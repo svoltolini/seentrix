@@ -26,12 +26,16 @@ export default function AuthLayout({
     const el = formRef.current;
     if (!el) return;
 
-    gsap.from(el, {
-      opacity: 0,
-      y: 20,
-      duration: 0.6,
-      ease: "power2.out",
-    });
+    const ctx = gsap.context(() => {
+      gsap.from(el, {
+        opacity: 0,
+        y: 20,
+        duration: 0.6,
+        ease: "power2.out",
+      });
+    }, el);
+
+    return () => ctx.revert();
   }, []);
 
   return (

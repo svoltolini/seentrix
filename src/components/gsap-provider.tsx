@@ -7,9 +7,10 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 export function GsapProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-    return () => {
-      ScrollTrigger.getAll().forEach((t) => t.kill());
-    };
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      gsap.globalTimeline.timeScale(100);
+    }
   }, []);
 
   return <>{children}</>;

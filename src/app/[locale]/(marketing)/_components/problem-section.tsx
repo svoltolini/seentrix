@@ -21,44 +21,47 @@ export function ProblemSection() {
     gsap.set(cards, { opacity: 0, y: 40 });
 
     const ctx = gsap.context(() => {
-      gsap.to(cards, {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: "power2.out",
+      const tl = gsap.timeline({
         scrollTrigger: {
           trigger: el,
           start: "top 85%",
           once: true,
         },
-        onComplete: () => {
-          // Counter animations after cards are visible
-          el.querySelectorAll("[data-counter]").forEach((counter) => {
-            const target = counter.getAttribute("data-counter") ?? "";
-            const numericMatch = target.match(/[\d.]+/);
-            if (!numericMatch) return;
+      });
 
-            const endVal = parseFloat(numericMatch[0]);
-            const prefix = target.slice(0, target.indexOf(numericMatch[0]));
-            const suffix = target.slice(
-              target.indexOf(numericMatch[0]) + numericMatch[0].length
-            );
+      tl.to(cards, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: "power2.out",
+      });
 
-            gsap.from(
-              { val: 0 },
-              {
-                val: endVal,
-                duration: 1.5,
-                ease: "power2.out",
-                onUpdate() {
-                  const current = Math.round(this.targets()[0].val);
-                  counter.textContent = `${prefix}${current}${suffix}`;
-                },
-              }
-            );
-          });
-        },
+      // Counter animations after cards are visible
+      el.querySelectorAll("[data-counter]").forEach((counter) => {
+        const target = counter.getAttribute("data-counter") ?? "";
+        const numericMatch = target.match(/[\d.]+/);
+        if (!numericMatch) return;
+
+        const endVal = parseFloat(numericMatch[0]);
+        const prefix = target.slice(0, target.indexOf(numericMatch[0]));
+        const suffix = target.slice(
+          target.indexOf(numericMatch[0]) + numericMatch[0].length
+        );
+
+        tl.from(
+          { val: 0 },
+          {
+            val: endVal,
+            duration: 1.5,
+            ease: "power2.out",
+            onUpdate() {
+              const current = Math.round(this.targets()[0].val);
+              counter.textContent = `${prefix}${current}${suffix}`;
+            },
+          },
+          "<0.3"
+        );
       });
     }, el);
 

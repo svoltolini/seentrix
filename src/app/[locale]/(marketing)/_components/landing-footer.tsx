@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { Logo } from "@/components/logo";
 
 export function LandingFooter() {
@@ -47,9 +48,9 @@ export function LandingFooter() {
               {t("resources")}
             </span>
             <nav className="flex flex-col gap-2 text-sm text-muted-foreground">
-              <a href="/blog" className="transition-colors hover:text-foreground">
+              <Link href="/blog" className="transition-colors hover:text-foreground">
                 {tHeader("blog")}
-              </a>
+              </Link>
             </nav>
           </div>
 
@@ -59,15 +60,9 @@ export function LandingFooter() {
               {t("legal")}
             </span>
             <nav className="flex flex-col gap-2 text-sm text-muted-foreground">
-              <span className="transition-colors hover:text-foreground">
-                {t("impressum")}
-              </span>
-              <span className="transition-colors hover:text-foreground">
-                {t("privacy")}
-              </span>
-              <span className="transition-colors hover:text-foreground">
-                {t("terms")}
-              </span>
+              <span>{t("impressum")}</span>
+              <span>{t("privacy")}</span>
+              <span>{t("terms")}</span>
             </nav>
           </div>
         </div>

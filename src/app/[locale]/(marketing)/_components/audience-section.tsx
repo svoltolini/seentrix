@@ -25,39 +25,37 @@ export function AudienceSection() {
 
     gsap.registerPlugin(ScrollTrigger);
 
-    const rows = el.querySelectorAll("[data-audience-row]");
+    const ctx = gsap.context(() => {
+      const rows = el.querySelectorAll("[data-audience-row]");
 
-    rows.forEach((row) => {
-      const icon = row.querySelector("[data-audience-icon]");
-      const text = row.querySelector("[data-audience-text]");
-      if (!icon || !text) return;
+      rows.forEach((row) => {
+        const icon = row.querySelector("[data-audience-icon]");
+        const text = row.querySelector("[data-audience-text]");
+        if (!icon || !text) return;
 
-      const isReversed = row.getAttribute("data-reversed") === "true";
-      gsap.set(icon, { opacity: 0, x: isReversed ? 40 : -40 });
-      gsap.set(text, { opacity: 0, y: 30 });
+        const isReversed = row.getAttribute("data-reversed") === "true";
+        gsap.set(icon, { opacity: 0, x: isReversed ? 40 : -40 });
+        gsap.set(text, { opacity: 0, y: 30 });
 
-      gsap.to(icon, {
-        opacity: 1,
-        x: 0,
-        duration: 0.8,
-        ease: "power2.out",
-        scrollTrigger: { trigger: row, start: "top 85%", once: true },
+        gsap.to(icon, {
+          opacity: 1,
+          x: 0,
+          duration: 0.8,
+          ease: "power2.out",
+          scrollTrigger: { trigger: row, start: "top 85%", once: true },
+        });
+        gsap.to(text, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          delay: 0.15,
+          ease: "power2.out",
+          scrollTrigger: { trigger: row, start: "top 85%", once: true },
+        });
       });
-      gsap.to(text, {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        delay: 0.15,
-        ease: "power2.out",
-        scrollTrigger: { trigger: row, start: "top 85%", once: true },
-      });
-    });
+    }, el);
 
-    return () => {
-      ScrollTrigger.getAll().forEach((t) => {
-        if (el.contains(t.trigger as Element)) t.kill();
-      });
-    };
+    return () => ctx.revert();
   }, []);
 
   return (
