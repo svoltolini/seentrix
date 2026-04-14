@@ -1,0 +1,197 @@
+{
+  "landing": {
+    "header": {
+      "features": "Funktionen",
+      "pricing": "Preise",
+      "timeline": "Zeitplan",
+      "blog": "Blog",
+      "login": "Anmelden",
+      "dashboard": "Dashboard",
+      "cta": "Kostenlose Bewertung starten",
+      "menu": "Menü",
+      "navigation": "Navigation"
+    },
+    "hero": {
+      "badge": "EU Cyber Resilience Act",
+      "titleLine1": "Ihre CRA-Compliance-Plattform",
+      "titleLine2": "Von Anfang an und darüber hinaus",
+      "subtitle": "Der EU Cyber Resilience Act verlangt laufende Cybersicherheit für jedes vernetzte Produkt in Europa. Seentrix hilft Herstellern, Compliance zu erreichen, kontinuierlich aufrechtzuerhalten und jederzeit audit-bereit zu bleiben. Nicht nur für die Frist, sondern langfristig.",
+      "cta": "Kostenlose Bewertung starten",
+      "ctaSecondary": "Preise ansehen",
+      "countdown": {
+        "title": "Zeit bis zur CRA-Durchsetzung",
+        "days": "Tage",
+        "hours": "Stunden",
+        "minutes": "Minuten",
+        "seconds": "Sekunden"
+      }
+    },
+    "problem": {
+      "title": "Die CRA-Compliance-Herausforderung",
+      "subtitle": "Hersteller stehen vor beispiellosen Cybersicherheitspflichten unter dem EU Cyber Resilience Act.",
+      "stats": {
+        "stat1": {
+          "value": "87%",
+          "label": "der Hersteller sind noch nicht CRA-bereit",
+          "description": "Die meisten Unternehmen unterschätzen den Umfang der Anforderungen für ihre vernetzten Produkte."
+        },
+        "stat2": {
+          "value": "24h",
+          "label": "Frist für Schwachstellenmeldung",
+          "description": "Aktiv ausgenutzte Schwachstellen müssen innerhalb von 24 Stunden an ENISA gemeldet werden."
+        },
+        "stat3": {
+          "value": "€15M",
+          "label": "Höchststrafe bei Nichteinhaltung",
+          "description": "Oder 2,5% des weltweiten Jahresumsatzes, je nachdem, welcher Betrag höher ist."
+        }
+      }
+    },
+    "features": {
+      "title": "Alles was Sie für CRA-Compliance brauchen",
+      "subtitle": "Vier integrierte Module, die Sie von der Bewertung bis zur zertifizierungsfertigen Dokumentation begleiten.",
+      "modules": {
+        "assessment": {
+          "title": "Scope-Bewertung",
+          "description": "Bestimmen Sie die CRA-Kategorie Ihres Produkts, den Konformitätsweg und ob eine benannte Stelle erforderlich ist. Alles in wenigen Minuten."
+        },
+        "checklist": {
+          "title": "Compliance-Checkliste",
+          "description": "Interaktive Checklisten, die auf CRA-Anhang-I-Anforderungen abgestimmt sind, mit Fortschrittsverfolgung und Nachweisverknüpfung."
+        },
+        "sbom": {
+          "title": "SBOM-Verwaltung",
+          "description": "Laden Sie Software-Stücklisten hoch und verwalten Sie diese mit automatisiertem Schwachstellen-Scanning gegen bekannte CVE-Datenbanken."
+        },
+        "documents": {
+          "title": "Dokumenten-Hub",
+          "description": "Erstellen Sie EU-Konformitätserklärungen, technische Dokumentation und Richtlinien zur Schwachstellenbehandlung aus Vorlagen."
+        }
+      }
+    },
+    "audience": {
+      "title": "Entwickelt für Produkthersteller",
+      "subtitle": "Wir haben Seentrix entwickelt, damit Hersteller jeder Art die CRA-Compliance sicher meistern, von der ersten Bewertung bis zur marktfertigen Dokumentation.",
+      "cta": "Jetzt starten",
+      "segments": {
+        "industrial": {
+          "title": "Industrie & OT",
+          "description": "Ordnen Sie Ihre SPSen, SCADA-Systeme und Industriesteuerungen den CRA-Anhang-I-Anforderungen zu. Erhalten Sie Klarheit über Konformitätswege und Pflichten zur Einschaltung benannter Stellen."
+        },
+        "iot": {
+          "title": "IoT-Geräte",
+          "description": "Verwalten Sie Cybersecurity-by-Design-Pflichten für vernetzte Verbraucher- und Kommerzgeräte. Verfolgen Sie Schwachstellen, pflegen Sie SBOMs und erstellen Sie die von Prüfern erwartete Dokumentation."
+        },
+        "software": {
+          "title": "Software & Firmware",
+          "description": "Bewerten Sie eigenständige Softwareprodukte und eingebettete Firmware anhand der CRA-Scope-Kriterien. Automatisieren Sie die Schwachstellenüberwachung und erstellen Sie EU-Konformitätserklärungen aus Vorlagen."
+        }
+      }
+    },
+    "pricingPreview": {
+      "title": "Einfache, transparente Preise",
+      "subtitle": "Starten Sie kostenlos und upgraden Sie, wenn Ihre Compliance-Anforderungen wachsen.",
+      "free": {
+        "name": "Free",
+        "price": "€0",
+        "description": "CRA-Anforderungen erkunden",
+        "features": {
+          "f1": "1 Produkt",
+          "f2": "Grundlegende Scope-Bewertung",
+          "f3": "Nur-Lese-Checkliste"
+        }
+      },
+      "professional": {
+        "name": "Professional",
+        "price": "€49",
+        "period": "/Mo.",
+        "description": "Aktives Compliance-Management",
+        "badge": "Beliebteste",
+        "features": {
+          "f1": "5 Produkte",
+          "f2": "Vollständige Compliance-Checklisten",
+          "f3": "SBOM mit Schwachstellen-Scanning",
+          "f4": "Dokumentvorlagen & PDF-Export"
+        }
+      },
+      "business": {
+        "name": "Business",
+        "price": "€199",
+        "period": "/Mo.",
+        "description": "Multi-Produkt-Organisationen",
+        "features": {
+          "f1": "25 Produkte",
+          "f2": "Unbegrenzte SBOM-Uploads",
+          "f3": "Kontinuierliche Überwachung",
+          "f4": "5 Benutzerplätze"
+        }
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "price": "€499",
+        "period": "/Mo.",
+        "description": "Für große Organisationen",
+        "cta": "Vertrieb kontaktieren",
+        "features": {
+          "f1": "100 Produkte",
+          "f2": "SSO / SAML-Integration",
+          "f3": "Dediziertes Onboarding",
+          "f4": "Individuelle Integrationen"
+        }
+      },
+      "getStarted": "Jetzt starten",
+      "cta": "Alle Preise ansehen"
+    },
+    "timeline": {
+      "title": "CRA-Zeitplan: Wichtige Fristen",
+      "subtitle": "Der Cyber Resilience Act wird in Phasen eingeführt. Hier sind die Meilensteine, die zählen.",
+      "milestones": {
+        "m1": {
+          "date": "Juni 2026",
+          "title": "Schwachstellenmeldung",
+          "description": "Hersteller müssen aktiv ausgenutzte Schwachstellen innerhalb von 24 Stunden an ENISA melden."
+        },
+        "m2": {
+          "date": "11. September 2026",
+          "title": "Vollständige CRA-Durchsetzung",
+          "description": "Alle wesentlichen Cybersicherheitsanforderungen gelten. Produkte müssen vor dem Inverkehrbringen auf dem EU-Markt konform sein."
+        },
+        "m3": {
+          "date": "Dezember 2027",
+          "title": "Konformitätsbewertung",
+          "description": "Bewertungen durch benannte Stellen für Produktkategorien \"wichtig\" und \"kritisch\" erforderlich."
+        }
+      }
+    },
+    "trust": {
+      "title": "Entwickelt von Compliance-Ingenieuren",
+      "subtitle": "In der Schweiz entwickelt von einem Team mit tiefen Wurzeln in industrieller Automatisierung und Cybersicherheitsstandards.",
+      "badges": {
+        "iec": "IEC 62443",
+        "etsi": "ETSI EN 303 645",
+        "gdpr": "EU-DSGVO-konform",
+        "swiss": "Made in Switzerland"
+      }
+    },
+    "newsletter": {
+      "title": "Holen Sie sich Ihre kostenlose CRA-Bereitschafts-Checkliste",
+      "subtitle": "Abonnieren Sie unseren Newsletter und erhalten Sie eine praktische Checkliste zur Bewertung Ihrer CRA-Bereitschaft, direkt in Ihren Posteingang.",
+      "placeholder": "E-Mail-Adresse eingeben",
+      "cta": "Abonnieren",
+      "privacy": "Wir respektieren Ihre Privatsphäre. Jederzeit abbestellbar.",
+      "success": "Sie sind abonniert! Prüfen Sie Ihren Posteingang für die CRA-Bereitschafts-Checkliste.",
+      "error": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.",
+      "duplicate": "Sie sind bereits abonniert. Prüfen Sie Ihren Posteingang für die neuesten Updates."
+    },
+    "footer": {
+      "location": "Rotkreuz, Schweiz",
+      "impressum": "Impressum",
+      "privacy": "Datenschutzerklärung",
+      "terms": "Nutzungsbedingungen",
+      "copyright": "© {year} Seentrix. Alle Rechte vorbehalten.",
+      "product": "Produkt",
+      "resources": "Ressourcen",
+      "legal": "Rechtliches"
+    }
+  }
+}

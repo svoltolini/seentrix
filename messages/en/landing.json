@@ -1,0 +1,197 @@
+{
+  "landing": {
+    "header": {
+      "features": "Features",
+      "pricing": "Pricing",
+      "timeline": "Timeline",
+      "blog": "Blog",
+      "login": "Log In",
+      "dashboard": "Dashboard",
+      "cta": "Start Free Assessment",
+      "menu": "Menu",
+      "navigation": "Navigation"
+    },
+    "hero": {
+      "badge": "EU Cyber Resilience Act",
+      "titleLine1": "Your CRA Compliance Platform",
+      "titleLine2": "From Day One and Beyond",
+      "subtitle": "The EU Cyber Resilience Act demands ongoing cybersecurity for every connected product in Europe. Seentrix helps manufacturers achieve compliance, maintain it continuously, and stay audit-ready. Not just for the deadline, but for the long run.",
+      "cta": "Start Free Assessment",
+      "ctaSecondary": "See Pricing",
+      "countdown": {
+        "title": "Time until CRA enforcement",
+        "days": "Days",
+        "hours": "Hours",
+        "minutes": "Minutes",
+        "seconds": "Seconds"
+      }
+    },
+    "problem": {
+      "title": "The CRA Compliance Challenge",
+      "subtitle": "Manufacturers face unprecedented cybersecurity obligations under the EU Cyber Resilience Act.",
+      "stats": {
+        "stat1": {
+          "value": "87%",
+          "label": "of manufacturers are not yet CRA-ready",
+          "description": "Most companies underestimate the scope of requirements for their connected products."
+        },
+        "stat2": {
+          "value": "24h",
+          "label": "vulnerability reporting deadline",
+          "description": "Actively exploited vulnerabilities must be reported to ENISA within 24 hours."
+        },
+        "stat3": {
+          "value": "€15M",
+          "label": "maximum penalty for non-compliance",
+          "description": "Or 2.5% of worldwide annual turnover, whichever is higher."
+        }
+      }
+    },
+    "features": {
+      "title": "Everything You Need for CRA Compliance",
+      "subtitle": "Four integrated modules that guide you from assessment to certification-ready documentation.",
+      "modules": {
+        "assessment": {
+          "title": "Scope Assessment",
+          "description": "Determine your product's CRA category, conformity route, and whether a notified body is required. All in minutes."
+        },
+        "checklist": {
+          "title": "Compliance Checklist",
+          "description": "Interactive checklists mapped to CRA Annex I requirements, with progress tracking and evidence linking."
+        },
+        "sbom": {
+          "title": "SBOM Management",
+          "description": "Upload and manage Software Bills of Materials with automated vulnerability scanning against known CVE databases."
+        },
+        "documents": {
+          "title": "Document Hub",
+          "description": "Generate EU Declaration of Conformity, technical documentation, and vulnerability handling policies from templates."
+        }
+      }
+    },
+    "audience": {
+      "title": "Built for Product Manufacturers",
+      "subtitle": "We built Seentrix so manufacturers of every kind can navigate CRA compliance with confidence, from first assessment to market-ready documentation.",
+      "cta": "Get Started",
+      "segments": {
+        "industrial": {
+          "title": "Industrial & OT",
+          "description": "Map your PLCs, SCADA systems, and industrial controllers against CRA Annex I requirements. Get clarity on conformity routes and notified body obligations for your operational technology."
+        },
+        "iot": {
+          "title": "IoT Devices",
+          "description": "Manage cybersecurity-by-design obligations for connected consumer and commercial devices. Track vulnerabilities, maintain SBOMs, and generate the documentation auditors expect."
+        },
+        "software": {
+          "title": "Software & Firmware",
+          "description": "Assess standalone software products and embedded firmware against CRA scope criteria. Automate vulnerability monitoring and produce EU Declarations of Conformity from templates."
+        }
+      }
+    },
+    "pricingPreview": {
+      "title": "Simple, Transparent Pricing",
+      "subtitle": "Start free and upgrade as your compliance needs grow.",
+      "free": {
+        "name": "Free",
+        "price": "€0",
+        "description": "Explore CRA requirements",
+        "features": {
+          "f1": "1 product",
+          "f2": "Basic scope assessment",
+          "f3": "Read-only checklist"
+        }
+      },
+      "professional": {
+        "name": "Professional",
+        "price": "€49",
+        "period": "/mo",
+        "description": "Active compliance management",
+        "badge": "Most Popular",
+        "features": {
+          "f1": "5 products",
+          "f2": "Full compliance checklists",
+          "f3": "SBOM with vulnerability scanning",
+          "f4": "Document templates & PDF export"
+        }
+      },
+      "business": {
+        "name": "Business",
+        "price": "€199",
+        "period": "/mo",
+        "description": "Multi-product organizations",
+        "features": {
+          "f1": "25 products",
+          "f2": "Unlimited SBOM uploads",
+          "f3": "Continuous monitoring",
+          "f4": "5 user seats"
+        }
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "price": "€499",
+        "period": "/mo",
+        "description": "For large organizations",
+        "cta": "Contact Sales",
+        "features": {
+          "f1": "100 products",
+          "f2": "SSO / SAML integration",
+          "f3": "Dedicated onboarding",
+          "f4": "Custom integrations"
+        }
+      },
+      "getStarted": "Get Started",
+      "cta": "View Full Pricing"
+    },
+    "timeline": {
+      "title": "CRA Timeline: Key Deadlines",
+      "subtitle": "The Cyber Resilience Act rolls out in phases. Here are the milestones that matter.",
+      "milestones": {
+        "m1": {
+          "date": "June 2026",
+          "title": "Vulnerability Reporting",
+          "description": "Manufacturers must report actively exploited vulnerabilities to ENISA within 24 hours."
+        },
+        "m2": {
+          "date": "September 11, 2026",
+          "title": "Full CRA Enforcement",
+          "description": "All essential cybersecurity requirements apply. Products must comply before being placed on the EU market."
+        },
+        "m3": {
+          "date": "December 2027",
+          "title": "Conformity Assessment",
+          "description": "Notified body assessments required for \"important\" and \"critical\" product categories."
+        }
+      }
+    },
+    "trust": {
+      "title": "Built by Compliance Engineers",
+      "subtitle": "Developed in Switzerland by a team with deep roots in industrial automation and cybersecurity standards.",
+      "badges": {
+        "iec": "IEC 62443",
+        "etsi": "ETSI EN 303 645",
+        "gdpr": "EU GDPR Compliant",
+        "swiss": "Made in Switzerland"
+      }
+    },
+    "newsletter": {
+      "title": "Get Your Free CRA Readiness Checklist",
+      "subtitle": "Join our newsletter and receive a practical checklist to assess your CRA readiness, delivered straight to your inbox.",
+      "placeholder": "Enter your email address",
+      "cta": "Subscribe",
+      "privacy": "We respect your privacy. Unsubscribe at any time.",
+      "success": "You're subscribed! Check your inbox for the CRA Readiness Checklist.",
+      "error": "Something went wrong. Please try again.",
+      "duplicate": "You're already subscribed. Check your inbox for the latest updates."
+    },
+    "footer": {
+      "location": "Rotkreuz, Switzerland",
+      "impressum": "Impressum",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "copyright": "© {year} Seentrix. All rights reserved.",
+      "product": "Product",
+      "resources": "Resources",
+      "legal": "Legal"
+    }
+  }
+}
