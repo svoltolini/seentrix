@@ -348,7 +348,6 @@ export function OrgSettingsContent({
 
       {/* Organization chart — vertical tree */}
       <OrganizationChart
-        orgName={org?.legal_name ?? org?.name ?? ""}
         plan={org?.plan ?? "free"}
         members={members}
         isAdmin={isAdmin}
@@ -361,22 +360,19 @@ export function OrgSettingsContent({
 
 // ---------------------------------------------------------------------------
 // Organization chart — vertical tree.
-// Root node is the org itself (with plan badge); a solid vertical spine
-// descends from the root and branches right into a box per CRA role. Inside
-// each role box the members sit as avatar rows, also connected back to the
-// spine with a small horizontal stub. Empty roles show a dashed "Invite a
+// A single vertical trunk runs the height of the tree, branching right into
+// a box per CRA role. The trunk caps with a rounded corner at the first and
+// last tier so the endpoints don't hang. Empty roles show a dashed "Invite a
 // <role>" branch for admins, or a muted "No one yet" for everyone else.
 // ---------------------------------------------------------------------------
 
 function OrganizationChart({
-  orgName,
   plan,
   members,
   isAdmin,
   t,
   tTeam,
 }: {
-  orgName: string;
   plan: OrgPlan;
   members: TeamMember[];
   isAdmin: boolean;
@@ -437,28 +433,15 @@ function OrganizationChart({
       </div>
 
       <div className="px-6 py-6">
-        {/* Root node — the organization itself */}
-        <div className="inline-flex items-center gap-3 rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-3">
-          <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-primary/30 to-primary/10 text-primary">
-            <HugeIcon name="chip-stroke-rounded" size={18} />
-          </div>
-          <div className="min-w-0">
-            <p className="truncate text-sm font-semibold text-foreground">
-              {orgName || t("title")}
-            </p>
-            <p className="mt-0.5 text-[11px] uppercase tracking-wider text-muted-foreground/60">
-              {plan}
-            </p>
-          </div>
-        </div>
-
         {/* Tree: each tier draws its own connector SVG so the trunk + L-bend
-            are precise at any row height; no overlap tricks. */}
-        <ol className="mt-2">
+            are precise at any row height; no overlap tricks. Top and bottom
+            tiers cap the trunk with a rounded corner. */}
+        <ol>
           {tiers.map((tier, i) => (
             <RoleBranch
               key={tier.key}
               tier={tier}
+              isFirst={i === 0}
               isLast={i === tiers.length - 1}
               isAdmin={isAdmin}
               tTeam={tTeam}
@@ -476,6 +459,7 @@ function OrganizationChart({
 
 function RoleBranch({
   tier,
+  isFirst,
   isLast,
   isAdmin,
   tTeam,
@@ -483,6 +467,7 @@ function RoleBranch({
   emptyLabel,
 }: {
   tier: (typeof ROLE_HIERARCHY)[number] & { members: TeamMember[] };
+  isFirst: boolean;
   isLast: boolean;
   isAdmin: boolean;
   tTeam: ReturnType<typeof useTranslations>;
@@ -491,8 +476,16 @@ function RoleBranch({
 }) {
   const hex = tier.bg.match(/#[0-9A-Fa-f]{6}/)?.[0] ?? "#6B7280";
   // Trunk geometry — kept constant across tiers so the SVG paths line up.
-  const STUB_Y = 28; // y coord where the horizontal stub meets the badge
-  const RADIUS = 8;  // radius of the L-corner on the last tier
+  // STUB_Y matches the vertical center of the size-11 (44px) badge so the
+  // horizontal stub points straight at the role icon.
+  const STUB_Y = 22;
+  const RADIUS = 8;
+  const STROKE = {
+    stroke: "white",
+    strokeOpacity: "0.1",
+    strokeWidth: "1",
+    vectorEffect: "non-scaling-stroke" as const,
+  };
 
   return (
     <li
@@ -502,8 +495,9 @@ function RoleBranch({
       )}
       style={{ paddingLeft: 40 }}
     >
-      {/* Connector: trunk + branch stub. Drawn as one SVG so the rounded
-          corner on the last tier joins the stub perfectly. */}
+      {/* Connector: vertical trunk + horizontal stub to the badge. Top and
+          bottom tiers get a rounded L-corner so the trunk caps cleanly; the
+          middle tiers use a plain T-junction. */}
       <svg
         aria-hidden
         className="pointer-events-none absolute left-0 top-0 h-full"
@@ -512,41 +506,40 @@ function RoleBranch({
         preserveAspectRatio="none"
         style={{ overflow: "visible" }}
       >
-        {/* The trunk itself — absolute positioned segment lines so that
-            preserveAspectRatio doesn't distort them. Use single-pixel lines
-            with vector-effect for crispness. */}
+        {/* Vertical trunk. Clipped by STUB_Y ± RADIUS on the end tiers so
+            the straight segment meets the arc without overlap. */}
         <line
           x1="17"
-          y1="0"
+          y1={isFirst ? STUB_Y + RADIUS : 0}
           x2="17"
           y2={isLast ? STUB_Y - RADIUS : "100%"}
-          stroke="white"
-          strokeOpacity="0.1"
-          strokeWidth="1"
-          vectorEffect="non-scaling-stroke"
+          {...STROKE}
         />
-        {/* Stub: straight horizontal for non-last, rounded L for last. */}
-        {isLast ? (
+        {/* Top-left L-arc — caps the top of the trunk on the first tier. */}
+        {isFirst && (
           <path
-            d={`M 17 ${STUB_Y - RADIUS} A ${RADIUS} ${RADIUS} 0 0 0 ${17 + RADIUS} ${STUB_Y} H 40`}
-            stroke="white"
-            strokeOpacity="0.1"
-            strokeWidth="1"
+            d={`M ${17 + RADIUS} ${STUB_Y} A ${RADIUS} ${RADIUS} 0 0 1 17 ${STUB_Y + RADIUS}`}
             fill="none"
-            vectorEffect="non-scaling-stroke"
-          />
-        ) : (
-          <line
-            x1="17"
-            y1={STUB_Y}
-            x2="40"
-            y2={STUB_Y}
-            stroke="white"
-            strokeOpacity="0.1"
-            strokeWidth="1"
-            vectorEffect="non-scaling-stroke"
+            {...STROKE}
           />
         )}
+        {/* Bottom-left L-arc — caps the bottom of the trunk on the last tier. */}
+        {isLast && (
+          <path
+            d={`M 17 ${STUB_Y - RADIUS} A ${RADIUS} ${RADIUS} 0 0 0 ${17 + RADIUS} ${STUB_Y}`}
+            fill="none"
+            {...STROKE}
+          />
+        )}
+        {/* Horizontal stub. Starts past the corner on end tiers so the arc
+            joins it without a kink. */}
+        <line
+          x1={isFirst || isLast ? 17 + RADIUS : 17}
+          y1={STUB_Y}
+          x2="40"
+          y2={STUB_Y}
+          {...STROKE}
+        />
       </svg>
 
       {/* Tier badge */}
