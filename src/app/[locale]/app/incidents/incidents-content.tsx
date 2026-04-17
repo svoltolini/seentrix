@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { HugeIcon } from "@/components/huge-icon";
 import { StaggerReveal } from "@/components/stagger-reveal";
+import { StatCard } from "@/components/stat-card";
 import { useToast } from "@/components/ui/toast";
 import { useLocaleDate } from "@/lib/locale-date";
 import {
@@ -220,28 +221,38 @@ export function IncidentsContent({
           data-reveal
           className="grid grid-cols-2 gap-3 sm:grid-cols-4"
         >
-          <Kpi
+          <StatCard
             label={t("kpi.active")}
-            value={kpis.active}
-            accent={STATUS_COLOR.detected}
+            from="#D97706"
+            to="#EA580C"
+            accentDot
             pulse={kpis.active > 0}
-          />
-          <Kpi
+          >
+            <p className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white">
+              {kpis.active}
+            </p>
+          </StatCard>
+          <StatCard
             label={t("kpi.overdue")}
-            value={kpis.overdue}
-            accent="#DC2626"
+            from="#DC2626"
+            to="#7F1D1D"
+            accentDot
             pulse={kpis.overdue > 0}
-          />
-          <Kpi
-            label={t("kpi.critical")}
-            value={kpis.critical}
-            accent={SEVERITY_COLOR.critical}
-          />
-          <Kpi
-            label={t("kpi.closed")}
-            value={kpis.closed}
-            accent={STATUS_COLOR.closed}
-          />
+          >
+            <p className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white">
+              {kpis.overdue}
+            </p>
+          </StatCard>
+          <StatCard label={t("kpi.critical")} from="#DC2626" to="#E11D48">
+            <p className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white">
+              {kpis.critical}
+            </p>
+          </StatCard>
+          <StatCard label={t("kpi.closed")} from="#16A34A" to="#15803D">
+            <p className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white">
+              {kpis.closed}
+            </p>
+          </StatCard>
         </div>
 
         {/* Filters */}
@@ -431,38 +442,6 @@ export function IncidentsContent({
 // ---------------------------------------------------------------------------
 // Sub-components
 // ---------------------------------------------------------------------------
-
-function Kpi({
-  label,
-  value,
-  accent,
-  pulse,
-}: {
-  label: string;
-  value: number;
-  accent: string;
-  pulse?: boolean;
-}) {
-  return (
-    <div className="rounded-xl border border-white/[0.06] bg-card p-4">
-      <div className="flex items-center gap-2">
-        <span
-          className={cn("size-2 rounded-full", pulse && "animate-pulse")}
-          style={{ backgroundColor: accent }}
-        />
-        <p className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground/70">
-          {label}
-        </p>
-      </div>
-      <p
-        className="mt-2 text-2xl font-bold tabular-nums tracking-tight"
-        style={{ color: accent }}
-      >
-        {value}
-      </p>
-    </div>
-  );
-}
 
 function SegmentedControl({
   options,

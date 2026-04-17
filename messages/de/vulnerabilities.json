@@ -35,7 +35,9 @@
       "anyAssignee": "Beliebige Zuweisung",
       "unassigned": "Nicht zugewiesen",
       "byMember": "Nach Mitglied",
-      "assignee": "Zugewiesen an"
+      "assignee": "Zugewiesen an",
+      "clearAll": "Alle löschen",
+      "activeFilters": "{count, plural, one {# Filter} other {# Filter}}"
     },
     "bulk": {
       "selected": "{count, plural, one {# ausgewählt} other {# ausgewählt}}",

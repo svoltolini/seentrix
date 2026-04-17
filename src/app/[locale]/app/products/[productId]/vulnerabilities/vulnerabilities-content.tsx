@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import { HugeIcon } from "@/components/huge-icon";
 import { StaggerReveal } from "@/components/stagger-reveal";
+import { StatCard } from "@/components/stat-card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
@@ -191,6 +192,23 @@ export function VulnerabilitiesContent({
     assigneeFilter,
   ]);
 
+  // Total number of active filters (search excluded — it has its own
+  // clear button inside the input). Drives the "Clear all" affordance.
+  const activeFilterCount =
+    statusFilter.size +
+    severityFilter.size +
+    (kevOnly ? 1 : 0) +
+    (exploitOnly ? 1 : 0) +
+    (assigneeFilter !== "all" ? 1 : 0);
+
+  const clearAllFilters = useCallback(() => {
+    setStatusFilter(new Set());
+    setSeverityFilter(new Set());
+    setKevOnly(false);
+    setExploitOnly(false);
+    setAssigneeFilter("all");
+  }, []);
+
   // Optimistic local update -------------------------------------------------
   const applyLocal = useCallback(
     (ids: string[], patch: Partial<VulnListItem>) => {
@@ -355,135 +373,184 @@ export function VulnerabilitiesContent({
           data-reveal
           className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5"
         >
-          <Kpi label={t("kpi.total")} value={kpis.total} />
-          <Kpi
-            label={t("kpi.open")}
-            value={kpis.open}
-            accent={STATUS_COLOR.in_progress}
-          />
-          <Kpi
-            label={t("kpi.critical")}
-            value={kpis.critical}
-            accent={SEVERITY_COLOR.critical}
-          />
-          <Kpi label={t("kpi.kev")} value={kpis.kev} accent="#DC2626" />
-          <Kpi
+          <StatCard label={t("kpi.total")} from="#2563EB" to="#0891B2">
+            <p className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white">
+              {kpis.total}
+            </p>
+          </StatCard>
+          <StatCard label={t("kpi.open")} from="#D97706" to="#EA580C">
+            <p className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white">
+              {kpis.open}
+            </p>
+          </StatCard>
+          <StatCard label={t("kpi.critical")} from="#DC2626" to="#E11D48">
+            <p className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white">
+              {kpis.critical}
+            </p>
+          </StatCard>
+          <StatCard label={t("kpi.kev")} from="#E11D48" to="#BE123C">
+            <p className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white">
+              {kpis.kev}
+            </p>
+          </StatCard>
+          <StatCard
             label={t("kpi.exploited")}
-            value={kpis.exploited}
-            accent="#DC2626"
+            from="#DC2626"
+            to="#7F1D1D"
+            accentDot
             pulse={kpis.exploited > 0}
-          />
+          >
+            <p className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white">
+              {kpis.exploited}
+            </p>
+          </StatCard>
         </div>
 
         {/* ── Filter bar ── */}
         <div
           data-reveal
-          className="flex flex-wrap items-center gap-2 rounded-xl border border-white/[0.06] bg-card p-2"
+          className="overflow-hidden rounded-xl border border-white/[0.06] bg-card"
         >
-          <div className="relative min-w-0 flex-1">
-            <Input
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder={t("filter.searchPlaceholder")}
-              className="h-9 pl-9"
-            />
-            <HugeIcon
-              name="glasses-stroke-rounded"
-              size={14}
-              className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground/60"
-            />
+          {/* Search row — takes full width for scannability */}
+          <div className="border-b border-white/[0.04] p-3">
+            <div className="relative">
+              <Input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder={t("filter.searchPlaceholder")}
+                className="h-10 border-white/[0.06] bg-background/40 pl-10 pr-10 text-sm"
+              />
+              <HugeIcon
+                name="glasses-stroke-rounded"
+                size={16}
+                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground/60"
+              />
+              {search && (
+                <button
+                  type="button"
+                  onClick={() => setSearch("")}
+                  className="absolute right-2.5 top-1/2 flex size-6 -translate-y-1/2 items-center justify-center rounded-md text-muted-foreground/60 transition-colors hover:bg-white/[0.06] hover:text-foreground"
+                  aria-label={t("filter.clearAll")}
+                >
+                  <HugeIcon name="add-01" size={14} className="rotate-45" />
+                </button>
+              )}
+            </div>
           </div>
 
-          <MultiSelect
-            label={t("filter.status")}
-            options={STATUS_ORDER.map((s) => ({ value: s, label: tStatus(s) }))}
-            selected={statusFilter}
-            onToggle={(v) => {
-              setStatusFilter((prev) => {
-                const next = new Set(prev);
-                if (next.has(v as VulnStatus)) next.delete(v as VulnStatus);
-                else next.add(v as VulnStatus);
-                return next;
-              });
-            }}
-            onClear={() => setStatusFilter(new Set())}
-          />
+          {/* Filter row — chips, with active-count + clear-all on the right */}
+          <div className="flex flex-wrap items-center gap-2 px-3 py-2.5">
+            <MultiSelect
+              label={t("filter.status")}
+              options={STATUS_ORDER.map((s) => ({
+                value: s,
+                label: tStatus(s),
+              }))}
+              selected={statusFilter}
+              onToggle={(v) => {
+                setStatusFilter((prev) => {
+                  const next = new Set(prev);
+                  if (next.has(v as VulnStatus)) next.delete(v as VulnStatus);
+                  else next.add(v as VulnStatus);
+                  return next;
+                });
+              }}
+              onClear={() => setStatusFilter(new Set())}
+            />
 
-          <MultiSelect
-            label={t("filter.severity")}
-            options={SEVERITY_ORDER.map((s) => ({
-              value: s,
-              label: tSev(s),
-              color: SEVERITY_COLOR[s],
-            }))}
-            selected={severityFilter}
-            onToggle={(v) => {
-              setSeverityFilter((prev) => {
-                const next = new Set(prev);
-                if (next.has(v as VulnSeverity))
-                  next.delete(v as VulnSeverity);
-                else next.add(v as VulnSeverity);
-                return next;
-              });
-            }}
-            onClear={() => setSeverityFilter(new Set())}
-          />
+            <MultiSelect
+              label={t("filter.severity")}
+              options={SEVERITY_ORDER.map((s) => ({
+                value: s,
+                label: tSev(s),
+                color: SEVERITY_COLOR[s],
+              }))}
+              selected={severityFilter}
+              onToggle={(v) => {
+                setSeverityFilter((prev) => {
+                  const next = new Set(prev);
+                  if (next.has(v as VulnSeverity))
+                    next.delete(v as VulnSeverity);
+                  else next.add(v as VulnSeverity);
+                  return next;
+                });
+              }}
+              onClear={() => setSeverityFilter(new Set())}
+            />
 
-          <ToggleChip
-            active={kevOnly}
-            label={t("filter.kevOnly")}
-            color="#DC2626"
-            onClick={() => setKevOnly((v) => !v)}
-          />
+            <ToggleChip
+              active={kevOnly}
+              label={t("filter.kevOnly")}
+              color="#DC2626"
+              onClick={() => setKevOnly((v) => !v)}
+            />
 
-          <ToggleChip
-            active={exploitOnly}
-            label={t("filter.exploitedOnly")}
-            color="#DC2626"
-            onClick={() => setExploitOnly((v) => !v)}
-          />
+            <ToggleChip
+              active={exploitOnly}
+              label={t("filter.exploitedOnly")}
+              color="#DC2626"
+              onClick={() => setExploitOnly((v) => !v)}
+            />
 
-          <DropdownMenu>
-            <DropdownMenuTrigger
-              render={<Button variant="outline" size="sm" />}
-            >
-              <HugeIcon name="one-circle-stroke-rounded" size={14} />
-              {assigneeFilter === "all"
-                ? t("filter.anyAssignee")
-                : assigneeFilter === "unassigned"
-                  ? t("filter.unassigned")
-                  : members.find((m) => m.id === assigneeFilter)?.full_name ??
-                    t("filter.assignee")}
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="min-w-44">
-              <DropdownMenuItem onClick={() => setAssigneeFilter("all")}>
-                {t("filter.anyAssignee")}
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setAssigneeFilter("unassigned")}>
-                {t("filter.unassigned")}
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuLabel>{t("filter.byMember")}</DropdownMenuLabel>
-              {members.map((m) => (
-                <DropdownMenuItem
-                  key={m.id}
-                  onClick={() => setAssigneeFilter(m.id)}
-                >
-                  <Avatar size="sm">
-                    {m.avatar_url && (
-                      <AvatarImage src={m.avatar_url} alt="" />
-                    )}
-                    <AvatarFallback>
-                      {initialsOf(m.full_name, m.email)}
-                    </AvatarFallback>
-                  </Avatar>
-                  <span className="truncate">
-                    {m.full_name ?? m.email ?? m.id}
-                  </span>
+            <DropdownMenu>
+              <DropdownMenuTrigger
+                render={<Button variant="outline" size="sm" />}
+              >
+                <HugeIcon name="one-circle-stroke-rounded" size={14} />
+                {assigneeFilter === "all"
+                  ? t("filter.anyAssignee")
+                  : assigneeFilter === "unassigned"
+                    ? t("filter.unassigned")
+                    : members.find((m) => m.id === assigneeFilter)
+                        ?.full_name ?? t("filter.assignee")}
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="min-w-44">
+                <DropdownMenuItem onClick={() => setAssigneeFilter("all")}>
+                  {t("filter.anyAssignee")}
                 </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
+                <DropdownMenuItem
+                  onClick={() => setAssigneeFilter("unassigned")}
+                >
+                  {t("filter.unassigned")}
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuLabel>{t("filter.byMember")}</DropdownMenuLabel>
+                {members.map((m) => (
+                  <DropdownMenuItem
+                    key={m.id}
+                    onClick={() => setAssigneeFilter(m.id)}
+                  >
+                    <Avatar size="sm">
+                      {m.avatar_url && (
+                        <AvatarImage src={m.avatar_url} alt="" />
+                      )}
+                      <AvatarFallback>
+                        {initialsOf(m.full_name, m.email)}
+                      </AvatarFallback>
+                    </Avatar>
+                    <span className="truncate">
+                      {m.full_name ?? m.email ?? m.id}
+                    </span>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            {activeFilterCount > 0 && (
+              <div className="ml-auto flex items-center gap-2 pl-2">
+                <span className="text-[11px] tabular-nums text-muted-foreground/70">
+                  {t("filter.activeFilters", { count: activeFilterCount })}
+                </span>
+                <button
+                  type="button"
+                  onClick={clearAllFilters}
+                  className="rounded-md px-2 py-1 text-xs font-medium text-muted-foreground transition-colors hover:bg-white/[0.06] hover:text-foreground"
+                >
+                  {t("filter.clearAll")}
+                </button>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* ── Bulk action bar ── */}
@@ -616,47 +683,6 @@ export function VulnerabilitiesContent({
         tStatus={tStatus}
         t={t}
       />
-    </div>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// KPI tile
-// ---------------------------------------------------------------------------
-
-function Kpi({
-  label,
-  value,
-  accent,
-  pulse,
-}: {
-  label: string;
-  value: number;
-  accent?: string;
-  pulse?: boolean;
-}) {
-  return (
-    <div className="rounded-xl border border-white/[0.06] bg-card p-4">
-      <div className="flex items-center gap-2">
-        {accent && (
-          <span
-            className={cn(
-              "size-2 rounded-full",
-              pulse && "animate-pulse",
-            )}
-            style={{ backgroundColor: accent }}
-          />
-        )}
-        <p className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground/70">
-          {label}
-        </p>
-      </div>
-      <p
-        className="mt-2 text-2xl font-bold tabular-nums tracking-tight"
-        style={accent ? { color: accent } : undefined}
-      >
-        {value}
-      </p>
     </div>
   );
 }

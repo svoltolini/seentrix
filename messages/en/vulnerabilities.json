@@ -35,7 +35,9 @@
       "anyAssignee": "Any assignee",
       "unassigned": "Unassigned",
       "byMember": "By member",
-      "assignee": "Assignee"
+      "assignee": "Assignee",
+      "clearAll": "Clear all",
+      "activeFilters": "{count, plural, one {# filter} other {# filters}}"
     },
     "bulk": {
       "selected": "{count, plural, one {# selected} other {# selected}}",

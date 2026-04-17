@@ -9,6 +9,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { HugeIcon } from "@/components/huge-icon";
 import { StaggerReveal } from "@/components/stagger-reveal";
+import { StatCard } from "@/components/stat-card";
 import { SEVERITY_CHART_COLORS } from "../products/[productId]/constants";
 import type {
   DashboardStats,
@@ -894,36 +895,6 @@ function ActionNeededBanner({
           {t("actionNeeded.cta")}
           <HugeIcon name="arrow-right-01-stroke-rounded" size={16} />
         </Link>
-      </div>
-    </div>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Stat Card
-// ---------------------------------------------------------------------------
-
-function StatCard({
-  label,
-  from,
-  to,
-  className,
-  children,
-}: {
-  label: string;
-  from: string;
-  to: string;
-  className?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div
-      className={cn("relative overflow-hidden rounded-xl", className)}
-      style={{ background: `linear-gradient(135deg, ${from}, ${to})` }}
-    >
-      <div className="p-5">
-        <p className="text-[11px] font-semibold text-white/75">{label}</p>
-        {children}
       </div>
     </div>
   );

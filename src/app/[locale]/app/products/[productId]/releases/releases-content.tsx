@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { HugeIcon } from "@/components/huge-icon";
 import { StaggerReveal } from "@/components/stagger-reveal";
+import { StatCard } from "@/components/stat-card";
 import { useToast } from "@/components/ui/toast";
 import { useLocaleDate } from "@/lib/locale-date";
 import {
@@ -162,18 +163,26 @@ export function ReleasesContent({
           data-reveal
           className="grid grid-cols-2 gap-3 sm:grid-cols-4"
         >
-          <Kpi label={t("kpi.total")} value={summary.total} />
-          <Kpi
-            label={t("kpi.security")}
-            value={summary.security}
-            accent={RELEASE_TYPE_COLOR.security}
-          />
-          <Kpi label={t("kpi.cvesFixed")} value={summary.cves} accent="#16A34A" />
-          <Kpi
-            label={t("kpi.latest")}
-            value={summary.latest ? summary.latest.version : "—"}
-            text
-          />
+          <StatCard label={t("kpi.total")} from="#2563EB" to="#0891B2">
+            <p className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white">
+              {summary.total}
+            </p>
+          </StatCard>
+          <StatCard label={t("kpi.security")} from="#DC2626" to="#E11D48">
+            <p className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white">
+              {summary.security}
+            </p>
+          </StatCard>
+          <StatCard label={t("kpi.cvesFixed")} from="#16A34A" to="#15803D">
+            <p className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white">
+              {summary.cves}
+            </p>
+          </StatCard>
+          <StatCard label={t("kpi.latest")} from="#7C3AED" to="#4F46E5">
+            <p className="mt-2 truncate text-lg font-bold tracking-tight text-white">
+              {summary.latest ? summary.latest.version : "—"}
+            </p>
+          </StatCard>
         </div>
 
         {/* Releases list */}
@@ -279,35 +288,6 @@ export function ReleasesContent({
 // Sub-components
 // ---------------------------------------------------------------------------
 
-function Kpi({
-  label,
-  value,
-  accent,
-  text,
-}: {
-  label: string;
-  value: string | number;
-  accent?: string;
-  text?: boolean;
-}) {
-  return (
-    <div className="rounded-xl border border-white/[0.06] bg-card p-4">
-      <p className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground/70">
-        {label}
-      </p>
-      <p
-        className={cn(
-          "mt-2 font-bold tracking-tight",
-          text ? "text-base" : "text-2xl tabular-nums",
-        )}
-        style={accent ? { color: accent } : undefined}
-      >
-        {value}
-      </p>
-    </div>
-  );
-}
-
 function SupportField({
   label,
   value,
@@ -324,22 +304,32 @@ function SupportField({
   onSave: (v: string) => void;
 }) {
   const [local, setLocal] = useState(value);
+  const isDate = type === "date";
   return (
     <div>
       <label className="text-xs font-medium text-muted-foreground/70">
         {label}
       </label>
-      <Input
-        type={type}
-        value={local}
-        onChange={(e) => setLocal(e.target.value)}
-        onBlur={() => {
-          if (local !== value) onSave(local);
-        }}
-        placeholder={placeholder}
-        disabled={disabled}
-        className="mt-1.5"
-      />
+      <div className="relative mt-1.5">
+        <Input
+          type={type}
+          value={local}
+          onChange={(e) => setLocal(e.target.value)}
+          onBlur={() => {
+            if (local !== value) onSave(local);
+          }}
+          placeholder={placeholder}
+          disabled={disabled}
+          className={cn(isDate && "pl-9")}
+        />
+        {isDate && (
+          <HugeIcon
+            name="calendar-03-stroke-rounded"
+            size={14}
+            className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground/60"
+          />
+        )}
+      </div>
     </div>
   );
 }
@@ -517,12 +507,19 @@ function NewReleaseDialog({
             <label className="text-xs font-medium text-muted-foreground">
               {t("new.releasedAtLabel")}
             </label>
-            <Input
-              type="date"
-              value={releasedAt}
-              onChange={(e) => setReleasedAt(e.target.value)}
-              className="mt-1.5"
-            />
+            <div className="relative mt-1.5">
+              <Input
+                type="date"
+                value={releasedAt}
+                onChange={(e) => setReleasedAt(e.target.value)}
+                className="pl-9"
+              />
+              <HugeIcon
+                name="calendar-03-stroke-rounded"
+                size={14}
+                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground/60"
+              />
+            </div>
           </div>
         </div>
         <div>

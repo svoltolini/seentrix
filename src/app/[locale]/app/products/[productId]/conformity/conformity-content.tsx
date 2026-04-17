@@ -3,7 +3,6 @@
 import { useMemo, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { HugeIcon } from "@/components/huge-icon";
@@ -365,32 +364,36 @@ export function ConformityContent({
           </div>
         </div>
 
-        {/* DoC gate + CTA */}
+        {/* DoC gate + CTA — same gradient language as the onboarding/profile
+            banners so the flagship "issue the declaration" action pops as the
+            hero moment of the page. Text flips to white on the dark gradient
+            and the primary CTA uses a white pill for maximum contrast. */}
         <div
           data-reveal
-          className="overflow-hidden rounded-2xl border px-6 py-6"
-          style={{
-            borderColor: allStepsComplete
-              ? "rgba(22,163,74,0.35)"
-              : "rgba(148,163,184,0.15)",
-            background: allStepsComplete
-              ? "linear-gradient(135deg, rgba(22,163,74,0.12), rgba(21,128,61,0.06))"
-              : "transparent",
-          }}
+          className="overflow-hidden rounded-2xl bg-cover bg-center"
+          style={{ backgroundImage: "url('/images/entity-role-bg.svg')" }}
         >
-          <div className="flex flex-wrap items-start justify-between gap-4">
-            <div>
-              <p className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground/60">
+          <div className="flex flex-wrap items-start justify-between gap-4 p-6 md:p-8">
+            <div className="min-w-0 flex-1">
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur-sm">
+                <span
+                  className={cn(
+                    "size-1.5 rounded-full",
+                    allStepsComplete
+                      ? "bg-[#16A34A]"
+                      : "animate-pulse bg-[#F59E0B]",
+                  )}
+                />
                 {t("doc.eyebrow")}
-              </p>
-              <h2 className="mt-1 font-heading text-lg font-bold">
+              </div>
+              <h2 className="font-heading text-xl font-bold leading-snug text-white md:text-2xl">
                 {t("doc.title")}
               </h2>
-              <p className="mt-2 max-w-xl text-xs text-muted-foreground/80">
+              <p className="mt-2 max-w-xl text-sm text-white/75">
                 {t("doc.description")}
               </p>
               {state.declarationIssuedAt && state.declarationVersion && (
-                <p className="mt-2 font-mono text-[11px] text-muted-foreground/70">
+                <p className="mt-3 font-mono text-[11px] text-white/60">
                   {state.declarationVersion} ·{" "}
                   {t("doc.issuedOn", {
                     date: formatDate(state.declarationIssuedAt),
@@ -398,22 +401,23 @@ export function ConformityContent({
                 </p>
               )}
             </div>
-            <div className="flex gap-2">
+            <div className="flex shrink-0 gap-2">
               {state.declarationIssuedAt && (
-                <Button
-                  variant="outline"
-                  size="sm"
+                <button
+                  type="button"
                   onClick={handleDownload}
+                  className="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-white/10 px-4 py-2.5 text-sm font-semibold text-white backdrop-blur-sm transition-colors hover:bg-white/15"
                 >
                   <HugeIcon name="pdf-01-stroke-rounded" size={14} />
                   {t("doc.download")}
-                </Button>
+                </button>
               )}
               {canIssue && (
-                <Button
-                  size="sm"
+                <button
+                  type="button"
                   onClick={handleIssue}
                   disabled={!allStepsComplete || issuing}
+                  className="inline-flex items-center gap-2 rounded-lg bg-white px-4 py-2.5 text-sm font-semibold text-black shadow-sm transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0"
                 >
                   <HugeIcon
                     name="checkmark-circle-01-stroke-rounded"
@@ -422,7 +426,7 @@ export function ConformityContent({
                   {state.declarationIssuedAt
                     ? t("doc.reissue")
                     : t("doc.issue")}
-                </Button>
+                </button>
               )}
             </div>
           </div>
