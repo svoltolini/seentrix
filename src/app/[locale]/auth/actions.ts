@@ -99,11 +99,16 @@ export async function completeOnboarding(
     return { error: "notAuthenticated" };
   }
 
-  // Handle avatar upload
+  // Handle avatar upload. Only trust a whitelisted extension — the avatars
+  // bucket restricts MIME types server-side, but constraining the extension
+  // here avoids any chance of a crafted filename (e.g. `avatar.png/../x`)
+  // escaping the user's own folder.
   let avatarUrl: string | null = null;
   const avatarFile = formData.get("avatar") as File | null;
   if (avatarFile && avatarFile.size > 0) {
-    const ext = avatarFile.name.split(".").pop() || "jpg";
+    const ALLOWED_EXT = new Set(["jpg", "jpeg", "png", "webp"]);
+    const rawExt = avatarFile.name.split(".").pop()?.toLowerCase() ?? "";
+    const ext = ALLOWED_EXT.has(rawExt) ? rawExt : "jpg";
     const path = `${user.id}/avatar.${ext}`;
     const { error: uploadError } = await supabase.storage
       .from("avatars")
