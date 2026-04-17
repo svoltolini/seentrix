@@ -210,10 +210,25 @@ export async function removeTeamMember(
 
   if (memberId === user.id) return { error: "cantRemoveSelf" };
 
-  // Also delete the auth user via admin client
+  // SECURITY: verify the target user is in the caller's org BEFORE the
+  // admin-client delete. Without this check, an admin in any org could pass
+  // another org's user UUID and the service-role-key deleteUser call would
+  // wipe that user's auth row — cascading through public.users.
+  const { data: target } = await supabase
+    .from("users")
+    .select("id")
+    .eq("id", memberId)
+    .eq("org_id", orgId)
+    .maybeSingle();
+  if (!target) return { error: "notFound" };
+
+  // Delete the auth user via admin client (bypasses RLS). Safe now that we
+  // confirmed membership above.
   const adminSupabase = createAdminClient();
   await adminSupabase.auth.admin.deleteUser(memberId);
 
+  // The profile row cascades from the auth delete, but we re-run the delete
+  // to keep the RLS path intact in case of stale auth.users references.
   const { error } = await supabase
     .from("users")
     .delete()
