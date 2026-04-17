@@ -26,7 +26,7 @@ export function VulnAgingChart({ buckets, mttr, openCount }: Props) {
   );
 
   return (
-    <div className="rounded-2xl border border-white/[0.06] bg-card p-6">
+    <div className="flex h-full flex-col rounded-2xl border border-white/[0.06] bg-card p-6">
       {/* Header row: open count + MTTR */}
       <div className="mb-6 flex items-start justify-between">
         <div>
@@ -53,11 +53,12 @@ export function VulnAgingChart({ buckets, mttr, openCount }: Props) {
       </div>
 
       {!hasData ? (
-        <p className="py-12 text-center text-xs text-muted-foreground/50">
+        <p className="flex-1 py-12 text-center text-xs text-muted-foreground/50">
           {t("vulnAging.noData")}
         </p>
       ) : (
-        <ResponsiveContainer width="100%" height={280}>
+        <div className="min-h-[280px] flex-1">
+        <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={buckets}
             margin={{ top: 8, right: 8, bottom: 0, left: 0 }}
@@ -132,6 +133,7 @@ export function VulnAgingChart({ buckets, mttr, openCount }: Props) {
             />
           </BarChart>
         </ResponsiveContainer>
+        </div>
       )}
     </div>
   );

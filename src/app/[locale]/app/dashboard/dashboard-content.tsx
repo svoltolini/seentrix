@@ -728,20 +728,42 @@ function VulnBreakdownCard({
 
   if (total === 0) {
     return (
-      <div className="rounded-2xl border border-white/[0.06] bg-card p-6">
+      <div className="flex h-full flex-col rounded-2xl border border-white/[0.06] bg-card p-6">
         <h2 className="mb-2 text-sm font-semibold">{t("vulnChart")}</h2>
         <p className="text-xs text-muted-foreground/60">
           {t("vulnChartSubtitle")}
         </p>
-        <p className="mt-10 text-center text-xs text-muted-foreground/50">
+        <p className="mt-10 flex-1 text-center text-xs text-muted-foreground/50">
           {t("noVulnerabilities")}
         </p>
       </div>
     );
   }
 
+  // Build a smooth CSS gradient that reflects each severity's share by
+  // placing color stops at the segment midpoints. The browser interpolates
+  // between stops, so neighbouring colors blend smoothly instead of the
+  // hard edges a segmented bar would show.
+  const gradientStops: { color: string; midpoint: number }[] = [];
+  let cumulative = 0;
+  for (const entry of data) {
+    const segWidth = (entry.value / total) * 100;
+    const midpoint = cumulative + segWidth / 2;
+    gradientStops.push({
+      color: SEVERITY_CHART_COLORS[entry.key],
+      midpoint,
+    });
+    cumulative += segWidth;
+  }
+  const gradient =
+    gradientStops.length === 1
+      ? gradientStops[0].color
+      : `linear-gradient(to right, ${gradientStops
+          .map((s) => `${s.color} ${s.midpoint.toFixed(2)}%`)
+          .join(", ")})`;
+
   return (
-    <div className="rounded-2xl border border-white/[0.06] bg-card p-6">
+    <div className="flex h-full flex-col rounded-2xl border border-white/[0.06] bg-card p-6">
       {/* Header */}
       <div className="mb-6">
         <h2 className="text-sm font-semibold">{t("vulnChart")}</h2>
@@ -750,33 +772,33 @@ function VulnBreakdownCard({
         </p>
       </div>
 
-      {/* Hero — big total + single distribution bar */}
-      <div className="mb-6 flex items-center gap-5">
-        <div className="shrink-0">
+      {/* Hero — big total on top, full-width gradient distribution bar below */}
+      <div className="mb-6">
+        <div className="mb-3 flex items-baseline gap-2">
           <span
-            className="block text-4xl font-bold tabular-nums leading-none text-foreground"
+            className="text-4xl font-bold tabular-nums leading-none text-foreground"
             data-counter={String(total)}
           >
             {total}
           </span>
-          <span className="mt-1.5 block text-[11px] uppercase tracking-wide text-muted-foreground/70">
+          <span className="text-[11px] uppercase tracking-wide text-muted-foreground/70">
             {t("vulnerabilities")}
           </span>
         </div>
-        <div className="flex h-5 min-w-0 flex-1 overflow-hidden rounded-[4px] bg-[#191919]">
-          {data.map((entry) => {
-            const pct = total > 0 ? (entry.value / total) * 100 : 0;
-            const color = SEVERITY_CHART_COLORS[entry.key];
-            return (
-              <div
-                key={entry.key}
-                className="h-full"
-                style={{ width: `${pct}%`, backgroundColor: color }}
-                data-progress-bar={String(pct)}
-                title={`${entry.name}: ${entry.value} (${Math.round(pct)}%)`}
-              />
-            );
-          })}
+        <div className="h-6 w-full overflow-hidden rounded-[4px] bg-[#191919]">
+          <div
+            className="h-full rounded-[4px]"
+            style={{ width: "100%", backgroundImage: gradient }}
+            data-progress-bar="100"
+            title={data
+              .map(
+                (e) =>
+                  `${e.name}: ${e.value} (${Math.round(
+                    (e.value / total) * 100,
+                  )}%)`,
+              )
+              .join(" · ")}
+          />
         </div>
       </div>
 
