@@ -346,10 +346,11 @@ export function OrgSettingsContent({
         )}
       </form>
 
-      {/* Organization chart — role columns */}
+      {/* Organization chart — vertical tree */}
       <OrganizationChart
-        members={members}
+        orgName={org?.legal_name ?? org?.name ?? ""}
         plan={org?.plan ?? "free"}
+        members={members}
         isAdmin={isAdmin}
         t={t}
         tTeam={tTeam}
@@ -359,22 +360,25 @@ export function OrgSettingsContent({
 }
 
 // ---------------------------------------------------------------------------
-// Role-column organization chart — a horizontal "Kanban" of the 5 CRA roles.
-// Above the columns is a seat-usage strip that makes plan capacity obvious;
-// below, every column shows its members stacked with a clickable card that
-// deep-links into /app/settings/team. Empty columns show an "Invite X" CTA
-// so structural gaps (no compliance officer yet, etc.) are easy to spot.
+// Organization chart — vertical tree.
+// Root node is the org itself (with plan badge); a solid vertical spine
+// descends from the root and branches right into a box per CRA role. Inside
+// each role box the members sit as avatar rows, also connected back to the
+// spine with a small horizontal stub. Empty roles show a dashed "Invite a
+// <role>" branch for admins, or a muted "No one yet" for everyone else.
 // ---------------------------------------------------------------------------
 
 function OrganizationChart({
-  members,
+  orgName,
   plan,
+  members,
   isAdmin,
   t,
   tTeam,
 }: {
-  members: TeamMember[];
+  orgName: string;
   plan: OrgPlan;
+  members: TeamMember[];
   isAdmin: boolean;
   t: ReturnType<typeof useTranslations>;
   tTeam: ReturnType<typeof useTranslations>;
@@ -391,7 +395,7 @@ function OrganizationChart({
       ? "#D97706"
       : "#16A34A";
 
-  const byRole = ROLE_HIERARCHY.map((tier) => ({
+  const tiers = ROLE_HIERARCHY.map((tier) => ({
     ...tier,
     members: members.filter((m) => m.role === tier.key),
   }));
@@ -426,22 +430,36 @@ function OrganizationChart({
           <div className="mt-3 h-1.5 overflow-hidden rounded-[3px] bg-[#191919]">
             <div
               className="h-full rounded-[3px] transition-all duration-500"
-              style={{
-                width: `${pct}%`,
-                backgroundColor: capacityColor,
-              }}
+              style={{ width: `${pct}%`, backgroundColor: capacityColor }}
             />
           </div>
         )}
       </div>
 
-      {/* Columns — horizontally scrollable on narrow screens; 5-col grid at lg */}
-      <div className="overflow-x-auto px-6 py-5">
-        <div className="flex min-w-[960px] gap-3 lg:grid lg:min-w-0 lg:grid-cols-5">
-          {byRole.map((tier) => (
-            <RoleColumn
+      <div className="px-6 py-6">
+        {/* Root node — the organization itself */}
+        <div className="inline-flex items-center gap-3 rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-3">
+          <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-primary/30 to-primary/10 text-primary">
+            <HugeIcon name="chip-stroke-rounded" size={18} />
+          </div>
+          <div className="min-w-0">
+            <p className="truncate text-sm font-semibold text-foreground">
+              {orgName || t("title")}
+            </p>
+            <p className="mt-0.5 text-[11px] uppercase tracking-wider text-muted-foreground/60">
+              {plan}
+            </p>
+          </div>
+        </div>
+
+        {/* Tree spine — solid left border running through every tier. */}
+        <div className="relative mt-4 space-y-5 pl-6">
+          <div className="pointer-events-none absolute inset-y-0 left-[17px] w-px bg-gradient-to-b from-white/[0.12] via-white/[0.06] to-transparent" />
+          {tiers.map((tier, i) => (
+            <RoleBranch
               key={tier.key}
               tier={tier}
+              isLast={i === tiers.length - 1}
               isAdmin={isAdmin}
               tTeam={tTeam}
               inviteLabel={t("inviteToRole", {
@@ -456,48 +474,47 @@ function OrganizationChart({
   );
 }
 
-function RoleColumn({
+function RoleBranch({
   tier,
+  isLast,
   isAdmin,
   tTeam,
   inviteLabel,
   emptyLabel,
 }: {
   tier: (typeof ROLE_HIERARCHY)[number] & { members: TeamMember[] };
+  isLast: boolean;
   isAdmin: boolean;
   tTeam: ReturnType<typeof useTranslations>;
   inviteLabel: string;
   emptyLabel: string;
 }) {
-  // Tier.bg is a Tailwind bg-[#XXXXXX] class — pull the hex out so we can
-  // tint borders and halos with opacity variants Tailwind can't pre-compile.
   const hex = tier.bg.match(/#[0-9A-Fa-f]{6}/)?.[0] ?? "#6B7280";
 
   return (
-    <div
-      className="flex w-60 shrink-0 flex-col rounded-xl border lg:w-auto"
-      style={{
-        borderColor: `${hex}40`,
-        background: `linear-gradient(180deg, ${hex}15 0%, rgba(255,255,255,0) 55%)`,
-      }}
-    >
-      <div
-        className="flex items-center gap-2.5 border-b px-3 py-3"
-        style={{ borderColor: `${hex}33` }}
-      >
+    <div className="relative">
+      {/* Branch stub from the spine into the tier badge */}
+      <span
+        className="pointer-events-none absolute left-[-23px] top-[19px] h-px w-[18px]"
+        style={{ backgroundColor: `${hex}55` }}
+      />
+      {/* Shave the last tier's spine so the line doesn't overshoot */}
+      {isLast && (
+        <span className="pointer-events-none absolute left-[-23px] top-[20px] bottom-[-28px] w-px bg-card" />
+      )}
+
+      {/* Tier badge (icon + role + count) */}
+      <div className="flex items-center gap-2.5">
         <div
           className={cn(
-            "flex size-8 shrink-0 items-center justify-center rounded-lg text-white/95",
+            "flex size-10 shrink-0 items-center justify-center rounded-lg text-white/95 shadow-sm",
             tier.bg,
           )}
         >
-          <HugeIcon name={tier.icon} size={15} />
+          <HugeIcon name={tier.icon} size={16} />
         </div>
-        <div className="min-w-0 flex-1">
-          <p
-            className="truncate text-xs font-semibold"
-            style={{ color: hex }}
-          >
+        <div>
+          <p className="text-sm font-semibold" style={{ color: hex }}>
             {tTeam(`roles.${tier.key}` as Parameters<typeof tTeam>[0])}
           </p>
           <p className="mt-0.5 text-[10px] tabular-nums text-muted-foreground/50">
@@ -508,14 +525,38 @@ function RoleColumn({
         </div>
       </div>
 
-      <div className="flex flex-1 flex-col gap-2 p-2">
-        {tier.members.map((member) => (
+      {/* Members, branching off the tier backbone */}
+      <div
+        className="relative ml-[19px] mt-3 space-y-2 pl-6"
+        style={{
+          backgroundImage:
+            tier.members.length > 0 || isAdmin
+              ? `linear-gradient(to bottom, ${hex}40, ${hex}15)`
+              : undefined,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "1px calc(100% - 24px)",
+          backgroundPosition: "0 0",
+        }}
+      >
+        {tier.members.map((member, j) => (
           <Link
             key={member.id}
             href="/app/settings/team"
-            className="group flex items-center gap-2.5 rounded-lg border border-transparent p-2 transition-all hover:-translate-y-0.5 hover:border-white/[0.08] hover:bg-white/[0.04]"
+            className="group relative flex items-center gap-3 rounded-lg border border-transparent px-3 py-2 transition-all hover:-translate-y-0.5 hover:border-white/[0.08] hover:bg-white/[0.03]"
           >
-            <div className="flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white/[0.06] text-[11px] font-bold text-muted-foreground">
+            {/* Horizontal connector from the tier spine into each row */}
+            <span
+              className="pointer-events-none absolute left-[-24px] top-1/2 h-px w-[20px]"
+              style={{ backgroundColor: `${hex}50` }}
+            />
+            {j === tier.members.length - 1 && (
+              <span
+                className="pointer-events-none absolute left-[-24px] top-[50%] bottom-[-8px] w-px"
+                style={{ backgroundColor: "var(--card)" }}
+              />
+            )}
+
+            <div className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white/[0.06] text-[12px] font-bold text-muted-foreground">
               {member.avatar_url ? (
                 <img
                   src={member.avatar_url}
@@ -527,38 +568,57 @@ function RoleColumn({
               )}
             </div>
             <div className="min-w-0 flex-1">
-              <p className="truncate text-xs font-medium text-foreground group-hover:text-primary">
+              <p className="truncate text-sm font-medium text-foreground group-hover:text-primary">
                 {member.full_name ?? member.email}
               </p>
-              <p className="truncate text-[10px] text-muted-foreground/50">
+              <p className="truncate text-[11px] text-muted-foreground/50">
                 {member.email}
               </p>
             </div>
+            <HugeIcon
+              name="arrow-right-01-stroke-rounded"
+              size={14}
+              className="shrink-0 text-muted-foreground/30 transition-colors group-hover:text-muted-foreground"
+            />
           </Link>
         ))}
+
         {tier.members.length === 0 &&
           (isAdmin ? (
             <Link
               href="/app/settings/team"
-              className="flex min-h-[76px] flex-col items-center justify-center gap-1.5 rounded-lg border border-dashed p-3 text-center transition-colors hover:bg-white/[0.03]"
-              style={{ borderColor: `${hex}40` }}
+              className="relative flex items-center gap-3 rounded-lg border border-dashed px-3 py-2.5 transition-colors hover:bg-white/[0.02]"
+              style={{ borderColor: `${hex}50` }}
             >
               <span
-                className="flex size-7 items-center justify-center rounded-full"
+                className="pointer-events-none absolute left-[-24px] top-1/2 h-px w-[20px]"
+                style={{ backgroundColor: `${hex}50` }}
+              />
+              <span
+                className="pointer-events-none absolute left-[-24px] top-[50%] bottom-[-8px] w-px"
+                style={{ backgroundColor: "var(--card)" }}
+              />
+              <span
+                className="flex size-9 shrink-0 items-center justify-center rounded-full"
                 style={{ backgroundColor: `${hex}25`, color: hex }}
               >
-                <HugeIcon name="add-01" size={12} />
+                <HugeIcon name="add-01" size={13} />
               </span>
-              <span
-                className="text-[11px] font-medium"
-                style={{ color: hex }}
-              >
+              <span className="text-sm font-medium" style={{ color: hex }}>
                 {inviteLabel}
               </span>
             </Link>
           ) : (
-            <div className="flex min-h-[76px] items-center justify-center rounded-lg border border-dashed border-white/[0.06] p-3">
-              <span className="text-[11px] text-muted-foreground/40">
+            <div className="relative flex items-center gap-3 rounded-lg border border-dashed border-white/[0.06] px-3 py-2.5">
+              <span
+                className="pointer-events-none absolute left-[-24px] top-1/2 h-px w-[20px]"
+                style={{ backgroundColor: `${hex}40` }}
+              />
+              <span
+                className="pointer-events-none absolute left-[-24px] top-[50%] bottom-[-8px] w-px"
+                style={{ backgroundColor: "var(--card)" }}
+              />
+              <span className="text-sm text-muted-foreground/40">
                 {emptyLabel}
               </span>
             </div>
