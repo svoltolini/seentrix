@@ -6,14 +6,22 @@
     "type": {
       "title": "Ihre Rolle",
       "description": "Nur Admins und Compliance-Beauftragte können die Rolle ändern. Der Wechsel initialisiert die Pflichten-Liste neu.",
-      "manufacturer.title": "Hersteller",
-      "manufacturer.description": "Sie bringen Produkte mit digitalen Elementen unter eigenem Namen / Marke auf den EU-Markt.",
-      "authorised_representative.title": "Bevollmächtigter",
-      "authorised_representative.description": "In der EU ansässige Person, die mandatiert für einen Nicht-EU-Hersteller handelt.",
-      "importer.title": "Importeur",
-      "importer.description": "Sie bringen das Produkt eines Nicht-EU-Herstellers auf den EU-Markt.",
-      "distributor.title": "Händler",
-      "distributor.description": "Sie stellen Produkte auf dem EU-Markt bereit, ohne Hersteller oder Importeur zu sein."
+      "manufacturer": {
+        "title": "Hersteller",
+        "description": "Sie bringen Produkte mit digitalen Elementen unter eigenem Namen / Marke auf den EU-Markt."
+      },
+      "authorised_representative": {
+        "title": "Bevollmächtigter",
+        "description": "In der EU ansässige Person, die mandatiert für einen Nicht-EU-Hersteller handelt."
+      },
+      "importer": {
+        "title": "Importeur",
+        "description": "Sie bringen das Produkt eines Nicht-EU-Herstellers auf den EU-Markt."
+      },
+      "distributor": {
+        "title": "Händler",
+        "description": "Sie stellen Produkte auf dem EU-Markt bereit, ohne Hersteller oder Importeur zu sein."
+      }
     },
     "status": {
       "pending": "Ausstehend",

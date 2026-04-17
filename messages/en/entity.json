@@ -6,14 +6,22 @@
     "type": {
       "title": "Your role",
       "description": "Only admins and compliance officers can change the role. Switching re-seeds the obligation list.",
-      "manufacturer.title": "Manufacturer",
-      "manufacturer.description": "You place products with digital elements on the EU market under your own name or trademark.",
-      "authorised_representative.title": "Authorised representative",
-      "authorised_representative.description": "A mandated person in the EU who acts on behalf of a non-EU manufacturer.",
-      "importer.title": "Importer",
-      "importer.description": "You place a product from a non-EU manufacturer on the EU market.",
-      "distributor.title": "Distributor",
-      "distributor.description": "You make products available on the EU market without being the manufacturer or importer."
+      "manufacturer": {
+        "title": "Manufacturer",
+        "description": "You place products with digital elements on the EU market under your own name or trademark."
+      },
+      "authorised_representative": {
+        "title": "Authorised representative",
+        "description": "A mandated person in the EU who acts on behalf of a non-EU manufacturer."
+      },
+      "importer": {
+        "title": "Importer",
+        "description": "You place a product from a non-EU manufacturer on the EU market."
+      },
+      "distributor": {
+        "title": "Distributor",
+        "description": "You make products available on the EU market without being the manufacturer or importer."
+      }
     },
     "status": {
       "pending": "Pending",

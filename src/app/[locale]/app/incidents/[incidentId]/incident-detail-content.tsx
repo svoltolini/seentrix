@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { HugeIcon } from "@/components/huge-icon";
 import { StaggerReveal } from "@/components/stagger-reveal";
 import { useToast } from "@/components/ui/toast";
+import { useLocaleDate } from "@/lib/locale-date";
 import {
   closeIncident,
   recordUserNotification,
@@ -206,6 +207,7 @@ function PhaseSection({
   submittedLabel: string;
   placeholder: string;
 }) {
+  const { formatDate } = useLocaleDate();
   const [notes, setNotes] = useState(
     initialNotes || prefillFromPrevious || "",
   );
@@ -233,7 +235,7 @@ function PhaseSection({
         </div>
         {submitted && (
           <span className="shrink-0 rounded-full bg-[#16A34A]/15 px-2.5 py-1 text-[11px] font-semibold text-[#16A34A]">
-            {submittedLabel} · {new Date(submittedAt).toLocaleDateString()}
+            {submittedLabel} · {formatDate(submittedAt)}
           </span>
         )}
       </div>
@@ -295,6 +297,7 @@ export function IncidentDetailContent({
   const tType = useTranslations("incidents.type");
   const tSev = useTranslations("incidents.severity");
   const tStatus = useTranslations("incidents.status");
+  const { formatDate, formatDateTime } = useLocaleDate();
   const { toast } = useToast();
   const [userNotification, setUserNotification] = useState(
     incident.user_notification_content ?? "",
@@ -426,7 +429,7 @@ export function IncidentDetailContent({
               </h1>
               <p className="mt-2 text-[13px] text-muted-foreground">
                 {t("detail.awareAt", {
-                  date: new Date(incident.aware_at).toLocaleString(),
+                  date: formatDateTime(incident.aware_at),
                 })}
               </p>
               {incident.affected_product_names.length > 0 && (
@@ -589,9 +592,7 @@ export function IncidentDetailContent({
             {incident.user_notification_sent_at && (
               <span className="shrink-0 rounded-full bg-[#16A34A]/15 px-2.5 py-1 text-[11px] font-semibold text-[#16A34A]">
                 {t("detail.userNotify.sent", {
-                  date: new Date(
-                    incident.user_notification_sent_at,
-                  ).toLocaleDateString(),
+                  date: formatDate(incident.user_notification_sent_at),
                 })}
               </span>
             )}

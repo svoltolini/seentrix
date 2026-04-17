@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import {
   AreaChart,
   Area,
@@ -18,6 +18,11 @@ interface Props {
 
 export function ActivityVelocityChart({ data }: Props) {
   const t = useTranslations("dashboard");
+  // Pin the locale so server and client render the date identically; using
+  // `undefined` falls back to Node's default on the server and the user's
+  // browser default on the client, which causes a hydration mismatch.
+  const locale = useLocale();
+  const dateLocale = locale === "de" ? "de-DE" : "en-US";
 
   const totalActions = data.reduce((s, d) => s + d.count, 0);
   const hasData = totalActions > 0;
@@ -43,7 +48,10 @@ export function ActivityVelocityChart({ data }: Props) {
 
   const formatDate = (dateStr: string) => {
     const d = new Date(dateStr + "T00:00:00");
-    return d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+    return d.toLocaleDateString(dateLocale, {
+      month: "short",
+      day: "numeric",
+    });
   };
 
   return (

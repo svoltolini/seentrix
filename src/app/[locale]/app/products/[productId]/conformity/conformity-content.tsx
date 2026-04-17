@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { HugeIcon } from "@/components/huge-icon";
 import { StaggerReveal } from "@/components/stagger-reveal";
 import { useToast } from "@/components/ui/toast";
+import { useLocaleDate } from "@/lib/locale-date";
 import {
   issueDeclaration,
   setStepStatus,
@@ -45,6 +46,7 @@ export function ConformityContent({
   const tRoute = useTranslations("conformity.route");
   const tStep = useTranslations("conformity.step");
   const tStatus = useTranslations("conformity.status");
+  const { formatDate } = useLocaleDate();
   const { toast } = useToast();
   const [state, setState] = useState(initial);
   const [expandedKey, setExpandedKey] = useState<string | null>(null);
@@ -175,7 +177,7 @@ export function ConformityContent({
                 {t("header.routeLabel")}
               </p>
               <h2 className="mt-1 font-heading text-xl font-bold">
-                {tRoute(state.route)}
+                {tRoute(`${state.route}.title`)}
               </h2>
               <p className="mt-2 max-w-xl text-xs text-muted-foreground/80">
                 {tRoute(`${state.route}.description`)}
@@ -389,9 +391,7 @@ export function ConformityContent({
                 <p className="mt-2 font-mono text-[11px] text-muted-foreground/70">
                   {state.declarationVersion} ·{" "}
                   {t("doc.issuedOn", {
-                    date: new Date(
-                      state.declarationIssuedAt,
-                    ).toLocaleDateString(),
+                    date: formatDate(state.declarationIssuedAt),
                   })}
                 </p>
               )}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { useLocaleDate } from "@/lib/locale-date";
 import {
   LineChart,
   Line,
@@ -25,6 +26,7 @@ interface Props {
 
 export function ComplianceTrendChart({ data, className }: Props) {
   const t = useTranslations("dashboard");
+  const { formatShortMonthDay } = useLocaleDate();
 
   if (data.length === 0) {
     return (
@@ -71,10 +73,8 @@ export function ComplianceTrendChart({ data, className }: Props) {
       return { date, ...scores, avg };
     });
 
-  const formatDate = (dateStr: string) => {
-    const d = new Date(dateStr + "T00:00:00");
-    return d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
-  };
+  const formatDate = (dateStr: string) =>
+    formatShortMonthDay(dateStr + "T00:00:00");
 
   return (
     <div

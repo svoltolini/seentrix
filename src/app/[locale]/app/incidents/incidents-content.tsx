@@ -11,6 +11,7 @@ import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { HugeIcon } from "@/components/huge-icon";
 import { StaggerReveal } from "@/components/stagger-reveal";
 import { useToast } from "@/components/ui/toast";
+import { useLocaleDate } from "@/lib/locale-date";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -131,6 +132,7 @@ export function IncidentsContent({
   const tSev = useTranslations("incidents.severity");
   const tPhase = useTranslations("incidents.phase");
   const tStatus = useTranslations("incidents.status");
+  const { formatDate } = useLocaleDate();
   const { toast } = useToast();
   const [incidents] = useState(initialIncidents);
   const [statusFilter, setStatusFilter] = useState<"active" | "all" | "closed">(
@@ -354,7 +356,7 @@ export function IncidentsContent({
                       {tType(inc.type)}
                     </span>
                     <span className="hidden w-28 text-xs text-muted-foreground sm:block">
-                      {new Date(inc.aware_at).toLocaleDateString()}
+                      {formatDate(inc.aware_at)}
                     </span>
                     <div className="hidden w-32 md:block">
                       <StatusChip

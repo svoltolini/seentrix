@@ -10,6 +10,7 @@ import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { HugeIcon } from "@/components/huge-icon";
 import { StaggerReveal } from "@/components/stagger-reveal";
 import { useToast } from "@/components/ui/toast";
+import { useLocaleDate } from "@/lib/locale-date";
 import {
   createRelease,
   deleteRelease,
@@ -360,6 +361,7 @@ function ReleaseRow({
   tSignedDigest: string;
   onDelete: () => void;
 }) {
+  const { formatDate } = useLocaleDate();
   const color = RELEASE_TYPE_COLOR[release.release_type];
   return (
     <div className="relative flex items-start gap-4 px-5 py-4">
@@ -379,7 +381,7 @@ function ReleaseRow({
             v{release.version}
           </span>
           <span className="text-xs text-muted-foreground/70">
-            {new Date(release.released_at).toLocaleDateString()}
+            {formatDate(release.released_at)}
           </span>
           {release.is_security_update && release.cves_fixed.length > 0 && (
             <span className="inline-flex items-center gap-1 rounded-full bg-[#16A34A]/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-[#16A34A]">
