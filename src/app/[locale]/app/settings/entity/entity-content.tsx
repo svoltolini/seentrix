@@ -119,31 +119,39 @@ export function EntityContent({
           </p>
         </div>
 
-        {/* Entity-type picker — decorative gradient hero */}
+        {/* Entity-type picker — gradient hero. Shares the same visual
+            language as ProfileIncompleteBanner and the conformity DoC card:
+            full-bleed gradient image, no border, no dark overlay, eyebrow
+            rendered as a pill chip with a state-colored dot. */}
         <div
           data-reveal
-          className="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-cover bg-center p-6"
+          className="overflow-hidden rounded-2xl bg-cover bg-center p-6 md:p-8"
           style={{ backgroundImage: "url('/images/entity-role-bg.svg')" }}
         >
-          {/* Readability overlay over the decorative bg */}
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-black/55 via-black/35 to-black/25" />
-
-          <div className="relative flex items-start justify-between gap-3">
-            <div>
-              <p className="text-[10px] font-semibold uppercase tracking-wider text-white/70">
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0">
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur-sm">
+                <span
+                  className={cn(
+                    "size-1.5 rounded-full",
+                    progress === 100
+                      ? "bg-[#16A34A]"
+                      : "animate-pulse bg-[#F59E0B]",
+                  )}
+                />
                 {t("progressLabel")}
-              </p>
-              <h2 className="mt-1 font-heading text-lg font-bold text-white">
+              </div>
+              <h2 className="font-heading text-xl font-bold leading-snug text-white md:text-2xl">
                 {t("type.title")}
               </h2>
-              <p className="mt-1 max-w-md text-xs text-white/75">
+              <p className="mt-2 max-w-md text-sm text-white/75">
                 {t("type.description")}
               </p>
             </div>
             <ProgressRing value={progress} onDark />
           </div>
 
-          <div className="relative mt-6 grid grid-cols-1 gap-3 md:grid-cols-2">
+          <div className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2">
             {ENTITY_ORDER.map((ty) => {
               const active = state.entityType === ty;
               return (
