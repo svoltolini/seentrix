@@ -1,9 +1,10 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { exportActivities, type Activity } from "../actions";
+import { useLocaleDate } from "@/lib/locale-date";
 import {
   Download,
   ChevronDown,
@@ -11,23 +12,41 @@ import {
 
 const EXPORT_PERIODS = [1, 6, 12] as const;
 
-function relativeTime(dateStr: string): string {
-  const now = Date.now();
-  const then = new Date(dateStr).getTime();
-  const diffMs = now - then;
-  const diffMin = Math.floor(diffMs / 60000);
-  const diffHr = Math.floor(diffMs / 3600000);
-  const diffDay = Math.floor(diffMs / 86400000);
+function useRelativeTime() {
+  const t = useTranslations("settings.activity.relative");
+  const { formatDate } = useLocaleDate();
+  // Seed from Date.now() lazily so the first render is stable, then tick.
+  const [now, setNow] = useState<number>(() => Date.now());
+  useEffect(() => {
+    const id = setInterval(() => setNow(Date.now()), 60_000);
+    return () => clearInterval(id);
+  }, []);
 
-  if (diffMin < 1) return "just now";
-  if (diffMin < 60) return `${diffMin}m ago`;
-  if (diffHr < 24) return `${diffHr}h ago`;
-  if (diffDay < 7) return `${diffDay}d ago`;
-  return new Date(dateStr).toLocaleDateString();
+  return (dateStr: string) => {
+    const then = new Date(dateStr).getTime();
+    const diffMs = now - then;
+    const diffMin = Math.floor(diffMs / 60000);
+    const diffHr = Math.floor(diffMs / 3600000);
+    const diffDay = Math.floor(diffMs / 86400000);
+    if (diffMin < 1) return t("justNow");
+    if (diffMin < 60) return t("minutesAgo", { count: diffMin });
+    if (diffHr < 24) return t("hoursAgo", { count: diffHr });
+    if (diffDay < 7) return t("daysAgo", { count: diffDay });
+    return formatDate(dateStr);
+  };
+}
+
+/**
+ * Humanize an action key when we don't have an i18n string for it —
+ * "entity_obligation.updated" -> "entity obligation updated".
+ */
+function fallbackActionLabel(action: string): string {
+  return action.replace(/[._]/g, " ");
 }
 
 export function ActivityContent({ activities }: { activities: Activity[] }) {
   const t = useTranslations("settings.activity");
+  const relativeTime = useRelativeTime();
   const [isPending, startTransition] = useTransition();
   const [showExportMenu, setShowExportMenu] = useState(false);
 
@@ -131,11 +150,13 @@ export function ActivityContent({ activities }: { activities: Activity[] }) {
                       <span className="text-muted-foreground">
                         {t.has(`actions.${activity.action}` as Parameters<typeof t>[0])
                           ? t(`actions.${activity.action}` as Parameters<typeof t>[0])
-                          : activity.action.replace(".", " ")}
+                          : fallbackActionLabel(activity.action)}
                       </span>
                       {activity.target_name && (
                         <>
-                          {" "}
+                          <span className="mx-1 text-muted-foreground/40">
+                            ·
+                          </span>
                           <span className="font-medium">
                             {activity.target_name}
                           </span>

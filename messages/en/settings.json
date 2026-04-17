@@ -108,15 +108,23 @@
         "6": "Last 6 months",
         "12": "Last 12 months"
       },
+      "relative": {
+        "justNow": "just now",
+        "minutesAgo": "{count, plural, one {# minute ago} other {# minutes ago}}",
+        "hoursAgo": "{count, plural, one {# hour ago} other {# hours ago}}",
+        "daysAgo": "{count, plural, one {# day ago} other {# days ago}}"
+      },
       "actions": {
         "organization": {
-          "updated": "updated the organization",
-          "created": "created the organization"
+          "created": "created the organization",
+          "updated": "updated the organization details",
+          "security_updated": "updated the public security page",
+          "entity_type_changed": "changed the organization's operator role"
         },
         "member": {
-          "created": "added a team member",
+          "created": "added a new team member",
           "removed": "removed a team member",
-          "role_changed": "changed a member's role"
+          "role_changed": "changed a team member's role"
         },
         "profile": {
           "updated": "updated their profile"
@@ -125,29 +133,73 @@
           "changed": "changed their password"
         },
         "product": {
-          "created": "created a product",
-          "updated": "updated a product",
+          "created": "added a new product",
+          "updated": "updated product details for",
           "deleted": "deleted a product",
-          "assessed": "ran a product assessment"
+          "assessed": "completed the CRA assessment for",
+          "support_updated": "updated the support period for"
         },
         "document": {
-          "saved": "saved a document",
+          "saved": "saved document changes for",
           "status_changed": "changed a document's status",
-          "pdf_generated": "generated a PDF"
+          "pdf_generated": "generated a PDF for"
         },
         "sbom": {
-          "uploaded": "uploaded an SBOM",
+          "uploaded": "uploaded a new SBOM",
           "deleted": "deleted an SBOM",
-          "scanned": "scanned for vulnerabilities"
+          "scanned": "scanned an SBOM for vulnerabilities",
+          "activated": "activated the SBOM",
+          "archived": "archived an SBOM"
         },
         "checklist": {
-          "item_status_changed": "updated a checklist item",
-          "item_description_changed": "edited checklist notes",
+          "item_status_changed": "updated a CRA checklist item",
+          "item_description_changed": "edited notes on a checklist item",
           "evidence_uploaded": "uploaded evidence",
-          "evidence_removed": "removed evidence"
+          "evidence_removed": "removed evidence",
+          "item_assigned": "assigned a checklist item"
+        },
+        "vulnerability": {
+          "open": "reopened a vulnerability",
+          "in_progress": "started working on a vulnerability",
+          "resolved": "resolved a vulnerability",
+          "accepted": "accepted the risk of a vulnerability",
+          "assigned": "assigned a vulnerability",
+          "note_added": "added notes to a vulnerability",
+          "marked_exploited": "flagged a vulnerability as actively exploited",
+          "unmarked_exploited": "cleared the actively-exploited flag on a vulnerability"
+        },
+        "vulnerability_report": {
+          "triage": "re-queued a vulnerability report for triage",
+          "accepted": "accepted a vulnerability report",
+          "investigating": "started investigating a vulnerability report",
+          "resolved": "resolved a vulnerability report",
+          "duplicate": "marked a vulnerability report as duplicate",
+          "spam": "marked a vulnerability report as spam"
+        },
+        "incident": {
+          "detected": "opened a new incident",
+          "updated": "updated an incident",
+          "early_warning_submitted": "submitted the 24-hour early warning",
+          "incident_report_submitted": "submitted the 72-hour incident report",
+          "final_report_submitted": "submitted the 14-day final report",
+          "user_notified": "notified affected users of an incident",
+          "closed": "closed an incident"
+        },
+        "release": {
+          "published": "published a new release",
+          "deleted": "deleted a release"
+        },
+        "conformity": {
+          "step_completed": "completed a conformity-assessment step",
+          "step_reopened": "reopened a conformity-assessment step",
+          "notified_body_updated": "updated the notified-body record",
+          "declaration_issued": "issued a Declaration of Conformity for"
+        },
+        "entity_obligation": {
+          "updated": "updated a compliance obligation"
         },
         "billing": {
-          "checkout_created": "started a checkout"
+          "checkout_created": "started a plan checkout"
         }
       }
     },

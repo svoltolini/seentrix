@@ -108,15 +108,23 @@
         "6": "Letzte 6 Monate",
         "12": "Letzte 12 Monate"
       },
+      "relative": {
+        "justNow": "gerade eben",
+        "minutesAgo": "{count, plural, one {vor # Minute} other {vor # Minuten}}",
+        "hoursAgo": "{count, plural, one {vor # Stunde} other {vor # Stunden}}",
+        "daysAgo": "{count, plural, one {vor # Tag} other {vor # Tagen}}"
+      },
       "actions": {
         "organization": {
-          "updated": "hat die Organisation aktualisiert",
-          "created": "hat die Organisation erstellt"
+          "created": "hat die Organisation erstellt",
+          "updated": "hat die Organisationsdaten aktualisiert",
+          "security_updated": "hat die öffentliche Security-Seite aktualisiert",
+          "entity_type_changed": "hat die Akteursrolle der Organisation geändert"
         },
         "member": {
-          "created": "hat ein Teammitglied hinzugefügt",
+          "created": "hat ein neues Teammitglied hinzugefügt",
           "removed": "hat ein Teammitglied entfernt",
-          "role_changed": "hat die Rolle eines Mitglieds geändert"
+          "role_changed": "hat die Rolle eines Teammitglieds geändert"
         },
         "profile": {
           "updated": "hat das Profil aktualisiert"
@@ -125,29 +133,73 @@
           "changed": "hat das Passwort geändert"
         },
         "product": {
-          "created": "hat ein Produkt erstellt",
-          "updated": "hat ein Produkt aktualisiert",
+          "created": "hat ein neues Produkt angelegt",
+          "updated": "hat Produktdaten aktualisiert für",
           "deleted": "hat ein Produkt gelöscht",
-          "assessed": "hat eine Produktbewertung durchgeführt"
+          "assessed": "hat die CRA-Bewertung abgeschlossen für",
+          "support_updated": "hat den Support-Zeitraum aktualisiert für"
         },
         "document": {
-          "saved": "hat ein Dokument gespeichert",
+          "saved": "hat Dokumentenänderungen gespeichert für",
           "status_changed": "hat den Dokumentstatus geändert",
-          "pdf_generated": "hat ein PDF erstellt"
+          "pdf_generated": "hat ein PDF erstellt für"
         },
         "sbom": {
-          "uploaded": "hat eine SBOM hochgeladen",
-          "deleted": "hat eine SBOM gelöscht",
-          "scanned": "hat nach Schwachstellen gescannt"
+          "uploaded": "hat ein neues SBOM hochgeladen",
+          "deleted": "hat ein SBOM gelöscht",
+          "scanned": "hat ein SBOM auf Schwachstellen gescannt",
+          "activated": "hat ein SBOM aktiviert",
+          "archived": "hat ein SBOM archiviert"
         },
         "checklist": {
-          "item_status_changed": "hat einen Checklisten-Punkt aktualisiert",
-          "item_description_changed": "hat Checklisten-Notizen bearbeitet",
+          "item_status_changed": "hat einen CRA-Checklisten-Punkt aktualisiert",
+          "item_description_changed": "hat Notizen an einem Checklisten-Punkt bearbeitet",
           "evidence_uploaded": "hat einen Nachweis hochgeladen",
-          "evidence_removed": "hat einen Nachweis entfernt"
+          "evidence_removed": "hat einen Nachweis entfernt",
+          "item_assigned": "hat einen Checklisten-Punkt zugewiesen"
+        },
+        "vulnerability": {
+          "open": "hat eine Schwachstelle wieder geöffnet",
+          "in_progress": "hat mit der Bearbeitung einer Schwachstelle begonnen",
+          "resolved": "hat eine Schwachstelle behoben",
+          "accepted": "hat das Risiko einer Schwachstelle akzeptiert",
+          "assigned": "hat eine Schwachstelle zugewiesen",
+          "note_added": "hat Notizen zu einer Schwachstelle hinzugefügt",
+          "marked_exploited": "hat eine Schwachstelle als aktiv ausgenutzt markiert",
+          "unmarked_exploited": "hat die Markierung 'aktiv ausgenutzt' entfernt"
+        },
+        "vulnerability_report": {
+          "triage": "hat eine Schwachstellen-Meldung erneut zur Bewertung eingereiht",
+          "accepted": "hat eine Schwachstellen-Meldung angenommen",
+          "investigating": "hat die Untersuchung einer Schwachstellen-Meldung gestartet",
+          "resolved": "hat eine Schwachstellen-Meldung behoben",
+          "duplicate": "hat eine Schwachstellen-Meldung als Duplikat markiert",
+          "spam": "hat eine Schwachstellen-Meldung als Spam markiert"
+        },
+        "incident": {
+          "detected": "hat einen neuen Vorfall eröffnet",
+          "updated": "hat einen Vorfall aktualisiert",
+          "early_warning_submitted": "hat die 24-Stunden-Frühwarnung eingereicht",
+          "incident_report_submitted": "hat die 72-Stunden-Vorfallmeldung eingereicht",
+          "final_report_submitted": "hat den 14-Tage-Abschlussbericht eingereicht",
+          "user_notified": "hat betroffene Nutzer über einen Vorfall informiert",
+          "closed": "hat einen Vorfall geschlossen"
+        },
+        "release": {
+          "published": "hat einen neuen Release veröffentlicht",
+          "deleted": "hat einen Release gelöscht"
+        },
+        "conformity": {
+          "step_completed": "hat einen Konformitätsschritt abgeschlossen",
+          "step_reopened": "hat einen Konformitätsschritt wieder geöffnet",
+          "notified_body_updated": "hat die Angaben zur notifizierten Stelle aktualisiert",
+          "declaration_issued": "hat eine Konformitätserklärung ausgestellt für"
+        },
+        "entity_obligation": {
+          "updated": "hat eine Compliance-Pflicht aktualisiert"
         },
         "billing": {
-          "checkout_created": "hat einen Checkout gestartet"
+          "checkout_created": "hat einen Plan-Checkout gestartet"
         }
       }
     },
