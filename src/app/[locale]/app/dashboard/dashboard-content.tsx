@@ -4,13 +4,8 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import {
-  PlusIcon,
-  CheckCircle2Icon,
-  CircleIcon,
-  CircleDotIcon,
-  ChevronRight,
-} from "lucide-react";
+import { PlusIcon } from "lucide-react";
+import { HugeIcon } from "@/components/huge-icon";
 import {
   PieChart,
   Pie,
@@ -329,7 +324,11 @@ export function DashboardContent(stats: DashboardStats) {
 
                     {/* Chevron */}
                     <div className="flex w-6 justify-end">
-                      <ChevronRight className="size-4 text-muted-foreground/20 transition-colors group-hover:text-muted-foreground" />
+                      <HugeIcon
+                        name="arrow-right-01-stroke-rounded"
+                        size={16}
+                        className="text-muted-foreground/20 transition-colors group-hover:text-muted-foreground"
+                      />
                     </div>
                   </Link>
                 );
@@ -362,11 +361,23 @@ export function DashboardContent(stats: DashboardStats) {
                     <div key={dl.date} className="flex items-start gap-3">
                       <div className="mt-0.5">
                         {isPast ? (
-                          <CheckCircle2Icon className="size-4 text-[#16A34A]" />
+                          <HugeIcon
+                            name="checkmark-circle-01-stroke-rounded"
+                            size={16}
+                            className="text-[#16A34A]"
+                          />
                         ) : isUrgent ? (
-                          <CircleDotIcon className="size-4 text-[#D97706]" />
+                          <HugeIcon
+                            name="circle-arrow-right-double-stroke-rounded"
+                            size={16}
+                            className="text-[#D97706]"
+                          />
                         ) : (
-                          <CircleIcon className="size-4 text-muted-foreground/40" />
+                          <HugeIcon
+                            name="circle-stroke-rounded"
+                            size={16}
+                            className="text-muted-foreground/40"
+                          />
                         )}
                       </div>
                       <div className="flex-1">
@@ -417,10 +428,11 @@ export function DashboardContent(stats: DashboardStats) {
 
       {/* ── Row 5: Compliance Trend (⅔) + Overdue Tasks (⅓) ── */}
       {totalProducts > 0 && (
-        <div className="grid gap-6 lg:grid-cols-3">
-          <div className="lg:col-span-2">
-            <ComplianceTrendChart data={stats.complianceTrend} />
-          </div>
+        <div className="grid items-stretch gap-6 lg:grid-cols-3">
+          <ComplianceTrendChart
+            data={stats.complianceTrend}
+            className="h-full lg:col-span-2"
+          />
           <OverdueTasksWidget
             count={stats.overdueCount}
             items={stats.overdueItems}
@@ -528,67 +540,83 @@ function VulnDonutChart({
   return (
     <div className="rounded-2xl border border-white/[0.06] bg-card p-5">
       <h2 className="mb-4 text-sm font-semibold">{t("vulnChart")}</h2>
-      <div className="flex items-center gap-6">
-        <div className="relative size-[120px] shrink-0">
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Pie
-                data={data}
-                cx="50%"
-                cy="50%"
-                innerRadius={36}
-                outerRadius={56}
-                paddingAngle={2}
-                dataKey="value"
-                stroke="none"
-              >
-                {data.map((entry) => (
-                  <Cell
-                    key={entry.key}
-                    fill={SEVERITY_CHART_COLORS[entry.key]}
-                  />
-                ))}
-              </Pie>
-              <Tooltip
-                content={({ payload }) => {
-                  if (!payload?.length) return null;
-                  const item = payload[0];
-                  return (
-                    <div className="rounded-lg border border-white/[0.08] bg-card px-3 py-1.5 text-xs shadow-md">
-                      <span className="font-medium">{item.name}</span>
-                      <span className="ml-2 tabular-nums text-muted-foreground">
-                        {item.value}
-                      </span>
-                    </div>
-                  );
-                }}
-              />
-            </PieChart>
-          </ResponsiveContainer>
-          <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <span className="text-lg font-bold tabular-nums text-foreground">
-              {total}
-            </span>
-          </div>
+
+      {/* Donut — sized up and centered */}
+      <div className="relative mx-auto mb-5 size-[200px]">
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart>
+            <Pie
+              data={data}
+              cx="50%"
+              cy="50%"
+              innerRadius={68}
+              outerRadius={96}
+              paddingAngle={2}
+              dataKey="value"
+              stroke="none"
+            >
+              {data.map((entry) => (
+                <Cell
+                  key={entry.key}
+                  fill={SEVERITY_CHART_COLORS[entry.key]}
+                />
+              ))}
+            </Pie>
+            <Tooltip
+              content={({ payload }) => {
+                if (!payload?.length) return null;
+                const item = payload[0];
+                const pct = total > 0
+                  ? Math.round(((item.value as number) / total) * 100)
+                  : 0;
+                return (
+                  <div className="rounded-lg border border-white/[0.08] bg-card px-3 py-1.5 text-xs shadow-md">
+                    <span className="font-medium">{item.name}</span>
+                    <span className="ml-2 tabular-nums text-muted-foreground">
+                      {item.value} ({pct}%)
+                    </span>
+                  </div>
+                );
+              }}
+            />
+          </PieChart>
+        </ResponsiveContainer>
+        <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
+          <span className="text-3xl font-bold tabular-nums leading-none text-foreground">
+            {total}
+          </span>
+          <span className="mt-1.5 text-[11px] uppercase tracking-wide text-muted-foreground/70">
+            {t("vulnerabilities")}
+          </span>
         </div>
-        <div className="flex flex-col gap-2">
-          {data.map((entry) => (
+      </div>
+
+      {/* Legend — 2-col grid below the donut */}
+      <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+        {data.map((entry) => {
+          const pct = total > 0 ? Math.round((entry.value / total) * 100) : 0;
+          return (
             <div key={entry.key} className="flex items-center gap-2">
               <div
-                className="size-2.5 rounded-full"
+                className="size-2.5 shrink-0 rounded-full"
                 style={{
                   backgroundColor: SEVERITY_CHART_COLORS[entry.key],
                 }}
               />
-              <span className="text-xs text-muted-foreground">
+              <span className="truncate text-xs text-muted-foreground">
                 {entry.name}
               </span>
-              <span className="ml-auto text-xs font-semibold tabular-nums text-foreground">
-                {entry.value}
-              </span>
+              <div className="ml-auto flex items-baseline gap-1 tabular-nums">
+                <span className="text-xs font-semibold text-foreground">
+                  {entry.value}
+                </span>
+                <span className="text-[10px] text-muted-foreground/60">
+                  {pct}%
+                </span>
+              </div>
             </div>
-          ))}
-        </div>
+          );
+        })}
       </div>
     </div>
   );

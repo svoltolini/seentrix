@@ -1,9 +1,10 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { ChevronRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
+import { HugeIcon } from "@/components/huge-icon";
 import { cn } from "@/lib/utils";
+import { STATUS_CHART_COLORS } from "../../products/[productId]/constants";
 import type { ChecklistProgress } from "../../products/actions";
 
 interface Props {
@@ -12,15 +13,6 @@ interface Props {
 
 const SEGMENTS = ["completed", "in_progress", "pending", "not_applicable"] as const;
 type Segment = (typeof SEGMENTS)[number];
-
-const SEGMENT_BG: Record<Segment, string> = {
-  completed: "bg-success",
-  in_progress: "bg-warning",
-  pending: "bg-muted-foreground/60",
-  not_applicable: "bg-border",
-};
-
-const SEGMENT_DOT: Record<Segment, string> = SEGMENT_BG;
 
 export function ChecklistProgressChart({ data }: Props) {
   const t = useTranslations("dashboard");
@@ -78,7 +70,10 @@ export function ChecklistProgressChart({ data }: Props) {
         <div className="flex flex-wrap gap-x-4 gap-y-1.5">
           {SEGMENTS.map((seg) => (
             <div key={seg} className="flex items-center gap-1.5">
-              <span className={cn("size-2 rounded-full", SEGMENT_DOT[seg])} />
+              <span
+                className="size-2 rounded-full"
+                style={{ backgroundColor: STATUS_CHART_COLORS[seg] }}
+              />
               <span className="text-[11px] text-muted-foreground">
                 {labels[seg]}
               </span>
@@ -87,7 +82,7 @@ export function ChecklistProgressChart({ data }: Props) {
         </div>
       </div>
 
-      {/* Rows */}
+      {/* Rows — use the dashboard progress bar pattern */}
       <div className="divide-y divide-white/[0.04]">
         {rows.map((row) => (
           <Link
@@ -102,7 +97,7 @@ export function ChecklistProgressChart({ data }: Props) {
             </div>
 
             <div className="flex min-w-0 flex-1 items-center gap-4">
-              <div className="flex h-2.5 flex-1 overflow-hidden rounded-full bg-white/[0.04]">
+              <div className="flex h-3 flex-1 overflow-hidden rounded-[3px] bg-[#191919]">
                 {SEGMENTS.map((seg) => {
                   const value = row[seg];
                   if (value === 0 || row.total === 0) return null;
@@ -110,8 +105,11 @@ export function ChecklistProgressChart({ data }: Props) {
                   return (
                     <div
                       key={seg}
-                      className={cn("h-full", SEGMENT_BG[seg])}
-                      style={{ width: `${pct}%` }}
+                      className="h-full"
+                      style={{
+                        width: `${pct}%`,
+                        backgroundColor: STATUS_CHART_COLORS[seg],
+                      }}
                       title={`${labels[seg]}: ${value}`}
                     />
                   );
@@ -127,14 +125,18 @@ export function ChecklistProgressChart({ data }: Props) {
                 </span>
               </div>
 
-              <div className="w-11 shrink-0 text-right">
+              <div className={cn("w-11 shrink-0 text-right")}>
                 <span className="text-xs font-semibold tabular-nums text-muted-foreground">
                   {row.pct}%
                 </span>
               </div>
             </div>
 
-            <ChevronRight className="size-4 shrink-0 text-muted-foreground/20 transition-colors group-hover:text-muted-foreground" />
+            <HugeIcon
+              name="arrow-right-01-stroke-rounded"
+              size={16}
+              className="shrink-0 text-muted-foreground/20 transition-colors group-hover:text-muted-foreground"
+            />
           </Link>
         ))}
       </div>

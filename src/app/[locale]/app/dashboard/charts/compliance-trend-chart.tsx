@@ -16,16 +16,24 @@ import {
 } from "../../products/[productId]/constants";
 import type { ComplianceTrendPoint } from "../../products/actions";
 
+import { cn } from "@/lib/utils";
+
 interface Props {
   data: ComplianceTrendPoint[];
+  className?: string;
 }
 
-export function ComplianceTrendChart({ data }: Props) {
+export function ComplianceTrendChart({ data, className }: Props) {
   const t = useTranslations("dashboard");
 
   if (data.length === 0) {
     return (
-      <div className="rounded-2xl border border-white/[0.06] bg-card p-5">
+      <div
+        className={cn(
+          "rounded-2xl border border-white/[0.06] bg-card p-5",
+          className,
+        )}
+      >
         <h2 className="mb-3 text-sm font-semibold">
           {t("complianceTrend.title")}
         </h2>
@@ -69,11 +77,17 @@ export function ComplianceTrendChart({ data }: Props) {
   };
 
   return (
-    <div className="rounded-2xl border border-white/[0.06] bg-card p-5">
+    <div
+      className={cn(
+        "flex flex-col rounded-2xl border border-white/[0.06] bg-card p-5",
+        className,
+      )}
+    >
       <h2 className="mb-4 text-sm font-semibold">
         {t("complianceTrend.title")}
       </h2>
-      <ResponsiveContainer width="100%" height={240}>
+      <div className="min-h-[240px] flex-1">
+      <ResponsiveContainer width="100%" height="100%">
         <LineChart data={chartData}>
           <CartesianGrid
             strokeDasharray="3 3"
@@ -147,6 +161,7 @@ export function ComplianceTrendChart({ data }: Props) {
           />
         </LineChart>
       </ResponsiveContainer>
+      </div>
     </div>
   );
 }

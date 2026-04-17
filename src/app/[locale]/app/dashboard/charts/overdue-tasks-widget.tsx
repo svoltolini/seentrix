@@ -1,8 +1,8 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { CheckCircle2Icon } from "lucide-react";
 import { Link } from "@/i18n/navigation";
+import { HugeIcon } from "@/components/huge-icon";
 import type { OverdueItem } from "../../products/actions";
 
 const PRIORITY_DOT: Record<string, string> = {
@@ -21,12 +21,16 @@ export function OverdueTasksWidget({ count, items }: Props) {
   const t = useTranslations("dashboard");
 
   return (
-    <div className="rounded-2xl border border-white/[0.06] bg-card p-5">
+    <div className="flex h-full flex-col rounded-2xl border border-white/[0.06] bg-card p-5">
       <h2 className="mb-4 text-sm font-semibold">{t("overdueTasks.title")}</h2>
 
       {count === 0 ? (
-        <div className="flex flex-col items-center justify-center py-6 text-center">
-          <CheckCircle2Icon className="mb-2 size-8 text-[#16A34A]" />
+        <div className="flex flex-1 flex-col items-center justify-center py-6 text-center">
+          <HugeIcon
+            name="checkmark-circle-01-stroke-rounded"
+            size={40}
+            className="mb-3 text-[#16A34A]"
+          />
           <p className="text-sm font-medium text-[#16A34A]">
             {t("overdueTasks.allOnTrack")}
           </p>
