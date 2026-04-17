@@ -452,9 +452,9 @@ function OrganizationChart({
           </div>
         </div>
 
-        {/* Tree spine — solid left border running through every tier. */}
-        <div className="relative mt-4 space-y-5 pl-6">
-          <div className="pointer-events-none absolute inset-y-0 left-[17px] w-px bg-gradient-to-b from-white/[0.12] via-white/[0.06] to-transparent" />
+        {/* Tree: each tier draws its own connector SVG so the trunk + L-bend
+            are precise at any row height; no overlap tricks. */}
+        <ol className="mt-2">
           {tiers.map((tier, i) => (
             <RoleBranch
               key={tier.key}
@@ -468,7 +468,7 @@ function OrganizationChart({
               emptyLabel={t("noOneYet")}
             />
           ))}
-        </div>
+        </ol>
       </div>
     </div>
   );
@@ -490,28 +490,74 @@ function RoleBranch({
   emptyLabel: string;
 }) {
   const hex = tier.bg.match(/#[0-9A-Fa-f]{6}/)?.[0] ?? "#6B7280";
+  // Trunk geometry — kept constant across tiers so the SVG paths line up.
+  const STUB_Y = 28; // y coord where the horizontal stub meets the badge
+  const RADIUS = 8;  // radius of the L-corner on the last tier
 
   return (
-    <div className="relative">
-      {/* Branch stub from the spine into the tier badge */}
-      <span
-        className="pointer-events-none absolute left-[-23px] top-[19px] h-px w-[18px]"
-        style={{ backgroundColor: `${hex}55` }}
-      />
-      {/* Shave the last tier's spine so the line doesn't overshoot */}
-      {isLast && (
-        <span className="pointer-events-none absolute left-[-23px] top-[20px] bottom-[-28px] w-px bg-card" />
+    <li
+      className={cn(
+        "relative list-none",
+        !isLast && "pb-5", // gap before next tier; trunk runs through it
       )}
+      style={{ paddingLeft: 40 }}
+    >
+      {/* Connector: trunk + branch stub. Drawn as one SVG so the rounded
+          corner on the last tier joins the stub perfectly. */}
+      <svg
+        aria-hidden
+        className="pointer-events-none absolute left-0 top-0 h-full"
+        width="40"
+        height="100%"
+        preserveAspectRatio="none"
+        style={{ overflow: "visible" }}
+      >
+        {/* The trunk itself — absolute positioned segment lines so that
+            preserveAspectRatio doesn't distort them. Use single-pixel lines
+            with vector-effect for crispness. */}
+        <line
+          x1="17"
+          y1="0"
+          x2="17"
+          y2={isLast ? STUB_Y - RADIUS : "100%"}
+          stroke="white"
+          strokeOpacity="0.1"
+          strokeWidth="1"
+          vectorEffect="non-scaling-stroke"
+        />
+        {/* Stub: straight horizontal for non-last, rounded L for last. */}
+        {isLast ? (
+          <path
+            d={`M 17 ${STUB_Y - RADIUS} A ${RADIUS} ${RADIUS} 0 0 0 ${17 + RADIUS} ${STUB_Y} H 40`}
+            stroke="white"
+            strokeOpacity="0.1"
+            strokeWidth="1"
+            fill="none"
+            vectorEffect="non-scaling-stroke"
+          />
+        ) : (
+          <line
+            x1="17"
+            y1={STUB_Y}
+            x2="40"
+            y2={STUB_Y}
+            stroke="white"
+            strokeOpacity="0.1"
+            strokeWidth="1"
+            vectorEffect="non-scaling-stroke"
+          />
+        )}
+      </svg>
 
-      {/* Tier badge (icon + role + count) */}
+      {/* Tier badge */}
       <div className="flex items-center gap-2.5">
         <div
           className={cn(
-            "flex size-10 shrink-0 items-center justify-center rounded-lg text-white/95 shadow-sm",
+            "flex size-11 shrink-0 items-center justify-center rounded-lg text-white/95 shadow-sm",
             tier.bg,
           )}
         >
-          <HugeIcon name={tier.icon} size={16} />
+          <HugeIcon name={tier.icon} size={18} />
         </div>
         <div>
           <p className="text-sm font-semibold" style={{ color: hex }}>
@@ -525,37 +571,15 @@ function RoleBranch({
         </div>
       </div>
 
-      {/* Members, branching off the tier backbone */}
-      <div
-        className="relative ml-[19px] mt-3 space-y-2 pl-6"
-        style={{
-          backgroundImage:
-            tier.members.length > 0 || isAdmin
-              ? `linear-gradient(to bottom, ${hex}40, ${hex}15)`
-              : undefined,
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "1px calc(100% - 24px)",
-          backgroundPosition: "0 0",
-        }}
-      >
-        {tier.members.map((member, j) => (
+      {/* Members — plain indented list; the trunk above already carries the
+          hierarchy signal, sub-connectors would just add clutter. */}
+      <div className="mt-2.5 ml-[22px] space-y-1.5">
+        {tier.members.map((member) => (
           <Link
             key={member.id}
             href="/app/settings/team"
-            className="group relative flex items-center gap-3 rounded-lg border border-transparent px-3 py-2 transition-all hover:-translate-y-0.5 hover:border-white/[0.08] hover:bg-white/[0.03]"
+            className="group flex items-center gap-3 rounded-lg border border-transparent px-3 py-2 transition-all hover:-translate-y-0.5 hover:border-white/[0.08] hover:bg-white/[0.03]"
           >
-            {/* Horizontal connector from the tier spine into each row */}
-            <span
-              className="pointer-events-none absolute left-[-24px] top-1/2 h-px w-[20px]"
-              style={{ backgroundColor: `${hex}50` }}
-            />
-            {j === tier.members.length - 1 && (
-              <span
-                className="pointer-events-none absolute left-[-24px] top-[50%] bottom-[-8px] w-px"
-                style={{ backgroundColor: "var(--card)" }}
-              />
-            )}
-
             <div className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white/[0.06] text-[12px] font-bold text-muted-foreground">
               {member.avatar_url ? (
                 <img
@@ -587,17 +611,9 @@ function RoleBranch({
           (isAdmin ? (
             <Link
               href="/app/settings/team"
-              className="relative flex items-center gap-3 rounded-lg border border-dashed px-3 py-2.5 transition-colors hover:bg-white/[0.02]"
+              className="flex items-center gap-3 rounded-lg border border-dashed px-3 py-2.5 transition-colors hover:bg-white/[0.02]"
               style={{ borderColor: `${hex}50` }}
             >
-              <span
-                className="pointer-events-none absolute left-[-24px] top-1/2 h-px w-[20px]"
-                style={{ backgroundColor: `${hex}50` }}
-              />
-              <span
-                className="pointer-events-none absolute left-[-24px] top-[50%] bottom-[-8px] w-px"
-                style={{ backgroundColor: "var(--card)" }}
-              />
               <span
                 className="flex size-9 shrink-0 items-center justify-center rounded-full"
                 style={{ backgroundColor: `${hex}25`, color: hex }}
@@ -609,21 +625,13 @@ function RoleBranch({
               </span>
             </Link>
           ) : (
-            <div className="relative flex items-center gap-3 rounded-lg border border-dashed border-white/[0.06] px-3 py-2.5">
-              <span
-                className="pointer-events-none absolute left-[-24px] top-1/2 h-px w-[20px]"
-                style={{ backgroundColor: `${hex}40` }}
-              />
-              <span
-                className="pointer-events-none absolute left-[-24px] top-[50%] bottom-[-8px] w-px"
-                style={{ backgroundColor: "var(--card)" }}
-              />
+            <div className="flex items-center gap-3 rounded-lg border border-dashed border-white/[0.06] px-3 py-2.5">
               <span className="text-sm text-muted-foreground/40">
                 {emptyLabel}
               </span>
             </div>
           ))}
       </div>
-    </div>
+    </li>
   );
 }
