@@ -1,0 +1,54 @@
+{
+  "reports": {
+    "breadcrumb": "Vulnerability reports",
+    "title": "Coordinated disclosure inbox",
+    "subtitle": "Incoming vulnerability reports from the public security page. Triage, investigate, and respond without losing the audit trail.",
+    "status": {
+      "triage": "Needs triage",
+      "accepted": "Accepted",
+      "investigating": "Investigating",
+      "resolved": "Resolved",
+      "duplicate": "Duplicate",
+      "spam": "Spam"
+    },
+    "kpi": {
+      "triage": "Needs triage",
+      "investigating": "Investigating",
+      "resolved": "Resolved",
+      "total": "Total"
+    },
+    "settings": {
+      "title": "Public security page",
+      "description": "Publish a public URL where researchers can reach your security team and submit reports. Works out of the box with security.txt conventions.",
+      "enablePublic": "Publish publicly",
+      "slugLabel": "URL slug",
+      "contactLabel": "Security contact email",
+      "policyLabel": "Disclosure policy",
+      "policyPlaceholder": "How you handle reports, your commitment to coordinated disclosure, safe-harbour statement, etc.",
+      "openPublic": "Open public page ↗",
+      "downloadSecurityTxt": "security.txt ↓",
+      "saved": "Saved",
+      "saveFailed": "Couldn't save",
+      "slugTaken": "That slug is already in use"
+    },
+    "list": {
+      "title": "Incoming reports"
+    },
+    "empty": {
+      "title": "No reports yet",
+      "description": "When someone submits a vulnerability through your public page, it'll land here for triage."
+    },
+    "row": {
+      "anonymous": "Anonymous",
+      "productLabel": "Affected product",
+      "triageNotes": "Triage notes",
+      "setStatus": "Set status",
+      "notesLabel": "Internal notes",
+      "notesPlaceholder": "What you checked, what you found, next steps. Not visible to the reporter."
+    },
+    "toast": {
+      "updated": "Report updated",
+      "updateFailed": "Couldn't update report"
+    }
+  }
+}

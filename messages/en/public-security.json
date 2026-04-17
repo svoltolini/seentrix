@@ -1,0 +1,36 @@
+{
+  "publicSecurity": {
+    "eyebrow": "Security disclosure",
+    "title": "Report a vulnerability to {org}",
+    "subtitle": "If you have found a security vulnerability in one of our products, we want to hear from you. We follow coordinated disclosure and commit to acknowledging valid reports within 72 hours.",
+    "emailCta": "Email {email}",
+    "policyTitle": "Disclosure policy",
+    "severity": {
+      "critical": "Critical",
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low"
+    },
+    "form": {
+      "title": "Submit a report",
+      "description": "All fields marked * are required. You may submit anonymously; we'll still investigate but can't reply.",
+      "titleLabel": "Title",
+      "titlePlaceholder": "Short summary",
+      "descriptionLabel": "Description",
+      "descriptionPlaceholder": "What you found, how to reproduce it, potential impact.",
+      "affectedProductLabel": "Affected product",
+      "affectedProductPlaceholder": "Product name / version / model",
+      "severityLabel": "Suggested severity",
+      "reporterNameLabel": "Your name",
+      "reporterEmailLabel": "Your email",
+      "reporterHandleLabel": "Handle (optional)",
+      "reporterHandlePlaceholder": "@you",
+      "anonymousNote": "Submitting anonymously is fine — we just can't follow up with you.",
+      "submit": "Submit report",
+      "submitting": "Submitting…",
+      "submitFailed": "Couldn't submit the report. Please email us instead.",
+      "successTitle": "Report received",
+      "successDescription": "Thank you for the responsible disclosure. If you left an email, we'll reach out within 72 hours."
+    }
+  }
+}

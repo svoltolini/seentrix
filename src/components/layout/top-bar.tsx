@@ -31,6 +31,11 @@ const navItems = [
     icon: "alert-02",
   },
   {
+    href: "/app/vulnerability-reports",
+    labelKey: "nav.reports",
+    icon: "shield-check",
+  },
+  {
     href: "/app/settings",
     labelKey: "nav.settings",
     icon: "settings-02",

@@ -1,0 +1,54 @@
+{
+  "reports": {
+    "breadcrumb": "Schwachstellen-Meldungen",
+    "title": "Posteingang für koordinierte Offenlegung",
+    "subtitle": "Eingehende Schwachstellen-Meldungen von Ihrer öffentlichen Security-Seite. Bewerten, untersuchen und reagieren — mit vollständigem Audit-Protokoll.",
+    "status": {
+      "triage": "Zu bewerten",
+      "accepted": "Angenommen",
+      "investigating": "In Untersuchung",
+      "resolved": "Behoben",
+      "duplicate": "Duplikat",
+      "spam": "Spam"
+    },
+    "kpi": {
+      "triage": "Zu bewerten",
+      "investigating": "In Untersuchung",
+      "resolved": "Behoben",
+      "total": "Gesamt"
+    },
+    "settings": {
+      "title": "Öffentliche Security-Seite",
+      "description": "Veröffentlichen Sie eine öffentliche URL, unter der Forscher Ihr Security-Team erreichen und Meldungen einreichen können.",
+      "enablePublic": "Öffentlich",
+      "slugLabel": "URL-Kennung",
+      "contactLabel": "Security-Kontakt-E-Mail",
+      "policyLabel": "Offenlegungsrichtlinie",
+      "policyPlaceholder": "Wie Sie mit Meldungen umgehen, Ihr Bekenntnis zur koordinierten Offenlegung, Safe-Harbour-Klausel usw.",
+      "openPublic": "Öffentliche Seite öffnen ↗",
+      "downloadSecurityTxt": "security.txt ↓",
+      "saved": "Gespeichert",
+      "saveFailed": "Speichern fehlgeschlagen",
+      "slugTaken": "Diese Kennung ist bereits vergeben"
+    },
+    "list": {
+      "title": "Eingehende Meldungen"
+    },
+    "empty": {
+      "title": "Noch keine Meldungen",
+      "description": "Sobald jemand eine Schwachstelle über Ihre öffentliche Seite meldet, erscheint sie hier zur Bearbeitung."
+    },
+    "row": {
+      "anonymous": "Anonym",
+      "productLabel": "Betroffenes Produkt",
+      "triageNotes": "Bewertungs-Notizen",
+      "setStatus": "Status setzen",
+      "notesLabel": "Interne Notizen",
+      "notesPlaceholder": "Was wurde geprüft, was gefunden, nächste Schritte. Für den Melder nicht sichtbar."
+    },
+    "toast": {
+      "updated": "Meldung aktualisiert",
+      "updateFailed": "Meldung konnte nicht aktualisiert werden"
+    }
+  }
+}

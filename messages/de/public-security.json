@@ -1,0 +1,36 @@
+{
+  "publicSecurity": {
+    "eyebrow": "Security-Offenlegung",
+    "title": "Schwachstelle an {org} melden",
+    "subtitle": "Wenn Sie eine Sicherheitslücke in einem unserer Produkte gefunden haben, wollen wir davon hören. Wir folgen der koordinierten Offenlegung und bestätigen gültige Meldungen innerhalb von 72 Stunden.",
+    "emailCta": "E-Mail an {email}",
+    "policyTitle": "Offenlegungsrichtlinie",
+    "severity": {
+      "critical": "Kritisch",
+      "high": "Hoch",
+      "medium": "Mittel",
+      "low": "Niedrig"
+    },
+    "form": {
+      "title": "Meldung einreichen",
+      "description": "Mit * markierte Felder sind Pflicht. Sie dürfen anonym einreichen; wir prüfen trotzdem, können aber nicht antworten.",
+      "titleLabel": "Titel",
+      "titlePlaceholder": "Kurze Zusammenfassung",
+      "descriptionLabel": "Beschreibung",
+      "descriptionPlaceholder": "Was Sie gefunden haben, wie es reproduzierbar ist, mögliche Auswirkungen.",
+      "affectedProductLabel": "Betroffenes Produkt",
+      "affectedProductPlaceholder": "Produktname / Version / Modell",
+      "severityLabel": "Vorgeschlagener Schweregrad",
+      "reporterNameLabel": "Ihr Name",
+      "reporterEmailLabel": "Ihre E-Mail",
+      "reporterHandleLabel": "Handle (optional)",
+      "reporterHandlePlaceholder": "@sie",
+      "anonymousNote": "Anonym geht auch — wir können dann nur nicht zurückfragen.",
+      "submit": "Meldung einreichen",
+      "submitting": "Wird übertragen…",
+      "submitFailed": "Meldung konnte nicht übertragen werden. Bitte per E-Mail kontaktieren.",
+      "successTitle": "Meldung eingegangen",
+      "successDescription": "Vielen Dank für die verantwortungsvolle Offenlegung. Bei hinterlegter E-Mail melden wir uns innerhalb von 72 Stunden."
+    }
+  }
+}
