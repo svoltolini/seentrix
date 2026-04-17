@@ -10,6 +10,7 @@ const TABS = [
   { key: "checklist", segment: "/checklist" },
   { key: "sbom", segment: "/sbom" },
   { key: "vulnerabilities", segment: "/vulnerabilities" },
+  { key: "releases", segment: "/releases" },
   { key: "documents", segment: "/documents" },
 ] as const;
 

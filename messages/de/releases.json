@@ -1,0 +1,68 @@
+{
+  "releases": {
+    "type": {
+      "security": "Sicherheit",
+      "bugfix": "Fehlerbehebung",
+      "feature": "Feature",
+      "maintenance": "Wartung"
+    },
+    "support": {
+      "title": "Support-Zeitraum",
+      "description": "CRA Anhang I Teil II verlangt Sicherheitsupdates über den gesamten Support-Zeitraum — mindestens 5 Jahre.",
+      "startLabel": "Support beginnt",
+      "endLabel": "Support endet",
+      "updateChannelLabel": "Update-Kanal",
+      "updateChannelPlaceholder": "z. B. OTA, Paketmanager, Download-Portal",
+      "inSupport": "Im Support · {days}T verbleibend",
+      "expiringSoon": "Endet in {days}T",
+      "outOfSupport": "Außer Support · seit {days}T"
+    },
+    "kpi": {
+      "total": "Releases",
+      "security": "Sicherheit",
+      "cvesFixed": "CVEs behoben",
+      "latest": "Neueste"
+    },
+    "list": {
+      "title": "Release-Historie",
+      "cvesFixed": "CVEs behoben",
+      "signedDigest": "Signatur",
+      "delete": "Release löschen",
+      "confirmDelete": "Diesen Release löschen? Dies kann nicht rückgängig gemacht werden."
+    },
+    "empty": {
+      "title": "Keine Releases erfasst",
+      "description": "Veröffentlichen Sie einen Release, um Sicherheitsupdates, behobene CVEs und signierte Digests im Audit-Protokoll zu erfassen."
+    },
+    "new": {
+      "cta": "Release veröffentlichen",
+      "title": "Neuen Release veröffentlichen",
+      "description": "Erfassen Sie Version, Datum und behobene CVEs, damit Ihr Audit-Protokoll die Erfüllung der Support-Pflicht belegt.",
+      "versionLabel": "Version",
+      "releasedAtLabel": "Release-Datum",
+      "typeLabel": "Typ",
+      "cvesLabel": "Behobene CVEs (kommasepariert)",
+      "cvesPlaceholder": "CVE-2024-0001, CVE-2024-0002",
+      "notesLabel": "Release-Notizen",
+      "notesPlaceholder": "Was ist in diesem Release enthalten…",
+      "digestLabel": "Signierter Digest",
+      "digestPlaceholder": "SHA-256 oder Signing-Identity",
+      "cancel": "Abbrechen",
+      "create": "Veröffentlichen"
+    },
+    "toast": {
+      "saved": "Gespeichert",
+      "saveFailed": "Speichern fehlgeschlagen",
+      "created": "Release veröffentlicht",
+      "createFailed": "Release konnte nicht veröffentlicht werden",
+      "deleted": "Release gelöscht",
+      "deleteFailed": "Release konnte nicht gelöscht werden"
+    },
+    "dashboard": {
+      "title": "Support-Fenster",
+      "expiringSoon": "läuft in 90T ab",
+      "outOfSupport": "außer Support",
+      "missing": "ohne Support-Datum"
+    }
+  }
+}

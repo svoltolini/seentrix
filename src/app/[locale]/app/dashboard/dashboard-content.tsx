@@ -16,6 +16,7 @@ import type {
   ActivityItem,
 } from "../products/actions";
 import type { IncidentWidgetData } from "../incidents/actions";
+import type { SupportWidgetData } from "../products/[productId]/releases/actions";
 import { ComplianceTrendChart } from "./charts/compliance-trend-chart";
 import { VulnAgingChart } from "./charts/vuln-aging-chart";
 import { ChecklistProgressChart } from "./charts/checklist-progress-chart";
@@ -100,10 +101,14 @@ const ACTIVITY_TYPE_PILL: Record<string, string> = {
 // ---------------------------------------------------------------------------
 
 export function DashboardContent(
-  stats: DashboardStats & { incidentWidget?: IncidentWidgetData },
+  stats: DashboardStats & {
+    incidentWidget?: IncidentWidgetData;
+    supportWidget?: SupportWidgetData;
+  },
 ) {
   const t = useTranslations("dashboard");
   const tInc = useTranslations("incidents");
+  const tRel = useTranslations("releases");
   const rootRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -379,6 +384,18 @@ export function DashboardContent(
             />
           </div>
         )}
+
+        {/* ── Support period watch — Annex I Part II "N years of updates" ── */}
+        {stats.supportWidget &&
+          (stats.supportWidget.expiringWithin90 > 0 ||
+            stats.supportWidget.outOfSupport > 0) && (
+            <div data-reveal>
+              <SupportWatchStrip
+                data={stats.supportWidget}
+                tRel={tRel}
+              />
+            </div>
+          )}
 
         {/* ── Action Needed Banner ── */}
         {atRiskProduct && nextDeadline && (
@@ -656,6 +673,72 @@ export function DashboardContent(
 // ---------------------------------------------------------------------------
 // Action Needed Banner
 // ---------------------------------------------------------------------------
+
+function SupportWatchStrip({
+  data,
+  tRel,
+}: {
+  data: SupportWidgetData;
+  tRel: ReturnType<typeof useTranslations>;
+}) {
+  const tiles = [
+    {
+      key: "expiringSoon",
+      label: tRel("dashboard.expiringSoon"),
+      value: data.expiringWithin90,
+      accent: "#D97706",
+      show: data.expiringWithin90 > 0,
+    },
+    {
+      key: "outOfSupport",
+      label: tRel("dashboard.outOfSupport"),
+      value: data.outOfSupport,
+      accent: "#DC2626",
+      show: data.outOfSupport > 0,
+    },
+    {
+      key: "missing",
+      label: tRel("dashboard.missing"),
+      value: data.missingSupportDates,
+      accent: "#6B7280",
+      show: data.missingSupportDates > 0,
+    },
+  ].filter((t) => t.show);
+
+  return (
+    <div className="flex flex-wrap items-center gap-3 rounded-2xl border border-white/[0.06] bg-card p-4">
+      <div className="flex items-center gap-2">
+        <HugeIcon
+          name="time-quarter-02-stroke-rounded"
+          size={16}
+          className="text-muted-foreground"
+        />
+        <p className="text-xs font-semibold text-foreground">
+          {tRel("dashboard.title")}
+        </p>
+      </div>
+      <div className="flex flex-wrap gap-2">
+        {tiles.map((tile) => (
+          <span
+            key={tile.key}
+            className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold"
+            style={{
+              borderColor: `${tile.accent}4D`,
+              backgroundColor: `${tile.accent}1A`,
+              color: tile.accent,
+            }}
+          >
+            <span
+              className="size-1.5 rounded-full"
+              style={{ backgroundColor: tile.accent }}
+            />
+            {tile.value} · {tile.label}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 function ActiveIncidentsBanner({
   data,

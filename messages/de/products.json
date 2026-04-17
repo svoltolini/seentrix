@@ -60,6 +60,7 @@
         "checklist": "Checkliste",
         "sbom": "SBOM",
         "vulnerabilities": "Schwachstellen",
+        "releases": "Releases",
         "documents": "Dokumente"
       },
       "overview": {

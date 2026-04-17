@@ -1,0 +1,68 @@
+{
+  "releases": {
+    "type": {
+      "security": "Security",
+      "bugfix": "Bug fix",
+      "feature": "Feature",
+      "maintenance": "Maintenance"
+    },
+    "support": {
+      "title": "Support period",
+      "description": "CRA Annex I Part II requires you to provide security updates throughout the product's support period — minimum 5 years.",
+      "startLabel": "Support starts",
+      "endLabel": "Support ends",
+      "updateChannelLabel": "Update channel",
+      "updateChannelPlaceholder": "e.g. OTA, package manager, download portal",
+      "inSupport": "In support · {days}d left",
+      "expiringSoon": "Expires in {days}d",
+      "outOfSupport": "Out of support · {days}d ago"
+    },
+    "kpi": {
+      "total": "Releases",
+      "security": "Security",
+      "cvesFixed": "CVEs fixed",
+      "latest": "Latest"
+    },
+    "list": {
+      "title": "Release history",
+      "cvesFixed": "CVEs fixed",
+      "signedDigest": "Signature",
+      "delete": "Delete release",
+      "confirmDelete": "Delete this release? This cannot be undone."
+    },
+    "empty": {
+      "title": "No releases logged",
+      "description": "Publish a release to record security updates, fixed CVEs, and signed digests in your CRA audit trail."
+    },
+    "new": {
+      "cta": "Publish release",
+      "title": "Publish a new release",
+      "description": "Log the version, date, and CVEs fixed so your audit trail shows the support commitment is being met.",
+      "versionLabel": "Version",
+      "releasedAtLabel": "Release date",
+      "typeLabel": "Type",
+      "cvesLabel": "CVEs fixed (comma or space separated)",
+      "cvesPlaceholder": "CVE-2024-0001, CVE-2024-0002",
+      "notesLabel": "Release notes",
+      "notesPlaceholder": "What's included in this release…",
+      "digestLabel": "Signed digest",
+      "digestPlaceholder": "SHA-256 or signing identity",
+      "cancel": "Cancel",
+      "create": "Publish"
+    },
+    "toast": {
+      "saved": "Saved",
+      "saveFailed": "Couldn't save",
+      "created": "Release published",
+      "createFailed": "Couldn't publish release",
+      "deleted": "Release deleted",
+      "deleteFailed": "Couldn't delete release"
+    },
+    "dashboard": {
+      "title": "Support window",
+      "expiringSoon": "expiring within 90d",
+      "outOfSupport": "out of support",
+      "missing": "no support dates"
+    }
+  }
+}
