@@ -9,13 +9,6 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { HugeIcon } from "@/components/huge-icon";
 import { StaggerReveal } from "@/components/stagger-reveal";
-import {
-  PieChart,
-  Pie,
-  Cell,
-  ResponsiveContainer,
-  Tooltip,
-} from "recharts";
 import { SEVERITY_CHART_COLORS } from "../products/[productId]/constants";
 import type {
   DashboardStats,
@@ -750,104 +743,75 @@ function VulnBreakdownCard({
   return (
     <div className="rounded-2xl border border-white/[0.06] bg-card p-6">
       {/* Header */}
-      <div className="mb-6 flex items-start justify-between gap-4">
-        <div>
-          <h2 className="text-sm font-semibold">{t("vulnChart")}</h2>
-          <p className="mt-1 text-[11px] text-muted-foreground/60">
-            {t("vulnChartSubtitle")}
-          </p>
-        </div>
+      <div className="mb-6">
+        <h2 className="text-sm font-semibold">{t("vulnChart")}</h2>
+        <p className="mt-1 text-[11px] text-muted-foreground/60">
+          {t("vulnChartSubtitle")}
+        </p>
       </div>
 
-      {/* Main — donut stacked on top, severity ranking below */}
-      <div className="flex flex-col items-center gap-6">
-        {/* Donut */}
-        <div className="relative size-[200px]">
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Pie
-                data={data}
-                cx="50%"
-                cy="50%"
-                innerRadius={68}
-                outerRadius={94}
-                paddingAngle={2}
-                dataKey="value"
-                stroke="none"
-              >
-                {data.map((entry) => (
-                  <Cell
-                    key={entry.key}
-                    fill={SEVERITY_CHART_COLORS[entry.key]}
-                  />
-                ))}
-              </Pie>
-              <Tooltip
-                content={({ payload }) => {
-                  if (!payload?.length) return null;
-                  const item = payload[0];
-                  const pct =
-                    total > 0
-                      ? Math.round(((item.value as number) / total) * 100)
-                      : 0;
-                  return (
-                    <div className="rounded-lg border border-white/[0.08] bg-card px-3 py-1.5 text-xs shadow-md">
-                      <span className="font-medium">{item.name}</span>
-                      <span className="ml-2 tabular-nums text-muted-foreground">
-                        {item.value} ({pct}%)
-                      </span>
-                    </div>
-                  );
-                }}
-              />
-            </PieChart>
-          </ResponsiveContainer>
-          <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-            <span
-              className="text-4xl font-bold tabular-nums leading-none text-foreground"
-              data-counter={String(total)}
-            >
-              {total}
-            </span>
-            <span className="mt-2 text-[11px] uppercase tracking-wide text-muted-foreground/70">
-              {t("vulnerabilities")}
-            </span>
-          </div>
+      {/* Hero — big total + single distribution bar */}
+      <div className="mb-6 flex items-center gap-5">
+        <div className="shrink-0">
+          <span
+            className="block text-4xl font-bold tabular-nums leading-none text-foreground"
+            data-counter={String(total)}
+          >
+            {total}
+          </span>
+          <span className="mt-1.5 block text-[11px] uppercase tracking-wide text-muted-foreground/70">
+            {t("vulnerabilities")}
+          </span>
         </div>
-
-        {/* Severity ranking — each row is a labelled bar */}
-        <div className="w-full space-y-3">
+        <div className="flex h-5 min-w-0 flex-1 overflow-hidden rounded-[4px] bg-[#191919]">
           {data.map((entry) => {
             const pct = total > 0 ? (entry.value / total) * 100 : 0;
             const color = SEVERITY_CHART_COLORS[entry.key];
             return (
-              <div key={entry.key}>
-                <div className="mb-1.5 flex items-center gap-2">
-                  <span
-                    className="size-2.5 shrink-0 rounded-full"
-                    style={{ backgroundColor: color }}
-                  />
-                  <span className="text-sm font-medium text-foreground">
-                    {entry.name}
-                  </span>
-                  <span className="ml-auto text-sm font-bold tabular-nums text-foreground">
-                    {entry.value}
-                  </span>
-                  <span className="text-xs tabular-nums text-muted-foreground/60">
-                    ({Math.round(pct)}%)
-                  </span>
-                </div>
-                <div className="h-3 overflow-hidden rounded-[3px] bg-[#191919]">
-                  <div
-                    className="h-full rounded-[3px]"
-                    style={{ width: `${pct}%`, backgroundColor: color }}
-                    data-progress-bar={String(pct)}
-                  />
-                </div>
-              </div>
+              <div
+                key={entry.key}
+                className="h-full"
+                style={{ width: `${pct}%`, backgroundColor: color }}
+                data-progress-bar={String(pct)}
+                title={`${entry.name}: ${entry.value} (${Math.round(pct)}%)`}
+              />
             );
           })}
         </div>
+      </div>
+
+      {/* Severity ranking — each row is a labelled bar */}
+      <div className="space-y-3">
+        {data.map((entry) => {
+          const pct = total > 0 ? (entry.value / total) * 100 : 0;
+          const color = SEVERITY_CHART_COLORS[entry.key];
+          return (
+            <div key={entry.key}>
+              <div className="mb-1.5 flex items-center gap-2">
+                <span
+                  className="size-2.5 shrink-0 rounded-full"
+                  style={{ backgroundColor: color }}
+                />
+                <span className="text-sm font-medium text-foreground">
+                  {entry.name}
+                </span>
+                <span className="ml-auto text-sm font-bold tabular-nums text-foreground">
+                  {entry.value}
+                </span>
+                <span className="text-xs tabular-nums text-muted-foreground/60">
+                  ({Math.round(pct)}%)
+                </span>
+              </div>
+              <div className="h-3 overflow-hidden rounded-[3px] bg-[#191919]">
+                <div
+                  className="h-full rounded-[3px]"
+                  style={{ width: `${pct}%`, backgroundColor: color }}
+                  data-progress-bar={String(pct)}
+                />
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
