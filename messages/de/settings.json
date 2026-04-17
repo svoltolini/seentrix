@@ -17,7 +17,23 @@
       "namePlaceholder": "Beispiel GmbH",
       "languageLabel": "Standardsprache",
       "languageDescription": "Legt die Standardsprache für Ihre Organisation fest.",
-      "addressTitle": "Firmenadresse",
+      "legalTitle": "Rechtliche Identität",
+      "legalDescription": "Pflichtangabe auf jeder Konformitätserklärung und technischen Dokumentation. Bitte exakt wie in den Gründungsdokumenten eintragen.",
+      "legalName": "Name der juristischen Person",
+      "legalNameHint": "Registrierter Firmenname — kann vom Handels-/Anzeigenamen oben abweichen.",
+      "legalNamePlaceholder": "Beispiel GmbH",
+      "registrationNumber": "Handelsregister- oder USt-Nummer",
+      "registrationNumberHint": "Handelsregister (HRB), USt-ID oder vergleichbare nationale Kennung.",
+      "registrationNumberPlaceholder": "DE123456789 oder HRB 12345",
+      "signatoryTitle": "Unterzeichnung & Kontakt",
+      "signatoryDescription": "Die unterzeichnende Person ist die natürliche Person, die die Konformitätserklärung unterschreibt. Die Kontakt-E-Mail ist der öffentliche Kundenkontakt auf Produkten.",
+      "signatoryName": "Name der unterzeichnenden Person",
+      "signatoryNamePlaceholder": "Jane Doe",
+      "signatoryPosition": "Position",
+      "signatoryPositionPlaceholder": "Geschäftsführer:in",
+      "contactEmail": "Öffentliche Kontakt-E-Mail",
+      "website": "Website",
+      "addressTitle": "Registrierte Adresse",
       "addressDescription": "Wird in der Konformitätserklärung und anderen Compliance-Dokumenten verwendet.",
       "addressLine1": "Adresszeile 1",
       "addressLine1Placeholder": "Hauptstraße 123",
@@ -35,7 +51,11 @@
       "error": "Einstellungen konnten nicht gespeichert werden. Bitte versuchen Sie es erneut.",
       "readOnly": "Nur Admins können die Organisationseinstellungen bearbeiten.",
       "orgChart": "Organigramm",
-      "orgChartDescription": "Teammitglieder nach Rollenhierarchie gruppiert."
+      "orgChartDescription": "Teammitglieder nach Rollenhierarchie gruppiert.",
+      "docReady": {
+        "title": "Konformitätserklärung kann noch nicht ausgestellt werden",
+        "description": "{count, plural, one {# Pflichtfeld fehlt} other {# Pflichtfelder fehlen}} für die CRA-Dokumenterstellung. Bitte ausfüllen — der Konformitäts-Workflow verweigert die Ausstellung, bis diese Seite vollständig ist."
+      }
     },
     "team": {
       "title": "Team",

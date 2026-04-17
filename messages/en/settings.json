@@ -17,7 +17,23 @@
       "namePlaceholder": "Acme Inc.",
       "languageLabel": "Default language",
       "languageDescription": "Sets the default language for your organization.",
-      "addressTitle": "Company Address",
+      "legalTitle": "Legal identity",
+      "legalDescription": "Required on every Declaration of Conformity and technical file. Fill this in exactly as it appears on your incorporation documents.",
+      "legalName": "Legal entity name",
+      "legalNameHint": "Registered company name — may differ from the trading/display name above.",
+      "legalNamePlaceholder": "Acme GmbH",
+      "registrationNumber": "Registration or VAT number",
+      "registrationNumberHint": "Trade register (HRB), VAT ID, or equivalent national business registration.",
+      "registrationNumberPlaceholder": "DE123456789 or HRB 12345",
+      "signatoryTitle": "Signatory & contact",
+      "signatoryDescription": "The signatory is the natural person who signs the Declaration of Conformity. The contact email is the customer-facing public contact printed on product labels.",
+      "signatoryName": "Signatory name",
+      "signatoryNamePlaceholder": "Jane Doe",
+      "signatoryPosition": "Signatory position",
+      "signatoryPositionPlaceholder": "Chief Executive Officer",
+      "contactEmail": "Public contact email",
+      "website": "Website",
+      "addressTitle": "Registered Address",
       "addressDescription": "Used in the Declaration of Conformity and other compliance documents.",
       "addressLine1": "Address line 1",
       "addressLine1Placeholder": "123 Main Street",
@@ -35,7 +51,11 @@
       "error": "Failed to save settings. Please try again.",
       "readOnly": "Only admins can edit organization settings.",
       "orgChart": "Organization chart",
-      "orgChartDescription": "Team members grouped by role hierarchy."
+      "orgChartDescription": "Team members grouped by role hierarchy.",
+      "docReady": {
+        "title": "Declaration of Conformity is not ready to issue yet",
+        "description": "{count, plural, one {# required field is missing} other {# required fields are missing}} for CRA document generation. Fill them below — the conformity workflow will refuse to issue the DoC until everything on this page is complete."
+      }
     },
     "team": {
       "title": "Team",

@@ -17,6 +17,7 @@ import type {
 } from "../products/actions";
 import type { IncidentWidgetData } from "../incidents/actions";
 import type { SupportWidgetData } from "../products/[productId]/releases/actions";
+import type { CompanyProfileStatus } from "../settings/actions";
 import { ComplianceTrendChart } from "./charts/compliance-trend-chart";
 import { VulnAgingChart } from "./charts/vuln-aging-chart";
 import { ChecklistProgressChart } from "./charts/checklist-progress-chart";
@@ -104,11 +105,13 @@ export function DashboardContent(
   stats: DashboardStats & {
     incidentWidget?: IncidentWidgetData;
     supportWidget?: SupportWidgetData;
+    profileStatus?: CompanyProfileStatus;
   },
 ) {
   const t = useTranslations("dashboard");
   const tInc = useTranslations("incidents");
   const tRel = useTranslations("releases");
+  const tOrg = useTranslations("settings.organization");
   const rootRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -374,6 +377,20 @@ export function DashboardContent(
             )}
           </StatCard>
         </div>
+
+        {/* ── Company profile completeness — blocks DoC issuance ── */}
+        {stats.profileStatus && !stats.profileStatus.complete && (
+          <div data-reveal>
+            <CompanyProfileBanner
+              missing={stats.profileStatus.missing.length}
+              title={tOrg("docReady.title")}
+              description={tOrg("docReady.description", {
+                count: stats.profileStatus.missing.length,
+              })}
+              cta={t("actionNeeded.cta")}
+            />
+          </div>
+        )}
 
         {/* ── Active Incidents Banner — Article 14 countdown ── */}
         {stats.incidentWidget && stats.incidentWidget.activeCount > 0 && (
@@ -673,6 +690,51 @@ export function DashboardContent(
 // ---------------------------------------------------------------------------
 // Action Needed Banner
 // ---------------------------------------------------------------------------
+
+function CompanyProfileBanner({
+  missing,
+  title,
+  description,
+  cta,
+}: {
+  missing: number;
+  title: string;
+  description: string;
+  cta: string;
+}) {
+  return (
+    <div
+      className="overflow-hidden rounded-2xl border border-[#D97706]/30"
+      style={{
+        background:
+          "linear-gradient(135deg, rgba(217,119,6,0.18), rgba(234,88,12,0.08))",
+      }}
+    >
+      <div className="flex flex-col items-start justify-between gap-3 p-5 md:flex-row md:items-center">
+        <div className="flex items-start gap-3">
+          <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-[#D97706]/25">
+            <HugeIcon name="alert-02" size={16} className="text-[#D97706]" />
+          </div>
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-wider text-[#D97706]">
+              {title}
+            </p>
+            <p className="mt-1 max-w-xl text-xs text-muted-foreground">
+              {description}
+            </p>
+          </div>
+        </div>
+        <Link
+          href="/app/settings/organization"
+          className="inline-flex shrink-0 items-center gap-2 rounded-lg bg-[#D97706] px-4 py-2 text-xs font-semibold text-white transition-transform hover:-translate-y-0.5"
+        >
+          {missing > 0 ? `${cta} (${missing})` : cta}
+          <HugeIcon name="arrow-right-01-stroke-rounded" size={14} />
+        </Link>
+      </div>
+    </div>
+  );
+}
 
 function SupportWatchStrip({
   data,

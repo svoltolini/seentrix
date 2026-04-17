@@ -42,6 +42,32 @@ export function OrgSettingsContent({
   const [postalCode, setPostalCode] = useState(org?.postal_code ?? "");
   const [city, setCity] = useState(org?.city ?? "");
   const [country, setCountry] = useState(org?.country ?? "");
+  const [legalName, setLegalName] = useState(org?.legal_name ?? "");
+  const [registrationNumber, setRegistrationNumber] = useState(
+    org?.registration_number ?? "",
+  );
+  const [signatoryName, setSignatoryName] = useState(
+    org?.signatory_name ?? "",
+  );
+  const [signatoryPosition, setSignatoryPosition] = useState(
+    org?.signatory_position ?? "",
+  );
+  const [contactEmail, setContactEmail] = useState(org?.contact_email ?? "");
+  const [website, setWebsite] = useState(org?.website ?? "");
+
+  // Fields mandatory for DoC issuance; shown inline so users know why.
+  const docReadyFields: { key: string; value: string }[] = [
+    { key: "legalName", value: legalName },
+    { key: "registrationNumber", value: registrationNumber },
+    { key: "addressLine1", value: addressLine1 },
+    { key: "postalCode", value: postalCode },
+    { key: "city", value: city },
+    { key: "country", value: country },
+    { key: "signatoryName", value: signatoryName },
+    { key: "signatoryPosition", value: signatoryPosition },
+    { key: "contactEmail", value: contactEmail },
+  ];
+  const missingForDoc = docReadyFields.filter((f) => !f.value.trim());
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -55,6 +81,12 @@ export function OrgSettingsContent({
     formData.set("postal_code", postalCode);
     formData.set("city", city);
     formData.set("country", country);
+    formData.set("legal_name", legalName);
+    formData.set("registration_number", registrationNumber);
+    formData.set("signatory_name", signatoryName);
+    formData.set("signatory_position", signatoryPosition);
+    formData.set("contact_email", contactEmail);
+    formData.set("website", website);
 
     startTransition(async () => {
       const result = await updateOrganization(formData);
@@ -127,6 +159,124 @@ export function OrgSettingsContent({
                     {lang === "en" ? "English" : "Deutsch"}
                   </label>
                 ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* DoC-readiness banner */}
+        {isAdmin && missingForDoc.length > 0 && (
+          <div
+            className="rounded-xl border border-[#D97706]/30 p-4"
+            style={{
+              background:
+                "linear-gradient(135deg, rgba(217,119,6,0.12), rgba(234,88,12,0.06))",
+            }}
+          >
+            <p className="text-xs font-semibold text-[#D97706]">
+              {t("docReady.title")}
+            </p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              {t("docReady.description", { count: missingForDoc.length })}
+            </p>
+          </div>
+        )}
+
+        {/* Legal entity (CRA-mandatory) */}
+        <div className="rounded-xl bg-card">
+          <div className="border-b border-white/[0.06] px-6 py-4">
+            <h2 className="text-sm font-semibold">{t("legalTitle")}</h2>
+            <p className="mt-0.5 text-xs text-muted-foreground/60">
+              {t("legalDescription")}
+            </p>
+          </div>
+          <div className="space-y-5 px-6 py-5">
+            <div className="flex flex-col gap-1.5">
+              <Label htmlFor="legal_name">{t("legalName")}</Label>
+              <Input
+                id="legal_name"
+                value={legalName}
+                onChange={(e) => setLegalName(e.target.value)}
+                placeholder={t("legalNamePlaceholder")}
+                disabled={!isAdmin}
+              />
+              <p className="text-[11px] text-muted-foreground/60">
+                {t("legalNameHint")}
+              </p>
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <Label htmlFor="registration_number">
+                {t("registrationNumber")}
+              </Label>
+              <Input
+                id="registration_number"
+                value={registrationNumber}
+                onChange={(e) => setRegistrationNumber(e.target.value)}
+                placeholder={t("registrationNumberPlaceholder")}
+                disabled={!isAdmin}
+              />
+              <p className="text-[11px] text-muted-foreground/60">
+                {t("registrationNumberHint")}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Signatory + public contact */}
+        <div className="rounded-xl bg-card">
+          <div className="border-b border-white/[0.06] px-6 py-4">
+            <h2 className="text-sm font-semibold">{t("signatoryTitle")}</h2>
+            <p className="mt-0.5 text-xs text-muted-foreground/60">
+              {t("signatoryDescription")}
+            </p>
+          </div>
+          <div className="space-y-5 px-6 py-5">
+            <div className="grid gap-5 sm:grid-cols-2">
+              <div className="flex flex-col gap-1.5">
+                <Label htmlFor="signatory_name">{t("signatoryName")}</Label>
+                <Input
+                  id="signatory_name"
+                  value={signatoryName}
+                  onChange={(e) => setSignatoryName(e.target.value)}
+                  placeholder={t("signatoryNamePlaceholder")}
+                  disabled={!isAdmin}
+                />
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <Label htmlFor="signatory_position">
+                  {t("signatoryPosition")}
+                </Label>
+                <Input
+                  id="signatory_position"
+                  value={signatoryPosition}
+                  onChange={(e) => setSignatoryPosition(e.target.value)}
+                  placeholder={t("signatoryPositionPlaceholder")}
+                  disabled={!isAdmin}
+                />
+              </div>
+            </div>
+            <div className="grid gap-5 sm:grid-cols-2">
+              <div className="flex flex-col gap-1.5">
+                <Label htmlFor="contact_email">{t("contactEmail")}</Label>
+                <Input
+                  id="contact_email"
+                  type="email"
+                  value={contactEmail}
+                  onChange={(e) => setContactEmail(e.target.value)}
+                  placeholder="contact@example.com"
+                  disabled={!isAdmin}
+                />
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <Label htmlFor="website">{t("website")}</Label>
+                <Input
+                  id="website"
+                  type="url"
+                  value={website}
+                  onChange={(e) => setWebsite(e.target.value)}
+                  placeholder="https://example.com"
+                  disabled={!isAdmin}
+                />
               </div>
             </div>
           </div>

@@ -46,6 +46,13 @@ export interface OrgSettings {
   postal_code: string | null;
   city: string | null;
   country: string | null;
+  legal_name: string | null;
+  registration_number: string | null;
+  signatory_name: string | null;
+  signatory_position: string | null;
+  contact_email: string | null;
+  website: string | null;
+  onboarding_completed: boolean;
 }
 
 export async function loadOrgSettings(): Promise<OrgSettings | null> {
@@ -72,6 +79,13 @@ export async function loadOrgSettings(): Promise<OrgSettings | null> {
     postal_code: (record.postal_code as string) ?? null,
     city: (record.city as string) ?? null,
     country: (record.country as string) ?? null,
+    legal_name: (record.legal_name as string) ?? null,
+    registration_number: (record.registration_number as string) ?? null,
+    signatory_name: (record.signatory_name as string) ?? null,
+    signatory_position: (record.signatory_position as string) ?? null,
+    contact_email: (record.contact_email as string) ?? null,
+    website: (record.website as string) ?? null,
+    onboarding_completed: !!record.onboarding_completed,
   };
 }
 
@@ -87,19 +101,28 @@ export async function updateOrganization(
 
   const updateData: Record<string, unknown> = { name };
 
-  const language = formData.get("language") as string | null;
-  const address_line1 = formData.get("address_line1") as string | null;
-  const address_line2 = formData.get("address_line2") as string | null;
-  const postal_code = formData.get("postal_code") as string | null;
-  const city = formData.get("city") as string | null;
-  const country = formData.get("country") as string | null;
+  // Read every optional field from the form; NULL out blanks so the DB
+  // matches the UI state exactly. All "required-for-DoC" fields live here
+  // too — the gate in issueDeclaration enforces their presence at use-time.
+  const setIfPresent = (key: string, dbCol?: string) => {
+    const raw = formData.get(key);
+    if (raw === null) return;
+    const value = typeof raw === "string" ? raw.trim() : null;
+    updateData[dbCol ?? key] = value ? value : null;
+  };
 
-  if (language) updateData.language = language;
-  if (address_line1 !== null) updateData.address_line1 = address_line1 || null;
-  if (address_line2 !== null) updateData.address_line2 = address_line2 || null;
-  if (postal_code !== null) updateData.postal_code = postal_code || null;
-  if (city !== null) updateData.city = city || null;
-  if (country !== null) updateData.country = country || null;
+  setIfPresent("language");
+  setIfPresent("address_line1");
+  setIfPresent("address_line2");
+  setIfPresent("postal_code");
+  setIfPresent("city");
+  setIfPresent("country");
+  setIfPresent("legal_name");
+  setIfPresent("registration_number");
+  setIfPresent("signatory_name");
+  setIfPresent("signatory_position");
+  setIfPresent("contact_email");
+  setIfPresent("website");
 
   const { error } = await supabase
     .from("organizations")
@@ -111,6 +134,39 @@ export async function updateOrganization(
   await logActivity({ action: "organization.updated", targetType: "organization", targetId: orgId, targetName: name });
 
   return {};
+}
+
+// ---------------------------------------------------------------------------
+// Company profile completeness — used by the dashboard banner + DoC gate.
+// Keep the list in sync with DOC_REQUIRED_ORG_FIELDS in the conformity
+// action. Returns the list of missing field keys so the UI can deep-link.
+// ---------------------------------------------------------------------------
+
+export interface CompanyProfileStatus {
+  complete: boolean;
+  missing: string[];
+}
+
+const COMPANY_PROFILE_REQUIRED: (keyof OrgSettings)[] = [
+  "legal_name",
+  "registration_number",
+  "address_line1",
+  "postal_code",
+  "city",
+  "country",
+  "signatory_name",
+  "signatory_position",
+  "contact_email",
+];
+
+export async function getCompanyProfileStatus(): Promise<CompanyProfileStatus> {
+  const org = await loadOrgSettings();
+  if (!org) return { complete: false, missing: COMPANY_PROFILE_REQUIRED };
+  const missing = COMPANY_PROFILE_REQUIRED.filter((key) => {
+    const value = org[key];
+    return typeof value !== "string" || value.trim() === "";
+  });
+  return { complete: missing.length === 0, missing };
 }
 
 // ---------------------------------------------------------------------------

@@ -110,6 +110,7 @@
       "issued": "Erklärung ausgestellt",
       "issuedOn": "Ausgestellt am {date}",
       "stepsIncomplete": "Alle Ablaufschritte müssen abgeschlossen oder N/A sein, bevor die Erklärung ausgestellt werden kann.",
+      "profileIncomplete": "Im Unternehmensprofil fehlen Pflichtangaben. Öffnen Sie Einstellungen → Organisation, um die Angaben zu vervollständigen.",
       "downloadFailed": "Herunterladen fehlgeschlagen"
     },
     "toast": {

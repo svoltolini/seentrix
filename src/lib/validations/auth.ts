@@ -12,7 +12,27 @@ export const signupSchema = z.object({
 });
 
 export const onboardingSchema = z.object({
+  // Step 1 — identity
   organizationName: z.string().min(1),
+  // Step 2 — legal entity (required for CRA document generation)
+  legalName: z.string().min(1),
+  registrationNumber: z.string().min(1),
+  entityType: z.enum([
+    "manufacturer",
+    "authorised_representative",
+    "importer",
+    "distributor",
+  ]),
+  addressLine1: z.string().min(1),
+  addressLine2: z.string().optional(),
+  postalCode: z.string().min(1),
+  city: z.string().min(1),
+  country: z.string().min(1),
+  // Step 3 — signatory + contact
+  signatoryName: z.string().min(1),
+  signatoryPosition: z.string().min(1),
+  contactEmail: z.string().email(),
+  website: z.string().url().optional().or(z.literal("")),
 });
 
 export const forgotPasswordSchema = z.object({

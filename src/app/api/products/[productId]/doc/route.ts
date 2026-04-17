@@ -37,7 +37,9 @@ export async function GET(
       .single(),
     supabase
       .from("organizations")
-      .select("name, address, postal_code, city, country")
+      .select(
+        "name, legal_name, registration_number, address_line1, address_line2, postal_code, city, country, signatory_name, signatory_position, contact_email, website",
+      )
       .eq("id", orgId)
       .single(),
   ]);
@@ -48,8 +50,12 @@ export async function GET(
   const p = product as Record<string, string | null>;
   const o = org as Record<string, string | null>;
 
+  // Prefer the registered legal entity name on formal documents; fall back
+  // to the display name only if the profile hasn't been completed.
+  const manufacturerName = o.legal_name?.trim() || o.name || "";
   const addressParts = [
-    o.address,
+    o.address_line1,
+    o.address_line2,
     [o.postal_code, o.city].filter(Boolean).join(" "),
     o.country,
   ].filter(Boolean);
@@ -59,17 +65,26 @@ export async function GET(
     : "N/A";
 
   const content = JSON.stringify({
-    manufacturerName: o.name ?? "",
+    manufacturerName,
     manufacturerAddress: addressParts.join(", "),
+    manufacturerRegistration: o.registration_number ?? "",
+    manufacturerContact: o.contact_email ?? "",
+    manufacturerWebsite: o.website ?? "",
     productName: p.name ?? "",
     productIdentification: [p.type, p.description ?? ""]
       .filter(Boolean)
       .join(" · "),
-    conformityStatement: `The manufacturer declares under its sole responsibility that the product named above is in conformity with Regulation (EU) 2024/2847 (Cyber Resilience Act) and fulfils the essential cybersecurity requirements set out in Annex I. Conformity route: ${p.conformity_route ?? "module_a"}.`,
+    conformityStatement: `${manufacturerName} declares under its sole responsibility that the product named above is in conformity with Regulation (EU) 2024/2847 (Cyber Resilience Act) and fulfils the essential cybersecurity requirements set out in Annex I. Conformity route: ${p.conformity_route ?? "module_a"}.`,
     standardsApplied:
       "Harmonised standards EN 18031-1, EN 18031-2, EN 18031-3 (where applicable).",
     notifiedBodyName: p.notified_body_name ?? "N/A",
     notifiedBodyNumber: notifiedBodyLine,
+    signatoryName: o.signatory_name ?? "",
+    signatoryPosition: o.signatory_position ?? "",
+    place: o.city ?? "",
+    date: p.declaration_issued_at
+      ? new Date(p.declaration_issued_at).toLocaleDateString()
+      : new Date().toLocaleDateString(),
     version: p.declaration_version ?? "",
     issuedAt: p.declaration_issued_at
       ? new Date(p.declaration_issued_at).toLocaleDateString()

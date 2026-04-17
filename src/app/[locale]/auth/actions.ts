@@ -117,9 +117,20 @@ export async function completeOnboarding(
     }
   }
 
-  // Normal flow — create new org
   const raw = {
     organizationName: formData.get("organizationName") as string,
+    legalName: formData.get("legalName") as string,
+    registrationNumber: formData.get("registrationNumber") as string,
+    entityType: formData.get("entityType") as string,
+    addressLine1: formData.get("addressLine1") as string,
+    addressLine2: (formData.get("addressLine2") as string) || undefined,
+    postalCode: formData.get("postalCode") as string,
+    city: formData.get("city") as string,
+    country: formData.get("country") as string,
+    signatoryName: formData.get("signatoryName") as string,
+    signatoryPosition: formData.get("signatoryPosition") as string,
+    contactEmail: formData.get("contactEmail") as string,
+    website: (formData.get("website") as string) || undefined,
   };
 
   const result = onboardingSchema.safeParse(raw);
@@ -127,24 +138,62 @@ export async function completeOnboarding(
     return { error: result.error.issues[0].message };
   }
 
-  const { error } = await supabase.rpc("create_org_and_user", {
-    p_org_name: result.data.organizationName,
-    p_full_name: user.user_metadata.full_name ?? "",
-    p_email: user.email!,
-    p_avatar_url: avatarUrl,
-  });
-
-  if (error) {
-    if (error.message.includes("already onboarded")) {
-      return { error: "alreadyOnboarded" };
+  // If the user doesn't yet have an org, create it via the existing RPC.
+  // If they do (partial onboarding from a previous session), just update.
+  let orgId = user.app_metadata?.org_id as string | undefined;
+  if (!orgId) {
+    const { error } = await supabase.rpc("create_org_and_user", {
+      p_org_name: result.data.organizationName,
+      p_full_name: user.user_metadata.full_name ?? "",
+      p_email: user.email!,
+      p_avatar_url: avatarUrl,
+    });
+    if (error) {
+      if (error.message.includes("already onboarded")) {
+        return { error: "alreadyOnboarded" };
+      }
+      return { error: "generic" };
     }
-    return { error: "generic" };
+    // Refresh session to pick up new org_id claim in JWT.
+    await supabase.auth.refreshSession();
+    const {
+      data: { user: refreshed },
+    } = await supabase.auth.getUser();
+    orgId = refreshed?.app_metadata?.org_id as string | undefined;
   }
 
-  // Refresh session to pick up new org_id claim in JWT
-  await supabase.auth.refreshSession();
+  if (!orgId) return { error: "generic" };
 
-  await logActivity({ action: "organization.created", targetType: "organization", targetName: result.data.organizationName });
+  // Persist the legal-identity + signatory details. These columns power every
+  // CRA document the product tab later issues (Declaration of Conformity,
+  // Technical Documentation, Incident Report, etc.).
+  const { error: updateError } = await supabase
+    .from("organizations")
+    .update({
+      name: result.data.organizationName,
+      legal_name: result.data.legalName,
+      registration_number: result.data.registrationNumber,
+      entity_type: result.data.entityType,
+      address_line1: result.data.addressLine1,
+      address_line2: result.data.addressLine2 || null,
+      postal_code: result.data.postalCode,
+      city: result.data.city,
+      country: result.data.country,
+      signatory_name: result.data.signatoryName,
+      signatory_position: result.data.signatoryPosition,
+      contact_email: result.data.contactEmail,
+      website: result.data.website || null,
+      onboarding_completed: true,
+    })
+    .eq("id", orgId);
+
+  if (updateError) return { error: "generic" };
+
+  await logActivity({
+    action: "organization.created",
+    targetType: "organization",
+    targetName: result.data.organizationName,
+  });
 
   redirect(`/${locale}/app/welcome`);
 }

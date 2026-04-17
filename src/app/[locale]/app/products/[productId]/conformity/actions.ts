@@ -344,14 +344,27 @@ export async function updateNotifiedBody(
   return {};
 }
 
+// Required for a legally useful Declaration of Conformity (Annex V).
+const DOC_REQUIRED_ORG_FIELDS = [
+  "legal_name",
+  "registration_number",
+  "address_line1",
+  "postal_code",
+  "city",
+  "country",
+  "signatory_name",
+  "signatory_position",
+  "contact_email",
+] as const;
+
 export async function issueDeclaration(
   productId: string,
-): Promise<{ error?: string; version?: string }> {
-  const { supabase, user, role } = await getAuthContext();
-  if (!user) return { error: "notAuthenticated" };
+): Promise<{ error?: string; version?: string; missingOrgFields?: string[] }> {
+  const { supabase, user, orgId, role } = await getAuthContext();
+  if (!user || !orgId) return { error: "notAuthenticated" };
   if (!canIssue(role)) return { error: "notAuthorized" };
 
-  // Guard rail — refuse to issue unless all non-N/A steps are complete.
+  // Guard rail 1 — refuse to issue unless all non-N/A steps are complete.
   const { data: steps } = await supabase
     .from("product_conformity_steps")
     .select("status")
@@ -364,6 +377,23 @@ export async function issueDeclaration(
     gating.some((s) => (s as { status: string }).status !== "complete")
   ) {
     return { error: "stepsIncomplete" };
+  }
+
+  // Guard rail 2 — every legally mandatory company field must be filled.
+  // The DoC PDF autofill pulls them straight from organizations, so a blank
+  // here would produce an unsignable document.
+  const { data: org } = await supabase
+    .from("organizations")
+    .select(DOC_REQUIRED_ORG_FIELDS.join(", "))
+    .eq("id", orgId)
+    .single();
+  if (!org) return { error: "generic" };
+  const orgRow = org as unknown as Record<string, string | null>;
+  const missingOrgFields = DOC_REQUIRED_ORG_FIELDS.filter(
+    (key) => !orgRow[key] || (orgRow[key] as string).trim() === "",
+  );
+  if (missingOrgFields.length > 0) {
+    return { error: "orgProfileIncomplete", missingOrgFields };
   }
 
   const version = `DoC-${new Date().toISOString().slice(0, 10)}-${Math.random()

@@ -125,7 +125,9 @@ export function ConformityContent({
         message:
           res.error === "stepsIncomplete"
             ? t("doc.stepsIncomplete")
-            : t("toast.saveFailed"),
+            : res.error === "orgProfileIncomplete"
+              ? t("doc.profileIncomplete")
+              : t("toast.saveFailed"),
       });
     } else if (res.version) {
       setState((prev) => ({
