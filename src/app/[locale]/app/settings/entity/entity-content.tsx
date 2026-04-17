@@ -119,21 +119,31 @@ export function EntityContent({
           </p>
         </div>
 
-        {/* Entity-type picker */}
+        {/* Entity-type picker — decorative gradient hero */}
         <div
           data-reveal
-          className="rounded-2xl border border-white/[0.06] bg-card p-6"
+          className="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-cover bg-center p-6"
+          style={{ backgroundImage: "url('/images/entity-role-bg.svg')" }}
         >
-          <div className="flex items-start justify-between gap-3">
+          {/* Readability overlay over the decorative bg */}
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-black/55 via-black/35 to-black/25" />
+
+          <div className="relative flex items-start justify-between gap-3">
             <div>
-              <h2 className="text-sm font-semibold">{t("type.title")}</h2>
-              <p className="mt-1 text-xs text-muted-foreground/70">
+              <p className="text-[10px] font-semibold uppercase tracking-wider text-white/70">
+                {t("progressLabel")}
+              </p>
+              <h2 className="mt-1 font-heading text-lg font-bold text-white">
+                {t("type.title")}
+              </h2>
+              <p className="mt-1 max-w-md text-xs text-white/75">
                 {t("type.description")}
               </p>
             </div>
-            <ProgressRing value={progress} label={t("progressLabel")} />
+            <ProgressRing value={progress} onDark />
           </div>
-          <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2">
+
+          <div className="relative mt-6 grid grid-cols-1 gap-3 md:grid-cols-2">
             {ENTITY_ORDER.map((ty) => {
               const active = state.entityType === ty;
               return (
@@ -143,29 +153,35 @@ export function EntityContent({
                   disabled={!canEdit}
                   onClick={() => handleTypeChange(ty)}
                   className={cn(
-                    "flex items-start gap-3 rounded-xl border px-4 py-4 text-left transition-colors",
+                    "group flex items-start gap-3 rounded-xl border p-4 text-left backdrop-blur-md transition-all",
                     active
-                      ? "border-primary bg-primary/5"
-                      : "border-white/[0.06] hover:border-white/[0.12]",
+                      ? "border-white/60 bg-white/15 shadow-lg shadow-black/20"
+                      : "border-white/15 bg-white/[0.06] hover:-translate-y-0.5 hover:border-white/40 hover:bg-white/10",
+                    !canEdit && "cursor-not-allowed opacity-70",
                   )}
                 >
                   <span
                     className={cn(
-                      "flex size-10 shrink-0 items-center justify-center rounded-full",
-                      active ? "bg-primary/15" : "bg-white/[0.04]",
+                      "flex size-10 shrink-0 items-center justify-center rounded-full border transition-colors",
+                      active
+                        ? "border-white/50 bg-white/25 text-white"
+                        : "border-white/20 bg-white/10 text-white/80 group-hover:text-white",
                     )}
                   >
-                    <HugeIcon
-                      name={ENTITY_ICON[ty]}
-                      size={18}
-                      className={active ? "text-primary" : "text-muted-foreground"}
-                    />
+                    <HugeIcon name={ENTITY_ICON[ty]} size={18} />
                   </span>
                   <div className="min-w-0">
-                    <p className="text-sm font-semibold text-foreground">
-                      {tType(`${ty}.title`)}
-                    </p>
-                    <p className="mt-0.5 text-[11px] text-muted-foreground/70">
+                    <div className="flex items-center gap-2">
+                      <p className="text-sm font-semibold text-white">
+                        {tType(`${ty}.title`)}
+                      </p>
+                      {active && (
+                        <span className="rounded-full bg-white/20 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
+                          {t("type.current")}
+                        </span>
+                      )}
+                    </div>
+                    <p className="mt-1 text-[11px] leading-relaxed text-white/80">
                       {tType(`${ty}.description`)}
                     </p>
                   </div>
@@ -291,13 +307,27 @@ export function EntityContent({
   );
 }
 
-function ProgressRing({ value, label }: { value: number; label: string }) {
+function ProgressRing({
+  value,
+  label,
+  onDark,
+}: {
+  value: number;
+  label?: string;
+  onDark?: boolean;
+}) {
   const SIZE = 72;
   const STROKE = 7;
   const R = (SIZE - STROKE) / 2;
   const CIRC = 2 * Math.PI * R;
   const offset = CIRC * (1 - value / 100);
-  const color = value >= 100 ? "#16A34A" : value >= 50 ? "#D97706" : "#2563EB";
+  const color = onDark
+    ? "#ffffff"
+    : value >= 100
+      ? "#16A34A"
+      : value >= 50
+        ? "#D97706"
+        : "#2563EB";
   return (
     <div className="flex flex-col items-center">
       <div className="relative" style={{ width: SIZE, height: SIZE }}>
@@ -307,8 +337,8 @@ function ProgressRing({ value, label }: { value: number; label: string }) {
             cy={SIZE / 2}
             r={R}
             fill="none"
-            stroke="var(--border)"
-            strokeOpacity="0.25"
+            stroke={onDark ? "#ffffff" : "var(--border)"}
+            strokeOpacity={onDark ? 0.2 : 0.25}
             strokeWidth={STROKE}
           />
           <circle
@@ -330,9 +360,16 @@ function ProgressRing({ value, label }: { value: number; label: string }) {
           </span>
         </div>
       </div>
-      <span className="mt-1 text-[9px] uppercase tracking-wide text-muted-foreground/70">
-        {label}
-      </span>
+      {label && (
+        <span
+          className={cn(
+            "mt-1 text-[9px] uppercase tracking-wide",
+            onDark ? "text-white/70" : "text-muted-foreground/70",
+          )}
+        >
+          {label}
+        </span>
+      )}
     </div>
   );
 }

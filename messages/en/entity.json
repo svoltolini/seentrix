@@ -6,6 +6,7 @@
     "type": {
       "title": "Your role",
       "description": "Only admins and compliance officers can change the role. Switching re-seeds the obligation list.",
+      "current": "Current",
       "manufacturer": {
         "title": "Manufacturer",
         "description": "You place products with digital elements on the EU market under your own name or trademark."
