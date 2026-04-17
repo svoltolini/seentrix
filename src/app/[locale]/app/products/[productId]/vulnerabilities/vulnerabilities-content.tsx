@@ -421,7 +421,7 @@ export function VulnerabilitiesContent({
                 className="h-10 border-white/[0.06] bg-background/40 pl-10 pr-10 text-sm"
               />
               <HugeIcon
-                name="glasses-stroke-rounded"
+                name="search-02-stroke-rounded"
                 size={16}
                 className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground/60"
               />
