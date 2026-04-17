@@ -384,7 +384,6 @@ export function DashboardContent(
         {stats.profileStatus && !stats.profileStatus.complete && (
           <div data-reveal>
             <ProfileIncompleteBanner
-              missing={stats.profileStatus.missing.length}
               eyebrow={tOrg("docReady.eyebrow")}
               title={tOrg("docReady.title")}
               description={tOrg("docReady.description", {

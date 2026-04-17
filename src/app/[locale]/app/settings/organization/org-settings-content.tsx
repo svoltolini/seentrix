@@ -168,7 +168,6 @@ export function OrgSettingsContent({
         {/* DoC-readiness banner — mirrors the Action Needed card style */}
         {isAdmin && missingForDoc.length > 0 && (
           <ProfileIncompleteBanner
-            missing={missingForDoc.length}
             eyebrow={t("docReady.eyebrow")}
             title={t("docReady.title")}
             description={t("docReady.description", {
