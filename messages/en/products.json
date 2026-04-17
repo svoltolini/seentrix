@@ -59,6 +59,7 @@
         "assessment": "Assessment",
         "checklist": "Checklist",
         "sbom": "SBOM",
+        "vulnerabilities": "Vulnerabilities",
         "documents": "Documents"
       },
       "overview": {

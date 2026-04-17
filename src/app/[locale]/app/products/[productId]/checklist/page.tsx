@@ -1,5 +1,8 @@
 import { loadProduct } from "../../actions";
-import { loadProductChecklist } from "../checklist-actions";
+import {
+  listChecklistAssignees,
+  loadProductChecklist,
+} from "../checklist-actions";
 import { ComplianceChecklist } from "../compliance-checklist";
 import { ChecklistGate } from "./checklist-gate";
 
@@ -18,9 +21,18 @@ export default async function ChecklistPage({
     return <ChecklistGate productId={productId} />;
   }
 
-  const { product: checklistProduct, items } = await loadProductChecklist(productId);
+  const [{ product: checklistProduct, items }, { members }] = await Promise.all([
+    loadProductChecklist(productId),
+    listChecklistAssignees(),
+  ]);
 
   if (!checklistProduct) return null;
 
-  return <ComplianceChecklist product={checklistProduct} initialItems={items} />;
+  return (
+    <ComplianceChecklist
+      product={checklistProduct}
+      initialItems={items}
+      members={members}
+    />
+  );
 }

@@ -1,0 +1,91 @@
+{
+  "vulnerabilities": {
+    "title": "Vulnerabilities",
+    "status": {
+      "open": "Open",
+      "in_progress": "In Progress",
+      "resolved": "Resolved",
+      "accepted": "Accepted"
+    },
+    "severity": {
+      "critical": "Critical",
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low"
+    },
+    "resolution": {
+      "fix": "Fix",
+      "mitigation": "Mitigation",
+      "false_positive": "False positive",
+      "wont_fix": "Won't fix"
+    },
+    "kpi": {
+      "total": "Total",
+      "open": "Open",
+      "critical": "Critical open",
+      "kev": "KEV",
+      "exploited": "Actively exploited"
+    },
+    "filter": {
+      "searchPlaceholder": "Search CVE or component",
+      "status": "Status",
+      "severity": "Severity",
+      "kevOnly": "KEV only",
+      "exploitedOnly": "Exploited",
+      "anyAssignee": "Any assignee",
+      "unassigned": "Unassigned",
+      "byMember": "By member",
+      "assignee": "Assignee"
+    },
+    "bulk": {
+      "selected": "{count, plural, one {# selected} other {# selected}}",
+      "changeStatus": "Change status",
+      "assign": "Assign",
+      "unassign": "Unassign",
+      "clear": "Clear"
+    },
+    "table": {
+      "cve": "CVE",
+      "component": "Component",
+      "age": "Age",
+      "assignee": "Assignee",
+      "status": "Status",
+      "selectAll": "Select all",
+      "selectRow": "Select {cve}"
+    },
+    "empty": {
+      "title": "No vulnerabilities yet",
+      "description": "Upload and scan an SBOM to surface CVEs. Findings will appear here for triage.",
+      "filtered": "No vulnerabilities match these filters.",
+      "clearFilters": "Clear filters"
+    },
+    "row": {
+      "actively_exploited": "Exploited",
+      "daysOld": "{days}d",
+      "unassign": "Unassign",
+      "assign": "Assign",
+      "unassigned": "Unassigned",
+      "more": "More actions",
+      "markExploited": "Mark actively exploited",
+      "unmarkExploited": "Remove exploited flag"
+    },
+    "modal": {
+      "resolveTitle": "{count, plural, one {Resolve vulnerability} other {Resolve # vulnerabilities}}",
+      "acceptTitle": "{count, plural, one {Accept vulnerability} other {Accept # vulnerabilities}}",
+      "resolveDescription": "Document how this was resolved. This is captured in the audit trail for your CRA records.",
+      "acceptDescription": "Record why you are accepting this risk instead of fixing it. This is captured in the audit trail for your CRA records.",
+      "cancel": "Cancel",
+      "resolutionTypeLabel": "Resolution type",
+      "notesLabel": "Notes",
+      "notesPlaceholder": "Describe the fix, mitigation, or rationale for accepting the risk."
+    },
+    "toast": {
+      "updateFailed": "Couldn't apply the change",
+      "statusUpdated": "Status updated",
+      "bulkUpdated": "{count} vulnerabilities updated",
+      "assignmentUpdated": "Assignment updated",
+      "markedExploited": "Flagged as actively exploited",
+      "unmarkedExploited": "Exploited flag removed"
+    }
+  }
+}

@@ -1,0 +1,28 @@
+import { getCurrentUserRole } from "../../../settings/actions";
+import {
+  listAssignableMembers,
+  listProductVulnerabilities,
+} from "./actions";
+import { VulnerabilitiesContent } from "./vulnerabilities-content";
+
+export default async function VulnerabilitiesPage({
+  params,
+}: {
+  params: Promise<{ locale: string; productId: string }>;
+}) {
+  const { productId } = await params;
+  const [{ vulns }, { members }, role] = await Promise.all([
+    listProductVulnerabilities(productId),
+    listAssignableMembers(),
+    getCurrentUserRole(),
+  ]);
+
+  return (
+    <VulnerabilitiesContent
+      productId={productId}
+      initialVulns={vulns}
+      members={members}
+      currentUserRole={role}
+    />
+  );
+}

@@ -11,10 +11,12 @@ import {
   type ChecklistStatus,
 } from "@/lib/constants/cra-requirements";
 import {
+  assignChecklistItem,
   updateChecklistItemStatus,
   updateChecklistItemDescription,
   uploadEvidence,
   removeEvidence,
+  type ChecklistAssignee,
   type ChecklistItem,
   type Product,
 } from "./checklist-actions";
@@ -28,9 +30,11 @@ function scoreColor(score: number): string {
 export function ComplianceChecklist({
   product,
   initialItems,
+  members,
 }: {
   product: Product;
   initialItems: ChecklistItem[];
+  members: ChecklistAssignee[];
 }) {
   const t = useTranslations("checklist");
   const [items, setItems] = useState<ChecklistItem[]>(initialItems);
@@ -88,6 +92,21 @@ export function ComplianceChecklist({
       await removeEvidence(filePath);
     },
     []
+  );
+
+  const handleAssigneeChange = useCallback(
+    async (itemId: string, userId: string | null) => {
+      const assignee = userId
+        ? members.find((m) => m.id === userId) ?? null
+        : null;
+      setItems((prev) =>
+        prev.map((i) =>
+          i.id === itemId ? { ...i, assigned_to: userId, assignee } : i
+        )
+      );
+      await assignChecklistItem(itemId, userId);
+    },
+    [members]
   );
 
   function findItem(requirementId: string) {
@@ -196,10 +215,13 @@ export function ComplianceChecklist({
                 article={req.article}
                 status={item.status}
                 description={item.description}
+                assignee={item.assignee}
+                members={members}
                 onStatusChange={handleStatusChange}
                 onNotesChange={handleNotesChange}
                 onEvidenceUpload={handleEvidenceUpload}
                 onEvidenceRemove={handleEvidenceRemove}
+                onAssigneeChange={handleAssigneeChange}
               />
             );
           })}
@@ -242,10 +264,13 @@ export function ComplianceChecklist({
                 article={req.article}
                 status={item.status}
                 description={item.description}
+                assignee={item.assignee}
+                members={members}
                 onStatusChange={handleStatusChange}
                 onNotesChange={handleNotesChange}
                 onEvidenceUpload={handleEvidenceUpload}
                 onEvidenceRemove={handleEvidenceRemove}
+                onAssigneeChange={handleAssigneeChange}
               />
             );
           })}

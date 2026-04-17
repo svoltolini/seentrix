@@ -3,8 +3,17 @@
 import { useState, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { HugeIcon } from "@/components/huge-icon";
 import {
   ChevronDownIcon,
   UploadIcon,
@@ -17,6 +26,18 @@ import {
   parseItemDescription,
   serializeItemDescription,
 } from "@/lib/constants/cra-requirements";
+import type { ChecklistAssignee } from "../checklist-actions";
+
+function initialsOf(name: string | null, email: string | null): string {
+  const src = name?.trim() || email?.trim() || "";
+  if (!src) return "?";
+  return src
+    .split(/\s+/)
+    .map((p) => p[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+}
 
 const STATUS_DOT: Record<ChecklistStatus, string> = {
   pending: "bg-muted-foreground/30",
@@ -40,10 +61,13 @@ interface ChecklistItemCardProps {
   article: string;
   status: ChecklistStatus;
   description: string | null;
+  assignee: ChecklistAssignee | null;
+  members: ChecklistAssignee[];
   onStatusChange: (id: string, status: ChecklistStatus) => void;
   onNotesChange: (id: string, description: string) => void;
   onEvidenceUpload: (id: string, file: File) => Promise<string | null>;
   onEvidenceRemove: (id: string, fileName: string) => void;
+  onAssigneeChange: (id: string, userId: string | null) => void;
 }
 
 export function ChecklistItemCard({
@@ -53,10 +77,13 @@ export function ChecklistItemCard({
   article,
   status,
   description,
+  assignee,
+  members,
   onStatusChange,
   onNotesChange,
   onEvidenceUpload,
   onEvidenceRemove,
+  onAssigneeChange,
 }: ChecklistItemCardProps) {
   const t = useTranslations("checklist");
   const [expanded, setExpanded] = useState(false);
@@ -121,7 +148,24 @@ export function ChecklistItemCard({
             {t(`${translationNs}.${requirementId}.title`)}
           </span>
         </div>
-        <div className="flex shrink-0 items-center gap-2">
+        <div className="flex shrink-0 items-center gap-3">
+          {assignee ? (
+            <Avatar size="sm" title={assignee.full_name ?? assignee.email ?? ""}>
+              {assignee.avatar_url && (
+                <AvatarImage src={assignee.avatar_url} alt="" />
+              )}
+              <AvatarFallback>
+                {initialsOf(assignee.full_name, assignee.email)}
+              </AvatarFallback>
+            </Avatar>
+          ) : (
+            <span
+              className="flex size-6 items-center justify-center rounded-full border border-dashed border-muted-foreground/30 text-muted-foreground/40"
+              title={t("unassigned")}
+            >
+              <HugeIcon name="add-01" size={10} />
+            </span>
+          )}
           <div className="flex items-center gap-1.5">
             <span
               className={cn("size-1.5 rounded-full", STATUS_DOT[status])}
@@ -160,6 +204,76 @@ export function ChecklistItemCard({
             <p className="text-sm leading-relaxed text-muted-foreground">
               {t(`${translationNs}.${requirementId}.guidance`)}
             </p>
+          </div>
+
+          {/* Assignee picker */}
+          <div className="flex flex-col gap-2">
+            <span className="text-xs font-medium text-muted-foreground/50">
+              {t("assigneeLabel")}
+            </span>
+            <DropdownMenu>
+              <DropdownMenuTrigger
+                render={
+                  <button
+                    type="button"
+                    className={cn(
+                      buttonVariants({ variant: "outline", size: "sm" }),
+                      "h-9 w-fit justify-start gap-2 px-2"
+                    )}
+                  />
+                }
+              >
+                {assignee ? (
+                  <>
+                    <Avatar size="sm">
+                      {assignee.avatar_url && (
+                        <AvatarImage src={assignee.avatar_url} alt="" />
+                      )}
+                      <AvatarFallback>
+                        {initialsOf(assignee.full_name, assignee.email)}
+                      </AvatarFallback>
+                    </Avatar>
+                    <span>{assignee.full_name ?? assignee.email}</span>
+                  </>
+                ) : (
+                  <>
+                    <span className="flex size-6 items-center justify-center rounded-full border border-dashed border-muted-foreground/40 text-muted-foreground/50">
+                      <HugeIcon name="add-01" size={12} />
+                    </span>
+                    <span className="text-muted-foreground/70">
+                      {t("assignTo")}
+                    </span>
+                  </>
+                )}
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="max-h-72 overflow-y-auto">
+                <DropdownMenuItem onClick={() => onAssigneeChange(id, null)}>
+                  <HugeIcon
+                    name="circle-stroke-rounded"
+                    size={14}
+                    className="text-muted-foreground"
+                  />
+                  {t("unassign")}
+                </DropdownMenuItem>
+                {members.length > 0 && <DropdownMenuSeparator />}
+                {members.map((m) => (
+                  <DropdownMenuItem
+                    key={m.id}
+                    onClick={() => onAssigneeChange(id, m.id)}
+                  >
+                    <Avatar size="sm">
+                      {m.avatar_url && <AvatarImage src={m.avatar_url} alt="" />}
+                      <AvatarFallback>
+                        {initialsOf(m.full_name, m.email)}
+                      </AvatarFallback>
+                    </Avatar>
+                    <span className="truncate">
+                      {m.full_name ?? m.email ?? m.id}
+                    </span>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
           {/* Status selector */}

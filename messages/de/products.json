@@ -59,6 +59,7 @@
         "assessment": "Bewertung",
         "checklist": "Checkliste",
         "sbom": "SBOM",
+        "vulnerabilities": "Schwachstellen",
         "documents": "Dokumente"
       },
       "overview": {

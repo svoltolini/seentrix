@@ -1,0 +1,91 @@
+{
+  "vulnerabilities": {
+    "title": "Schwachstellen",
+    "status": {
+      "open": "Offen",
+      "in_progress": "In Bearbeitung",
+      "resolved": "Behoben",
+      "accepted": "Akzeptiert"
+    },
+    "severity": {
+      "critical": "Kritisch",
+      "high": "Hoch",
+      "medium": "Mittel",
+      "low": "Niedrig"
+    },
+    "resolution": {
+      "fix": "Behebung",
+      "mitigation": "Minderung",
+      "false_positive": "Fehlalarm",
+      "wont_fix": "Keine Behebung"
+    },
+    "kpi": {
+      "total": "Gesamt",
+      "open": "Offen",
+      "critical": "Kritisch offen",
+      "kev": "KEV",
+      "exploited": "Aktiv ausgenutzt"
+    },
+    "filter": {
+      "searchPlaceholder": "CVE oder Komponente suchen",
+      "status": "Status",
+      "severity": "Schweregrad",
+      "kevOnly": "Nur KEV",
+      "exploitedOnly": "Ausgenutzt",
+      "anyAssignee": "Beliebige Zuweisung",
+      "unassigned": "Nicht zugewiesen",
+      "byMember": "Nach Mitglied",
+      "assignee": "Zugewiesen an"
+    },
+    "bulk": {
+      "selected": "{count, plural, one {# ausgewählt} other {# ausgewählt}}",
+      "changeStatus": "Status ändern",
+      "assign": "Zuweisen",
+      "unassign": "Zuweisung entfernen",
+      "clear": "Aufheben"
+    },
+    "table": {
+      "cve": "CVE",
+      "component": "Komponente",
+      "age": "Alter",
+      "assignee": "Zuständig",
+      "status": "Status",
+      "selectAll": "Alle auswählen",
+      "selectRow": "{cve} auswählen"
+    },
+    "empty": {
+      "title": "Noch keine Schwachstellen",
+      "description": "Laden Sie ein SBOM hoch und scannen Sie es, um CVEs zu finden. Ergebnisse erscheinen hier zur Bearbeitung.",
+      "filtered": "Keine Schwachstellen entsprechen diesen Filtern.",
+      "clearFilters": "Filter zurücksetzen"
+    },
+    "row": {
+      "actively_exploited": "Ausgenutzt",
+      "daysOld": "{days}T",
+      "unassign": "Zuweisung entfernen",
+      "assign": "Zuweisen",
+      "unassigned": "Nicht zugewiesen",
+      "more": "Weitere Aktionen",
+      "markExploited": "Als aktiv ausgenutzt markieren",
+      "unmarkExploited": "Markierung entfernen"
+    },
+    "modal": {
+      "resolveTitle": "{count, plural, one {Schwachstelle beheben} other {# Schwachstellen beheben}}",
+      "acceptTitle": "{count, plural, one {Schwachstelle akzeptieren} other {# Schwachstellen akzeptieren}}",
+      "resolveDescription": "Dokumentieren Sie, wie die Behebung erfolgte. Dies wird im Audit-Protokoll für Ihre CRA-Unterlagen festgehalten.",
+      "acceptDescription": "Halten Sie fest, warum Sie dieses Risiko akzeptieren, statt es zu beheben. Dies wird im Audit-Protokoll für Ihre CRA-Unterlagen festgehalten.",
+      "cancel": "Abbrechen",
+      "resolutionTypeLabel": "Art der Behebung",
+      "notesLabel": "Notizen",
+      "notesPlaceholder": "Beschreiben Sie die Behebung, Minderung oder den Grund für die Akzeptanz des Risikos."
+    },
+    "toast": {
+      "updateFailed": "Änderung konnte nicht übernommen werden",
+      "statusUpdated": "Status aktualisiert",
+      "bulkUpdated": "{count} Schwachstellen aktualisiert",
+      "assignmentUpdated": "Zuweisung aktualisiert",
+      "markedExploited": "Als aktiv ausgenutzt markiert",
+      "unmarkedExploited": "Markierung entfernt"
+    }
+  }
+}
