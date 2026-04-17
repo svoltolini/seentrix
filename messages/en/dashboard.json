@@ -12,7 +12,15 @@
     "medium": "Medium",
     "low": "Low",
     "vulnChart": "Vulnerability Breakdown",
+    "vulnChartSubtitle": "Open vulnerabilities across all products, ranked by severity",
     "noVulnerabilities": "No vulnerabilities found",
+    "actionNeeded": {
+      "eyebrow": "Action Needed",
+      "headline": "Get {product} on track before {deadline}",
+      "daysLeft": "days left",
+      "compliance": "compliance",
+      "cta": "Open checklist"
+    },
     "daysRemaining": "{days}d",
     "passed": "Passed",
     "timeAgo": {

@@ -12,7 +12,15 @@
     "medium": "Mittel",
     "low": "Niedrig",
     "vulnChart": "Schwachstellen-Aufschlüsselung",
+    "vulnChartSubtitle": "Offene Schwachstellen aller Produkte, nach Schweregrad sortiert",
     "noVulnerabilities": "Keine Schwachstellen gefunden",
+    "actionNeeded": {
+      "eyebrow": "Handlungsbedarf",
+      "headline": "Bringen Sie {product} vor {deadline} auf Kurs",
+      "daysLeft": "Tage verbleibend",
+      "compliance": "Compliance",
+      "cta": "Checkliste öffnen"
+    },
     "daysRemaining": "{days}T",
     "passed": "Vergangen",
     "timeAgo": {

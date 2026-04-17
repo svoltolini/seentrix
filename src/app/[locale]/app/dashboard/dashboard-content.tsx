@@ -1,11 +1,14 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Link } from "@/i18n/navigation";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { PlusIcon } from "lucide-react";
 import { HugeIcon } from "@/components/huge-icon";
+import { StaggerReveal } from "@/components/stagger-reveal";
 import {
   PieChart,
   Pie,
@@ -14,7 +17,11 @@ import {
   Tooltip,
 } from "recharts";
 import { SEVERITY_CHART_COLORS } from "../products/[productId]/constants";
-import type { DashboardStats, ActivityItem } from "../products/actions";
+import type {
+  DashboardStats,
+  DashboardProduct,
+  ActivityItem,
+} from "../products/actions";
 import { ComplianceTrendChart } from "./charts/compliance-trend-chart";
 import { VulnAgingChart } from "./charts/vuln-aging-chart";
 import { ChecklistProgressChart } from "./charts/checklist-progress-chart";
@@ -51,7 +58,28 @@ function scoreColor(score: number): string {
   return "#DC2626";
 }
 
-/** Solid-color category pills — matches the products list page */
+/**
+ * Pick the product most likely to block the next CRA deadline:
+ * lowest compliance_score below the 75% "on track" threshold, with not-yet
+ * -assessed products preferred (they haven't even started).
+ * Returns null when every product is at or above the threshold.
+ */
+function findAtRiskProduct(
+  products: DashboardProduct[],
+): DashboardProduct | null {
+  if (products.length === 0) return null;
+  const candidates = products.filter((p) => p.compliance_score < 75);
+  if (candidates.length === 0) return null;
+  candidates.sort((a, b) => {
+    // not-assessed first (no cra_category), then by lowest score
+    const aUn = a.cra_category ? 1 : 0;
+    const bUn = b.cra_category ? 1 : 0;
+    if (aUn !== bUn) return aUn - bUn;
+    return a.compliance_score - b.compliance_score;
+  });
+  return candidates[0];
+}
+
 const CATEGORY_PILL: Record<string, string> = {
   default: "bg-[#2563EB]",
   important_class_i: "bg-[#D97706]",
@@ -66,7 +94,6 @@ const CATEGORY_KEY_MAP: Record<string, string> = {
   critical: "categoryCritical",
 };
 
-/** Activity type pill colors — solid fills with white text */
 const ACTIVITY_TYPE_PILL: Record<string, string> = {
   assessment: "bg-[#7C3AED]",
   checklist: "bg-[#2563EB]",
@@ -80,6 +107,8 @@ const ACTIVITY_TYPE_PILL: Record<string, string> = {
 
 export function DashboardContent(stats: DashboardStats) {
   const t = useTranslations("dashboard");
+  const rootRef = useRef<HTMLDivElement>(null);
+
   const {
     totalProducts,
     assessedCount,
@@ -115,243 +144,332 @@ export function DashboardContent(stats: DashboardStats) {
   ];
 
   const nextDeadline = deadlines.find((dl) => getDaysUntil(dl.date) > 0);
+  const atRiskProduct =
+    totalProducts > 0 ? findAtRiskProduct(products) : null;
+
+  // --- Counter + progress-bar grow-in animations ---
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el) return;
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      // Counter numbers (stat cards)
+      el.querySelectorAll<HTMLElement>("[data-counter]").forEach((counter) => {
+        const target = counter.getAttribute("data-counter") ?? "";
+        const match = target.match(/[\d.]+/);
+        if (!match) return;
+        const endVal = parseFloat(match[0]);
+        const prefix = target.slice(0, target.indexOf(match[0]));
+        const suffix = target.slice(
+          target.indexOf(match[0]) + match[0].length,
+        );
+        const obj = { val: 0 };
+        gsap.to(obj, {
+          val: endVal,
+          duration: 1.2,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: counter,
+            start: "top 90%",
+            once: true,
+          },
+          onUpdate() {
+            counter.textContent = `${prefix}${Math.round(obj.val)}${suffix}`;
+          },
+        });
+      });
+
+      // Progress bars grow from 0% to target%
+      el.querySelectorAll<HTMLElement>("[data-progress-bar]").forEach(
+        (bar) => {
+          const target = parseFloat(
+            bar.getAttribute("data-progress-bar") ?? "0",
+          );
+          gsap.fromTo(
+            bar,
+            { width: "0%" },
+            {
+              width: `${target}%`,
+              duration: 1.1,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: bar,
+                start: "top 90%",
+                once: true,
+              },
+            },
+          );
+        },
+      );
+    }, el);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <div className="mx-auto max-w-[1120px] space-y-8 pb-12">
-      {/* ── Header ── */}
-      <div className="flex items-end justify-between gap-4">
-        <div>
-          <h1 className="font-heading text-[28px] font-bold tracking-tight">
-            {firstName ? t("greeting", { name: firstName }) : t("title")}
-          </h1>
-          <p className="mt-1.5 text-[13px] text-muted-foreground">
-            {firstName ? t("greetingSubtitle") : t("subtitle")}
-          </p>
-        </div>
-        {totalProducts > 0 && (
-          <Link
-            href="/app/products/new"
-            className={buttonVariants({ size: "sm" })}
-          >
-            <PlusIcon className="size-3.5" />
-            {t("addProduct")}
-          </Link>
-        )}
-      </div>
-
-      {/* ── Stat Cards ── */}
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-5">
-        <StatCard label={t("totalProducts")} from="#2563EB" to="#0891B2">
-          <p className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white">
-            {totalProducts}
-          </p>
-        </StatCard>
-
-        <StatCard label={t("assessed")} from="#7C3AED" to="#4F46E5">
-          <p className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white">
-            {assessedCount}
-            <span className="text-base text-white/65">
-              {" "}
-              / {totalProducts}
-            </span>
-          </p>
-        </StatCard>
-
-        <StatCard label={t("avgCompliance")} from="#16A34A" to="#15803D">
-          <p className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white">
-            {totalProducts > 0 ? `${avgCompliance}%` : "\u2014"}
-          </p>
-          {totalProducts > 0 && (
-            <div className="mt-2.5 h-3 overflow-hidden rounded-[3px] bg-black/25">
-              <div
-                className="h-full rounded-[3px] bg-white transition-all duration-500"
-                style={{ width: `${avgCompliance}%` }}
-              />
-            </div>
-          )}
-        </StatCard>
-
-        <StatCard label={t("totalVulnerabilities")} from="#DC2626" to="#E11D48">
-          <p className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white">
-            {totalVulnerabilities}
-          </p>
-          {(criticalCount > 0 || highCount > 0) && (
-            <div className="mt-2 flex gap-1.5">
-              {criticalCount > 0 && (
-                <span className="rounded-full bg-black/20 px-2.5 py-0.5 text-[11px] font-semibold text-white">
-                  {criticalCount} {t("critical")}
-                </span>
-              )}
-              {highCount > 0 && (
-                <span className="rounded-full bg-black/20 px-2.5 py-0.5 text-[11px] font-semibold text-white">
-                  {highCount} {t("high")}
-                </span>
-              )}
-            </div>
-          )}
-        </StatCard>
-
-        <StatCard
-          label={nextDeadline?.name ?? t("upcomingDeadline")}
-          from="#D97706"
-          to="#EA580C"
-          className="col-span-2 lg:col-span-1"
+    <div ref={rootRef} className="mx-auto max-w-[1120px] pb-12">
+      <StaggerReveal
+        className="space-y-8"
+        selector="[data-reveal]"
+        stagger={0.08}
+        y={24}
+        duration={0.7}
+      >
+        {/* ── Header ── */}
+        <div
+          data-reveal
+          className="flex items-end justify-between gap-4"
         >
-          {nextDeadline ? (
-            <>
-              <p className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white">
-                {t("daysLeft", { days: getDaysUntil(nextDeadline.date) })}
-              </p>
-              <p className="mt-1 text-[10px] text-white/65">
-                {nextDeadline.dateLabel}
-              </p>
-            </>
-          ) : (
-            <p className="mt-2 text-2xl font-bold tracking-tight text-white">
-              {"\u2014"}
+          <div>
+            <h1 className="font-heading text-[28px] font-bold tracking-tight">
+              {firstName ? t("greeting", { name: firstName }) : t("title")}
+            </h1>
+            <p className="mt-1.5 text-[13px] text-muted-foreground">
+              {firstName ? t("greetingSubtitle") : t("subtitle")}
             </p>
-          )}
-        </StatCard>
-      </div>
-
-      {/* ── Two-column: Product Table + Right sidebar ── */}
-      {totalProducts > 0 && (
-        <div className="grid gap-6 lg:grid-cols-3">
-          {/* Product Compliance Table — 2/3 */}
-          <div className="overflow-hidden rounded-2xl border border-white/[0.06] bg-card lg:col-span-2">
-            {/* Header */}
-            <div className="flex items-center justify-between border-b border-white/[0.06] px-5 py-3">
-              <span className="text-sm font-semibold">
-                {t("productTable.title")}
-              </span>
-              <Link
-                href="/app/products"
-                className="text-xs font-medium text-primary hover:underline"
-              >
-                {t("viewAll")}
-              </Link>
-            </div>
-
-            {/* Column headers */}
-            <div className="flex items-center border-b border-white/[0.06] px-5 py-2.5">
-              <span className="flex-1 text-[11px] text-muted-foreground/60">
-                {t("productTable.name")}
-              </span>
-              <span className="hidden w-32 text-[11px] text-muted-foreground/60 sm:block">
-                {t("productTable.category")}
-              </span>
-              <span className="hidden w-44 text-[11px] text-muted-foreground/60 md:block">
-                {t("productTable.compliance")}
-              </span>
-              <span className="hidden w-20 text-[11px] text-muted-foreground/60 lg:block">
-                {t("productTable.sbom")}
-              </span>
-              <div className="w-6" />
-            </div>
-
-            {/* Rows */}
-            <div className="divide-y divide-white/[0.04]">
-              {products.slice(0, 5).map((p) => {
-                const catKey = p.cra_category ?? "default";
-                return (
-                  <Link
-                    key={p.id}
-                    href={`/app/products/${p.id}`}
-                    className="group flex items-center px-5 py-3.5 transition-colors hover:bg-white/[0.02]"
-                  >
-                    {/* Product name */}
-                    <div className="min-w-0 flex-1">
-                      <p className="truncate text-sm font-semibold text-foreground transition-colors group-hover:text-primary">
-                        {p.name}
-                      </p>
-                      {p.type && (
-                        <p className="mt-0.5 text-[11px] capitalize text-muted-foreground/50">
-                          {t(`productType.${p.type}`)}
-                        </p>
-                      )}
-                    </div>
-
-                    {/* Category pill — solid color + white text */}
-                    <div className="hidden w-32 sm:block">
-                      {p.cra_category ? (
-                        <span
-                          className={cn(
-                            "inline-flex w-24 justify-center rounded-full px-2.5 py-0.5 text-[11px] font-semibold text-white",
-                            CATEGORY_PILL[catKey] ?? CATEGORY_PILL.default,
-                          )}
-                        >
-                          {t(CATEGORY_KEY_MAP[catKey] ?? "categoryDefault")}
-                        </span>
-                      ) : (
-                        <span className="text-[11px] text-muted-foreground/30">
-                          {t("notAssessed")}
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Compliance bar — matches products list page */}
-                    <div className="hidden w-44 items-center gap-2.5 md:flex">
-                      <div className="h-3 w-24 overflow-hidden rounded-[3px] bg-[#191919]">
-                        <div
-                          className="h-full rounded-[3px] transition-all"
-                          style={{
-                            width: `${p.compliance_score}%`,
-                            backgroundColor: scoreColor(p.compliance_score),
-                          }}
-                        />
-                      </div>
-                      <span
-                        className="text-xs font-semibold tabular-nums"
-                        style={{ color: scoreColor(p.compliance_score) }}
-                      >
-                        {p.compliance_score}%
-                      </span>
-                    </div>
-
-                    {/* SBOM status */}
-                    <div className="hidden w-20 lg:block">
-                      {p.has_sbom ? (
-                        <span className="inline-flex items-center gap-1.5 text-[11px] font-medium text-[#16A34A]">
-                          <span className="size-1.5 rounded-full bg-[#16A34A]" />
-                          {t("sbomUploaded")}
-                        </span>
-                      ) : (
-                        <span className="text-[11px] text-muted-foreground/30">
-                          {t("sbomMissing")}
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Chevron */}
-                    <div className="flex w-6 justify-end">
-                      <HugeIcon
-                        name="arrow-right-01-stroke-rounded"
-                        size={16}
-                        className="text-muted-foreground/20 transition-colors group-hover:text-muted-foreground"
-                      />
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
           </div>
+          {totalProducts > 0 && (
+            <Link
+              href="/app/products/new"
+              className={buttonVariants({ size: "sm" })}
+            >
+              <HugeIcon
+                name="plus-sign-square-stroke-rounded"
+                size={14}
+                className="text-current"
+              />
+              {t("addProduct")}
+            </Link>
+          )}
+        </div>
 
-          {/* Right column — Vuln Chart + Deadlines */}
-          <div className="space-y-6">
-            {/* Vulnerability Donut */}
-            <VulnDonutChart
-              critical={criticalCount}
-              high={highCount}
-              medium={mediumCount}
-              low={lowCount}
+        {/* ── Action Needed Banner ── */}
+        {atRiskProduct && nextDeadline && (
+          <div data-reveal>
+            <ActionNeededBanner
+              product={atRiskProduct}
+              deadlineName={nextDeadline.name}
+              daysLeft={getDaysUntil(nextDeadline.date)}
               t={t}
             />
+          </div>
+        )}
 
-            {/* CRA Deadlines */}
+        {/* ── Stat Cards ── */}
+        <div
+          data-reveal
+          className="grid grid-cols-2 gap-3 lg:grid-cols-5"
+        >
+          <StatCard label={t("totalProducts")} from="#2563EB" to="#0891B2">
+            <p
+              className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white"
+              data-counter={String(totalProducts)}
+            >
+              {totalProducts}
+            </p>
+          </StatCard>
+
+          <StatCard label={t("assessed")} from="#7C3AED" to="#4F46E5">
+            <p className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white">
+              <span data-counter={String(assessedCount)}>{assessedCount}</span>
+              <span className="text-base text-white/65">
+                {" "}
+                / {totalProducts}
+              </span>
+            </p>
+          </StatCard>
+
+          <StatCard label={t("avgCompliance")} from="#16A34A" to="#15803D">
+            <p
+              className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white"
+              data-counter={totalProducts > 0 ? `${avgCompliance}%` : "\u2014"}
+            >
+              {totalProducts > 0 ? `${avgCompliance}%` : "\u2014"}
+            </p>
+            {totalProducts > 0 && (
+              <div className="mt-2.5 h-3 overflow-hidden rounded-[3px] bg-black/25">
+                <div
+                  className="h-full rounded-[3px] bg-white"
+                  style={{ width: `${avgCompliance}%` }}
+                  data-progress-bar={String(avgCompliance)}
+                />
+              </div>
+            )}
+          </StatCard>
+
+          <StatCard label={t("totalVulnerabilities")} from="#DC2626" to="#E11D48">
+            <p
+              className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white"
+              data-counter={String(totalVulnerabilities)}
+            >
+              {totalVulnerabilities}
+            </p>
+            {(criticalCount > 0 || highCount > 0) && (
+              <div className="mt-2 flex gap-1.5">
+                {criticalCount > 0 && (
+                  <span className="rounded-full bg-black/20 px-2.5 py-0.5 text-[11px] font-semibold text-white">
+                    {criticalCount} {t("critical")}
+                  </span>
+                )}
+                {highCount > 0 && (
+                  <span className="rounded-full bg-black/20 px-2.5 py-0.5 text-[11px] font-semibold text-white">
+                    {highCount} {t("high")}
+                  </span>
+                )}
+              </div>
+            )}
+          </StatCard>
+
+          <StatCard
+            label={nextDeadline?.name ?? t("upcomingDeadline")}
+            from="#D97706"
+            to="#EA580C"
+            className="col-span-2 lg:col-span-1"
+          >
+            {nextDeadline ? (
+              <>
+                <p
+                  className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white"
+                  data-counter={t("daysLeft", {
+                    days: getDaysUntil(nextDeadline.date),
+                  })}
+                >
+                  {t("daysLeft", { days: getDaysUntil(nextDeadline.date) })}
+                </p>
+                <p className="mt-1 text-[10px] text-white/65">
+                  {nextDeadline.dateLabel}
+                </p>
+              </>
+            ) : (
+              <p className="mt-2 text-2xl font-bold tracking-tight text-white">
+                {"\u2014"}
+              </p>
+            )}
+          </StatCard>
+        </div>
+
+        {/* ── Two-column: Product Table + Deadlines sidebar ── */}
+        {totalProducts > 0 && (
+          <div
+            data-reveal
+            className="grid gap-6 lg:grid-cols-3"
+          >
+            {/* Product Compliance Table — 2/3 */}
+            <div className="overflow-hidden rounded-2xl border border-white/[0.06] bg-card lg:col-span-2">
+              <div className="flex items-center justify-between border-b border-white/[0.06] px-5 py-3">
+                <span className="text-sm font-semibold">
+                  {t("productTable.title")}
+                </span>
+                <Link
+                  href="/app/products"
+                  className="text-xs font-medium text-primary hover:underline"
+                >
+                  {t("viewAll")}
+                </Link>
+              </div>
+
+              <div className="flex items-center border-b border-white/[0.06] px-5 py-2.5">
+                <span className="flex-1 text-[11px] text-muted-foreground/60">
+                  {t("productTable.name")}
+                </span>
+                <span className="hidden w-32 text-[11px] text-muted-foreground/60 sm:block">
+                  {t("productTable.category")}
+                </span>
+                <span className="hidden w-44 text-[11px] text-muted-foreground/60 md:block">
+                  {t("productTable.compliance")}
+                </span>
+                <span className="hidden w-20 text-[11px] text-muted-foreground/60 lg:block">
+                  {t("productTable.sbom")}
+                </span>
+                <div className="w-6" />
+              </div>
+
+              <div className="divide-y divide-white/[0.04]">
+                {products.slice(0, 5).map((p) => {
+                  const catKey = p.cra_category ?? "default";
+                  return (
+                    <Link
+                      key={p.id}
+                      href={`/app/products/${p.id}`}
+                      className="group flex items-center px-5 py-3.5 transition-colors hover:bg-white/[0.02]"
+                    >
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-semibold text-foreground transition-colors group-hover:text-primary">
+                          {p.name}
+                        </p>
+                        {p.type && (
+                          <p className="mt-0.5 text-[11px] capitalize text-muted-foreground/50">
+                            {t(`productType.${p.type}`)}
+                          </p>
+                        )}
+                      </div>
+
+                      <div className="hidden w-32 sm:block">
+                        {p.cra_category ? (
+                          <span
+                            className={cn(
+                              "inline-flex w-24 justify-center rounded-full px-2.5 py-0.5 text-[11px] font-semibold text-white",
+                              CATEGORY_PILL[catKey] ?? CATEGORY_PILL.default,
+                            )}
+                          >
+                            {t(CATEGORY_KEY_MAP[catKey] ?? "categoryDefault")}
+                          </span>
+                        ) : (
+                          <span className="text-[11px] text-muted-foreground/30">
+                            {t("notAssessed")}
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="hidden w-44 items-center gap-2.5 md:flex">
+                        <div className="h-3 w-24 overflow-hidden rounded-[3px] bg-[#191919]">
+                          <div
+                            className="h-full rounded-[3px]"
+                            style={{
+                              width: `${p.compliance_score}%`,
+                              backgroundColor: scoreColor(p.compliance_score),
+                            }}
+                            data-progress-bar={String(p.compliance_score)}
+                          />
+                        </div>
+                        <span
+                          className="text-xs font-semibold tabular-nums"
+                          style={{ color: scoreColor(p.compliance_score) }}
+                        >
+                          {p.compliance_score}%
+                        </span>
+                      </div>
+
+                      <div className="hidden w-20 lg:block">
+                        {p.has_sbom ? (
+                          <span className="inline-flex items-center gap-1.5 text-[11px] font-medium text-[#16A34A]">
+                            <span className="size-1.5 rounded-full bg-[#16A34A]" />
+                            {t("sbomUploaded")}
+                          </span>
+                        ) : (
+                          <span className="text-[11px] text-muted-foreground/30">
+                            {t("sbomMissing")}
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="flex w-6 justify-end">
+                        <HugeIcon
+                          name="arrow-right-01-stroke-rounded"
+                          size={16}
+                          className="text-muted-foreground/20 transition-colors group-hover:text-muted-foreground"
+                        />
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* CRA Deadlines — 1/3 */}
             <div className="rounded-2xl border border-white/[0.06] bg-card p-5">
-              <h2 className="mb-4 text-sm font-semibold">
-                {t("deadlines")}
-              </h2>
+              <h2 className="mb-4 text-sm font-semibold">{t("deadlines")}</h2>
               <div className="space-y-4">
                 {deadlines.map((dl) => {
                   const days = getDaysUntil(dl.date);
@@ -396,9 +514,7 @@ export function DashboardContent(stats: DashboardStats) {
                               : "text-muted-foreground/50",
                         )}
                       >
-                        {isPast
-                          ? t("passed")
-                          : t("daysRemaining", { days })}
+                        {isPast ? t("passed") : t("daysRemaining", { days })}
                       </span>
                     </div>
                   );
@@ -406,64 +522,160 @@ export function DashboardContent(stats: DashboardStats) {
               </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* ── Row 3: Vuln Aging + Team Activity (each ½) ── */}
-      {totalProducts > 0 && (
-        <div className="grid gap-6 lg:grid-cols-2">
-          <VulnAgingChart
-            buckets={stats.vulnAging}
-            mttr={stats.mttr}
-            openCount={stats.openVulnCount}
-          />
-          <ActivityVelocityChart data={stats.activityVelocity} />
-        </div>
-      )}
-
-      {/* ── Row 4: Checklist Progress (full width) ── */}
-      {totalProducts > 0 && (
-        <ChecklistProgressChart data={stats.checklistProgress} />
-      )}
-
-      {/* ── Row 5: Compliance Trend (⅔) + Overdue Tasks (⅓) ── */}
-      {totalProducts > 0 && (
-        <div className="grid items-stretch gap-6 lg:grid-cols-3">
-          <ComplianceTrendChart
-            data={stats.complianceTrend}
-            className="h-full lg:col-span-2"
-          />
-          <OverdueTasksWidget
-            count={stats.overdueCount}
-            items={stats.overdueItems}
-          />
-        </div>
-      )}
-
-      {/* ── Recent Activity — matches settings/activity format ── */}
-      {totalProducts > 0 && (
-        <div className="overflow-hidden rounded-2xl border border-white/[0.06] bg-card">
-          <div className="border-b border-white/[0.06] px-5 py-3">
-            <span className="text-sm font-semibold">{t("recentActivity")}</span>
+        {/* ── Vulnerability Breakdown — full width, redesigned ── */}
+        {totalProducts > 0 && (
+          <div data-reveal>
+            <VulnBreakdownCard
+              critical={criticalCount}
+              high={highCount}
+              medium={mediumCount}
+              low={lowCount}
+              t={t}
+            />
           </div>
-          {recentActivity.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-16 text-center">
-              <p className="text-sm text-muted-foreground/50">
-                {t("noActivity")}
-              </p>
-              <p className="mt-1 text-xs text-muted-foreground/30">
-                {t("activityLogEmpty")}
-              </p>
+        )}
+
+        {/* ── Vuln Aging + Team Activity (each ½) ── */}
+        {totalProducts > 0 && (
+          <div
+            data-reveal
+            className="grid gap-6 lg:grid-cols-2"
+          >
+            <VulnAgingChart
+              buckets={stats.vulnAging}
+              mttr={stats.mttr}
+              openCount={stats.openVulnCount}
+            />
+            <ActivityVelocityChart data={stats.activityVelocity} />
+          </div>
+        )}
+
+        {/* ── Checklist Progress (full width) ── */}
+        {totalProducts > 0 && (
+          <div data-reveal>
+            <ChecklistProgressChart data={stats.checklistProgress} />
+          </div>
+        )}
+
+        {/* ── Compliance Trend (⅔) + Overdue Tasks (⅓) ── */}
+        {totalProducts > 0 && (
+          <div
+            data-reveal
+            className="grid items-stretch gap-6 lg:grid-cols-3"
+          >
+            <ComplianceTrendChart
+              data={stats.complianceTrend}
+              className="h-full lg:col-span-2"
+            />
+            <OverdueTasksWidget
+              count={stats.overdueCount}
+              items={stats.overdueItems}
+            />
+          </div>
+        )}
+
+        {/* ── Recent Activity ── */}
+        {totalProducts > 0 && (
+          <div
+            data-reveal
+            className="overflow-hidden rounded-2xl border border-white/[0.06] bg-card"
+          >
+            <div className="border-b border-white/[0.06] px-5 py-3">
+              <span className="text-sm font-semibold">
+                {t("recentActivity")}
+              </span>
             </div>
-          ) : (
-            <div className="divide-y divide-white/[0.04]">
-              {recentActivity.map((item) => (
-                <ActivityRow key={item.id} item={item} t={t} />
-              ))}
-            </div>
-          )}
+            {recentActivity.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-16 text-center">
+                <p className="text-sm text-muted-foreground/50">
+                  {t("noActivity")}
+                </p>
+                <p className="mt-1 text-xs text-muted-foreground/30">
+                  {t("activityLogEmpty")}
+                </p>
+              </div>
+            ) : (
+              <div className="divide-y divide-white/[0.04]">
+                {recentActivity.map((item) => (
+                  <ActivityRow key={item.id} item={item} t={t} />
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+      </StaggerReveal>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Action Needed Banner
+// ---------------------------------------------------------------------------
+
+function ActionNeededBanner({
+  product,
+  deadlineName,
+  daysLeft,
+  t,
+}: {
+  product: DashboardProduct;
+  deadlineName: string;
+  daysLeft: number;
+  t: ReturnType<typeof useTranslations>;
+}) {
+  return (
+    <div
+      className="group relative overflow-hidden rounded-2xl border border-white/[0.06] bg-cover bg-center transition-all hover:border-white/[0.12]"
+      style={{ backgroundImage: "url('/images/action-needed-bg.svg')" }}
+    >
+      {/* Gradient overlay for legible text over the decorative bg */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/30" />
+
+      <div className="relative flex flex-col gap-5 p-6 md:flex-row md:items-center md:justify-between md:p-8">
+        <div className="min-w-0 flex-1">
+          <div className="mb-2.5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur">
+            <span className="size-1.5 rounded-full bg-[#F59E0B]" />
+            {t("actionNeeded.eyebrow")}
+          </div>
+          <h2 className="font-heading text-xl font-bold leading-snug text-white md:text-2xl">
+            {t("actionNeeded.headline", {
+              product: product.name,
+              deadline: deadlineName,
+            })}
+          </h2>
+          <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px]">
+            <span className="flex items-center gap-1.5 text-white/80">
+              <span className="font-semibold text-white tabular-nums">
+                {daysLeft}
+              </span>
+              {t("actionNeeded.daysLeft")}
+            </span>
+            <span className="flex items-center gap-1.5 text-white/80">
+              <span
+                className="size-1.5 rounded-full"
+                style={{ backgroundColor: scoreColor(product.compliance_score) }}
+              />
+              <span
+                className="font-semibold tabular-nums"
+                style={{ color: scoreColor(product.compliance_score) }}
+              >
+                {product.compliance_score}%
+              </span>
+              {t("actionNeeded.compliance")}
+            </span>
+          </div>
         </div>
-      )}
+
+        <Link
+          href={`/app/products/${product.id}/checklist`}
+          className="inline-flex shrink-0 items-center gap-2 rounded-lg bg-white px-4 py-2.5 text-sm font-semibold text-black shadow-sm transition-transform hover:-translate-y-0.5"
+        >
+          {t("actionNeeded.cta")}
+          <HugeIcon name="arrow-right-01-stroke-rounded" size={16} />
+        </Link>
+      </div>
     </div>
   );
 }
@@ -487,10 +699,8 @@ function StatCard({
 }) {
   return (
     <div
-      className={`relative overflow-hidden rounded-xl ${className ?? ""}`}
-      style={{
-        background: `linear-gradient(135deg, ${from}, ${to})`,
-      }}
+      className={cn("relative overflow-hidden rounded-xl", className)}
+      style={{ background: `linear-gradient(135deg, ${from}, ${to})` }}
     >
       <div className="p-5">
         <p className="text-[11px] font-semibold text-white/75">{label}</p>
@@ -501,10 +711,10 @@ function StatCard({
 }
 
 // ---------------------------------------------------------------------------
-// Vulnerability Donut Chart
+// Vulnerability Breakdown Card — full-width, donut + ranked severity list
 // ---------------------------------------------------------------------------
 
-function VulnDonutChart({
+function VulnBreakdownCard({
   critical,
   high,
   medium,
@@ -528,9 +738,12 @@ function VulnDonutChart({
 
   if (total === 0) {
     return (
-      <div className="rounded-2xl border border-white/[0.06] bg-card p-5">
-        <h2 className="mb-3 text-sm font-semibold">{t("vulnChart")}</h2>
-        <p className="text-xs text-muted-foreground/50">
+      <div className="rounded-2xl border border-white/[0.06] bg-card p-6">
+        <h2 className="mb-2 text-sm font-semibold">{t("vulnChart")}</h2>
+        <p className="text-xs text-muted-foreground/60">
+          {t("vulnChartSubtitle")}
+        </p>
+        <p className="mt-10 text-center text-xs text-muted-foreground/50">
           {t("noVulnerabilities")}
         </p>
       </div>
@@ -538,92 +751,113 @@ function VulnDonutChart({
   }
 
   return (
-    <div className="rounded-2xl border border-white/[0.06] bg-card p-5">
-      <h2 className="mb-4 text-sm font-semibold">{t("vulnChart")}</h2>
-
-      {/* Donut — sized up and centered */}
-      <div className="relative mx-auto mb-5 size-[200px]">
-        <ResponsiveContainer width="100%" height="100%">
-          <PieChart>
-            <Pie
-              data={data}
-              cx="50%"
-              cy="50%"
-              innerRadius={68}
-              outerRadius={96}
-              paddingAngle={2}
-              dataKey="value"
-              stroke="none"
-            >
-              {data.map((entry) => (
-                <Cell
-                  key={entry.key}
-                  fill={SEVERITY_CHART_COLORS[entry.key]}
-                />
-              ))}
-            </Pie>
-            <Tooltip
-              content={({ payload }) => {
-                if (!payload?.length) return null;
-                const item = payload[0];
-                const pct = total > 0
-                  ? Math.round(((item.value as number) / total) * 100)
-                  : 0;
-                return (
-                  <div className="rounded-lg border border-white/[0.08] bg-card px-3 py-1.5 text-xs shadow-md">
-                    <span className="font-medium">{item.name}</span>
-                    <span className="ml-2 tabular-nums text-muted-foreground">
-                      {item.value} ({pct}%)
-                    </span>
-                  </div>
-                );
-              }}
-            />
-          </PieChart>
-        </ResponsiveContainer>
-        <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-3xl font-bold tabular-nums leading-none text-foreground">
-            {total}
-          </span>
-          <span className="mt-1.5 text-[11px] uppercase tracking-wide text-muted-foreground/70">
-            {t("vulnerabilities")}
-          </span>
+    <div className="rounded-2xl border border-white/[0.06] bg-card p-6">
+      {/* Header */}
+      <div className="mb-6 flex items-start justify-between gap-4">
+        <div>
+          <h2 className="text-sm font-semibold">{t("vulnChart")}</h2>
+          <p className="mt-1 text-[11px] text-muted-foreground/60">
+            {t("vulnChartSubtitle")}
+          </p>
         </div>
       </div>
 
-      {/* Legend — 2-col grid below the donut */}
-      <div className="grid grid-cols-2 gap-x-4 gap-y-2">
-        {data.map((entry) => {
-          const pct = total > 0 ? Math.round((entry.value / total) * 100) : 0;
-          return (
-            <div key={entry.key} className="flex items-center gap-2">
-              <div
-                className="size-2.5 shrink-0 rounded-full"
-                style={{
-                  backgroundColor: SEVERITY_CHART_COLORS[entry.key],
+      {/* Main — donut + severity ranking */}
+      <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2">
+        {/* Donut */}
+        <div className="relative mx-auto size-[240px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <PieChart>
+              <Pie
+                data={data}
+                cx="50%"
+                cy="50%"
+                innerRadius={80}
+                outerRadius={112}
+                paddingAngle={2}
+                dataKey="value"
+                stroke="none"
+              >
+                {data.map((entry) => (
+                  <Cell
+                    key={entry.key}
+                    fill={SEVERITY_CHART_COLORS[entry.key]}
+                  />
+                ))}
+              </Pie>
+              <Tooltip
+                content={({ payload }) => {
+                  if (!payload?.length) return null;
+                  const item = payload[0];
+                  const pct =
+                    total > 0
+                      ? Math.round(((item.value as number) / total) * 100)
+                      : 0;
+                  return (
+                    <div className="rounded-lg border border-white/[0.08] bg-card px-3 py-1.5 text-xs shadow-md">
+                      <span className="font-medium">{item.name}</span>
+                      <span className="ml-2 tabular-nums text-muted-foreground">
+                        {item.value} ({pct}%)
+                      </span>
+                    </div>
+                  );
                 }}
               />
-              <span className="truncate text-xs text-muted-foreground">
-                {entry.name}
-              </span>
-              <div className="ml-auto flex items-baseline gap-1 tabular-nums">
-                <span className="text-xs font-semibold text-foreground">
-                  {entry.value}
-                </span>
-                <span className="text-[10px] text-muted-foreground/60">
-                  {pct}%
-                </span>
+            </PieChart>
+          </ResponsiveContainer>
+          <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
+            <span
+              className="text-4xl font-bold tabular-nums leading-none text-foreground"
+              data-counter={String(total)}
+            >
+              {total}
+            </span>
+            <span className="mt-2 text-[11px] uppercase tracking-wide text-muted-foreground/70">
+              {t("vulnerabilities")}
+            </span>
+          </div>
+        </div>
+
+        {/* Severity ranking — each row is a labelled bar */}
+        <div className="space-y-4">
+          {data.map((entry) => {
+            const pct = total > 0 ? (entry.value / total) * 100 : 0;
+            const color = SEVERITY_CHART_COLORS[entry.key];
+            return (
+              <div key={entry.key}>
+                <div className="mb-1.5 flex items-center gap-2">
+                  <span
+                    className="size-2.5 shrink-0 rounded-full"
+                    style={{ backgroundColor: color }}
+                  />
+                  <span className="text-sm font-medium text-foreground">
+                    {entry.name}
+                  </span>
+                  <span className="ml-auto text-sm font-bold tabular-nums text-foreground">
+                    {entry.value}
+                  </span>
+                  <span className="text-xs tabular-nums text-muted-foreground/60">
+                    ({Math.round(pct)}%)
+                  </span>
+                </div>
+                <div className="h-3 overflow-hidden rounded-[3px] bg-[#191919]">
+                  <div
+                    className="h-full rounded-[3px]"
+                    style={{ width: `${pct}%`, backgroundColor: color }}
+                    data-progress-bar={String(pct)}
+                  />
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </div>
   );
 }
 
 // ---------------------------------------------------------------------------
-// Activity Row — matches settings/activity log format
+// Activity Row
 // ---------------------------------------------------------------------------
 
 function ActivityRow({
@@ -644,7 +878,6 @@ function ActivityRow({
 
   return (
     <div className="flex items-start gap-3.5 px-5 py-3.5">
-      {/* Avatar — profile picture or initials fallback */}
       {item.user_avatar_url ? (
         <img
           src={item.user_avatar_url}
@@ -657,12 +890,9 @@ function ActivityRow({
         </div>
       )}
 
-      {/* Content — bold name + action + bold target */}
       <div className="min-w-0 flex-1">
         <p className="text-sm">
-          <span className="font-medium">
-            {item.user_name ?? "System"}
-          </span>{" "}
+          <span className="font-medium">{item.user_name ?? "System"}</span>{" "}
           <span className="text-muted-foreground">
             {t(`activity.${item.type}`, { product: "" }).trim()}
           </span>{" "}
