@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,6 +11,7 @@ import { useToast } from "@/components/ui/toast";
 import { cn } from "@/lib/utils";
 import { HugeIcon } from "@/components/huge-icon";
 import { ProfileIncompleteBanner } from "@/components/profile-incomplete-banner";
+import { PLAN_USER_LIMITS, type OrgPlan } from "@/lib/constants/plans";
 
 // Role hierarchy from highest to lowest
 const ROLE_HIERARCHY: { key: string; color: string; bg: string; icon: string }[] = [
@@ -99,12 +100,6 @@ export function OrgSettingsContent({
       }
     });
   }
-
-  // Group members by role
-  const membersByRole = ROLE_HIERARCHY.map((tier) => ({
-    ...tier,
-    members: members.filter((m) => m.role === tier.key),
-  })).filter((tier) => tier.members.length > 0);
 
   return (
     <div className="space-y-6">
@@ -351,86 +346,223 @@ export function OrgSettingsContent({
         )}
       </form>
 
-      {/* Organization tree */}
-      <div className="rounded-xl bg-card">
-        <div className="border-b border-white/[0.06] px-6 py-4">
-          <h2 className="text-sm font-semibold">{t("orgChart")}</h2>
-          <p className="mt-0.5 text-xs text-muted-foreground/60">
-            {t("orgChartDescription")}
-          </p>
-        </div>
-        <div className="px-6 py-5">
-          <div className="space-y-0">
-            {membersByRole.map((tier, tierIdx) => (
-              <div key={tier.key} className="relative">
-                {/* Vertical connector from previous tier */}
-                {tierIdx > 0 && (
-                  <div className="absolute left-[17px] -top-0 h-4 w-px bg-white/[0.08]" />
-                )}
+      {/* Organization chart — role columns */}
+      <OrganizationChart
+        members={members}
+        plan={org?.plan ?? "free"}
+        isAdmin={isAdmin}
+        t={t}
+        tTeam={tTeam}
+      />
+    </div>
+  );
+}
 
-                {/* Tier label */}
-                <div className="flex items-center gap-3 pb-2 pt-4">
-                  <div
-                    className={cn(
-                      "flex size-[35px] shrink-0 items-center justify-center rounded-lg text-white/90",
-                      tier.bg
-                    )}
-                  >
-                    <HugeIcon name={tier.icon} size={18} />
-                  </div>
-                  <div>
-                    <p className={cn("text-xs font-semibold", tier.color)}>
-                      {tTeam(`roles.${tier.key}` as Parameters<typeof tTeam>[0])}
-                    </p>
-                    <p className="text-[10px] text-muted-foreground/40">
-                      {tier.members.length === 1
-                        ? tTeam("memberCount", { count: tier.members.length })
-                        : tTeam("memberCountPlural", { count: tier.members.length })}
-                    </p>
-                  </div>
-                </div>
+// ---------------------------------------------------------------------------
+// Role-column organization chart — a horizontal "Kanban" of the 5 CRA roles.
+// Above the columns is a seat-usage strip that makes plan capacity obvious;
+// below, every column shows its members stacked with a clickable card that
+// deep-links into /app/settings/team. Empty columns show an "Invite X" CTA
+// so structural gaps (no compliance officer yet, etc.) are easy to spot.
+// ---------------------------------------------------------------------------
 
-                {/* Members in this tier */}
-                <div className="ml-[17px] border-l border-white/[0.08] pl-6">
-                  {tier.members.map((member, memberIdx) => (
-                    <div
-                      key={member.id}
-                      className="relative flex items-center gap-3 py-2"
-                    >
-                      {/* Horizontal connector */}
-                      <div className="absolute -left-6 top-1/2 h-px w-6 bg-white/[0.08]" />
+function OrganizationChart({
+  members,
+  plan,
+  isAdmin,
+  t,
+  tTeam,
+}: {
+  members: TeamMember[];
+  plan: OrgPlan;
+  isAdmin: boolean;
+  t: ReturnType<typeof useTranslations>;
+  tTeam: ReturnType<typeof useTranslations>;
+}) {
+  const used = members.length;
+  const limit = PLAN_USER_LIMITS[plan];
+  const unlimited = !Number.isFinite(limit);
+  const pct = unlimited ? 0 : Math.min(100, (used / limit) * 100);
+  const nearCap = !unlimited && used / limit >= 0.8;
+  const atCap = !unlimited && used >= limit;
+  const capacityColor = atCap
+    ? "#DC2626"
+    : nearCap
+      ? "#D97706"
+      : "#16A34A";
 
-                      {/* Avatar */}
-                      <div className="flex size-7 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white/[0.06] text-[10px] font-bold text-muted-foreground">
-                        {member.avatar_url ? (
-                          <img
-                            src={member.avatar_url}
-                            alt=""
-                            className="size-full object-cover"
-                          />
-                        ) : (
-                          (member.full_name ?? member.email)
-                            .charAt(0)
-                            .toUpperCase()
-                        )}
-                      </div>
+  const byRole = ROLE_HIERARCHY.map((tier) => ({
+    ...tier,
+    members: members.filter((m) => m.role === tier.key),
+  }));
 
-                      {/* Name */}
-                      <div className="min-w-0">
-                        <p className="truncate text-xs font-medium text-foreground">
-                          {member.full_name ?? member.email}
-                        </p>
-                        <p className="truncate text-[10px] text-muted-foreground/40">
-                          {member.email}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
+  return (
+    <div className="overflow-hidden rounded-xl bg-card">
+      <div className="border-b border-white/[0.06] px-6 py-4">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <h2 className="text-sm font-semibold">{t("orgChart")}</h2>
+            <p className="mt-0.5 text-xs text-muted-foreground/60">
+              {t("orgChartDescription")}
+            </p>
+          </div>
+          <div className="flex items-center gap-3">
+            <span className="text-xs tabular-nums text-muted-foreground">
+              {unlimited
+                ? t("seatsUsedUnlimited", { count: used })
+                : t("seatsUsed", { count: used, limit })}
+            </span>
+            {isAdmin && !unlimited && nearCap && (
+              <Link
+                href="/app/settings/billing"
+                className="text-xs font-medium text-primary hover:underline"
+              >
+                {t("upgrade")}
+              </Link>
+            )}
           </div>
         </div>
+        {!unlimited && (
+          <div className="mt-3 h-1.5 overflow-hidden rounded-[3px] bg-[#191919]">
+            <div
+              className="h-full rounded-[3px] transition-all duration-500"
+              style={{
+                width: `${pct}%`,
+                backgroundColor: capacityColor,
+              }}
+            />
+          </div>
+        )}
+      </div>
+
+      {/* Columns — horizontally scrollable on narrow screens; 5-col grid at lg */}
+      <div className="overflow-x-auto px-6 py-5">
+        <div className="flex min-w-[960px] gap-3 lg:grid lg:min-w-0 lg:grid-cols-5">
+          {byRole.map((tier) => (
+            <RoleColumn
+              key={tier.key}
+              tier={tier}
+              isAdmin={isAdmin}
+              tTeam={tTeam}
+              inviteLabel={t("inviteToRole", {
+                role: tTeam(`roles.${tier.key}` as Parameters<typeof tTeam>[0]),
+              })}
+              emptyLabel={t("noOneYet")}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function RoleColumn({
+  tier,
+  isAdmin,
+  tTeam,
+  inviteLabel,
+  emptyLabel,
+}: {
+  tier: (typeof ROLE_HIERARCHY)[number] & { members: TeamMember[] };
+  isAdmin: boolean;
+  tTeam: ReturnType<typeof useTranslations>;
+  inviteLabel: string;
+  emptyLabel: string;
+}) {
+  // Tier.bg is a Tailwind bg-[#XXXXXX] class — pull the hex out so we can
+  // tint borders and halos with opacity variants Tailwind can't pre-compile.
+  const hex = tier.bg.match(/#[0-9A-Fa-f]{6}/)?.[0] ?? "#6B7280";
+
+  return (
+    <div
+      className="flex w-60 shrink-0 flex-col rounded-xl border lg:w-auto"
+      style={{
+        borderColor: `${hex}40`,
+        background: `linear-gradient(180deg, ${hex}15 0%, rgba(255,255,255,0) 55%)`,
+      }}
+    >
+      <div
+        className="flex items-center gap-2.5 border-b px-3 py-3"
+        style={{ borderColor: `${hex}33` }}
+      >
+        <div
+          className={cn(
+            "flex size-8 shrink-0 items-center justify-center rounded-lg text-white/95",
+            tier.bg,
+          )}
+        >
+          <HugeIcon name={tier.icon} size={15} />
+        </div>
+        <div className="min-w-0 flex-1">
+          <p
+            className="truncate text-xs font-semibold"
+            style={{ color: hex }}
+          >
+            {tTeam(`roles.${tier.key}` as Parameters<typeof tTeam>[0])}
+          </p>
+          <p className="mt-0.5 text-[10px] tabular-nums text-muted-foreground/50">
+            {tier.members.length === 1
+              ? tTeam("memberCount", { count: tier.members.length })
+              : tTeam("memberCountPlural", { count: tier.members.length })}
+          </p>
+        </div>
+      </div>
+
+      <div className="flex flex-1 flex-col gap-2 p-2">
+        {tier.members.map((member) => (
+          <Link
+            key={member.id}
+            href="/app/settings/team"
+            className="group flex items-center gap-2.5 rounded-lg border border-transparent p-2 transition-all hover:-translate-y-0.5 hover:border-white/[0.08] hover:bg-white/[0.04]"
+          >
+            <div className="flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white/[0.06] text-[11px] font-bold text-muted-foreground">
+              {member.avatar_url ? (
+                <img
+                  src={member.avatar_url}
+                  alt=""
+                  className="size-full object-cover"
+                />
+              ) : (
+                (member.full_name ?? member.email).charAt(0).toUpperCase()
+              )}
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-xs font-medium text-foreground group-hover:text-primary">
+                {member.full_name ?? member.email}
+              </p>
+              <p className="truncate text-[10px] text-muted-foreground/50">
+                {member.email}
+              </p>
+            </div>
+          </Link>
+        ))}
+        {tier.members.length === 0 &&
+          (isAdmin ? (
+            <Link
+              href="/app/settings/team"
+              className="flex min-h-[76px] flex-col items-center justify-center gap-1.5 rounded-lg border border-dashed p-3 text-center transition-colors hover:bg-white/[0.03]"
+              style={{ borderColor: `${hex}40` }}
+            >
+              <span
+                className="flex size-7 items-center justify-center rounded-full"
+                style={{ backgroundColor: `${hex}25`, color: hex }}
+              >
+                <HugeIcon name="add-01" size={12} />
+              </span>
+              <span
+                className="text-[11px] font-medium"
+                style={{ color: hex }}
+              >
+                {inviteLabel}
+              </span>
+            </Link>
+          ) : (
+            <div className="flex min-h-[76px] items-center justify-center rounded-lg border border-dashed border-white/[0.06] p-3">
+              <span className="text-[11px] text-muted-foreground/40">
+                {emptyLabel}
+              </span>
+            </div>
+          ))}
       </div>
     </div>
   );

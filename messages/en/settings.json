@@ -51,7 +51,12 @@
       "error": "Failed to save settings. Please try again.",
       "readOnly": "Only admins can edit organization settings.",
       "orgChart": "Organization chart",
-      "orgChartDescription": "Team members grouped by role hierarchy.",
+      "orgChartDescription": "Your team grouped by CRA role. Click a person to manage them.",
+      "seatsUsed": "{count} of {limit} seats used",
+      "seatsUsedUnlimited": "{count, plural, one {# seat used} other {# seats used}} · Unlimited",
+      "upgrade": "Upgrade",
+      "inviteToRole": "Invite a {role}",
+      "noOneYet": "No one yet",
       "docReady": {
         "eyebrow": "Compliance setup",
         "title": "Declaration of Conformity is not ready to issue yet",

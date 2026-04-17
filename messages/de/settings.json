@@ -51,7 +51,12 @@
       "error": "Einstellungen konnten nicht gespeichert werden. Bitte versuchen Sie es erneut.",
       "readOnly": "Nur Admins können die Organisationseinstellungen bearbeiten.",
       "orgChart": "Organigramm",
-      "orgChartDescription": "Teammitglieder nach Rollenhierarchie gruppiert.",
+      "orgChartDescription": "Ihr Team nach CRA-Rollen gruppiert. Auf eine Person klicken, um sie zu verwalten.",
+      "seatsUsed": "{count} von {limit} Plätzen belegt",
+      "seatsUsedUnlimited": "{count, plural, one {# Platz belegt} other {# Plätze belegt}} · Unbegrenzt",
+      "upgrade": "Upgrade",
+      "inviteToRole": "{role} einladen",
+      "noOneYet": "Noch niemand",
       "docReady": {
         "eyebrow": "Compliance-Einrichtung",
         "title": "Konformitätserklärung kann noch nicht ausgestellt werden",
