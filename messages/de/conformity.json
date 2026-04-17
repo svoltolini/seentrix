@@ -1,0 +1,86 @@
+{
+  "conformity": {
+    "header": {
+      "routeLabel": "Konformitätsbewertungsverfahren",
+      "progressLabel": "Fortschritt"
+    },
+    "route": {
+      "module_a": "Modul A — Interne Fertigungskontrolle",
+      "module_a.description": "Eigenverantwortung. Der Hersteller erstellt die technische Dokumentation, erklärt die Konformität und bringt die CE-Kennzeichnung an. Keine notifizierte Stelle.",
+      "module_b_c": "Modul B+C — EU-Baumusterprüfung",
+      "module_b_c.description": "Eine notifizierte Stelle prüft ein repräsentatives Muster (Modul B), anschließend erklärt der Hersteller die Konformität mit der Bauart (Modul C).",
+      "module_h": "Modul H — Umfassende Qualitätssicherung",
+      "module_h.description": "Eine notifizierte Stelle prüft und genehmigt ein vollständiges Qualitätssicherungssystem für Entwicklung, Fertigung und Endprüfung. Überwachungsaudits sind wiederkehrend.",
+      "european_certification": "Europäische Cybersicherheitszertifizierung",
+      "european_certification.description": "Konformität wird durch ein Zertifikat nach einer EU-Cybersicherheitszertifizierungsregelung (CSA) nachgewiesen."
+    },
+    "gate": {
+      "checklist": "CRA-Checkliste",
+      "sbom": "Aktives SBOM-Scan",
+      "ready": "Bereit",
+      "pending": "Nicht bereit"
+    },
+    "notifiedBody": {
+      "title": "Notifizierte Stelle",
+      "description": "Erfassen Sie die notifizierte Stelle, die die Konformitätsbewertung durchführt. Die ID und der Umfang erscheinen direkt auf der Konformitätserklärung.",
+      "name": "Name",
+      "id": "Kennnummer",
+      "scope": "Umfang"
+    },
+    "steps": {
+      "title": "Ablauf",
+      "notesLabel": "Notizen",
+      "notesPlaceholder": "Interne Notizen, Nachweise, Audit-Referenzen."
+    },
+    "status": {
+      "pending": "Ausstehend",
+      "in_progress": "In Bearbeitung",
+      "complete": "Abgeschlossen",
+      "not_applicable": "N/A"
+    },
+    "step": {
+      "checklist_complete.title": "CRA-Checkliste zu 100%",
+      "checklist_complete.description": "Alle zutreffenden Anhang-I-Punkte sind als abgeschlossen markiert.",
+      "sbom_active.title": "Aktives SBOM gescannt",
+      "sbom_active.description": "Das aktive SBOM wurde gescannt und die CVE-Ergebnisse geprüft.",
+      "technical_documentation_prepared.title": "Technische Dokumentation erstellt",
+      "technical_documentation_prepared.description": "Anhang-II-Dossier ist zusammengestellt: Beschreibung, Entwurf, Risiko, Tests, Konformitätserklärung.",
+      "risk_assessment_complete.title": "Risikobewertung abgeschlossen",
+      "risk_assessment_complete.description": "Das Cybersicherheitsrisiko wurde bewertet und dokumentiert.",
+      "notified_body_selected.title": "Notifizierte Stelle ausgewählt",
+      "notified_body_selected.description": "Eine notifizierte Stelle mit dem erforderlichen Umfang wurde beauftragt.",
+      "eu_type_examination_passed.title": "EU-Baumusterprüfung bestanden",
+      "eu_type_examination_passed.description": "Notifizierte Stelle hat ein repräsentatives Muster geprüft und das Zertifikat ausgestellt.",
+      "conformity_to_type_verified.title": "Konformität mit der Bauart bestätigt",
+      "conformity_to_type_verified.description": "Die Fertigung entspricht nachweislich dem geprüften Muster.",
+      "quality_system_documented.title": "Qualitätssystem dokumentiert",
+      "quality_system_documented.description": "Entwurfs-, Fertigungs- und Endprüfungsverfahren sind dokumentiert.",
+      "quality_system_approved.title": "Qualitätssystem genehmigt",
+      "quality_system_approved.description": "Notifizierte Stelle hat das Qualitätssystem genehmigt.",
+      "surveillance_audit_scheduled.title": "Überwachungsaudit geplant",
+      "surveillance_audit_scheduled.description": "Wiederkehrendes Überwachungsaudit mit der notifizierten Stelle ist geplant.",
+      "eu_certification_obtained.title": "EU-Zertifikat erhalten",
+      "eu_certification_obtained.description": "Produkt verfügt über ein gültiges Zertifikat nach einer EU-Cybersicherheitszertifizierungsregelung.",
+      "declaration_prepared.title": "Erklärung vorbereitet",
+      "declaration_prepared.description": "DoC-Text, Herstellerangaben und referenzierte Normen sind bereit.",
+      "ce_marking_affixed.title": "CE-Kennzeichnung angebracht",
+      "ce_marking_affixed.description": "Die CE-Kennzeichnung (ggf. mit Kennnummer der notifizierten Stelle) ist am Produkt angebracht."
+    },
+    "doc": {
+      "eyebrow": "Konformitätserklärung",
+      "title": "Konformitätserklärung ausstellen",
+      "description": "EU-Konformitätserklärung automatisch aus Produkt-, Organisations- und Stellen-Daten erzeugen.",
+      "issue": "Erklärung ausstellen",
+      "reissue": "Neu ausstellen",
+      "download": "PDF herunterladen",
+      "issued": "Erklärung ausgestellt",
+      "issuedOn": "Ausgestellt am {date}",
+      "stepsIncomplete": "Alle Ablaufschritte müssen abgeschlossen oder N/A sein, bevor die Erklärung ausgestellt werden kann.",
+      "downloadFailed": "Herunterladen fehlgeschlagen"
+    },
+    "toast": {
+      "saved": "Gespeichert",
+      "saveFailed": "Speichern fehlgeschlagen"
+    }
+  }
+}

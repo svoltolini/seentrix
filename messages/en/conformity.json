@@ -1,0 +1,86 @@
+{
+  "conformity": {
+    "header": {
+      "routeLabel": "Conformity route",
+      "progressLabel": "Progress"
+    },
+    "route": {
+      "module_a": "Module A — Internal Control",
+      "module_a.description": "Self-assessment path. The manufacturer prepares the technical documentation, declares conformity, and affixes the CE marking. No notified body is involved.",
+      "module_b_c": "Module B+C — EU Type Examination",
+      "module_b_c.description": "A notified body examines a representative example of the product (Module B), then the manufacturer declares conformity to that type (Module C).",
+      "module_h": "Module H — Full Quality Assurance",
+      "module_h.description": "A notified body audits and approves a full quality system covering design, manufacturing, and final inspection. Surveillance audits are recurring.",
+      "european_certification": "European Cybersecurity Certification",
+      "european_certification.description": "Conformity is demonstrated through a product's certificate issued under an EU cybersecurity certification scheme (CSA)."
+    },
+    "gate": {
+      "checklist": "CRA checklist",
+      "sbom": "Active SBOM scan",
+      "ready": "Ready",
+      "pending": "Not ready"
+    },
+    "notifiedBody": {
+      "title": "Notified body",
+      "description": "Record the notified body that is performing the conformity assessment. The ID and scope go directly onto the Declaration of Conformity.",
+      "name": "Name",
+      "id": "Notified body number",
+      "scope": "Scope"
+    },
+    "steps": {
+      "title": "Workflow",
+      "notesLabel": "Notes",
+      "notesPlaceholder": "Add internal notes, links to evidence, or audit reference."
+    },
+    "status": {
+      "pending": "Pending",
+      "in_progress": "In progress",
+      "complete": "Complete",
+      "not_applicable": "N/A"
+    },
+    "step": {
+      "checklist_complete.title": "CRA checklist at 100%",
+      "checklist_complete.description": "All applicable Annex I items on the checklist are marked Completed.",
+      "sbom_active.title": "Active SBOM scanned",
+      "sbom_active.description": "The active SBOM has been scanned and the CVE results are reviewed.",
+      "technical_documentation_prepared.title": "Technical documentation prepared",
+      "technical_documentation_prepared.description": "Annex II technical file is compiled: description, design, risk, testing, DoC.",
+      "risk_assessment_complete.title": "Risk assessment completed",
+      "risk_assessment_complete.description": "Product's cybersecurity risk has been assessed and documented.",
+      "notified_body_selected.title": "Notified body selected",
+      "notified_body_selected.description": "A notified body with the required scope has been engaged.",
+      "eu_type_examination_passed.title": "EU type examination passed",
+      "eu_type_examination_passed.description": "Notified body has examined a representative sample and issued the certificate.",
+      "conformity_to_type_verified.title": "Conformity to type verified",
+      "conformity_to_type_verified.description": "Production is verified to match the examined type.",
+      "quality_system_documented.title": "Quality system documented",
+      "quality_system_documented.description": "Design, manufacturing, and final-inspection procedures are documented.",
+      "quality_system_approved.title": "Quality system approved",
+      "quality_system_approved.description": "Notified body has approved the quality system.",
+      "surveillance_audit_scheduled.title": "Surveillance audit scheduled",
+      "surveillance_audit_scheduled.description": "Recurring surveillance audit planned with the notified body.",
+      "eu_certification_obtained.title": "EU certificate obtained",
+      "eu_certification_obtained.description": "Product holds a valid certificate under an EU cybersecurity certification scheme.",
+      "declaration_prepared.title": "Declaration prepared",
+      "declaration_prepared.description": "DoC text, manufacturer details, and referenced standards are ready.",
+      "ce_marking_affixed.title": "CE marking affixed",
+      "ce_marking_affixed.description": "The CE marking (with notified body number where applicable) is affixed to the product."
+    },
+    "doc": {
+      "eyebrow": "Declaration of Conformity",
+      "title": "Issue the Declaration of Conformity",
+      "description": "Generate the EU Declaration of Conformity, auto-filled from the product, organization, and notified body details above.",
+      "issue": "Issue declaration",
+      "reissue": "Re-issue",
+      "download": "Download PDF",
+      "issued": "Declaration issued",
+      "issuedOn": "Issued on {date}",
+      "stepsIncomplete": "All workflow steps must be complete or N/A before the declaration can be issued.",
+      "downloadFailed": "Couldn't download the declaration"
+    },
+    "toast": {
+      "saved": "Saved",
+      "saveFailed": "Couldn't save"
+    }
+  }
+}

@@ -61,6 +61,7 @@
         "sbom": "SBOM",
         "vulnerabilities": "Schwachstellen",
         "releases": "Releases",
+        "conformity": "Konformität",
         "documents": "Dokumente"
       },
       "overview": {
