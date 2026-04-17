@@ -54,7 +54,8 @@
       "orgChartDescription": "Teammitglieder nach Rollenhierarchie gruppiert.",
       "docReady": {
         "title": "Konformitätserklärung kann noch nicht ausgestellt werden",
-        "description": "{count, plural, one {# Pflichtfeld fehlt} other {# Pflichtfelder fehlen}} für die CRA-Dokumenterstellung. Bitte ausfüllen — der Konformitäts-Workflow verweigert die Ausstellung, bis diese Seite vollständig ist."
+        "description": "{count, plural, one {# Pflichtfeld fehlt} other {# Pflichtfelder fehlen}} für die CRA-Dokumenterstellung. Bitte ausfüllen — der Konformitäts-Workflow verweigert die Ausstellung, bis diese Seite vollständig ist.",
+        "cta": "Jetzt ausfüllen"
       }
     },
     "team": {

@@ -10,6 +10,7 @@ import { updateOrganization, type OrgSettings, type TeamMember } from "../action
 import { useToast } from "@/components/ui/toast";
 import { cn } from "@/lib/utils";
 import { HugeIcon } from "@/components/huge-icon";
+import { ProfileIncompleteBanner } from "@/components/profile-incomplete-banner";
 
 // Role hierarchy from highest to lowest
 const ROLE_HIERARCHY: { key: string; color: string; bg: string; icon: string }[] = [
@@ -164,22 +165,18 @@ export function OrgSettingsContent({
           </div>
         </div>
 
-        {/* DoC-readiness banner */}
+        {/* DoC-readiness banner — same eye-catching treatment as the
+            dashboard; animates to keep attention until the user finishes. */}
         {isAdmin && missingForDoc.length > 0 && (
-          <div
-            className="rounded-xl border border-[#D97706]/30 p-4"
-            style={{
-              background:
-                "linear-gradient(135deg, rgba(217,119,6,0.12), rgba(234,88,12,0.06))",
-            }}
-          >
-            <p className="text-xs font-semibold text-[#D97706]">
-              {t("docReady.title")}
-            </p>
-            <p className="mt-1 text-xs text-muted-foreground">
-              {t("docReady.description", { count: missingForDoc.length })}
-            </p>
-          </div>
+          <ProfileIncompleteBanner
+            missing={missingForDoc.length}
+            title={t("docReady.title")}
+            description={t("docReady.description", {
+              count: missingForDoc.length,
+            })}
+            cta={t("docReady.cta")}
+            variant="inline"
+          />
         )}
 
         {/* Legal entity (CRA-mandatory) */}

@@ -54,7 +54,8 @@
       "orgChartDescription": "Team members grouped by role hierarchy.",
       "docReady": {
         "title": "Declaration of Conformity is not ready to issue yet",
-        "description": "{count, plural, one {# required field is missing} other {# required fields are missing}} for CRA document generation. Fill them below — the conformity workflow will refuse to issue the DoC until everything on this page is complete."
+        "description": "{count, plural, one {# required field is missing} other {# required fields are missing}} for CRA document generation. Fill them below — the conformity workflow will refuse to issue the DoC until everything on this page is complete.",
+        "cta": "Fill in now"
       }
     },
     "team": {
