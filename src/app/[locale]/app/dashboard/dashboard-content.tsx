@@ -140,7 +140,7 @@ export function DashboardContent(stats: DashboardStats) {
   const atRiskProduct =
     totalProducts > 0 ? findAtRiskProduct(products) : null;
 
-  // --- Counter + progress-bar grow-in animations ---
+  // --- Dashboard-wide animations ---
   useEffect(() => {
     const el = rootRef.current;
     if (!el) return;
@@ -160,8 +160,8 @@ export function DashboardContent(stats: DashboardStats) {
         const obj = { val: 0 };
         gsap.to(obj, {
           val: endVal,
-          duration: 1.2,
-          ease: "power2.out",
+          duration: 1.4,
+          ease: "power3.out",
           scrollTrigger: {
             trigger: counter,
             start: "top 90%",
@@ -184,8 +184,8 @@ export function DashboardContent(stats: DashboardStats) {
             { width: "0%" },
             {
               width: `${target}%`,
-              duration: 1.1,
-              ease: "power2.out",
+              duration: 1.3,
+              ease: "power3.out",
               scrollTrigger: {
                 trigger: bar,
                 start: "top 90%",
@@ -195,6 +195,35 @@ export function DashboardContent(stats: DashboardStats) {
           );
         },
       );
+
+      // Shimmer sweep — a subtle highlight passes across marked elements
+      // every few seconds. Adds life to gradient bars without distracting.
+      el.querySelectorAll<HTMLElement>("[data-shimmer]").forEach((shimmer) => {
+        gsap.fromTo(
+          shimmer,
+          { xPercent: -100 },
+          {
+            xPercent: 400,
+            duration: 2.8,
+            ease: "power2.inOut",
+            repeat: -1,
+            repeatDelay: 3,
+            delay: 1.5,
+          },
+        );
+      });
+
+      // Pulse — the Action Needed dot breathes to draw the eye
+      el.querySelectorAll<HTMLElement>("[data-pulse]").forEach((dot) => {
+        gsap.to(dot, {
+          scale: 1.4,
+          opacity: 0.6,
+          duration: 1.1,
+          ease: "sine.inOut",
+          yoyo: true,
+          repeat: -1,
+        });
+      });
     }, el);
 
     return () => ctx.revert();
@@ -205,9 +234,11 @@ export function DashboardContent(stats: DashboardStats) {
       <StaggerReveal
         className="space-y-8"
         selector="[data-reveal]"
-        stagger={0.08}
-        y={24}
-        duration={0.7}
+        stagger={0.09}
+        y={28}
+        duration={0.8}
+        scale={0.98}
+        ease="power3.out"
       >
         {/* ── Header ── */}
         <div
@@ -626,7 +657,10 @@ function ActionNeededBanner({
       <div className="flex flex-col gap-5 p-6 md:flex-row md:items-center md:justify-between md:p-8">
         <div className="min-w-0 flex-1">
           <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur-sm">
-            <span className="size-1.5 rounded-full bg-[#F59E0B]" />
+            <span
+              data-pulse
+              className="size-1.5 rounded-full bg-[#F59E0B]"
+            />
             {t("actionNeeded.eyebrow")}
           </div>
           <h2 className="font-heading text-xl font-bold leading-snug text-white md:text-2xl">
@@ -785,7 +819,7 @@ function VulnBreakdownCard({
             {t("vulnerabilities")}
           </span>
         </div>
-        <div className="h-6 w-full overflow-hidden rounded-[4px] bg-[#191919]">
+        <div className="relative h-6 w-full overflow-hidden rounded-[4px] bg-[#191919]">
           <div
             className="h-full rounded-[4px]"
             style={{ width: "100%", backgroundImage: gradient }}
@@ -798,6 +832,12 @@ function VulnBreakdownCard({
                   )}%)`,
               )
               .join(" · ")}
+          />
+          {/* Shimmer sweep — a soft highlight animated via GSAP */}
+          <div
+            data-shimmer
+            aria-hidden
+            className="pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-transparent via-white/20 to-transparent"
           />
         </div>
       </div>

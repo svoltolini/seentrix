@@ -104,7 +104,7 @@ export async function listProducts(): Promise<{
 
   // Calculate compliance scores for all products
   const productIds = (products ?? []).map((p) => p.id);
-  let checklistMap: Record<string, { completed: number; applicable: number }> = {};
+  const checklistMap: Record<string, { completed: number; applicable: number }> = {};
 
   if (productIds.length > 0) {
     const { data: items } = await supabase
@@ -510,9 +510,9 @@ export async function getDashboardStats(): Promise<DashboardStats> {
   const productIds = allProducts.map((p) => p.id);
 
   // Calculate compliance scores
-  let checklistMap: Record<string, { completed: number; applicable: number }> = {};
+  const checklistMap: Record<string, { completed: number; applicable: number }> = {};
   // SBOM data per product
-  let sbomMap: Record<string, { vulnerability_count: number; critical_count: number; high_count: number; medium_count: number; low_count: number; has_sbom: boolean }> = {};
+  const sbomMap: Record<string, { vulnerability_count: number; critical_count: number; high_count: number; medium_count: number; low_count: number; has_sbom: boolean }> = {};
 
   if (productIds.length > 0) {
     const { data: items } = await supabase
@@ -565,11 +565,6 @@ export async function getDashboardStats(): Promise<DashboardStats> {
 
   let totalScore = 0;
   let scoredCount = 0;
-  let totalVulnerabilities = 0;
-  let criticalCount = 0;
-  let highCount = 0;
-  let mediumCount = 0;
-  let lowCount = 0;
 
   const dashboardProducts: DashboardProduct[] = allProducts.map((p) => {
     const stats = checklistMap[p.id];
@@ -584,13 +579,6 @@ export async function getDashboardStats(): Promise<DashboardStats> {
     const vulnCount = sbomData?.vulnerability_count ?? 0;
     const critCount = sbomData?.critical_count ?? 0;
     const hiCount = sbomData?.high_count ?? 0;
-    const medCount = sbomData?.medium_count ?? 0;
-    const loCount = sbomData?.low_count ?? 0;
-    totalVulnerabilities += vulnCount;
-    criticalCount += critCount;
-    highCount += hiCount;
-    mediumCount += medCount;
-    lowCount += loCount;
 
     return {
       id: p.id,
@@ -788,7 +776,9 @@ export async function getDashboardStats(): Promise<DashboardStats> {
     }
   }
 
-  // --- Process vulnerability aging ---
+  // --- Process vulnerability aging + severity breakdown ---
+  // Both Vuln Aging and Vuln Breakdown read from the same source (open
+  // and in-progress vuln tickets) so their totals stay in sync.
   const agingBuckets: VulnAgingBucket[] = [
     { bucket: "0-7d", critical: 0, high: 0, medium: 0, low: 0 },
     { bucket: "8-30d", critical: 0, high: 0, medium: 0, low: 0 },
@@ -796,6 +786,10 @@ export async function getDashboardStats(): Promise<DashboardStats> {
     { bucket: "90d+", critical: 0, high: 0, medium: 0, low: 0 },
   ];
   let openVulnCount = 0;
+  let openCritical = 0;
+  let openHigh = 0;
+  let openMedium = 0;
+  let openLow = 0;
 
   if (vulnRawResult.data) {
     const now = Date.now();
@@ -813,6 +807,10 @@ export async function getDashboardStats(): Promise<DashboardStats> {
       if (severity in bucket) {
         bucket[severity]++;
       }
+      if (severity === "critical") openCritical++;
+      else if (severity === "high") openHigh++;
+      else if (severity === "medium") openMedium++;
+      else if (severity === "low") openLow++;
       openVulnCount++;
     }
   }
@@ -930,11 +928,14 @@ export async function getDashboardStats(): Promise<DashboardStats> {
     totalProducts,
     assessedCount,
     avgCompliance,
-    totalVulnerabilities,
-    criticalCount,
-    highCount,
-    mediumCount,
-    lowCount,
+    // Dashboard-wide vuln counters now reflect open + in-progress tickets
+    // (same source as Vuln Aging) rather than historical SBOM scan results,
+    // so the stat card, breakdown, and aging chart all show the same totals.
+    totalVulnerabilities: openVulnCount,
+    criticalCount: openCritical,
+    highCount: openHigh,
+    mediumCount: openMedium,
+    lowCount: openLow,
     products: dashboardProducts,
     recentActivity,
     currentUser,

@@ -12,6 +12,8 @@ interface StaggerRevealProps {
   y?: number;
   duration?: number;
   selector?: string;
+  scale?: number;
+  ease?: string;
 }
 
 export function StaggerReveal({
@@ -21,6 +23,8 @@ export function StaggerReveal({
   y = 40,
   duration = 0.8,
   selector,
+  scale,
+  ease = "power2.out",
 }: StaggerRevealProps) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -36,25 +40,30 @@ export function StaggerReveal({
 
     if (targets.length === 0) return;
 
-    gsap.set(targets, { opacity: 0, y });
+    const fromProps: gsap.TweenVars = { opacity: 0, y };
+    if (scale !== undefined) fromProps.scale = scale;
+    gsap.set(targets, fromProps);
+
+    const toProps: gsap.TweenVars = {
+      opacity: 1,
+      y: 0,
+      duration,
+      stagger,
+      ease,
+      scrollTrigger: {
+        trigger: el,
+        start: "top 85%",
+        once: true,
+      },
+    };
+    if (scale !== undefined) toProps.scale = 1;
 
     const ctx = gsap.context(() => {
-      gsap.to(targets, {
-        opacity: 1,
-        y: 0,
-        duration,
-        stagger,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: el,
-          start: "top 85%",
-          once: true,
-        },
-      });
+      gsap.to(targets, toProps);
     }, el);
 
     return () => ctx.revert();
-  }, [stagger, y, duration, selector]);
+  }, [stagger, y, duration, selector, scale, ease]);
 
   return (
     <div ref={ref} className={cn(className)}>
