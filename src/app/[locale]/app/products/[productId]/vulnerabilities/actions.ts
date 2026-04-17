@@ -435,9 +435,9 @@ export async function setActivelyExploited(
   vulnId: string,
   flag: boolean,
   productId?: string,
-): Promise<{ error?: string }> {
-  const { supabase, user, role } = await getAuthContext();
-  if (!user) return { error: "notAuthenticated" };
+): Promise<{ error?: string; incidentId?: string }> {
+  const { supabase, user, orgId, role } = await getAuthContext();
+  if (!user || !orgId) return { error: "notAuthenticated" };
   if (!canFlagExploit(role)) return { error: "notAuthorized" };
 
   const { error } = await supabase
@@ -457,10 +457,94 @@ export async function setActivelyExploited(
     targetId: vulnId,
   });
 
+  // Flipping to true kicks off the Article 14 clock. Auto-create a linked
+  // incident record so the team sees the 24h/72h/14d countdown straight
+  // away instead of having to remember to file one manually.
+  let newIncidentId: string | undefined;
+  if (flag) {
+    const { data: existing } = await supabase
+      .from("incidents")
+      .select("id")
+      .eq("linked_vulnerability_id", vulnId)
+      .eq("org_id", orgId)
+      .limit(1);
+    const alreadyLinked = !!(existing && existing.length > 0);
+
+    if (!alreadyLinked) {
+      const { data: vulnRow } = await supabase
+        .from("vulnerabilities")
+        .select("cve_id, severity, description, sbom_component_id")
+        .eq("id", vulnId)
+        .single();
+      const vr = vulnRow as {
+        cve_id: string;
+        severity: string;
+        description: string | null;
+        sbom_component_id: string;
+      } | null;
+
+      let affectedProducts: string[] = [];
+      if (productId) {
+        affectedProducts = [productId];
+      } else if (vr) {
+        const { data: comp } = await supabase
+          .from("sbom_components")
+          .select("sbom_id")
+          .eq("id", vr.sbom_component_id)
+          .single();
+        const cr = comp as { sbom_id: string } | null;
+        if (cr) {
+          const { data: sbom } = await supabase
+            .from("sboms")
+            .select("product_id")
+            .eq("id", cr.sbom_id)
+            .single();
+          const sr = sbom as { product_id: string } | null;
+          if (sr) affectedProducts = [sr.product_id];
+        }
+      }
+
+      const { data: incident } = await supabase
+        .from("incidents")
+        .insert({
+          org_id: orgId,
+          type: "exploited_vulnerability",
+          severity: (vr?.severity as string) ?? "high",
+          title: `${vr?.cve_id ?? "Exploited vulnerability"} actively exploited`,
+          description: vr?.description ?? null,
+          affected_product_ids: affectedProducts,
+          linked_vulnerability_id: vulnId,
+          linked_cve_id: vr?.cve_id ?? null,
+          status: "detected",
+          created_by: user.id,
+        })
+        .select("id")
+        .single();
+
+      const ir = incident as { id: string } | null;
+      if (ir) {
+        newIncidentId = ir.id;
+        await logActivity({
+          action: "incident.detected",
+          targetType: "incident",
+          targetId: ir.id,
+          targetName: `${vr?.cve_id ?? "exploited"} actively exploited`,
+          metadata: {
+            type: "exploited_vulnerability",
+            source: "vulnerability_flag",
+            vulnerabilityId: vulnId,
+          },
+        });
+        revalidatePath("/app/incidents");
+        revalidatePath("/app/dashboard");
+      }
+    }
+  }
+
   if (productId) {
     revalidatePath(`/app/products/${productId}/vulnerabilities`);
   }
-  return {};
+  return { incidentId: newIncidentId };
 }
 
 // ---------------------------------------------------------------------------

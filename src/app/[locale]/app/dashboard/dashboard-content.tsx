@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -15,6 +15,7 @@ import type {
   DashboardProduct,
   ActivityItem,
 } from "../products/actions";
+import type { IncidentWidgetData } from "../incidents/actions";
 import { ComplianceTrendChart } from "./charts/compliance-trend-chart";
 import { VulnAgingChart } from "./charts/vuln-aging-chart";
 import { ChecklistProgressChart } from "./charts/checklist-progress-chart";
@@ -98,8 +99,11 @@ const ACTIVITY_TYPE_PILL: Record<string, string> = {
 // Main
 // ---------------------------------------------------------------------------
 
-export function DashboardContent(stats: DashboardStats) {
+export function DashboardContent(
+  stats: DashboardStats & { incidentWidget?: IncidentWidgetData },
+) {
   const t = useTranslations("dashboard");
+  const tInc = useTranslations("incidents");
   const rootRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -365,6 +369,16 @@ export function DashboardContent(stats: DashboardStats) {
             )}
           </StatCard>
         </div>
+
+        {/* ── Active Incidents Banner — Article 14 countdown ── */}
+        {stats.incidentWidget && stats.incidentWidget.activeCount > 0 && (
+          <div data-reveal>
+            <ActiveIncidentsBanner
+              data={stats.incidentWidget}
+              tInc={tInc}
+            />
+          </div>
+        )}
 
         {/* ── Action Needed Banner ── */}
         {atRiskProduct && nextDeadline && (
@@ -642,6 +656,84 @@ export function DashboardContent(stats: DashboardStats) {
 // ---------------------------------------------------------------------------
 // Action Needed Banner
 // ---------------------------------------------------------------------------
+
+function ActiveIncidentsBanner({
+  data,
+  tInc,
+}: {
+  data: IncidentWidgetData;
+  tInc: ReturnType<typeof useTranslations>;
+}) {
+  // Keep the countdown fresh without calling Date.now() inline during
+  // render (the React purity rules forbid that). We seed from a lazy
+  // initializer and tick each minute inside an effect.
+  const [now, setNow] = useState<number>(() => Date.now());
+  useEffect(() => {
+    const id = setInterval(() => setNow(Date.now()), 60_000);
+    return () => clearInterval(id);
+  }, []);
+
+  const deadline = data.nextDeadlineAt
+    ? new Date(data.nextDeadlineAt)
+    : null;
+  const overdue = deadline ? deadline.getTime() < now : false;
+  const remainingMs = deadline ? deadline.getTime() - now : 0;
+  const absH = Math.floor(Math.abs(remainingMs) / 3600_000);
+  const absD = Math.floor(absH / 24);
+  const timeText = absD >= 1 ? `${absD}d ${absH % 24}h` : `${absH}h`;
+
+  return (
+    <div
+      className="group relative overflow-hidden rounded-2xl border border-[#DC2626]/40"
+      style={{
+        background:
+          "linear-gradient(135deg, rgba(220,38,38,0.25), rgba(217,119,6,0.15))",
+      }}
+    >
+      <div className="flex flex-col gap-4 p-6 md:flex-row md:items-center md:justify-between">
+        <div className="flex items-start gap-3">
+          <div className="mt-0.5 flex size-10 shrink-0 items-center justify-center rounded-full bg-[#DC2626]/25">
+            <span
+              data-pulse
+              className="flex size-6 items-center justify-center rounded-full bg-[#DC2626]"
+            >
+              <HugeIcon name="alert-02" size={14} className="text-white" />
+            </span>
+          </div>
+          <div className="min-w-0">
+            <p className="text-[10px] font-semibold uppercase tracking-wider text-[#DC2626]">
+              {tInc("kpi.active")}
+            </p>
+            <h2 className="mt-1 font-heading text-lg font-bold leading-snug text-foreground md:text-xl">
+              {tInc("banner.headline", { count: data.activeCount })}
+            </h2>
+            {deadline && data.nextDeadlinePhase && (
+              <p className="mt-1 text-[13px] text-muted-foreground">
+                {overdue
+                  ? tInc("deadline.overdueBy", { time: timeText })
+                  : tInc("deadline.in", { time: timeText })}
+                <span className="ml-1.5 text-[12px]">
+                  · {tInc(`phase.${data.nextDeadlinePhase}`)}
+                </span>
+              </p>
+            )}
+          </div>
+        </div>
+        <Link
+          href={
+            data.nextIncidentId
+              ? `/app/incidents/${data.nextIncidentId}`
+              : "/app/incidents"
+          }
+          className="inline-flex shrink-0 items-center gap-2 rounded-lg bg-white px-4 py-2.5 text-sm font-semibold text-black shadow-sm transition-transform hover:-translate-y-0.5"
+        >
+          {tInc("breadcrumb")}
+          <HugeIcon name="arrow-right-01-stroke-rounded" size={16} />
+        </Link>
+      </div>
+    </div>
+  );
+}
 
 function ActionNeededBanner({
   product,

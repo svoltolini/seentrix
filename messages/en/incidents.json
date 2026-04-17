@@ -1,0 +1,124 @@
+{
+  "incidents": {
+    "breadcrumb": "Incidents",
+    "banner": {
+      "headline": "{count, plural, one {# active incident} other {# active incidents}}"
+    },
+    "title": "Article 14 Incident Reporting",
+    "subtitle": "Track and report security incidents and actively-exploited vulnerabilities to ENISA within the CRA reporting windows.",
+    "type": {
+      "security_incident": "Security incident",
+      "exploited_vulnerability": "Exploited vulnerability"
+    },
+    "severity": {
+      "critical": "Critical",
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low"
+    },
+    "status": {
+      "detected": "Detected",
+      "early_warning_submitted": "Early warning sent",
+      "incident_report_submitted": "Incident report sent",
+      "final_report_submitted": "Final report sent",
+      "closed": "Closed"
+    },
+    "phase": {
+      "early_warning": "Early warning",
+      "incident_report": "Incident report",
+      "final_report": "Final report",
+      "submitted": "Submitted",
+      "overdue": "Overdue",
+      "remaining": "Remaining"
+    },
+    "kpi": {
+      "active": "Active",
+      "overdue": "Overdue",
+      "critical": "Critical",
+      "closed": "Closed"
+    },
+    "filter": {
+      "active": "Active",
+      "all": "All",
+      "closed": "Closed",
+      "severity": "Severity"
+    },
+    "table": {
+      "incident": "Incident",
+      "type": "Type",
+      "aware_at": "Aware at",
+      "status": "Status",
+      "deadline": "Next deadline"
+    },
+    "deadline": {
+      "in": "In {time}",
+      "overdueBy": "Overdue by {time}",
+      "none": "All windows closed"
+    },
+    "empty": {
+      "title": "No incidents yet",
+      "description": "When a security incident or actively-exploited vulnerability is detected, file it here to start the 24h / 72h / 14d reporting clock.",
+      "filtered": "No incidents match your filters",
+      "filteredDescription": "Try adjusting the filters above."
+    },
+    "new": {
+      "cta": "New incident",
+      "title": "Report a new incident",
+      "description": "Filing an incident starts the Article 14 reporting clock. You have 24h for the early warning, 72h for the incident report, and 14 days for the final report.",
+      "titleLabel": "Title",
+      "titlePlaceholder": "Short, specific incident name",
+      "typeLabel": "Type",
+      "severityLabel": "Severity",
+      "affectedProductsLabel": "Affected products",
+      "descriptionLabel": "Description",
+      "descriptionPlaceholder": "What happened, when you became aware, and who is investigating.",
+      "cancel": "Cancel",
+      "create": "Start reporting clock",
+      "created": "Incident created",
+      "error": "Couldn't create incident"
+    },
+    "detail": {
+      "awareAt": "Became aware at {date}",
+      "affecting": "Affecting",
+      "downloadPdf": "Download PDF",
+      "close": "Close incident",
+      "saveDraft": "Save draft",
+      "saved": "Draft saved",
+      "saveFailed": "Couldn't save draft",
+      "submitted": "Phase submitted",
+      "submitFailed": "Couldn't submit",
+      "closed": "Incident closed",
+      "closeFailed": "Couldn't close incident",
+      "confirmClose": "Close this incident? The timeline will stop, but the record is retained.",
+      "notified": "User notification recorded",
+      "notifyFailed": "Couldn't save notification",
+      "pdfFailed": "Couldn't generate PDF",
+      "phaseA": {
+        "title": "24-hour early warning",
+        "description": "First notice to ENISA and your CSIRT. Confirm awareness, initial impact, and whether you suspect malicious activity.",
+        "placeholder": "Describe the initial indicators, scope of awareness, and any immediate containment actions.",
+        "submit": "Submit 24h warning"
+      },
+      "phaseB": {
+        "title": "72-hour incident report",
+        "description": "Full notification with impact assessment, root cause so far, and compromised data categories.",
+        "placeholder": "Root cause, impact, affected components and users, remediation in progress.",
+        "submit": "Submit 72h report"
+      },
+      "phaseC": {
+        "title": "14-day final report",
+        "description": "Final report with the incident's cause, severity, remediation, and mitigation measures.",
+        "placeholder": "Final cause analysis, remediation taken, residual risk, lessons learned.",
+        "submit": "Submit final report"
+      },
+      "userNotify": {
+        "title": "Notify affected users",
+        "description": "Article 14 requires manufacturers to inform affected users without undue delay and provide mitigation guidance. Captured verbatim into the audit trail.",
+        "placeholder": "What happened, what users should do, and where to get updates.",
+        "send": "Record notification",
+        "update": "Update notification",
+        "sent": "Sent {date}"
+      }
+    }
+  }
+}

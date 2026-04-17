@@ -26,6 +26,11 @@ const navItems = [
     icon: "package-open-stroke-rounded",
   },
   {
+    href: "/app/incidents",
+    labelKey: "nav.incidents",
+    icon: "alert-02",
+  },
+  {
     href: "/app/settings",
     labelKey: "nav.settings",
     icon: "settings-02",
