@@ -244,18 +244,6 @@ export function DashboardContent(stats: DashboardStats) {
           )}
         </div>
 
-        {/* ── Action Needed Banner ── */}
-        {atRiskProduct && nextDeadline && (
-          <div data-reveal>
-            <ActionNeededBanner
-              product={atRiskProduct}
-              deadlineName={nextDeadline.name}
-              daysLeft={getDaysUntil(nextDeadline.date)}
-              t={t}
-            />
-          </div>
-        )}
-
         {/* ── Stat Cards ── */}
         <div
           data-reveal
@@ -348,6 +336,18 @@ export function DashboardContent(stats: DashboardStats) {
             )}
           </StatCard>
         </div>
+
+        {/* ── Action Needed Banner ── */}
+        {atRiskProduct && nextDeadline && (
+          <div data-reveal>
+            <ActionNeededBanner
+              product={atRiskProduct}
+              deadlineName={nextDeadline.name}
+              daysLeft={getDaysUntil(nextDeadline.date)}
+              t={t}
+            />
+          </div>
+        )}
 
         {/* ── Two-column: Product Table + Deadlines sidebar ── */}
         {totalProducts > 0 && (
@@ -524,9 +524,12 @@ export function DashboardContent(stats: DashboardStats) {
           </div>
         )}
 
-        {/* ── Vulnerability Breakdown — full width, redesigned ── */}
+        {/* ── Vuln Breakdown (½) + Vuln Aging (½) ── */}
         {totalProducts > 0 && (
-          <div data-reveal>
+          <div
+            data-reveal
+            className="grid gap-6 lg:grid-cols-2"
+          >
             <VulnBreakdownCard
               critical={criticalCount}
               high={highCount}
@@ -534,20 +537,17 @@ export function DashboardContent(stats: DashboardStats) {
               low={lowCount}
               t={t}
             />
-          </div>
-        )}
-
-        {/* ── Vuln Aging + Team Activity (each ½) ── */}
-        {totalProducts > 0 && (
-          <div
-            data-reveal
-            className="grid gap-6 lg:grid-cols-2"
-          >
             <VulnAgingChart
               buckets={stats.vulnAging}
               mttr={stats.mttr}
               openCount={stats.openVulnCount}
             />
+          </div>
+        )}
+
+        {/* ── Team Activity (full width — line chart wants the space) ── */}
+        {totalProducts > 0 && (
+          <div data-reveal>
             <ActivityVelocityChart data={stats.activityVelocity} />
           </div>
         )}
@@ -627,15 +627,12 @@ function ActionNeededBanner({
 }) {
   return (
     <div
-      className="group relative overflow-hidden rounded-2xl border border-white/[0.06] bg-cover bg-center transition-all hover:border-white/[0.12]"
-      style={{ backgroundImage: "url('/images/action-needed-bg.svg')" }}
+      className="overflow-hidden rounded-2xl bg-cover bg-center"
+      style={{ backgroundImage: "url('/images/empty-state-bg.png')" }}
     >
-      {/* Gradient overlay for legible text over the decorative bg */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/30" />
-
-      <div className="relative flex flex-col gap-5 p-6 md:flex-row md:items-center md:justify-between md:p-8">
+      <div className="flex flex-col gap-5 p-6 md:flex-row md:items-center md:justify-between md:p-8">
         <div className="min-w-0 flex-1">
-          <div className="mb-2.5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur">
+          <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur-sm">
             <span className="size-1.5 rounded-full bg-[#F59E0B]" />
             {t("actionNeeded.eyebrow")}
           </div>
@@ -646,13 +643,13 @@ function ActionNeededBanner({
             })}
           </h2>
           <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px]">
-            <span className="flex items-center gap-1.5 text-white/80">
+            <span className="flex items-center gap-1.5 text-white/70">
               <span className="font-semibold text-white tabular-nums">
                 {daysLeft}
               </span>
               {t("actionNeeded.daysLeft")}
             </span>
-            <span className="flex items-center gap-1.5 text-white/80">
+            <span className="flex items-center gap-1.5 text-white/70">
               <span
                 className="size-1.5 rounded-full"
                 style={{ backgroundColor: scoreColor(product.compliance_score) }}
@@ -762,18 +759,18 @@ function VulnBreakdownCard({
         </div>
       </div>
 
-      {/* Main — donut + severity ranking */}
-      <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2">
+      {/* Main — donut stacked on top, severity ranking below */}
+      <div className="flex flex-col items-center gap-6">
         {/* Donut */}
-        <div className="relative mx-auto size-[240px]">
+        <div className="relative size-[200px]">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
                 data={data}
                 cx="50%"
                 cy="50%"
-                innerRadius={80}
-                outerRadius={112}
+                innerRadius={68}
+                outerRadius={94}
                 paddingAngle={2}
                 dataKey="value"
                 stroke="none"
@@ -819,7 +816,7 @@ function VulnBreakdownCard({
         </div>
 
         {/* Severity ranking — each row is a labelled bar */}
-        <div className="space-y-4">
+        <div className="w-full space-y-3">
           {data.map((entry) => {
             const pct = total > 0 ? (entry.value / total) * 100 : 0;
             const color = SEVERITY_CHART_COLORS[entry.key];
