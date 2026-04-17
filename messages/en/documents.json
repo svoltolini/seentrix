@@ -1,0 +1,130 @@
+{
+  "documents": {
+    "title": "Documents",
+    "subtitle": "Manage CRA compliance documentation for this product.",
+    "grid": {
+      "statusNotStarted": "Not started",
+      "statusDraft": "Draft",
+      "statusFinal": "Final",
+      "lastUpdated": "Updated {date}",
+      "neverEdited": "Not started yet"
+    },
+    "types": {
+      "declaration_of_conformity": {
+        "title": "Declaration of Conformity",
+        "description": "EU Declaration of Conformity per CRA Annex V. Required for placing your product on the EU market."
+      },
+      "vulnerability_disclosure_policy": {
+        "title": "Vulnerability Disclosure Policy",
+        "description": "Coordinated vulnerability disclosure process. Required under CRA Article 11."
+      },
+      "incident_report": {
+        "title": "Incident Report Template",
+        "description": "Security incident notification template per CRA Article 14. For reporting to ENISA."
+      },
+      "risk_assessment": {
+        "title": "Risk Assessment Matrix",
+        "description": "Cybersecurity risk assessment. Identifies threats, vulnerabilities, and mitigation measures."
+      },
+      "technical_documentation": {
+        "title": "Technical Documentation",
+        "description": "Technical documentation outline per CRA Annex VII. Covers design, development, and testing."
+      }
+    },
+    "editor": {
+      "back": "Back to Documents",
+      "save": "Save Document",
+      "saving": "Saving…",
+      "saved": "Document saved successfully.",
+      "generatePdf": "Generate PDF",
+      "generatingPdf": "Generating…",
+      "downloadPdf": "Download PDF",
+      "pdfGenerated": "PDF generated successfully.",
+      "markFinal": "Mark as Final",
+      "markDraft": "Revert to Draft",
+      "errors": {
+        "notAuthenticated": "You must be signed in.",
+        "generic": "Something went wrong. Please try again.",
+        "saveFailed": "Failed to save. Please try again.",
+        "documentNotFound": "Document not found.",
+        "noContent": "Please save the document before generating a PDF.",
+        "uploadFailed": "Failed to upload PDF. Please try again.",
+        "noPdf": "No PDF available. Generate one first.",
+        "planRequired": "PDF export requires a Professional plan or higher."
+      }
+    },
+    "fields": {
+      "manufacturerName": "Manufacturer Name",
+      "manufacturerNamePlaceholder": "e.g. Acme GmbH",
+      "manufacturerAddress": "Manufacturer Address",
+      "manufacturerAddressPlaceholder": "Full postal address…",
+      "productName": "Product Name",
+      "productNamePlaceholder": "e.g. Smart Thermostat Pro",
+      "productIdentification": "Product Identification",
+      "productIdentificationPlaceholder": "Model number, serial number, or unique identifier…",
+      "conformityStatement": "Conformity Statement",
+      "conformityStatementPlaceholder": "The above product is in conformity with the requirements set out in the Cyber Resilience Act…",
+      "standardsApplied": "Standards Applied",
+      "standardsAppliedPlaceholder": "e.g. IEC 62443, ETSI EN 303 645",
+      "standardsAppliedHint": "Comma-separated list of harmonised standards or specifications.",
+      "notifiedBodyName": "Notified Body Name",
+      "notifiedBodyNamePlaceholder": "e.g. TÜV Rheinland",
+      "notifiedBodyNumber": "Notified Body Number",
+      "notifiedBodyNumberPlaceholder": "e.g. 0035",
+      "place": "Place",
+      "placePlaceholder": "e.g. Berlin, Germany",
+      "date": "Date",
+      "signatoryName": "Signatory Name",
+      "signatoryNamePlaceholder": "Full name of the authorized person",
+      "signatoryPosition": "Signatory Position",
+      "signatoryPositionPlaceholder": "e.g. Chief Technology Officer",
+      "policyScope": "Policy Scope",
+      "policyScopePlaceholder": "Describe what systems and products this policy covers…",
+      "reportingChannels": "Reporting Channels",
+      "reportingChannelsPlaceholder": "e.g. security@example.com, https://example.com/security",
+      "responseTimeline": "Response Timeline",
+      "responseTimelinePlaceholder": "e.g. Initial acknowledgment within 24 hours, triage within 72 hours…",
+      "disclosureTimeline": "Disclosure Timeline",
+      "disclosureTimelinePlaceholder": "e.g. Coordinated public disclosure after 90 days…",
+      "safeHarborStatement": "Safe Harbor Statement",
+      "safeHarborStatementPlaceholder": "Assurance that good-faith reporters will not face legal action…",
+      "incidentTitle": "Incident Title",
+      "incidentTitlePlaceholder": "Brief title for the incident…",
+      "incidentDate": "Incident Date",
+      "incidentDescription": "Incident Description",
+      "incidentDescriptionPlaceholder": "Detailed description of what happened…",
+      "impactAssessment": "Impact Assessment",
+      "impactAssessmentPlaceholder": "Systems, users, and data affected…",
+      "mitigationActions": "Mitigation Actions",
+      "mitigationActionsPlaceholder": "Actions taken to contain and remediate…",
+      "notificationDate": "Notification Date to ENISA",
+      "riskTitle": "Assessment Title",
+      "riskTitlePlaceholder": "e.g. Q1 2026 Cybersecurity Risk Assessment",
+      "threatDescription": "Threat Description",
+      "threatDescriptionPlaceholder": "Describe the threat landscape and threat actors…",
+      "vulnerabilitiesIdentified": "Vulnerabilities Identified",
+      "vulnerabilitiesIdentifiedPlaceholder": "List known vulnerabilities and weaknesses…",
+      "riskLevel": "Overall Risk Level",
+      "riskLevelLow": "Low",
+      "riskLevelMedium": "Medium",
+      "riskLevelHigh": "High",
+      "riskLevelCritical": "Critical",
+      "mitigationPlan": "Mitigation Plan",
+      "mitigationPlanPlaceholder": "Actions planned to reduce identified risks…",
+      "residualRisk": "Residual Risk",
+      "residualRiskPlaceholder": "Remaining risk after mitigation measures…",
+      "techDocScope": "Scope",
+      "techDocScopePlaceholder": "Products and systems covered by this documentation…",
+      "designDescription": "Design Description",
+      "designDescriptionPlaceholder": "Architecture, components, and design decisions…",
+      "developmentProcess": "Development Process",
+      "developmentProcessPlaceholder": "Development methodology, tools, and secure coding practices…",
+      "testingResults": "Testing and Verification",
+      "testingResultsPlaceholder": "Test plans, results, and verification activities…",
+      "updateMechanism": "Update Mechanism",
+      "updateMechanismPlaceholder": "How security updates are delivered to users…",
+      "supportPeriod": "Support Period",
+      "supportPeriodPlaceholder": "e.g. 5 years from date of sale"
+    }
+  }
+}

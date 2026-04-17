@@ -1,0 +1,21 @@
+{
+  "upgrade": {
+    "upgradeCta": "Upgrade Plan",
+    "sbom": {
+      "title": "SBOM Management requires a paid plan",
+      "description": "Upload and manage Software Bills of Materials, scan for vulnerabilities, and track component risks with a Professional plan or higher."
+    },
+    "pdf": {
+      "title": "PDF Export requires a paid plan",
+      "description": "Generate professional, regulation-compliant PDF documents with a Professional plan or higher."
+    },
+    "documents": {
+      "title": "Document Templates require a paid plan",
+      "description": "Access CRA compliance document templates and generate PDFs with a Professional plan or higher."
+    },
+    "monitoring": {
+      "title": "Continuous Monitoring requires a Business plan",
+      "description": "Get automated vulnerability monitoring and alerts for your products with a Business plan or higher."
+    }
+  }
+}

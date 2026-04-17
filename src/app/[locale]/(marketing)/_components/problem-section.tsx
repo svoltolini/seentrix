@@ -17,8 +17,8 @@ export function ProblemSection() {
 
     gsap.registerPlugin(ScrollTrigger);
 
-    const cards = el.querySelectorAll("[data-stat-card]");
-    gsap.set(cards, { opacity: 0, y: 40 });
+    const items = el.querySelectorAll("[data-stat-card]");
+    gsap.set(items, { opacity: 0, y: 40 });
 
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
@@ -29,7 +29,7 @@ export function ProblemSection() {
         },
       });
 
-      tl.to(cards, {
+      tl.to(items, {
         opacity: 1,
         y: 0,
         duration: 0.8,
@@ -37,7 +37,6 @@ export function ProblemSection() {
         ease: "power2.out",
       });
 
-      // Counter animations after cards are visible
       el.querySelectorAll("[data-counter]").forEach((counter) => {
         const target = counter.getAttribute("data-counter") ?? "";
         const numericMatch = target.match(/[\d.]+/);
@@ -49,7 +48,7 @@ export function ProblemSection() {
           target.indexOf(numericMatch[0]) + numericMatch[0].length
         );
 
-        tl.from(
+        tl.to(
           { val: 0 },
           {
             val: endVal,
@@ -83,16 +82,16 @@ export function ProblemSection() {
           </p>
         </div>
 
-        <div className="grid gap-8 md:grid-cols-3">
+        <div className="grid gap-12 md:grid-cols-3">
           {stats.map((key) => (
             <div
               key={key}
               data-stat-card
-              className="flex flex-col items-center rounded-2xl border border-border bg-card p-8 text-center"
+              className="flex flex-col items-center text-center"
             >
               <span
                 data-counter={t(`stats.${key}.value`)}
-                className="text-5xl font-bold text-primary sm:text-6xl"
+                className="bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] bg-clip-text text-6xl font-extrabold text-transparent sm:text-7xl"
               >
                 {t(`stats.${key}.value`)}
               </span>

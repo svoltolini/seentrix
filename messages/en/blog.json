@@ -1,0 +1,16 @@
+{
+  "blog": {
+    "meta": {
+      "title": "Blog",
+      "description": "Insights on EU Cyber Resilience Act compliance, SBOM management, and product security for manufacturers."
+    },
+    "heading": "Blog",
+    "subheading": "Insights on CRA compliance, SBOM management, and product security.",
+    "noPosts": "No posts yet. Check back soon!",
+    "readMore": "Read more",
+    "minRead": "min read",
+    "backToBlog": "Back to blog",
+    "toc": "Table of contents",
+    "relatedPosts": "Related posts"
+  }
+}

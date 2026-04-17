@@ -163,6 +163,24 @@
         }
       }
     },
+    "howItWorks": {
+      "title": "In 3 Schritten compliant",
+      "subtitle": "Von der ersten Bewertung bis zur audit-fertigen Dokumentation — Seentrix begleitet Sie durch die gesamte CRA-Compliance-Reise.",
+      "steps": {
+        "s1": {
+          "title": "Produkte bewerten",
+          "description": "Führen Sie die Scope-Bewertung durch, um Ihre CRA-Kategorie, den Konformitätsweg und die Notwendigkeit einer benannten Stelle zu bestimmen."
+        },
+        "s2": {
+          "title": "Anforderungen verfolgen",
+          "description": "Arbeiten Sie interaktive Checklisten ab, die auf CRA-Anhang I abgestimmt sind. Laden Sie Ihre SBOM hoch und scannen Sie nach bekannten Schwachstellen."
+        },
+        "s3": {
+          "title": "Dokumentation erstellen",
+          "description": "Exportieren Sie Ihre EU-Konformitätserklärung, technische Dokumentation und Richtlinien zur Schwachstellenbehandlung — bereit für Prüfer."
+        }
+      }
+    },
     "trust": {
       "title": "Entwickelt von Compliance-Ingenieuren",
       "subtitle": "In der Schweiz entwickelt von einem Team mit tiefen Wurzeln in industrieller Automatisierung und Cybersicherheitsstandards.",
@@ -171,6 +189,36 @@
         "etsi": "ETSI EN 303 645",
         "gdpr": "EU-DSGVO-konform",
         "swiss": "Made in Switzerland"
+      }
+    },
+    "faq": {
+      "title": "Häufig gestellte Fragen",
+      "subtitle": "Alles, was Sie über den CRA und die Hilfe von Seentrix wissen müssen.",
+      "items": {
+        "q1": {
+          "question": "Was ist der EU Cyber Resilience Act?",
+          "answer": "Der CRA ist eine EU-Verordnung, die verbindliche Cybersicherheitsanforderungen für alle Produkte mit digitalen Elementen festlegt, die auf dem europäischen Markt verkauft werden. Er umfasst Hardware und Software, von IoT-Geräten bis zu Industriesteuerungen."
+        },
+        "q2": {
+          "question": "Gilt der CRA für meine Produkte?",
+          "answer": "Wenn Sie Produkte mit digitalen Elementen herstellen oder in den EU-Markt importieren, gilt der CRA wahrscheinlich. Dies umfasst vernetzte Geräte, eigenständige Software und eingebettete Firmware. Führen Sie unsere kostenlose Scope-Bewertung durch, um es in Minuten herauszufinden."
+        },
+        "q3": {
+          "question": "Wann tritt der CRA in Kraft?",
+          "answer": "Die Meldepflicht für Schwachstellen beginnt im Juni 2026. Die vollständige Durchsetzung beginnt am 11. September 2026. Konformitätsbewertungen durch benannte Stellen für kritische Produkte sind bis Dezember 2027 erforderlich."
+        },
+        "q4": {
+          "question": "Was passiert bei Nichteinhaltung?",
+          "answer": "Nichteinhaltung kann zu Bußgeldern von bis zu 15 Millionen Euro oder 2,5% des weltweiten Jahresumsatzes führen, je nachdem, welcher Betrag höher ist. Produkte können auch vom EU-Markt zurückgezogen werden."
+        },
+        "q5": {
+          "question": "Wie schnell kann ich starten?",
+          "answer": "Sie können Ihre erste Scope-Bewertung in unter 10 Minuten abschließen. Die meisten Teams haben innerhalb weniger Tage ein vollständiges Compliance-Bild, abhängig von der Anzahl der Produkte und der Komplexität."
+        },
+        "q6": {
+          "question": "Kann ich Seentrix kostenlos testen?",
+          "answer": "Ja. Der kostenlose Plan umfasst ein Produkt mit grundlegender Scope-Bewertung und einer Nur-Lese-Compliance-Checkliste. Keine Kreditkarte erforderlich."
+        }
       }
     },
     "newsletter": {

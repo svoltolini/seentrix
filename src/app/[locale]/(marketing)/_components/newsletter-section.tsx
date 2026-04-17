@@ -24,13 +24,12 @@ export function NewsletterSection() {
 
     gsap.registerPlugin(ScrollTrigger);
 
-    gsap.set(el, { opacity: 0, y: 30, scale: 0.97 });
+    gsap.set(el, { opacity: 0, y: 30 });
 
     const ctx = gsap.context(() => {
       gsap.to(el, {
         opacity: 1,
         y: 0,
-        scale: 1,
         duration: 0.8,
         ease: "power2.out",
         scrollTrigger: {
@@ -45,11 +44,11 @@ export function NewsletterSection() {
   }, []);
 
   return (
-    <section className="bg-gradient-to-r from-primary/5 via-[#8B5CF6]/5 to-[#F97316]/5 py-24 lg:py-32">
+    <section className="py-24 lg:py-32">
       <div className="mx-auto max-w-6xl px-6">
         <div
           ref={containerRef}
-          className="mx-auto max-w-4xl rounded-3xl border border-border bg-card p-10 text-center lg:p-14"
+          className="mx-auto max-w-2xl text-center"
         >
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
             {t("title")}
@@ -60,7 +59,7 @@ export function NewsletterSection() {
 
           <form
             action={action}
-            className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center"
+            className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center"
           >
             <input type="hidden" name="locale" value={locale} />
             <Input

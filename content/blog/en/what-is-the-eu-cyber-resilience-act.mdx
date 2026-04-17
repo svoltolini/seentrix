@@ -1,0 +1,135 @@
+---
+title: "What is the EU Cyber Resilience Act? A Practical Guide for Manufacturers"
+description: "A plain-language explanation of the EU Cyber Resilience Act (CRA), who it affects, key deadlines, penalties, and practical first steps for product manufacturers."
+date: "2026-03-15"
+category: "Regulation"
+author: "Seentrix Team"
+---
+
+The EU Cyber Resilience Act (CRA) is the most significant piece of cybersecurity legislation to come out of Europe in a decade. If your company manufactures, imports, or distributes any product that contains software or connects to a network, this regulation will directly affect how you design, build, and maintain that product.
+
+This guide breaks down the CRA in plain language: what it requires, who it applies to, what the deadlines are, and what you should be doing right now to prepare.
+
+## Why the CRA Exists
+
+Connected products are everywhere. From industrial sensors and smart home devices to medical equipment and enterprise routers, software-driven products have become the backbone of modern infrastructure. Yet the cybersecurity standards for these products have historically been fragmented, voluntary, or non-existent.
+
+The result has been predictable. High-profile vulnerabilities like Log4Shell and SolarWinds exposed how a single weak link in the software supply chain can cascade across millions of systems. The European Commission recognised that the existing regulatory patchwork was not keeping up with the threat landscape, and that consumers and businesses had no reliable way to evaluate whether a product was secure before purchasing it.
+
+The Cyber Resilience Act was introduced to address this gap. It establishes **mandatory cybersecurity requirements for all products with digital elements** sold in the European Union, shifting the burden of security from the end user back to the manufacturer, where it belongs.
+
+The regulation was formally adopted in late 2024 and entered into force on 10 December 2024, starting the clock on a phased transition period.
+
+## Who the CRA Affects
+
+The CRA applies broadly. If you place a product with digital elements on the EU market, the regulation applies to you. A "product with digital elements" is defined as any hardware or software product that includes, or connects to, a digital component. This covers:
+
+- **Hardware manufacturers** producing IoT devices, networking equipment, industrial controllers, consumer electronics, medical devices, and more.
+- **Software publishers** distributing standalone software products, firmware, operating systems, and applications.
+- **Importers and distributors** who bring third-party products into the EU market, as they carry their own set of obligations to verify compliance.
+
+Open-source software developed and distributed on a non-commercial basis is generally exempt, though the boundaries here have been the subject of extensive debate. If you are a commercial entity that integrates open-source components into a product you sell, the compliance responsibility falls on you.
+
+There are also narrow exemptions for products already covered by sector-specific regulations, such as medical devices under the MDR, vehicles under UNECE standards, and aviation systems. If your product falls under one of these regimes, check whether the CRA applies in addition to, or instead of, your existing requirements.
+
+## Product Categories and Conformity Assessment
+
+Not every product is treated the same under the CRA. The regulation defines four product categories, each with escalating requirements for how you demonstrate compliance.
+
+### Default Category
+
+The vast majority of products fall into the **default category**. These are lower-risk products that can be self-assessed by the manufacturer. You declare conformity through an internal assessment process, apply the CE marking, and prepare the required technical documentation. Examples include photo editing software, smart speakers, or hard drives.
+
+### Important Class I
+
+Products in **Important Class I** carry a higher risk profile and require a more rigorous conformity assessment. Manufacturers can still use harmonised standards for self-assessment, but if no harmonised standard exists, a third-party audit by a notified body is required. Examples include password managers, VPN products, network management systems, and routers intended for industrial use.
+
+### Important Class II
+
+**Important Class II** products present a still higher risk and **must undergo a third-party conformity assessment** by a notified body, regardless of whether harmonised standards exist. These include operating systems, firewalls, tamper-resistant microprocessors, and industrial intrusion detection systems.
+
+### Critical Category
+
+The **critical category** is reserved for products that are foundational to the security of other systems, such as hardware security modules (HSMs), smart meter gateways, and smartcard devices. These products face the strictest assessment procedures, typically requiring European cybersecurity certification.
+
+Understanding which category your product falls into is one of the most important early steps, because it determines the entire conformity pathway you will need to follow.
+
+## Key Obligations for Manufacturers
+
+The CRA imposes a set of essential cybersecurity requirements that apply across all product categories. While the conformity assessment route varies, the underlying obligations are consistent.
+
+### Security by Design and by Default
+
+Products must be designed with cybersecurity in mind from the outset. This means performing threat modelling, minimising attack surfaces, implementing secure default configurations, and ensuring that components are kept up to date. Products must ship in a secure state, without known exploitable vulnerabilities.
+
+### Vulnerability Handling
+
+Manufacturers must establish and maintain a **coordinated vulnerability disclosure process**. This includes monitoring for vulnerabilities in your own code and in any third-party or open-source components you integrate, providing timely security patches, and making those patches available to users free of charge for a defined support period.
+
+The regulation requires that you handle vulnerabilities for the **expected product lifetime or for a minimum of five years** from placing the product on the market, whichever is shorter.
+
+### Software Bill of Materials (SBOM)
+
+Every product must be accompanied by a **Software Bill of Materials**, a machine-readable inventory of all software components included in the product. The SBOM must be maintained and kept up to date throughout the product's support period.
+
+The SBOM requirement is not merely administrative. It enables downstream users, market surveillance authorities, and incident response teams to quickly identify whether a newly disclosed vulnerability affects a given product. If Log4Shell taught us anything, it is that most organisations had no reliable way to answer the question "are we affected?" within a reasonable timeframe. The SBOM obligation is designed to fix that.
+
+### Incident and Vulnerability Reporting
+
+One of the earliest obligations to take effect under the CRA is the duty to report **actively exploited vulnerabilities** and **severe security incidents** to the European Union Agency for Cybersecurity (ENISA) via a dedicated reporting platform.
+
+- An **early warning** must be submitted within **24 hours** of becoming aware of an actively exploited vulnerability.
+- A **detailed notification** must follow within **72 hours**.
+- A **final report** is due within **14 days**, or within one month in cases where remediation is still ongoing.
+
+This reporting obligation applies even if a fix is not yet available, which makes having robust internal vulnerability monitoring processes essential.
+
+### Technical Documentation and CE Marking
+
+Manufacturers must prepare and maintain technical documentation that demonstrates compliance with all essential requirements. This documentation must be available for inspection by market surveillance authorities for at least **ten years** after the product is placed on the market. Upon successful conformity assessment, the product receives the CE marking, which is your ticket to the EU single market.
+
+## Key Deadlines
+
+The CRA uses a phased transition timeline. These are the dates every manufacturer needs on their calendar:
+
+- **11 June 2026**: Conformity assessment bodies (notified bodies) can begin operating under the CRA.
+- **11 September 2026**: **Vulnerability and incident reporting obligations take effect.** From this date, manufacturers must report actively exploited vulnerabilities and severe incidents to ENISA within the prescribed timelines. This is the first hard compliance deadline.
+- **11 December 2027**: **Full compliance is required.** All essential cybersecurity requirements, conformity assessment procedures, SBOM obligations, documentation, and CE marking rules apply in full. Products placed on the market after this date must meet every requirement of the CRA.
+
+The September 2026 reporting deadline is less than six months away. If you do not yet have a process for identifying actively exploited vulnerabilities in your products, building one should be an immediate priority.
+
+## Penalties for Non-Compliance
+
+The CRA carries substantial financial penalties, structured in tiers based on the nature of the violation:
+
+- **Failure to meet essential cybersecurity requirements**: fines of up to **EUR 15 million** or **2.5% of global annual turnover**, whichever is higher.
+- **Failure to meet other CRA obligations** (such as documentation or reporting duties): fines of up to **EUR 10 million** or **2% of global annual turnover**.
+- **Providing incorrect, incomplete, or misleading information** to authorities: fines of up to **EUR 5 million** or **1% of global annual turnover**.
+
+Beyond fines, market surveillance authorities have the power to restrict or prohibit the sale of non-compliant products in the EU, and to order recalls. For manufacturers who depend on access to the European market, the commercial risk of non-compliance extends well beyond financial penalties.
+
+## Practical First Steps for Manufacturers
+
+If you are starting from scratch, the volume of requirements can feel overwhelming. Here is a practical sequence of first steps that will put you on solid footing.
+
+**1. Classify your products.** Determine which CRA category each of your products falls into: Default, Important Class I, Important Class II, or Critical. This determines your conformity assessment pathway and whether you will need a notified body.
+
+**2. Conduct a gap analysis.** Map the CRA's essential requirements against your current product development and security practices. Identify where you already meet requirements, and where the gaps are. Pay particular attention to vulnerability handling, SBOM generation, and incident reporting.
+
+**3. Build your SBOM capability.** If you are not already generating SBOMs as part of your build process, start now. Tooling has matured considerably, and integrating SBOM generation into your CI/CD pipeline is achievable with modest effort. Focus on accuracy and completeness, as an inaccurate SBOM is arguably worse than none at all.
+
+**4. Establish a vulnerability disclosure and handling process.** Define how you will receive vulnerability reports, how you will triage them, and how you will deliver patches to users. If you rely on open-source components, you need a process for monitoring upstream advisories and determining whether they affect your products.
+
+**5. Prepare for reporting obligations.** The September 2026 deadline is close. Ensure you have internal procedures to detect actively exploited vulnerabilities, assess severity, and submit reports to ENISA within the required 24-hour, 72-hour, and 14-day windows.
+
+**6. Review your supply chain.** The CRA makes you responsible for the security of components you integrate, including third-party and open-source software. Assess your suppliers' security practices and ensure your contracts reflect the obligations you carry under the regulation.
+
+**7. Engage leadership and allocate resources.** CRA compliance is not a one-time project. It requires sustained investment in processes, tooling, and people. Make sure your leadership team understands the regulatory timeline, the penalties, and the resources needed to get there.
+
+## Start Today, Not Tomorrow
+
+The CRA is not a future problem. The reporting obligations take effect in September 2026, and full compliance is required by December 2027. Manufacturers who wait until the last minute will find themselves scrambling, while those who start now will have the time to build compliance into their processes thoughtfully and efficiently.
+
+The good news is that much of what the CRA requires aligns with security best practices that many forward-thinking manufacturers have already begun adopting. The regulation simply makes these practices mandatory and verifiable.
+
+Ready to start your CRA compliance journey? [Try Seentrix's free CRA assessment](https://seentrix.com) to understand where your products stand — and what steps to take next.

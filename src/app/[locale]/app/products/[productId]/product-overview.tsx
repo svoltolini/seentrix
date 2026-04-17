@@ -1,0 +1,400 @@
+"use client";
+
+import { useState, useActionState, useTransition, useEffect, useRef } from "react";
+import { useTranslations } from "next-intl";
+import { useRouter, Link } from "@/i18n/navigation";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from "@/components/ui/sheet";
+import { ConfirmDialog } from "@/components/ui/confirm-dialog";
+import {
+  updateProduct,
+  deleteProduct,
+  type ProductDetail,
+  type ProductActionState,
+} from "../actions";
+import { PRODUCT_TYPES } from "./constants";
+import { PencilIcon, Trash2Icon, ImageIcon, XIcon } from "lucide-react";
+
+const TYPE_STYLE: Record<string, { bg: string; text: string }> = {
+  hardware: { bg: "bg-[#2563EB]/15", text: "text-[#2563EB]" },
+  software: { bg: "bg-[#7C3AED]/15", text: "text-[#7C3AED]" },
+  firmware: { bg: "bg-[#EA580C]/15", text: "text-[#EA580C]" },
+  iot: { bg: "bg-[#0891B2]/15", text: "text-[#0891B2]" },
+};
+
+const CATEGORY_PILL: Record<string, string> = {
+  default: "bg-[#2563EB]",
+  important_class_i: "bg-[#D97706]",
+  important_class_ii: "bg-[#EA580C]",
+  critical: "bg-[#DC2626]",
+};
+
+function scoreColor(score: number): string {
+  if (score >= 75) return "#16A34A";
+  if (score >= 40) return "#D97706";
+  return "#DC2626";
+}
+
+export function ProductOverview({
+  product,
+  complianceScore,
+  hasChecklist,
+}: {
+  product: ProductDetail;
+  complianceScore: number;
+  hasChecklist: boolean;
+}) {
+  const t = useTranslations("products");
+  const tAssessment = useTranslations("assessment");
+  const router = useRouter();
+  const [editing, setEditing] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
+  const [isPending, startTransition] = useTransition();
+  const [imagePreview, setImagePreview] = useState<string | null>(product.image_url);
+  const [removeImage, setRemoveImage] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (file) {
+      setImagePreview(URL.createObjectURL(file));
+      setRemoveImage(false);
+    }
+  }
+
+  function handleRemoveImage() {
+    setImagePreview(null);
+    setRemoveImage(true);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  }
+
+  function resetImageState() {
+    setImagePreview(product.image_url);
+    setRemoveImage(false);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  }
+
+  const boundUpdate = updateProduct.bind(null, product.id);
+  const [editState, editAction] = useActionState<ProductActionState, FormData>(
+    boundUpdate,
+    undefined
+  );
+
+  useEffect(() => {
+    if (editState?.productId) {
+      setEditing(false);
+      resetImageState();
+      router.refresh();
+    }
+  }, [editState, router]);
+
+  function handleEdit(formData: FormData) {
+    startTransition(() => editAction(formData));
+  }
+
+  async function handleDelete() {
+    startTransition(async () => {
+      const result = await deleteProduct(product.id);
+      if (!result?.error) {
+        router.push("/app/products");
+      }
+    });
+  }
+
+  const ts = TYPE_STYLE[product.type ?? ""] ?? {
+    bg: "bg-white/[0.06]",
+    text: "text-muted-foreground",
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Stat cards */}
+      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+        {/* Type — purple */}
+        <div
+          className="overflow-hidden rounded-xl"
+          style={{ background: "linear-gradient(135deg, #7C3AED, #4F46E5)" }}
+        >
+          <div className="p-5">
+            <p className="text-[11px] font-semibold text-white/75">
+              {t("detail.overview.type")}
+            </p>
+            <div className="mt-2">
+              <span className="inline-block rounded-full bg-black/20 px-2.5 py-0.5 text-xs font-semibold text-white">
+                {product.type ? t(`types.${product.type}`) : "\u2014"}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* CRA Category */}
+        <div
+          className="overflow-hidden rounded-xl"
+          style={{
+            background: product.cra_category
+              ? product.cra_category === "critical"
+                ? "linear-gradient(135deg, #DC2626, #E11D48)"
+                : product.cra_category === "important_class_ii"
+                  ? "linear-gradient(135deg, #EA580C, #DC2626)"
+                  : product.cra_category === "important_class_i"
+                    ? "linear-gradient(135deg, #D97706, #EA580C)"
+                    : "linear-gradient(135deg, #2563EB, #0891B2)"
+              : "linear-gradient(135deg, #52525B, #3F3F46)",
+          }}
+        >
+          <div className="p-5">
+            <p className="text-[11px] font-semibold text-white/75">
+              {t("detail.overview.craStatus")}
+            </p>
+            {product.cra_category ? (
+              <div className="mt-2">
+                <span className="inline-block rounded-full bg-black/20 px-2.5 py-0.5 text-xs font-semibold text-white">
+                  {t(`categories.${product.cra_category}`)}
+                </span>
+              </div>
+            ) : (
+              <div className="mt-2">
+                <Link
+                  href={`/app/products/${product.id}/assess`}
+                  className="text-xs font-medium text-white hover:underline"
+                >
+                  {t("detail.overview.runAssessment")} &rarr;
+                </Link>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Compliance — green */}
+        <div
+          className="overflow-hidden rounded-xl"
+          style={{
+            background: hasChecklist
+              ? "linear-gradient(135deg, #16A34A, #15803D)"
+              : "linear-gradient(135deg, #52525B, #3F3F46)",
+          }}
+        >
+          <div className="p-5">
+            <p className="text-[11px] font-semibold text-white/75">
+              {t("detail.overview.complianceScore")}
+            </p>
+            <p className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white">
+              {hasChecklist ? `${complianceScore}%` : "\u2014"}
+            </p>
+            {hasChecklist && (
+              <div className="mt-2.5 h-3 overflow-hidden rounded-[3px] bg-black/25">
+                <div
+                  className="h-full rounded-[3px] bg-white transition-all duration-500"
+                  style={{ width: `${complianceScore}%` }}
+                />
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Conformity Route — blue */}
+        <div
+          className="overflow-hidden rounded-xl"
+          style={{ background: "linear-gradient(135deg, #2563EB, #0891B2)" }}
+        >
+          <div className="p-5">
+            <p className="text-[11px] font-semibold text-white/75">
+              {t("detail.overview.conformityRoute")}
+            </p>
+            <p className="mt-2 text-sm font-semibold text-white">
+              {product.conformity_route
+                ? tAssessment(`result.routes.${product.conformity_route}`)
+                : "\u2014"}
+            </p>
+            {product.requires_notified_body && (
+              <p className="mt-1 text-[11px] text-white/65">
+                {t("detail.overview.notifiedBody")}: {t("detail.overview.yes")}
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Actions row */}
+      <div className="flex items-center gap-2">
+        {product.cra_category && (
+          <Link
+            href={`/app/products/${product.id}/assess`}
+            className={buttonVariants({ variant: "outline", size: "sm" })}
+          >
+            {t("detail.assessment.rerun")}
+          </Link>
+        )}
+        <Button
+          size="sm"
+          variant="outline"
+          onClick={() => setEditing(true)}
+          className="gap-1.5"
+        >
+          <PencilIcon className="size-3.5" />
+          {t("detail.overview.edit")}
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => setShowDelete(true)}
+          className="gap-1.5 text-destructive hover:bg-destructive/10 hover:text-destructive"
+        >
+          <Trash2Icon className="size-3.5" />
+          {t("detail.overview.delete")}
+        </Button>
+      </div>
+
+      {/* Edit sheet */}
+      <Sheet open={editing} onOpenChange={(open) => { setEditing(open); if (!open) resetImageState(); }}>
+        <SheetContent side="right" className="overflow-y-auto sm:max-w-md">
+          <SheetHeader>
+            <SheetTitle>{t("edit.title")}</SheetTitle>
+            <SheetDescription>{t("detail.overview.edit")}</SheetDescription>
+          </SheetHeader>
+          <div className="px-4 pb-6">
+            <form action={handleEdit} className="flex flex-col gap-5">
+              {editState?.error && (
+                <p className="rounded-lg bg-destructive/10 px-3 py-2.5 text-sm text-destructive">
+                  {t.has(`errors.${editState.error}`)
+                    ? t(`errors.${editState.error}`)
+                    : t("errors.generic")}
+                </p>
+              )}
+              <div className="flex flex-col gap-1.5">
+                <Label htmlFor="edit-name">{t("create.nameLabel")}</Label>
+                <Input
+                  id="edit-name"
+                  name="name"
+                  required
+                  defaultValue={product.name}
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <Label>{t("create.typeLabel")}</Label>
+                <div className="grid grid-cols-2 gap-2">
+                  {PRODUCT_TYPES.map((type) => {
+                    const typeStyle = TYPE_STYLE[type] ?? {
+                      bg: "bg-white/[0.06]",
+                      text: "text-muted-foreground",
+                    };
+                    return (
+                      <label
+                        key={type}
+                        className="flex cursor-pointer items-center gap-2.5 rounded-xl border border-white/[0.06] px-3 py-2.5 text-sm transition-all has-[:checked]:border-primary/40 has-[:checked]:bg-primary/5"
+                      >
+                        <input
+                          type="radio"
+                          name="type"
+                          value={type}
+                          defaultChecked={product.type === type}
+                          className="sr-only"
+                        />
+                        <div
+                          className={`flex size-6 shrink-0 items-center justify-center rounded text-[10px] font-bold ${typeStyle.bg} ${typeStyle.text}`}
+                        >
+                          {type[0].toUpperCase()}
+                        </div>
+                        <span className="font-medium">{t(`types.${type}`)}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <Label htmlFor="edit-desc">
+                  {t("create.descriptionLabel")}
+                </Label>
+                <Textarea
+                  id="edit-desc"
+                  name="description"
+                  rows={3}
+                  defaultValue={product.description ?? ""}
+                />
+              </div>
+
+              {/* Product image */}
+              <div className="flex flex-col gap-2">
+                <Label>{t("create.imageLabel")}</Label>
+                <input type="hidden" name="remove_image" value={removeImage ? "1" : "0"} />
+                {imagePreview ? (
+                  <div className="relative w-fit">
+                    <img
+                      src={imagePreview}
+                      alt="Product"
+                      className="size-24 rounded-xl border border-white/[0.06] object-cover"
+                    />
+                    <button
+                      type="button"
+                      onClick={handleRemoveImage}
+                      className="absolute -right-2 -top-2 flex size-6 items-center justify-center rounded-full bg-card text-muted-foreground transition-colors hover:bg-destructive hover:text-white"
+                    >
+                      <XIcon className="size-3.5" />
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    className="flex size-24 flex-col items-center justify-center gap-1.5 rounded-xl border border-dashed border-white/[0.08] text-muted-foreground/40 transition-colors hover:border-white/[0.15] hover:text-muted-foreground/60"
+                  >
+                    <ImageIcon className="size-5" />
+                    <span className="text-[10px] font-medium">
+                      {t("create.imageUpload")}
+                    </span>
+                  </button>
+                )}
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  name="image"
+                  accept="image/jpeg,image/png,image/webp"
+                  onChange={handleImageChange}
+                  className="hidden"
+                />
+                <p className="text-[11px] text-muted-foreground/40">
+                  {t("create.imageHint")}
+                </p>
+              </div>
+
+              <div className="flex justify-end gap-2 pt-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => { setEditing(false); resetImageState(); }}
+                >
+                  {t("edit.cancel")}
+                </Button>
+                <Button type="submit" size="sm" disabled={isPending}>
+                  {t("edit.submit")}
+                </Button>
+              </div>
+            </form>
+          </div>
+        </SheetContent>
+      </Sheet>
+
+      {/* Delete confirmation */}
+      <ConfirmDialog
+        open={showDelete}
+        onOpenChange={setShowDelete}
+        title={t("delete.title")}
+        description={t("delete.description", { name: product.name })}
+        confirmLabel={t("delete.confirm")}
+        cancelLabel={t("delete.cancel")}
+        onConfirm={handleDelete}
+        disabled={isPending}
+      />
+    </div>
+  );
+}

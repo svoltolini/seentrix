@@ -1,0 +1,146 @@
+import { setRequestLocale } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
+import { notFound } from "next/navigation";
+import { MDXRemote } from "next-mdx-remote/rsc";
+import { Link } from "@/i18n/navigation";
+import { Badge } from "@/components/ui/badge";
+import { ArrowLeft, Calendar, Clock } from "lucide-react";
+import {
+  getPostBySlug,
+  getRelatedPosts,
+  getAllSlugs,
+  extractHeadings,
+} from "@/lib/blog";
+import { routing } from "@/i18n/routing";
+import { mdxComponents } from "../_components/mdx-components";
+import { TableOfContents } from "../_components/table-of-contents";
+import { BlogCard } from "../_components/blog-card";
+import type { Metadata } from "next";
+
+export function generateStaticParams() {
+  const slugs = getAllSlugs();
+  return routing.locales.flatMap((locale) =>
+    slugs.map((slug) => ({ locale, slug }))
+  );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const post = getPostBySlug(locale, slug);
+  if (!post) return {};
+
+  const baseUrl = "https://seentrix.com";
+
+  return {
+    title: `${post.title} — Seentrix Blog`,
+    description: post.description,
+    authors: [{ name: post.author }],
+    alternates: {
+      canonical: `${baseUrl}/${locale}/blog/${slug}`,
+      languages: {
+        en: `${baseUrl}/en/blog/${slug}`,
+        de: `${baseUrl}/de/blog/${slug}`,
+      },
+    },
+    openGraph: {
+      title: post.title,
+      description: post.description,
+      url: `${baseUrl}/${locale}/blog/${slug}`,
+      type: "article",
+      publishedTime: post.date,
+      authors: [post.author],
+      ...(post.ogImage && { images: [{ url: post.ogImage }] }),
+    },
+  };
+}
+
+export default async function BlogPostPage({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}) {
+  const { locale, slug } = await params;
+  setRequestLocale(locale);
+
+  const post = getPostBySlug(locale, slug);
+  if (!post) notFound();
+
+  const t = await getTranslations({ locale, namespace: "blog" });
+  const headings = extractHeadings(post.content);
+  const related = getRelatedPosts(locale, slug, 2);
+
+  return (
+    <article className="mx-auto max-w-5xl px-6 py-20">
+      {/* Back link */}
+      <Link
+        href="/blog"
+        className="mb-8 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+      >
+        <ArrowLeft className="size-4" />
+        {t("backToBlog")}
+      </Link>
+
+      {/* Header */}
+      <header className="mb-10">
+        <Badge variant="secondary" className="mb-4">
+          {post.category}
+        </Badge>
+        <h1 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
+          {post.title}
+        </h1>
+        <div className="mt-4 flex items-center gap-4 text-sm text-muted-foreground">
+          <span className="flex items-center gap-1.5">
+            <Calendar className="size-4" />
+            {new Date(post.date).toLocaleDateString(
+              locale === "de" ? "de-DE" : "en-US",
+              { year: "numeric", month: "long", day: "numeric" }
+            )}
+          </span>
+          <span className="flex items-center gap-1.5">
+            <Clock className="size-4" />
+            {post.readingTime} {t("minRead")}
+          </span>
+        </div>
+      </header>
+
+      {/* Content + TOC grid */}
+      <div className="relative grid gap-12 lg:grid-cols-[1fr_200px]">
+        {/* MDX Content */}
+        <div className="prose">
+          <MDXRemote source={post.content} components={mdxComponents} />
+        </div>
+
+        {/* Sidebar TOC */}
+        {headings.length > 0 && (
+          <aside className="hidden lg:block">
+            <div className="sticky top-24">
+              <TableOfContents headings={headings} title={t("toc")} />
+            </div>
+          </aside>
+        )}
+      </div>
+
+      {/* Related posts */}
+      {related.length > 0 && (
+        <section className="mt-16 border-t pt-12">
+          <h2 className="mb-6 font-heading text-2xl font-bold">
+            {t("relatedPosts")}
+          </h2>
+          <div className="grid gap-6 sm:grid-cols-2">
+            {related.map((rp) => (
+              <BlogCard
+                key={rp.slug}
+                post={rp}
+                minRead={t("minRead")}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+    </article>
+  );
+}

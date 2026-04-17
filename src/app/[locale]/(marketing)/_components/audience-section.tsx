@@ -5,14 +5,12 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { HugeIcon } from "@/components/huge-icon";
 import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 
 const segments = [
-  { key: "industrial", icon: "circuit-board-stroke-rounded" },
-  { key: "iot", icon: "chip-stroke-rounded" },
-  { key: "software", icon: "visual-studio-code-stroke-rounded" },
+  { key: "industrial", accent: "#3B82F6" },
+  { key: "iot", accent: "#8B5CF6" },
+  { key: "software", accent: "#6366F1" },
 ] as const;
 
 export function AudienceSection() {
@@ -29,26 +27,12 @@ export function AudienceSection() {
       const rows = el.querySelectorAll("[data-audience-row]");
 
       rows.forEach((row) => {
-        const icon = row.querySelector("[data-audience-icon]");
-        const text = row.querySelector("[data-audience-text]");
-        if (!icon || !text) return;
+        gsap.set(row, { opacity: 0, y: 30 });
 
-        const isReversed = row.getAttribute("data-reversed") === "true";
-        gsap.set(icon, { opacity: 0, x: isReversed ? 40 : -40 });
-        gsap.set(text, { opacity: 0, y: 30 });
-
-        gsap.to(icon, {
-          opacity: 1,
-          x: 0,
-          duration: 0.8,
-          ease: "power2.out",
-          scrollTrigger: { trigger: row, start: "top 85%", once: true },
-        });
-        gsap.to(text, {
+        gsap.to(row, {
           opacity: 1,
           y: 0,
           duration: 0.8,
-          delay: 0.15,
           ease: "power2.out",
           scrollTrigger: { trigger: row, start: "top 85%", once: true },
         });
@@ -73,43 +57,30 @@ export function AudienceSection() {
           </p>
         </div>
 
-        <div className="flex flex-col gap-16 lg:gap-20">
-          {segments.map((seg, i) => {
-            const isReversed = i % 2 === 1;
-            return (
-              <div
-                key={seg.key}
-                data-audience-row
-                data-reversed={isReversed}
-                className={cn(
-                  "flex flex-col items-center gap-8 lg:flex-row lg:gap-16",
-                  isReversed && "lg:flex-row-reverse"
-                )}
+        <div className="mx-auto grid max-w-4xl gap-8 lg:gap-10">
+          {segments.map((seg, i) => (
+            <div
+              key={seg.key}
+              data-audience-row
+              className="flex items-start gap-6 rounded-2xl bg-white/[0.03] p-8 lg:gap-8"
+            >
+              <span
+                className="shrink-0 text-4xl font-extrabold leading-none lg:text-5xl"
+                style={{ color: seg.accent }}
               >
-                {/* Icon */}
-                <div
-                  data-audience-icon
-                  className="flex h-24 w-24 shrink-0 items-center justify-center rounded-2xl border border-border bg-gradient-to-br from-primary/10 to-[#8B5CF6]/10 lg:h-32 lg:w-32"
-                >
-                  <HugeIcon
-                    name={seg.icon}
-                    size={48}
-                    className="text-foreground"
-                  />
-                </div>
+                {String(i + 1).padStart(2, "0")}
+              </span>
 
-                {/* Text */}
-                <div data-audience-text className="max-w-md text-center lg:text-left">
-                  <h3 className="text-xl font-bold text-foreground">
-                    {t(`segments.${seg.key}.title`)}
-                  </h3>
-                  <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-                    {t(`segments.${seg.key}.description`)}
-                  </p>
-                </div>
+              <div>
+                <h3 className="text-xl font-bold text-foreground">
+                  {t(`segments.${seg.key}.title`)}
+                </h3>
+                <p className="mt-3 text-base leading-relaxed text-muted-foreground">
+                  {t(`segments.${seg.key}.description`)}
+                </p>
               </div>
-            );
-          })}
+            </div>
+          ))}
         </div>
 
         <div className="mt-16 text-center">

@@ -1,0 +1,157 @@
+---
+title: "Does the CRA Apply to Your Product? A Simple Decision Guide"
+description: "Not sure if the EU Cyber Resilience Act applies to your product? This decision guide walks you through product types, exemptions, categories, and how to determine your obligations."
+date: "2026-04-14"
+category: "Compliance"
+author: "Seentrix Team"
+---
+
+If you have been following the EU Cyber Resilience Act, you have probably encountered a version of the same question: "Does this actually apply to us?" It is a fair question, and the answer is less obvious than you might expect. The CRA casts an extraordinarily wide net, but it also contains meaningful exemptions and distinctions that determine exactly what is required of you.
+
+This guide will help you work through that question step by step. By the end, you should have a clear picture of whether the CRA applies to your product, which category it falls into, and what that means for your compliance obligations.
+
+## The Core Question
+
+Most manufacturers and software publishers who ask whether the CRA applies to them already suspect the answer is yes. The regulation was deliberately designed to be broad, covering the vast majority of products that contain software or connect to a network. But "broad" does not mean "universal," and the details matter.
+
+The difficulty is that the CRA does not neatly map to the product categories most companies use internally. It does not distinguish between "enterprise software" and "consumer devices" in the way you might expect. Instead, it introduces its own framework built around the concept of **products with digital elements**, a definition that captures far more than the term initially suggests.
+
+Companies struggle with this for three reasons. First, the definition is wide enough to include products that do not feel like "cybersecurity products." Second, the exemptions are based on other EU regulations, which means you need to understand the broader regulatory landscape. Third, the product categories that determine your conformity assessment route use criteria that may not align with how you think about risk internally.
+
+Let us work through each of these in turn.
+
+## What Counts as a "Product with Digital Elements"
+
+The CRA defines a **product with digital elements** as any software or hardware product whose intended or reasonably foreseeable use includes a direct or indirect logical or physical data connection to a device or network. That is a deliberately expansive definition, and it is worth unpacking.
+
+**Direct connection** means your product physically or wirelessly connects to a network. A Wi-Fi-enabled thermostat, a Bluetooth speaker, or an Ethernet-connected industrial controller all qualify.
+
+**Indirect connection** means your product does not connect to a network itself, but it processes data that comes from or goes to a networked system. A piece of desktop software that reads files downloaded from the internet, or firmware that runs on a device connected to a larger networked system, falls into this category.
+
+The practical result is that almost any product containing software is likely in scope. Here are some examples:
+
+- **IoT devices**: smart home sensors, connected cameras, wearable fitness trackers, smart locks
+- **Firmware and embedded systems**: the software running inside routers, printers, medical peripherals, and industrial machinery
+- **Standalone software**: productivity applications, development tools, database systems, security software
+- **Connected appliances**: smart refrigerators, washing machines with app connectivity, robotic vacuum cleaners
+- **Industrial controllers**: PLCs, SCADA components, industrial sensors, building automation systems
+- **Networking equipment**: routers, switches, access points, modems
+
+If your product includes software and there is any pathway through which data flows between your product and a network, you should assume the CRA applies unless a specific exemption covers you.
+
+## Products That Are Clearly In Scope
+
+While the CRA's definition is broad, certain product types are unambiguously within scope. If your product falls into any of the following categories, there is no grey area:
+
+- **Consumer IoT devices**: smart home hubs, connected lighting systems, smart speakers, wearable devices, baby monitors, smart doorbells. The CRA was partly motivated by the historically poor security posture of consumer IoT products.
+- **Networking equipment**: routers, switches, firewalls, access points, network-attached storage devices, and modems. These products sit at critical junctions in network infrastructure and are explicitly addressed in the regulation.
+- **Industrial hardware and control systems**: programmable logic controllers (PLCs), industrial sensors, actuators, SCADA components, and building management systems. The convergence of IT and OT has made these products increasingly connected and increasingly vulnerable.
+- **Standalone software products**: operating systems, office suites, password managers, VPN clients, antivirus software, development environments, and enterprise applications distributed as products. If you sell or distribute software as a product, it is in scope.
+- **Firmware and embedded systems**: the software that runs on hardware devices, whether consumer electronics, medical peripherals, or industrial equipment. Firmware is explicitly treated as a product with digital elements under the CRA.
+
+If you recognise your product in this list, you can skip ahead to understanding which category it falls into. The question for you is not "does the CRA apply?" but "what exactly does the CRA require?"
+
+## Products That Are Exempt
+
+The CRA does not apply to every product on the EU market. Several categories are explicitly excluded, but the reason for the exclusion is important to understand: these products are **not exempt because they are considered safe**. They are exempt because **another EU regulation already imposes cybersecurity requirements** on them. In other words, if your product is exempt from the CRA, it is almost certainly subject to a different set of obligations.
+
+The key exemptions are:
+
+- **Medical devices**: products covered by the Medical Device Regulation (MDR) or the In Vitro Diagnostic Medical Devices Regulation (IVDR) are exempt from the CRA. The MDR already contains cybersecurity provisions for medical devices. If your product is a certified medical device, the CRA does not apply, but the MDR's cybersecurity requirements do.
+- **Motor vehicles**: vehicles and their components that fall under UNECE regulations for type approval are exempt. The automotive sector has its own cybersecurity framework under UNECE Regulation No. 155, which addresses vehicle cybersecurity management systems.
+- **Aviation systems**: products regulated under the European Aviation Safety Agency (EASA) framework, including avionics and air traffic management systems, are exempt.
+- **Marine equipment**: products covered by the Marine Equipment Directive are excluded from the CRA's scope.
+- **Products for national security and military purposes**: products designed exclusively for national security, defence, or military applications are outside the CRA's scope.
+
+A common misconception is that these exemptions create a "free pass." They do not. If your product is a medical device, you still face rigorous cybersecurity obligations under the MDR. If you manufacture automotive components, UNECE R155 imposes its own comprehensive requirements. The CRA exemption simply avoids regulatory duplication.
+
+If your product partially overlaps with an exempt category, be cautious. A connected device that has both medical and consumer applications may fall under the MDR for its medical function and under the CRA for its consumer function. When in doubt, seek legal advice specific to your product.
+
+## The Open Source Question
+
+Open-source software occupies a unique position under the CRA, and the rules here are frequently misunderstood. Let us clarify.
+
+**Non-commercial open-source software is exempt from the CRA.** If you are a developer or project maintainer who releases software under an open-source licence without any commercial intent, the CRA does not impose obligations on you. The regulation explicitly recognises that applying manufacturer obligations to volunteer-driven, non-commercial open-source projects would be disproportionate and counterproductive.
+
+However, there are critical nuances:
+
+**If you integrate open-source components into a commercial product, you bear full responsibility.** The CRA treats you as the manufacturer. When you ship a product that includes open-source libraries, frameworks, or tools, you are responsible for ensuring that those components meet the CRA's security requirements. You must include them in your SBOM, monitor them for vulnerabilities, and provide patches when issues are discovered. The fact that you did not write the code does not reduce your obligations.
+
+**The "open-source steward" concept** was introduced for large non-profit foundations and organisations that facilitate the development of open-source software used in commercial products. Think of organisations like the Apache Software Foundation, the Eclipse Foundation, or the Linux Foundation. These stewards have a lighter set of obligations under the CRA, primarily around establishing security policies and cooperating with market surveillance authorities. They are not treated as manufacturers, but they are expected to support the security ecosystem.
+
+**Commercial open-source is not exempt.** If you are a company that develops open-source software as part of a commercial business model, whether through paid support, hosted services, or dual licensing, the CRA treats your software as a commercial product with digital elements. The open-source exemption applies only when there is genuinely no commercial activity involved.
+
+The key takeaway is this: **using open-source does not exempt you from the CRA; it shifts the compliance responsibility to you as the integrator.** This has significant implications for how you manage your software supply chain, and it makes a thorough SBOM process essential.
+
+## Which Category Does Your Product Fall Into
+
+Once you have established that the CRA applies to your product, the next question is which **product category** it falls into. The CRA defines four categories, and your category determines the conformity assessment route you must follow.
+
+### Default Category
+
+The **default category** covers the majority of products on the market. If your product is not explicitly listed in the annexes for higher categories, it falls here. Default category products can be **self-assessed** by the manufacturer. You conduct an internal conformity assessment, prepare technical documentation, and apply the CE marking yourself. No third-party audit is required.
+
+Examples: photo editing software, smart toys, smart speakers, luggage with connectivity features, hard drives, game consoles.
+
+### Important Class I
+
+Products in **Important Class I** present a heightened risk and are subject to stricter assessment. You can still self-assess if you apply **harmonised European standards** that cover the relevant security requirements. If no harmonised standard exists or you choose not to apply one, you must engage a **notified body** (an accredited third-party auditor) to assess your product.
+
+Examples: password managers, VPN software, network management systems, routers intended for industrial use, connected home automation systems, physical network interfaces.
+
+### Important Class II
+
+**Important Class II** products carry a higher risk profile and **always require third-party assessment** by a notified body, regardless of whether harmonised standards are available. Self-assessment is not sufficient for this category.
+
+Examples: operating systems, hypervisors, firewalls, tamper-resistant microprocessors, industrial intrusion detection and prevention systems, industrial routers and switches.
+
+### Critical Category
+
+The **critical category** is reserved for products that underpin the security of broad systems and critical infrastructure. These products face the most stringent requirements and typically require **European cybersecurity certification** schemes.
+
+Examples: hardware security modules (HSMs), smart meter gateways, smartcard devices and readers, secure elements.
+
+Understanding your category is essential because it directly determines how much time, effort, and cost your conformity assessment will involve. A default-category product can be self-assessed in-house, while a critical-category product may require months of work with a certification body.
+
+## A Quick Self-Assessment
+
+If you want a structured way to determine your obligations, work through the following steps:
+
+**Step 1: Does your product contain software or connect to a network?**
+If yes, it is likely a "product with digital elements" under the CRA. If your product is purely mechanical with no software component and no network connectivity, the CRA does not apply. Proceed to Step 2.
+
+**Step 2: Is your product exempt under sector-specific regulation?**
+Check whether your product falls under the MDR (medical devices), UNECE regulations (motor vehicles), EASA (aviation), the Marine Equipment Directive, or is designed exclusively for national security or military use. If it is covered by one of these frameworks, the CRA likely does not apply, but the relevant sector regulation does. If not, proceed to Step 3.
+
+**Step 3: Which category does your product fall into?**
+Review the CRA's annexes (Annexes III and IV) to determine whether your product is listed as Important Class I, Important Class II, or Critical. If it is not listed in any of these annexes, it falls into the default category. Your category determines whether you can self-assess or need a notified body. Proceed to Step 4.
+
+**Step 4: What is your role in the supply chain?**
+Are you the **manufacturer** (you design and produce the product), an **importer** (you bring a third-party product into the EU market), or a **distributor** (you make an already-available product accessible to the market)? Each role carries distinct obligations under the CRA. Manufacturers bear the heaviest burden, but importers and distributors also have verification and documentation duties.
+
+If you answered "yes" to Step 1, "no" to Step 2, and identified your category in Step 3, the CRA applies to your product and your category determines your conformity pathway.
+
+## What If You Are Not Sure
+
+If you have worked through the self-assessment above and still find yourself uncertain, you are not alone. The CRA is a new regulation, and many of its finer points will only become clear as implementation guidance is published and market practice develops.
+
+Here is what you can do in the meantime:
+
+- **Seek specialised legal advice.** The intersection of product regulation, cybersecurity law, and EU market access rules is complex. A lawyer with experience in CE marking and EU product regulation can help you determine your obligations with precision.
+- **Watch for ENISA guidance.** The European Union Agency for Cybersecurity (ENISA) is tasked with supporting the CRA's implementation and will publish guidance documents, including details on the vulnerability reporting platform and expectations around conformity assessment. Monitor their publications as they become available.
+- **Start compliance work regardless.** Even if you are unsure about the exact category or scope, the CRA's core requirements, such as security by design, vulnerability management, SBOM generation, and incident reporting, align closely with recognised security best practices. Working towards these standards strengthens your product's security posture whether or not the CRA ultimately applies in full. If you start now and later discover the CRA does not apply to a particular product, the work will not have been wasted.
+- **Document your analysis.** Whatever conclusion you reach, document the reasoning behind it. If a market surveillance authority later questions whether your product is in scope, having a well-reasoned, documented analysis will demonstrate good faith and due diligence.
+
+## Next Steps
+
+Understanding whether the CRA applies to your product is the first step. Once you have that clarity, the real work begins: understanding the specific requirements, building the processes to meet them, and preparing for the conformity assessment.
+
+We have published several guides to help you move forward:
+
+- [What is the EU Cyber Resilience Act?](/blog/what-is-the-eu-cyber-resilience-act) provides a comprehensive overview of the regulation, its key obligations, and the penalties for non-compliance.
+- [CRA September 2026 Deadline: What You Need to Know](/blog/cra-september-2026-deadline) focuses on the first hard compliance deadline and what you need to have in place by then.
+- [SBOM for Manufacturers](/blog/sbom-for-manufacturers) walks through the practical side of building and maintaining a Software Bill of Materials, one of the CRA's most concrete requirements.
+
+The CRA compliance journey is a process, not a one-time event. The earlier you start, the more time you have to integrate compliance into your existing workflows rather than bolting it on under deadline pressure.
+
+Ready to find out exactly where your products stand? [Start your free CRA assessment with Seentrix](https://seentrix.com) and get a clear picture of your compliance gaps, your product categories, and the steps you need to take next.

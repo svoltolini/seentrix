@@ -1,0 +1,185 @@
+{
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Manage your organization, team, and account.",
+    "nav": {
+      "organization": "Organization",
+      "team": "Team",
+      "billing": "Billing",
+      "activity": "Activity",
+      "account": "Account"
+    },
+    "organization": {
+      "title": "Organization",
+      "subtitle": "Manage your organization details and preferences.",
+      "nameLabel": "Organization name",
+      "namePlaceholder": "Acme Inc.",
+      "languageLabel": "Default language",
+      "languageDescription": "Sets the default language for your organization.",
+      "addressTitle": "Company Address",
+      "addressDescription": "Used in the Declaration of Conformity and other compliance documents.",
+      "addressLine1": "Address line 1",
+      "addressLine1Placeholder": "123 Main Street",
+      "addressLine2": "Address line 2",
+      "addressLine2Placeholder": "Suite 100",
+      "postalCode": "Postal code",
+      "postalCodePlaceholder": "12345",
+      "city": "City",
+      "cityPlaceholder": "Berlin",
+      "country": "Country",
+      "countryPlaceholder": "Germany",
+      "save": "Save changes",
+      "saving": "Saving…",
+      "saved": "Organization settings saved.",
+      "error": "Failed to save settings. Please try again.",
+      "readOnly": "Only admins can edit organization settings.",
+      "orgChart": "Organization chart",
+      "orgChartDescription": "Team members grouped by role hierarchy."
+    },
+    "team": {
+      "title": "Team",
+      "subtitle": "Manage who has access to your organization.",
+      "members": "Members",
+      "memberCount": "{count} member",
+      "memberCountPlural": "{count} members",
+      "createTitle": "Add a team member",
+      "createDescription": "Create an account for a new team member. They will need to change their password on first login.",
+      "createEmail": "Email",
+      "createEmailPlaceholder": "colleague@company.com",
+      "createName": "Full name",
+      "createNamePlaceholder": "Jane Doe",
+      "createRoleLabel": "Role",
+      "createPassword": "Temporary password",
+      "createPasswordPlaceholder": "Min. 8 characters",
+      "createMember": "Create member",
+      "creatingMember": "Creating…",
+      "memberCreated": "Team member created successfully.",
+      "createError": "Failed to create team member.",
+      "createErrors": {
+        "notAdmin": "Only admins can add team members.",
+        "emailInUse": "This email is already registered.",
+        "limitReached": "Your plan's member limit has been reached.",
+        "passwordTooShort": "Password must be at least 8 characters.",
+        "invalidRole": "Invalid role selected."
+      },
+      "credentialsTitle": "Account created",
+      "credentialsHint": "Share these credentials with the new team member. They will be asked to set a new password on first login.",
+      "credentialsCopied": "Credentials copied to clipboard.",
+      "pendingPassword": "Pending",
+      "removeMember": "Remove",
+      "removeMemberConfirm": "Remove team member?",
+      "removeMemberDescription": "Are you sure you want to remove {name} from your organization? They will lose access immediately.",
+      "removeMemberCancel": "Cancel",
+      "removeMemberSubmit": "Remove",
+      "removed": "Team member removed.",
+      "removeError": "Failed to remove team member.",
+      "changeRole": "Change role",
+      "changeRoleConfirm": "Change role?",
+      "changeRoleDescription": "Change {name}'s role from {oldRole} to {newRole}?",
+      "changeRoleCancel": "Cancel",
+      "changeRoleSubmit": "Change role",
+      "roleChanged": "Role updated.",
+      "roleChangeError": "Failed to change role.",
+      "lastAdminError": "Cannot change the last admin's role.",
+      "you": "You",
+      "adminOnly": "Only admins can manage the team.",
+      "roles": {
+        "admin": "Admin",
+        "compliance_officer": "Compliance Officer",
+        "cto": "CTO",
+        "editor": "Editor",
+        "viewer": "Viewer"
+      },
+      "limits": {
+        "reached": "Team member limit reached",
+        "reachedDescription": "Your {plan} plan allows up to {limit} team member.",
+        "reachedDescriptionPlural": "Your {plan} plan allows up to {limit} team members.",
+        "upgrade": "Upgrade plan"
+      }
+    },
+    "activity": {
+      "title": "Activity Log",
+      "subtitle": "Track all changes made within your organization.",
+      "download": "Download",
+      "empty": "No activity yet.",
+      "exportPeriod": {
+        "1": "Last month",
+        "6": "Last 6 months",
+        "12": "Last 12 months"
+      },
+      "actions": {
+        "organization": {
+          "updated": "updated the organization",
+          "created": "created the organization"
+        },
+        "member": {
+          "created": "added a team member",
+          "removed": "removed a team member",
+          "role_changed": "changed a member's role"
+        },
+        "profile": {
+          "updated": "updated their profile"
+        },
+        "password": {
+          "changed": "changed their password"
+        },
+        "product": {
+          "created": "created a product",
+          "updated": "updated a product",
+          "deleted": "deleted a product",
+          "assessed": "ran a product assessment"
+        },
+        "document": {
+          "saved": "saved a document",
+          "status_changed": "changed a document's status",
+          "pdf_generated": "generated a PDF"
+        },
+        "sbom": {
+          "uploaded": "uploaded an SBOM",
+          "deleted": "deleted an SBOM",
+          "scanned": "scanned for vulnerabilities"
+        },
+        "checklist": {
+          "item_status_changed": "updated a checklist item",
+          "item_description_changed": "edited checklist notes",
+          "evidence_uploaded": "uploaded evidence",
+          "evidence_removed": "removed evidence"
+        },
+        "billing": {
+          "checkout_created": "started a checkout"
+        }
+      }
+    },
+    "account": {
+      "title": "Account",
+      "subtitle": "Manage your personal account settings.",
+      "profileTitle": "Profile",
+      "avatarLabel": "Profile photo",
+      "avatarHint": "Click to upload (JPG, PNG, WebP, max 2MB)",
+      "avatarUploading": "Uploading…",
+      "nameLabel": "Full name",
+      "namePlaceholder": "John Doe",
+      "emailLabel": "Email",
+      "emailDescription": "Your email is managed through your authentication provider.",
+      "saveProfile": "Save profile",
+      "savingProfile": "Saving…",
+      "profileSaved": "Profile updated.",
+      "profileError": "Failed to update profile.",
+      "passwordTitle": "Change password",
+      "currentPassword": "Current password",
+      "newPassword": "New password",
+      "newPasswordPlaceholder": "Minimum 8 characters",
+      "changePassword": "Change password",
+      "changingPassword": "Changing…",
+      "passwordChanged": "Password changed successfully.",
+      "passwordError": "Failed to change password. Please check your current password.",
+      "dangerTitle": "Danger Zone",
+      "logoutButton": "Log out",
+      "logoutDescription": "Sign out of your Seentrix account on this device."
+    },
+    "toast": {
+      "success": "Success",
+      "error": "Error"
+    }
+  }
+}

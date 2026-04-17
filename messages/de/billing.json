@@ -1,0 +1,20 @@
+{
+  "billing": {
+    "title": "Abrechnung",
+    "subtitle": "Verwalten Sie Ihr Abonnement und Ihre Rechnungsdetails.",
+    "currentPlan": "Aktueller Plan",
+    "nextBillingDate": "Nächstes Abrechnungsdatum: {date}",
+    "manageSubscription": "Abonnement verwalten",
+    "upgradePlan": "Plan upgraden",
+    "redirecting": "Weiterleitung…",
+    "readOnly": "Nur Administratoren können Abrechnung und Abonnements verwalten.",
+    "perMonth": "pro Monat",
+    "upgradeDescription": "Upgraden Sie auf Professional für SBOM-Verwaltung, Dokumentvorlagen, PDF-Export und mehr.",
+    "plans": {
+      "free": "Free",
+      "professional": "Professional",
+      "business": "Business",
+      "enterprise": "Enterprise"
+    }
+  }
+}

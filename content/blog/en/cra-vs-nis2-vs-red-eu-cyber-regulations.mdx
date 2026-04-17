@@ -1,0 +1,210 @@
+---
+title: "CRA vs NIS2 vs the Radio Equipment Directive: How EU Cyber Regulations Overlap"
+description: "Confused by the alphabet soup of EU cybersecurity regulations? This guide explains how the CRA, NIS2, and RED differ, where they overlap, and what applies to your business."
+date: "2026-05-02"
+category: "Regulation"
+author: "Seentrix Team"
+---
+
+If you manufacture connected products and sell them in Europe, you have probably encountered a growing list of acronyms: CRA, NIS2, RED. Each represents a distinct piece of EU cybersecurity legislation, and each comes with its own scope, obligations, deadlines, and penalties. The problem is that these regulations were not designed in isolation, and their boundaries are not always obvious. A single company can easily fall under two or all three at the same time.
+
+This guide cuts through the confusion. We explain what each regulation covers, where they overlap, how they differ, and how to determine which ones apply to your business.
+
+## The EU's Cybersecurity Regulation Landscape
+
+Europe has moved aggressively on cybersecurity regulation in recent years. The continent experienced a wave of high-profile cyberattacks, supply chain compromises, and IoT vulnerabilities that exposed critical gaps in existing law. The legislative response has been comprehensive, resulting in three major pieces of legislation that now form the core of the EU's cybersecurity framework:
+
+- **The Cyber Resilience Act (CRA)** addresses **product security**. It targets the manufacturers, importers, and distributors of products with digital elements.
+- **The NIS2 Directive** addresses **operator and service security**. It targets organizations that operate essential and important services and infrastructure.
+- **The Radio Equipment Directive (RED)** addresses **radio equipment**. It targets manufacturers of devices that transmit or receive radio waves, with cybersecurity requirements added through a delegated act.
+
+These three regulations serve fundamentally different purposes, but they can and do apply to the same company simultaneously. A manufacturer of connected industrial sensors, for example, could face obligations under all three. Understanding each regulation individually is the first step toward managing them together.
+
+## The Cyber Resilience Act (CRA) at a Glance
+
+The CRA is the EU's flagship regulation for **product cybersecurity**. It establishes mandatory security requirements for all products with digital elements placed on the EU market, covering both hardware and software.
+
+**Who it targets:** Manufacturers, importers, and distributors of products with digital elements. If you make it, bring it into the EU, or sell it within the EU, the CRA applies to you.
+
+**What it requires:**
+
+- **Security by design and by default** throughout the product lifecycle
+- **Vulnerability handling** with coordinated disclosure processes and free security updates
+- A **Software Bill of Materials (SBOM)** documenting all software components
+- **Incident and vulnerability reporting** to ENISA
+- **CE marking** following successful conformity assessment
+- **Technical documentation** maintained for at least ten years
+
+**Timeline:**
+
+- **September 2026:** Vulnerability and incident reporting obligations take effect
+- **December 2027:** Full compliance with all requirements is mandatory
+
+**Penalties:** Up to **EUR 15 million or 2.5% of global annual turnover**, whichever is higher, for failure to meet essential cybersecurity requirements.
+
+The CRA is the broadest of the three regulations in terms of products covered. Any product that includes or connects to a digital component falls within scope, from consumer electronics and enterprise software to industrial control systems and smart home devices.
+
+## NIS2 at a Glance
+
+The **NIS2 Directive** (Network and Information Security Directive 2) is the EU's framework for securing the organizations that operate critical services and infrastructure. Unlike the CRA, which focuses on products, NIS2 focuses on **operators**.
+
+**Who it targets:** Organizations classified as **essential entities** or **important entities** across a wide range of sectors, including:
+
+- Energy (electricity, oil, gas, hydrogen)
+- Transport (air, rail, water, road)
+- Healthcare
+- Digital infrastructure (DNS, data centres, cloud providers, CDNs)
+- ICT service management (managed service providers, managed security service providers)
+- Public administration
+- Banking and financial market infrastructure
+- Drinking water and waste water
+- Space, postal services, food production, chemicals, manufacturing, and more
+
+**What it requires:**
+
+- **Risk management measures** covering governance, incident handling, business continuity, and supply chain security
+- **Incident reporting** to the national Computer Security Incident Response Team (CSIRT)
+- **Supply chain security** assessments and due diligence
+- **Governance obligations**, including management body accountability and cybersecurity training for leadership
+
+**Timeline:** EU member states were required to transpose NIS2 into national law by **October 2024**. Implementation timelines vary by country, with some member states still finalizing their national legislation.
+
+**Penalties:** Up to **EUR 10 million or 2% of global annual turnover** for essential entities. Member states may also impose **personal liability on management** for failure to ensure compliance.
+
+NIS2 is fundamentally about organizational security. It does not prescribe how a specific product should be built; it prescribes how an organization should manage cybersecurity risk across its operations.
+
+## The Radio Equipment Directive (RED) at a Glance
+
+The **Radio Equipment Directive (2014/53/EU)** is an older regulation that governs the placing of radio equipment on the EU market. Radio equipment means any device that intentionally transmits or receives radio waves for communication or radio determination purposes. This includes Wi-Fi routers, Bluetooth devices, cellular phones, IoT sensors with wireless connectivity, and countless other products.
+
+In 2022, the European Commission adopted a **delegated act** adding cybersecurity requirements to the RED under **Article 3.3(d), (e), and (f)**. These provisions require that radio equipment:
+
+- **(d)** Does not harm the network or its functioning and does not misuse network resources
+- **(e)** Incorporates safeguards to protect **user privacy** and personal data
+- **(f)** Supports certain features to protect against **fraud**
+
+**Who it targets:** Manufacturers of wireless devices placed on the EU market.
+
+**Timeline:** The cybersecurity provisions under Article 3.3(d/e/f) were originally set to apply from **August 2025**. However, the European Commission has recognized the overlap with the CRA and is working to align the two frameworks. The current expectation is that **RED's cybersecurity requirements will be superseded by the CRA** for products that fall under both regulations, ensuring that manufacturers do not face duplicate compliance obligations for the same product.
+
+**Enforcement:** Market surveillance authorities enforce the RED through product inspections and CE marking requirements. There is no specific incident reporting obligation under the RED comparable to those in the CRA or NIS2.
+
+The RED remains relevant for radio-specific safety requirements (electromagnetic compatibility, spectrum use, etc.), but its cybersecurity provisions are increasingly being absorbed into the CRA framework.
+
+## Where They Overlap
+
+The overlap between these three regulations is not theoretical. It is a practical reality for many companies. Consider the following scenario:
+
+A company manufactures a **connected IoT gateway** used in industrial environments. The device runs embedded software, connects to the internet, and communicates via Wi-Fi and cellular networks. The company also operates a **cloud platform** that aggregates data from deployed devices and provides monitoring services to critical infrastructure operators.
+
+This single company could face all three regulations:
+
+- **CRA** applies because the IoT gateway is a **product with digital elements** placed on the EU market. The manufacturer must ensure security by design, provide an SBOM, handle vulnerabilities, and report incidents to ENISA.
+- **RED** applies because the device contains **radio equipment** (Wi-Fi and cellular modules). The manufacturer must meet the cybersecurity provisions under Article 3.3(d/e/f), though these will likely be superseded by CRA compliance.
+- **NIS2** applies because the company **operates a cloud platform** that serves critical infrastructure clients, potentially qualifying it as a provider of digital infrastructure or an ICT service management entity.
+
+Other common overlap scenarios include:
+
+- **Consumer electronics manufacturers** producing smart home devices with wireless connectivity (CRA + RED)
+- **Telecommunications equipment manufacturers** that also operate managed network services (CRA + RED + NIS2)
+- **Medical device manufacturers** with connected products deployed in healthcare settings (CRA + RED, with NIS2 applying to the healthcare operators using the devices)
+- **Automotive suppliers** producing connected vehicle components with wireless interfaces (CRA + RED, with sector-specific regulations adding further layers)
+
+The key insight is that **CRA and RED regulate the product**, while **NIS2 regulates the organization**. A company can be subject to product-level and organization-level obligations simultaneously.
+
+## Key Differences
+
+While overlap exists, the three regulations differ in fundamental ways. The following table summarizes the most important distinctions:
+
+| | **CRA** | **NIS2** | **RED** |
+|---|---|---|---|
+| **Focus** | Products with digital elements | Organizations operating essential/important services | Radio equipment |
+| **Who is regulated** | Manufacturers, importers, distributors | Service operators and essential/important entities | Radio equipment manufacturers |
+| **Core obligation** | Product security across the entire lifecycle | Organizational risk management and governance | Radio equipment safety, including cybersecurity |
+| **Reporting** | To ENISA: 24h early warning, 72h detailed notification, 14-day final report | To national CSIRT: 24h early warning, 72h detailed notification, 1-month final report | No specific incident reporting requirement |
+| **Enforcement** | Market surveillance authorities + fines | National authorities + fines + personal management liability | Market surveillance + CE marking |
+| **Penalties** | Up to EUR 15M / 2.5% of turnover | Up to EUR 10M / 2% of turnover + personal liability | Product withdrawal / prohibition of sale |
+| **Key deliverable** | SBOM, technical documentation, CE marking | Risk management policies, incident response plans | Declaration of conformity, CE marking |
+| **Timeline** | Reporting: Sept 2026; Full: Dec 2027 | Transposition deadline: Oct 2024 | Cybersecurity provisions: aligning with CRA |
+
+### Reporting Obligations Compared
+
+The reporting frameworks under CRA and NIS2 are similar in structure but differ in destination and detail:
+
+- **CRA reporting** goes to **ENISA** via a single EU-wide platform and concerns actively exploited vulnerabilities and severe incidents affecting the product itself.
+- **NIS2 reporting** goes to the **national CSIRT** of the relevant member state and concerns incidents that significantly impact the provision of the organization's services.
+- **RED** does not include a comparable reporting obligation.
+
+Companies subject to both CRA and NIS2 may need to file separate reports to different authorities for the same underlying event, one concerning the product and another concerning the service disruption.
+
+## How to Determine What Applies to You
+
+Determining which regulations apply to your business requires answering three questions:
+
+**1. Do you manufacture, import, or distribute products with digital elements?**
+
+If yes, the **CRA** applies. This includes any hardware or software product that contains or connects to a digital component. The scope is broad and covers everything from standalone software applications to complex industrial systems.
+
+**2. Do you operate essential or important services, or does your organization fall within a NIS2-designated sector?**
+
+If yes, **NIS2** applies. Check whether your organization qualifies as an essential or important entity under the directive. This depends on your sector, the size of your organization, and the criticality of the services you provide. Review the national transposition in each member state where you operate.
+
+**3. Do your products intentionally transmit or receive radio waves?**
+
+If yes, the **RED** applies. Any product with Wi-Fi, Bluetooth, cellular, Zigbee, LoRa, or other radio communication capabilities falls under the Radio Equipment Directive. The cybersecurity provisions under Article 3.3(d/e/f) add specific security obligations, though these are being aligned with the CRA.
+
+Many companies will answer yes to more than one of these questions. This is normal and expected. The EU framework was designed so that product-level regulations (CRA, RED) and organization-level regulations (NIS2) complement each other rather than replace each other.
+
+## Managing Compliance Across Multiple Regulations
+
+If your company falls under two or three of these regulations, the worst approach is to build separate, siloed compliance programs for each one. The requirements share significant common ground, and a unified approach will save time, resources, and frustration.
+
+### Identify Common Requirements
+
+Several compliance activities serve multiple regulations simultaneously:
+
+- **Risk management:** Both CRA and NIS2 require systematic risk assessment. A single, well-structured risk management framework can address both product-level and organizational-level risks.
+- **Incident reporting:** CRA and NIS2 both require rapid incident reporting, albeit to different authorities. A unified incident detection and response process can feed into both reporting streams.
+- **Supply chain security:** All three regulations expect some level of supply chain diligence. CRA requires knowing what components are in your products (SBOM). NIS2 requires assessing the security posture of your suppliers. Building a comprehensive supply chain security program addresses both.
+- **Vulnerability management:** CRA requires ongoing vulnerability monitoring and patching for products. NIS2 requires vulnerability management as part of organizational risk management. A single vulnerability management capability can serve both needs.
+
+### Build a Unified Compliance Framework
+
+Rather than treating CRA, NIS2, and RED as three separate projects, map their requirements onto a single compliance framework. Identify where requirements overlap, where they diverge, and where a single control can satisfy multiple obligations. Standards like **ISO 27001** and **IEC 62443** can provide a useful foundation that aligns with multiple regulatory requirements.
+
+### Use SBOMs as a Foundation
+
+The SBOM is the single most versatile compliance artifact across these regulations. A well-maintained SBOM supports:
+
+- **CRA compliance** by documenting product composition and enabling vulnerability tracking
+- **NIS2 supply chain obligations** by providing visibility into third-party dependencies
+- **RED conformity** by demonstrating that software components in radio equipment meet security standards
+
+Investing in robust SBOM generation and management early pays dividends across all three regulatory frameworks.
+
+## The Trend Toward Consolidation
+
+The European Commission is aware that regulatory overlap creates compliance burdens, and it is actively working to reduce duplication.
+
+The most significant consolidation effort concerns **CRA and RED**. The cybersecurity requirements added to the RED via the Article 3.3 delegated act were introduced before the CRA was finalized. Now that the CRA exists as a comprehensive product security regulation, the Commission intends to **supersede RED's cybersecurity provisions with the CRA** for products that fall under both. This means that manufacturers of wireless products will not need to demonstrate cybersecurity compliance under both frameworks separately. Meeting the CRA's requirements will satisfy the RED's cybersecurity provisions as well.
+
+The relationship between **CRA and NIS2** is complementary rather than duplicative. The CRA secures the product; NIS2 secures the organization that uses or operates products. A connected device manufacturer subject to the CRA must ensure the device is secure. An energy company subject to NIS2 that deploys those devices must ensure its operations are secure. The two regulations address different links in the same chain, and compliance with one does not exempt you from the other.
+
+Over time, expect further alignment across EU cybersecurity legislation, including harmonized standards, shared reporting platforms, and coordinated enforcement mechanisms. The EU's goal is a coherent regulatory framework, not a fragmented one.
+
+## Next Steps
+
+The most important action you can take right now is to **assess which regulations apply to your business**. Use the three-question framework outlined above to determine your exposure to the CRA, NIS2, and RED. If you fall under multiple regulations, identify the common requirements and begin building a unified compliance approach.
+
+For manufacturers, the **CRA should be your starting point**. Its reporting obligations take effect in September 2026 and full compliance is required by December 2027. The CRA's requirements around SBOMs, vulnerability management, and security by design also provide a strong foundation that supports compliance with the other regulations.
+
+Key actions to take now:
+
+- **Map your regulatory exposure** across CRA, NIS2, and RED
+- **Classify your products** under the CRA's product categories
+- **Start generating SBOMs** if you are not already doing so
+- **Establish vulnerability monitoring and incident reporting processes** ahead of the September 2026 deadline
+- **Assess your NIS2 obligations** if you operate services in a designated sector
+- **Engage leadership** to ensure adequate resources and accountability
+
+Seentrix is built specifically to help manufacturers navigate **CRA product compliance**, from SBOM generation and vulnerability monitoring to conformity assessment preparation. If the CRA applies to your products, [start your free assessment today](https://seentrix.com) and get clarity on where you stand and what to do next.

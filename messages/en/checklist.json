@@ -1,0 +1,145 @@
+{
+  "checklist": {
+    "title": "Compliance Checklist",
+    "subtitle": "Track CRA Annex I essential cybersecurity requirements for this product.",
+    "score": "Compliance Score",
+    "partI": "Part I — Security Requirements",
+    "partIDescription": "Essential cybersecurity requirements for products with digital elements.",
+    "partII": "Part II — Vulnerability Handling",
+    "partIIDescription": "Requirements for handling vulnerabilities throughout the product lifecycle.",
+    "getStarted": "Ready to begin",
+    "getStartedDescription": "Start working through the CRA requirements — we'll guide you step by step. Select any item below to begin.",
+    "itemCount": "{completed} of {total} completed",
+    "notesLabel": "Notes",
+    "notesPlaceholder": "Add notes, observations, or implementation details…",
+    "evidenceLabel": "Evidence",
+    "uploadEvidence": "Upload file",
+    "removeFile": "Remove",
+    "guidanceLabel": "Guidance",
+    "statusLabel": "Status",
+    "articleLabel": "Article",
+    "saving": "Saving…",
+    "saved": "Saved",
+    "uploadError": "File upload failed. Please try again.",
+    "statuses": {
+      "pending": "Not Started",
+      "in_progress": "In Progress",
+      "completed": "Completed",
+      "not_applicable": "N/A"
+    },
+    "requirements": {
+      "secure_by_design": {
+        "title": "Security by Design & Default",
+        "description": "Products shall be designed, developed and produced to ensure an appropriate level of cybersecurity based on the risks.",
+        "guidance": "Integrate cybersecurity into all phases of the product lifecycle, from concept through design, development, production and maintenance. Perform threat modelling during design. Ensure the product ships with the most secure settings enabled by default."
+      },
+      "no_known_vulnerabilities": {
+        "title": "No Known Exploitable Vulnerabilities",
+        "description": "Products shall be delivered without any known exploitable vulnerabilities.",
+        "guidance": "Implement comprehensive vulnerability scanning before release. Use automated SAST/DAST tools in your CI/CD pipeline. Monitor CVE databases and NVD feeds for components in your SBOM. Establish a pre-release security review gate."
+      },
+      "risk_based_assessment": {
+        "title": "Cybersecurity Risk Assessment",
+        "description": "Based on an appropriate cybersecurity risk assessment, products shall be designed to mitigate identified risks.",
+        "guidance": "Document a formal cybersecurity risk assessment covering confidentiality, integrity, and availability. Identify threat actors, attack vectors, and potential impacts. Use established frameworks like STRIDE or OCTAVE. Update the assessment when the threat landscape changes."
+      },
+      "secure_default_config": {
+        "title": "Secure Default Configuration",
+        "description": "Products shall be delivered with a secure by default configuration, including the possibility to reset the product to its original state.",
+        "guidance": "Disable unnecessary services and ports by default. Require strong authentication on first use. Avoid default or hardcoded passwords. Provide a factory reset mechanism that returns the product to a known-secure state. Document the default configuration."
+      },
+      "unauthorized_access_protection": {
+        "title": "Protection Against Unauthorized Access",
+        "description": "Products shall protect against unauthorized access to data and functions, including appropriate authentication, identity and access management.",
+        "guidance": "Implement role-based access control (RBAC). Use multi-factor authentication where appropriate. Enforce strong password policies. Apply the principle of least privilege. Log all authentication attempts and access control decisions."
+      },
+      "data_confidentiality": {
+        "title": "Confidentiality of Data",
+        "description": "Products shall protect the confidentiality of stored, transmitted, or otherwise processed data, whether personal or other.",
+        "guidance": "Encrypt data at rest using AES-256 or equivalent. Encrypt data in transit using TLS 1.2+. Protect cryptographic keys with secure key management. Implement secure storage for sensitive configuration. Classify data by sensitivity level."
+      },
+      "data_integrity": {
+        "title": "Integrity of Data, Commands & Configuration",
+        "description": "Products shall protect the integrity of stored, transmitted, or otherwise processed data, commands, programs, and configuration.",
+        "guidance": "Use cryptographic hashing and digital signatures to detect tampering. Implement secure boot chains where applicable. Validate all incoming commands and configurations. Protect firmware update integrity with code signing."
+      },
+      "data_minimization": {
+        "title": "Data Minimization",
+        "description": "Products shall process only data that is adequate, relevant, and limited to what is necessary for the intended use.",
+        "guidance": "Audit data collection practices against product requirements. Minimize data stored on device and transmitted to external services. Implement data retention policies. Provide transparency about what data is collected and why. Ensure compliance with GDPR data minimization principles."
+      },
+      "availability_resilience": {
+        "title": "Availability & Resilience",
+        "description": "Products shall be designed and produced to ensure availability and resilience, including resistance to denial of service attacks.",
+        "guidance": "Implement rate limiting and traffic management. Design for graceful degradation under load. Test resilience against common DoS attack patterns. Implement redundancy for critical functions. Define and document recovery procedures."
+      },
+      "attack_surface_minimization": {
+        "title": "Attack Surface Minimization",
+        "description": "Products shall minimize their own attack surface, including external interfaces, and reduce the negative impact on availability of services provided by other devices or networks.",
+        "guidance": "Disable or remove unused services, ports, and protocols. Minimize exposed APIs to only what is necessary. Implement network segmentation capabilities. Restrict debug and diagnostic interfaces in production. Regularly review and reduce the attack surface."
+      },
+      "incident_impact_reduction": {
+        "title": "Incident Impact Reduction",
+        "description": "Products shall be designed to limit the impact of an incident using appropriate exploitation mitigation mechanisms and techniques.",
+        "guidance": "Implement sandboxing or process isolation where feasible. Use memory protection mechanisms (ASLR, DEP, stack canaries). Apply the principle of least privilege for all components. Implement fail-safe modes. Design containment boundaries to prevent lateral movement."
+      },
+      "security_logging": {
+        "title": "Security Event Logging & Monitoring",
+        "description": "Products shall provide the ability to record and monitor relevant internal activity, including access to or modification of data, services, or functions.",
+        "guidance": "Log all security-relevant events: authentication, authorization, configuration changes, error conditions. Use structured logging formats. Implement tamper-evident log storage. Provide interfaces for log export to SIEM systems. Include sufficient detail for incident investigation."
+      },
+      "security_updates": {
+        "title": "Security Updates Mechanism",
+        "description": "Products shall ensure vulnerabilities can be addressed through security updates, including automatic updates where appropriate.",
+        "guidance": "Implement an OTA (over-the-air) update mechanism with integrity verification. Support automatic security updates with user notification. Ensure update delivery for the entire support period. Digitally sign all updates. Provide rollback capability in case of failed updates."
+      }
+    },
+    "vulnerabilityRequirements": {
+      "vulnerability_identification": {
+        "title": "Vulnerability Identification & Documentation",
+        "description": "Identify and document vulnerabilities and components contained in the product, including by drawing up a software bill of materials.",
+        "guidance": "Maintain a complete and up-to-date SBOM (CycloneDX or SPDX format). Continuously monitor for new vulnerabilities in all components. Use automated vulnerability scanning tools. Document known vulnerabilities along with mitigation status."
+      },
+      "vulnerability_remediation": {
+        "title": "Timely Vulnerability Remediation",
+        "description": "Address and remediate vulnerabilities without delay, including by providing security updates.",
+        "guidance": "Define SLAs for vulnerability remediation based on severity (e.g., critical within 24h, high within 7 days). Implement a streamlined patching process. Track all vulnerabilities from discovery to resolution. Prioritize based on exploitability and impact."
+      },
+      "security_testing": {
+        "title": "Regular Security Testing",
+        "description": "Apply effective and regular testing and review of the security of the product with digital elements.",
+        "guidance": "Conduct regular penetration testing (at least annually). Integrate automated security testing into CI/CD (SAST, DAST, SCA). Perform fuzz testing on input parsers. Review security after each major release. Engage external security auditors periodically."
+      },
+      "vulnerability_disclosure": {
+        "title": "Public Vulnerability Disclosure",
+        "description": "Once a security update is available, publicly disclose information about fixed vulnerabilities, including a description and identification.",
+        "guidance": "Publish security advisories for each fixed vulnerability. Include CVE IDs where applicable. Describe the vulnerability, affected versions, and fixed versions. Provide clear upgrade instructions. Maintain a public security advisory archive."
+      },
+      "coordinated_disclosure_policy": {
+        "title": "Coordinated Vulnerability Disclosure Policy",
+        "description": "Put in place and enforce a policy on coordinated vulnerability disclosure.",
+        "guidance": "Publish a vulnerability disclosure policy (VDP) on your website. Provide a security contact (e.g., security@company.com). Define a clear timeline for acknowledgment (48h) and resolution. Offer legal safe harbor for good-faith security researchers. Follow ISO/IEC 29147 guidelines."
+      },
+      "vulnerability_info_sharing": {
+        "title": "Vulnerability Information Sharing",
+        "description": "Take measures to facilitate the sharing of information about vulnerabilities in the product and third-party components.",
+        "guidance": "Participate in relevant ISACs (Information Sharing and Analysis Centers). Share vulnerability data with CSIRT/CERT organizations. Notify downstream users and integrators of component vulnerabilities. Use standardized formats (CSAF, VEX) for vulnerability communication."
+      },
+      "sbom_maintenance": {
+        "title": "SBOM Creation & Maintenance",
+        "description": "Provide a software bill of materials in a commonly used and machine-readable format covering at a minimum top-level dependencies.",
+        "guidance": "Generate SBOM in CycloneDX or SPDX format. Include at minimum: component name, version, supplier, and unique identifier (pURL/CPE). Update the SBOM with every release. Make the SBOM available to customers and authorities upon request. Automate SBOM generation as part of the build process."
+      },
+      "security_advisories": {
+        "title": "Security Advisory Publication",
+        "description": "Disseminate timely security advisories about vulnerabilities that are identified, including information on available patches or mitigation measures.",
+        "guidance": "Establish a security advisory publication process. Include severity rating (CVSS), affected products/versions, remediation steps, and timeline. Distribute advisories through multiple channels (website, email lists, product notifications). Meet the CRA requirement to notify ENISA within 24 hours for actively exploited vulnerabilities."
+      }
+    },
+    "errors": {
+      "notAuthenticated": "You must be signed in to continue.",
+      "productNotFound": "Product not found.",
+      "generic": "Something went wrong. Please try again."
+    }
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "sbom": {
+    "title": "Software Bill of Materials",
+    "subtitle": "Upload and manage SBOMs for this product.",
+    "upload": {
+      "title": "Upload SBOM",
+      "dropzone": "Drag & drop your SBOM file here",
+      "dropzoneActive": "Drop your file here",
+      "browse": "or browse files",
+      "formats": "Supported: CycloneDX (JSON/XML), SPDX (JSON)",
+      "uploading": "Uploading and parsing…",
+      "success": "SBOM uploaded successfully.",
+      "errors": {
+        "noFile": "Please select a file.",
+        "invalidFormat": "Unrecognized SBOM format. Supported: CycloneDX JSON/XML, SPDX JSON.",
+        "tooLarge": "File is too large. Maximum size is 50 MB.",
+        "parseFailed": "Failed to parse the SBOM file. Please check the format.",
+        "uploadFailed": "Upload failed. Please try again.",
+        "notAuthenticated": "You must be signed in.",
+        "generic": "Something went wrong. Please try again."
+      }
+    },
+    "list": {
+      "empty": "No SBOMs uploaded yet",
+      "emptyDescription": "Upload your first SBOM to scan for vulnerabilities. We support CycloneDX and SPDX formats.",
+      "deleteConfirm": "Delete this SBOM?",
+      "deleteDescription": "This will permanently remove the SBOM, all component data, and vulnerability scan results. This action cannot be undone.",
+      "deleteCancel": "Cancel",
+      "deleteSubmit": "Delete",
+      "deleting": "Deleting…",
+      "archived": "Archived",
+      "archive": "Archive",
+      "restore": "Restore"
+    },
+    "formats": {
+      "cyclonedx": "CycloneDX",
+      "spdx": "SPDX"
+    },
+    "components": {
+      "title": "Components",
+      "name": "Name",
+      "version": "Version",
+      "license": "License",
+      "supplier": "Supplier",
+      "purl": "PURL",
+      "vulns": "Vulnerabilities",
+      "noVersion": "—",
+      "noLicense": "—",
+      "noSupplier": "—",
+      "showAll": "Show all {count} components",
+      "showLess": "Show fewer",
+      "loading": "Loading components…",
+      "sortBy": "Sort by",
+      "sortName": "Name",
+      "sortVulns": "Vulnerabilities"
+    },
+    "scan": {
+      "scanButton": "Scan for Vulnerabilities",
+      "rescan": "Rescan",
+      "scanning": "Scanning…",
+      "scanningDescription": "Querying OSV.dev and CISA KEV catalog…",
+      "lastScanned": "Scanned {date}",
+      "vuln": "vulnerability",
+      "vulns": "vulnerabilities",
+      "noVulns": "No vulnerabilities",
+      "noVulnsForComp": "No vulnerabilities found for this component.",
+      "loadingVulns": "Loading vulnerabilities…",
+      "totalLabel": "total",
+      "kevLabel": "CISA KEV",
+      "noDescription": "No description available.",
+      "viewDetails": "View details →",
+      "severity": {
+        "critical": "Critical",
+        "high": "High",
+        "medium": "Medium",
+        "low": "Low"
+      }
+    }
+  }
+}

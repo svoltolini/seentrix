@@ -1,0 +1,185 @@
+{
+  "settings": {
+    "title": "Einstellungen",
+    "subtitle": "Verwalten Sie Ihre Organisation, Ihr Team und Ihr Konto.",
+    "nav": {
+      "organization": "Organisation",
+      "team": "Team",
+      "billing": "Abrechnung",
+      "activity": "Aktivität",
+      "account": "Konto"
+    },
+    "organization": {
+      "title": "Organisation",
+      "subtitle": "Verwalten Sie die Details und Einstellungen Ihrer Organisation.",
+      "nameLabel": "Organisationsname",
+      "namePlaceholder": "Beispiel GmbH",
+      "languageLabel": "Standardsprache",
+      "languageDescription": "Legt die Standardsprache für Ihre Organisation fest.",
+      "addressTitle": "Firmenadresse",
+      "addressDescription": "Wird in der Konformitätserklärung und anderen Compliance-Dokumenten verwendet.",
+      "addressLine1": "Adresszeile 1",
+      "addressLine1Placeholder": "Hauptstraße 123",
+      "addressLine2": "Adresszeile 2",
+      "addressLine2Placeholder": "Gebäude A",
+      "postalCode": "Postleitzahl",
+      "postalCodePlaceholder": "10115",
+      "city": "Stadt",
+      "cityPlaceholder": "Berlin",
+      "country": "Land",
+      "countryPlaceholder": "Deutschland",
+      "save": "Änderungen speichern",
+      "saving": "Speichern…",
+      "saved": "Organisationseinstellungen gespeichert.",
+      "error": "Einstellungen konnten nicht gespeichert werden. Bitte versuchen Sie es erneut.",
+      "readOnly": "Nur Admins können die Organisationseinstellungen bearbeiten.",
+      "orgChart": "Organigramm",
+      "orgChartDescription": "Teammitglieder nach Rollenhierarchie gruppiert."
+    },
+    "team": {
+      "title": "Team",
+      "subtitle": "Verwalten Sie, wer Zugriff auf Ihre Organisation hat.",
+      "members": "Mitglieder",
+      "memberCount": "{count} Mitglied",
+      "memberCountPlural": "{count} Mitglieder",
+      "createTitle": "Teammitglied hinzufügen",
+      "createDescription": "Erstellen Sie ein Konto für ein neues Teammitglied. Das Mitglied muss beim ersten Login sein Passwort ändern.",
+      "createEmail": "E-Mail",
+      "createEmailPlaceholder": "kollege@firma.de",
+      "createName": "Vollständiger Name",
+      "createNamePlaceholder": "Max Mustermann",
+      "createRoleLabel": "Rolle",
+      "createPassword": "Temporäres Passwort",
+      "createPasswordPlaceholder": "Mind. 8 Zeichen",
+      "createMember": "Mitglied erstellen",
+      "creatingMember": "Wird erstellt…",
+      "memberCreated": "Teammitglied erfolgreich erstellt.",
+      "createError": "Teammitglied konnte nicht erstellt werden.",
+      "createErrors": {
+        "notAdmin": "Nur Admins können Teammitglieder hinzufügen.",
+        "emailInUse": "Diese E-Mail ist bereits registriert.",
+        "limitReached": "Das Mitgliederlimit Ihres Plans wurde erreicht.",
+        "passwordTooShort": "Passwort muss mindestens 8 Zeichen lang sein.",
+        "invalidRole": "Ungültige Rolle ausgewählt."
+      },
+      "credentialsTitle": "Konto erstellt",
+      "credentialsHint": "Teilen Sie diese Zugangsdaten mit dem neuen Teammitglied. Beim ersten Login wird ein neues Passwort verlangt.",
+      "credentialsCopied": "Zugangsdaten in die Zwischenablage kopiert.",
+      "pendingPassword": "Ausstehend",
+      "removeMember": "Entfernen",
+      "removeMemberConfirm": "Teammitglied entfernen?",
+      "removeMemberDescription": "Möchten Sie {name} wirklich aus Ihrer Organisation entfernen? Der Zugang wird sofort entzogen.",
+      "removeMemberCancel": "Abbrechen",
+      "removeMemberSubmit": "Entfernen",
+      "removed": "Teammitglied entfernt.",
+      "removeError": "Teammitglied konnte nicht entfernt werden.",
+      "changeRole": "Rolle ändern",
+      "changeRoleConfirm": "Rolle ändern?",
+      "changeRoleDescription": "Rolle von {name} von {oldRole} zu {newRole} ändern?",
+      "changeRoleCancel": "Abbrechen",
+      "changeRoleSubmit": "Rolle ändern",
+      "roleChanged": "Rolle aktualisiert.",
+      "roleChangeError": "Rolle konnte nicht geändert werden.",
+      "lastAdminError": "Die Rolle des letzten Admins kann nicht geändert werden.",
+      "you": "Sie",
+      "adminOnly": "Nur Admins können das Team verwalten.",
+      "roles": {
+        "admin": "Admin",
+        "compliance_officer": "Compliance-Beauftragter",
+        "cto": "CTO",
+        "editor": "Bearbeiter",
+        "viewer": "Betrachter"
+      },
+      "limits": {
+        "reached": "Teammitglied-Limit erreicht",
+        "reachedDescription": "Ihr {plan}-Plan erlaubt bis zu {limit} Teammitglied.",
+        "reachedDescriptionPlural": "Ihr {plan}-Plan erlaubt bis zu {limit} Teammitglieder.",
+        "upgrade": "Plan upgraden"
+      }
+    },
+    "activity": {
+      "title": "Aktivitätsprotokoll",
+      "subtitle": "Verfolgen Sie alle Änderungen in Ihrer Organisation.",
+      "download": "Herunterladen",
+      "empty": "Noch keine Aktivität.",
+      "exportPeriod": {
+        "1": "Letzter Monat",
+        "6": "Letzte 6 Monate",
+        "12": "Letzte 12 Monate"
+      },
+      "actions": {
+        "organization": {
+          "updated": "hat die Organisation aktualisiert",
+          "created": "hat die Organisation erstellt"
+        },
+        "member": {
+          "created": "hat ein Teammitglied hinzugefügt",
+          "removed": "hat ein Teammitglied entfernt",
+          "role_changed": "hat die Rolle eines Mitglieds geändert"
+        },
+        "profile": {
+          "updated": "hat das Profil aktualisiert"
+        },
+        "password": {
+          "changed": "hat das Passwort geändert"
+        },
+        "product": {
+          "created": "hat ein Produkt erstellt",
+          "updated": "hat ein Produkt aktualisiert",
+          "deleted": "hat ein Produkt gelöscht",
+          "assessed": "hat eine Produktbewertung durchgeführt"
+        },
+        "document": {
+          "saved": "hat ein Dokument gespeichert",
+          "status_changed": "hat den Dokumentstatus geändert",
+          "pdf_generated": "hat ein PDF erstellt"
+        },
+        "sbom": {
+          "uploaded": "hat eine SBOM hochgeladen",
+          "deleted": "hat eine SBOM gelöscht",
+          "scanned": "hat nach Schwachstellen gescannt"
+        },
+        "checklist": {
+          "item_status_changed": "hat einen Checklisten-Punkt aktualisiert",
+          "item_description_changed": "hat Checklisten-Notizen bearbeitet",
+          "evidence_uploaded": "hat einen Nachweis hochgeladen",
+          "evidence_removed": "hat einen Nachweis entfernt"
+        },
+        "billing": {
+          "checkout_created": "hat einen Checkout gestartet"
+        }
+      }
+    },
+    "account": {
+      "title": "Konto",
+      "subtitle": "Verwalten Sie Ihre persönlichen Kontoeinstellungen.",
+      "profileTitle": "Profil",
+      "avatarLabel": "Profilbild",
+      "avatarHint": "Klicken zum Hochladen (JPG, PNG, WebP, max. 2 MB)",
+      "avatarUploading": "Wird hochgeladen…",
+      "nameLabel": "Vollständiger Name",
+      "namePlaceholder": "Max Mustermann",
+      "emailLabel": "E-Mail",
+      "emailDescription": "Ihre E-Mail wird über Ihren Authentifizierungsanbieter verwaltet.",
+      "saveProfile": "Profil speichern",
+      "savingProfile": "Speichern…",
+      "profileSaved": "Profil aktualisiert.",
+      "profileError": "Profil konnte nicht aktualisiert werden.",
+      "passwordTitle": "Passwort ändern",
+      "currentPassword": "Aktuelles Passwort",
+      "newPassword": "Neues Passwort",
+      "newPasswordPlaceholder": "Mindestens 8 Zeichen",
+      "changePassword": "Passwort ändern",
+      "changingPassword": "Wird geändert…",
+      "passwordChanged": "Passwort erfolgreich geändert.",
+      "passwordError": "Passwort konnte nicht geändert werden. Bitte überprüfen Sie Ihr aktuelles Passwort.",
+      "dangerTitle": "Gefahrenzone",
+      "logoutButton": "Abmelden",
+      "logoutDescription": "Melden Sie sich auf diesem Gerät von Ihrem Seentrix-Konto ab."
+    },
+    "toast": {
+      "success": "Erfolg",
+      "error": "Fehler"
+    }
+  }
+}

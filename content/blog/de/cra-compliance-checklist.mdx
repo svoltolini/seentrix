@@ -1,0 +1,274 @@
+---
+title: "CRA-Compliance-Checkliste: In 10 Schritten zur Konformität"
+description: "Eine praktische Schritt-für-Schritt-Checkliste für Hersteller, die ihre EU Cyber Resilience Act Compliance starten. Von der Gap-Analyse bis zur CE-Kennzeichnung."
+date: "2026-04-18"
+category: "Compliance"
+author: "Seentrix Team"
+---
+
+Der EU Cyber Resilience Act ist kein ferner Regulierungsentwurf mehr. Er ist geltendes Recht. Die erste Compliance-Frist — die verpflichtende Meldung von Schwachstellen und Sicherheitsvorfällen — tritt am 11. September 2026 in Kraft. Die vollständige Konformität, einschließlich Konformitätsbewertung, CE-Kennzeichnung und umfassender technischer Dokumentation, ist bis zum 11. Dezember 2027 erforderlich.
+
+Das klingt nach ausreichend Zeit. Ist es aber nicht.
+
+Compliance betrifft jeden Aspekt der Entwicklung, Auslieferung und Wartung von Produkten mit digitalen Elementen. Es erfordert Änderungen an Entwicklungsprozessen, Lieferkettenmanagement, Dokumentationspraktiken, Incident-Response-Fähigkeiten und Organisationsstrukturen. Diese Veränderungen lassen sich nicht an einem Wochenende umsetzen.
+
+Dieser Artikel ist Ihr Aktionsplan für Montagmorgen. Zehn konkrete Schritte in der richtigen Reihenfolge, die Sie von „Wo fangen wir überhaupt an?" zu einem klaren, nachverfolgbaren Compliance-Programm führen. Drucken Sie ihn aus. Hängen Sie ihn an die Wand. Arbeiten Sie ihn Schritt für Schritt ab.
+
+## Warum Sie jetzt eine Checkliste brauchen
+
+Die Meldefrist im September 2026 liegt weniger als fünf Monate entfernt. Die vollständige Konformitätsfrist im Dezember 2027 ist in weniger als zwanzig Monaten fällig. Für die meisten Hersteller bedeutet das den Aufbau von Fähigkeiten, die heute noch nicht existieren — SBOM-Pipelines, Prozesse zur Schwachstellenbehandlung, Workflows für die Vorfallsmeldung und umfassende technische Dokumentation.
+
+Ohne einen strukturierten Plan wird Compliance zu einem reaktiven Durcheinander. Teams arbeiten doppelt, kritische Anforderungen werden übersehen, und die Geschäftsleitung hat keine Transparenz über Fortschritt oder Risiken. Eine Checkliste ändert das. Sie verwandelt eine überwältigende 60-seitige Verordnung in **handhabbare, zuweisbare und nachverfolgbare Schritte**.
+
+Es gibt auch eine praktische Realität: Unternehmen, die jetzt beginnen, haben die Zeit, Compliance durchdacht in ihre Prozesse zu integrieren. Unternehmen, die warten, werden zu teuren, disruptiven Crash-Programmen gezwungen — und könnten die Frist dennoch verfehlen.
+
+Eine Checkliste ersetzt nicht die Lektüre der Verordnung. Aber sie ist der schnellste Weg, vom Lesen zum Handeln zu kommen.
+
+## Schritt 1: Klassifizieren Sie Ihre Produkte
+
+Bevor Sie den CRA einhalten können, müssen Sie wissen, welche Anforderungen für jedes Ihrer Produkte gelten. Die Verordnung definiert vier Produktkategorien, und Ihre Kategorie bestimmt den **Konformitätsbewertungsweg** — eine der folgenreichsten Entscheidungen auf Ihrem Compliance-Weg.
+
+Erstellen Sie zunächst eine **vollständige Bestandsaufnahme aller Produkte mit digitalen Elementen**, die Sie auf dem EU-Markt bereitstellen. Dies umfasst Hardwareprodukte mit eingebetteter Software, eigenständige Softwareprodukte, Firmware und jedes Produkt, das sich mit einem Netzwerk oder einem anderen Gerät verbindet.
+
+Bestimmen Sie für jedes Produkt die Kategorie:
+
+- **Standardkategorie** — die Mehrheit der Produkte fällt hierunter. Geringeres Risiko, Selbstbewertung durch den Hersteller möglich. Beispiele: Bildbearbeitungssoftware, Smart Speaker, Festplatten.
+- **Wichtige Klasse I** — Produkte mit höherem Risikoprofil, die harmonisierte Normen zur Selbstbewertung nutzen können, aber eine benannte Stelle erfordern, wenn keine Norm existiert. Beispiele: Passwort-Manager, VPN-Produkte, Netzwerk-Router für den industriellen Einsatz.
+- **Wichtige Klasse II** — müssen unabhängig von verfügbaren Normen eine Drittbewertung durch eine benannte Stelle durchlaufen. Beispiele: Betriebssysteme, Firewalls, manipulationssichere Mikroprozessoren.
+- **Kritische Kategorie** — grundlegende Sicherheitsprodukte, die die strengste Bewertung erfordern, typischerweise eine europäische Cybersicherheitszertifizierung. Beispiele: Hardware-Sicherheitsmodule, Smart-Meter-Gateways.
+
+Dokumentieren Sie Ihre Klassifizierungsentscheidungen und die dahinterstehende Begründung. Wenn ein Produkt an der Grenze zwischen zwei Kategorien liegt, wählen Sie im Zweifel die höhere Kategorie — Marktüberwachungsbehörden werden Hersteller, die aggressiv herunterklassifiziert haben, um Prüfungen zu vermeiden, kritisch betrachten.
+
+**Ergebnis:** Eine Produktinventar-Tabelle mit Spalten für Produktname, Beschreibung, Kategorieklassifizierung, Begründung und Konformitätsbewertungsweg.
+
+## Schritt 2: Führen Sie eine Gap-Analyse durch
+
+Mit der Klassifizierung Ihrer Produkte müssen Sie nun verstehen, wie weit Ihre aktuellen Praktiken von den CRA-Anforderungen entfernt sind. Eine **Gap-Analyse** ordnet jede wesentliche Anforderung der Verordnung Ihren bestehenden Prozessen zu und identifiziert, wo Handlungsbedarf besteht.
+
+Konzentrieren Sie Ihre Analyse auf folgende Kernbereiche:
+
+- **Sicherer Entwicklungslebenszyklus** — Haben Sie dokumentierte sichere Programmierpraktiken? Bedrohungsmodellierung? In die Pipeline integrierte Sicherheitstests?
+- **Schwachstellenbehandlung** — Haben Sie eine koordinierte Richtlinie zur Offenlegung von Schwachstellen? Einen Prozess zum Empfang, zur Bewertung und zum Patchen gemeldeter Schwachstellen?
+- **SBOM-Generierung** — Erzeugen Sie maschinenlesbare SBOMs für jedes Produkt? Sind diese vollständig, korrekt und aktuell?
+- **Vorfallsmeldung** — Haben Sie interne Workflows, um aktiv ausgenutzte Schwachstellen zu erkennen und sie innerhalb der vorgeschriebenen Fristen an die ENISA zu melden?
+- **Technische Dokumentation** — Pflegen Sie die vom CRA geforderten Risikobewertungen, Designdokumentationen, Testergebnisse und Konformitätsnachweise?
+- **Lieferkettensicherheit** — Wissen Sie, welche Drittanbieter- und Open-Source-Komponenten in Ihren Produkten enthalten sind? Sind Ihre Lieferantenverträge auf die CRA-Pflichten abgestimmt?
+
+Weisen Sie jedem Bereich einen Status zu:
+
+- **Grün** — Aktuelle Praktiken erfüllen die CRA-Anforderungen. Nachweise sind vorhanden und dokumentiert.
+- **Gelb** — Teilweise Abdeckung. Einige Prozesse existieren, müssen aber verstärkt, formalisiert oder dokumentiert werden.
+- **Rot** — Erhebliche Lücke. Der Prozess existiert nicht oder ist grundlegend unzureichend.
+
+Die Gap-Analyse ist keine Einzelaufgabe. Sie benötigen Input von Engineering, Produktmanagement, Security, Recht und Qualitätssicherung. Planen Sie die Workshops, holen Sie die richtigen Personen an den Tisch und seien Sie ehrlich darüber, wo Sie stehen.
+
+**Ergebnis:** Eine Gap-Analyse-Matrix mit farbcodiertem Status für jeden CRA-Anforderungsbereich sowie eine priorisierte Liste von Maßnahmen.
+
+## Schritt 3: Bauen Sie Ihre SBOM-Pipeline auf
+
+Die **Software Bill of Materials** ist eine der greifbarsten und technisch konkretesten CRA-Anforderungen. Jedes Produkt mit digitalen Elementen muss eine SBOM haben, die alle Softwarekomponenten auflistet, und diese muss während der gesamten Supportdauer aktuell gehalten werden.
+
+Wenn Sie noch keine SBOMs generieren, gehen Sie folgendermaßen vor:
+
+1. **Wählen Sie ein Format.** Die beiden akzeptierten Standards sind **CycloneDX** (OWASP, sicherheitsorientiert) und **SPDX** (Linux Foundation, ISO-Standard). Beide sind für die CRA-Compliance gültig. Wenn Ihr Hauptanliegen Sicherheit und Schwachstellenkorrelation ist, bietet CycloneDX oft den einfacheren Einstieg.
+
+2. **Integrieren Sie in Ihre CI/CD-Pipeline.** Die SBOM-Generierung sollte automatisch bei jedem Build ausgelöst werden. Tools wie Syft, Trivy oder die CycloneDX CLI können Ihren Quellcode, Abhängigkeiten und Container-Images scannen und eine standardkonforme SBOM ohne manuellen Eingriff erzeugen.
+
+3. **Stellen Sie Vollständigkeit sicher.** Eine gute SBOM enthält jede Abhängigkeit — nicht nur Ihre direkten Imports, sondern auch **transitive Abhängigkeiten**. Die Bibliothek, die Sie importieren, hängt von drei weiteren Bibliotheken ab, von denen jede wiederum fünf weitere nutzt. Alle müssen in der SBOM enthalten sein.
+
+4. **Fügen Sie umfangreiche Metadaten hinzu.** Über Komponentennamen und Versionen hinaus sollten Sie Lieferanteninformationen, Lizenzdaten, eindeutige Bezeichner (PURL, CPE) und Abhängigkeitsbeziehungsgraphen aufnehmen. Je reichhaltiger Ihre SBOM, desto schneller können Sie reagieren, wenn eine neue Schwachstelle bekannt wird.
+
+5. **Automatisieren Sie Aktualisierungen.** Bei jeder neuen Produktversion muss eine aktuelle SBOM erzeugt werden. Bei jedem Komponenten-Patch muss die SBOM die Änderung widerspiegeln. Manuelle SBOM-Pflege skaliert nicht.
+
+6. **Speichern und verteilen Sie.** Entscheiden Sie, wo SBOMs gespeichert werden — in einem zentralen Repository, als Anhang zu Release-Artefakten oder über eine dedizierte Plattform. Marktüberwachungsbehörden können sie anfordern, und Ihre Kunden erwarten sie zunehmend.
+
+**Ergebnis:** Automatisierte SBOM-Generierung, integriert in Ihre Build-Pipeline, mit CycloneDX- oder SPDX-Output für jede Produktversion.
+
+## Schritt 4: Etablieren Sie die Schwachstellenbehandlung
+
+Der CRA verlangt von Herstellern, während der gesamten Supportdauer jedes Produkts einen **koordinierten Prozess zur Offenlegung von Schwachstellen (Coordinated Vulnerability Disclosure, CVD)** aufrechtzuerhalten. Dies ist nicht optional und gehört zu den Bereichen, die Marktüberwachungsbehörden besonders genau prüfen werden.
+
+Folgendes müssen Sie aufbauen:
+
+- **Richten Sie einen öffentlichen Sicherheitskontakt ein.** Erstellen Sie eine dedizierte E-Mail-Adresse wie **security@ihrfirma.de** und veröffentlichen Sie diese prominent — auf Ihrer Website, in Ihrer Produktdokumentation und in Ihrer Sicherheitsrichtlinie. Sicherheitsforscher brauchen einen klaren, zuverlässigen Kontaktweg.
+
+- **Definieren Sie Triage-Verfahren.** Wenn ein Schwachstellenbericht eingeht — was passiert dann? Wer empfängt ihn? Wie wird der Schweregrad bewertet? Sie benötigen einen dokumentierten Triage-Workflow, der jeden eingehenden Bericht innerhalb eines definierten Zeitrahmens einem verantwortlichen Bearbeiter zuweist.
+
+- **Legen Sie SLAs für Patches fest.** Der CRA erwartet zeitnahe Behebung. Definieren Sie interne Zielvorgaben für Patch-Entwicklung, Test und Veröffentlichung nach Schweregrad — zum Beispiel: kritische Schwachstellen innerhalb von 7 Tagen gepatcht, hohe innerhalb von 30, mittlere innerhalb von 90 Tagen.
+
+- **Überwachen Sie Upstream-Advisories.** Wenn Ihr Produkt Open-Source-Komponenten enthält (und das tut es mit hoher Wahrscheinlichkeit), sind Sie für die Überwachung dieser Komponenten auf neu veröffentlichte Schwachstellen verantwortlich. Abonnieren Sie Sicherheitsmailinglisten, nutzen Sie automatisierte Überwachungstools und gleichen Sie Advisories mit Ihrer SBOM ab.
+
+- **Stellen Sie Patches kostenfrei bereit.** Die Verordnung verlangt, dass Sicherheitsupdates den Nutzern während der definierten Supportdauer kostenfrei zur Verfügung gestellt werden. Stellen Sie sicher, dass Ihr Update-Verteilungsmechanismus dies unterstützt.
+
+- **Dokumentieren Sie alles.** Jeden Schwachstellenbericht, jede Triage-Entscheidung, jeden Patch-Zeitplan. Diese Dokumentation dient als Konformitätsnachweis und wird bei Audits unverzichtbar sein.
+
+**Ergebnis:** Eine veröffentlichte Richtlinie zur Offenlegung von Schwachstellen, ein dedizierter Sicherheitskontakt, dokumentierte Triage-Verfahren und definierte Patch-SLAs.
+
+## Schritt 5: Richten Sie Ihr PSIRT ein
+
+Ein **Product Security Incident Response Team (PSIRT)** ist die organisatorische Struktur, die die Schwachstellenbehandlung in der Praxis funktionsfähig macht. Auch wenn Ihr Unternehmen klein ist, benötigen Sie klar definierte Rollen und Verantwortlichkeiten für den Umgang mit Sicherheitsvorfällen.
+
+Ein PSIRT muss keine eigene Abteilung sein. In kleineren Organisationen kann es ein funktionsübergreifendes Team aus Entwicklern, Produktmanagern und Security-Mitarbeitern sein, das bei Bedarf zusammentritt. Entscheidend ist, dass die Struktur existiert, die Rollen zugewiesen sind und alle Beteiligten das Vorgehen kennen.
+
+Definieren Sie Folgendes:
+
+- **PSIRT-Leitung** — wer verantwortet den Prozess und hat die Befugnis, Entscheidungen über Schweregrad, Offenlegungszeitpläne und Ressourcenzuweisung zu treffen.
+- **Triage-Analysten** — wer bewertet eingehende Berichte und bestimmt Gültigkeit und Schweregrad.
+- **Engineering-Responder** — wer entwickelt und testet den Patch.
+- **Kommunikationsverantwortliche** — wer verfasst Advisories, koordiniert die Offenlegung mit Meldern und steuert die Kundenkommunikation.
+- **Eskalationspfade** — wann wird ein Vorfall an die Geschäftsleitung eskaliert? Wann wird die Rechtsabteilung einbezogen? Wann werden externe Ressourcen hinzugezogen?
+
+Dokumentieren Sie das **PSIRT-Playbook** — eine Schritt-für-Schritt-Anleitung für die Bearbeitung eines eingehenden Schwachstellenberichts vom Eingang bis zur Lösung. Fügen Sie Vorlagen für die interne Nachverfolgung, Kriterien zur Schweregradklassifizierung und Kommunikationsvorlagen für Melder und Kunden bei.
+
+Führen Sie vor der September-2026-Frist mindestens eine **Planübung (Tabletop Exercise)** durch. Simulieren Sie ein realistisches Szenario: Ein Sicherheitsforscher meldet eine kritische Schwachstelle in einer Komponente, die in drei Ihrer Produkte verwendet wird. Wer tut was, in welcher Reihenfolge und innerhalb welchen Zeitrahmens?
+
+**Ergebnis:** Ein dokumentiertes PSIRT-Mandat mit benannten Rollen, ein Response-Playbook, Eskalationsverfahren und mindestens eine durchgeführte Planübung.
+
+## Schritt 6: Bereiten Sie die Vorfallsmeldung vor
+
+Ab dem 11. September 2026 müssen Hersteller **aktiv ausgenutzte Schwachstellen** und **schwerwiegende Sicherheitsvorfälle** über eine dedizierte Meldeplattform an die ENISA melden. Die Meldekette folgt einem strikten Zeitplan:
+
+- **Innerhalb von 24 Stunden** — Übermittlung einer Frühwarnung. Dies ist eine kurze Benachrichtigung, dass eine aktiv ausgenutzte Schwachstelle identifiziert wurde. Eine vollständige Analyse ist zu diesem Zeitpunkt nicht erforderlich.
+- **Innerhalb von 72 Stunden** — Übermittlung einer detaillierten Meldung mit einer ersten Bewertung der Schwachstelle, ihrem Schweregrad, dem Umfang der Auswirkungen und etwaigen bekannten Ausnutzungsaktivitäten.
+- **Innerhalb von 14 Tagen** — Übermittlung eines Abschlussberichts mit vollständigen Details einschließlich Ursachenanalyse, betroffenen Produkten, ergriffenen Abhilfemaßnahmen und verbleibenden Risiken.
+
+Um diese Fristen zuverlässig einzuhalten, benötigen Sie einen internen Workflow, der folgende Fragen beantwortet:
+
+1. **Wer erkennt?** Wie werden Sie darauf aufmerksam, dass eine Schwachstelle in Ihrem Produkt aktiv ausgenutzt wird? Dies erfordert die Überwachung von Threat-Intelligence-Feeds, Kundenberichten und Kanälen der Sicherheits-Community.
+2. **Wer entscheidet über die Meldung?** Nicht jede Schwachstelle löst eine Meldepflicht aus. Sie benötigen ein klares Entscheidungsframework und eine benannte Person mit der Befugnis, diese Entscheidung zu treffen.
+3. **Wer verfasst die Meldung?** Die ENISA wird spezifische Meldevorlagen und -formate bereitstellen. Benennen Sie die Person oder das Team, das für die Erstellung der Meldungen verantwortlich ist, und stellen Sie sicher, dass diese geschult sind.
+4. **Wer prüft und übermittelt?** Bauen Sie einen kurzen Prüfschritt ein, um Fehler zu erkennen, aber lassen Sie ihn nicht zu einem Engpass werden, der die 24-Stunden-Frist gefährdet.
+
+**Üben Sie mit Planübungen.** Simulieren Sie ein Szenario, in dem Sie an einem Freitagnachmittag entdecken, dass eine Schwachstelle in Ihrem Hauptprodukt aktiv ausgenutzt wird. Gehen Sie jeden Schritt durch, messen Sie die Dauer und identifizieren Sie Engpässe.
+
+**Ergebnis:** Ein dokumentierter Workflow für die Vorfallsmeldung mit benannten Rollen, Entscheidungskriterien, ENISA-Meldevorlagen und mindestens einer durchgeführten Planübung.
+
+## Schritt 7: Implementieren Sie Security by Design
+
+Der CRA verlangt, dass Produkte **mit Cybersicherheit als Kernaspekt entworfen, entwickelt und gewartet** werden — nicht als nachträglicher Zusatz. Dies ist eine der umfassendsten Anforderungen der Verordnung und betrifft jede Phase Ihres Produktentwicklungslebenszyklus.
+
+Zentrale Praktiken, die Sie implementieren sollten:
+
+- **Bedrohungsmodellierung** — Identifizieren Sie für jedes Produkt und jede wesentliche Funktion die zu schützenden Assets, potenzielle Bedrohungen, Angriffsvektoren und Gegenmaßnahmen. Nutzen Sie etablierte Frameworks wie STRIDE oder PASTA. Machen Sie Bedrohungsmodellierung zu einem Standardbestandteil Ihres Designprozesses, nicht zu einer einmaligen Übung.
+
+- **Sichere Standardkonfigurationen** — Produkte müssen in einer sicheren Konfiguration ausgeliefert werden. Keine Standardpasswörter, keine unnötig offenen Ports, keine Dienste aktiviert, die der Nutzer nicht angefordert hat. Wenn ein Nutzer die Sicherheit für seinen Anwendungsfall abschwächen muss, sollte dies eine bewusste Entscheidung sein und nicht der Ausgangszustand.
+
+- **Minimierte Angriffsfläche** — Jede Funktion, jeder offene Port, jeder aktivierte Dienst ist ein potenzieller Einstiegspunkt. Minimieren Sie konsequent, was exponiert wird. Deaktivieren Sie, was nicht benötigt wird. Isolieren Sie, was laufen muss.
+
+- **Prinzip der geringsten Berechtigung** — Softwarekomponenten sollten nur mit den Berechtigungen arbeiten, die sie benötigen. Keine Ausführung als Root, wenn Benutzerberechtigungen ausreichen. Kein breiter Netzwerkzugriff, wenn ein einzelner Endpunkt genügt.
+
+- **Sicherheitsreviews** — Integrieren Sie Sicherheitsprüfungs-Checkpoints in Ihren Entwicklungsprozess. Code-Reviews sollten eine Sicherheitsperspektive einschließen. Architekturentscheidungen sollten auf Sicherheitsauswirkungen bewertet werden. Release-Gates sollten ein Sicherheits-Sign-off beinhalten.
+
+- **Sicherer Update-Mechanismus** — Produkte müssen sichere, authentifizierte Updates unterstützen, damit Sicherheitspatches während der gesamten Supportdauer zuverlässig ausgeliefert werden können.
+
+Dies ist keine einmalige Compliance-Aktivität. **Security by Design ist eine kontinuierliche Praxis**, die in Ihre Kultur und Prozesse eingebettet werden muss. Schulen Sie Ihre Entwickler, überprüfen Sie Ihre Architektur und iterieren Sie.
+
+**Ergebnis:** Aktualisierte Entwicklungsprozess-Dokumentation mit integrierter Bedrohungsmodellierung, Richtlinie für sichere Standardkonfigurationen, Checklisten zur Prüfung der Angriffsfläche und Sicherheitsreview-Gates.
+
+## Schritt 8: Bereiten Sie die technische Dokumentation vor
+
+Der CRA verlangt von Herstellern die Erstellung und Pflege **umfassender technischer Dokumentation** für jedes Produkt. Diese Dokumentation muss den Marktüberwachungsbehörden mindestens **zehn Jahre** nach dem Inverkehrbringen des Produkts zur Verfügung stehen.
+
+Die Dokumentation muss Folgendes umfassen:
+
+- **Produktbeschreibung** — eine allgemeine Beschreibung des Produkts, seines Verwendungszwecks und seiner Hardware- und Softwarekomponenten.
+- **Risikobewertung** — eine dokumentierte Bewertung der Cybersicherheitsrisiken, der identifizierten Bedrohungen und der zu deren Bewältigung ergriffenen Maßnahmen.
+- **Design- und Entwicklungsinformationen** — wie das Produkt unter Berücksichtigung der Sicherheit entworfen wurde, einschließlich Architekturentscheidungen, Bedrohungsmodelle und angewandter sicherer Entwicklungspraktiken.
+- **Testergebnisse** — Nachweise über durchgeführte Sicherheitstests, einschließlich Testmethoden, verwendeter Tools und Ergebnisse.
+- **SBOM** — die Software Bill of Materials des Produkts.
+- **Dokumentation der Schwachstellenbehandlung** — Aufzeichnungen über Ihre Richtlinie zur Offenlegung von Schwachstellen, eingegangene Berichte, ausgelieferte Patches und Zeitpläne.
+- **Konformitätsbewertungsunterlagen** — die Ergebnisse Ihrer Konformitätsbewertung, ob als Selbstbewertung oder durch eine benannte Stelle durchgeführt.
+- **EU-Konformitätserklärung** — die formelle Erklärung, dass das Produkt alle anwendbaren CRA-Anforderungen erfüllt.
+
+Beginnen Sie jetzt mit dem Aufbau Ihrer Dokumentationsvorlagen. Warten Sie nicht, bis die Frist näher rückt, um Format- und Inhaltsanforderungen zu klären. Erstellen Sie eine strukturierte Ablage oder ein Dokumentationssystem für jedes Produkt und füllen Sie es, während Sie die anderen Schritte dieser Checkliste abarbeiten.
+
+**Ergebnis:** Dokumentationsvorlagen für jede geforderte Kategorie, ein zentrales Dokumentations-Repository und ein erster Entwurf für mindestens ein Produkt.
+
+## Schritt 9: Überprüfen Sie Ihre Lieferkette
+
+Moderne Produkte werden aus Dutzenden, manchmal Hunderten von Drittanbieterkomponenten zusammengestellt — Open-Source-Bibliotheken, kommerzielle SDKs, Firmware-Module, Cloud-Dienste. Unter dem CRA sind **Sie für die Sicherheit von allem verantwortlich, was sich in Ihrem Produkt befindet** — unabhängig davon, wer den Code ursprünglich geschrieben hat.
+
+Das bedeutet: Lieferkettensicherheit ist nicht das Problem eines anderen. Es ist Ihr Problem.
+
+Erforderliche Maßnahmen:
+
+- **Inventarisieren Sie Ihre Abhängigkeiten.** Ihre SBOM (Schritt 3) gibt Ihnen Transparenz darüber, was in Ihren Produkten steckt. Nutzen Sie sie als Grundlage für die Risikobewertung der Lieferkette.
+
+- **Bewerten Sie die Sicherheit von Drittanbieterkomponenten.** Evaluieren Sie bei kritischen Abhängigkeiten die Sicherheitspraktiken des Upstream-Projekts oder Anbieters. Wird das Projekt aktiv gepflegt? Gibt es einen Prozess zur Offenlegung von Schwachstellen? Wie schnell wird auf gemeldete Probleme reagiert?
+
+- **Aktualisieren Sie Lieferantenverträge.** Wenn Sie kommerzielle Komponenten beziehen, sollten Ihre Verträge Ihre CRA-Pflichten widerspiegeln. Nehmen Sie Klauseln auf, die Anbieter verpflichten, Sie über bekannte Schwachstellen zu informieren, zeitnahe Patches bereitzustellen und SBOM-Daten für ihre Komponenten zu liefern.
+
+- **Überwachen Sie Abhängigkeiten kontinuierlich.** Täglich werden neue Schwachstellen veröffentlicht. Nutzen Sie automatisierte Tools, um Ihre SBOM kontinuierlich gegen Schwachstellendatenbanken (NVD, OSV, GitHub Advisory Database) abzugleichen und Sie zu benachrichtigen, wenn eine Komponente in Ihrem Produkt betroffen ist.
+
+- **Haben Sie einen Ersatzplan.** Wenn eine kritische Open-Source-Abhängigkeit nicht mehr gepflegt wird oder ein Anbieter die Sicherheitserwartungen nicht erfüllt, müssen Sie die Möglichkeit haben, auf eine Alternative umzusteigen. Identifizieren Sie Ihre kritischsten Abhängigkeiten und schätzen Sie den Aufwand für einen Wechsel ein.
+
+- **Dokumentieren Sie Ihre Sorgfaltspflicht.** Marktüberwachungsbehörden werden Nachweise sehen wollen, dass Sie Ihre Lieferkettenrisiken bewertet und angemessene Maßnahmen zu deren Minderung ergriffen haben. Führen Sie Aufzeichnungen über Ihre Bewertungen, Entscheidungen und Überwachungsaktivitäten.
+
+**Ergebnis:** Eine Lieferketten-Risikobewertung für jedes Produkt, aktualisierte Lieferantenverträge mit CRA-konformen Klauseln und kontinuierliche Abhängigkeitsüberwachung.
+
+## Schritt 10: Planen Sie die Konformitätsbewertung
+
+Der letzte Schritt vor der Anbringung der **CE-Kennzeichnung** und dem Inverkehrbringen Ihres Produkts auf dem EU-Markt ist die **Konformitätsbewertung**. Der einzuschlagende Weg hängt von Ihrer Produktklassifizierung aus Schritt 1 ab.
+
+- **Produkte der Standardkategorie** — Sie können eine **Selbstbewertung** durchführen. Das bedeutet, eine interne Bewertung anhand der wesentlichen CRA-Anforderungen durchzuführen, die technische Dokumentation zu erstellen und die EU-Konformitätserklärung aufzusetzen. Eine externe Stelle ist nicht erforderlich, aber die Selbstbewertung muss gründlich und gut dokumentiert sein.
+
+- **Produkte der Wichtigen Klasse I** — wenn eine **harmonisierte Norm** für Ihren Produkttyp existiert und Sie diese angewendet haben, können Sie eine Selbstbewertung durchführen. Wenn keine harmonisierte Norm existiert, müssen Sie eine **benannte Stelle** für eine Drittbewertung beauftragen.
+
+- **Produkte der Wichtigen Klasse II und der Kritischen Kategorie** — diese **erfordern eine Drittbewertung** durch eine benannte Stelle oder, bei kritischen Produkten, möglicherweise eine europäische Cybersicherheitszertifizierung.
+
+Wenn Sie eine benannte Stelle benötigen, **beginnen Sie die Zusammenarbeit frühzeitig**. Benannte Stellen können seit Juni 2026 unter dem CRA tätig werden, und ihre Kapazitäten sind begrenzt. Je näher die Dezember-2027-Frist rückt, desto stärker wird die Nachfrage nach ihren Dienstleistungen steigen. Hersteller, die erst Mitte 2027 eine benannte Stelle beauftragen, könnten sich in einer Warteschlange wiederfinden, die über die Compliance-Frist hinausreicht.
+
+Bereiten Sie Ihr Dokumentationspaket vor, bevor Sie eine benannte Stelle ansprechen. Je organisierter und vollständiger Ihre Unterlagen sind, desto schneller verläuft der Bewertungsprozess.
+
+**Ergebnis:** Konformitätsbewertungsweg für jedes Produkt identifiziert, benannte Stelle beauftragt (falls erforderlich) und Dokumentationspaket für die Bewertung vorbereitet.
+
+## Ihr Zeitplan
+
+Compliance ist ein Marathon, kein Sprint — aber dieser Marathon hat feste Fristen. Hier ist ein realistischer Zeitplan, was Sie wann priorisieren sollten.
+
+**Jetzt — April 2026:**
+- Produktklassifizierung abschließen (Schritt 1)
+- Gap-Analyse durchführen (Schritt 2)
+- SBOM-Pipeline-Implementierung beginnen (Schritt 3)
+- PSIRT-Rollen zuweisen und Response-Playbook entwerfen (Schritt 5)
+- Aufbau der Workflows für die Vorfallsmeldung starten (Schritt 6)
+
+**Bis Juni 2026:**
+- SBOM-Generierung in der CI/CD-Pipeline betriebsbereit
+- Richtlinie zur Offenlegung von Schwachstellen veröffentlicht und Sicherheitskontakt aktiv (Schritt 4)
+- PSIRT-Playbook dokumentiert und erste Planübung durchgeführt
+- Workflow für die Vorfallsmeldung mit mindestens einem Probelauf getestet
+- Erste Überprüfung der Lieferantenverträge eingeleitet (Schritt 9)
+
+**Bis September 2026 (Meldefrist):**
+- Melde- und Vorfallsberichtsfähigkeit vollständig betriebsbereit
+- Überwachung aktiv ausgenutzter Schwachstellen eingerichtet
+- ENISA-Meldeworkflow getestet und validiert
+- Team auf die 24h/72h/14d-Meldepflichten geschult
+- Alle roten Punkte aus der Gap-Analyse entweder behoben oder auf einem nachverfolgten Maßnahmenplan
+
+**Bis Dezember 2027 (vollständige Konformität):**
+- Alle wesentlichen Cybersicherheitsanforderungen erfüllt
+- Security-by-Design-Praktiken im Entwicklungsprozess verankert (Schritt 7)
+- Vollständige technische Dokumentation für jedes Produkt (Schritt 8)
+- Lieferkettensicherheit bewertet und kontinuierlich überwacht (Schritt 9)
+- Konformitätsbewertung für jedes Produkt abgeschlossen (Schritt 10)
+- CE-Kennzeichnung angebracht
+- EU-Konformitätserklärung ausgestellt
+
+Das Versäumen der September-2026-Meldefrist ist keine Option — es ist der erste Zeitpunkt, an dem Ihre Compliance-Haltung rechtlich überprüfbar wird. Und Dezember 2027 kommt schneller, als Sie denken.
+
+## Unterstützung erhalten
+
+Diese Checkliste gibt Ihnen den Fahrplan. Aber die Umsetzung — insbesondere über mehrere Produkte, komplexe Lieferketten und enge Zeitpläne hinweg — erfordert die richtigen Werkzeuge.
+
+**Seentrix** wurde speziell entwickelt, um Hersteller bei der CRA-Compliance zu unterstützen. Die Plattform automatisiert viele der in dieser Checkliste beschriebenen Schritte:
+
+- **Automatisierte SBOM-Generierung und -Verwaltung** — laden Sie Ihre Softwarekomponenten hoch, analysieren und überwachen Sie sie kontinuierlich über alle Produkte hinweg.
+- **Schwachstellenüberwachung** — Echtzeit-Abgleich Ihrer SBOM mit Schwachstellendatenbanken, mit Benachrichtigungen, wenn Ihre Produkte betroffen sind.
+- **Compliance-Tracking** — ein strukturiertes Dashboard, das Ihren Fortschritt gegenüber den CRA-Anforderungen abbildet, sodass Sie stets wissen, wo Sie stehen und worauf Sie sich konzentrieren müssen.
+- **Dokumentationsunterstützung** — zentralisierte Ablage für Ihre technische Dokumentation, auditbereit und nach Produkten geordnet.
+
+Sie müssen nicht alles von Grund auf neu aufbauen. Tausende Hersteller arbeiten auf dieselben Fristen hin, und diejenigen, die zweckgebaute Werkzeuge einsetzen, werden schneller und mit weniger Aufwand ans Ziel gelangen.
+
+Starten Sie mit einer kostenlosen CRA-Bewertung auf [seentrix.com](https://seentrix.com), um zu sehen, wo Ihre Produkte heute stehen — und ein klares Bild davon zu bekommen, was als Nächstes zu tun ist.

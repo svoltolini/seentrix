@@ -1,0 +1,182 @@
+"use client";
+
+import { useState, useTransition, useRef } from "react";
+import { useTranslations } from "next-intl";
+import { useRouter } from "@/i18n/navigation";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { updateProfile, changePassword, type AccountInfo } from "../actions";
+import { useToast } from "@/components/ui/toast";
+import { Camera } from "lucide-react";
+import Image from "next/image";
+
+export function AccountContent({ account }: { account: AccountInfo | null }) {
+  const t = useTranslations("settings.account");
+  const router = useRouter();
+  const { toast } = useToast();
+
+  const [fullName, setFullName] = useState(account?.fullName ?? "");
+  const [newPassword, setNewPassword] = useState("");
+  const [profilePending, startProfileTransition] = useTransition();
+  const [passwordPending, startPasswordTransition] = useTransition();
+
+  // Avatar
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(
+    account?.avatarUrl ?? null
+  );
+  const fileRef = useRef<HTMLInputElement>(null);
+  const avatarFileRef = useRef<File | null>(null);
+
+  function handleAvatarChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    avatarFileRef.current = file;
+    const reader = new FileReader();
+    reader.onloadend = () => setAvatarPreview(reader.result as string);
+    reader.readAsDataURL(file);
+  }
+
+  function handleProfileSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.set("fullName", fullName);
+    if (avatarFileRef.current) {
+      formData.set("avatar", avatarFileRef.current);
+    }
+
+    startProfileTransition(async () => {
+      const result = await updateProfile(formData);
+      if (result?.error) {
+        toast({ type: "error", message: t("profileError") });
+      } else {
+        toast({ type: "success", message: t("profileSaved") });
+        avatarFileRef.current = null;
+        router.refresh();
+      }
+    });
+  }
+
+  function handlePasswordSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.set("newPassword", newPassword);
+
+    startPasswordTransition(async () => {
+      const result = await changePassword(formData);
+      if (result?.error) {
+        toast({ type: "error", message: t("passwordError") });
+      } else {
+        toast({ type: "success", message: t("passwordChanged") });
+        setNewPassword("");
+      }
+    });
+  }
+
+  return (
+    <div className="space-y-6">
+      {/* Profile */}
+      <div className="rounded-xl bg-card">
+        <div className="border-b border-white/[0.06] px-6 py-4">
+          <h2 className="text-sm font-semibold">{t("profileTitle")}</h2>
+        </div>
+        <form onSubmit={handleProfileSubmit}>
+          <div className="flex flex-col gap-6 px-6 py-5 sm:flex-row sm:gap-6">
+            {/* Avatar — left column, stretches to fields height */}
+            <div className="flex flex-col items-center gap-2 sm:items-start">
+              <button
+                type="button"
+                onClick={() => fileRef.current?.click()}
+                className="group relative flex size-20 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-muted transition-colors sm:h-full sm:w-28 sm:rounded-xl hover:bg-muted/80"
+              >
+                {avatarPreview ? (
+                  <Image
+                    src={avatarPreview}
+                    alt="Avatar"
+                    fill
+                    className="object-cover"
+                  />
+                ) : (
+                  <Camera className="size-6 text-muted-foreground" />
+                )}
+                <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
+                  <Camera className="size-5 text-white" />
+                </div>
+              </button>
+              <p className="text-[11px] text-muted-foreground/40 sm:hidden">
+                {t("avatarHint")}
+              </p>
+              <input
+                ref={fileRef}
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                onChange={handleAvatarChange}
+                className="hidden"
+              />
+            </div>
+
+            {/* Fields — right column */}
+            <div className="min-w-0 flex-1 space-y-5">
+              <div className="flex flex-col gap-1.5">
+                <Label htmlFor="fullName">{t("nameLabel")}</Label>
+                <Input
+                  id="fullName"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  placeholder={t("namePlaceholder")}
+                  required
+                />
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <Label>{t("emailLabel")}</Label>
+                <Input
+                  value={account?.email ?? ""}
+                  disabled
+                  className="opacity-50"
+                />
+                <p className="text-[11px] text-muted-foreground/40">
+                  {t("emailDescription")}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex justify-end border-t border-white/[0.06] px-6 py-4">
+            <Button type="submit" size="sm" disabled={profilePending}>
+              {profilePending ? t("savingProfile") : t("saveProfile")}
+            </Button>
+          </div>
+        </form>
+      </div>
+
+      {/* Password */}
+      <div className="rounded-xl bg-card">
+        <div className="border-b border-white/[0.06] px-6 py-4">
+          <h2 className="text-sm font-semibold">{t("passwordTitle")}</h2>
+        </div>
+        <div className="px-6 py-5">
+          <form onSubmit={handlePasswordSubmit} className="space-y-5">
+            <div className="flex flex-col gap-1.5">
+              <Label htmlFor="newPassword">{t("newPassword")}</Label>
+              <Input
+                id="newPassword"
+                type="password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                placeholder={t("newPasswordPlaceholder")}
+                minLength={8}
+                required
+              />
+            </div>
+            <div className="flex justify-end">
+              <Button type="submit" size="sm" disabled={passwordPending}>
+                {passwordPending ? t("changingPassword") : t("changePassword")}
+              </Button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  );
+}

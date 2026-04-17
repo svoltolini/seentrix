@@ -1,0 +1,21 @@
+{
+  "app": {
+    "name": "Seentrix",
+    "tagline": "CRA Compliance Platform for Manufacturers"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "products": "Products",
+    "settings": "Settings",
+    "logout": "Log out",
+    "myAccount": "My Account",
+    "error": "Something went wrong",
+    "errorDescription": "An unexpected error occurred. Please try again.",
+    "tryAgain": "Try again"
+  },
+  "sidebar": {
+    "overview": "Overview",
+    "compliance": "Compliance",
+    "management": "Management"
+  }
+}

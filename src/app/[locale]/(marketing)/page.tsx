@@ -3,9 +3,12 @@ import { getTranslations } from "next-intl/server";
 import { HeroSection } from "./_components/hero-section";
 import { ProblemSection } from "./_components/problem-section";
 import { FeaturesSection } from "./_components/features-section";
+import { HowItWorksSection } from "./_components/how-it-works-section";
 import { AudienceSection } from "./_components/audience-section";
+import { TrustSection } from "./_components/trust-section";
 import { PricingPreview } from "./_components/pricing-preview";
 import { TimelineSection } from "./_components/timeline-section";
+import { FaqSection } from "./_components/faq-section";
 import { NewsletterSection } from "./_components/newsletter-section";
 
 export async function generateMetadata({
@@ -35,9 +38,12 @@ export default async function LandingPage({
       <HeroSection />
       <ProblemSection />
       <FeaturesSection />
+      <HowItWorksSection />
       <AudienceSection />
+      <TrustSection />
       <PricingPreview />
       <TimelineSection />
+      <FaqSection />
       <NewsletterSection />
     </>
   );

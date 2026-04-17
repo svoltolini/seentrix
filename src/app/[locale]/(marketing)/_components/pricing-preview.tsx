@@ -5,13 +5,6 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
@@ -78,73 +71,82 @@ export function PricingPreview() {
             const isEnterprise = tier === "enterprise";
             const features = tierFeatures[tier];
 
-            const cardInner = (
-              <Card
+            const cardContent = (
+              <div
                 className={cn(
-                  "relative flex h-full flex-col bg-card/80 backdrop-blur-sm",
-                  !isPro && "border-border/50",
-                  isPro && "border-transparent"
+                  "relative flex h-full flex-col p-6 transition-all duration-300 hover:-translate-y-1",
+                  isPro
+                    ? "bg-white/[0.06]"
+                    : "rounded-2xl bg-white/[0.03] hover:bg-white/[0.05]"
                 )}
               >
-                {isPro && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                    <Badge
-                      variant="default"
-                      className="overflow-visible border-primary bg-primary text-primary-foreground"
-                    >
-                      {t("professional.badge")}
-                    </Badge>
-                  </div>
-                )}
-
-                <CardHeader>
-                  <CardTitle className="text-lg">
+                <div className="mb-1">
+                  <h3 className="text-lg font-bold text-foreground">
                     {t(`${tier}.name`)}
-                  </CardTitle>
-                  <CardDescription>
+                  </h3>
+                  <p className="mt-1 text-sm text-muted-foreground">
                     {t(`${tier}.description`)}
-                  </CardDescription>
-                </CardHeader>
+                  </p>
+                </div>
 
-                <CardContent className="flex flex-1 flex-col gap-6">
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-5xl font-extrabold text-foreground">
-                      {t(`${tier}.price`)}
-                    </span>
-                    {tier !== "free" && (
-                      <span className="text-sm text-muted-foreground">
-                        {t(`${tier}.period`)}
-                      </span>
+                <div className="mt-4 flex items-baseline gap-1">
+                  <span
+                    className={cn(
+                      "text-5xl font-extrabold",
+                      isPro
+                        ? "bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] bg-clip-text text-transparent"
+                        : "text-foreground"
                     )}
-                  </div>
-
-                  <ul className="flex flex-1 flex-col gap-3 text-sm text-muted-foreground">
-                    {features.map((fk) => (
-                      <li key={fk} className="flex items-start gap-2">
-                        <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs text-primary">
-                          &#10003;
-                        </span>
-                        {t(`${tier}.features.${fk}`)}
-                      </li>
-                    ))}
-                  </ul>
-
-                  <Link
-                    href={isEnterprise ? "/pricing" : "/auth/signup"}
-                    className={buttonVariants({
-                      variant: "default",
-                      size: "sm",
-                      className: cn(
-                        "w-full",
-                        !isPro &&
-                          "bg-secondary text-secondary-foreground hover:bg-secondary/90"
-                      ),
-                    })}
                   >
-                    {isEnterprise ? t("enterprise.cta") : t("getStarted")}
-                  </Link>
-                </CardContent>
-              </Card>
+                    {t(`${tier}.price`)}
+                  </span>
+                  {tier !== "free" && (
+                    <span className="text-sm text-muted-foreground">
+                      {t(`${tier}.period`)}
+                    </span>
+                  )}
+                </div>
+
+                <div className="my-6 h-px bg-border/50" />
+
+                <ul className="flex flex-1 flex-col gap-3 text-sm text-muted-foreground">
+                  {features.map((fk) => (
+                    <li key={fk} className="flex items-start gap-2.5">
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 16 16"
+                        fill="none"
+                        className="mt-0.5 shrink-0 text-primary"
+                      >
+                        <path
+                          d="M13.3 4.3 6.5 11.1 2.7 7.3"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                      {t(`${tier}.features.${fk}`)}
+                    </li>
+                  ))}
+                </ul>
+
+                <Link
+                  href={isEnterprise ? "/pricing" : "/auth/signup"}
+                  className={buttonVariants({
+                    variant: "default",
+                    size: "sm",
+                    className: cn(
+                      "mt-6 w-full",
+                      !isPro &&
+                        "bg-white/[0.08] text-foreground hover:bg-white/[0.12]"
+                    ),
+                  })}
+                >
+                  {isEnterprise ? t("enterprise.cta") : t("getStarted")}
+                </Link>
+              </div>
             );
 
             return (
@@ -152,16 +154,27 @@ export function PricingPreview() {
                 key={tier}
                 data-pricing-card
                 className={cn(
-                  "transition-transform duration-300 hover:-translate-y-1",
-                  isPro && "rounded-2xl bg-gradient-to-b from-[#3B82F6] via-[#8B5CF6] to-[#F97316] p-px"
+                  "relative",
+                  isPro &&
+                    "rounded-[16px] bg-gradient-to-b from-[#3B82F6] via-[#8B5CF6] to-[#F97316] p-px"
                 )}
               >
+                {isPro && (
+                  <div className="absolute -top-3 left-1/2 z-10 -translate-x-1/2">
+                    <Badge
+                      variant="default"
+                      className="border-primary bg-primary text-primary-foreground"
+                    >
+                      {t("professional.badge")}
+                    </Badge>
+                  </div>
+                )}
                 {isPro ? (
-                  <div className="h-full rounded-[calc(1rem-1px)] bg-card">
-                    {cardInner}
+                  <div className="h-full overflow-hidden rounded-[15px] bg-background">
+                    {cardContent}
                   </div>
                 ) : (
-                  cardInner
+                  cardContent
                 )}
               </div>
             );

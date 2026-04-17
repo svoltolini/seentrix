@@ -1,0 +1,63 @@
+{
+  "pricing": {
+    "title": "Simple, transparent pricing",
+    "subtitle": "Choose the plan that fits your CRA compliance needs.",
+    "monthly": "Monthly",
+    "annual": "Annual",
+    "savePercent": "Save 16%",
+    "perMonth": "mo",
+    "billedAnnually": "€{total} billed annually",
+    "mostPopular": "Most Popular",
+    "getStarted": "Get Started",
+    "subscribe": "Subscribe",
+    "contactSales": "Contact Sales",
+    "redirecting": "Redirecting…",
+    "plans": {
+      "free": {
+        "name": "Free",
+        "description": "For individuals exploring CRA requirements.",
+        "features": {
+          "f1": "1 product",
+          "f2": "Basic CRA scope assessment",
+          "f3": "Read-only compliance checklist",
+          "f4": "Community support"
+        }
+      },
+      "professional": {
+        "name": "Professional",
+        "description": "For teams actively managing CRA compliance.",
+        "features": {
+          "f1": "5 products",
+          "f2": "Full compliance checklists",
+          "f3": "SBOM uploads with vulnerability scanning",
+          "f4": "Document templates with PDF export",
+          "f5": "Email support"
+        }
+      },
+      "business": {
+        "name": "Business",
+        "description": "For organizations with multiple product lines.",
+        "features": {
+          "f1": "25 products",
+          "f2": "Unlimited SBOM uploads",
+          "f3": "Continuous vulnerability monitoring",
+          "f4": "5 user seats",
+          "f5": "Priority support",
+          "f6": "All document templates"
+        }
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "description": "For large organizations with custom needs.",
+        "features": {
+          "f1": "100 products",
+          "f2": "Unlimited everything",
+          "f3": "SSO / SAML integration",
+          "f4": "Dedicated onboarding",
+          "f5": "Phone support",
+          "f6": "Custom integrations"
+        }
+      }
+    }
+  }
+}

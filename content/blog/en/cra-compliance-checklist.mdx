@@ -1,0 +1,274 @@
+---
+title: "CRA Compliance Checklist: How to Get Started in 10 Steps"
+description: "A practical, step-by-step checklist for manufacturers starting their EU Cyber Resilience Act compliance journey. From gap analysis to CE marking — everything you need to do."
+date: "2026-04-18"
+category: "Compliance"
+author: "Seentrix Team"
+---
+
+The EU Cyber Resilience Act is no longer a distant regulatory proposal. It is law. The first compliance deadline — mandatory vulnerability and incident reporting — takes effect on 11 September 2026. Full compliance, including conformity assessment, CE marking, and complete technical documentation, is required by 11 December 2027.
+
+That sounds like plenty of time. It is not.
+
+Compliance touches every part of how you build, ship, and maintain products with digital elements. It requires changes to development processes, supply chain management, documentation practices, incident response capabilities, and organizational structure. These are not changes you make in a weekend.
+
+This article is your Monday morning action plan. Ten concrete steps, in the right order, that will take you from "where do we even start?" to a clear, trackable compliance programme. Print it out. Pin it to the wall. Work through it one step at a time.
+
+## Why You Need a Checklist Now
+
+The September 2026 reporting deadline is now less than five months away. The December 2027 full compliance date is under twenty months out. For most manufacturers, that means building capabilities that do not yet exist — SBOM pipelines, vulnerability handling processes, incident reporting workflows, and comprehensive technical documentation.
+
+Without a structured plan, compliance becomes a reactive scramble. Teams duplicate effort, critical requirements slip through the cracks, and leadership has no visibility into progress or risk. A checklist changes that. It turns an overwhelming 60-page regulation into **manageable, assignable, trackable steps**.
+
+There is also a practical reality: the companies that start now will have time to build compliance into their processes thoughtfully. The companies that wait will be forced into expensive, disruptive crash programmes — and may still miss the deadline.
+
+A checklist is not a substitute for reading the regulation. But it is the fastest way to move from reading to doing.
+
+## Step 1: Classify Your Products
+
+Before you can comply with the CRA, you need to know which requirements apply to each of your products. The regulation defines four product categories, and your category determines your **conformity assessment route** — which is one of the most consequential decisions in your compliance journey.
+
+Start by creating a **complete inventory of every product with digital elements** that you place on the EU market. This includes hardware products with embedded software, standalone software products, firmware, and any product that connects to a network or another device.
+
+For each product, determine its category:
+
+- **Default Category** — the majority of products fall here. Lower risk, eligible for manufacturer self-assessment. Examples: photo editing software, smart speakers, hard drives.
+- **Important Class I** — higher risk products that can use harmonised standards for self-assessment, but require a notified body if no standard exists. Examples: password managers, VPN products, network routers for industrial use.
+- **Important Class II** — must undergo third-party assessment by a notified body regardless of available standards. Examples: operating systems, firewalls, tamper-resistant microprocessors.
+- **Critical Category** — foundational security products requiring the strictest assessment, typically European cybersecurity certification. Examples: hardware security modules, smart meter gateways.
+
+Document your classification decisions and the rationale behind them. If a product sits on the boundary between categories, err on the side of the higher category — market surveillance authorities will not look kindly on manufacturers who aggressively downclassified to avoid scrutiny.
+
+**Deliverable:** A product inventory spreadsheet with columns for product name, description, category classification, rationale, and conformity assessment route.
+
+## Step 2: Conduct a Gap Analysis
+
+With your products classified, you now need to understand how far your current practices are from where the CRA requires them to be. A **gap analysis** maps every essential requirement of the regulation against your existing processes and identifies where the work needs to happen.
+
+Focus your analysis on these key areas:
+
+- **Secure development lifecycle** — Do you have documented secure coding practices? Threat modelling? Security testing integrated into your pipeline?
+- **Vulnerability handling** — Do you have a coordinated vulnerability disclosure policy? A process for receiving, triaging, and patching reported vulnerabilities?
+- **SBOM generation** — Are you producing machine-readable SBOMs for every product? Are they complete, accurate, and kept current?
+- **Incident reporting** — Do you have internal workflows to detect actively exploited vulnerabilities and report them to ENISA within the required timeframes?
+- **Technical documentation** — Do you maintain the risk assessments, design documentation, test results, and conformity records the CRA requires?
+- **Supply chain security** — Do you know what third-party and open-source components are in your products? Are your supplier contracts aligned with CRA obligations?
+
+For each area, assign a status:
+
+- **Green** — Current practices meet CRA requirements. Evidence exists and is documented.
+- **Yellow** — Partial coverage. Some processes exist but need strengthening, formalisation, or documentation.
+- **Red** — Significant gap. Process does not exist or is fundamentally inadequate.
+
+The gap analysis is not a one-person job. You will need input from engineering, product management, security, legal, and quality assurance. Schedule the workshops, get the right people in the room, and be honest about where you stand.
+
+**Deliverable:** A gap analysis matrix with colour-coded status for each CRA requirement area, plus a prioritised list of remediation actions.
+
+## Step 3: Build Your SBOM Pipeline
+
+The **Software Bill of Materials** is one of the most tangible and technically concrete CRA requirements. Every product with digital elements must have an SBOM that lists all software components, and it must be kept current throughout the product's support period.
+
+If you are not already generating SBOMs, here is how to get started:
+
+1. **Choose a format.** The two accepted standards are **CycloneDX** (OWASP, security-focused) and **SPDX** (Linux Foundation, ISO standard). Both are valid for CRA compliance. If your primary concern is security and vulnerability correlation, CycloneDX is often the simpler starting point.
+
+2. **Integrate into your CI/CD pipeline.** SBOM generation should be automatic, triggered on every build. Tools like Syft, Trivy, or the CycloneDX CLI can scan your source code, dependencies, and container images and produce a standards-compliant SBOM without manual intervention.
+
+3. **Ensure completeness.** A good SBOM includes every dependency — not just your direct imports, but **transitive dependencies** as well. The library you import depends on three other libraries, each of which depends on five more. All of them need to be in the SBOM.
+
+4. **Include rich metadata.** Beyond component names and versions, aim to include supplier information, license data, unique identifiers (PURL, CPE), and dependency relationship graphs. The richer your SBOM, the faster you can respond when a new vulnerability drops.
+
+5. **Automate updates.** Every time you release a new product version, a fresh SBOM must be generated. Every time you patch a component, the SBOM must reflect the change. Manual SBOM maintenance does not scale.
+
+6. **Store and distribute.** Decide where SBOMs will live — a centralised repository, attached to release artifacts, or managed through a dedicated platform. Market surveillance authorities may request them, and your customers increasingly expect them.
+
+**Deliverable:** Automated SBOM generation integrated into your build pipeline, producing CycloneDX or SPDX output for every product release.
+
+## Step 4: Establish Vulnerability Handling
+
+The CRA requires manufacturers to maintain a **coordinated vulnerability disclosure (CVD) process** for the entire support period of each product. This is not optional, and it is one of the areas market surveillance authorities will examine closely.
+
+Here is what you need to build:
+
+- **Create a public security contact.** Set up a dedicated email address like **security@yourcompany.com** and publish it prominently — on your website, in your product documentation, and in your security policy. Security researchers need a clear, reliable way to reach you.
+
+- **Define triage procedures.** When a vulnerability report arrives, what happens? Who receives it? How is severity assessed? You need a documented triage workflow that assigns every incoming report to a responsible owner within a defined timeframe.
+
+- **Establish SLAs for patches.** The CRA expects timely remediation. Define internal targets for patch development, testing, and release based on severity — for example, critical vulnerabilities patched within 7 days, high within 30, medium within 90.
+
+- **Monitor upstream advisories.** If your product includes open-source components (and it almost certainly does), you are responsible for monitoring those components for newly disclosed vulnerabilities. Subscribe to security mailing lists, use automated monitoring tools, and correlate advisories against your SBOM.
+
+- **Provide patches free of charge.** The regulation requires that security updates be made available to users at no cost for the defined support period. Ensure your update distribution mechanism supports this.
+
+- **Document everything.** Every vulnerability report, every triage decision, every patch timeline. This documentation serves as evidence of compliance and will be essential during audits.
+
+**Deliverable:** A published vulnerability disclosure policy, a dedicated security contact, documented triage procedures, and defined patch SLAs.
+
+## Step 5: Set Up Your PSIRT
+
+A **Product Security Incident Response Team (PSIRT)** is the organisational structure that makes vulnerability handling work in practice. Even if your company is small, you need clearly defined roles and responsibilities for handling security incidents.
+
+A PSIRT does not have to be a dedicated department. In smaller organisations, it might be a cross-functional team of engineers, product managers, and security staff who assemble when needed. What matters is that the structure exists, roles are assigned, and everyone knows the playbook.
+
+Define the following:
+
+- **PSIRT lead** — who owns the process and has authority to make decisions about severity, disclosure timelines, and resource allocation.
+- **Triage analysts** — who evaluates incoming reports and determines validity and severity.
+- **Engineering responders** — who develops and tests the patch.
+- **Communications lead** — who drafts advisories, coordinates disclosure with reporters, and manages customer communications.
+- **Escalation paths** — when does an incident escalate to executive leadership? When does legal get involved? When do you engage external resources?
+
+Document the **PSIRT playbook** — a step-by-step guide for handling an incoming vulnerability report from receipt to resolution. Include templates for internal tracking, severity classification criteria, and communication templates for reporters and customers.
+
+Run a **tabletop exercise** at least once before the September 2026 deadline. Walk through a realistic scenario: a security researcher reports a critical vulnerability in a component used by three of your products. Who does what, in what order, and within what timeframe?
+
+**Deliverable:** A documented PSIRT charter with named roles, a response playbook, escalation procedures, and at least one completed tabletop exercise.
+
+## Step 6: Prepare Incident Reporting
+
+Starting 11 September 2026, manufacturers must report **actively exploited vulnerabilities** and **severe security incidents** to ENISA through a dedicated reporting platform. The reporting chain follows a strict timeline:
+
+- **Within 24 hours** — submit an early warning notification. This is a brief alert that an actively exploited vulnerability has been identified. It does not require a complete analysis.
+- **Within 72 hours** — submit a detailed notification with an initial assessment of the vulnerability, its severity, scope of impact, and any known exploitation activity.
+- **Within 14 days** — submit a final report with full details including root cause analysis, affected products, remediation measures taken, and any remaining risks.
+
+To meet these deadlines consistently, you need an internal workflow that answers these questions:
+
+1. **Who detects?** How will you become aware that a vulnerability in your product is being actively exploited? This requires monitoring threat intelligence feeds, customer reports, and security community channels.
+2. **Who decides to report?** Not every vulnerability triggers a reporting obligation. You need a clear decision framework and a designated person with the authority to make the call.
+3. **Who writes the notification?** ENISA will have specific reporting templates and formats. Designate the person or team responsible for drafting submissions and ensure they are trained on the requirements.
+4. **Who reviews and submits?** Build in a quick review step to catch errors, but do not let it become a bottleneck that threatens the 24-hour deadline.
+
+**Practice with tabletop exercises.** Simulate a scenario where you discover on a Friday afternoon that a vulnerability in your flagship product is being exploited in the wild. Walk through every step, measure how long each takes, and identify bottlenecks.
+
+**Deliverable:** A documented incident reporting workflow with named roles, decision criteria, ENISA submission templates, and at least one tabletop exercise completed.
+
+## Step 7: Implement Security by Design
+
+The CRA requires that products be **designed, developed, and maintained with cybersecurity as a core consideration**, not bolted on at the end. This is one of the broadest requirements in the regulation, and it touches every phase of your product development lifecycle.
+
+Key practices to implement:
+
+- **Threat modelling** — For every product and every significant feature, identify the assets to protect, the potential threats, the attack vectors, and the mitigations. Use established frameworks like STRIDE or PASTA. Make threat modelling a standard part of your design process, not a one-time exercise.
+
+- **Secure defaults** — Products must ship in a secure configuration. No default passwords, no unnecessary open ports, no services enabled that the user did not request. If a user needs to weaken security for their use case, that should be a deliberate choice, not the default state.
+
+- **Minimised attack surface** — Every feature, every open port, every enabled service is a potential entry point. Ruthlessly minimise what is exposed. Disable what is not needed. Isolate what must run.
+
+- **Principle of least privilege** — Software components should operate with only the permissions they need. No running as root when user-level permissions suffice. No broad network access when a single endpoint will do.
+
+- **Security reviews** — Integrate security review checkpoints into your development process. Code reviews should include a security lens. Architectural decisions should be evaluated for security implications. Release gates should include security sign-off.
+
+- **Secure update mechanism** — Products must support secure, authenticated updates so that security patches can be delivered reliably throughout the support period.
+
+This is not a one-time compliance activity. **Security by design is a continuous practice** that must be embedded in your culture and processes. Train your developers, review your architecture, and iterate.
+
+**Deliverable:** Updated development process documentation incorporating threat modelling, secure defaults policy, attack surface review checklists, and security review gates.
+
+## Step 8: Prepare Technical Documentation
+
+The CRA requires manufacturers to prepare and maintain **comprehensive technical documentation** for each product. This documentation must be available for market surveillance authorities for at least **ten years** after the product is placed on the market.
+
+The documentation must include:
+
+- **Product description** — a general description of the product, its intended purpose, and its hardware and software components.
+- **Risk assessment** — a documented assessment of cybersecurity risks, the threats identified, and the measures taken to address them.
+- **Design and development information** — how the product was designed with security in mind, including architecture decisions, threat models, and secure development practices applied.
+- **Test results** — evidence of security testing performed, including test methodologies, tools used, and outcomes.
+- **SBOM** — the Software Bill of Materials for the product.
+- **Vulnerability handling documentation** — records of your vulnerability disclosure policy, reports received, patches issued, and timelines.
+- **Conformity assessment records** — the results of your conformity assessment, whether self-assessed or conducted by a notified body.
+- **EU Declaration of Conformity** — the formal declaration that the product meets all applicable CRA requirements.
+
+Start building your documentation templates now. Do not wait until the deadline approaches to figure out the format and content requirements. Create a structured folder or documentation system for each product, and populate it as you work through the other steps on this checklist.
+
+**Deliverable:** Documentation templates for each required category, a centralised documentation repository, and an initial draft for at least one product.
+
+## Step 9: Review Your Supply Chain
+
+Modern products are assembled from dozens, sometimes hundreds, of third-party components — open-source libraries, commercial SDKs, firmware modules, cloud services. Under the CRA, **you are responsible for the security of everything in your product**, regardless of who originally wrote the code.
+
+This means supply chain security is not someone else's problem. It is yours.
+
+Actions to take:
+
+- **Inventory your dependencies.** Your SBOM (Step 3) gives you visibility into what is in your products. Use it as the foundation for supply chain risk assessment.
+
+- **Assess third-party component security.** For critical dependencies, evaluate the security practices of the upstream project or vendor. Are they actively maintained? Do they have a vulnerability disclosure process? How quickly do they respond to reported issues?
+
+- **Update supplier contracts.** If you purchase commercial components, your contracts should reflect your CRA obligations. Include clauses requiring vendors to notify you of known vulnerabilities, provide timely patches, and supply SBOM data for their components.
+
+- **Monitor dependencies continuously.** New vulnerabilities are disclosed daily. Use automated tooling to continuously monitor your SBOM against vulnerability databases (NVD, OSV, GitHub Advisory Database) and alert you when a component in your product is affected.
+
+- **Have a replacement plan.** If a critical open-source dependency becomes unmaintained or a vendor fails to meet security expectations, you need the ability to switch to an alternative. Identify your most critical dependencies and assess the effort required to replace them.
+
+- **Document your due diligence.** Market surveillance authorities will want to see evidence that you assessed your supply chain risks and took reasonable measures to mitigate them. Keep records of your evaluations, decisions, and monitoring activities.
+
+**Deliverable:** A supply chain risk assessment for each product, updated supplier contracts with CRA-aligned clauses, and continuous dependency monitoring in place.
+
+## Step 10: Plan for Conformity Assessment
+
+The final step before you can apply the **CE marking** and place your product on the EU market is the **conformity assessment**. The route you take depends on your product classification from Step 1.
+
+- **Default category products** — you can perform a **self-assessment**. This means conducting an internal evaluation against the CRA's essential requirements, preparing your technical documentation, and drawing up the EU Declaration of Conformity. No external body is needed, but the self-assessment must be thorough and well-documented.
+
+- **Important Class I products** — if a **harmonised standard** exists for your product type and you have applied it, you can self-assess. If no harmonised standard exists, you must engage a **notified body** for third-party assessment.
+
+- **Important Class II and Critical category products** — these **require third-party assessment** by a notified body or, for critical products, may require European cybersecurity certification.
+
+If you need a notified body, **start the engagement early**. Notified bodies began operating under the CRA in June 2026, and their capacity is finite. As the December 2027 deadline approaches, demand for their services will surge. Manufacturers who wait until mid-2027 to engage a notified body may find themselves in a queue that extends past the compliance deadline.
+
+Prepare your documentation package before approaching a notified body. The more organised and complete your submission, the faster the assessment process will go.
+
+**Deliverable:** Conformity assessment route identified for each product, notified body engaged (if required), and documentation package prepared for assessment.
+
+## Your Timeline
+
+Compliance is a marathon, not a sprint — but this marathon has hard deadlines. Here is a realistic timeline for what to prioritise and when.
+
+**Now — April 2026:**
+- Complete product classification (Step 1)
+- Conduct gap analysis (Step 2)
+- Begin SBOM pipeline implementation (Step 3)
+- Assign PSIRT roles and draft the response playbook (Step 5)
+- Start building incident reporting workflows (Step 6)
+
+**By June 2026:**
+- SBOM generation operational in CI/CD pipeline
+- Vulnerability disclosure policy published and security contact live (Step 4)
+- PSIRT playbook documented and first tabletop exercise completed
+- Incident reporting workflow tested with at least one dry run
+- Initial supplier contract reviews initiated (Step 9)
+
+**By September 2026 (reporting deadline):**
+- Vulnerability and incident reporting capability fully operational
+- Monitoring for actively exploited vulnerabilities in place
+- ENISA reporting workflow tested and validated
+- Team trained on 24h/72h/14d reporting obligations
+- All red items from gap analysis either resolved or on a tracked remediation plan
+
+**By December 2027 (full compliance):**
+- All essential cybersecurity requirements met
+- Security by design practices embedded in development process (Step 7)
+- Complete technical documentation for every product (Step 8)
+- Supply chain security assessed and continuously monitored (Step 9)
+- Conformity assessment completed for every product (Step 10)
+- CE marking applied
+- EU Declaration of Conformity issued
+
+Missing the September 2026 reporting deadline is not an option — it is the first moment your compliance posture becomes legally testable. And December 2027 will arrive faster than you think.
+
+## Getting Help
+
+This checklist gives you the roadmap. But executing it — especially across multiple products, complex supply chains, and tight timelines — requires the right tooling.
+
+**Seentrix** was built specifically to help manufacturers navigate CRA compliance. The platform automates many of the steps described in this checklist:
+
+- **Automated SBOM generation and management** — upload, analyze, and continuously monitor your software components across all products.
+- **Vulnerability monitoring** — real-time correlation of your SBOM against vulnerability databases, with alerts when your products are affected.
+- **Compliance tracking** — a structured dashboard that maps your progress against CRA requirements, so you always know where you stand and what needs attention.
+- **Documentation support** — centralised storage for your technical documentation, audit-ready and organised by product.
+
+You do not have to build all of this from scratch. Thousands of manufacturers will be working toward the same deadlines, and the ones who use purpose-built tooling will get there faster and with less pain.
+
+Start with a free CRA assessment at [seentrix.com](https://seentrix.com) to see where your products stand today — and get a clear picture of exactly what you need to do next.

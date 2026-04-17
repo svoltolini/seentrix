@@ -1,0 +1,20 @@
+{
+  "billing": {
+    "title": "Billing",
+    "subtitle": "Manage your subscription and billing details.",
+    "currentPlan": "Current Plan",
+    "nextBillingDate": "Next billing date: {date}",
+    "manageSubscription": "Manage Subscription",
+    "upgradePlan": "Upgrade Plan",
+    "redirecting": "Redirecting…",
+    "readOnly": "Only administrators can manage billing and subscriptions.",
+    "perMonth": "per month",
+    "upgradeDescription": "Upgrade to Professional to access SBOM management, document templates, PDF export, and more.",
+    "plans": {
+      "free": "Free",
+      "professional": "Professional",
+      "business": "Business",
+      "enterprise": "Enterprise"
+    }
+  }
+}

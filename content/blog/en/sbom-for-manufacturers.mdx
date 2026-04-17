@@ -1,0 +1,87 @@
+---
+title: "SBOM for Manufacturers: What It Is and Why CRA Requires It"
+description: "Learn what a Software Bill of Materials (SBOM) is, why the EU Cyber Resilience Act requires one, and how to create your first SBOM using CycloneDX or SPDX."
+date: "2026-04-10"
+category: "Technical"
+author: "Seentrix Team"
+---
+
+If you manufacture a product that contains software — whether it is a smart thermostat, an industrial sensor, or a connected medical device — the EU Cyber Resilience Act (CRA) will soon require you to know exactly what is inside that software. The tool that makes this possible is called a Software Bill of Materials, or SBOM.
+
+This guide explains what an SBOM is, why regulators now demand one, and how you can create and maintain your first SBOM without needing a computer science degree.
+
+## What Is an SBOM?
+
+Think of an SBOM as an ingredient list for software. Just as a food label tells you that a product contains wheat flour, sugar, and preservatives, an SBOM tells you which software components make up your product. It lists every library, framework, and module your software depends on, along with details like version numbers, licenses, and who supplied each component.
+
+Most modern software is not written entirely from scratch. Developers assemble products from hundreds — sometimes thousands — of pre-built open-source and third-party components. An SBOM makes all of those building blocks visible in a single, structured document.
+
+## Why SBOMs Matter for Security
+
+When a critical vulnerability is discovered in a widely used software component, the first question every manufacturer needs to answer is: "Are we affected?" Without an SBOM, answering that question can take days or even weeks of manual investigation. With an SBOM, you can search the list in seconds and know immediately whether the vulnerable component is present in any of your products.
+
+This matters more than ever because supply chain attacks are on the rise. Attackers increasingly target popular open-source libraries, knowing that a single compromised component can cascade into thousands of downstream products. An SBOM gives you the visibility to detect these risks early, respond quickly, and communicate transparently with your customers and regulators.
+
+Beyond incident response, SBOMs also help you manage license compliance. Some open-source licenses carry obligations that can affect how you distribute your product. Knowing which licenses are in play before you ship — rather than after a legal dispute — is simply good business practice.
+
+## What the CRA Requires
+
+The EU Cyber Resilience Act, which applies to products with digital elements placed on the European market, includes specific SBOM requirements. Article 10 of the regulation states that manufacturers must identify and document the components contained in their products, including open-source components.
+
+Here is what you need to know about the CRA's SBOM expectations:
+
+- **An SBOM must accompany the product.** It is part of the technical documentation that manufacturers are required to maintain and, when requested, provide to market surveillance authorities.
+- **At minimum, list top-level dependencies.** The regulation expects you to document at least the top-level components your product relies on. While a deeper, fully recursive SBOM is considered best practice, the mandatory baseline focuses on direct dependencies.
+- **Keep it current.** The SBOM is not a one-time deliverable. It must be updated throughout the product's support period as components are added, removed, or patched.
+- **Machine-readable format preferred.** Regulators expect SBOMs to be in a standardized, machine-readable format so they can be processed and analyzed efficiently.
+
+Non-compliance carries real consequences. Products that do not meet CRA requirements can be pulled from the market, and manufacturers can face significant fines.
+
+## SBOM Formats: CycloneDX vs. SPDX
+
+Two major standards have emerged for SBOM formatting, and both are accepted under the CRA.
+
+**CycloneDX** was created by OWASP and is designed with security use cases in mind. It supports not only component inventories but also vulnerability tracking, service definitions, and dependency graphs. Its structure is lightweight and easy to generate with automated tools, which makes it a popular choice for teams that are new to SBOMs.
+
+**SPDX** (Software Package Data Exchange) is an ISO/IEC standard (ISO/IEC 5962:2021) maintained by the Linux Foundation. It has deeper roots in license compliance and is widely used in industries where intellectual property management is a priority. SPDX supports multiple output formats including JSON, XML, and tag-value.
+
+In practice, either format will satisfy CRA requirements. If you are starting from scratch and your primary concern is security and vulnerability management, CycloneDX is often the simpler path. If your organization already has mature license compliance processes or operates in a sector where SPDX is the norm, stay with what you know. The important thing is to pick one and start generating SBOMs consistently.
+
+## How to Create an SBOM
+
+The good news is that you do not need to build an SBOM by hand. A growing ecosystem of tools can generate one automatically by scanning your source code, container images, or compiled binaries.
+
+**Automated tools for software-based products:**
+
+- **Syft** (by Anchore) scans container images and file systems and outputs SBOMs in both CycloneDX and SPDX formats. It is open-source and integrates easily into CI/CD pipelines.
+- **Trivy** (by Aqua Security) is a vulnerability scanner that also generates SBOMs. It supports a wide range of languages and package managers.
+- **CycloneDX CLI** provides dedicated tooling for creating, converting, and validating CycloneDX SBOMs across multiple ecosystems.
+
+**Manual and hybrid approaches for embedded systems:**
+
+Not every product lends itself to automated scanning. Embedded systems, firmware, and products that incorporate proprietary binary components often require a manual or semi-automated approach. In these cases, engineering teams compile the SBOM by documenting each component they integrate, its version, its source, and its license. Templates and spreadsheet-based workflows can serve as a starting point, but converting that information into a standardized format like CycloneDX or SPDX is essential for regulatory compliance.
+
+## What a Good SBOM Includes
+
+A minimum viable SBOM lists component names and version numbers. A good SBOM goes further. Here are the key fields to aim for:
+
+- **Component name** — the official name of each library or module.
+- **Version** — the exact version integrated into your product.
+- **Supplier** — who authored or distributes the component.
+- **License** — the open-source license governing the component (e.g., MIT, Apache 2.0, GPL-3.0).
+- **Dependency relationships** — how components relate to each other, showing which components depend on which.
+- **Unique identifiers** — such as CPE (Common Platform Enumeration) or PURL (Package URL), which allow automated tools to cross-reference components against vulnerability databases.
+
+The richer your SBOM data, the faster you can respond to security incidents, the easier audits become, and the more value you extract from the effort of creating it in the first place.
+
+## Keeping Your SBOM Updated
+
+An SBOM is a living document. Software changes with every update, patch, and new release. A component that was safe six months ago might have a critical vulnerability today.
+
+Build SBOM generation into your development and release process so that every time you ship a new version, a fresh SBOM is produced automatically. Monitor vulnerability databases like the NVD (National Vulnerability Database) and OSV (Open Source Vulnerabilities) against your current SBOM to catch new risks as they emerge. And when the CRA's reporting obligations take effect, having an up-to-date SBOM will be the difference between a timely, confident response and a scramble.
+
+## Get Started with Seentrix
+
+Creating your first SBOM doesn't have to be complicated. Seentrix lets you upload, analyze, and manage SBOMs for all your products — helping you meet CRA requirements with confidence. Whether you are dealing with a single product or an entire portfolio, our platform gives you a clear view of your software components, flags vulnerabilities, and keeps your documentation audit-ready.
+
+Start with our free CRA assessment and find out exactly where you stand today.

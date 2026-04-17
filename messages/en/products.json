@@ -1,0 +1,138 @@
+{
+  "products": {
+    "title": "Products",
+    "subtitle": "Manage your products and track CRA compliance.",
+    "addProduct": "Add Product",
+    "noProducts": "No products yet",
+    "noProductsDescription": "Add your first product to start your CRA compliance journey. We'll guide you through every step.",
+    "searchPlaceholder": "Search products…",
+    "columns": {
+      "name": "Name",
+      "type": "Type",
+      "category": "CRA Category",
+      "compliance": "Compliance",
+      "created": "Created"
+    },
+    "notAssessed": "Not assessed",
+    "types": {
+      "hardware": "Hardware",
+      "software": "Software",
+      "firmware": "Firmware",
+      "iot": "IoT"
+    },
+    "categories": {
+      "default": "Default",
+      "important_class_i": "Important I",
+      "important_class_ii": "Important II",
+      "critical": "Critical"
+    },
+    "create": {
+      "title": "Add Product",
+      "subtitle": "Create a new product to begin CRA compliance tracking.",
+      "nameLabel": "Product name",
+      "namePlaceholder": "e.g. Smart Thermostat Pro",
+      "typeLabel": "Product type",
+      "descriptionLabel": "Description",
+      "descriptionPlaceholder": "Brief description of the product…",
+      "imageLabel": "Product image",
+      "imageUpload": "Upload",
+      "imageHint": "JPG, PNG, or WebP. Max 2 MB.",
+      "submit": "Create Product",
+      "cancel": "Cancel",
+      "startAssessment": "Start CRA Assessment",
+      "startAssessmentDescription": "Immediately run the CRA scope assessment after creating this product."
+    },
+    "edit": {
+      "title": "Edit Product",
+      "submit": "Save Changes",
+      "cancel": "Cancel"
+    },
+    "delete": {
+      "title": "Delete Product",
+      "description": "This will permanently delete \"{name}\" and all related assessment answers, checklist items, SBOMs, and documents. This action cannot be undone.",
+      "confirm": "Delete Product",
+      "cancel": "Cancel"
+    },
+    "detail": {
+      "tabs": {
+        "overview": "Overview",
+        "assessment": "Assessment",
+        "checklist": "Checklist",
+        "sbom": "SBOM",
+        "documents": "Documents"
+      },
+      "overview": {
+        "title": "Product Overview",
+        "productInfo": "Product Information",
+        "name": "Name",
+        "type": "Type",
+        "description": "Description",
+        "noDescription": "No description provided.",
+        "craStatus": "CRA Classification",
+        "notAssessed": "Not yet assessed",
+        "notAssessedDescription": "Run the CRA scope assessment to determine which requirements apply to your product.",
+        "runAssessment": "Run Assessment",
+        "complianceScore": "Compliance Score",
+        "noChecklist": "No checklist data yet. Complete the assessment first.",
+        "conformityRoute": "Conformity Route",
+        "notifiedBody": "Requires Notified Body",
+        "yes": "Yes",
+        "no": "No",
+        "edit": "Edit",
+        "delete": "Delete"
+      },
+      "assessment": {
+        "title": "CRA Scope Assessment",
+        "completed": "Assessment completed",
+        "completedDescription": "This product has been assessed and classified.",
+        "rerun": "Re-run Assessment",
+        "category": "CRA Category",
+        "route": "Conformity Route"
+      },
+      "checklist": {
+        "notAssessed": "Complete the assessment first",
+        "notAssessedDescription": "Run the CRA scope assessment to determine which requirements apply to your product. Once done, your personalized compliance checklist will appear here.",
+        "runAssessment": "Run Assessment"
+      },
+      "sbom": {
+        "title": "Software Bill of Materials",
+        "comingSoon": "SBOM management is coming soon.",
+        "description": "You will be able to upload, generate, and manage SBOMs for this product."
+      },
+      "documents": {
+        "title": "Documents",
+        "comingSoon": "Document management is coming soon.",
+        "description": "You will be able to upload and manage compliance documentation for this product."
+      }
+    },
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "products": "Products"
+    },
+    "limits": {
+      "reached": "Product limit reached",
+      "reachedDescription": "Your {plan} plan allows up to {limit} product. Upgrade to add more products.",
+      "reachedDescriptionPlural": "Your {plan} plan allows up to {limit} products. Upgrade to add more products.",
+      "upgrade": "Upgrade Plan",
+      "usage": "{count} of {limit} products used",
+      "currentPlan": "Current plan",
+      "backToProducts": "Back to Products",
+      "planFeatures": {
+        "free": "1 product, read-only checklist",
+        "professional": "3 products, full checklist editing",
+        "business": "15 products, team collaboration",
+        "enterprise": "Unlimited products, priority support"
+      }
+    },
+    "planGate": {
+      "readOnly": "Upgrade to edit",
+      "readOnlyDescription": "The Free plan only includes read-only access to the checklist. Upgrade to Professional to edit checklist items and upload evidence."
+    },
+    "errors": {
+      "generic": "Something went wrong. Please try again.",
+      "notAuthenticated": "You must be logged in.",
+      "noOrganization": "No organization found. Please complete onboarding.",
+      "limitReached": "You have reached the product limit for your plan."
+    }
+  }
+}

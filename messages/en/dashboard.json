@@ -1,0 +1,136 @@
+{
+  "dashboard": {
+    "title": "Compliance Dashboard",
+    "subtitle": "Overview of your CRA compliance status across all products.",
+    "totalProducts": "Total Products",
+    "assessed": "Assessed",
+    "assessedOf": "{assessed} / {total}",
+    "avgCompliance": "Avg. Compliance",
+    "totalVulnerabilities": "Vulnerabilities",
+    "critical": "Critical",
+    "high": "High",
+    "medium": "Medium",
+    "low": "Low",
+    "vulnChart": "Vulnerability Breakdown",
+    "noVulnerabilities": "No vulnerabilities found",
+    "daysRemaining": "{days}d",
+    "passed": "Passed",
+    "timeAgo": {
+      "justNow": "just now",
+      "minutesAgo": "{count}m ago",
+      "hoursAgo": "{count}h ago",
+      "daysAgo": "{count}d ago"
+    },
+    "daysLeft": "{days} days left",
+    "upcomingDeadline": "Next Deadline",
+    "vulnerabilities": "Open Vulnerabilities",
+    "noProducts": "No products yet",
+    "noProductsDescription": "Add your first product to start your CRA compliance journey. We'll guide you through every step.",
+    "addProduct": "Add Product",
+    "compliance": "Compliance",
+    "notAssessed": "Not assessed",
+    "productTable": {
+      "title": "Product Compliance",
+      "name": "Product",
+      "category": "Category",
+      "compliance": "Compliance",
+      "vulnerabilities": "Vuln",
+      "sbom": "SBOM",
+      "action": "Action",
+      "view": "View"
+    },
+    "productType": {
+      "hardware": "Hardware",
+      "software": "Software",
+      "firmware": "Firmware",
+      "iot": "IoT"
+    },
+    "sbomUploaded": "Uploaded",
+    "sbomMissing": "Missing",
+    "recentActivity": "Recent Activity",
+    "activity": {
+      "assessment": "Assessment answered for {product}",
+      "checklist": "Checklist updated for {product}",
+      "sbom": "SBOM uploaded for {product}",
+      "document": "Document added for {product}",
+      "userColumn": "User",
+      "actionColumn": "Activity",
+      "dateColumn": "Date",
+      "typeColumn": "Type"
+    },
+    "activityType": {
+      "assessment": "Assessment",
+      "checklist": "Checklist",
+      "sbom": "SBOM",
+      "document": "Document"
+    },
+    "noActivity": "No recent activity",
+    "activityLogEmpty": "Activity from your team will appear here as you work on compliance.",
+    "greeting": "Welcome back, {name}",
+    "greetingSubtitle": "Here's your compliance overview for today.",
+    "deadlines": "Upcoming Deadlines",
+    "deadlineDescription": "Key CRA regulatory milestones",
+    "timeElapsed": "Time elapsed",
+    "deadline": {
+      "notifiedBodies": "Notified Bodies",
+      "notifiedBodiesDate": "Jun 11, 2026",
+      "reporting": "Reporting Obligations",
+      "reportingDate": "Sep 11, 2026",
+      "fullCompliance": "Full Compliance",
+      "fullComplianceDate": "Dec 11, 2027"
+    },
+    "viewAll": "View all",
+    "recentProducts": "Recent Products",
+    "reportingDeadline": "Reporting Obligations",
+    "reportingDate": "Sep 11, 2026",
+    "fullCompliance": "Full Product Requirements",
+    "fullComplianceDate": "Dec 11, 2027",
+    "categoryDefault": "Default",
+    "categoryImportantI": "Important I",
+    "categoryImportantII": "Important II",
+    "categoryCritical": "Critical",
+    "role": {
+      "admin": "Admin",
+      "compliance_officer": "Compliance Officer",
+      "cto": "CTO",
+      "viewer": "Viewer",
+      "editor": "Editor"
+    },
+    "complianceTrend": {
+      "title": "Compliance Trend",
+      "orgAverage": "Org Average",
+      "score": "Score",
+      "noData": "No compliance history yet. Scores are tracked as you update checklists."
+    },
+    "vulnAging": {
+      "title": "Vulnerability Aging",
+      "openVulns": "Open Vulnerabilities",
+      "mttr": "MTTR",
+      "mttrDays": "{days}d avg",
+      "mttrNoData": "No data",
+      "noData": "No open vulnerabilities to display."
+    },
+    "checklistProgress": {
+      "title": "Checklist Progress",
+      "summary": "{pct}% avg completion · {count, plural, one {# product} other {# products}}",
+      "pending": "Pending",
+      "inProgress": "In Progress",
+      "completed": "Completed",
+      "notApplicable": "N/A",
+      "noData": "No checklist data available."
+    },
+    "overdueTasks": {
+      "title": "Overdue Tasks",
+      "allOnTrack": "All tasks on track",
+      "allOnTrackDescription": "No overdue checklist items.",
+      "daysOverdue": "{days}d overdue"
+    },
+    "activityVelocity": {
+      "title": "Team Activity",
+      "actions": "{count} actions",
+      "totalLast30d": "actions · last 30 days",
+      "peak": "Peak day",
+      "noData": "No team activity in the last 30 days."
+    }
+  }
+}

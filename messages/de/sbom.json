@@ -1,0 +1,80 @@
+{
+  "sbom": {
+    "title": "Software-Stückliste",
+    "subtitle": "SBOMs für dieses Produkt hochladen und verwalten.",
+    "upload": {
+      "title": "SBOM hochladen",
+      "dropzone": "SBOM-Datei hierher ziehen",
+      "dropzoneActive": "Datei hier ablegen",
+      "browse": "oder Dateien durchsuchen",
+      "formats": "Unterstützt: CycloneDX (JSON/XML), SPDX (JSON)",
+      "uploading": "Wird hochgeladen und analysiert…",
+      "success": "SBOM erfolgreich hochgeladen.",
+      "errors": {
+        "noFile": "Bitte wählen Sie eine Datei aus.",
+        "invalidFormat": "Unbekanntes SBOM-Format. Unterstützt: CycloneDX JSON/XML, SPDX JSON.",
+        "tooLarge": "Datei ist zu groß. Maximale Größe beträgt 50 MB.",
+        "parseFailed": "SBOM-Datei konnte nicht verarbeitet werden. Bitte prüfen Sie das Format.",
+        "uploadFailed": "Hochladen fehlgeschlagen. Bitte versuchen Sie es erneut.",
+        "notAuthenticated": "Sie müssen angemeldet sein.",
+        "generic": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut."
+      }
+    },
+    "list": {
+      "empty": "Noch keine SBOMs hochgeladen",
+      "emptyDescription": "Laden Sie Ihre erste SBOM hoch, um nach Schwachstellen zu scannen. Wir unterstützen CycloneDX- und SPDX-Formate.",
+      "deleteConfirm": "Diese SBOM löschen?",
+      "deleteDescription": "Dadurch werden die SBOM, alle Komponentendaten und Schwachstellen-Scanergebnisse dauerhaft entfernt. Diese Aktion kann nicht rückgängig gemacht werden.",
+      "deleteCancel": "Abbrechen",
+      "deleteSubmit": "Löschen",
+      "deleting": "Wird gelöscht…",
+      "archived": "Archiviert",
+      "archive": "Archivieren",
+      "restore": "Wiederherstellen"
+    },
+    "formats": {
+      "cyclonedx": "CycloneDX",
+      "spdx": "SPDX"
+    },
+    "components": {
+      "title": "Komponenten",
+      "name": "Name",
+      "version": "Version",
+      "license": "Lizenz",
+      "supplier": "Lieferant",
+      "purl": "PURL",
+      "vulns": "Schwachstellen",
+      "noVersion": "—",
+      "noLicense": "—",
+      "noSupplier": "—",
+      "showAll": "Alle {count} Komponenten anzeigen",
+      "showLess": "Weniger anzeigen",
+      "loading": "Komponenten werden geladen…",
+      "sortBy": "Sortieren nach",
+      "sortName": "Name",
+      "sortVulns": "Schwachstellen"
+    },
+    "scan": {
+      "scanButton": "Nach Schwachstellen scannen",
+      "rescan": "Erneut scannen",
+      "scanning": "Wird gescannt…",
+      "scanningDescription": "OSV.dev und CISA KEV-Katalog werden abgefragt…",
+      "lastScanned": "Gescannt am {date}",
+      "vuln": "Schwachstelle",
+      "vulns": "Schwachstellen",
+      "noVulns": "Keine Schwachstellen",
+      "noVulnsForComp": "Keine Schwachstellen für diese Komponente gefunden.",
+      "loadingVulns": "Schwachstellen werden geladen…",
+      "totalLabel": "gesamt",
+      "kevLabel": "CISA KEV",
+      "noDescription": "Keine Beschreibung verfügbar.",
+      "viewDetails": "Details ansehen →",
+      "severity": {
+        "critical": "Kritisch",
+        "high": "Hoch",
+        "medium": "Mittel",
+        "low": "Niedrig"
+      }
+    }
+  }
+}

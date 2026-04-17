@@ -1,0 +1,63 @@
+{
+  "pricing": {
+    "title": "Einfache, transparente Preise",
+    "subtitle": "Wählen Sie den Plan, der zu Ihren CRA-Compliance-Anforderungen passt.",
+    "monthly": "Monatlich",
+    "annual": "Jährlich",
+    "savePercent": "16% sparen",
+    "perMonth": "Mo.",
+    "billedAnnually": "€{total} jährlich abgerechnet",
+    "mostPopular": "Beliebteste",
+    "getStarted": "Loslegen",
+    "subscribe": "Abonnieren",
+    "contactSales": "Vertrieb kontaktieren",
+    "redirecting": "Weiterleitung…",
+    "plans": {
+      "free": {
+        "name": "Free",
+        "description": "Für Einzelpersonen, die CRA-Anforderungen erkunden.",
+        "features": {
+          "f1": "1 Produkt",
+          "f2": "Grundlegende CRA-Bewertung",
+          "f3": "Nur-Lese-Compliance-Checkliste",
+          "f4": "Community-Support"
+        }
+      },
+      "professional": {
+        "name": "Professional",
+        "description": "Für Teams, die CRA-Compliance aktiv verwalten.",
+        "features": {
+          "f1": "5 Produkte",
+          "f2": "Vollständige Compliance-Checklisten",
+          "f3": "SBOM-Uploads mit Schwachstellen-Scan",
+          "f4": "Dokumentvorlagen mit PDF-Export",
+          "f5": "E-Mail-Support"
+        }
+      },
+      "business": {
+        "name": "Business",
+        "description": "Für Organisationen mit mehreren Produktlinien.",
+        "features": {
+          "f1": "25 Produkte",
+          "f2": "Unbegrenzte SBOM-Uploads",
+          "f3": "Kontinuierliche Schwachstellenüberwachung",
+          "f4": "5 Benutzerplätze",
+          "f5": "Prioritäts-Support",
+          "f6": "Alle Dokumentvorlagen"
+        }
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "description": "Für große Organisationen mit individuellen Anforderungen.",
+        "features": {
+          "f1": "100 Produkte",
+          "f2": "Alles unbegrenzt",
+          "f3": "SSO / SAML-Integration",
+          "f4": "Dediziertes Onboarding",
+          "f5": "Telefon-Support",
+          "f6": "Individuelle Integrationen"
+        }
+      }
+    }
+  }
+}

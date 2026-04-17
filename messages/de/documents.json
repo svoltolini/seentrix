@@ -1,0 +1,130 @@
+{
+  "documents": {
+    "title": "Dokumente",
+    "subtitle": "CRA-Konformitätsdokumentation für dieses Produkt verwalten.",
+    "grid": {
+      "statusNotStarted": "Nicht begonnen",
+      "statusDraft": "Entwurf",
+      "statusFinal": "Fertig",
+      "lastUpdated": "Aktualisiert am {date}",
+      "neverEdited": "Noch nicht begonnen"
+    },
+    "types": {
+      "declaration_of_conformity": {
+        "title": "Konformitätserklärung",
+        "description": "EU-Konformitätserklärung gemäß CRA Anhang V. Erforderlich für das Inverkehrbringen auf dem EU-Markt."
+      },
+      "vulnerability_disclosure_policy": {
+        "title": "Schwachstellen-Offenlegungsrichtlinie",
+        "description": "Koordinierter Schwachstellen-Offenlegungsprozess. Erforderlich gemäß CRA Artikel 11."
+      },
+      "incident_report": {
+        "title": "Sicherheitsvorfall-Vorlage",
+        "description": "Vorlage zur Meldung von Sicherheitsvorfällen gemäß CRA Artikel 14. Für Meldungen an ENISA."
+      },
+      "risk_assessment": {
+        "title": "Risikobewertungsmatrix",
+        "description": "Cybersicherheits-Risikobewertung. Identifiziert Bedrohungen, Schwachstellen und Gegenmaßnahmen."
+      },
+      "technical_documentation": {
+        "title": "Technische Dokumentation",
+        "description": "Gliederung der technischen Dokumentation gemäß CRA Anhang VII. Umfasst Entwurf, Entwicklung und Tests."
+      }
+    },
+    "editor": {
+      "back": "Zurück zu Dokumente",
+      "save": "Dokument speichern",
+      "saving": "Wird gespeichert…",
+      "saved": "Dokument erfolgreich gespeichert.",
+      "generatePdf": "PDF erstellen",
+      "generatingPdf": "Wird erstellt…",
+      "downloadPdf": "PDF herunterladen",
+      "pdfGenerated": "PDF erfolgreich erstellt.",
+      "markFinal": "Als fertig markieren",
+      "markDraft": "Zu Entwurf zurücksetzen",
+      "errors": {
+        "notAuthenticated": "Sie müssen angemeldet sein.",
+        "generic": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.",
+        "saveFailed": "Speichern fehlgeschlagen. Bitte versuchen Sie es erneut.",
+        "documentNotFound": "Dokument nicht gefunden.",
+        "noContent": "Bitte speichern Sie das Dokument, bevor Sie ein PDF erstellen.",
+        "uploadFailed": "PDF-Upload fehlgeschlagen. Bitte versuchen Sie es erneut.",
+        "noPdf": "Kein PDF verfügbar. Erstellen Sie zuerst eines.",
+        "planRequired": "PDF-Export erfordert einen Professional-Plan oder höher."
+      }
+    },
+    "fields": {
+      "manufacturerName": "Herstellername",
+      "manufacturerNamePlaceholder": "z. B. Acme GmbH",
+      "manufacturerAddress": "Herstelleradresse",
+      "manufacturerAddressPlaceholder": "Vollständige Postanschrift…",
+      "productName": "Produktname",
+      "productNamePlaceholder": "z. B. Smart Thermostat Pro",
+      "productIdentification": "Produktidentifikation",
+      "productIdentificationPlaceholder": "Modellnummer, Seriennummer oder eindeutige Kennung…",
+      "conformityStatement": "Konformitätserklärung",
+      "conformityStatementPlaceholder": "Das oben genannte Produkt entspricht den Anforderungen des Cyber Resilience Act…",
+      "standardsApplied": "Angewandte Normen",
+      "standardsAppliedPlaceholder": "z. B. IEC 62443, ETSI EN 303 645",
+      "standardsAppliedHint": "Kommagetrennte Liste der harmonisierten Normen oder Spezifikationen.",
+      "notifiedBodyName": "Name der benannten Stelle",
+      "notifiedBodyNamePlaceholder": "z. B. TÜV Rheinland",
+      "notifiedBodyNumber": "Nummer der benannten Stelle",
+      "notifiedBodyNumberPlaceholder": "z. B. 0035",
+      "place": "Ort",
+      "placePlaceholder": "z. B. Berlin, Deutschland",
+      "date": "Datum",
+      "signatoryName": "Name des Unterzeichners",
+      "signatoryNamePlaceholder": "Vollständiger Name der autorisierten Person",
+      "signatoryPosition": "Position des Unterzeichners",
+      "signatoryPositionPlaceholder": "z. B. Chief Technology Officer",
+      "policyScope": "Geltungsbereich",
+      "policyScopePlaceholder": "Beschreiben Sie, welche Systeme und Produkte diese Richtlinie abdeckt…",
+      "reportingChannels": "Meldekanäle",
+      "reportingChannelsPlaceholder": "z. B. security@example.com, https://example.com/security",
+      "responseTimeline": "Reaktionszeit",
+      "responseTimelinePlaceholder": "z. B. Erstbestätigung innerhalb von 24 Stunden, Sichtung innerhalb von 72 Stunden…",
+      "disclosureTimeline": "Offenlegungszeitraum",
+      "disclosureTimelinePlaceholder": "z. B. Koordinierte Veröffentlichung nach 90 Tagen…",
+      "safeHarborStatement": "Safe-Harbor-Erklärung",
+      "safeHarborStatementPlaceholder": "Zusicherung, dass gutgläubige Melder keine rechtlichen Konsequenzen befürchten müssen…",
+      "incidentTitle": "Vorfallstitel",
+      "incidentTitlePlaceholder": "Kurzer Titel des Vorfalls…",
+      "incidentDate": "Datum des Vorfalls",
+      "incidentDescription": "Vorfallsbeschreibung",
+      "incidentDescriptionPlaceholder": "Detaillierte Beschreibung des Geschehens…",
+      "impactAssessment": "Auswirkungsanalyse",
+      "impactAssessmentPlaceholder": "Betroffene Systeme, Nutzer und Daten…",
+      "mitigationActions": "Gegenmaßnahmen",
+      "mitigationActionsPlaceholder": "Ergriffene Maßnahmen zur Eindämmung und Behebung…",
+      "notificationDate": "Meldedatum an ENISA",
+      "riskTitle": "Bewertungstitel",
+      "riskTitlePlaceholder": "z. B. Cybersicherheits-Risikobewertung Q1 2026",
+      "threatDescription": "Bedrohungsbeschreibung",
+      "threatDescriptionPlaceholder": "Beschreiben Sie die Bedrohungslandschaft und Bedrohungsakteure…",
+      "vulnerabilitiesIdentified": "Identifizierte Schwachstellen",
+      "vulnerabilitiesIdentifiedPlaceholder": "Liste bekannter Schwachstellen und Schwächen…",
+      "riskLevel": "Gesamtrisikostufe",
+      "riskLevelLow": "Niedrig",
+      "riskLevelMedium": "Mittel",
+      "riskLevelHigh": "Hoch",
+      "riskLevelCritical": "Kritisch",
+      "mitigationPlan": "Minderungsplan",
+      "mitigationPlanPlaceholder": "Geplante Maßnahmen zur Reduzierung der identifizierten Risiken…",
+      "residualRisk": "Restrisiko",
+      "residualRiskPlaceholder": "Verbleibendes Risiko nach Gegenmaßnahmen…",
+      "techDocScope": "Geltungsbereich",
+      "techDocScopePlaceholder": "Von dieser Dokumentation abgedeckte Produkte und Systeme…",
+      "designDescription": "Entwurfsbeschreibung",
+      "designDescriptionPlaceholder": "Architektur, Komponenten und Entwurfsentscheidungen…",
+      "developmentProcess": "Entwicklungsprozess",
+      "developmentProcessPlaceholder": "Entwicklungsmethodik, Werkzeuge und sichere Programmierpraktiken…",
+      "testingResults": "Tests und Verifizierung",
+      "testingResultsPlaceholder": "Testpläne, Ergebnisse und Verifizierungsaktivitäten…",
+      "updateMechanism": "Update-Mechanismus",
+      "updateMechanismPlaceholder": "Wie Sicherheitsupdates an Nutzer ausgeliefert werden…",
+      "supportPeriod": "Supportzeitraum",
+      "supportPeriodPlaceholder": "z. B. 5 Jahre ab Verkaufsdatum"
+    }
+  }
+}

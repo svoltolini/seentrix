@@ -1,0 +1,90 @@
+---
+title: "SBOM für Hersteller: Was es ist und warum der CRA es verlangt"
+description: "Erfahren Sie, was eine Software Bill of Materials (SBOM) ist, warum der EU Cyber Resilience Act eine solche verlangt und wie Sie Ihre erste SBOM mit CycloneDX oder SPDX erstellen."
+date: "2026-04-10"
+category: "Technik"
+author: "Seentrix Team"
+---
+
+Wenn Sie ein Produkt mit digitalen Elementen herstellen, dann haben Sie vermutlich bereits vom Cyber Resilience Act (CRA) gehört. Eine der zentralen Anforderungen dieser neuen EU-Verordnung betrifft ein Dokument, das vielen Herstellern bislang wenig vertraut ist: die sogenannte **Software Bill of Materials**, kurz SBOM. Doch was genau verbirgt sich dahinter — und warum wird sie für Ihr Unternehmen so wichtig?
+
+## Was ist eine SBOM?
+
+Stellen Sie sich vor, Sie kaufen ein Lebensmittel im Supermarkt. Auf der Verpackung finden Sie eine Zutatenliste: Mehl, Zucker, Butter, Eier und so weiter. Diese Liste verrät Ihnen genau, woraus das Produkt besteht. Sie hilft Ihnen, Allergene zu erkennen, die Qualität einzuschätzen und fundierte Entscheidungen zu treffen.
+
+Eine SBOM ist im Grunde dasselbe — nur eben für Software. Sie ist eine vollständige, maschinenlesbare Aufstellung aller Softwarekomponenten, aus denen ein Produkt besteht. Dazu gehören selbst entwickelter Code, Open-Source-Bibliotheken, Frameworks und alle weiteren Abhängigkeiten, die in Ihrem Produkt stecken.
+
+Genau wie die Zutatenliste auf der Lebensmittelverpackung schafft die SBOM Transparenz. Sie zeigt allen Beteiligten — Herstellern, Kunden und Behörden — woraus die Software tatsächlich aufgebaut ist.
+
+## Warum SBOMs für die Sicherheit entscheidend sind
+
+Moderne Softwareprodukte werden selten komplett von Grund auf neu entwickelt. Stattdessen bestehen sie zu einem erheblichen Teil aus Drittanbieter-Komponenten und Open-Source-Bibliotheken. Studien zeigen, dass bis zu 90 Prozent des Codes in heutigen Anwendungen aus solchen externen Quellen stammen.
+
+Das schafft ein erhebliches Risiko in der Lieferkette. Wenn eine einzige Bibliothek eine Sicherheitslücke aufweist — denken Sie an den Log4Shell-Vorfall Ende 2021 — dann sind potenziell Tausende von Produkten betroffen. Ohne eine SBOM wissen Hersteller oft nicht einmal, ob sie die betroffene Komponente überhaupt verwenden.
+
+Eine SBOM löst dieses Problem, indem sie vollständige Transparenz über alle verwendeten Komponenten herstellt. Wird eine neue Schwachstelle bekannt, können Hersteller innerhalb von Minuten prüfen, ob ihr Produkt betroffen ist. Ohne SBOM kann diese Prüfung Tage oder sogar Wochen dauern — wertvolle Zeit, in der Angreifer die Lücke bereits ausnutzen können.
+
+## Was der CRA in Bezug auf SBOMs verlangt
+
+Der Cyber Resilience Act macht die SBOM zu einer rechtlichen Pflicht. In Artikel 10 der Verordnung wird festgelegt, dass Hersteller eine SBOM erstellen und pflegen müssen. Die wichtigsten Anforderungen im Überblick:
+
+- **Die SBOM muss dem Produkt beiliegen.** Sie ist Teil der technischen Dokumentation, die Hersteller für ihre Produkte erstellen und bereithalten müssen.
+- **Mindestens die Top-Level-Abhängigkeiten müssen aufgelistet werden.** Das bedeutet, dass Sie zumindest die direkten Softwarekomponenten dokumentieren müssen, auf die Ihr Produkt aufbaut. Eine vollständige Auflistung aller transitiven Abhängigkeiten wird empfohlen, ist aber als Minimum nicht zwingend.
+- **Die SBOM muss in einem gängigen, maschinenlesbaren Format vorliegen.** Der CRA schreibt kein bestimmtes Format vor, nennt aber anerkannte Standards als Orientierung.
+- **Die SBOM muss aktuell gehalten werden.** Sie ist kein einmaliges Dokument, sondern muss den tatsächlichen Zustand des Produkts zu jedem Zeitpunkt widerspiegeln.
+
+Für Hersteller bedeutet das: Die SBOM ist keine optionale Best Practice mehr, sondern eine verbindliche Anforderung, deren Nichteinhaltung Konsequenzen haben kann.
+
+## SBOM-Formate: CycloneDX und SPDX im Vergleich
+
+Für die Erstellung einer SBOM haben sich zwei Formate als internationale Standards durchgesetzt: **CycloneDX** und **SPDX**. Beide sind vom CRA akzeptiert, unterscheiden sich jedoch in einigen Punkten.
+
+**CycloneDX** wurde von der OWASP-Community entwickelt und ist besonders auf Sicherheitsanwendungen ausgerichtet. Es ist leichtgewichtig, einfach zu implementieren und bietet native Unterstützung für die Dokumentation von Schwachstellen. Viele Sicherheits-Tools unterstützen CycloneDX von Haus aus.
+
+**SPDX** (Software Package Data Exchange) ist ein Standard der Linux Foundation und hat seine Wurzeln im Lizenzmanagement. Es ist ein ISO-Standard (ISO/IEC 5962:2021) und eignet sich besonders gut, wenn neben der Sicherheit auch die Lizenz-Compliance eine wichtige Rolle spielt.
+
+In der Praxis gilt: Beide Formate erfüllen die Anforderungen des CRA. Wenn Ihr Schwerpunkt auf Sicherheit liegt, ist CycloneDX oft die einfachere Wahl. Wenn Sie umfangreiche Lizenzinformationen dokumentieren müssen, bietet SPDX hier mehr Tiefe. Viele Unternehmen entscheiden sich für das Format, das am besten zu ihren bestehenden Werkzeugen passt.
+
+## Wie Sie eine SBOM erstellen
+
+Die gute Nachricht: Sie müssen Ihre SBOM nicht manuell zusammenstellen. Es gibt zahlreiche automatisierte Werkzeuge, die Ihnen diese Arbeit abnehmen.
+
+Für die meisten Softwareprodukte empfehlen sich Tools wie:
+
+- **Syft** — ein Open-Source-Tool von Anchore, das Container-Images und Dateisysteme analysiert und SBOMs in verschiedenen Formaten erzeugt.
+- **Trivy** — ein vielseitiger Sicherheitsscanner von Aqua Security, der neben Schwachstellen auch SBOMs generieren kann.
+- **CycloneDX CLI** — ein Kommandozeilen-Tool, das speziell für die Erstellung von CycloneDX-SBOMs entwickelt wurde und viele Programmiersprachen und Paketmanager unterstützt.
+
+Diese Tools scannen automatisch Ihre Projektdateien, Paketmanager und Abhängigkeitsbäume und erzeugen daraus eine strukturierte SBOM.
+
+Für **eingebettete Systeme** sieht die Situation etwas anders aus. Hier fehlen oft standardisierte Paketmanager, was die automatische Erkennung von Komponenten erschwert. In solchen Fällen ist ein manueller oder halbautomatischer Ansatz nötig: Sie pflegen eine Liste der verwendeten Bibliotheken, Firmware-Komponenten und Treiber von Hand und überführen diese in ein SBOM-Format. Werkzeuge wie Vorlagen und Editoren können diesen Prozess vereinfachen.
+
+## Was eine gute SBOM enthält
+
+Nicht jede SBOM ist gleich aussagekräftig. Eine SBOM, die den Anforderungen des CRA gerecht wird und echten Mehrwert für Ihre Sicherheitsprozesse bietet, sollte folgende Informationen für jede Komponente enthalten:
+
+- **Komponentenname** — der eindeutige Name der Bibliothek oder des Pakets.
+- **Version** — die exakte Versionsnummer, damit Schwachstellen präzise zugeordnet werden können.
+- **Lizenzen** — die geltenden Open-Source-Lizenzen, um Lizenz-Compliance sicherzustellen.
+- **Lieferanteninformationen** — wer die Komponente entwickelt oder veröffentlicht hat, um die Herkunft nachvollziehen zu können.
+- **Abhängigkeitsbeziehungen** — wie die Komponenten untereinander zusammenhängen, also welche Bibliothek von welcher anderen abhängt.
+
+Je vollständiger und genauer diese Angaben sind, desto schneller können Sie auf Sicherheitsvorfälle reagieren und desto einfacher wird die Zusammenarbeit mit Behörden und Kunden.
+
+## SBOMs über den gesamten Produktlebenszyklus aktuell halten
+
+Eine SBOM ist kein Dokument, das man einmal erstellt und dann vergisst. Software verändert sich laufend: Updates werden eingespielt, Abhängigkeiten aktualisiert, neue Komponenten hinzugefügt und alte entfernt. Ihre SBOM muss diese Veränderungen widerspiegeln.
+
+Der CRA verlangt ausdrücklich, dass die SBOM über den gesamten Lebenszyklus eines Produkts gepflegt wird. Das bedeutet in der Praxis:
+
+- **Integrieren Sie die SBOM-Erstellung in Ihre Build-Pipeline.** Bei jedem neuen Release sollte automatisch eine aktuelle SBOM erzeugt werden.
+- **Überwachen Sie Ihre SBOM kontinuierlich auf neue Schwachstellen.** Wenn eine Komponente in Ihrer SBOM von einer neu entdeckten Sicherheitslücke betroffen ist, müssen Sie zeitnah reagieren können.
+- **Dokumentieren Sie Änderungen nachvollziehbar.** Halten Sie fest, wann welche Komponente hinzugefügt, aktualisiert oder entfernt wurde.
+
+So wird die SBOM vom bürokratischen Pflichtdokument zu einem echten Werkzeug für Ihre Produktsicherheit.
+
+## Starten Sie jetzt mit Ihrer SBOM
+
+Die Erstellung Ihrer ersten SBOM muss nicht kompliziert sein. Mit Seentrix können Sie SBOMs für alle Ihre Produkte hochladen, analysieren und verwalten — und so die CRA-Anforderungen sicher erfüllen. Unsere Plattform unterstützt sowohl CycloneDX als auch SPDX, zeigt Ihnen Schwachstellen auf einen Blick und hilft Ihnen, den Überblick über Ihre gesamte Software-Lieferkette zu behalten.
+
+**Starten Sie mit unserer kostenlosen CRA-Bewertung** und erfahren Sie, wo Ihre Produkte heute stehen — und welche Schritte als Nächstes nötig sind.

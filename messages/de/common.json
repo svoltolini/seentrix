@@ -1,0 +1,21 @@
+{
+  "app": {
+    "name": "Seentrix",
+    "tagline": "CRA-Compliance-Plattform für Hersteller"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "products": "Produkte",
+    "settings": "Einstellungen",
+    "logout": "Abmelden",
+    "myAccount": "Mein Konto",
+    "error": "Etwas ist schiefgelaufen",
+    "errorDescription": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+    "tryAgain": "Erneut versuchen"
+  },
+  "sidebar": {
+    "overview": "Übersicht",
+    "compliance": "Compliance",
+    "management": "Verwaltung"
+  }
+}

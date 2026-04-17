@@ -1,0 +1,125 @@
+---
+title: "Open Source and the CRA: What Manufacturers Must Know"
+description: "Almost every product uses open source software. Learn how the EU Cyber Resilience Act affects your use of open source components, your obligations, and the new open source steward concept."
+date: "2026-04-25"
+category: "Technical"
+author: "Seentrix Team"
+---
+
+Open source software is everywhere. It powers web servers, encrypts communications, parses data formats, and provides the invisible infrastructure that modern products are built on. If your company ships a product with digital elements, open source is almost certainly part of it — whether your team wrote it or not.
+
+The EU Cyber Resilience Act (CRA) does not change the fact that open source is a cornerstone of modern software development. What it does change is who is accountable when something goes wrong. This article explains how the CRA treats open source, what new concepts like the **open source steward** mean in practice, and what you as a manufacturer need to do to stay compliant.
+
+## The Open Source Reality
+
+Virtually every modern product contains open source software. Studies consistently show that the average commercial software product includes hundreds of open source dependencies. A typical web application might rely on 500 to 1,000 packages. An embedded device might contain dozens of libraries for networking, cryptography, and data handling — all drawn from the open source ecosystem.
+
+This is not a problem in itself. Open source has accelerated innovation, reduced development costs, and given companies access to battle-tested code that would take years and millions of euros to replicate internally. The challenge is visibility. Many engineering teams do not have a complete picture of every open source component in their product, especially when it comes to **transitive dependencies** — the libraries that your libraries depend on.
+
+The CRA does not ban open source. It does not discourage its use. What it does is make **you** — the manufacturer — responsible for what you ship. If your product contains an open source component with a known vulnerability, regulators will not accept "we didn't know it was in there" as an excuse. The obligation to ensure the security of your product rests squarely on your shoulders, regardless of where the code originated.
+
+## How the CRA Treats Open Source
+
+One of the most important distinctions in the CRA is how it draws the line between non-commercial open source development and commercial use of open source components.
+
+**Non-commercial open source development is explicitly exempt from CRA obligations.** If a developer writes and publishes a library on GitHub as a personal project, with no commercial intent, they do not become a manufacturer under the CRA. The regulation recognizes that imposing manufacturer-level security obligations on volunteer developers would stifle the open source ecosystem that the entire industry depends on.
+
+But here is the critical point: **the moment you integrate an open source component into a commercial product, you — the manufacturer — become responsible for its security.** The exemption protects the volunteer developer who wrote the library. It does not protect the company that chose to include that library in a product sold on the European market.
+
+This means that the CRA creates an asymmetry that manufacturers need to understand clearly. The upstream developer has no obligation to fix a vulnerability on your timeline, provide security patches, or even maintain the project at all. But you, as the manufacturer, have all of those obligations for your product. If the upstream project abandons a component or is slow to respond to a vulnerability disclosure, the regulatory burden does not disappear — it falls entirely on you.
+
+In practical terms, every open source component you include becomes your responsibility from the moment it enters your product. You must treat it with the same level of security diligence as code your own team wrote.
+
+## The Open Source Steward Concept
+
+The CRA introduces a new concept that did not exist in previous EU product regulation: the **open source steward**. This concept acknowledges the unique role that large open source foundations and organizations play in the software ecosystem.
+
+An open source steward is defined as a legal person — other than a manufacturer — that has the purpose or objective of systematically providing support on a sustained basis for the development of products with digital elements qualifying as free and open source software, and that is intended for commercial activities. In simpler terms, these are organizations like the **Linux Foundation**, the **Eclipse Foundation**, or the **Apache Software Foundation** — entities that coordinate, fund, and govern major open source projects used across the industry.
+
+Open source stewards have **lighter obligations** than manufacturers. They are not required to perform full conformity assessments or meet the complete set of essential cybersecurity requirements that apply to manufacturers. Instead, their obligations focus on:
+
+- Establishing and documenting a **cybersecurity policy** to foster the development of secure products.
+- Cooperating with **market surveillance authorities** when requested.
+- Facilitating the **reporting of vulnerabilities** discovered in the projects they support.
+
+This is a pragmatic approach. These foundations do not sell products, so it would be unreasonable to hold them to manufacturer obligations. But they do play a significant role in the security posture of the open source components that end up in commercial products, so the CRA gives them a defined role with proportionate responsibilities.
+
+For manufacturers, the key takeaway is this: the existence of open source stewards does not reduce your own obligations. Even if a component you use is governed by a foundation that qualifies as a steward, you remain fully responsible for the security of that component within your product.
+
+## Your Obligations as a Manufacturer
+
+When you use open source in your product, the CRA places specific obligations on you. These are not optional best practices — they are regulatory requirements that carry enforcement consequences.
+
+**1. Include open source components in your SBOM.** Every open source library, framework, and module in your product must be documented in your Software Bill of Materials. This applies to both direct dependencies and transitive dependencies. A partial SBOM that omits open source components is not compliant.
+
+**2. Monitor for vulnerabilities in all open source dependencies.** You cannot adopt a component and then forget about it. You must have processes in place to continuously track whether new vulnerabilities have been disclosed in any of the open source components your product relies on.
+
+**3. Provide patches when vulnerabilities are discovered.** When a vulnerability is found in an open source component that affects your product, you must develop or integrate a fix and deliver it to your customers. The CRA expects timely remediation — not indefinite delays.
+
+**4. You cannot just point to the upstream project.** If the original open source maintainers do not fix a vulnerability, or do not fix it quickly enough, that does not excuse you. As the manufacturer, you are expected to resolve the issue yourself — whether that means developing your own patch, switching to an alternative component, or implementing a workaround.
+
+**5. Maintain security updates for the product lifetime.** The CRA requires manufacturers to provide security updates for the expected product lifetime, with a minimum of **five years**. That means the open source components you choose today will need to be monitored and maintained for at least half a decade. Choosing components with strong community support and active maintenance is not just good engineering — it is a compliance decision.
+
+## Supply Chain Visibility
+
+The CRA demands that you know **every open source component** in your product. This is harder than it sounds, because modern software has deep dependency trees.
+
+Consider a simple example. Your product uses a web framework — call it Framework A. Framework A depends on a logging library, Library B. Library B depends on a string formatting utility, Library C. If a critical vulnerability is discovered in Library C, your product is affected, even though your team never directly chose to use Library C and may not even know it exists.
+
+These are **transitive dependencies**, and they are where most of the risk hides. Research shows that the majority of vulnerabilities in modern software supply chains originate not in direct dependencies but in components two, three, or more levels deep in the dependency tree.
+
+A single vulnerable library buried three levels deep can make your product non-compliant with the CRA. You cannot manage what you cannot see, which is why **SBOM tooling** is essential. Tools like Syft, Trivy, or CycloneDX CLI can automatically resolve your full dependency tree and produce a comprehensive SBOM that includes every transitive dependency.
+
+Without this level of visibility, you are flying blind. And under the CRA, flying blind is not an option.
+
+## License Compliance Meets Security Compliance
+
+For many companies, open source governance has historically meant one thing: **license compliance**. Teams tracked which open source components they used primarily to ensure they met the legal requirements of licenses like MIT, Apache 2.0, or GPL. Legal departments reviewed license obligations, and engineering teams maintained records accordingly.
+
+The CRA adds an entirely new dimension: **security compliance**. Now, knowing what open source you use is not just about avoiding license violations — it is about ensuring that every component meets cybersecurity requirements and that vulnerabilities are detected and addressed throughout the product lifetime.
+
+The good news is that if you already have a mature **OSS governance program**, extending it to cover CRA security requirements is straightforward. The foundational elements are the same: an accurate inventory of components, a process for evaluating new dependencies, and a system for tracking changes over time. You are essentially adding a security lens to an existing framework.
+
+If you do not have an OSS governance program at all, the CRA means you need to build both license and security compliance from scratch. This is a larger undertaking, but it is also an opportunity to do it right from the start — building a single, unified process that covers legal, security, and regulatory requirements in one workflow.
+
+## Monitoring and Responding to OSS Vulnerabilities
+
+Knowing what open source you use is only the first step. You also need to know when something goes wrong — and respond quickly when it does.
+
+**Subscribe to security advisories** for your key dependencies. Most major open source projects publish security advisories through GitHub, dedicated mailing lists, or foundations like the Apache Software Foundation. Make sure someone on your team is monitoring these channels.
+
+**Use automated vulnerability scanning** against your SBOM. Tools that continuously cross-reference your SBOM against vulnerability databases like the National Vulnerability Database (NVD), the GitHub Advisory Database, or OSV can alert you the moment a new vulnerability affects one of your components. Manual monitoring does not scale — automation is not a luxury, it is a necessity.
+
+When a vulnerability is disclosed, your response process should follow a clear sequence:
+
+1. **Assess the impact** on your product. Not every vulnerability in a component is exploitable in the context of your specific product. Determine the severity and whether the vulnerable code path is actually reachable.
+2. **Develop or integrate the patch.** If the upstream project has released a fix, integrate it. If they have not, develop your own mitigation.
+3. **Release an update** to your customers. Communicate transparently about the issue, the risk, and the fix.
+
+Critically, the CRA's **reporting obligations apply even if the vulnerability originated in an upstream open source component**. If your product is affected, you must report actively exploited vulnerabilities to the relevant authorities within the required timeframe. The source of the vulnerability — whether it was your own code or an open source library — does not change your reporting obligation.
+
+## Practical Steps to Get Started
+
+If you are reading this and realizing that your organization has work to do, here are concrete steps to begin:
+
+**1. Generate a complete SBOM for every product.** Use automated tooling to scan your codebases and produce SBOMs in a standardized format like CycloneDX or SPDX. Make this part of your CI/CD pipeline so that every build produces a fresh SBOM.
+
+**2. Set up automated vulnerability monitoring.** Connect your SBOMs to a vulnerability scanning service that continuously checks for new disclosures. Alerts should reach the right people immediately — not sit in an unmonitored inbox.
+
+**3. Establish a process for evaluating and applying upstream patches.** When an open source dependency releases a security update, your team needs a defined workflow for assessing relevance, testing the patch, and rolling it into your product.
+
+**4. Document your OSS governance process.** Regulators will want to see that you have systematic processes, not ad-hoc responses. Write down your policies for selecting, evaluating, monitoring, and updating open source components.
+
+**5. Review your dependency tree — reduce unnecessary dependencies.** Not every convenience library is worth the compliance overhead. Audit your dependencies and remove components that provide trivial functionality but add supply chain risk.
+
+**6. Consider contributing back to critical OSS projects you depend on.** If your product relies heavily on a specific open source project, investing in that project's health — through code contributions, funding, or bug reports — is both good citizenship and good risk management. A well-maintained upstream project means fewer vulnerabilities and faster fixes for everyone.
+
+## The Bigger Picture
+
+The CRA is pushing the entire industry toward better **software supply chain management**. This is, ultimately, a good thing. The days of treating open source as "free code with no strings attached" are ending. In their place is a more mature model where companies take responsibility for the software they ship, regardless of who originally wrote it.
+
+Companies that invest in **OSS governance** now — building robust SBOMs, automating vulnerability monitoring, and establishing clear processes for dependency management — will be more secure and more compliant when enforcement begins. They will also be more resilient, better positioned to respond to incidents, and more trusted by their customers.
+
+**Seentrix** helps manufacturers navigate this transition. Our platform supports **SBOM generation**, **automated vulnerability monitoring**, and **CRA compliance tracking** — giving you a clear, real-time view of the open source components in your products and the risks they carry. Whether you are just getting started with your first SBOM or scaling compliance across an entire product portfolio, Seentrix provides the tools to manage your open source supply chain with confidence.
+
+The deadline is approaching. The work starts now.

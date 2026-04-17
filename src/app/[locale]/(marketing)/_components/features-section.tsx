@@ -4,14 +4,12 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useTranslations } from "next-intl";
-import { HugeIcon } from "@/components/huge-icon";
-import { cn } from "@/lib/utils";
 
 const modules = [
-  { key: "assessment", icon: "shield-check" },
-  { key: "checklist", icon: "checkmark-badge-01-stroke-rounded" },
-  { key: "sbom", icon: "package-open-stroke-rounded" },
-  { key: "documents", icon: "pdf-01-stroke-rounded" },
+  { key: "assessment", accent: "#3B82F6" },
+  { key: "checklist", accent: "#6366F1" },
+  { key: "sbom", accent: "#8B5CF6" },
+  { key: "documents", accent: "#A855F7" },
 ] as const;
 
 export function FeaturesSection() {
@@ -61,41 +59,30 @@ export function FeaturesSection() {
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2">
           {modules.map((mod, i) => (
             <div
               key={mod.key}
               data-feature-card
-              className={cn(
-                "group flex flex-col rounded-2xl border border-border bg-card p-8 transition-all duration-300 hover:-translate-y-1 hover:border-primary/30",
-                i === 0 && "md:col-span-2"
-              )}
+              className="group relative rounded-2xl bg-white/[0.03] p-8 transition-colors duration-300 hover:bg-white/[0.05]"
             >
-              <div
-                className={cn(
-                  "mb-6 flex items-center justify-center rounded-xl bg-gradient-to-br from-primary/20 to-[#8B5CF6]/20",
-                  i === 0 ? "h-16 w-16" : "h-14 w-14"
-                )}
-              >
-                <HugeIcon
-                  name={mod.icon}
-                  size={i === 0 ? 32 : 28}
-                  className="text-foreground"
-                />
+              <div className="flex items-start gap-5">
+                <span
+                  className="shrink-0 text-3xl font-extrabold leading-none"
+                  style={{ color: mod.accent }}
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+
+                <div>
+                  <h3 className="text-lg font-bold text-foreground">
+                    {t(`modules.${mod.key}.title`)}
+                  </h3>
+                  <p className="mt-2 text-base leading-relaxed text-muted-foreground">
+                    {t(`modules.${mod.key}.description`)}
+                  </p>
+                </div>
               </div>
-
-              <h3
-                className={cn(
-                  "font-bold text-foreground",
-                  i === 0 ? "text-xl" : "text-lg"
-                )}
-              >
-                {t(`modules.${mod.key}.title`)}
-              </h3>
-
-              <p className="mt-3 text-base leading-relaxed text-muted-foreground">
-                {t(`modules.${mod.key}.description`)}
-              </p>
             </div>
           ))}
         </div>

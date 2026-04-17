@@ -163,6 +163,24 @@
         }
       }
     },
+    "howItWorks": {
+      "title": "Get Compliant in 3 Steps",
+      "subtitle": "From first assessment to audit-ready documentation — Seentrix guides you through the entire CRA compliance journey.",
+      "steps": {
+        "s1": {
+          "title": "Assess Your Products",
+          "description": "Run the scope assessment to determine your CRA category, conformity route, and whether a notified body is required."
+        },
+        "s2": {
+          "title": "Track Requirements",
+          "description": "Work through interactive checklists mapped to CRA Annex I. Upload your SBOM and scan for known vulnerabilities."
+        },
+        "s3": {
+          "title": "Generate Documentation",
+          "description": "Export your EU Declaration of Conformity, technical documentation, and vulnerability handling policies — ready for auditors."
+        }
+      }
+    },
     "trust": {
       "title": "Built by Compliance Engineers",
       "subtitle": "Developed in Switzerland by a team with deep roots in industrial automation and cybersecurity standards.",
@@ -171,6 +189,36 @@
         "etsi": "ETSI EN 303 645",
         "gdpr": "EU GDPR Compliant",
         "swiss": "Made in Switzerland"
+      }
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "subtitle": "Everything you need to know about the CRA and how Seentrix helps.",
+      "items": {
+        "q1": {
+          "question": "What is the EU Cyber Resilience Act?",
+          "answer": "The CRA is an EU regulation that establishes mandatory cybersecurity requirements for all products with digital elements sold in the European market. It covers hardware and software, from IoT devices to industrial controllers."
+        },
+        "q2": {
+          "question": "Does the CRA apply to my products?",
+          "answer": "If you manufacture or import products with digital elements into the EU market, the CRA likely applies. This includes connected devices, standalone software, and embedded firmware. Run our free scope assessment to find out in minutes."
+        },
+        "q3": {
+          "question": "When does the CRA take effect?",
+          "answer": "Vulnerability reporting obligations begin in June 2026. Full enforcement starts September 11, 2026. Notified body conformity assessments for critical products are required by December 2027."
+        },
+        "q4": {
+          "question": "What happens if I don't comply?",
+          "answer": "Non-compliance can result in fines up to €15 million or 2.5% of worldwide annual turnover, whichever is higher. Products can also be withdrawn from the EU market."
+        },
+        "q5": {
+          "question": "How long does it take to get started?",
+          "answer": "You can complete your first scope assessment in under 10 minutes. Most teams have a full compliance picture within a few days, depending on the number of products and complexity."
+        },
+        "q6": {
+          "question": "Can I try Seentrix for free?",
+          "answer": "Yes. The free plan includes one product with basic scope assessment and a read-only compliance checklist. No credit card required."
+        }
       }
     },
     "newsletter": {

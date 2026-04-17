@@ -1,0 +1,16 @@
+{
+  "blog": {
+    "meta": {
+      "title": "Blog",
+      "description": "Einblicke in die Einhaltung des EU Cyber Resilience Act, SBOM-Management und Produktsicherheit für Hersteller."
+    },
+    "heading": "Blog",
+    "subheading": "Einblicke in CRA-Compliance, SBOM-Management und Produktsicherheit.",
+    "noPosts": "Noch keine Beiträge. Schauen Sie bald wieder vorbei!",
+    "readMore": "Weiterlesen",
+    "minRead": "Min. Lesezeit",
+    "backToBlog": "Zurück zum Blog",
+    "toc": "Inhaltsverzeichnis",
+    "relatedPosts": "Verwandte Beiträge"
+  }
+}

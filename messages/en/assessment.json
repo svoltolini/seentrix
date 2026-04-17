@@ -1,0 +1,205 @@
+{
+  "assessment": {
+    "pageTitle": "CRA Scope Assessment",
+    "pageDescription": "Determine if your product falls under the EU Cyber Resilience Act and its classification.",
+    "steps": {
+      "productInfo": "Product Info",
+      "digitalElements": "Digital Elements",
+      "euDistribution": "EU Market",
+      "excludedSectors": "Excluded Sectors",
+      "classification": "Classification"
+    },
+    "navigation": {
+      "continue": "Continue",
+      "back": "Back",
+      "submit": "Submit Assessment",
+      "submitting": "Submitting…",
+      "startOver": "Start Over"
+    },
+    "step1": {
+      "title": "Tell us about your product",
+      "description": "Basic information about the product you want to assess.",
+      "nameLabel": "Product name",
+      "namePlaceholder": "e.g. Smart Thermostat Pro",
+      "typeLabel": "Product type",
+      "descriptionLabel": "Description",
+      "descriptionPlaceholder": "Brief description of your product's functionality…",
+      "types": {
+        "hardware": "Hardware",
+        "hardwareDescription": "Physical devices and components",
+        "software": "Software",
+        "softwareDescription": "Applications and programs",
+        "firmware": "Firmware",
+        "firmwareDescription": "Embedded device software",
+        "iot": "IoT Device",
+        "iotDescription": "Internet-connected smart devices"
+      }
+    },
+    "step2": {
+      "title": "Does your product contain digital elements?",
+      "description": "The CRA applies to products with digital elements — any software or hardware product with a data connection, including remote data processing.",
+      "yes": "Yes, it contains digital elements",
+      "yesDescription": "The product includes software, firmware, or network connectivity.",
+      "no": "No digital elements",
+      "noDescription": "The product is purely mechanical or analog with no digital components."
+    },
+    "step3": {
+      "title": "Will this product be distributed in the EU market?",
+      "description": "The CRA applies only to products placed on the EU market or made available within the European Union.",
+      "yes": "Yes, distributed in the EU",
+      "yesDescription": "The product will be sold, distributed, or made available in EU member states.",
+      "no": "No, not for the EU market",
+      "noDescription": "The product is exclusively for markets outside the European Union."
+    },
+    "step4": {
+      "title": "Is your product covered by sector-specific regulations?",
+      "description": "Products already covered by certain EU sector-specific regulations are excluded from the CRA scope.",
+      "or": "or",
+      "noneApply": "None of the above apply",
+      "noneApplyDescription": "My product is not covered by any of these sector-specific regulations.",
+      "sectors": {
+        "medical_devices": "Medical Devices",
+        "medical_devicesDescription": "Products regulated under the Medical Device Regulation (EU) 2017/745.",
+        "motor_vehicles": "Motor Vehicles",
+        "motor_vehiclesDescription": "Vehicles and components covered by type-approval regulation (EU) 2019/2144.",
+        "marine_equipment": "Marine Equipment",
+        "marine_equipmentDescription": "Equipment covered by the Marine Equipment Directive 2014/90/EU.",
+        "aviation": "Aviation",
+        "aviationDescription": "Products certified under civil aviation regulations (EU) 2018/1139.",
+        "military_defense": "Military & Defense",
+        "military_defenseDescription": "Products developed exclusively for military or defense purposes.",
+        "national_security": "National Security",
+        "national_securityDescription": "Products developed exclusively for national security purposes."
+      }
+    },
+    "step5": {
+      "title": "Select the subcategory that best matches your product",
+      "description": "CRA Annexes III and IV define specific product subcategories with higher security requirements. Select the most applicable subcategory, or choose \"None\" if your product doesn't match any listed subcategory.",
+      "noneMatch": "None of these match",
+      "noneMatchDescription": "My product does not fall into any of the listed subcategories. It will be classified as Default.",
+      "groups": {
+        "identity_security": "Identity & Access Management",
+        "security_tools": "Security Tools",
+        "system_software": "System Software",
+        "network_devices": "Network Devices",
+        "connected_devices": "Connected Devices",
+        "virtualization": "Virtualization & Containers",
+        "network_security": "Network Security",
+        "hardware_security": "Tamper-Resistant Hardware",
+        "cryptography": "Cryptography & PKI",
+        "industrial": "Industrial Automation & Control",
+        "cryptographic_hardware": "Cryptographic Hardware",
+        "infrastructure": "Critical Infrastructure"
+      },
+      "categoryLabels": {
+        "important_class_i": "Important I",
+        "important_class_ii": "Important II",
+        "critical": "Critical"
+      },
+      "subcategories": {
+        "identity_management": "Identity Management Systems",
+        "browsers": "Web Browsers",
+        "password_managers": "Password Managers",
+        "malware_detection": "Malware Detection Software",
+        "vpn": "VPN Products",
+        "siem": "SIEM Systems",
+        "boot_managers": "Boot Managers",
+        "bios_uefi": "BIOS/UEFI Firmware",
+        "routers_modems": "Routers & Modems",
+        "switches": "Network Switches",
+        "iot_general": "General IoT Devices",
+        "smart_home_assistants": "Smart Home Assistants",
+        "smart_home_cameras": "Smart Home Cameras",
+        "smart_home_locks": "Smart Locks & Access Control",
+        "wearables": "Wearable Devices",
+        "connected_toys": "Connected Toys",
+        "personal_health_devices": "Personal Health Devices",
+        "network_management": "Network Management Systems",
+        "hypervisors_container_runtime": "Hypervisors & Container Runtimes",
+        "firewalls": "Firewalls",
+        "intrusion_detection": "Intrusion Detection/Prevention Systems",
+        "microprocessors_tamper_resistant": "Tamper-Resistant Microprocessors",
+        "microcontrollers_tamper_resistant": "Tamper-Resistant Microcontrollers",
+        "asics_tamper_resistant": "Tamper-Resistant ASICs/FPGAs",
+        "operating_systems": "Operating Systems",
+        "pki_digital_certificates": "PKI & Digital Certificate Management",
+        "industrial_automation_plc": "PLCs (Programmable Logic Controllers)",
+        "industrial_automation_scada": "SCADA Systems",
+        "cpads": "Central Process Automation Devices",
+        "hardware_security_modules": "Hardware Security Modules (HSMs)",
+        "smart_cards": "Smart Cards",
+        "smart_card_readers": "Smart Card Readers",
+        "smart_meter_gateways": "Smart Meter Gateways",
+        "secure_crypto_processing_units": "Secure Crypto Processing Units"
+      }
+    },
+    "outOfScope": {
+      "title": "Product is out of CRA scope",
+      "reasons": {
+        "noDigitalElements": "Your product does not contain digital elements and therefore falls outside the scope of the Cyber Resilience Act.",
+        "noEuDistribution": "Your product is not intended for the EU market and therefore falls outside the scope of the Cyber Resilience Act.",
+        "excludedSector": "Your product is already covered by sector-specific EU regulations and is excluded from the CRA scope."
+      }
+    },
+    "result": {
+      "title": "Assessment Complete",
+      "subtitle": "Your product has been assessed and classified under the CRA.",
+      "classification": "CRA Classification",
+      "conformityRoute": "Conformity Assessment Route",
+      "notifiedBody": "Requires Notified Body",
+      "yes": "Yes",
+      "no": "No",
+      "deadlines": "Key Deadlines",
+      "reportingDeadline": "Reporting Obligations",
+      "reportingDate": "Sep 11, 2026",
+      "fullCompliance": "Full Product Requirements",
+      "fullComplianceDate": "Dec 11, 2027",
+      "roadmap": "Compliance Roadmap",
+      "viewProduct": "View Product",
+      "addAnother": "Add Another Product",
+      "categories": {
+        "default": "Default",
+        "defaultDescription": "Standard security requirements apply. Self-assessment is sufficient.",
+        "important_class_i": "Important Class I",
+        "important_class_iDescription": "Enhanced security requirements. Self-assessment allowed with harmonised standards.",
+        "important_class_ii": "Important Class II",
+        "important_class_iiDescription": "High security requirements. Third-party assessment by a notified body required.",
+        "critical": "Critical",
+        "criticalDescription": "Highest security requirements. European cybersecurity certification required."
+      },
+      "routes": {
+        "module_a": "Module A — Self-Assessment",
+        "module_aDescription": "Internal production control. You can self-assess compliance with essential requirements.",
+        "module_b_c": "Module B+C — EU-Type Examination",
+        "module_b_cDescription": "EU-type examination (Module B) followed by conformity to type (Module C) by a notified body.",
+        "module_h": "Module H — Full Quality Assurance",
+        "module_hDescription": "Full quality assurance assessment by a notified body covering design, production, and product checks.",
+        "european_certification": "European Cybersecurity Certification",
+        "european_certificationDescription": "European cybersecurity certification scheme as defined by ENISA under the EU Cybersecurity Act."
+      },
+      "roadmapSteps": {
+        "step1": "Gap Analysis",
+        "step1Description": "Assess current security posture against CRA essential requirements.",
+        "step2": "Risk Assessment",
+        "step2Description": "Perform cybersecurity risk assessment for the product lifecycle.",
+        "step3": "Security by Design",
+        "step3Description": "Implement security requirements in product design and development.",
+        "step4": "Vulnerability Handling",
+        "step4Description": "Establish vulnerability handling and disclosure processes.",
+        "step5": "SBOM Creation",
+        "step5Description": "Generate and maintain a Software Bill of Materials (Annex II).",
+        "step6": "Technical Documentation",
+        "step6Description": "Prepare technical documentation per Annex V requirements.",
+        "step7": "Conformity Assessment",
+        "step7Description": "Complete the required conformity assessment procedure.",
+        "step8": "Declaration & CE Marking",
+        "step8Description": "Issue EU Declaration of Conformity and affix CE marking."
+      }
+    },
+    "errors": {
+      "notAuthenticated": "You must be signed in to continue.",
+      "noOrganization": "You must belong to an organization.",
+      "generic": "Something went wrong. Please try again."
+    }
+  }
+}

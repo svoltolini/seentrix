@@ -1,0 +1,98 @@
+---
+title: "CRA September 2026 Deadline: What Manufacturers Must Do Now"
+description: "The EU Cyber Resilience Act's first deadline hits September 2026. Learn about Article 14 reporting obligations, PSIRT requirements, and SBOM readiness."
+date: "2026-04-01"
+category: "Compliance"
+author: "Seentrix Team"
+---
+
+The EU Cyber Resilience Act (CRA) entered into force in December 2024, but its obligations phase in gradually. The first major compliance milestone arrives in **September 2026**, when Article 14 reporting obligations become enforceable. That is roughly five months from today. If your organization manufactures or distributes products with digital elements in the EU market, the time to prepare is now, not later.
+
+This post breaks down exactly what the September 2026 deadline requires, what infrastructure you need to have in place, and the concrete steps you should be taking right now to avoid non-compliance.
+
+## What Happens in September 2026
+
+The CRA follows a staggered enforcement timeline. While the full set of obligations for product security requirements does not take effect until December 2027, one critical set of rules kicks in much earlier: the **vulnerability and incident reporting obligations under Article 14**.
+
+Starting in September 2026, manufacturers of products with digital elements must report two categories of events to ENISA (the EU Agency for Cybersecurity) through the designated single reporting platform:
+
+1. **Actively exploited vulnerabilities** found in any product they have placed on the EU market.
+2. **Severe security incidents** that impact the security of those products.
+
+This is not a future consideration. It is a near-term operational requirement with real enforcement teeth. Non-compliance can result in fines of up to 15 million euros or 2.5% of global annual turnover, whichever is higher.
+
+## What Article 14 Requires in Practice
+
+The reporting obligations under Article 14 follow strict timelines. When a manufacturer becomes aware of an actively exploited vulnerability or a severe incident, the clock starts immediately:
+
+- **Within 24 hours**: Submit an early warning notification to ENISA, indicating whether the vulnerability is suspected to have been exploited maliciously and whether there is potential cross-border impact.
+- **Within 72 hours**: Follow up with a vulnerability notification that includes a general assessment of the vulnerability or incident, its severity, and any corrective measures taken or planned.
+- **Within 14 days**: Deliver a final report containing a detailed description of the vulnerability or incident, the root cause, any applied remediation, and, where applicable, information about the exploiting threat actor.
+
+Manufacturers must also notify users of affected products without undue delay, along with guidance on how to mitigate the risk. This is not optional supplementary information. It is a binding obligation.
+
+The scope here is broad. "Products with digital elements" covers any software or hardware product that includes a digital component and is made available on the EU market. This includes firmware, operating systems, embedded software, IoT devices, industrial control systems, and consumer electronics. If your product connects to a network or processes data, it almost certainly falls within scope.
+
+## Building a PSIRT Process
+
+You cannot meet Article 14 timelines without a structured vulnerability handling process. The industry standard for this is a **Product Security Incident Response Team (PSIRT)**, and the CRA effectively mandates one, even if it does not use that exact term.
+
+A functional PSIRT process for CRA compliance needs to cover the following:
+
+- **Vulnerability intake**: A clear, publicly accessible channel for receiving vulnerability reports from external researchers, customers, and automated scanning tools. The CRA requires manufacturers to provide a contact address for vulnerability reporting.
+- **Triage and assessment**: A repeatable process for evaluating reported vulnerabilities, determining severity (using CVSS or a comparable framework), and deciding on response priority.
+- **Coordination**: Defined workflows for coordinating with component suppliers, open-source maintainers, and other stakeholders when a vulnerability spans multiple products or dependencies.
+- **Remediation tracking**: Internal systems that track each vulnerability from intake through patch development, testing, and deployment.
+- **Reporting to ENISA**: Pre-established templates, designated personnel, and tested workflows for meeting the 24-hour, 72-hour, and 14-day reporting windows.
+- **User notification**: A reliable mechanism for notifying affected users with actionable remediation guidance.
+
+If you do not have a PSIRT today, standing one up is not something you can accomplish in a few weeks. The roles, tooling, documentation, and internal buy-in all take time. Start immediately.
+
+## SBOM Requirements Under the CRA
+
+The CRA introduces a formal obligation for manufacturers to create and maintain a **Software Bill of Materials (SBOM)** for every product with digital elements. While the SBOM requirements tie into the broader product security obligations taking effect in December 2027, building your SBOM capability now is essential for meeting the September 2026 reporting deadline effectively.
+
+Here is why: you cannot report actively exploited vulnerabilities accurately if you do not know what components are in your products. An SBOM is the foundation that makes vulnerability identification, triage, and reporting possible at scale.
+
+Under the CRA, a product's SBOM must include at minimum:
+
+- **Component identification**: The name, version, and supplier of every third-party and open-source component included in the product, including transitive dependencies.
+- **Dependency relationships**: How components relate to each other within the software supply chain.
+- **Sufficient detail for vulnerability mapping**: Enough information to reliably match components against known vulnerability databases such as the NVD or OSV.
+
+The CRA does not prescribe a specific SBOM format, but industry practice and the emerging regulatory guidance lean toward established standards such as **CycloneDX** and **SPDX**. Choosing a machine-readable format now will save significant rework later.
+
+SBOMs are not static documents. They must be updated with each product release and whenever the component inventory changes. Automating SBOM generation as part of your CI/CD pipeline is the only practical way to maintain accuracy over time.
+
+## Practical Steps to Prepare Now
+
+With five months until the September 2026 deadline, here is a prioritized action plan:
+
+**1. Inventory your products.** Identify every product with digital elements that you place on the EU market. This includes products sold directly and those distributed through channel partners. Determine which products fall under the "important" or "critical" categories, as these carry additional conformity assessment requirements.
+
+**2. Map your software components.** Generate an SBOM for each product. Start with your highest-risk and highest-volume products. Use automated tooling integrated into your build process rather than manual documentation.
+
+**3. Establish vulnerability handling procedures.** Define your PSIRT charter, assign roles, and document your triage and response workflows. Set up a public vulnerability disclosure policy and a reporting channel.
+
+**4. Set up ENISA reporting channels.** Familiarize your team with the ENISA single reporting platform. Prepare notification templates for the 24-hour, 72-hour, and 14-day reports. Run a tabletop exercise to test your team's ability to meet the timelines under realistic conditions.
+
+**5. Audit your supply chain.** Engage with your component suppliers and open-source dependencies. Understand their vulnerability disclosure practices and ensure you have a reliable way to receive upstream vulnerability notifications.
+
+**6. Assign accountability.** Designate a named individual or team responsible for CRA compliance. This person needs authority to coordinate across engineering, legal, and product management.
+
+## Common Mistakes to Avoid
+
+Organizations preparing for the CRA reporting deadline frequently fall into the same traps. Knowing these in advance can save you significant time and cost.
+
+- **Treating SBOMs as a one-time exercise.** An SBOM that was accurate at the time of a product release but has not been updated since is a liability, not an asset. Automate generation and updates.
+- **Confusing vulnerability disclosure with vulnerability reporting.** Disclosing a vulnerability to your users is separate from reporting it to ENISA. The CRA requires both, on different timelines and through different channels.
+- **Underestimating the 24-hour window.** Twenty-four hours from awareness to early warning notification is an extremely tight timeline. If your first attempt at meeting this deadline is during a real incident, you will almost certainly fail. Test your process before it matters.
+- **Ignoring transitive dependencies.** Your direct dependencies are only the surface. A vulnerability three levels deep in your dependency tree is still your reporting obligation. Your SBOM tooling must capture the full dependency graph.
+- **Waiting for final implementing acts.** Some manufacturers are delaying preparation because certain technical standards and implementing acts are still being finalized. The Article 14 reporting obligations, however, are already defined in the regulation text. Waiting is not a defensible strategy.
+- **Assuming this only applies to software companies.** If you manufacture any physical product that includes firmware, an embedded OS, or network connectivity, you are in scope. This includes industrial equipment, medical devices, automotive components, and consumer appliances.
+
+## Start Preparing Today
+
+The September 2026 deadline is close, but it is still reachable if you act now. The manufacturers who will navigate this transition smoothly are the ones building their vulnerability handling processes and SBOM infrastructure today, not the ones scrambling in August.
+
+Don't wait until the deadline is here. Seentrix helps manufacturers build SBOM inventories and prepare for CRA reporting obligations. [Try our free CRA assessment today](/assessment).
