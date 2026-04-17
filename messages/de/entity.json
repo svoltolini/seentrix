@@ -1,0 +1,140 @@
+{
+  "entity": {
+    "title": "Rolle als Wirtschaftsakteur",
+    "subtitle": "Der CRA verteilt Pflichten auf Hersteller, Bevollmächtigte, Importeure und Händler. Wählen Sie die Rolle Ihrer Organisation — die Pflichten-Checkliste passt sich an.",
+    "progressLabel": "Fortschritt",
+    "type": {
+      "title": "Ihre Rolle",
+      "description": "Nur Admins und Compliance-Beauftragte können die Rolle ändern. Der Wechsel initialisiert die Pflichten-Liste neu.",
+      "manufacturer.title": "Hersteller",
+      "manufacturer.description": "Sie bringen Produkte mit digitalen Elementen unter eigenem Namen / Marke auf den EU-Markt.",
+      "authorised_representative.title": "Bevollmächtigter",
+      "authorised_representative.description": "In der EU ansässige Person, die mandatiert für einen Nicht-EU-Hersteller handelt.",
+      "importer.title": "Importeur",
+      "importer.description": "Sie bringen das Produkt eines Nicht-EU-Herstellers auf den EU-Markt.",
+      "distributor.title": "Händler",
+      "distributor.description": "Sie stellen Produkte auf dem EU-Markt bereit, ohne Hersteller oder Importeur zu sein."
+    },
+    "status": {
+      "pending": "Ausstehend",
+      "in_progress": "In Bearbeitung",
+      "complete": "Abgeschlossen",
+      "not_applicable": "N/A"
+    },
+    "obligations": {
+      "title": "Pflichten für {entity}",
+      "notesLabel": "Nachweisnotizen",
+      "notesPlaceholder": "Wo der Nachweis liegt, wer ihn freigegeben hat, Link zum Dokument."
+    },
+    "obligation": {
+      "manufacturer": {
+        "essential_requirements_met": {
+          "title": "Grundlegende Anforderungen erfüllt",
+          "description": "Alle Anhang-I-Punkte (Teil I + II) sind adressiert und auf der Checkliste belegt."
+        },
+        "vulnerability_handling_operational": {
+          "title": "Schwachstellen-Handhabung etabliert",
+          "description": "Dokumentierter Prozess für Annahme, Bewertung und Behebung über den Support-Zeitraum hinweg."
+        },
+        "technical_documentation_ready": {
+          "title": "Technische Dokumentation bereit",
+          "description": "Anhang-II-Dossier ist zusammengestellt und wird 10 Jahre nach Inverkehrbringen aufbewahrt."
+        },
+        "doc_issued": {
+          "title": "EU-Konformitätserklärung ausgestellt",
+          "description": "Ausgestellt, unterzeichnet, dem technischen Dossier beigefügt."
+        },
+        "ce_marking_affixed": {
+          "title": "CE-Kennzeichnung angebracht",
+          "description": "CE-Kennzeichnung (ggf. mit Kennnummer der notifizierten Stelle) sichtbar und dauerhaft angebracht."
+        },
+        "ten_year_records_retained": {
+          "title": "10-Jahres-Aufbewahrung",
+          "description": "Technische Dokumentation, Konformitätserklärung und CVD-Artefakte werden 10 Jahre oder den Support-Zeitraum lang aufbewahrt."
+        }
+      },
+      "authorised_representative": {
+        "written_mandate": {
+          "title": "Schriftliches Mandat vorliegend",
+          "description": "Unterzeichnetes Mandat des Nicht-EU-Herstellers für die EU-Vertretung."
+        },
+        "technical_documentation_on_hand": {
+          "title": "Technische Dokumentation verfügbar",
+          "description": "Kann Behörden auf Anfrage die technische Dokumentation vorlegen."
+        },
+        "doc_on_hand": {
+          "title": "Konformitätserklärung verfügbar",
+          "description": "Kopie der DoC für jedes vertretene Produkt liegt vor."
+        },
+        "cooperate_with_authorities": {
+          "title": "Kooperation mit Behörden",
+          "description": "Verpflichtet, Informationen bereitzustellen und bei Marktüberwachung mitzuwirken."
+        },
+        "terminate_if_noncompliant": {
+          "title": "Mandat bei Verstoß kündigen",
+          "description": "Prozess zur Beendigung des Mandats bei CRA-Verstößen mit Benachrichtigung von Hersteller und Behörden."
+        }
+      },
+      "importer": {
+        "verify_manufacturer_doc": {
+          "title": "Hersteller-DoC geprüft",
+          "description": "Vor Inverkehrbringen geprüft, dass eine gültige EU-Konformitätserklärung ausgestellt wurde."
+        },
+        "verify_ce_marking": {
+          "title": "CE-Kennzeichnung geprüft",
+          "description": "Sicherstellen, dass die CE-Kennzeichnung (ggf. mit Kennnummer) angebracht ist."
+        },
+        "verify_technical_documentation": {
+          "title": "Technische Dokumentation bestätigt",
+          "description": "Bestätigt, dass der Hersteller die technische Dokumentation erstellt hat."
+        },
+        "add_importer_details_to_product": {
+          "title": "Importeurangaben am Produkt",
+          "description": "Name, Handelsname/Marke und Postanschrift auf Produkt, Verpackung oder beiliegenden Unterlagen."
+        },
+        "store_transport_without_impact": {
+          "title": "Lagerung / Transport ohne Beeinträchtigung",
+          "description": "Bedingungen gefährden nicht die Konformität mit grundlegenden Anforderungen."
+        },
+        "report_exploited_vulnerabilities_to_manufacturer": {
+          "title": "Schwachstellen an Hersteller melden",
+          "description": "Prozess zur Information des Herstellers (und ggf. Behörden) über aktiv ausgenutzte Schwachstellen."
+        },
+        "cooperate_with_authorities": {
+          "title": "Kooperation mit Behörden",
+          "description": "Marktüberwachungsbehörden mit allen Informationen versorgen und bei Korrekturmaßnahmen mitwirken."
+        }
+      },
+      "distributor": {
+        "verify_ce_marking": {
+          "title": "CE-Kennzeichnung geprüft",
+          "description": "CE-Kennzeichnung angebracht und mit erforderlicher Dokumentation verbunden."
+        },
+        "verify_importer_details": {
+          "title": "Importeurangaben vorhanden",
+          "description": "Kennzeichnung von Importeur oder Hersteller auf Produkt/Verpackung/Unterlagen geprüft."
+        },
+        "verify_instructions_user_info": {
+          "title": "Gebrauchsanleitungen vorhanden",
+          "description": "Anleitungen und Nutzerinformationen in einer leicht verständlichen Sprache liegen vor."
+        },
+        "store_transport_without_impact": {
+          "title": "Lagerung / Transport ohne Beeinträchtigung",
+          "description": "Bedingungen gefährden nicht die Konformität."
+        },
+        "report_exploited_vulnerabilities": {
+          "title": "Ausgenutzte Schwachstellen eskalieren",
+          "description": "Prozess zur Information von Hersteller/Importeur und Behörden bei aktiv ausgenutzten Schwachstellen."
+        },
+        "cooperate_with_authorities": {
+          "title": "Kooperation mit Behörden",
+          "description": "Marktüberwachungsbehörden informieren und bei Korrekturen unterstützen."
+        }
+      }
+    },
+    "toast": {
+      "saved": "Gespeichert",
+      "saveFailed": "Speichern fehlgeschlagen"
+    }
+  }
+}

@@ -4,6 +4,7 @@
     "subtitle": "Verwalten Sie Ihre Organisation, Ihr Team und Ihr Konto.",
     "nav": {
       "organization": "Organisation",
+      "entity": "Akteursrolle",
       "team": "Team",
       "billing": "Abrechnung",
       "activity": "Aktivität",

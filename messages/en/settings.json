@@ -4,6 +4,7 @@
     "subtitle": "Manage your organization, team, and account.",
     "nav": {
       "organization": "Organization",
+      "entity": "Entity role",
       "team": "Team",
       "billing": "Billing",
       "activity": "Activity",

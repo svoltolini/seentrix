@@ -1,0 +1,140 @@
+{
+  "entity": {
+    "title": "Economic-operator role",
+    "subtitle": "The CRA assigns different obligations to manufacturers, authorised representatives, importers, and distributors. Select the role your organization plays — the obligation checklist adapts.",
+    "progressLabel": "Progress",
+    "type": {
+      "title": "Your role",
+      "description": "Only admins and compliance officers can change the role. Switching re-seeds the obligation list.",
+      "manufacturer.title": "Manufacturer",
+      "manufacturer.description": "You place products with digital elements on the EU market under your own name or trademark.",
+      "authorised_representative.title": "Authorised representative",
+      "authorised_representative.description": "A mandated person in the EU who acts on behalf of a non-EU manufacturer.",
+      "importer.title": "Importer",
+      "importer.description": "You place a product from a non-EU manufacturer on the EU market.",
+      "distributor.title": "Distributor",
+      "distributor.description": "You make products available on the EU market without being the manufacturer or importer."
+    },
+    "status": {
+      "pending": "Pending",
+      "in_progress": "In progress",
+      "complete": "Complete",
+      "not_applicable": "N/A"
+    },
+    "obligations": {
+      "title": "{entity} obligations",
+      "notesLabel": "Evidence notes",
+      "notesPlaceholder": "Where the evidence lives, who signed it off, link to document."
+    },
+    "obligation": {
+      "manufacturer": {
+        "essential_requirements_met": {
+          "title": "Essential requirements met",
+          "description": "All Annex I Part I + II requirements are addressed and evidenced on the checklist."
+        },
+        "vulnerability_handling_operational": {
+          "title": "Vulnerability handling operational",
+          "description": "A documented process to receive, triage, and fix vulnerabilities throughout the support period is in place."
+        },
+        "technical_documentation_ready": {
+          "title": "Technical documentation ready",
+          "description": "Annex II technical file is compiled and retained for 10 years post-placement."
+        },
+        "doc_issued": {
+          "title": "Declaration of Conformity issued",
+          "description": "EU Declaration of Conformity is issued, signed, and kept with the technical file."
+        },
+        "ce_marking_affixed": {
+          "title": "CE marking affixed",
+          "description": "CE marking (with notified-body number if applicable) is affixed visibly and durably."
+        },
+        "ten_year_records_retained": {
+          "title": "10-year records retained",
+          "description": "Technical documentation, DoC, and CVD artefacts are retained for 10 years or the support period, whichever is longer."
+        }
+      },
+      "authorised_representative": {
+        "written_mandate": {
+          "title": "Written mandate on file",
+          "description": "Signed mandate from the non-EU manufacturer granting representation in the EU."
+        },
+        "technical_documentation_on_hand": {
+          "title": "Technical documentation at disposal",
+          "description": "Can make the technical documentation available to authorities on request."
+        },
+        "doc_on_hand": {
+          "title": "Declaration of Conformity at disposal",
+          "description": "Has a copy of the DoC for each product represented."
+        },
+        "cooperate_with_authorities": {
+          "title": "Cooperate with authorities",
+          "description": "Committed to providing information and cooperating with market-surveillance requests."
+        },
+        "terminate_if_noncompliant": {
+          "title": "Terminate mandate if non-compliant",
+          "description": "Process in place to terminate the mandate if the manufacturer is acting contrary to CRA obligations, and to notify the manufacturer and authorities."
+        }
+      },
+      "importer": {
+        "verify_manufacturer_doc": {
+          "title": "Manufacturer DoC verified",
+          "description": "Before placing, verified that the manufacturer has issued a valid Declaration of Conformity."
+        },
+        "verify_ce_marking": {
+          "title": "CE marking verified",
+          "description": "Checked that the CE marking (with notified-body number if applicable) is affixed."
+        },
+        "verify_technical_documentation": {
+          "title": "Technical documentation verified",
+          "description": "Confirmed that the manufacturer has drawn up the technical documentation."
+        },
+        "add_importer_details_to_product": {
+          "title": "Importer details on product",
+          "description": "Name, registered trade name / trademark, and postal address indicated on the product or, where not possible, on its packaging or in accompanying documents."
+        },
+        "store_transport_without_impact": {
+          "title": "Storage / transport preserves conformity",
+          "description": "Storage and transport conditions do not jeopardise the product's compliance with essential requirements."
+        },
+        "report_exploited_vulnerabilities_to_manufacturer": {
+          "title": "Report vulnerabilities to manufacturer",
+          "description": "Process in place to inform the manufacturer (and authorities where required) of actively-exploited vulnerabilities."
+        },
+        "cooperate_with_authorities": {
+          "title": "Cooperate with authorities",
+          "description": "Provide market-surveillance authorities with all information and cooperate in corrective actions."
+        }
+      },
+      "distributor": {
+        "verify_ce_marking": {
+          "title": "CE marking verified",
+          "description": "Checked that the CE marking is affixed and accompanied by the required documentation."
+        },
+        "verify_importer_details": {
+          "title": "Importer details present",
+          "description": "Verified the importer or manufacturer's identification is on the product / packaging / accompanying documents."
+        },
+        "verify_instructions_user_info": {
+          "title": "User instructions present",
+          "description": "Instructions and information for use are supplied in a language easily understood by users."
+        },
+        "store_transport_without_impact": {
+          "title": "Storage / transport preserves conformity",
+          "description": "Storage and transport conditions do not jeopardise compliance."
+        },
+        "report_exploited_vulnerabilities": {
+          "title": "Escalate exploited vulnerabilities",
+          "description": "Process to inform the manufacturer / importer and authorities when an actively-exploited vulnerability comes to your attention."
+        },
+        "cooperate_with_authorities": {
+          "title": "Cooperate with authorities",
+          "description": "Provide market-surveillance authorities with information and assist in corrective actions."
+        }
+      }
+    },
+    "toast": {
+      "saved": "Saved",
+      "saveFailed": "Couldn't save"
+    }
+  }
+}

@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 
 const TABS = [
   { key: "nav.organization", segment: "/organization" },
+  { key: "nav.entity", segment: "/entity" },
   { key: "nav.team", segment: "/team" },
   { key: "nav.billing", segment: "/billing" },
   { key: "nav.activity", segment: "/activity" },
