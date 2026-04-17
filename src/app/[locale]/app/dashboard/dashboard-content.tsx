@@ -385,11 +385,12 @@ export function DashboardContent(
           <div data-reveal>
             <ProfileIncompleteBanner
               missing={stats.profileStatus.missing.length}
+              eyebrow={tOrg("docReady.eyebrow")}
               title={tOrg("docReady.title")}
               description={tOrg("docReady.description", {
                 count: stats.profileStatus.missing.length,
               })}
-              cta={t("actionNeeded.cta")}
+              cta={tOrg("docReady.cta")}
             />
           </div>
         )}
