@@ -12,7 +12,7 @@
     "medium": "Medium",
     "low": "Low",
     "vulnChart": "Vulnerability Breakdown",
-    "vulnChartSubtitle": "Open vulnerabilities across all products, ranked by severity",
+    "vulnChartSubtitle": "Across all your products, ranked by severity",
     "noVulnerabilities": "No vulnerabilities found",
     "actionNeeded": {
       "eyebrow": "Action Needed",

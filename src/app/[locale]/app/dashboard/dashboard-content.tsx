@@ -173,7 +173,11 @@ export function DashboardContent(stats: DashboardStats) {
         });
       });
 
-      // Progress bars grow from 0% to target%
+      // Progress bars grow from 0% to target%.
+      // immediateRender: false keeps the "from" state from being applied on
+      // mount — so if the scroll trigger never fires (e.g. the element is
+      // inside a parent with transformed/opacity-0 state mid-reveal), the
+      // bar still displays at its target width from its inline style.
       el.querySelectorAll<HTMLElement>("[data-progress-bar]").forEach(
         (bar) => {
           const target = parseFloat(
@@ -186,9 +190,10 @@ export function DashboardContent(stats: DashboardStats) {
               width: `${target}%`,
               duration: 1.3,
               ease: "power3.out",
+              immediateRender: false,
               scrollTrigger: {
                 trigger: bar,
-                start: "top 90%",
+                start: "top 95%",
                 once: true,
               },
             },
@@ -820,10 +825,12 @@ function VulnBreakdownCard({
           </span>
         </div>
         <div className="relative h-6 w-full overflow-hidden rounded-[4px] bg-[#191919]">
+          {/* The gradient fill is always at 100% width — the "hero" bar
+              doesn't need the grow-in animation; the shimmer sweep plus
+              the cascade reveal on the parent card is enough movement. */}
           <div
             className="h-full rounded-[4px]"
             style={{ width: "100%", backgroundImage: gradient }}
-            data-progress-bar="100"
             title={data
               .map(
                 (e) =>

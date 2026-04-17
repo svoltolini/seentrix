@@ -565,6 +565,14 @@ export async function getDashboardStats(): Promise<DashboardStats> {
 
   let totalScore = 0;
   let scoredCount = 0;
+  // SBOM aggregate totals — used as a fallback for the dashboard vuln
+  // counters when the vulnerabilities table has no open/in_progress rows
+  // (e.g. fresh workspaces that scanned SBOMs but never worked the tickets).
+  let sbomTotalVulns = 0;
+  let sbomCritical = 0;
+  let sbomHigh = 0;
+  let sbomMedium = 0;
+  let sbomLow = 0;
 
   const dashboardProducts: DashboardProduct[] = allProducts.map((p) => {
     const stats = checklistMap[p.id];
@@ -579,6 +587,11 @@ export async function getDashboardStats(): Promise<DashboardStats> {
     const vulnCount = sbomData?.vulnerability_count ?? 0;
     const critCount = sbomData?.critical_count ?? 0;
     const hiCount = sbomData?.high_count ?? 0;
+    sbomTotalVulns += vulnCount;
+    sbomCritical += critCount;
+    sbomHigh += hiCount;
+    sbomMedium += sbomData?.medium_count ?? 0;
+    sbomLow += sbomData?.low_count ?? 0;
 
     return {
       id: p.id,
@@ -924,18 +937,27 @@ export async function getDashboardStats(): Promise<DashboardStats> {
   }
   activityVelocity.sort((a, b) => a.date.localeCompare(b.date));
 
+  // Prefer the vulnerabilities-table totals (open + in_progress tickets —
+  // same source as Vuln Aging), but fall back to SBOM scan aggregates when
+  // there are no tickets at all. Otherwise a workspace that scanned SBOMs
+  // but never triaged the findings into tickets would show an empty card
+  // even though the scan data is right there.
+  const useOpenCounts = openVulnCount > 0;
+  const totalVulnerabilities = useOpenCounts ? openVulnCount : sbomTotalVulns;
+  const criticalCount = useOpenCounts ? openCritical : sbomCritical;
+  const highCount = useOpenCounts ? openHigh : sbomHigh;
+  const mediumCount = useOpenCounts ? openMedium : sbomMedium;
+  const lowCount = useOpenCounts ? openLow : sbomLow;
+
   return {
     totalProducts,
     assessedCount,
     avgCompliance,
-    // Dashboard-wide vuln counters now reflect open + in-progress tickets
-    // (same source as Vuln Aging) rather than historical SBOM scan results,
-    // so the stat card, breakdown, and aging chart all show the same totals.
-    totalVulnerabilities: openVulnCount,
-    criticalCount: openCritical,
-    highCount: openHigh,
-    mediumCount: openMedium,
-    lowCount: openLow,
+    totalVulnerabilities,
+    criticalCount,
+    highCount,
+    mediumCount,
+    lowCount,
     products: dashboardProducts,
     recentActivity,
     currentUser,

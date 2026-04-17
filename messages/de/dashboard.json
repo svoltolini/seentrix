@@ -12,7 +12,7 @@
     "medium": "Mittel",
     "low": "Niedrig",
     "vulnChart": "Schwachstellen-Aufschlüsselung",
-    "vulnChartSubtitle": "Offene Schwachstellen aller Produkte, nach Schweregrad sortiert",
+    "vulnChartSubtitle": "Über alle Produkte, nach Schweregrad sortiert",
     "noVulnerabilities": "Keine Schwachstellen gefunden",
     "actionNeeded": {
       "eyebrow": "Handlungsbedarf",
