@@ -62,6 +62,73 @@
         "title": "Declaration of Conformity is not ready to issue yet",
         "description": "{count, plural, one {# required field is missing} other {# required fields are missing}} for CRA document generation. Fill them below — the conformity workflow will refuse to issue the DoC until everything on this page is complete.",
         "cta": "Fill in now"
+      },
+      "tooltips": {
+        "name": {
+          "title": "Organization name",
+          "body": "The trading or display name users and teammates see inside Seentrix. This is the friendly name — it does not have to match your registered legal entity.",
+          "ref": "Internal only. The legally-binding name on compliance documents is the Legal entity name field below."
+        },
+        "language": {
+          "title": "Default language",
+          "body": "Sets the default locale for every team member's Seentrix UI and the language used when generating compliance PDFs (Declaration of Conformity, Incident Reports, Technical Documentation). Individuals can override this later from their account.",
+          "ref": "Affects the language of the EU Declaration of Conformity under Annex V — customs authorities in the destination country may require a translation regardless."
+        },
+        "legalName": {
+          "title": "Legal entity name",
+          "body": "Registered company name exactly as it appears on your incorporation documents (e.g. Acme GmbH, Acme S.A.S.). May differ from the trading name — include the legal form suffix.",
+          "ref": "CRA Annex V(1) — the Declaration of Conformity must identify the legal person issuing it. Getting this wrong invalidates the declaration."
+        },
+        "registrationNumber": {
+          "title": "Registration or VAT number",
+          "body": "Trade register number (e.g. HRB 12345 in Germany), VAT ID (DE123456789), or equivalent national business registration. Enter exactly one — pick the identifier your national authority uses to look you up.",
+          "ref": "CRA Annex V(1)(b) — the Declaration of Conformity must include an identifier that unambiguously resolves the manufacturer. Market surveillance authorities use it to trace non-compliant products back to you."
+        },
+        "signatoryName": {
+          "title": "Signatory name",
+          "body": "The natural person who signs the Declaration of Conformity. Must be someone legally authorised to bind the organisation — typically the CEO, Managing Director, or an officer with delegated signing authority.",
+          "ref": "CRA Annex V(5) — the declaration is signed by a person acting on behalf of the manufacturer. An unauthorised signature can void the DoC."
+        },
+        "signatoryPosition": {
+          "title": "Signatory position",
+          "body": "Job title of the person signing (e.g. Chief Executive Officer, Managing Director, Head of Compliance). Printed under the signature on the Declaration of Conformity.",
+          "ref": "CRA Annex V(5) — along with the signatory name, this identifies who within the organisation takes legal responsibility for the declaration."
+        },
+        "contactEmail": {
+          "title": "Public contact email",
+          "body": "Customer-facing email printed on product labels, packaging, and the Declaration of Conformity. Must be monitored — market surveillance authorities and end users will use this to reach you.",
+          "ref": "CRA Article 13(4) — manufacturers must provide a single point of contact for cybersecurity matters on the product, packaging, or accompanying documentation."
+        },
+        "website": {
+          "title": "Website",
+          "body": "Corporate website URL. Optional but strongly recommended — it appears on the DoC and gives regulators and end users a second channel to verify your identity.",
+          "ref": "CRA Article 13(4) — not mandatory but counts as acceptable contact information alongside the public email."
+        },
+        "addressLine1": {
+          "title": "Registered address line 1",
+          "body": "Street and number of your registered corporate address — the address on your incorporation documents, not a PO box or shipping depot.",
+          "ref": "CRA Annex V(1)(a) — postal address of the manufacturer, printed on the Declaration of Conformity."
+        },
+        "addressLine2": {
+          "title": "Address line 2",
+          "body": "Optional second line for suite, floor, building name, or similar. Leave blank if your address is a single line.",
+          "ref": "Appended to address line 1 on the Declaration of Conformity when present."
+        },
+        "postalCode": {
+          "title": "Postal code",
+          "body": "ZIP or postal code of your registered address. Format must match your country's convention (e.g. 5 digits for Germany, alphanumeric for the UK).",
+          "ref": "CRA Annex V(1)(a) — part of the postal address block on the Declaration of Conformity."
+        },
+        "city": {
+          "title": "City",
+          "body": "City or locality of your registered address. Also used as the \"place\" field on the signed Declaration of Conformity (\"Signed in {city}, on {date}\").",
+          "ref": "CRA Annex V(6) — the declaration records the place where it was issued, which must match an address that can be linked back to you."
+        },
+        "country": {
+          "title": "Country",
+          "body": "Country of your registered corporate seat. If this is outside the EU, you also need an Authorised Representative in the Union — configure that on the Entity Role tab.",
+          "ref": "CRA Article 18 — manufacturers established outside the Union must appoint an authorised representative in the EU before placing products on the market."
+        }
       }
     },
     "team": {

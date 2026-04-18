@@ -62,6 +62,73 @@
         "title": "Konformitätserklärung kann noch nicht ausgestellt werden",
         "description": "{count, plural, one {# Pflichtfeld fehlt} other {# Pflichtfelder fehlen}} für die CRA-Dokumenterstellung. Bitte ausfüllen — der Konformitäts-Workflow verweigert die Ausstellung, bis diese Seite vollständig ist.",
         "cta": "Jetzt ausfüllen"
+      },
+      "tooltips": {
+        "name": {
+          "title": "Name der Organisation",
+          "body": "Der Handels- oder Anzeigename, den Nutzer und Teammitglieder in Seentrix sehen. Dieser freundliche Name muss nicht mit Ihrer eingetragenen juristischen Person übereinstimmen.",
+          "ref": "Nur intern. Der rechtsverbindliche Name auf Compliance-Dokumenten ist das Feld \"Name der juristischen Person\" weiter unten."
+        },
+        "language": {
+          "title": "Standardsprache",
+          "body": "Legt das Standard-Gebietsschema für die Oberfläche jedes Teammitglieds und die Sprache fest, in der Compliance-PDFs erstellt werden (Konformitätserklärung, Vorfallsberichte, technische Dokumentation). Einzelpersonen können dies später im Kontoverwaltungsbereich überschreiben.",
+          "ref": "Betrifft die Sprache der EU-Konformitätserklärung nach Anhang V — Zollbehörden im Bestimmungsland können unabhängig davon eine Übersetzung verlangen."
+        },
+        "legalName": {
+          "title": "Name der juristischen Person",
+          "body": "Eingetragener Firmenname, genau wie er in Ihren Gründungsunterlagen erscheint (z. B. Acme GmbH, Acme S.A.S.). Kann vom Handelsnamen abweichen — Rechtsformzusatz einschließen.",
+          "ref": "CRA Anhang V(1) — die Konformitätserklärung muss die juristische Person benennen, die sie ausstellt. Ein falscher Name macht die Erklärung ungültig."
+        },
+        "registrationNumber": {
+          "title": "Handelsregister- oder USt-Nummer",
+          "body": "Handelsregisternummer (z. B. HRB 12345 in Deutschland), USt-IdNr. (DE123456789) oder gleichwertige nationale Registrierung. Genau einen Bezeichner eingeben — den, mit dem Sie bei Ihrer nationalen Behörde geführt werden.",
+          "ref": "CRA Anhang V(1)(b) — die Konformitätserklärung muss einen Bezeichner enthalten, mit dem der Hersteller eindeutig identifiziert werden kann. Marktüberwachungsbehörden nutzen ihn zur Rückverfolgung nicht konformer Produkte."
+        },
+        "signatoryName": {
+          "title": "Name des Unterzeichners",
+          "body": "Die natürliche Person, die die Konformitätserklärung unterschreibt. Muss rechtlich befugt sein, die Organisation zu binden — typischerweise Geschäftsführer, Vorstand oder ein:e Bevollmächtigte:r mit übertragener Zeichnungsbefugnis.",
+          "ref": "CRA Anhang V(5) — die Erklärung wird von einer Person im Namen des Herstellers unterzeichnet. Eine nicht autorisierte Unterschrift kann die Erklärung nichtig machen."
+        },
+        "signatoryPosition": {
+          "title": "Position des Unterzeichners",
+          "body": "Funktionsbezeichnung der unterzeichnenden Person (z. B. Geschäftsführer, Chief Executive Officer, Leitung Compliance). Wird unter der Unterschrift auf der Konformitätserklärung gedruckt.",
+          "ref": "CRA Anhang V(5) — zusammen mit dem Namen identifiziert dies, wer innerhalb der Organisation rechtlich Verantwortung für die Erklärung übernimmt."
+        },
+        "contactEmail": {
+          "title": "Öffentliche Kontakt-E-Mail",
+          "body": "Kundengerichtete E-Mail, die auf Produktetiketten, Verpackungen und der Konformitätserklärung erscheint. Muss überwacht werden — Marktüberwachungsbehörden und Endnutzer verwenden sie, um Sie zu erreichen.",
+          "ref": "CRA Artikel 13(4) — Hersteller müssen eine einzige Kontaktstelle für Cybersicherheitsfragen auf dem Produkt, der Verpackung oder den Begleitdokumenten angeben."
+        },
+        "website": {
+          "title": "Website",
+          "body": "Unternehmens-Website. Optional, aber dringend empfohlen — erscheint auf der Konformitätserklärung und gibt Behörden und Endnutzern einen zweiten Kanal zur Identitätsprüfung.",
+          "ref": "CRA Artikel 13(4) — nicht verpflichtend, gilt aber neben der öffentlichen E-Mail als akzeptable Kontaktangabe."
+        },
+        "addressLine1": {
+          "title": "Eingetragene Adresse — Zeile 1",
+          "body": "Straße und Hausnummer Ihrer eingetragenen Firmenadresse — die Adresse aus Ihren Gründungsunterlagen, kein Postfach und kein Versandlager.",
+          "ref": "CRA Anhang V(1)(a) — Postanschrift des Herstellers, gedruckt auf der Konformitätserklärung."
+        },
+        "addressLine2": {
+          "title": "Adresszeile 2",
+          "body": "Optionale zweite Zeile für Stockwerk, Gebäude, Zusatz o. ä. Leer lassen, wenn Ihre Adresse einzeilig ist.",
+          "ref": "Wird in der Konformitätserklärung an Zeile 1 angehängt, wenn vorhanden."
+        },
+        "postalCode": {
+          "title": "Postleitzahl",
+          "body": "PLZ oder Postal Code Ihrer eingetragenen Adresse. Format muss der Landeskonvention entsprechen (z. B. 5-stellig in Deutschland, alphanumerisch im UK).",
+          "ref": "CRA Anhang V(1)(a) — Teil des Postanschrift-Blocks auf der Konformitätserklärung."
+        },
+        "city": {
+          "title": "Stadt",
+          "body": "Stadt oder Ort Ihrer eingetragenen Adresse. Wird auch als \"Ort\"-Feld auf der unterzeichneten Konformitätserklärung verwendet (\"Unterzeichnet in {city}, am {date}\").",
+          "ref": "CRA Anhang V(6) — die Erklärung hält den Ort ihrer Ausstellung fest, der einer Ihnen zurechenbaren Adresse entsprechen muss."
+        },
+        "country": {
+          "title": "Land",
+          "body": "Land Ihres eingetragenen Firmensitzes. Wenn außerhalb der EU, benötigen Sie zusätzlich einen Bevollmächtigten in der Union — auf dem Tab \"Rolle\" konfigurieren.",
+          "ref": "CRA Artikel 18 — außerhalb der Union niedergelassene Hersteller müssen vor dem Inverkehrbringen einen Bevollmächtigten in der EU benennen."
+        }
       }
     },
     "team": {

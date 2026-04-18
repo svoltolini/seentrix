@@ -11,6 +11,7 @@ import { useToast } from "@/components/ui/toast";
 import { cn } from "@/lib/utils";
 import { HugeIcon } from "@/components/huge-icon";
 import { ProfileIncompleteBanner } from "@/components/profile-incomplete-banner";
+import { FieldHelp } from "@/components/field-help";
 import { PLAN_USER_LIMITS, type OrgPlan } from "@/lib/constants/plans";
 
 // Role hierarchy from highest to lowest
@@ -36,6 +37,14 @@ export function OrgSettingsContent({
   const router = useRouter();
   const { toast } = useToast();
   const [isPending, startTransition] = useTransition();
+
+  // Shortcut so each FieldHelp resolves title/body/ref from settings.json
+  // under the `tooltips.<key>` namespace without three separate t() calls.
+  const tip = (key: string) => ({
+    title: t(`tooltips.${key}.title`),
+    body: t(`tooltips.${key}.body`),
+    reference: t(`tooltips.${key}.ref`),
+  });
 
   const [name, setName] = useState(org?.name ?? "");
   const [language, setLanguage] = useState(org?.language ?? "en");
@@ -118,7 +127,10 @@ export function OrgSettingsContent({
           </div>
           <div className="space-y-5 px-6 py-5">
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="name">{t("nameLabel")}</Label>
+              <Label htmlFor="name">
+                {t("nameLabel")}
+                <FieldHelp {...tip("name")} />
+              </Label>
               <Input
                 id="name"
                 value={name}
@@ -130,7 +142,10 @@ export function OrgSettingsContent({
             </div>
 
             <div className="flex flex-col gap-2">
-              <Label>{t("languageLabel")}</Label>
+              <Label>
+                {t("languageLabel")}
+                <FieldHelp {...tip("language")} />
+              </Label>
               <p className="text-xs text-muted-foreground/60">
                 {t("languageDescription")}
               </p>
@@ -183,7 +198,10 @@ export function OrgSettingsContent({
           </div>
           <div className="space-y-5 px-6 py-5">
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="legal_name">{t("legalName")}</Label>
+              <Label htmlFor="legal_name">
+                {t("legalName")}
+                <FieldHelp {...tip("legalName")} />
+              </Label>
               <Input
                 id="legal_name"
                 value={legalName}
@@ -198,6 +216,7 @@ export function OrgSettingsContent({
             <div className="flex flex-col gap-1.5">
               <Label htmlFor="registration_number">
                 {t("registrationNumber")}
+                <FieldHelp {...tip("registrationNumber")} />
               </Label>
               <Input
                 id="registration_number"
@@ -224,7 +243,10 @@ export function OrgSettingsContent({
           <div className="space-y-5 px-6 py-5">
             <div className="grid gap-5 sm:grid-cols-2">
               <div className="flex flex-col gap-1.5">
-                <Label htmlFor="signatory_name">{t("signatoryName")}</Label>
+                <Label htmlFor="signatory_name">
+                  {t("signatoryName")}
+                  <FieldHelp {...tip("signatoryName")} />
+                </Label>
                 <Input
                   id="signatory_name"
                   value={signatoryName}
@@ -236,6 +258,7 @@ export function OrgSettingsContent({
               <div className="flex flex-col gap-1.5">
                 <Label htmlFor="signatory_position">
                   {t("signatoryPosition")}
+                  <FieldHelp {...tip("signatoryPosition")} />
                 </Label>
                 <Input
                   id="signatory_position"
@@ -248,7 +271,10 @@ export function OrgSettingsContent({
             </div>
             <div className="grid gap-5 sm:grid-cols-2">
               <div className="flex flex-col gap-1.5">
-                <Label htmlFor="contact_email">{t("contactEmail")}</Label>
+                <Label htmlFor="contact_email">
+                  {t("contactEmail")}
+                  <FieldHelp {...tip("contactEmail")} />
+                </Label>
                 <Input
                   id="contact_email"
                   type="email"
@@ -259,7 +285,10 @@ export function OrgSettingsContent({
                 />
               </div>
               <div className="flex flex-col gap-1.5">
-                <Label htmlFor="website">{t("website")}</Label>
+                <Label htmlFor="website">
+                  {t("website")}
+                  <FieldHelp {...tip("website")} />
+                </Label>
                 <Input
                   id="website"
                   type="url"
@@ -283,7 +312,10 @@ export function OrgSettingsContent({
           </div>
           <div className="space-y-5 px-6 py-5">
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="address_line1">{t("addressLine1")}</Label>
+              <Label htmlFor="address_line1">
+                {t("addressLine1")}
+                <FieldHelp {...tip("addressLine1")} />
+              </Label>
               <Input
                 id="address_line1"
                 value={addressLine1}
@@ -293,7 +325,10 @@ export function OrgSettingsContent({
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="address_line2">{t("addressLine2")}</Label>
+              <Label htmlFor="address_line2">
+                {t("addressLine2")}
+                <FieldHelp {...tip("addressLine2")} />
+              </Label>
               <Input
                 id="address_line2"
                 value={addressLine2}
@@ -304,7 +339,10 @@ export function OrgSettingsContent({
             </div>
             <div className="grid gap-5 sm:grid-cols-2">
               <div className="flex flex-col gap-1.5">
-                <Label htmlFor="postal_code">{t("postalCode")}</Label>
+                <Label htmlFor="postal_code">
+                  {t("postalCode")}
+                  <FieldHelp {...tip("postalCode")} />
+                </Label>
                 <Input
                   id="postal_code"
                   value={postalCode}
@@ -314,7 +352,10 @@ export function OrgSettingsContent({
                 />
               </div>
               <div className="flex flex-col gap-1.5">
-                <Label htmlFor="city">{t("city")}</Label>
+                <Label htmlFor="city">
+                  {t("city")}
+                  <FieldHelp {...tip("city")} />
+                </Label>
                 <Input
                   id="city"
                   value={city}
@@ -325,7 +366,10 @@ export function OrgSettingsContent({
               </div>
             </div>
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="country">{t("country")}</Label>
+              <Label htmlFor="country">
+                {t("country")}
+                <FieldHelp {...tip("country")} />
+              </Label>
               <Input
                 id="country"
                 value={country}
