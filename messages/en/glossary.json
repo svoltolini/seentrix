@@ -1,0 +1,204 @@
+{
+  "glossary": {
+    "_meta": {
+      "eyebrow": "Glossary",
+      "pageTitle": "Glossary",
+      "pageSubtitle": "Plain-English definitions of the CRA, security, and SBOM vocabulary you'll encounter across Seentrix.",
+      "searchPlaceholder": "Search terms…",
+      "relatedHeading": "Related terms",
+      "lessonHeading": "Deep dive"
+    },
+    "vulnerability": {
+      "title": "Vulnerability",
+      "body": "A weakness in a product's code, design, or configuration that an attacker can exploit to affect confidentiality, integrity, or availability. A vulnerability is different from a bug: all exploitable bugs are vulnerabilities, but not all bugs have security impact. In Seentrix, vulnerabilities are detected by scanning the active SBOM and by direct reports through the PSIRT intake."
+    },
+    "cve": {
+      "title": "CVE",
+      "body": "Common Vulnerabilities and Exposures — a public identifier (e.g. CVE-2024-12345) assigned by MITRE to each publicly-known software vulnerability. CVEs are the lingua franca for vulnerability tracking: vendors, scanners, and advisories all reference them. Seentrix attaches the CVE id to every finding so your audit trail is interoperable with any external tool.",
+      "ref": "CRA Article 13(8) implicitly references CVEs when it requires manufacturers to \"address vulnerabilities\" — auditors expect your fix tickets to cite CVE ids."
+    },
+    "cvss": {
+      "title": "CVSS",
+      "body": "Common Vulnerability Scoring System — a 0.0 to 10.0 score quantifying how severe a vulnerability is. Scores break into Low (0.1-3.9), Medium (4.0-6.9), High (7.0-8.9), Critical (9.0-10.0). CVSS v4 (2023) is the current version; many scanners still report v3. Use CVSS as a starting point for triage, not the final decision — EPSS and KEV often change the priority."
+    },
+    "epss": {
+      "title": "EPSS",
+      "body": "Exploit Prediction Scoring System — a 0.0 to 1.0 probability estimate, updated daily, that a given CVE will be exploited in the next 30 days. Most CVEs have an EPSS below 0.01. An EPSS above 0.5 combined with a high CVSS usually means \"patch this week.\" EPSS is maintained by the FIRST.org community."
+    },
+    "kev": {
+      "title": "KEV catalog",
+      "body": "CISA's Known Exploited Vulnerabilities catalog — a curated list of CVEs that are actively being exploited in the wild. If a vulnerability in your SBOM is on the KEV list, it should jump to the top of your triage queue regardless of its CVSS. CISA adds ~5-10 CVEs to the KEV catalog per week."
+    },
+    "actively_exploited": {
+      "title": "Actively exploited",
+      "body": "A vulnerability is actively exploited when there's credible evidence of real-world attacks using it — public proof-of-concept weaponised, threat-intel reports, log evidence, or presence on the CISA KEV catalog. In Seentrix you can flag any vulnerability as actively-exploited, which immediately triggers the Article 14 incident reporting clock.",
+      "ref": "CRA Article 14(1) — manufacturers must notify ENISA of any actively-exploited vulnerability in their products within 24 hours of becoming aware."
+    },
+    "advisory": {
+      "title": "Security advisory",
+      "body": "A formal, public statement describing a vulnerability, its impact, and the fix. Usually published in machine-readable formats like CSAF or VEX so downstream users can automatically ingest it. Publishing advisories is one of the core obligations of running a PSIRT."
+    },
+    "cvd": {
+      "title": "Coordinated Vulnerability Disclosure",
+      "body": "A policy + process for handling incoming vulnerability reports: a public intake, a triage SLA, a safe-harbour statement for good-faith researchers, and coordinated timing between the vendor's patch and the researcher's public disclosure. The CRA makes CVD a formal obligation.",
+      "ref": "CRA Annex I Part II(1) — manufacturers must have a CVD policy. Seentrix's public security page is the intake side of that policy."
+    },
+    "psirt": {
+      "title": "PSIRT",
+      "body": "Product Security Incident Response Team — the team (not necessarily full-time) that owns vulnerability intake, triage, coordination with researchers, and publication of advisories for a product. For small companies the PSIRT might be one engineer wearing a second hat. The CRA assumes you have one even if you don't call it that."
+    },
+    "sbom": {
+      "title": "SBOM",
+      "body": "Software Bill of Materials — a machine-readable inventory of every component (including transitive dependencies) in a piece of software, along with versions and licences. The SBOM is the input to vulnerability scanning: you can't find a vulnerability if you don't know what you ship. Seentrix accepts CycloneDX and SPDX.",
+      "ref": "CRA Annex I Part I(2)(a)(v) — products must \"identify and document relevant components.\" An SBOM is the practical way to satisfy that requirement."
+    },
+    "cyclonedx": {
+      "title": "CycloneDX",
+      "body": "An SBOM format maintained by OWASP (XML or JSON). CycloneDX is popular in the security-tooling ecosystem and is particularly good at representing dependency relationships and vulnerabilities alongside components. Seentrix scans CycloneDX natively."
+    },
+    "spdx": {
+      "title": "SPDX",
+      "body": "Software Package Data Exchange — an ISO/IEC 5962 standardised SBOM format maintained by the Linux Foundation (tag-value, JSON, YAML, RDF). SPDX has the strongest licence-representation capabilities of any SBOM format and is the reference format for US federal procurement. Seentrix scans SPDX natively."
+    },
+    "semver": {
+      "title": "Semver",
+      "body": "Semantic Versioning — a three-number versioning convention (MAJOR.MINOR.PATCH) where bumps have defined meanings: MAJOR for breaking changes, MINOR for backwards-compatible features, PATCH for backwards-compatible fixes. Seentrix accepts any version string, but semver-compliant versions make it easier for users to decide whether to upgrade."
+    },
+    "digest": {
+      "title": "Digest",
+      "body": "A fixed-length fingerprint (usually a SHA-256 hash) of a file or artifact. If you change one byte, the digest changes completely. Digests let downstream users verify that the binary they downloaded is the one you shipped — essential for supply-chain integrity."
+    },
+    "hash": {
+      "title": "Hash",
+      "body": "A one-way mathematical function that maps data of any size to a fixed-length output (the digest). Cryptographic hashes (SHA-256, SHA-3) are designed so that different inputs produce different outputs and so you can't reverse the output back to the input. Used for integrity checks and signatures."
+    },
+    "signing": {
+      "title": "Code signing",
+      "body": "Attaching a cryptographic signature to a software artifact to prove it came from you and hasn't been tampered with. Implementations vary: GPG for open-source, Authenticode for Windows, Sigstore for cloud-native, OS-vendor signing for mobile. Signed releases are a practical way to satisfy the CRA's integrity-protection requirements.",
+      "ref": "CRA Annex I Part I(3)(h) — products must implement integrity protection for stored, transmitted, and processed data."
+    },
+    "cra": {
+      "title": "CRA",
+      "body": "Cyber Resilience Act — Regulation (EU) 2024/2847. An EU regulation that imposes cybersecurity requirements on \"products with digital elements\" placed on the EU market, including hardware, software, firmware, and IoT. Adopted 2024, with obligations phasing in through 2027 (full compliance by 11 December 2027)."
+    },
+    "annex_i": {
+      "title": "Annex I",
+      "body": "The essential cybersecurity requirements, split into Part I (cybersecurity requirements for the product itself — secure-by-default, integrity, data minimisation, etc.) and Part II (vulnerability-handling requirements — SBOM, CVD policy, security updates, etc.). Every product in scope must meet every applicable requirement."
+    },
+    "annex_v": {
+      "title": "Annex V",
+      "body": "The mandatory content of the EU Declaration of Conformity: manufacturer identification, product identification, list of harmonised standards applied, conformity-assessment route, notified-body details (where relevant), signature of an authorised person. Seentrix populates all of this automatically from the settings you provide."
+    },
+    "article_13": {
+      "title": "Article 13",
+      "body": "The CRA article that enumerates the manufacturer's obligations: CE marking, technical documentation, conformity assessment, vulnerability handling, support period, contact point for cybersecurity, and the duty to provide security updates without undue delay for the duration of the support period (minimum 5 years)."
+    },
+    "article_14": {
+      "title": "Article 14",
+      "body": "The CRA article that mandates incident reporting. When a manufacturer becomes aware of an actively-exploited vulnerability or a severe incident affecting their product's security, they must file an Early Warning within 24 hours, a full Incident Report within 72 hours, and a Final Report within 14 days — all via the ENISA single entry point."
+    },
+    "essential_requirements": {
+      "title": "Essential requirements",
+      "body": "The list of cybersecurity properties a product must have to be placed on the EU market, defined in CRA Annex I Part I. Examples: no known exploitable vulnerabilities at the time of placing on the market, secure-by-default configuration, minimised attack surface, protection of integrity and authenticity, data minimisation. Compliance with harmonised standards (EN 18031 series) gives you a presumption of conformity."
+    },
+    "conformity_assessment": {
+      "title": "Conformity assessment",
+      "body": "The formal procedure that determines whether your product meets the essential requirements. The CRA offers four routes: Module A (self-assessment, default for non-critical), Module B+C (type examination by a notified body for Important Class II), Module H (full quality-assurance audit), and the EU cybersecurity certification scheme."
+    },
+    "module_a": {
+      "title": "Module A",
+      "body": "Internal production control — the self-assessment route. The manufacturer prepares the technical documentation, declares conformity, affixes the CE marking, and assumes full responsibility. No notified body is involved. Available for products that aren't classified Important Class I or II or Critical."
+    },
+    "module_b_c": {
+      "title": "Module B+C",
+      "body": "EU-type examination (Module B) followed by conformity to type (Module C). A notified body examines a representative sample of the product, issues an EU-type examination certificate, and then the manufacturer declares every produced unit conforms to that type. Required for Important Class II products."
+    },
+    "module_h": {
+      "title": "Module H",
+      "body": "Full quality assurance — a notified body audits and approves the manufacturer's complete quality system (design, manufacturing, final inspection, testing). Surveillance audits recur annually. More expensive than Module B+C but covers all product variants under one certificate. Required for Critical products and available for Important Class II."
+    },
+    "ce_marking": {
+      "title": "CE marking",
+      "body": "The CE logo on products and packaging, signalling compliance with applicable EU regulations. Under the CRA, affixing CE marking to a product with digital elements is an attestation that it meets the essential requirements and has been through the correct conformity-assessment route. Illegitimate CE marking carries fines up to €15M or 2.5% of global turnover."
+    },
+    "doc": {
+      "title": "Declaration of Conformity",
+      "body": "A signed legal document where the manufacturer declares their product complies with every applicable EU regulation (CRA + others). Must be drawn up before placing the product on the market, kept on file for 10 years, and made available to market surveillance authorities on request. Seentrix generates it from your product + organisation settings.",
+      "ref": "CRA Annex V defines the mandatory content of the Declaration of Conformity."
+    },
+    "notified_body": {
+      "title": "Notified body",
+      "body": "An independent third-party organisation designated by an EU member state to perform conformity assessments. Each has a unique four-digit identifier (e.g. 0197 for TÜV Rheinland) and a scope of activities they're competent to assess. You must pick one before applying for Module B+C or Module H."
+    },
+    "nando": {
+      "title": "NANDO",
+      "body": "The Commission's New Approach Notified and Designated Organisations database. Every notified body competent to perform CRA conformity assessments is listed there with their scope, address, and four-digit ID. The authoritative place to pick a notified body. Search: ec.europa.eu/growth/tools-databases/nando."
+    },
+    "authorised_representative": {
+      "title": "Authorised representative",
+      "body": "A natural or legal person established in the EU, mandated in writing by a non-EU manufacturer, to carry out specific tasks on the manufacturer's behalf (keeping technical documentation, cooperating with market surveillance, etc.). Required before a non-EU manufacturer can place products on the EU market.",
+      "ref": "CRA Article 18."
+    },
+    "market_surveillance": {
+      "title": "Market surveillance",
+      "body": "The national-authority function that ensures products placed on the EU market comply with applicable regulations. Each member state designates one. They can request technical documentation, inspect products, ban sales, order recalls, and issue fines. Under the CRA, they typically give you 30-60 days to respond to a documentation request."
+    },
+    "placing_on_market": {
+      "title": "Placing on the market",
+      "body": "The legal moment at which a product is first made available on the EU market for distribution or use, whether in return for payment or free of charge. From that moment the manufacturer's CRA obligations begin, and the support period starts counting. Giving a device to a customer in the EU is placing on the market, even a beta unit."
+    },
+    "early_warning": {
+      "title": "Early warning",
+      "body": "The first of three CRA incident notifications. Must reach ENISA within 24 hours of becoming aware of an actively-exploited vulnerability or severe incident. Minimum content: general description, whether you suspect malicious activity, and the EU member state(s) where the product is in use. Can be terse — the 72-hour report fills in the gaps."
+    },
+    "incident_report": {
+      "title": "Incident report",
+      "body": "The 72-hour follow-up to the 24-hour early warning. Includes severity assessment, scope of the compromise, indicators of compromise (IOCs) where available, mitigation in progress, and affected products and users. Can still be revised in the 14-day final report."
+    },
+    "final_report": {
+      "title": "Final report",
+      "body": "The 14-day closing notification. Root-cause analysis, the corrective measures you've taken (and will take), residual risk, and how you communicated to affected users. This is the one auditors will dig into years later, so be thorough."
+    },
+    "triage": {
+      "title": "Triage",
+      "body": "The process of deciding, for every incoming vulnerability or report, what severity it really is and what to do about it. In Seentrix, triage moves a report along the triage → investigating → resolved / duplicate / spam pipeline and attaches notes that become part of the audit trail."
+    },
+    "severity": {
+      "title": "Severity",
+      "body": "A qualitative label (Critical / High / Medium / Low) for how serious a vulnerability or incident is in your specific context. Not the same as CVSS: a Critical CVSS score on a component you don't actually use is Low severity. Severity drives the CRA reporting obligations under Article 14."
+    },
+    "enisa": {
+      "title": "ENISA",
+      "body": "The European Union Agency for Cybersecurity. Under the CRA, ENISA operates the single reporting platform where manufacturers file the 24h / 72h / 14d incident notifications. Also maintains the European Vulnerability Database (EUVD) and coordinates with national CSIRTs."
+    },
+    "csirt": {
+      "title": "CSIRT",
+      "body": "Computer Security Incident Response Team — national-level teams (one per EU member state plus ENISA's own) that coordinate incident response. Under the CRA, CSIRTs receive Article 14 notifications from the single ENISA platform and may contact you directly for more information."
+    },
+    "support_period": {
+      "title": "Support period",
+      "body": "The window during which a manufacturer commits to providing security updates for a product. Declared publicly (on end-user information, the DoC, and product packaging) and binding — you can't shorten it after the fact. The CRA mandates a minimum of 5 years, longer if the expected product lifetime is longer.",
+      "ref": "CRA Article 13 + Annex I Part II(8)."
+    },
+    "update_channel": {
+      "title": "Update channel",
+      "body": "How security updates physically reach end users — over-the-air push, package manager pull (apt, npm, Docker Hub), a download portal, a vendor-shipped USB update, or manual replacement. The CRA requires the update channel to be declared on end-user information so users know how to stay current."
+    },
+    "release": {
+      "title": "Release",
+      "body": "A single shippable version of a product, characterised by a version string and a build artifact. Seentrix tracks releases so you can evidence the support commitment is being met: a 5-year support period with zero releases is a red flag for auditors."
+    },
+    "security_update": {
+      "title": "Security update",
+      "body": "A release whose primary purpose is patching one or more vulnerabilities. Under CRA Article 13(8) security updates must be made available \"without undue delay and free of charge.\" Tagging a release as a security update in Seentrix auto-flags it in the compliance evidence ledger."
+    }
+  },
+  "help": {
+    "fieldHelp": "Field help",
+    "craReference": "CRA reference",
+    "relatedTerms": "Related terms",
+    "academy": "Academy",
+    "comingSoon": "Coming soon",
+    "close": "Close"
+  }
+}

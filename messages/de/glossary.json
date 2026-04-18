@@ -1,0 +1,204 @@
+{
+  "glossary": {
+    "_meta": {
+      "eyebrow": "Glossar",
+      "pageTitle": "Glossar",
+      "pageSubtitle": "Kurze Definitionen der CRA-, Security- und SBOM-Begriffe, die Ihnen in Seentrix begegnen.",
+      "searchPlaceholder": "Begriffe suchen…",
+      "relatedHeading": "Verwandte Begriffe",
+      "lessonHeading": "Vertiefung"
+    },
+    "vulnerability": {
+      "title": "Schwachstelle",
+      "body": "Eine Schwäche in Code, Design oder Konfiguration, die ein Angreifer ausnutzen kann, um Vertraulichkeit, Integrität oder Verfügbarkeit zu beeinträchtigen. Unterscheidet sich vom Bug: Jede ausnutzbare Lücke ist eine Schwachstelle, nicht jeder Bug. In Seentrix werden Schwachstellen durch SBOM-Scans und über die PSIRT-Intake-Seite erfasst."
+    },
+    "cve": {
+      "title": "CVE",
+      "body": "Common Vulnerabilities and Exposures — eine öffentliche Kennung (z. B. CVE-2024-12345), die MITRE jeder bekannten Software-Schwachstelle zuweist. Vendors, Scanner und Advisories beziehen sich darauf. Seentrix hängt die CVE-ID an jeden Befund, damit Ihre Nachweiskette mit externen Tools kompatibel bleibt.",
+      "ref": "CRA Artikel 13(8) erwartet implizit, dass Tickets zur Fehlerbehebung die CVE-IDs nennen."
+    },
+    "cvss": {
+      "title": "CVSS",
+      "body": "Common Vulnerability Scoring System — Skala von 0,0 bis 10,0 für die Schwere einer Schwachstelle: Niedrig (0,1-3,9), Mittel (4,0-6,9), Hoch (7,0-8,9), Kritisch (9,0-10,0). CVSS v4 (2023) ist aktuell; viele Scanner nutzen noch v3. Als Triage-Startpunkt nutzen — EPSS und KEV können die Priorität verschieben."
+    },
+    "epss": {
+      "title": "EPSS",
+      "body": "Exploit Prediction Scoring System — täglich aktualisierte Wahrscheinlichkeit (0,0 bis 1,0), dass eine CVE in den nächsten 30 Tagen ausgenutzt wird. Die meisten CVEs liegen unter 0,01. Ab 0,5 + hohem CVSS: \"diese Woche patchen\". Gepflegt von FIRST.org."
+    },
+    "kev": {
+      "title": "KEV-Katalog",
+      "body": "Known Exploited Vulnerabilities der US-CISA — kuratierte Liste aktiv ausgenutzter CVEs. Taucht eine Schwachstelle Ihrer SBOM dort auf, gehört sie unabhängig vom CVSS ganz oben in die Triage. Die CISA ergänzt etwa 5-10 CVEs pro Woche."
+    },
+    "actively_exploited": {
+      "title": "Aktiv ausgenutzt",
+      "body": "Eine Schwachstelle gilt als aktiv ausgenutzt, wenn es glaubwürdige Hinweise auf reale Angriffe gibt — öffentliche Proof-of-Concepts, Threat-Intel, Log-Beweise oder Eintrag im KEV-Katalog. In Seentrix markiert, startet dies sofort die Artikel-14-Meldefristen.",
+      "ref": "CRA Artikel 14(1) — Hersteller müssen aktiv ausgenutzte Schwachstellen innerhalb von 24 Stunden an die ENISA melden."
+    },
+    "advisory": {
+      "title": "Security-Advisory",
+      "body": "Öffentliche, formale Bekanntmachung zu Schwachstelle, Auswirkung und Fix. Üblicherweise maschinenlesbar (CSAF, VEX), damit nachgelagerte Nutzer sie automatisch einlesen können. Zentraler Output eines PSIRT."
+    },
+    "cvd": {
+      "title": "Coordinated Vulnerability Disclosure",
+      "body": "Richtlinie und Prozess für eingehende Schwachstellenmeldungen: öffentliche Intake-URL, Triage-SLA, Safe-Harbour-Klausel für gutwillige Forscher und koordiniertes Timing zwischen Patch und öffentlicher Veröffentlichung. CRA-Pflicht.",
+      "ref": "CRA Anhang I Teil II(1) — Hersteller müssen eine CVD-Richtlinie vorhalten. Die Seentrix-Security-Seite ist das Intake dazu."
+    },
+    "psirt": {
+      "title": "PSIRT",
+      "body": "Product Security Incident Response Team — Team (nicht zwingend Vollzeit), das Intake, Triage, Forscher-Koordination und Advisory-Veröffentlichung verantwortet. Bei kleinen Firmen oft eine Person mit Doppelrolle. Der CRA setzt voraus, dass es existiert, auch wenn Sie es anders nennen."
+    },
+    "sbom": {
+      "title": "SBOM",
+      "body": "Software Bill of Materials — maschinenlesbare Liste aller Komponenten (inkl. transitiver Abhängigkeiten) einer Software mit Versionen und Lizenzen. Grundlage des Schwachstellen-Scans: ohne SBOM keine Prüfung. Seentrix unterstützt CycloneDX und SPDX.",
+      "ref": "CRA Anhang I Teil I(2)(a)(v) — Produkte müssen \"relevante Komponenten identifizieren und dokumentieren\". Eine SBOM ist der praktische Weg."
+    },
+    "cyclonedx": {
+      "title": "CycloneDX",
+      "body": "SBOM-Format von OWASP (XML oder JSON). Verbreitet in Security-Tools und besonders gut geeignet, Abhängigkeitsbeziehungen und Schwachstellen zusammen mit Komponenten abzubilden. Wird von Seentrix nativ gescannt."
+    },
+    "spdx": {
+      "title": "SPDX",
+      "body": "Software Package Data Exchange — ISO/IEC 5962-Standard der Linux Foundation (Tag-Value, JSON, YAML, RDF). Stärkste Lizenz-Repräsentation aller SBOM-Formate und Referenz für US-Behörden-Beschaffung. Wird von Seentrix nativ gescannt."
+    },
+    "semver": {
+      "title": "Semver",
+      "body": "Semantic Versioning — dreistufige Versionskonvention (MAJOR.MINOR.PATCH) mit definierten Bedeutungen: MAJOR bei Breaking Changes, MINOR bei kompatiblen Features, PATCH bei kompatiblen Fixes. Seentrix akzeptiert jede Versions-String, aber Semver erleichtert Nutzern die Upgrade-Entscheidung."
+    },
+    "digest": {
+      "title": "Digest",
+      "body": "Fest-längiger Fingerabdruck (meist SHA-256) einer Datei. Ändert sich ein Byte, ändert sich der Digest komplett. Ermöglicht nachgelagerten Nutzern zu prüfen, dass die heruntergeladene Binary der ausgelieferten entspricht — essenziell für Supply-Chain-Integrität."
+    },
+    "hash": {
+      "title": "Hash",
+      "body": "Einwegfunktion, die Daten beliebiger Größe auf eine feste Länge abbildet (Digest). Kryptografische Hashes (SHA-256, SHA-3) liefern verschiedene Outputs für verschiedene Inputs und sind nicht umkehrbar. Basis von Integritätsprüfungen und Signaturen."
+    },
+    "signing": {
+      "title": "Code-Signierung",
+      "body": "Kryptografische Signatur eines Software-Artefakts, um Herkunft und Unversehrtheit zu belegen. Je nach Plattform: GPG (Open Source), Authenticode (Windows), Sigstore (Cloud-Native), Vendor-Signing (Mobile). Praktischer Weg zur CRA-Integritätsanforderung.",
+      "ref": "CRA Anhang I Teil I(3)(h) — Produkte müssen Integritätsschutz für gespeicherte, übertragene und verarbeitete Daten implementieren."
+    },
+    "cra": {
+      "title": "CRA",
+      "body": "Cyber Resilience Act — Verordnung (EU) 2024/2847. Legt Cybersicherheitsanforderungen für \"Produkte mit digitalen Elementen\" fest, die auf dem EU-Markt bereitgestellt werden (Hardware, Software, Firmware, IoT). 2024 beschlossen, vollständige Compliance bis 11. Dezember 2027."
+    },
+    "annex_i": {
+      "title": "Anhang I",
+      "body": "Die grundlegenden Cybersicherheitsanforderungen. Teil I betrifft das Produkt selbst (Secure-by-Default, Integrität, Datensparsamkeit). Teil II betrifft den Umgang mit Schwachstellen (SBOM, CVD-Richtlinie, Sicherheitsupdates). Jedes Produkt im Anwendungsbereich muss alle zutreffenden Anforderungen erfüllen."
+    },
+    "annex_v": {
+      "title": "Anhang V",
+      "body": "Pflichtinhalt der EU-Konformitätserklärung: Herstellerangaben, Produktbezeichnung, angewandte harmonisierte Normen, Konformitätsbewertungsroute, Angaben zur notifizierten Stelle (soweit relevant), Unterschrift einer bevollmächtigten Person. Seentrix befüllt alles automatisch aus Ihren Einstellungen."
+    },
+    "article_13": {
+      "title": "Artikel 13",
+      "body": "CRA-Artikel mit den Herstellerpflichten: CE-Kennzeichnung, technische Dokumentation, Konformitätsbewertung, Schwachstellenbehandlung, Support-Zeitraum, Kontaktstelle für Cybersicherheit und Pflicht, Sicherheitsupdates für die gesamte Support-Dauer (mindestens 5 Jahre) \"ohne ungebührliche Verzögerung\" bereitzustellen."
+    },
+    "article_14": {
+      "title": "Artikel 14",
+      "body": "CRA-Artikel zur Vorfallsmeldung. Bei Kenntnis einer aktiv ausgenutzten Schwachstelle oder eines schweren Vorfalls: Frühwarnung binnen 24 Stunden, Vorfallsbericht binnen 72 Stunden, Abschlussbericht binnen 14 Tagen — alles über die einheitliche ENISA-Meldeplattform."
+    },
+    "essential_requirements": {
+      "title": "Grundlegende Anforderungen",
+      "body": "Liste der Cybersicherheits-Eigenschaften, die ein Produkt zum Inverkehrbringen auf dem EU-Markt haben muss (CRA Anhang I Teil I). Beispiele: keine bekannten ausnutzbaren Schwachstellen bei Markteintritt, sichere Standardkonfiguration, minimierte Angriffsfläche, Integritäts- und Authentizitätsschutz, Datensparsamkeit. Die harmonisierten Normen (EN 18031-Serie) geben Konformitätsvermutung."
+    },
+    "conformity_assessment": {
+      "title": "Konformitätsbewertung",
+      "body": "Formales Verfahren zur Feststellung, ob ein Produkt die grundlegenden Anforderungen erfüllt. CRA bietet vier Routen: Modul A (Selbstbewertung, Standard für nicht-kritische Produkte), Modul B+C (Baumusterprüfung durch notifizierte Stelle für Important Class II), Modul H (vollständiges QS-Audit), sowie das EU-Cybersicherheits-Zertifizierungsschema."
+    },
+    "module_a": {
+      "title": "Modul A",
+      "body": "Interne Fertigungskontrolle — der Selbstbewertungs-Pfad. Der Hersteller erstellt die technische Dokumentation, erklärt die Konformität, bringt die CE-Kennzeichnung an und trägt die volle Verantwortung. Keine notifizierte Stelle. Verfügbar für Produkte, die weder Important Class I/II noch Critical sind."
+    },
+    "module_b_c": {
+      "title": "Modul B+C",
+      "body": "EU-Baumusterprüfung (Modul B) gefolgt von Konformität mit dem Baumuster (Modul C). Notifizierte Stelle prüft eine repräsentative Probe, stellt ein Baumusterprüfzertifikat aus, dann erklärt der Hersteller die Konformität jeder produzierten Einheit. Pflicht für Important Class II."
+    },
+    "module_h": {
+      "title": "Modul H",
+      "body": "Umfassende Qualitätssicherung — notifizierte Stelle auditiert das gesamte Qualitätssystem des Herstellers (Entwurf, Fertigung, Endprüfung). Jährliche Überwachungsaudits. Teurer als B+C, deckt aber alle Produktvarianten mit einem Zertifikat ab. Pflicht für Critical-Produkte, verfügbar für Important Class II."
+    },
+    "ce_marking": {
+      "title": "CE-Kennzeichnung",
+      "body": "Das CE-Logo auf Produkt und Verpackung signalisiert Konformität mit allen einschlägigen EU-Verordnungen. Unter dem CRA ist das Anbringen eine Bestätigung, dass das Produkt die grundlegenden Anforderungen erfüllt und die korrekte Konformitätsbewertung durchlaufen hat. Unrechtmäßige CE-Kennzeichnung: Bußgelder bis 15 Mio. € oder 2,5 % des globalen Umsatzes."
+    },
+    "doc": {
+      "title": "Konformitätserklärung",
+      "body": "Vom Hersteller unterzeichnetes Rechtsdokument, mit dem er die Konformität des Produkts mit allen einschlägigen EU-Verordnungen (CRA + ggf. weitere) erklärt. Muss vor Inverkehrbringen erstellt, 10 Jahre aufbewahrt und Marktüberwachungsbehörden auf Anfrage vorgelegt werden. Seentrix generiert sie aus Ihren Produkt- und Organisationsdaten.",
+      "ref": "CRA Anhang V definiert den Pflichtinhalt der Konformitätserklärung."
+    },
+    "notified_body": {
+      "title": "Notifizierte Stelle",
+      "body": "Unabhängige Drittorganisation, die von einem EU-Mitgliedstaat zur Durchführung von Konformitätsbewertungen benannt ist. Jede trägt eine eindeutige vierstellige Kennnummer (z. B. 0197 für TÜV Rheinland) und einen Tätigkeitsbereich. Vor Modul B+C oder Modul H muss eine gewählt werden."
+    },
+    "nando": {
+      "title": "NANDO",
+      "body": "New Approach Notified and Designated Organisations — Datenbank der Europäischen Kommission. Jede für CRA-Konformitätsbewertungen zuständige notifizierte Stelle ist dort mit Tätigkeitsbereich, Adresse und vierstelliger ID gelistet. Maßgebliche Quelle für die Auswahl. Suche: ec.europa.eu/growth/tools-databases/nando."
+    },
+    "authorised_representative": {
+      "title": "Bevollmächtigter",
+      "body": "Natürliche oder juristische Person in der EU, die schriftlich von einem Nicht-EU-Hersteller mandatiert ist, bestimmte Aufgaben in dessen Namen wahrzunehmen (technische Dokumentation bereithalten, mit Marktüberwachung kooperieren usw.). Pflicht, bevor ein Nicht-EU-Hersteller Produkte auf dem EU-Markt bereitstellen darf.",
+      "ref": "CRA Artikel 18."
+    },
+    "market_surveillance": {
+      "title": "Marktüberwachung",
+      "body": "Nationale Behördenfunktion, die sicherstellt, dass auf dem EU-Markt bereitgestellte Produkte den einschlägigen Verordnungen entsprechen. Jedes Land benennt eine. Kann technische Dokumentation anfordern, Produkte prüfen, Verkauf untersagen, Rückrufe anordnen und Bußgelder verhängen. Unter dem CRA sind typische Antwortfristen 30-60 Tage."
+    },
+    "placing_on_market": {
+      "title": "Inverkehrbringen",
+      "body": "Der Zeitpunkt, an dem ein Produkt erstmals zum Vertrieb oder zur Nutzung auf dem EU-Markt bereitgestellt wird — entgeltlich oder unentgeltlich. Ab diesem Moment gelten die CRA-Pflichten und beginnt der Support-Zeitraum zu laufen. Auch ein Beta-Gerät an einen EU-Kunden zu übergeben ist ein Inverkehrbringen."
+    },
+    "early_warning": {
+      "title": "Frühwarnung",
+      "body": "Erste der drei CRA-Meldungen. Muss binnen 24 Stunden nach Kenntnis einer aktiv ausgenutzten Schwachstelle oder eines schweren Vorfalls bei der ENISA eingehen. Mindestinhalt: allgemeine Beschreibung, ob Sie böswillige Aktivität vermuten, und die EU-Mitgliedstaaten mit Produkt-Nutzung. Darf knapp sein — die 72-Stunden-Meldung füllt Lücken."
+    },
+    "incident_report": {
+      "title": "Vorfallsbericht",
+      "body": "72-Stunden-Folgemeldung zur Frühwarnung. Enthält Schweregradbewertung, Ausmaß der Kompromittierung, Indicators of Compromise (IOCs, soweit verfügbar), laufende Abhilfe und betroffene Produkte und Nutzer. Kann im 14-Tage-Abschlussbericht weiter präzisiert werden."
+    },
+    "final_report": {
+      "title": "Abschlussbericht",
+      "body": "14-Tage-Abschlussmeldung. Root-Cause-Analyse, ergriffene (und geplante) Maßnahmen, Restrisiko und Kommunikation an betroffene Nutzer. Darauf kommen Prüfer Jahre später zurück — gründlich ausfüllen."
+    },
+    "triage": {
+      "title": "Triage",
+      "body": "Prozess zur Bewertung jeder eingehenden Schwachstelle oder Meldung: tatsächliche Schwere und nächste Schritte. In Seentrix bewegt die Triage eine Meldung entlang Triage → in Untersuchung → gelöst / Duplikat / Spam und hinterlegt Notizen im Audit-Trail."
+    },
+    "severity": {
+      "title": "Schweregrad",
+      "body": "Qualitative Einstufung (Kritisch / Hoch / Mittel / Niedrig) einer Schwachstelle oder eines Vorfalls in Ihrem spezifischen Kontext. Nicht identisch mit CVSS: Ein kritischer CVSS-Wert für eine ungenutzte Komponente ist niedriger Schweregrad. Steuert die Meldepflichten nach Artikel 14."
+    },
+    "enisa": {
+      "title": "ENISA",
+      "body": "Agentur der Europäischen Union für Cybersicherheit. Betreibt unter dem CRA die einheitliche Meldeplattform für 24h-/72h-/14d-Vorfallsmeldungen. Führt außerdem die European Vulnerability Database (EUVD) und koordiniert mit nationalen CSIRTs."
+    },
+    "csirt": {
+      "title": "CSIRT",
+      "body": "Computer Security Incident Response Team — nationale Teams (eines pro EU-Mitgliedstaat plus ENISA-eigenes), die Vorfallsreaktionen koordinieren. Erhalten unter dem CRA Artikel-14-Meldungen über die ENISA-Plattform und können für Rückfragen direkt auf Sie zukommen."
+    },
+    "support_period": {
+      "title": "Support-Zeitraum",
+      "body": "Zeitfenster, in dem der Hersteller Sicherheitsupdates zusichert. Öffentlich erklärt (Endnutzerinformationen, DoC, Verpackung) und verbindlich — nachträgliche Kürzung ist unzulässig. CRA-Minimum 5 Jahre, länger, wenn die erwartete Nutzungsdauer länger ist.",
+      "ref": "CRA Artikel 13 + Anhang I Teil II(8)."
+    },
+    "update_channel": {
+      "title": "Update-Kanal",
+      "body": "Wie Sicherheitsupdates die Endnutzer erreichen — Over-the-Air-Push, Paketmanager-Pull (apt, npm, Docker Hub), Download-Portal, vom Vendor versendeter USB-Stick oder manueller Tausch. CRA verlangt die Angabe auf den Endnutzerinformationen."
+    },
+    "release": {
+      "title": "Release",
+      "body": "Einzelne auslieferbare Produktversion, gekennzeichnet durch Versions-String und Build-Artefakt. Seentrix verfolgt Releases, damit Sie nachweisen können, dass die Support-Zusage eingehalten wird: 5 Jahre Support ohne einen einzigen Release ist ein Warnsignal für Prüfer."
+    },
+    "security_update": {
+      "title": "Sicherheitsupdate",
+      "body": "Release, dessen primärer Zweck das Beheben einer oder mehrerer Schwachstellen ist. Nach CRA Artikel 13(8) müssen Sicherheitsupdates \"ohne ungebührliche Verzögerung und kostenfrei\" bereitgestellt werden. Die Markierung in Seentrix flagt sie automatisch im Compliance-Nachweisregister."
+    }
+  },
+  "help": {
+    "fieldHelp": "Feldhilfe",
+    "craReference": "CRA-Referenz",
+    "relatedTerms": "Verwandte Begriffe",
+    "academy": "Academy",
+    "comingSoon": "Bald verfügbar",
+    "close": "Schließen"
+  }
+}
