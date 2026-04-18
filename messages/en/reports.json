@@ -29,7 +29,29 @@
       "downloadSecurityTxt": "security.txt ↓",
       "saved": "Saved",
       "saveFailed": "Couldn't save",
-      "slugTaken": "That slug is already in use"
+      "slugTaken": "That slug is already in use",
+      "tooltips": {
+        "slug": {
+          "title": "URL slug",
+          "body": "Short identifier for your public security page URL (lowercase letters, numbers, hyphens). The page will live at /security/<slug>. Pick something short and guessable — researchers often try /security/acme before looking for a security.txt.",
+          "ref": "CRA Article 13(4) — manufacturers must provide a point of contact for cybersecurity matters. A stable, discoverable URL satisfies this obligation and doubles as the Policy link in security.txt (RFC 9116)."
+        },
+        "contact": {
+          "title": "Security contact email",
+          "body": "Dedicated mailbox or alias for vulnerability reports (e.g. security@acme.com). Must be monitored during business hours at a minimum. Published on your security page and baked into the downloadable security.txt Contact field.",
+          "ref": "CRA Article 13(4) — the contact point must be kept available throughout the product's support period and be able to receive reports of vulnerabilities."
+        },
+        "policy": {
+          "title": "Disclosure policy",
+          "body": "Plain-English statement describing how you handle incoming reports: response times, scope, legal safe harbour for good-faith researchers, and how you coordinate disclosure. Published verbatim on the public page — set expectations before a researcher hits submit.",
+          "ref": "CRA Annex I Part II(1) — manufacturers must have a coordinated vulnerability disclosure policy. This field is where you publish it."
+        },
+        "enablePublic": {
+          "title": "Publish publicly",
+          "body": "Master switch — when on, the /security/<slug> page is reachable by anyone on the internet and accepts anonymous submissions. When off, the page 404s and the intake is closed. Turn off during setup, turn on once your triage process is ready.",
+          "ref": "CRA Annex I Part II(1) + Article 11 — the CVD policy and intake must be operational before the product is placed on the market. Leaving this off after launch is non-compliant."
+        }
+      }
     },
     "list": {
       "title": "Incoming reports"

@@ -15,7 +15,24 @@
       "updateChannelPlaceholder": "e.g. OTA, package manager, download portal",
       "inSupport": "In support · {days}d left",
       "expiringSoon": "Expires in {days}d",
-      "outOfSupport": "Out of support · {days}d ago"
+      "outOfSupport": "Out of support · {days}d ago",
+      "tooltips": {
+        "start": {
+          "title": "Support period start",
+          "body": "The date from which you commit to providing security updates. Usually the same as the product's launch date or first placing on the market.",
+          "ref": "CRA Annex I Part II(8) — manufacturers must provide security updates \"during a period of time proportionate to the expected use of the product,\" and in any case at least 5 years from placing on the market (Article 13)."
+        },
+        "end": {
+          "title": "Support period end",
+          "body": "The last date you will ship security updates for this product. Must be at least 5 years after the support start date; longer is acceptable (and often expected for industrial/medical devices).",
+          "ref": "CRA Article 13 — the support period is a binding commitment declared to end users and printed on the end-user cybersecurity information sheet. Ending support earlier than declared is a breach of the CRA."
+        },
+        "updateChannel": {
+          "title": "Update channel",
+          "body": "How security updates reach end users — Over-The-Air (OTA), package manager (apt/npm), portal download, manual replacement, etc. End-users need to know this to stay protected.",
+          "ref": "CRA Annex II(3) of the end-user information — the declared support period is meaningless unless users also know how updates are delivered. Required on the end-user cybersecurity information sheet."
+        }
+      }
     },
     "kpi": {
       "total": "Releases",
@@ -48,7 +65,39 @@
       "digestLabel": "Signed digest",
       "digestPlaceholder": "SHA-256 or signing identity",
       "cancel": "Cancel",
-      "create": "Publish"
+      "create": "Publish",
+      "tooltips": {
+        "version": {
+          "title": "Version",
+          "body": "Semver or internal version identifier (e.g. 1.2.3, 2024-04-17-build42). Must uniquely identify this specific build — users and auditors use it to tell whether a given device is patched.",
+          "ref": "CRA Annex II(2) — the technical documentation must include version identifiers traceable from the product to this record."
+        },
+        "releasedAt": {
+          "title": "Release date",
+          "body": "The date you made this version generally available to end users — not when it was merged to main or when the build completed. Used to measure CRA's \"without undue delay\" requirement for security updates.",
+          "ref": "CRA Article 13(8) — security updates must be made available \"without undue delay and free of charge.\" This date is the auditable timestamp."
+        },
+        "type": {
+          "title": "Release type",
+          "body": "Security = at least one patched vulnerability. Bug fix = non-security bugs. Feature = new functionality. Maintenance = internal cleanup, no user-visible changes. \"Security\" auto-flags the release as a security update in the CRA evidence ledger.",
+          "ref": "CRA Article 13(8) — security updates have distinct obligations (free, without undue delay, communicated to users). Tagging correctly here is what makes those obligations measurable."
+        },
+        "cves": {
+          "title": "CVEs fixed",
+          "body": "List every CVE this release patches — comma or space separated. Links to the vulnerability ledger and closes the loop from detection → triage → fix. Blank is fine for non-security releases.",
+          "ref": "CRA Article 13(8) — security updates must address known exploitable vulnerabilities. Keeping this field accurate is the evidence an auditor will ask for."
+        },
+        "notes": {
+          "title": "Release notes",
+          "body": "Customer-facing summary. Plain language, include upgrade instructions and any breaking changes. Published on the download portal and attached to the end-user cybersecurity information sheet.",
+          "ref": "CRA Annex II(3) of the end-user information — users need enough information to decide whether to apply the update."
+        },
+        "digest": {
+          "title": "Signed digest",
+          "body": "SHA-256 hash of the signed artifact or the identity of the signer (e.g. GPG key fingerprint, Sigstore identity). Proof of integrity that lets a customer verify the binary they downloaded is the one you shipped.",
+          "ref": "CRA Annex I Part I(3)(h) — products must include \"integrity protection of stored, transmitted, and processed data.\" A signed release digest is how this is commonly evidenced for software."
+        }
+      }
     },
     "toast": {
       "saved": "Saved",

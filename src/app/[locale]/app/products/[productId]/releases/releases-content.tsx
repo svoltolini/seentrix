@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { useMemo, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
@@ -8,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { HugeIcon } from "@/components/huge-icon";
+import { FieldHelp } from "@/components/field-help";
 import { StaggerReveal } from "@/components/stagger-reveal";
 import { StatCard } from "@/components/stat-card";
 import { useToast } from "@/components/ui/toast";
@@ -136,6 +138,13 @@ export function ReleasesContent({
           <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-3">
             <SupportField
               label={t("support.startLabel")}
+              help={
+                <FieldHelp
+                  title={t("support.tooltips.start.title")}
+                  body={t("support.tooltips.start.body")}
+                  reference={t("support.tooltips.start.ref")}
+                />
+              }
               value={support.support_period_start ?? ""}
               type="date"
               disabled={!canWrite}
@@ -143,6 +152,13 @@ export function ReleasesContent({
             />
             <SupportField
               label={t("support.endLabel")}
+              help={
+                <FieldHelp
+                  title={t("support.tooltips.end.title")}
+                  body={t("support.tooltips.end.body")}
+                  reference={t("support.tooltips.end.ref")}
+                />
+              }
               value={support.support_period_end ?? ""}
               type="date"
               disabled={!canWrite}
@@ -150,6 +166,13 @@ export function ReleasesContent({
             />
             <SupportField
               label={t("support.updateChannelLabel")}
+              help={
+                <FieldHelp
+                  title={t("support.tooltips.updateChannel.title")}
+                  body={t("support.tooltips.updateChannel.body")}
+                  reference={t("support.tooltips.updateChannel.ref")}
+                />
+              }
               value={support.update_channel ?? ""}
               placeholder={t("support.updateChannelPlaceholder")}
               disabled={!canWrite}
@@ -290,6 +313,7 @@ export function ReleasesContent({
 
 function SupportField({
   label,
+  help,
   value,
   type = "text",
   placeholder,
@@ -297,6 +321,7 @@ function SupportField({
   onSave,
 }: {
   label: string;
+  help?: ReactNode;
   value: string;
   type?: "text" | "date";
   placeholder?: string;
@@ -307,8 +332,9 @@ function SupportField({
   const isDate = type === "date";
   return (
     <div>
-      <label className="text-xs font-medium text-muted-foreground/70">
+      <label className="flex items-center gap-2 text-xs font-medium text-muted-foreground/70">
         {label}
+        {help}
       </label>
       <div className="relative mt-1.5">
         <Input
@@ -439,6 +465,11 @@ function NewReleaseDialog({
   }) => Promise<boolean>;
 }) {
   const t = useTranslations("releases");
+  const tip = (key: string) => ({
+    title: t(`new.tooltips.${key}.title`),
+    body: t(`new.tooltips.${key}.body`),
+    reference: t(`new.tooltips.${key}.ref`),
+  });
   const [version, setVersion] = useState("");
   const [releasedAt, setReleasedAt] = useState(
     new Date().toISOString().slice(0, 10),
@@ -493,8 +524,9 @@ function NewReleaseDialog({
       <div className="space-y-3">
         <div className="grid grid-cols-2 gap-2">
           <div>
-            <label className="text-xs font-medium text-muted-foreground">
+            <label className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
               {t("new.versionLabel")}
+              <FieldHelp {...tip("version")} />
             </label>
             <Input
               value={version}
@@ -504,8 +536,9 @@ function NewReleaseDialog({
             />
           </div>
           <div>
-            <label className="text-xs font-medium text-muted-foreground">
+            <label className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
               {t("new.releasedAtLabel")}
+              <FieldHelp {...tip("releasedAt")} />
             </label>
             <div className="relative mt-1.5">
               <Input
@@ -523,8 +556,9 @@ function NewReleaseDialog({
           </div>
         </div>
         <div>
-          <label className="text-xs font-medium text-muted-foreground">
+          <label className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
             {t("new.typeLabel")}
+            <FieldHelp {...tip("type")} />
           </label>
           <div className="mt-1.5 grid grid-cols-4 gap-2">
             {(["security", "bugfix", "feature", "maintenance"] as ReleaseType[]).map(
@@ -548,8 +582,9 @@ function NewReleaseDialog({
           </div>
         </div>
         <div>
-          <label className="text-xs font-medium text-muted-foreground">
+          <label className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
             {t("new.cvesLabel")}
+            <FieldHelp {...tip("cves")} />
           </label>
           <Input
             value={cves}
@@ -559,8 +594,9 @@ function NewReleaseDialog({
           />
         </div>
         <div>
-          <label className="text-xs font-medium text-muted-foreground">
+          <label className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
             {t("new.notesLabel")}
+            <FieldHelp {...tip("notes")} />
           </label>
           <Textarea
             value={notes}
@@ -570,8 +606,9 @@ function NewReleaseDialog({
           />
         </div>
         <div>
-          <label className="text-xs font-medium text-muted-foreground">
+          <label className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
             {t("new.digestLabel")}
+            <FieldHelp {...tip("digest")} />
           </label>
           <Input
             value={digest}

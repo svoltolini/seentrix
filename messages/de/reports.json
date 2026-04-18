@@ -29,7 +29,29 @@
       "downloadSecurityTxt": "security.txt ↓",
       "saved": "Gespeichert",
       "saveFailed": "Speichern fehlgeschlagen",
-      "slugTaken": "Diese Kennung ist bereits vergeben"
+      "slugTaken": "Diese Kennung ist bereits vergeben",
+      "tooltips": {
+        "slug": {
+          "title": "URL-Kennung",
+          "body": "Kurze Kennung für Ihre öffentliche Security-Seite (Kleinbuchstaben, Ziffern, Bindestriche). Die Seite ist unter /security/<slug> erreichbar. Kurz und vorhersehbar wählen — Forscher probieren oft /security/acme, bevor sie nach security.txt suchen.",
+          "ref": "CRA Artikel 13(4) — Hersteller müssen einen Kontaktpunkt für Cybersicherheitsfragen bereitstellen. Eine stabile, auffindbare URL erfüllt diese Pflicht und wird zugleich als Policy-Link in security.txt (RFC 9116) eingebettet."
+        },
+        "contact": {
+          "title": "Security-Kontakt-E-Mail",
+          "body": "Dedizierte Mailbox oder Alias für Schwachstellenmeldungen (z. B. security@acme.com). Muss mindestens zu Geschäftszeiten überwacht werden. Erscheint auf Ihrer Security-Seite und im Contact-Feld der herunterladbaren security.txt.",
+          "ref": "CRA Artikel 13(4) — der Kontaktpunkt muss während des gesamten Support-Zeitraums verfügbar bleiben und für den Empfang von Schwachstellenmeldungen geeignet sein."
+        },
+        "policy": {
+          "title": "Offenlegungsrichtlinie",
+          "body": "Klare Beschreibung, wie Sie eingehende Meldungen behandeln: Reaktionszeiten, Scope, Safe-Harbour für Forscher mit gutem Willen und Koordination der Offenlegung. Wird wörtlich auf der öffentlichen Seite veröffentlicht — setzen Sie Erwartungen vor dem Absenden.",
+          "ref": "CRA Anhang I Teil II(1) — Hersteller müssen eine Richtlinie für die koordinierte Offenlegung von Schwachstellen haben. Hier wird sie veröffentlicht."
+        },
+        "enablePublic": {
+          "title": "Öffentlich",
+          "body": "Hauptschalter — ist er aktiv, ist /security/<slug> weltweit erreichbar und nimmt anonyme Meldungen an. Ausgeschaltet liefert die Seite 404 und die Intake-Funktion ist geschlossen. Während der Einrichtung aus, nach fertiger Triage einschalten.",
+          "ref": "CRA Anhang I Teil II(1) + Artikel 11 — die CVD-Richtlinie und das Intake müssen vor dem Inverkehrbringen des Produkts einsatzbereit sein. Ein dauerhaft abgeschaltetes Intake ist nicht konform."
+        }
+      }
     },
     "list": {
       "title": "Eingehende Meldungen"

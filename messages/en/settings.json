@@ -146,6 +146,28 @@
       "createRoleLabel": "Role",
       "createPassword": "Temporary password",
       "createPasswordPlaceholder": "Min. 8 characters",
+      "tooltips": {
+        "email": {
+          "title": "Team member's email",
+          "body": "The email address the new member will use to sign in. Must be unique across the entire Seentrix platform — if it's already in use elsewhere, the invitation fails. Also becomes the audit-log identity for every action they take.",
+          "ref": "Activity log entries are stored with the user's immutable auth ID, but the email is what regulators see in exported audit trails."
+        },
+        "fullName": {
+          "title": "Full name",
+          "body": "Legal or display name shown throughout Seentrix. Also printed on activity log exports and appears as the creator/assignee on vulnerabilities, incidents, and checklist items.",
+          "ref": "NIS2 Article 20 (where applicable) — audit-ready staff rosters need identifiable names, not just emails."
+        },
+        "role": {
+          "title": "Role",
+          "body": "Controls what this member can do. Admin: everything. Compliance officer: compliance-critical changes (entity role, DoC issue, incident reports). CTO: same as Compliance officer minus billing. Editor: products, vulnerabilities, checklist items; cannot issue DoC. Viewer: read-only.",
+          "ref": "CRA doesn't mandate specific roles, but segregation of duties between the person who signs the DoC and the person who operates the product is expected during audits. Pick a role that matches the person's actual responsibility."
+        },
+        "password": {
+          "title": "Temporary password",
+          "body": "First-login password you share with the member. They must change it on first sign-in — the must_change_password flag is set automatically. Use a fresh one-time password generator; don't reuse existing passwords.",
+          "ref": "Defense-in-depth — the temporary password is only valid until first login. If a member never logs in, rotate or remove them via the team list."
+        }
+      },
       "createMember": "Create member",
       "creatingMember": "Creating…",
       "memberCreated": "Team member created successfully.",

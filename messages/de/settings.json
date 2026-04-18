@@ -146,6 +146,28 @@
       "createRoleLabel": "Rolle",
       "createPassword": "Temporäres Passwort",
       "createPasswordPlaceholder": "Mind. 8 Zeichen",
+      "tooltips": {
+        "email": {
+          "title": "E-Mail des Teammitglieds",
+          "body": "E-Mail-Adresse, mit der sich das neue Mitglied anmeldet. Muss über die gesamte Seentrix-Plattform eindeutig sein — ist sie bereits vergeben, schlägt die Einladung fehl. Dient auch als Audit-Log-Identität jeder Aktion.",
+          "ref": "Aktivitätsprotokoll-Einträge werden über die unveränderliche Auth-ID gespeichert; die E-Mail erscheint jedoch in den exportierten Audit-Trails für Aufsichtsbehörden."
+        },
+        "fullName": {
+          "title": "Vollständiger Name",
+          "body": "Rechtlicher oder Anzeigename in Seentrix. Wird auch in Aktivitätsprotokoll-Exporten gedruckt und erscheint als Ersteller/Bearbeiter bei Schwachstellen, Vorfällen und Checklisten.",
+          "ref": "NIS2 Artikel 20 (soweit anwendbar) — Audit-taugliche Personallisten benötigen eindeutige Namen, nicht nur E-Mails."
+        },
+        "role": {
+          "title": "Rolle",
+          "body": "Legt fest, was dieses Mitglied darf. Admin: alles. Compliance Officer: compliancerelevante Änderungen (Rolle, DoC, Vorfälle). CTO: wie Compliance Officer, ohne Abrechnung. Editor: Produkte, Schwachstellen, Checklisten; keine DoC-Ausstellung. Viewer: nur lesen.",
+          "ref": "Der CRA schreibt keine konkreten Rollen vor, erwartet aber eine Trennung zwischen DoC-Unterzeichner und Produktbetreiber. Wählen Sie die Rolle passend zur tatsächlichen Verantwortung."
+        },
+        "password": {
+          "title": "Temporäres Passwort",
+          "body": "Erstanmelde-Passwort, das Sie mit dem Mitglied teilen. Das Mitglied muss es beim ersten Login ändern — das must_change_password-Flag wird automatisch gesetzt. Nutzen Sie einen frisch erzeugten Einmal-Passwort-Generator; keine bestehenden Passwörter wiederverwenden.",
+          "ref": "Defense-in-Depth — das temporäre Passwort gilt nur bis zum ersten Login. Meldet sich das Mitglied nie an, rotieren oder entfernen Sie es über die Teamliste."
+        }
+      },
       "createMember": "Mitglied erstellen",
       "creatingMember": "Wird erstellt…",
       "memberCreated": "Teammitglied erfolgreich erstellt.",

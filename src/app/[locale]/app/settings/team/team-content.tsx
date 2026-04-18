@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { HugeIcon } from "@/components/huge-icon";
+import { FieldHelp } from "@/components/field-help";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import {
   removeTeamMember,
@@ -335,6 +336,11 @@ function CreateMemberSection({
   onMemberCreated: (member: TeamMember) => void;
 }) {
   const t = useTranslations("settings.team");
+  const tip = (key: string) => ({
+    title: t(`tooltips.${key}.title`),
+    body: t(`tooltips.${key}.body`),
+    reference: t(`tooltips.${key}.ref`),
+  });
   const { toast } = useToast();
   const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("");
@@ -405,7 +411,10 @@ function CreateMemberSection({
         <form onSubmit={handleCreate} className="space-y-4">
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="memberEmail">{t("createEmail")}</Label>
+              <Label htmlFor="memberEmail">
+                {t("createEmail")}
+                <FieldHelp {...tip("email")} />
+              </Label>
               <Input
                 id="memberEmail"
                 type="email"
@@ -416,7 +425,10 @@ function CreateMemberSection({
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="memberName">{t("createName")}</Label>
+              <Label htmlFor="memberName">
+                {t("createName")}
+                <FieldHelp {...tip("fullName")} />
+              </Label>
               <Input
                 id="memberName"
                 type="text"
@@ -430,7 +442,10 @@ function CreateMemberSection({
 
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="memberRole">{t("createRoleLabel")}</Label>
+              <Label htmlFor="memberRole">
+                {t("createRoleLabel")}
+                <FieldHelp {...tip("role")} />
+              </Label>
               <select
                 id="memberRole"
                 value={role}
@@ -445,7 +460,10 @@ function CreateMemberSection({
               </select>
             </div>
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="memberPassword">{t("createPassword")}</Label>
+              <Label htmlFor="memberPassword">
+                {t("createPassword")}
+                <FieldHelp {...tip("password")} />
+              </Label>
               <div className="relative">
                 <Input
                   id="memberPassword"
