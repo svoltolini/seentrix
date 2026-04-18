@@ -23,6 +23,7 @@ import {
 } from "../actions";
 import { PRODUCT_TYPES } from "./constants";
 import { PencilIcon, Trash2Icon, ImageIcon, XIcon } from "lucide-react";
+import { FieldHelp } from "@/components/field-help";
 
 const TYPE_STYLE: Record<string, { bg: string; text: string }> = {
   hardware: { bg: "bg-[#2563EB]/15", text: "text-[#2563EB]" },
@@ -55,6 +56,11 @@ export function ProductOverview({
 }) {
   const t = useTranslations("products");
   const tAssessment = useTranslations("assessment");
+  const tip = (key: string) => ({
+    title: t(`create.tooltips.${key}.title`),
+    body: t(`create.tooltips.${key}.body`),
+    reference: t(`create.tooltips.${key}.ref`),
+  });
   const router = useRouter();
   const [editing, setEditing] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
@@ -271,7 +277,10 @@ export function ProductOverview({
                 </p>
               )}
               <div className="flex flex-col gap-1.5">
-                <Label htmlFor="edit-name">{t("create.nameLabel")}</Label>
+                <Label htmlFor="edit-name">
+                  {t("create.nameLabel")}
+                  <FieldHelp {...tip("name")} />
+                </Label>
                 <Input
                   id="edit-name"
                   name="name"
@@ -280,7 +289,10 @@ export function ProductOverview({
                 />
               </div>
               <div className="flex flex-col gap-2">
-                <Label>{t("create.typeLabel")}</Label>
+                <Label>
+                  {t("create.typeLabel")}
+                  <FieldHelp {...tip("type")} />
+                </Label>
                 <div className="grid grid-cols-2 gap-2">
                   {PRODUCT_TYPES.map((type) => {
                     const typeStyle = TYPE_STYLE[type] ?? {
@@ -313,6 +325,7 @@ export function ProductOverview({
               <div className="flex flex-col gap-1.5">
                 <Label htmlFor="edit-desc">
                   {t("create.descriptionLabel")}
+                  <FieldHelp {...tip("description")} />
                 </Label>
                 <Textarea
                   id="edit-desc"
@@ -324,7 +337,10 @@ export function ProductOverview({
 
               {/* Product image */}
               <div className="flex flex-col gap-2">
-                <Label>{t("create.imageLabel")}</Label>
+                <Label>
+                  {t("create.imageLabel")}
+                  <FieldHelp {...tip("image")} />
+                </Label>
                 <input type="hidden" name="remove_image" value={removeImage ? "1" : "0"} />
                 {imagePreview ? (
                   <div className="relative w-fit">

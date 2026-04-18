@@ -33,7 +33,24 @@
       "description": "Erfassen Sie die notifizierte Stelle, die die Konformitätsbewertung durchführt. Die ID und der Umfang erscheinen direkt auf der Konformitätserklärung.",
       "name": "Name",
       "id": "Kennnummer",
-      "scope": "Umfang"
+      "scope": "Umfang",
+      "tooltips": {
+        "name": {
+          "title": "Name der notifizierten Stelle",
+          "body": "Vollständiger juristischer Name der notifizierten Stelle (z. B. \"TÜV Rheinland LGA Products GmbH\", \"BSI Assurance UK Ltd\"). Muss dem Namen in der NANDO-Datenbank exakt entsprechen — Groß-/Kleinschreibung und Interpunktion beachten.",
+          "ref": "CRA Anhang V(4) — wenn eine notifizierte Stelle beteiligt ist (Modul B+C oder Modul H), muss die Konformitätserklärung ihren Namen neben der vierstelligen Kennnummer nennen."
+        },
+        "id": {
+          "title": "Kennnummer der notifizierten Stelle",
+          "body": "Die vierstellige Kennnummer, die die Europäische Kommission der Stelle zugewiesen hat (z. B. 0197 für TÜV Rheinland). Nachschlagbar in der NANDO-Datenbank: ec.europa.eu/growth/tools-databases/nando.",
+          "ref": "CRA Anhang V(4) — die Kennnummer ist Teil der CE-Kennzeichnung bei Drittprüfungen und muss auf der Konformitätserklärung gedruckt werden."
+        },
+        "scope": {
+          "title": "Tätigkeitsbereich der notifizierten Stelle",
+          "body": "Ein Satz, der die Tätigkeit der Stelle beschreibt — z. B. \"EU-Baumusterprüfung nach Modul B\" oder \"Qualitätssicherungsaudit nach Modul H\". Wortwörtlich aus dem Zertifikat der notifizierten Stelle übernehmen.",
+          "ref": "CRA Anhang V(4) — die Erklärung muss die konkret durchgeführte Konformitätsbewertung benennen, nicht nur den Namen der Stelle. Zoll- und Marktüberwachungsbehörden prüfen hiermit, ob das richtige Modul angewandt wurde."
+        }
+      }
     },
     "steps": {
       "title": "Ablauf",

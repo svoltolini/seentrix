@@ -11,6 +11,7 @@ import { createProduct, type ProductActionState } from "../actions";
 import type { OrgPlan } from "@/lib/constants/plans";
 import { PLAN_PRODUCT_LIMITS } from "@/lib/constants/plans";
 import { HugeIcon } from "@/components/huge-icon";
+import { FieldHelp } from "@/components/field-help";
 import { ImageIcon, XIcon } from "lucide-react";
 
 const PRODUCT_TYPES = ["hardware", "software", "firmware", "iot"] as const;
@@ -32,6 +33,11 @@ export function CreateProductForm({
   productCount: number;
 }) {
   const t = useTranslations("products");
+  const tip = (key: string) => ({
+    title: t(`create.tooltips.${key}.title`),
+    body: t(`create.tooltips.${key}.body`),
+    reference: t(`create.tooltips.${key}.ref`),
+  });
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [state, formAction] = useActionState<ProductActionState, FormData>(
@@ -207,7 +213,10 @@ export function CreateProductForm({
 
           {/* Name */}
           <div className="flex flex-col gap-1.5">
-            <Label htmlFor="name">{t("create.nameLabel")}</Label>
+            <Label htmlFor="name">
+              {t("create.nameLabel")}
+              <FieldHelp {...tip("name")} />
+            </Label>
             <Input
               id="name"
               name="name"
@@ -218,7 +227,10 @@ export function CreateProductForm({
 
           {/* Type selection */}
           <div className="flex flex-col gap-2">
-            <Label>{t("create.typeLabel")}</Label>
+            <Label>
+              {t("create.typeLabel")}
+              <FieldHelp {...tip("type")} />
+            </Label>
             <div className="grid grid-cols-2 gap-2">
               {PRODUCT_TYPES.map((type) => {
                 const ts = TYPE_ICON[type];
@@ -250,7 +262,10 @@ export function CreateProductForm({
 
           {/* Description */}
           <div className="flex flex-col gap-1.5">
-            <Label htmlFor="description">{t("create.descriptionLabel")}</Label>
+            <Label htmlFor="description">
+              {t("create.descriptionLabel")}
+              <FieldHelp {...tip("description")} />
+            </Label>
             <Textarea
               id="description"
               name="description"
@@ -261,7 +276,10 @@ export function CreateProductForm({
 
           {/* Product image */}
           <div className="flex flex-col gap-2">
-            <Label>{t("create.imageLabel")}</Label>
+            <Label>
+              {t("create.imageLabel")}
+              <FieldHelp {...tip("image")} />
+            </Label>
             {imagePreview ? (
               <div className="relative w-fit">
                 <img

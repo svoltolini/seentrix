@@ -33,7 +33,24 @@
       "description": "Record the notified body that is performing the conformity assessment. The ID and scope go directly onto the Declaration of Conformity.",
       "name": "Name",
       "id": "Notified body number",
-      "scope": "Scope"
+      "scope": "Scope",
+      "tooltips": {
+        "name": {
+          "title": "Notified body name",
+          "body": "Full legal name of the notified body (e.g. \"TÜV Rheinland LGA Products GmbH\", \"BSI Assurance UK Ltd\"). Must match the name published in the NANDO database — case and punctuation sensitive.",
+          "ref": "CRA Annex V(4) — when a notified body is involved (Module B+C or Module H), the Declaration of Conformity must state its name alongside the four-digit identification number."
+        },
+        "id": {
+          "title": "Notified body number",
+          "body": "The four-digit identification number the European Commission assigned to the notified body (e.g. 0197 for TÜV Rheinland). Find yours by looking the body up in the NANDO database: ec.europa.eu/growth/tools-databases/nando.",
+          "ref": "CRA Annex V(4) — the notified body number is part of the CE marking on products requiring third-party assessment and must be printed on the Declaration of Conformity."
+        },
+        "scope": {
+          "title": "Scope of the notified body's activity",
+          "body": "One sentence describing what the notified body did — e.g. \"EU-type examination of the product as per Module B\" or \"Quality system audit under Module H\". Taken verbatim from the notified body's certificate.",
+          "ref": "CRA Annex V(4) — the declaration must state the specific conformity-assessment activity performed, not just the body's name. Customs and market surveillance authorities use this to verify you used the right module."
+        }
+      }
     },
     "steps": {
       "title": "Workflow",

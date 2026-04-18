@@ -40,7 +40,29 @@
       "submit": "Create Product",
       "cancel": "Cancel",
       "startAssessment": "Start CRA Assessment",
-      "startAssessmentDescription": "Immediately run the CRA scope assessment after creating this product."
+      "startAssessmentDescription": "Immediately run the CRA scope assessment after creating this product.",
+      "tooltips": {
+        "name": {
+          "title": "Product name",
+          "body": "The marketing or commercial name of the product as it appears on packaging, labels, and the end-user-facing Declaration of Conformity.",
+          "ref": "CRA Annex V(2) — the Declaration of Conformity must identify the product by name and model so a market-surveillance authority can match a physical unit to the declaration."
+        },
+        "type": {
+          "title": "Product type",
+          "body": "Whether the product is a physical device (hardware), a software application, an embedded/firmware component, or an IoT device. Drives the CRA classification workflow and whether Annex II(3) SBOM obligations apply.",
+          "ref": "CRA Article 2 — defines \"product with digital elements\" and scopes the regulation. The type you pick here decides whether you fall under CRA at all and what essential requirements (Annex I) apply."
+        },
+        "description": {
+          "title": "Description",
+          "body": "Short internal description — one or two sentences about what the product does, who it's for, and any distinctive feature. Used on dashboard lists and in technical documentation.",
+          "ref": "Feeds Annex II(1) of the technical documentation: a general description of the product including its intended purpose."
+        },
+        "image": {
+          "title": "Product image",
+          "body": "Optional photo of the product. Purely cosmetic — helps teammates recognise the product in lists and dashboards. JPG, PNG, or WebP up to 2 MB.",
+          "ref": "Not a CRA requirement. No compliance document uses this image."
+        }
+      }
     },
     "edit": {
       "title": "Edit Product",

@@ -66,8 +66,7 @@ export function FieldHelp({
               {body}
             </div>
             {reference && (
-              <div className="mt-3 flex items-start gap-2 rounded-md bg-[#D97706]/10 px-2.5 py-2">
-                <span className="mt-[2px] size-1.5 shrink-0 rounded-full bg-[#D97706]" />
+              <div className="mt-3 rounded-md bg-[#D97706]/10 px-2.5 py-2">
                 <p className="text-[11px] leading-relaxed text-[#D97706]">
                   {reference}
                 </p>

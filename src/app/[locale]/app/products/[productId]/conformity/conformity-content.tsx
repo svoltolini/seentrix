@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { HugeIcon } from "@/components/huge-icon";
+import { FieldHelp } from "@/components/field-help";
 import { StaggerReveal } from "@/components/stagger-reveal";
 import { useToast } from "@/components/ui/toast";
 import { useLocaleDate } from "@/lib/locale-date";
@@ -222,12 +223,26 @@ export function ConformityContent({
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
               <BodyField
                 label={t("notifiedBody.name")}
+                help={
+                  <FieldHelp
+                    title={t("notifiedBody.tooltips.name.title")}
+                    body={t("notifiedBody.tooltips.name.body")}
+                    reference={t("notifiedBody.tooltips.name.ref")}
+                  />
+                }
                 value={state.notifiedBody.name ?? ""}
                 disabled={!canWrite}
                 onSave={(v) => saveBody({ name: v || null })}
               />
               <BodyField
                 label={t("notifiedBody.id")}
+                help={
+                  <FieldHelp
+                    title={t("notifiedBody.tooltips.id.title")}
+                    body={t("notifiedBody.tooltips.id.body")}
+                    reference={t("notifiedBody.tooltips.id.ref")}
+                  />
+                }
                 value={state.notifiedBody.id ?? ""}
                 placeholder="1234"
                 disabled={!canWrite}
@@ -235,6 +250,13 @@ export function ConformityContent({
               />
               <BodyField
                 label={t("notifiedBody.scope")}
+                help={
+                  <FieldHelp
+                    title={t("notifiedBody.tooltips.scope.title")}
+                    body={t("notifiedBody.tooltips.scope.body")}
+                    reference={t("notifiedBody.tooltips.scope.ref")}
+                  />
+                }
                 value={state.notifiedBody.scope ?? ""}
                 disabled={!canWrite}
                 onSave={(v) => saveBody({ scope: v || null })}
@@ -525,12 +547,14 @@ function GateTile({
 
 function BodyField({
   label,
+  help,
   value,
   placeholder,
   disabled,
   onSave,
 }: {
   label: string;
+  help?: React.ReactNode;
   value: string;
   placeholder?: string;
   disabled?: boolean;
@@ -539,8 +563,9 @@ function BodyField({
   const [local, setLocal] = useState(value);
   return (
     <div>
-      <label className="text-xs font-medium text-muted-foreground/70">
+      <label className="flex items-center gap-2 text-xs font-medium text-muted-foreground/70">
         {label}
+        {help}
       </label>
       <Input
         value={local}

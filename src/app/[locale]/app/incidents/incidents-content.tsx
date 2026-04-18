@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { HugeIcon } from "@/components/huge-icon";
+import { FieldHelp } from "@/components/field-help";
 import { StaggerReveal } from "@/components/stagger-reveal";
 import { StatCard } from "@/components/stat-card";
 import { useToast } from "@/components/ui/toast";
@@ -573,6 +574,11 @@ function NewIncidentDialog({
   const t = useTranslations("incidents");
   const tType = useTranslations("incidents.type");
   const tSev = useTranslations("incidents.severity");
+  const tip = (key: string) => ({
+    title: t(`new.tooltips.${key}.title`),
+    body: t(`new.tooltips.${key}.body`),
+    reference: t(`new.tooltips.${key}.ref`),
+  });
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [type, setType] = useState<IncidentType>("security_incident");
@@ -607,8 +613,9 @@ function NewIncidentDialog({
     >
       <div className="space-y-3">
         <div>
-          <label className="text-xs font-medium text-muted-foreground">
+          <label className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
             {t("new.titleLabel")}
+            <FieldHelp {...tip("title")} />
           </label>
           <Input
             value={title}
@@ -618,8 +625,9 @@ function NewIncidentDialog({
           />
         </div>
         <div>
-          <label className="text-xs font-medium text-muted-foreground">
+          <label className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
             {t("new.typeLabel")}
+            <FieldHelp {...tip("type")} />
           </label>
           <div className="mt-1.5 grid grid-cols-2 gap-2">
             {(["security_incident", "exploited_vulnerability"] as const).map(
@@ -642,8 +650,9 @@ function NewIncidentDialog({
           </div>
         </div>
         <div>
-          <label className="text-xs font-medium text-muted-foreground">
+          <label className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
             {t("new.severityLabel")}
+            <FieldHelp {...tip("severity")} />
           </label>
           <div className="mt-1.5 grid grid-cols-4 gap-2">
             {(["critical", "high", "medium", "low"] as IncidentSeverity[]).map(
@@ -668,8 +677,9 @@ function NewIncidentDialog({
         </div>
         {products.length > 0 && (
           <div>
-            <label className="text-xs font-medium text-muted-foreground">
+            <label className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
               {t("new.affectedProductsLabel")}
+              <FieldHelp {...tip("affectedProducts")} />
             </label>
             <div className="mt-1.5 flex max-h-40 flex-col gap-1 overflow-y-auto rounded-lg border border-border p-1">
               {products.map((p) => {
@@ -710,8 +720,9 @@ function NewIncidentDialog({
           </div>
         )}
         <div>
-          <label className="text-xs font-medium text-muted-foreground">
+          <label className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
             {t("new.descriptionLabel")}
+            <FieldHelp {...tip("description")} />
           </label>
           <Textarea
             value={description}

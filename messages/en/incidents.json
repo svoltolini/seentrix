@@ -75,7 +75,34 @@
       "cancel": "Cancel",
       "create": "Start reporting clock",
       "created": "Incident created",
-      "error": "Couldn't create incident"
+      "error": "Couldn't create incident",
+      "tooltips": {
+        "title": {
+          "title": "Incident title",
+          "body": "Short, recognisable name for the incident — something a teammate can identify at a glance in a list (e.g. \"CVE-2024-XXXX exploited in firmware v2.3\", \"Customer-reported privilege escalation\"). Used in the PDF filing to ENISA.",
+          "ref": "CRA Article 14(1) — the early warning filed within 24 hours must at minimum name the incident; a clear title is the first field ENISA's intake form asks for."
+        },
+        "type": {
+          "title": "Incident type",
+          "body": "Pick \"Security incident\" for a compromise that has already affected a product or its users (data leak, ransomware, account takeover). Pick \"Exploited vulnerability\" when you have evidence that a known CVE in your product is being actively exploited in the wild.",
+          "ref": "CRA Article 14(1) — both categories trigger the reporting clock, but the intake form ENISA uses distinguishes between them and routes them to different downstream teams."
+        },
+        "severity": {
+          "title": "Severity",
+          "body": "Subjective assessment of user impact. Critical = widespread harm or imminent safety risk. High = significant impact on affected users. Medium = limited impact, workaround exists. Low = minimal impact. Auditors expect your assessment to match the evidence.",
+          "ref": "CRA Article 14(2)(a) — the severity classification is part of every phase's report. It drives whether and how you must also notify affected users under Article 14(6)."
+        },
+        "affectedProducts": {
+          "title": "Affected products",
+          "body": "Select every product in your catalogue that is or might be affected. The list is used to generate the \"Affected products\" section of the 24h / 72h / 14d reports. Selecting more than strictly necessary is better than missing one.",
+          "ref": "CRA Article 14(2)(b) — each phase's report must identify the affected products. Incomplete product lists are the most common reason reports get bounced back by ENISA."
+        },
+        "description": {
+          "title": "Description",
+          "body": "Plain-English summary of what happened, when you became aware, who is investigating, and what you know so far. Copy-pasted verbatim into the early-warning PDF, so skip confidential detail and stick to facts that you can publish.",
+          "ref": "CRA Article 14(1)(a) — the 24-hour early warning must at minimum include a general description of the incident; you can refine it in the 72-hour report once you know more."
+        }
+      }
     },
     "detail": {
       "awareAt": "Became aware at {date}",

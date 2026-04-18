@@ -40,7 +40,29 @@
       "submit": "Produkt erstellen",
       "cancel": "Abbrechen",
       "startAssessment": "CRA-Bewertung starten",
-      "startAssessmentDescription": "CRA-Bewertung sofort nach der Erstellung dieses Produkts durchführen."
+      "startAssessmentDescription": "CRA-Bewertung sofort nach der Erstellung dieses Produkts durchführen.",
+      "tooltips": {
+        "name": {
+          "title": "Produktname",
+          "body": "Der Marketing- oder Handelsname des Produkts, wie er auf Verpackung, Etiketten und der Konformitätserklärung für Endnutzer erscheint.",
+          "ref": "CRA Anhang V(2) — die Konformitätserklärung muss das Produkt anhand von Name und Modell benennen, sodass Marktüberwachungsbehörden eine physische Einheit der Erklärung zuordnen können."
+        },
+        "type": {
+          "title": "Produkttyp",
+          "body": "Ob es sich um ein physisches Gerät (Hardware), eine Softwareanwendung, eine eingebettete Komponente (Firmware) oder ein IoT-Gerät handelt. Steuert den CRA-Klassifizierungs-Workflow und ob die SBOM-Pflichten nach Anhang II(3) greifen.",
+          "ref": "CRA Artikel 2 — definiert \"Produkt mit digitalen Elementen\" und den Anwendungsbereich. Die Wahl hier entscheidet, ob Sie überhaupt unter den CRA fallen und welche grundlegenden Anforderungen (Anhang I) gelten."
+        },
+        "description": {
+          "title": "Beschreibung",
+          "body": "Kurze interne Beschreibung — ein bis zwei Sätze zu Funktion, Zielgruppe und Besonderheiten. Wird in Dashboard-Listen und in der technischen Dokumentation verwendet.",
+          "ref": "Fließt in Anhang II(1) der technischen Dokumentation ein: allgemeine Beschreibung des Produkts einschließlich seines Verwendungszwecks."
+        },
+        "image": {
+          "title": "Produktbild",
+          "body": "Optionales Foto des Produkts. Rein kosmetisch — hilft Teammitgliedern, das Produkt in Listen und Dashboards wiederzuerkennen. JPG, PNG oder WebP bis 2 MB.",
+          "ref": "Keine CRA-Anforderung. Kein Compliance-Dokument verwendet dieses Bild."
+        }
+      }
     },
     "edit": {
       "title": "Produkt bearbeiten",
