@@ -1,6 +1,8 @@
+import { Suspense } from "react";
 import { TopBar } from "@/components/layout/top-bar";
 import { ToastProvider } from "@/components/ui/toast";
 import { GsapProvider } from "@/components/gsap-provider";
+import { NavigationProgress } from "@/components/navigation-progress";
 import { createClient } from "@/lib/supabase/server";
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
@@ -22,6 +24,11 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   return (
     <ToastProvider>
       <GsapProvider>
+        {/* NavigationProgress uses useSearchParams — must be wrapped in
+            Suspense so the layout can still be statically rendered. */}
+        <Suspense fallback={null}>
+          <NavigationProgress />
+        </Suspense>
         <div className="flex h-full flex-col">
           <TopBar avatarUrl={avatarUrl} />
           <main className="flex-1 overflow-y-auto bg-background px-4 py-6 lg:px-8">
