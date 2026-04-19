@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { rateLimit, clientIpFromHeaders } from "@/lib/rate-limit";
 
 /**
  * Generates a security.txt file (RFC 9116) for an org that has enabled its
@@ -10,6 +11,25 @@ export async function GET(
   req: Request,
   ctx: { params: Promise<{ slug: string }> },
 ) {
+  // 20 requests per IP per 10 minutes — legitimate tooling fetches security.txt
+  // once per domain. Anything higher is either a crawler we want to throttle or
+  // a slug-enumeration scanner.
+  const ip = clientIpFromHeaders(req.headers);
+  const gate = await rateLimit({
+    endpoint: "security-txt",
+    identifier: ip,
+    limit: 20,
+    windowMs: 10 * 60_000,
+  });
+  if (!gate.ok) {
+    return new NextResponse("Too Many Requests", {
+      status: 429,
+      headers: {
+        "Retry-After": String(gate.retryAfterSeconds ?? 60),
+      },
+    });
+  }
+
   const { slug } = await ctx.params;
   const supabase = await createClient();
 

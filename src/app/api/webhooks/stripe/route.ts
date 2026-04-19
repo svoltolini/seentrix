@@ -42,6 +42,25 @@ export async function POST(request: NextRequest) {
 
   const supabase = getAdminSupabase();
 
+  // Idempotency check — Stripe retries deliveries on any non-2xx (and
+  // sometimes on timeouts even when we did process it). Without this guard
+  // a flaky network blip turns into double-charges or double-emails.
+  const { error: idempotencyError } = await supabase
+    .from("stripe_events")
+    .insert({ event_id: event.id, event_type: event.type });
+  if (idempotencyError) {
+    // Duplicate PK means we already processed this one — ack and move on.
+    if (idempotencyError.code === "23505") {
+      return NextResponse.json({ received: true, duplicate: true });
+    }
+    // Any other insert error: bail with 500 so Stripe retries and we don't
+    // silently drop an event.
+    return NextResponse.json(
+      { error: "idempotency_store_failed" },
+      { status: 500 },
+    );
+  }
+
   switch (event.type) {
     // ----- Checkout completed → activate subscription -----
     case "checkout.session.completed": {
