@@ -11,6 +11,7 @@ const TABS = [
   { key: "nav.billing", segment: "/billing" },
   { key: "nav.activity", segment: "/activity" },
   { key: "nav.account", segment: "/account" },
+  { key: "nav.security", segment: "/security" },
 ] as const;
 
 const basePath = "/app/settings";

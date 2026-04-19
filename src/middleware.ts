@@ -24,6 +24,7 @@ export default async function middleware(request: NextRequest) {
   const isChangePasswordRoute = pathname.startsWith(
     `/${locale}/auth/change-password`
   );
+  const isMfaChallengeRoute = pathname.startsWith(`/${locale}/auth/mfa`);
   const isLoginOrSignup =
     pathname.startsWith(`/${locale}/auth/login`) ||
     pathname.startsWith(`/${locale}/auth/signup`);
@@ -37,6 +38,19 @@ export default async function middleware(request: NextRequest) {
   const mustChangePassword = user?.app_metadata?.must_change_password === true;
   const mustCompleteTraining =
     user?.app_metadata?.must_complete_training === true;
+
+  // AAL gating — when a user has MFA enrolled, Supabase issues a session
+  // at AAL1 (password only) after signInWithPassword. The middleware then
+  // bounces them to /auth/mfa until they elevate to AAL2 (password + TOTP).
+  // This check uses the MFA API which is cheap (no DB round-trip; works
+  // off the JWT claims).
+  let needsMfaChallenge = false;
+  if (user && orgId) {
+    const { data: aalData } =
+      await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+    needsMfaChallenge =
+      aalData?.nextLevel === "aal2" && aalData.currentLevel === "aal1";
+  }
 
   // 3. Redirect rules
 
@@ -59,6 +73,31 @@ export default async function middleware(request: NextRequest) {
   if (user && orgId && mustChangePassword && isAppRoute) {
     return NextResponse.redirect(
       new URL(`/${locale}/auth/change-password`, request.url)
+    );
+  }
+
+  // MFA challenge — any authed user with a pending AAL2 requirement gets
+  // bounced to the TOTP challenge before reaching app or settings. Also
+  // applies to the login page so a freshly-logged-in user can't linger on
+  // /auth/login after the MFA API has already noticed they need to
+  // elevate.
+  if (
+    user &&
+    orgId &&
+    needsMfaChallenge &&
+    !isMfaChallengeRoute &&
+    (isAppRoute || isLoginOrSignup)
+  ) {
+    return NextResponse.redirect(
+      new URL(`/${locale}/auth/mfa`, request.url),
+    );
+  }
+
+  // Authed + already passed MFA but sitting on the challenge page → go
+  // to the dashboard so we don't strand them there.
+  if (user && orgId && !needsMfaChallenge && isMfaChallengeRoute) {
+    return NextResponse.redirect(
+      new URL(`/${locale}/app/dashboard`, request.url),
     );
   }
 

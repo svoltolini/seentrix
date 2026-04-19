@@ -8,7 +8,8 @@
       "team": "Team",
       "billing": "Billing",
       "activity": "Activity",
-      "account": "Account"
+      "account": "Account",
+      "security": "Security"
     },
     "organization": {
       "title": "Organization",

@@ -8,7 +8,8 @@
       "team": "Team",
       "billing": "Abrechnung",
       "activity": "Aktivität",
-      "account": "Konto"
+      "account": "Konto",
+      "security": "Sicherheit"
     },
     "organization": {
       "title": "Organisation",
