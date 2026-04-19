@@ -365,12 +365,18 @@ export interface DashboardProduct {
   has_sbom: boolean;
 }
 
+/**
+ * Dashboard activity row. Thin projection over public.activities — the same
+ * table Settings → Activity reads from — so the dashboard always shows
+ * the authoritative log (every logActivity() call shows up here, including
+ * Academy lesson completions, incident lifecycle events, vulnerability
+ * triage, DoC issuance, and so on).
+ */
 export interface ActivityItem {
   id: string;
-  type: "assessment" | "checklist" | "sbom" | "document";
-  product_name: string;
-  product_id: string;
-  description: string;
+  action: string;
+  target_type: string | null;
+  target_name: string | null;
   created_at: string;
   user_name: string | null;
   user_avatar_url: string | null;
@@ -608,115 +614,77 @@ export async function getDashboardStats(): Promise<DashboardStats> {
 
   const avgCompliance = scoredCount > 0 ? Math.round(totalScore / scoredCount) : 0;
 
-  // Fetch recent activity across tables
-  const recentActivity: ActivityItem[] = [];
-  const productNameMap = Object.fromEntries(allProducts.map((p) => [p.id, p.name]));
+  // Product-id → name lookup, kept for downstream sections that build
+  // product-labeled rows (compliance trend, checklist progress…).
+  const productNameMap = Object.fromEntries(
+    allProducts.map((p) => [p.id, p.name]),
+  );
 
-  if (productIds.length > 0) {
-    // Assessment answers
-    const { data: assessments } = await supabase
-      .from("assessment_answers")
-      .select("id, product_id, question_id, assessed_by, created_at")
-      .in("product_id", productIds)
-      .order("created_at", { ascending: false })
-      .limit(10);
+  // Recent activity — single query against public.activities so the
+  // dashboard matches Settings → Activity exactly. Every logActivity()
+  // call feeds this list, including Academy lesson completions, incident
+  // lifecycle events, vulnerability triage, DoC issuance, etc.
+  const { data: activityRows } = await supabase
+    .from("activities")
+    .select(
+      "id, actor_id, actor_name, action, target_type, target_name, created_at",
+    )
+    .eq("org_id", orgId)
+    .order("created_at", { ascending: false })
+    .limit(10);
 
-    if (assessments) {
-      for (const a of assessments) {
-        const actorId = a.assessed_by as string | null;
-        const actor = actorId ? userMap[actorId] : null;
-        recentActivity.push({
-          id: a.id,
-          type: "assessment",
-          product_name: productNameMap[a.product_id] ?? "",
-          product_id: a.product_id,
-          description: `assessment:${a.question_id}`,
-          created_at: a.created_at,
-          user_name: actor?.full_name ?? currentUser?.full_name ?? null,
-          user_avatar_url: actor?.avatar_url ?? currentUser?.avatar_url ?? null,
-          user_role: actor?.role ?? currentUser?.role ?? null,
-        });
-      }
-    }
-
-    // Checklist items
-    const { data: checklists } = await supabase
-      .from("checklist_items")
-      .select("id, product_id, title, assigned_to, created_at")
-      .in("product_id", productIds)
-      .order("created_at", { ascending: false })
-      .limit(10);
-
-    if (checklists) {
-      for (const c of checklists) {
-        const actorId = c.assigned_to as string | null;
-        const actor = actorId ? userMap[actorId] : null;
-        recentActivity.push({
-          id: c.id,
-          type: "checklist",
-          product_name: productNameMap[c.product_id] ?? "",
-          product_id: c.product_id,
-          description: c.title,
-          created_at: c.created_at,
-          user_name: actor?.full_name ?? currentUser?.full_name ?? null,
-          user_avatar_url: actor?.avatar_url ?? currentUser?.avatar_url ?? null,
-          user_role: actor?.role ?? currentUser?.role ?? null,
-        });
-      }
-    }
-
-    // SBOMs
-    const { data: sbomActivity } = await supabase
-      .from("sboms")
-      .select("id, product_id, sbom_format, created_at")
-      .in("product_id", productIds)
-      .order("created_at", { ascending: false })
-      .limit(10);
-
-    if (sbomActivity) {
-      for (const s of sbomActivity) {
-        recentActivity.push({
-          id: s.id,
-          type: "sbom",
-          product_name: productNameMap[s.product_id] ?? "",
-          product_id: s.product_id,
-          description: s.sbom_format ? `SBOM (${s.sbom_format.toUpperCase()})` : "SBOM",
-          created_at: s.created_at,
-          user_name: currentUser?.full_name ?? null,
-          user_avatar_url: currentUser?.avatar_url ?? null,
-          user_role: currentUser?.role ?? null,
-        });
-      }
-    }
-
-    // Documents
-    const { data: docs } = await supabase
-      .from("documents")
-      .select("id, product_id, title, created_at")
-      .in("product_id", productIds)
-      .order("created_at", { ascending: false })
-      .limit(10);
-
-    if (docs) {
-      for (const d of docs) {
-        recentActivity.push({
-          id: d.id,
-          type: "document",
-          product_name: productNameMap[d.product_id] ?? "",
-          product_id: d.product_id,
-          description: d.title,
-          created_at: d.created_at,
-          user_name: currentUser?.full_name ?? null,
-          user_avatar_url: currentUser?.avatar_url ?? null,
-          user_role: currentUser?.role ?? null,
-        });
-      }
+  const activityActorIds = [
+    ...new Set(
+      (activityRows ?? [])
+        .map((r) => (r as { actor_id: string | null }).actor_id)
+        .filter((id): id is string => Boolean(id)),
+    ),
+  ];
+  const activityActorMap: Record<
+    string,
+    { full_name: string | null; avatar_url: string | null; role: string | null }
+  > = {};
+  if (activityActorIds.length > 0) {
+    const { data: actorRows } = await supabase
+      .from("users")
+      .select("id, full_name, avatar_url, role")
+      .in("id", activityActorIds);
+    for (const row of (actorRows ?? []) as Array<{
+      id: string;
+      full_name: string | null;
+      avatar_url: string | null;
+      role: string | null;
+    }>) {
+      activityActorMap[row.id] = {
+        full_name: row.full_name,
+        avatar_url: row.avatar_url,
+        role: row.role,
+      };
     }
   }
 
-  // Sort all activity by date descending, take top 10
-  recentActivity.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
-  recentActivity.splice(10);
+  const recentActivity: ActivityItem[] = (activityRows ?? []).map((row) => {
+    const r = row as {
+      id: string;
+      actor_id: string | null;
+      actor_name: string | null;
+      action: string;
+      target_type: string | null;
+      target_name: string | null;
+      created_at: string;
+    };
+    const actor = r.actor_id ? activityActorMap[r.actor_id] : null;
+    return {
+      id: r.id,
+      action: r.action,
+      target_type: r.target_type,
+      target_name: r.target_name,
+      created_at: r.created_at,
+      user_name: actor?.full_name ?? r.actor_name,
+      user_avatar_url: actor?.avatar_url ?? null,
+      user_role: actor?.role ?? null,
+    };
+  });
 
   // -----------------------------------------------------------------------
   // KPI queries (run in parallel)

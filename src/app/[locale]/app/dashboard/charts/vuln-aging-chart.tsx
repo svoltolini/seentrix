@@ -111,25 +111,25 @@ export function VulnAgingChart({ buckets, mttr, openCount }: Props) {
               dataKey="critical"
               stackId="a"
               fill={SEVERITY_CHART_COLORS.critical}
-              radius={[0, 0, 0, 0]}
+              radius={[6, 6, 0, 0]}
             />
             <Bar
               dataKey="high"
               stackId="a"
               fill={SEVERITY_CHART_COLORS.high}
-              radius={[0, 0, 0, 0]}
+              radius={[6, 6, 0, 0]}
             />
             <Bar
               dataKey="medium"
               stackId="a"
               fill={SEVERITY_CHART_COLORS.medium}
-              radius={[0, 0, 0, 0]}
+              radius={[6, 6, 0, 0]}
             />
             <Bar
               dataKey="low"
               stackId="a"
               fill={SEVERITY_CHART_COLORS.low}
-              radius={[4, 4, 0, 0]}
+              radius={[6, 6, 0, 0]}
             />
           </BarChart>
         </ResponsiveContainer>

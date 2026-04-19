@@ -92,12 +92,6 @@ const CATEGORY_KEY_MAP: Record<string, string> = {
   critical: "categoryCritical",
 };
 
-const ACTIVITY_TYPE_PILL: Record<string, string> = {
-  assessment: "bg-[#7C3AED]",
-  checklist: "bg-[#2563EB]",
-  sbom: "bg-[#D97706]",
-  document: "bg-[#16A34A]",
-};
 
 // ---------------------------------------------------------------------------
 // Main
@@ -114,6 +108,7 @@ export function DashboardContent(
   const tInc = useTranslations("incidents");
   const tRel = useTranslations("releases");
   const tOrg = useTranslations("settings.organization");
+  const tActivity = useTranslations("settings.activity");
   const rootRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -679,7 +674,12 @@ export function DashboardContent(
             ) : (
               <div className="divide-y divide-white/[0.04]">
                 {recentActivity.map((item) => (
-                  <ActivityRow key={item.id} item={item} t={t} />
+                  <ActivityRow
+                    key={item.id}
+                    item={item}
+                    tSettings={tActivity}
+                    tDashboard={t}
+                  />
                 ))}
               </div>
             )}
@@ -1051,12 +1051,36 @@ function VulnBreakdownCard({
 // Activity Row
 // ---------------------------------------------------------------------------
 
+// Top-level action namespace → activity-pill colour. Same palette that
+// lights up Settings → Activity so colours read consistently across both
+// views.
+const ACTIVITY_ACTION_PILL: Record<string, string> = {
+  organization: "bg-[#2563EB]",
+  member: "bg-[#2563EB]",
+  profile: "bg-[#2563EB]",
+  password: "bg-[#2563EB]",
+  product: "bg-[#7C3AED]",
+  document: "bg-[#16A34A]",
+  sbom: "bg-[#D97706]",
+  checklist: "bg-[#2563EB]",
+  vulnerability: "bg-[#DC2626]",
+  vulnerability_report: "bg-[#DC2626]",
+  incident: "bg-[#DC2626]",
+  release: "bg-[#0891B2]",
+  conformity: "bg-[#16A34A]",
+  entity_obligation: "bg-[#0891B2]",
+  billing: "bg-[#7C3AED]",
+  academy: "bg-[#F59E0B]",
+};
+
 function ActivityRow({
   item,
-  t,
+  tSettings,
+  tDashboard,
 }: {
   item: ActivityItem;
-  t: ReturnType<typeof useTranslations>;
+  tSettings: ReturnType<typeof useTranslations>;
+  tDashboard: ReturnType<typeof useTranslations>;
 }) {
   const initials = item.user_name
     ? item.user_name
@@ -1065,7 +1089,17 @@ function ActivityRow({
         .join("")
         .slice(0, 2)
         .toUpperCase()
-    : item.product_name.charAt(0).toUpperCase();
+    : "·";
+
+  // Translate the action key against the Settings → Activity namespace, so
+  // both views use the same human-readable strings.
+  const actionKey = `actions.${item.action}` as Parameters<typeof tSettings>[0];
+  const actionLabel = tSettings.has(actionKey)
+    ? tSettings(actionKey)
+    : item.action.replace(/[._]/g, " ");
+
+  const topLevel = item.action.split(".")[0];
+  const pillClass = ACTIVITY_ACTION_PILL[topLevel] ?? "bg-white/[0.12]";
 
   return (
     <div className="flex items-start gap-3.5 px-5 py-3.5">
@@ -1084,22 +1118,25 @@ function ActivityRow({
       <div className="min-w-0 flex-1">
         <p className="text-sm">
           <span className="font-medium">{item.user_name ?? "System"}</span>{" "}
-          <span className="text-muted-foreground">
-            {t(`activity.${item.type}`, { product: "" }).trim()}
-          </span>{" "}
-          <span className="font-medium">{item.product_name}</span>
+          <span className="text-muted-foreground">{actionLabel}</span>
+          {item.target_name && (
+            <>
+              {" "}
+              <span className="font-medium">{item.target_name}</span>
+            </>
+          )}
         </p>
         <div className="mt-1 flex items-center gap-2">
           <span
             className={cn(
               "inline-flex rounded-full px-2 py-0.5 text-[10px] font-semibold text-white",
-              ACTIVITY_TYPE_PILL[item.type] ?? "bg-white/[0.12]",
+              pillClass,
             )}
           >
-            {t(`activityType.${item.type}`)}
+            {topLevel.replace(/_/g, " ")}
           </span>
           <span className="text-[11px] text-muted-foreground/40">
-            {relativeTime(item.created_at, t)}
+            {relativeTime(item.created_at, tDashboard)}
           </span>
         </div>
       </div>

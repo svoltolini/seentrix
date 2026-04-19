@@ -316,6 +316,9 @@
         },
         "billing": {
           "checkout_created": "hat einen Plan-Checkout gestartet"
+        },
+        "academy": {
+          "lesson_completed": "hat eine Academy-Lektion abgeschlossen"
         }
       }
     },

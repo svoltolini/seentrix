@@ -102,18 +102,6 @@ function LessonCard({
       href={`/app/academy/${id}`}
       className="group flex items-start gap-4 rounded-2xl bg-white/[0.03] p-6 transition-colors duration-300 hover:bg-white/[0.05]"
     >
-      <div
-        className={
-          done
-            ? "flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#16A34A]/15 text-[#16A34A]"
-            : "flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary"
-        }
-      >
-        <HugeIcon
-          name={done ? "checkmark-circle-01-stroke-rounded" : "elearning-exchange-stroke-rounded"}
-          size={18}
-        />
-      </div>
       <div className="min-w-0 flex-1">
         <p className="font-heading text-[15px] font-semibold text-foreground group-hover:text-primary">
           {title}
@@ -180,9 +168,6 @@ function ScreenCard({
   return (
     <div className="rounded-2xl bg-white/[0.03] p-6 transition-colors duration-300 hover:bg-white/[0.05]">
       <div className="flex items-center gap-3">
-        <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
-          <HugeIcon name={screen.icon} size={18} />
-        </div>
         <div className="min-w-0 flex-1">
           <p className="font-heading text-[15px] font-semibold text-foreground">
             {screenName}

@@ -191,44 +191,44 @@ function MemberCard({
 }
 
 function ProgressRing({ value, color }: { value: number; color: string }) {
-  const r = 16;
+  const r = 28;
   const c = 2 * Math.PI * r;
   const offset = c - (Math.min(100, Math.max(0, value)) / 100) * c;
   return (
     <svg
-      width="44"
-      height="44"
-      viewBox="0 0 44 44"
+      width="72"
+      height="72"
+      viewBox="0 0 72 72"
       className="shrink-0"
       aria-hidden
     >
       <circle
-        cx="22"
-        cy="22"
+        cx="36"
+        cy="36"
         r={r}
         stroke="rgba(255,255,255,0.08)"
-        strokeWidth="3"
+        strokeWidth="4"
         fill="none"
       />
       <circle
-        cx="22"
-        cy="22"
+        cx="36"
+        cy="36"
         r={r}
         stroke={color}
-        strokeWidth="3"
+        strokeWidth="4"
         fill="none"
         strokeLinecap="round"
         strokeDasharray={c}
         strokeDashoffset={offset}
-        transform="rotate(-90 22 22)"
+        transform="rotate(-90 36 36)"
       />
       <text
-        x="22"
-        y="22"
+        x="36"
+        y="36"
         textAnchor="middle"
         dominantBaseline="central"
         fill={color}
-        className="text-[10px] font-semibold tabular-nums"
+        className="text-[15px] font-semibold tabular-nums"
       >
         {value}%
       </text>
