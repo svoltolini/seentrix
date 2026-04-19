@@ -304,32 +304,43 @@ interface OsvBatchResult {
   results: { vulns?: OsvVuln[] }[];
 }
 
-// Fetch full vulnerability details for vulns missing summaries (up to limit)
-async function enrichVulnSummaries(
+// OSV.dev's /v1/querybatch returns a minimal response by design — only
+// { id, modified } per vuln, no severity, no description, no
+// database_specific. We *must* follow up with /v1/vulns/{id} for each
+// unique vuln id to recover the data we need for severity bucketing and
+// description text. Without this, every CVE buckets to the null-score
+// fallback in cvssToSeverity (= "medium"), which is why QA was seeing
+// everything labelled medium regardless of actual severity.
+async function enrichVulns(
   vulns: OsvVuln[],
-  limit = 50
-): Promise<Map<string, { summary: string; references?: { type: string; url: string }[] }>> {
-  const missing = vulns.filter((v) => !v.summary).slice(0, limit);
-  const enriched = new Map<string, { summary: string; references?: { type: string; url: string }[] }>();
+): Promise<Map<string, OsvVuln>> {
+  const enriched = new Map<string, OsvVuln>();
+  const uniqueIds = Array.from(new Set(vulns.map((v) => v.id)));
 
-  // Fetch in parallel batches of 10
   const PARALLEL = 10;
-  for (let i = 0; i < missing.length; i += PARALLEL) {
-    const batch = missing.slice(i, i + PARALLEL);
+  for (let i = 0; i < uniqueIds.length; i += PARALLEL) {
+    const batch = uniqueIds.slice(i, i + PARALLEL);
     const results = await Promise.allSettled(
-      batch.map(async (v) => {
-        const res = await fetch(`https://api.osv.dev/v1/vulns/${v.id}`, {
+      batch.map(async (id) => {
+        const res = await fetch(`https://api.osv.dev/v1/vulns/${id}`, {
           headers: { "Content-Type": "application/json" },
         });
         if (!res.ok) return null;
-        const data = (await res.json()) as OsvVuln;
-        const text = data.summary || data.details?.slice(0, 2000);
-        if (text) {
-          enriched.set(v.id, { summary: text, references: data.references });
-        }
-        return data;
-      })
+        return (await res.json()) as OsvVuln;
+      }),
     );
+    results.forEach((r, idx) => {
+      if (r.status === "fulfilled" && r.value) {
+        enriched.set(batch[idx], r.value);
+      }
+    });
+  }
+
+  // Fall back to the sparse stub when /v1/vulns/{id} didn't return (rate
+  // limit, transient error). Severity extraction will still return null
+  // for these, which is honest — we shouldn't pretend we know.
+  for (const v of vulns) {
+    if (!enriched.has(v.id)) enriched.set(v.id, v);
   }
 
   return enriched;
@@ -518,8 +529,10 @@ export async function scanVulnerabilities(
 
       componentsWithVulns++;
 
-      // Enrich vulns missing summaries by fetching full details
-      const enriched = await enrichVulnSummaries(vulns);
+      // Enrich every unique vuln with full details. The batch endpoint
+      // only returns { id, modified } so severity + description can only
+      // be recovered with a follow-up /v1/vulns/{id} call per id.
+      const enriched = await enrichVulns(vulns);
 
       // Deduplicate by vuln ID
       const seen = new Set<string>();
@@ -536,7 +549,11 @@ export async function scanVulnerabilities(
       let compCritical = 0;
       let compHigh = 0;
 
-      for (const vuln of vulns) {
+      for (const vulnStub of vulns) {
+        // Always operate on the enriched version if we got one, otherwise
+        // fall back to the stub so we don't silently drop a vuln just
+        // because its detail fetch hiccuped.
+        const vuln = enriched.get(vulnStub.id) ?? vulnStub;
         const vulnId = extractVulnId(vuln);
         if (seen.has(vulnId)) continue;
         seen.add(vulnId);
@@ -545,11 +562,9 @@ export async function scanVulnerabilities(
         const severity = cvssToSeverity(score);
         const isKev = kevCveIds.has(vulnId);
 
-        // Use enriched summary if batch query didn't return one
-        const enrichedData = enriched.get(vuln.id);
         const description =
           vuln.summary?.slice(0, 2000) ??
-          enrichedData?.summary?.slice(0, 2000) ??
+          vuln.details?.slice(0, 2000) ??
           null;
 
         vulnRows.push({
