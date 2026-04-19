@@ -209,6 +209,28 @@
     "tabs": {
       "lessons": "Lessons",
       "glossary": "Glossary"
+    },
+    "lesson": {
+      "backToAcademy": "Academy",
+      "questionCount": "{count} quiz questions",
+      "disclaimer": "Educational material, not legal advice. Consult a qualified CRA expert for legally binding decisions.",
+      "quizHeading": "Check your understanding",
+      "quizIntro": "Five multiple-choice questions. Pass 4 of 5 to mark this lesson complete.",
+      "alreadyPassed": "You passed this lesson — {score}% correct.",
+      "certificateLabel": "Certificate"
+    },
+    "quiz": {
+      "threshold": "{percent}% pass threshold",
+      "submit": "Submit answers",
+      "submitting": "Submitting…",
+      "retry": "Try again",
+      "passedTitle": "Nicely done",
+      "passedBody": "You scored {score}%. Completion recorded to your audit trail.",
+      "certificateLabel": "Certificate",
+      "failedTitle": "Not this time — {score}% (need {threshold}%)",
+      "failedBody": "Review the feedback above, then retry in {minutes} min.",
+      "cooldownTitle": "Cooldown in progress",
+      "cooldownBody": "You can retry in {minutes} min. The delay is there to make sure the quiz is actually teaching the concept."
     }
   }
 }

@@ -209,6 +209,28 @@
     "tabs": {
       "lessons": "Lektionen",
       "glossary": "Glossar"
+    },
+    "lesson": {
+      "backToAcademy": "Academy",
+      "questionCount": "{count} Quizfragen",
+      "disclaimer": "Bildungsmaterial, keine Rechtsberatung. Für rechtsverbindliche Entscheidungen konsultieren Sie eine qualifizierte CRA-Expertin.",
+      "quizHeading": "Verständnis prüfen",
+      "quizIntro": "Fünf Multiple-Choice-Fragen. Ab 4 von 5 richtig gilt die Lektion als abgeschlossen.",
+      "alreadyPassed": "Lektion bestanden — {score}% richtig.",
+      "certificateLabel": "Zertifikat"
+    },
+    "quiz": {
+      "threshold": "{percent}%-Bestehensgrenze",
+      "submit": "Antworten abschicken",
+      "submitting": "Wird übermittelt…",
+      "retry": "Erneut versuchen",
+      "passedTitle": "Gut gemacht",
+      "passedBody": "Ergebnis: {score}%. Abschluss ist im Audit-Trail hinterlegt.",
+      "certificateLabel": "Zertifikat",
+      "failedTitle": "Diesmal nicht — {score}% (benötigt: {threshold}%)",
+      "failedBody": "Feedback oben durchgehen, dann in {minutes} min erneut versuchen.",
+      "cooldownTitle": "Cooldown läuft",
+      "cooldownBody": "Erneut versuchen in {minutes} min. Die Sperre stellt sicher, dass das Quiz das Konzept auch vermittelt."
     }
   }
 }
