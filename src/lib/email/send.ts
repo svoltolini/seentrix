@@ -16,7 +16,7 @@ import { Resend } from "resend";
 
 const apiKey = process.env.RESEND_API_KEY;
 const fromAddress =
-  process.env.RESEND_FROM_ADDRESS ?? "Seentrix <no-reply@seentrix.app>";
+  process.env.RESEND_FROM_ADDRESS ?? "Seentrix <no-reply@seentrix.com>";
 
 const client = apiKey ? new Resend(apiKey) : null;
 
