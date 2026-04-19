@@ -486,25 +486,44 @@ export async function getDashboardStats(): Promise<DashboardStats> {
     };
   }
 
-  // Fetch current user profile
-  let currentUser: DashboardCurrentUser | null = null;
-  if (user) {
-    const { data: profile } = await supabase
+  // ---------------------------------------------------------------------
+  // Round 1 — fetch everything that doesn't depend on any other query.
+  // Before: 4 serial round-trips. After: 1 parallel round-trip.
+  // ---------------------------------------------------------------------
+  const [
+    currentUserRes,
+    orgUsersRes,
+    productsRes,
+    activityRowsRes,
+  ] = await Promise.all([
+    user
+      ? supabase
+          .from("users")
+          .select("full_name, email, avatar_url, role")
+          .eq("id", user.id)
+          .single()
+      : Promise.resolve({ data: null }),
+    supabase
       .from("users")
-      .select("full_name, email, avatar_url, role")
-      .eq("id", user.id)
-      .single();
-    if (profile) {
-      currentUser = profile as DashboardCurrentUser;
-    }
-  }
+      .select("id, full_name, avatar_url, role")
+      .eq("org_id", orgId),
+    supabase
+      .from("products")
+      .select("id, name, type, cra_category, created_at")
+      .eq("org_id", orgId)
+      .order("created_at", { ascending: false }),
+    supabase
+      .from("activities")
+      .select("id, actor_id, actor_name, action, target_type, target_name, created_at")
+      .eq("org_id", orgId)
+      .order("created_at", { ascending: false })
+      .limit(10),
+  ]);
 
-  // Fetch all org users for activity attribution
-  const { data: orgUsers } = await supabase
-    .from("users")
-    .select("id, full_name, avatar_url, role")
-    .eq("org_id", orgId);
+  const currentUser: DashboardCurrentUser | null =
+    (currentUserRes.data as DashboardCurrentUser | null) ?? null;
 
+  const orgUsers = orgUsersRes.data;
   const userMap: Record<string, { full_name: string | null; avatar_url: string | null; role: string }> = {};
   if (orgUsers) {
     for (const u of orgUsers) {
@@ -512,68 +531,170 @@ export async function getDashboardStats(): Promise<DashboardStats> {
     }
   }
 
-  // Fetch all products
-  const { data: products } = await supabase
-    .from("products")
-    .select("id, name, type, cra_category, created_at")
-    .eq("org_id", orgId)
-    .order("created_at", { ascending: false });
-
-  const allProducts = products ?? [];
+  const allProducts = productsRes.data ?? [];
   const totalProducts = allProducts.length;
   const assessedCount = allProducts.filter((p) => p.cra_category).length;
   const productIds = allProducts.map((p) => p.id);
 
-  // Calculate compliance scores
+  // Collect activity actor ids — these feed the second-round actor lookup.
+  const activityRows = activityRowsRes.data ?? [];
+  const activityActorIds = [
+    ...new Set(
+      activityRows
+        .map((r) => (r as { actor_id: string | null }).actor_id)
+        .filter((id): id is string => Boolean(id)),
+    ),
+  ];
+
+  // ---------------------------------------------------------------------
+  // Round 2 — everything that depends on productIds or activity actor ids.
+  // All parallel, so one round-trip regardless of how many queries.
+  // ---------------------------------------------------------------------
+  const twelveWeeksAgo = new Date();
+  twelveWeeksAgo.setDate(twelveWeeksAgo.getDate() - 84);
+  const thirtyDaysAgo = new Date();
+  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+  const today = new Date().toISOString().split("T")[0];
+
+  const [
+    checklistItemsRes,
+    sbomsRes,
+    complianceTrendResult,
+    vulnRawResult,
+    mttrResult,
+    overdueResult,
+    activityVelocityResult,
+    fullOverdueCountRes,
+    actorRowsRes,
+  ] = await Promise.all([
+    productIds.length > 0
+      ? supabase
+          .from("checklist_items")
+          .select("product_id, status")
+          .in("product_id", productIds)
+      : Promise.resolve({ data: null }),
+    productIds.length > 0
+      ? supabase
+          .from("sboms")
+          .select(
+            "product_id, vulnerability_count, critical_count, high_count, medium_count, low_count",
+          )
+          .in("product_id", productIds)
+      : Promise.resolve({ data: null }),
+    // 1. Compliance trend — last 12 weeks
+    supabase
+      .from("compliance_snapshots")
+      .select("snapshot_date, product_id, score")
+      .eq("org_id", orgId)
+      .gte("snapshot_date", twelveWeeksAgo.toISOString().split("T")[0])
+      .order("snapshot_date", { ascending: true }),
+    // 2. Vulnerability aging — open/in_progress vulns
+    supabase
+      .from("vulnerabilities")
+      .select("id, severity, created_at, status")
+      .in("status", ["open", "in_progress"]),
+    // 3. MTTR — resolved vulns
+    supabase
+      .from("vulnerabilities")
+      .select("created_at, resolved_at")
+      .eq("status", "resolved")
+      .not("resolved_at", "is", null),
+    // 4. Overdue checklist items (top 5)
+    productIds.length > 0
+      ? supabase
+          .from("checklist_items")
+          .select("id, title, product_id, due_date, priority, status")
+          .in("product_id", productIds)
+          .lt("due_date", today)
+          .not("status", "in", '("completed","not_applicable")')
+          .order("due_date", { ascending: true })
+          .limit(5)
+      : Promise.resolve({ data: null }),
+    // 5. Activity velocity — last 30 days
+    supabase
+      .from("activities")
+      .select("created_at")
+      .eq("org_id", orgId)
+      .gte("created_at", thirtyDaysAgo.toISOString()),
+    // 6. Full overdue count (not just top 5)
+    productIds.length > 0
+      ? supabase
+          .from("checklist_items")
+          .select("id", { count: "exact", head: true })
+          .in("product_id", productIds)
+          .lt("due_date", today)
+          .not("status", "in", '("completed","not_applicable")')
+      : Promise.resolve({ count: 0 }),
+    // 7. Activity actor details (avatars, roles)
+    activityActorIds.length > 0
+      ? supabase
+          .from("users")
+          .select("id, full_name, avatar_url, role")
+          .in("id", activityActorIds)
+      : Promise.resolve({ data: null }),
+  ]);
+
+  // --- Build compliance + per-product checklist progress from a SINGLE
+  //     checklist_items fetch (previously this data was fetched twice). ---
   const checklistMap: Record<string, { completed: number; applicable: number }> = {};
-  // SBOM data per product
-  const sbomMap: Record<string, { vulnerability_count: number; critical_count: number; high_count: number; medium_count: number; low_count: number; has_sbom: boolean }> = {};
+  const progressMap: Record<string, ChecklistProgress> = {};
+  const top5ProductIds = new Set(productIds.slice(0, 5));
 
-  if (productIds.length > 0) {
-    const { data: items } = await supabase
-      .from("checklist_items")
-      .select("product_id, status")
-      .in("product_id", productIds);
-
-    if (items) {
-      for (const item of items) {
-        if (!checklistMap[item.product_id]) {
-          checklistMap[item.product_id] = { completed: 0, applicable: 0 };
+  if (checklistItemsRes.data) {
+    for (const item of checklistItemsRes.data) {
+      const pid = item.product_id as string;
+      if (!checklistMap[pid]) {
+        checklistMap[pid] = { completed: 0, applicable: 0 };
+      }
+      if (item.status !== "not_applicable") {
+        checklistMap[pid].applicable++;
+        if (item.status === "completed") {
+          checklistMap[pid].completed++;
         }
-        if (item.status !== "not_applicable") {
-          checklistMap[item.product_id].applicable++;
-          if (item.status === "completed") {
-            checklistMap[item.product_id].completed++;
-          }
+      }
+
+      // Second pass within the same loop — per-product progress for the
+      // first 5 products (the dashboard only renders the top 5).
+      if (top5ProductIds.has(pid)) {
+        if (!progressMap[pid]) {
+          progressMap[pid] = {
+            productId: pid,
+            productName: "",
+            pending: 0,
+            in_progress: 0,
+            completed: 0,
+            not_applicable: 0,
+          };
+        }
+        const status = item.status as string;
+        if (status in progressMap[pid]) {
+          const rec = progressMap[pid] as unknown as Record<string, number>;
+          rec[status] = (rec[status] ?? 0) + 1;
         }
       }
     }
+  }
 
-    // Fetch SBOM vulnerability aggregates
-    const { data: sboms } = await supabase
-      .from("sboms")
-      .select("product_id, vulnerability_count, critical_count, high_count, medium_count, low_count")
-      .in("product_id", productIds);
-
-    if (sboms) {
-      for (const sbom of sboms) {
-        const existing = sbomMap[sbom.product_id];
-        if (!existing) {
-          sbomMap[sbom.product_id] = {
-            vulnerability_count: sbom.vulnerability_count ?? 0,
-            critical_count: sbom.critical_count ?? 0,
-            high_count: sbom.high_count ?? 0,
-            medium_count: sbom.medium_count ?? 0,
-            low_count: sbom.low_count ?? 0,
-            has_sbom: true,
-          };
-        } else {
-          existing.vulnerability_count += sbom.vulnerability_count ?? 0;
-          existing.critical_count += sbom.critical_count ?? 0;
-          existing.high_count += sbom.high_count ?? 0;
-          existing.medium_count += sbom.medium_count ?? 0;
-          existing.low_count += sbom.low_count ?? 0;
-        }
+  // --- Build SBOM vulnerability aggregates ---
+  const sbomMap: Record<string, { vulnerability_count: number; critical_count: number; high_count: number; medium_count: number; low_count: number; has_sbom: boolean }> = {};
+  if (sbomsRes.data) {
+    for (const sbom of sbomsRes.data) {
+      const existing = sbomMap[sbom.product_id];
+      if (!existing) {
+        sbomMap[sbom.product_id] = {
+          vulnerability_count: sbom.vulnerability_count ?? 0,
+          critical_count: sbom.critical_count ?? 0,
+          high_count: sbom.high_count ?? 0,
+          medium_count: sbom.medium_count ?? 0,
+          low_count: sbom.low_count ?? 0,
+          has_sbom: true,
+        };
+      } else {
+        existing.vulnerability_count += sbom.vulnerability_count ?? 0;
+        existing.critical_count += sbom.critical_count ?? 0;
+        existing.high_count += sbom.high_count ?? 0;
+        existing.medium_count += sbom.medium_count ?? 0;
+        existing.low_count += sbom.low_count ?? 0;
       }
     }
   }
@@ -629,36 +750,14 @@ export async function getDashboardStats(): Promise<DashboardStats> {
     allProducts.map((p) => [p.id, p.name]),
   );
 
-  // Recent activity — single query against public.activities so the
-  // dashboard matches Settings → Activity exactly. Every logActivity()
-  // call feeds this list, including Academy lesson completions, incident
-  // lifecycle events, vulnerability triage, DoC issuance, etc.
-  const { data: activityRows } = await supabase
-    .from("activities")
-    .select(
-      "id, actor_id, actor_name, action, target_type, target_name, created_at",
-    )
-    .eq("org_id", orgId)
-    .order("created_at", { ascending: false })
-    .limit(10);
-
-  const activityActorIds = [
-    ...new Set(
-      (activityRows ?? [])
-        .map((r) => (r as { actor_id: string | null }).actor_id)
-        .filter((id): id is string => Boolean(id)),
-    ),
-  ];
+  // Recent activity — both the activity rows (Round 1) and actor profile
+  // details (Round 2) are already fetched. This just stitches them.
   const activityActorMap: Record<
     string,
     { full_name: string | null; avatar_url: string | null; role: string | null }
   > = {};
-  if (activityActorIds.length > 0) {
-    const { data: actorRows } = await supabase
-      .from("users")
-      .select("id, full_name, avatar_url, role")
-      .in("id", activityActorIds);
-    for (const row of (actorRows ?? []) as Array<{
+  if (actorRowsRes.data) {
+    for (const row of actorRowsRes.data as Array<{
       id: string;
       full_name: string | null;
       avatar_url: string | null;
@@ -672,7 +771,7 @@ export async function getDashboardStats(): Promise<DashboardStats> {
     }
   }
 
-  const recentActivity: ActivityItem[] = (activityRows ?? []).map((row) => {
+  const recentActivity: ActivityItem[] = activityRows.map((row) => {
     const r = row as {
       id: string;
       actor_id: string | null;
@@ -694,63 +793,6 @@ export async function getDashboardStats(): Promise<DashboardStats> {
       user_role: actor?.role ?? null,
     };
   });
-
-  // -----------------------------------------------------------------------
-  // KPI queries (run in parallel)
-  // -----------------------------------------------------------------------
-  const twelveWeeksAgo = new Date();
-  twelveWeeksAgo.setDate(twelveWeeksAgo.getDate() - 84);
-  const thirtyDaysAgo = new Date();
-  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-  const today = new Date().toISOString().split("T")[0];
-
-  const [
-    complianceTrendResult,
-    vulnRawResult,
-    mttrResult,
-    overdueResult,
-    activityVelocityResult,
-  ] = await Promise.all([
-    // 1. Compliance trend — last 12 weeks
-    supabase
-      .from("compliance_snapshots")
-      .select("snapshot_date, product_id, score")
-      .eq("org_id", orgId)
-      .gte("snapshot_date", twelveWeeksAgo.toISOString().split("T")[0])
-      .order("snapshot_date", { ascending: true }),
-
-    // 2. Vulnerability aging — open/in_progress vulns with severity + age
-    supabase
-      .from("vulnerabilities")
-      .select("id, severity, created_at, status")
-      .in("status", ["open", "in_progress"]),
-
-    // 3. MTTR — resolved vulns
-    supabase
-      .from("vulnerabilities")
-      .select("created_at, resolved_at")
-      .eq("status", "resolved")
-      .not("resolved_at", "is", null),
-
-    // 4. Overdue checklist items
-    productIds.length > 0
-      ? supabase
-          .from("checklist_items")
-          .select("id, title, product_id, due_date, priority, status")
-          .in("product_id", productIds)
-          .lt("due_date", today)
-          .not("status", "in", '("completed","not_applicable")')
-          .order("due_date", { ascending: true })
-          .limit(5)
-      : Promise.resolve({ data: null }),
-
-    // 5. Activity velocity — last 30 days
-    supabase
-      .from("activities")
-      .select("created_at")
-      .eq("org_id", orgId)
-      .gte("created_at", thirtyDaysAgo.toISOString()),
-  ]);
 
   // --- Process compliance trend ---
   const complianceTrend: ComplianceTrendPoint[] = [];
@@ -819,40 +861,13 @@ export async function getDashboardStats(): Promise<DashboardStats> {
   }
 
   // --- Process checklist progress (per-product status counts) ---
+  // progressMap was already populated during the Round 2 checklist_items
+  // pass. Just attach product names + order by allProducts slice.
   const checklistProgress: ChecklistProgress[] = [];
-  if (productIds.length > 0) {
-    const progressMap: Record<string, ChecklistProgress> = {};
-    // Re-use the checklist items we already fetched (items variable from above)
-    const { data: allChecklistItems } = await supabase
-      .from("checklist_items")
-      .select("product_id, status")
-      .in("product_id", productIds.slice(0, 5));
-
-    if (allChecklistItems) {
-      for (const item of allChecklistItems) {
-        const pid = item.product_id as string;
-        if (!progressMap[pid]) {
-          progressMap[pid] = {
-            productId: pid,
-            productName: productNameMap[pid] ?? "",
-            pending: 0,
-            in_progress: 0,
-            completed: 0,
-            not_applicable: 0,
-          };
-        }
-        const status = item.status as string;
-        if (status in progressMap[pid]) {
-          const rec = progressMap[pid] as unknown as Record<string, number>;
-          rec[status] = (rec[status] ?? 0) + 1;
-        }
-      }
-    }
-    // Return up to 5 products
-    for (const p of allProducts.slice(0, 5)) {
-      if (progressMap[p.id]) {
-        checklistProgress.push(progressMap[p.id]);
-      }
+  for (const p of allProducts.slice(0, 5)) {
+    const entry = progressMap[p.id];
+    if (entry) {
+      checklistProgress.push({ ...entry, productName: productNameMap[p.id] ?? "" });
     }
   }
 
@@ -877,16 +892,8 @@ export async function getDashboardStats(): Promise<DashboardStats> {
     }
   }
 
-  // Get full overdue count (not just top 5)
-  if (productIds.length > 0) {
-    const { count: fullOverdueCount } = await supabase
-      .from("checklist_items")
-      .select("id", { count: "exact", head: true })
-      .in("product_id", productIds)
-      .lt("due_date", today)
-      .not("status", "in", '("completed","not_applicable")');
-    overdueCount = fullOverdueCount ?? overdueItems.length;
-  }
+  // Full overdue count (not just top 5) — already fetched in Round 2.
+  overdueCount = fullOverdueCountRes.count ?? overdueItems.length;
 
   // --- Process activity velocity ---
   const activityVelocity: ActivityVelocityPoint[] = [];
