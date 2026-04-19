@@ -1133,7 +1133,10 @@ function ActivityRow({
               pillClass,
             )}
           >
-            {topLevel.replace(/_/g, " ")}
+            {(() => {
+              const spaced = topLevel.replace(/_/g, " ");
+              return spaced.charAt(0).toUpperCase() + spaced.slice(1);
+            })()}
           </span>
           <span className="text-[11px] text-muted-foreground/40">
             {relativeTime(item.created_at, tDashboard)}
