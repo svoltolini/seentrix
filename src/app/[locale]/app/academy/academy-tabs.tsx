@@ -100,13 +100,13 @@ function LessonCard({
   return (
     <Link
       href={`/app/academy/${id}`}
-      className="group flex items-start gap-4 rounded-xl border border-white/[0.06] bg-card p-5 transition-all hover:-translate-y-0.5 hover:border-white/[0.12]"
+      className="group flex items-start gap-4 rounded-2xl bg-white/[0.03] p-6 transition-colors duration-300 hover:bg-white/[0.05]"
     >
       <div
         className={
           done
-            ? "flex size-10 shrink-0 items-center justify-center rounded-lg bg-[#16A34A]/15 text-[#16A34A]"
-            : "flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary"
+            ? "flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#16A34A]/15 text-[#16A34A]"
+            : "flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary"
         }
       >
         <HugeIcon
@@ -115,7 +115,7 @@ function LessonCard({
         />
       </div>
       <div className="min-w-0 flex-1">
-        <p className="font-heading text-sm font-semibold text-foreground group-hover:text-primary">
+        <p className="font-heading text-[15px] font-semibold text-foreground group-hover:text-primary">
           {title}
         </p>
         <div className="mt-1.5 flex items-center gap-2 text-[11px]">
@@ -178,13 +178,13 @@ function ScreenCard({
   const doneCount = screen.lessons.filter((id) => completed.has(id)).length;
 
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-card p-5">
+    <div className="rounded-2xl bg-white/[0.03] p-6 transition-colors duration-300 hover:bg-white/[0.05]">
       <div className="flex items-center gap-3">
-        <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+        <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
           <HugeIcon name={screen.icon} size={18} />
         </div>
         <div className="min-w-0 flex-1">
-          <p className="font-heading text-sm font-semibold text-foreground">
+          <p className="font-heading text-[15px] font-semibold text-foreground">
             {screenName}
           </p>
           <p className="mt-0.5 text-[11px] text-muted-foreground">
@@ -194,12 +194,12 @@ function ScreenCard({
         </div>
         <Link
           href={screen.href}
-          className="shrink-0 rounded-md border border-white/[0.08] px-2.5 py-1 text-[11px] font-medium text-muted-foreground transition-colors hover:border-white/[0.2] hover:text-foreground"
+          className="shrink-0 rounded-md px-2.5 py-1 text-[11px] font-medium text-muted-foreground transition-colors hover:bg-white/[0.05] hover:text-foreground"
         >
           {openLabel} →
         </Link>
       </div>
-      <ul className="mt-4 space-y-1.5 border-t border-white/[0.04] pt-4">
+      <ul className="mt-4 space-y-1 border-t border-white/[0.04] pt-3">
         {screen.lessons.map((id) => {
           const lesson = ACADEMY_LESSONS[id as keyof typeof ACADEMY_LESSONS];
           if (!lesson) return null;
@@ -208,7 +208,7 @@ function ScreenCard({
             <li key={id}>
               <Link
                 href={`/app/academy/${id}`}
-                className="group flex items-center gap-2 rounded-md px-2 py-1.5 text-[12px] transition-colors hover:bg-white/[0.03]"
+                className="group flex items-center gap-2 rounded-md px-2 py-1.5 text-[12px] transition-colors hover:bg-white/[0.04]"
               >
                 <HugeIcon
                   name={
