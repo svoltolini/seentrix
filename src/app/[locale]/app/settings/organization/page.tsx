@@ -1,11 +1,13 @@
 import { loadOrgSettings, listTeamMembers, getCurrentUserRole } from "../actions";
+import { getDeletionStatus } from "../gdpr-actions";
 import { OrgSettingsContent } from "./org-settings-content";
 
 export default async function OrganizationPage() {
-  const [org, members, currentUserRole] = await Promise.all([
+  const [org, members, currentUserRole, deletion] = await Promise.all([
     loadOrgSettings(),
     listTeamMembers(),
     getCurrentUserRole(),
+    getDeletionStatus(),
   ]);
 
   return (
@@ -13,6 +15,7 @@ export default async function OrganizationPage() {
       org={org}
       members={members}
       isAdmin={currentUserRole === "admin"}
+      deletion={deletion}
     />
   );
 }

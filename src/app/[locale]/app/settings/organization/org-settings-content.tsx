@@ -14,6 +14,8 @@ import { ProfileIncompleteBanner } from "@/components/profile-incomplete-banner"
 import { FieldHelp } from "@/components/field-help";
 import { useGlossaryTags } from "@/components/glossary/use-glossary-tags";
 import { PLAN_USER_LIMITS, type OrgPlan } from "@/lib/constants/plans";
+import { DangerZone } from "./danger-zone";
+import type { DeletionStatus } from "../gdpr-types";
 
 // Role hierarchy from highest to lowest
 const ROLE_HIERARCHY: { key: string; color: string; bg: string; icon: string }[] = [
@@ -28,10 +30,12 @@ export function OrgSettingsContent({
   org,
   members,
   isAdmin,
+  deletion,
 }: {
   org: OrgSettings | null;
   members: TeamMember[];
   isAdmin: boolean;
+  deletion: DeletionStatus | null;
 }) {
   const t = useTranslations("settings.organization");
   const tTeam = useTranslations("settings.team");
@@ -403,6 +407,12 @@ export function OrgSettingsContent({
         t={t}
         tTeam={tTeam}
       />
+
+      {/* Danger zone — GDPR data rights. Admin-only; stays mounted so the
+          pending-deletion banner is always visible to anyone with the link. */}
+      {isAdmin && org && (
+        <DangerZone orgName={org.name} orgId={org.id} deletion={deletion} />
+      )}
     </div>
   );
 }

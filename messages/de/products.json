@@ -157,7 +157,8 @@
       "generic": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.",
       "notAuthenticated": "Sie müssen angemeldet sein.",
       "noOrganization": "Keine Organisation gefunden. Bitte schließen Sie das Onboarding ab.",
-      "limitReached": "Sie haben das Produktlimit für Ihren Plan erreicht."
+      "limitReached": "Sie haben das Produktlimit für Ihren Plan erreicht.",
+      "planLimitReached": "Sie haben das Produktlimit für Ihren Plan erreicht. Upgraden Sie, um weitere Produkte hinzuzufügen."
     }
   }
 }

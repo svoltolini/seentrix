@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { assessmentSchema } from "@/lib/validations/assessment";
 import { classifyProduct } from "@/lib/constants/cra-classification";
 import { logActivity } from "@/lib/activity";
+import { canCreateProduct, type OrgPlan } from "@/lib/constants/plans";
 
 export type AssessmentState =
   | { productId: string; error?: never }
@@ -44,6 +45,24 @@ export async function createProductWithAssessment(
   const orgId = user.app_metadata?.org_id;
   if (!orgId) {
     return { error: "noOrganization" };
+  }
+
+  // Server-side plan-limit enforcement — mirror createMember in settings.
+  // Fetch the org plan + current product count and refuse past the cap so
+  // a direct POST can't blow past the quota. The UI already prevents this
+  // for normal navigation; this is the defence-in-depth guard.
+  const { data: org } = await supabase
+    .from("organizations")
+    .select("plan")
+    .eq("id", orgId)
+    .single();
+  const plan = ((org as { plan?: string } | null)?.plan ?? "free") as OrgPlan;
+  const { count: productCount } = await supabase
+    .from("products")
+    .select("id", { count: "exact", head: true })
+    .eq("org_id", orgId);
+  if (!canCreateProduct(plan, productCount ?? 0)) {
+    return { error: "planLimitReached" };
   }
 
   const classification = classifyProduct(result.data.subcategoryId);

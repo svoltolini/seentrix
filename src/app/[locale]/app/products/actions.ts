@@ -174,6 +174,15 @@ export async function createProduct(
   const orgId = user.app_metadata?.org_id as string | undefined;
   if (!orgId) return { error: "noOrganization" };
 
+  // Server-side plan-limit enforcement. The UI already hides the create
+  // button when at cap, but the action is reachable on its own — without
+  // this check a user could POST around the disabled button and blow past
+  // the plan quota. Keeps the seat/product caps symmetric.
+  const { plan, productCount } = await getOrgProductInfo();
+  if (!canCreateProduct(plan, productCount)) {
+    return { error: "planLimitReached" };
+  }
+
   // Upload product image if provided
   let imageUrl: string | null = null;
   const imageFile = formData.get("image") as File | null;

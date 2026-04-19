@@ -157,7 +157,8 @@
       "generic": "Something went wrong. Please try again.",
       "notAuthenticated": "You must be logged in.",
       "noOrganization": "No organization found. Please complete onboarding.",
-      "limitReached": "You have reached the product limit for your plan."
+      "limitReached": "You have reached the product limit for your plan.",
+      "planLimitReached": "You have reached the product limit for your plan. Upgrade to add more products."
     }
   }
 }
