@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { HugeIcon } from "@/components/huge-icon";
+import { useCurrentLessonId } from "@/lib/academy/current-lesson-context";
 import {
   ACADEMY_LESSONS,
   type AcademyLessonId,
@@ -41,7 +42,14 @@ export function HelpSheet({
   const t = useTranslations("help");
   const tGlossary = useTranslations("glossary");
 
-  const lesson = academyLessonId ? ACADEMY_LESSONS[academyLessonId] : null;
+  // If we're already on this lesson's page, suppress the "Open lesson"
+  // CTA — it would just re-open the same page the user is reading.
+  const currentLessonId = useCurrentLessonId();
+  const effectiveLessonId =
+    academyLessonId && academyLessonId !== currentLessonId
+      ? academyLessonId
+      : undefined;
+  const lesson = effectiveLessonId ? ACADEMY_LESSONS[effectiveLessonId] : null;
 
   return (
     <SheetPrimitive.Root>
@@ -112,9 +120,9 @@ export function HelpSheet({
               </div>
             )}
 
-            {lesson && academyLessonId && (
+            {lesson && effectiveLessonId && (
               <Link
-                href={`/app/academy/${academyLessonId}`}
+                href={`/app/academy/${effectiveLessonId}`}
                 className="group block rounded-xl bg-white/[0.03] p-4 transition-colors hover:bg-white/[0.06]"
               >
                 <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/60">

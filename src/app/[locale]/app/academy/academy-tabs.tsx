@@ -70,6 +70,7 @@ export function AcademyTabs({
 }
 
 function LessonsGrid({ completed }: { completed: Set<string> }) {
+  const t = useTranslations("academy.lessonCard");
   const lessons = Object.entries(ACADEMY_LESSONS);
   return (
     <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
@@ -80,6 +81,8 @@ function LessonsGrid({ completed }: { completed: Set<string> }) {
           title={lesson.title}
           duration={lesson.duration}
           done={completed.has(id)}
+          completedLabel={t("completed")}
+          openLabel={t("open")}
         />
       ))}
     </div>
@@ -91,11 +94,15 @@ function LessonCard({
   title,
   duration,
   done,
+  completedLabel,
+  openLabel,
 }: {
   id: string;
   title: string;
   duration: string;
   done: boolean;
+  completedLabel: string;
+  openLabel: string;
 }) {
   return (
     <Link
@@ -111,11 +118,11 @@ function LessonCard({
           <span className="text-muted-foreground/40">·</span>
           {done ? (
             <span className="inline-flex items-center gap-1 rounded-full bg-[#16A34A]/10 px-2 py-0.5 font-medium text-[#16A34A]">
-              Completed
+              {completedLabel}
             </span>
           ) : (
             <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2 py-0.5 font-medium text-primary">
-              Open
+              {openLabel}
             </span>
           )}
         </div>
@@ -158,6 +165,7 @@ function ScreenCard({
   completed: Set<string>;
   openLabel: string;
 }) {
+  const tCard = useTranslations("academy.byScreenCard");
   const totalMinutes = screen.lessons.reduce((sum, id) => {
     const lesson = ACADEMY_LESSONS[id as keyof typeof ACADEMY_LESSONS];
     const match = lesson?.duration.match(/\d+/);
@@ -173,8 +181,12 @@ function ScreenCard({
             {screenName}
           </p>
           <p className="mt-0.5 text-[11px] text-muted-foreground">
-            {screen.lessons.length} lesson{screen.lessons.length > 1 ? "s" : ""}{" "}
-            · {totalMinutes} min · {doneCount}/{screen.lessons.length} done
+            {tCard("meta", {
+              count: screen.lessons.length,
+              minutes: totalMinutes,
+              done: doneCount,
+              total: screen.lessons.length,
+            })}
           </p>
         </div>
         <Link

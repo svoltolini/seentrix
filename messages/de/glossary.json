@@ -207,6 +207,16 @@
       "title": "Seentrix Academy",
       "description": "Kurze Lektionen zu CRA, Schwachstellenbehandlung, SBOMs und den Pflichten hinter jedem Feld in Seentrix. Tracks abschließen und prüfungstaugliche Zertifikate für jedes Teammitglied sammeln."
     },
+    "lessonCard": {
+      "completed": "Abgeschlossen",
+      "open": "Offen"
+    },
+    "byScreenCard": {
+      "meta": "{count, plural, one {# Lektion} other {# Lektionen}} · {minutes} Min · {done}/{total} erledigt"
+    },
+    "quiz": {
+      "questionPrefix": "F"
+    },
     "tabs": {
       "lessons": "Lektionen",
       "byScreen": "Nach Screen",

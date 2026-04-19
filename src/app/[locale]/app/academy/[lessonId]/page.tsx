@@ -3,6 +3,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { getLesson, getLessonContent } from "@/lib/academy/lessons";
 import type { LocaleId } from "@/lib/academy/types";
+import { CurrentLessonProvider } from "@/lib/academy/current-lesson-context";
 import { createClient } from "@/lib/supabase/server";
 import { HugeIcon } from "@/components/huge-icon";
 import { Quiz } from "./quiz";
@@ -48,6 +49,7 @@ export default async function LessonPage({
   }
 
   return (
+    <CurrentLessonProvider lessonId={lesson.id}>
     <div className="mx-auto max-w-3xl px-4 py-8 md:py-12">
       <Link
         href="/app/academy"
@@ -141,5 +143,6 @@ export default async function LessonPage({
         </div>
       </div>
     </div>
+    </CurrentLessonProvider>
   );
 }

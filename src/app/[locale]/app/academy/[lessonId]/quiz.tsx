@@ -194,15 +194,22 @@ function QuestionCard({
   revealCorrect: boolean;
   onSelect: (choice: number) => void;
 }) {
+  const tCard = useTranslations("academy.quiz");
+  const legendId = `quiz-q${index}-legend`;
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-card p-5">
+    <fieldset
+      disabled={locked}
+      aria-labelledby={legendId}
+      className="rounded-xl border border-white/[0.06] bg-card p-5"
+    >
       <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/60">
-        Q{index + 1}
+        {tCard("questionPrefix")}
+        {index + 1}
       </p>
-      <p className="mt-1 text-sm font-semibold text-foreground">
+      <legend id={legendId} className="mt-1 text-sm font-semibold text-foreground">
         {question.question}
-      </p>
-      <div className="mt-4 space-y-2">
+      </legend>
+      <div className="mt-4 space-y-2" role="radiogroup">
         {question.options.map((opt, j) => {
           const isSelected = selected === j;
           const isCorrect = j === question.correctIndex;
@@ -212,6 +219,8 @@ function QuestionCard({
             <button
               key={j}
               type="button"
+              role="radio"
+              aria-checked={isSelected}
               disabled={locked}
               onClick={() => onSelect(j)}
               className={cn(
@@ -224,6 +233,7 @@ function QuestionCard({
               )}
             >
               <span
+                aria-hidden
                 className={cn(
                   "mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full border",
                   isSelected
@@ -247,7 +257,7 @@ function QuestionCard({
           {question.explanation}
         </p>
       )}
-    </div>
+    </fieldset>
   );
 }
 

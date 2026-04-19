@@ -207,6 +207,16 @@
       "title": "Seentrix Academy",
       "description": "Short lessons on the CRA, vulnerability handling, SBOMs, and the obligations behind every field you fill in across Seentrix. Complete tracks to collect audit-ready certificates for each team member."
     },
+    "lessonCard": {
+      "completed": "Completed",
+      "open": "Open"
+    },
+    "byScreenCard": {
+      "meta": "{count, plural, one {# lesson} other {# lessons}} · {minutes} min · {done}/{total} done"
+    },
+    "quiz": {
+      "questionPrefix": "Q"
+    },
     "tabs": {
       "lessons": "Lessons",
       "byScreen": "By Screen",
