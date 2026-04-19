@@ -1,20 +1,8 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useLinkStatus } from "next/link";
 import { usePathname, Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
-
-function TabPendingDot() {
-  const { pending } = useLinkStatus();
-  if (!pending) return null;
-  return (
-    <span
-      aria-hidden
-      className="ml-1.5 inline-block size-1.5 animate-pulse rounded-full bg-primary"
-    />
-  );
-}
 
 const TABS = [
   { key: "nav.organization", segment: "/organization" },
@@ -43,14 +31,13 @@ export function SettingsNav() {
           key={tab.key}
           href={`${basePath}${tab.segment}`}
           className={cn(
-            "flex items-center rounded-lg px-4 py-2 text-sm font-medium transition-all",
+            "rounded-lg px-4 py-2 text-sm font-medium transition-all",
             isActive(tab.segment)
               ? "bg-white/[0.08] text-foreground"
               : "text-muted-foreground/60 hover:text-foreground"
           )}
         >
           {t(tab.key)}
-          <TabPendingDot />
         </Link>
       ))}
     </div>

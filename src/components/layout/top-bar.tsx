@@ -1,7 +1,6 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
-import { useLinkStatus } from "next/link";
 import { usePathname, useRouter, Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -14,23 +13,6 @@ import {
 import { HugeIcon } from "@/components/huge-icon";
 import Image from "next/image";
 import { logout } from "@/app/[locale]/auth/actions";
-
-/**
- * Small animated dot that appears next to a nav label while the Link that
- * wraps it is mid-transition. Uses Next's useLinkStatus hook — must be
- * rendered inside a <Link>. Gives immediate feedback at the clicked
- * item, complementing the global top progress bar.
- */
-function NavPendingDot() {
-  const { pending } = useLinkStatus();
-  if (!pending) return null;
-  return (
-    <span
-      aria-hidden
-      className="ml-1 inline-block size-1.5 animate-pulse rounded-full bg-primary"
-    />
-  );
-}
 
 const navItems = [
   {
@@ -100,7 +82,6 @@ export function TopBar({ avatarUrl }: { avatarUrl?: string | null }) {
               >
                 <HugeIcon name={item.icon} size={16} />
                 {t(item.labelKey)}
-                <NavPendingDot />
               </Link>
             );
           })}
@@ -218,7 +199,6 @@ export function TopBar({ avatarUrl }: { avatarUrl?: string | null }) {
                   >
                     <HugeIcon name={item.icon} size={16} />
                     {t(item.labelKey)}
-                    <NavPendingDot />
                   </Link>
                 );
               })}
