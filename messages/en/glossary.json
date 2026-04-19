@@ -200,5 +200,15 @@
     "academy": "Academy",
     "comingSoon": "Coming soon",
     "close": "Close"
+  },
+  "academy": {
+    "hero": {
+      "title": "Seentrix Academy",
+      "description": "Short lessons on the CRA, vulnerability handling, SBOMs, and the obligations behind every field you fill in across Seentrix. Complete tracks to collect audit-ready certificates for each team member."
+    },
+    "tabs": {
+      "lessons": "Lessons",
+      "glossary": "Glossary"
+    }
   }
 }

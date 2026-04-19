@@ -200,5 +200,15 @@
     "academy": "Academy",
     "comingSoon": "Bald verfügbar",
     "close": "Schließen"
+  },
+  "academy": {
+    "hero": {
+      "title": "Seentrix Academy",
+      "description": "Kurze Lektionen zu CRA, Schwachstellenbehandlung, SBOMs und den Pflichten hinter jedem Feld in Seentrix. Tracks abschließen und prüfungstaugliche Zertifikate für jedes Teammitglied sammeln."
+    },
+    "tabs": {
+      "lessons": "Lektionen",
+      "glossary": "Glossar"
+    }
   }
 }

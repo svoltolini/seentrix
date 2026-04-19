@@ -4,6 +4,7 @@ import * as React from "react";
 import { Dialog as SheetPrimitive } from "@base-ui/react/dialog";
 import { cn } from "@/lib/utils";
 import { HelpSheet } from "@/components/help-sheet";
+import { HugeIcon } from "@/components/huge-icon";
 import type {
   AcademyLessonId,
   GlossaryTermId,
@@ -60,12 +61,12 @@ export function FieldHelp({
       <SheetPrimitive.Trigger
         type="button"
         className={cn(
-          "inline-flex size-[14px] shrink-0 items-center justify-center rounded-full bg-muted-foreground/15 text-[10px] font-bold leading-none text-muted-foreground transition-colors hover:bg-primary/15 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background data-[popup-open]:bg-primary/15 data-[popup-open]:text-primary",
+          "inline-flex shrink-0 items-center justify-center rounded-md text-muted-foreground/70 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background data-[popup-open]:text-primary",
           className,
         )}
         aria-label={title}
       >
-        ?
+        <HugeIcon name="bubble-chat-question-stroke-rounded" size={15} />
       </SheetPrimitive.Trigger>
     </HelpSheet>
   );
