@@ -198,11 +198,12 @@
     "craReference": "CRA-Referenz",
     "relatedTerms": "Verwandte Begriffe",
     "academy": "Academy",
-    "comingSoon": "Bald verfügbar",
+    "openLesson": "Lektion öffnen →",
     "close": "Schließen"
   },
   "academy": {
     "hero": {
+      "eyebrow": "CRA-Schulung",
       "title": "Seentrix Academy",
       "description": "Kurze Lektionen zu CRA, Schwachstellenbehandlung, SBOMs und den Pflichten hinter jedem Feld in Seentrix. Tracks abschließen und prüfungstaugliche Zertifikate für jedes Teammitglied sammeln."
     },

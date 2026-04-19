@@ -108,9 +108,12 @@ export default async function AcademyPage({
           className="mb-8 overflow-hidden rounded-2xl bg-cover bg-center p-6 md:mb-10 md:p-10"
           style={{ backgroundImage: "url('/images/entity-role-bg.svg')" }}
         >
+          {/* Static eyebrow — no amber pulse here. The pulsing dot is
+              reserved for the gate hero (above) where it signals an
+              action the user must take. On the happy path it reads as a
+              false alarm. */}
           <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur-sm">
-            <span className="size-1.5 animate-pulse rounded-full bg-[#F59E0B]" />
-            Layer 2
+            {t("hero.eyebrow")}
           </div>
           <h1 className="font-heading text-2xl font-bold leading-tight text-white md:text-3xl">
             {t("hero.title")}

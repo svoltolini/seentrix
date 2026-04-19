@@ -61,8 +61,9 @@ export default async function LessonPage({
         {t("backToAcademy")}
       </Link>
 
-      {/* Hero */}
-      <div className="mb-8 rounded-2xl border border-white/[0.06] bg-card p-6 md:p-8">
+      {/* Hero — borderless bg-white/[0.03] to match the Academy card
+          language (see academy-tabs.tsx → LessonCard). */}
+      <div className="mb-8 rounded-2xl bg-white/[0.03] p-6 md:p-8">
         <div className="flex items-center gap-2 text-[11px] text-muted-foreground">
           <span>{lesson.duration}</span>
           <span className="text-muted-foreground/40">·</span>

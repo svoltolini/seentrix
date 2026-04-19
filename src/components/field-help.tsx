@@ -20,7 +20,7 @@ import { useTranslations } from "next-intl";
  *   - a gradient CRA-reference callout (optional)
  *   - related glossary terms as chips (optional) — clicking one opens that
  *     term's sheet
- *   - an Academy lesson CTA (optional, "Coming soon" for now)
+ *   - an Academy lesson CTA (optional) that links to the lesson page
  *
  * The API is string-in / JSX-out so translations stay flat and locale-aware.
  * Pass body as a plain string; use the "tip" helpers inside screens to fetch

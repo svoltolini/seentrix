@@ -3,7 +3,9 @@
 import * as React from "react";
 import { Dialog as SheetPrimitive } from "@base-ui/react/dialog";
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
+import { HugeIcon } from "@/components/huge-icon";
 import {
   ACADEMY_LESSONS,
   type AcademyLessonId,
@@ -110,24 +112,32 @@ export function HelpSheet({
               </div>
             )}
 
-            {lesson && (
-              <div className="rounded-xl border border-white/[0.08] bg-white/[0.02] p-4">
+            {lesson && academyLessonId && (
+              <Link
+                href={`/app/academy/${academyLessonId}`}
+                className="group block rounded-xl bg-white/[0.03] p-4 transition-colors hover:bg-white/[0.06]"
+              >
                 <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/60">
                   {t("academy")}
                 </p>
-                <p className="mt-1 font-heading text-sm font-semibold text-foreground">
-                  {lesson.title}
-                </p>
-                <div className="mt-3 flex items-center gap-2 text-[11px]">
-                  <span className="text-muted-foreground">
-                    {lesson.duration}
-                  </span>
+                <div className="mt-1 flex items-start justify-between gap-3">
+                  <p className="font-heading text-sm font-semibold text-foreground group-hover:text-primary">
+                    {lesson.title}
+                  </p>
+                  <HugeIcon
+                    name="arrow-right-01-stroke-rounded"
+                    size={14}
+                    className="mt-1 shrink-0 text-muted-foreground/40 transition-colors group-hover:text-primary"
+                  />
+                </div>
+                <div className="mt-2 flex items-center gap-2 text-[11px] text-muted-foreground">
+                  <span>{lesson.duration}</span>
                   <span className="text-muted-foreground/40">·</span>
-                  <span className="inline-flex items-center gap-1 rounded-full bg-[#D97706]/10 px-2 py-0.5 font-medium text-[#D97706]">
-                    {t("comingSoon")}
+                  <span className="font-medium text-primary">
+                    {t("openLesson")}
                   </span>
                 </div>
-              </div>
+              </Link>
             )}
           </div>
         </SheetPrimitive.Popup>

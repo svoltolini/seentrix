@@ -198,11 +198,12 @@
     "craReference": "CRA reference",
     "relatedTerms": "Related terms",
     "academy": "Academy",
-    "comingSoon": "Coming soon",
+    "openLesson": "Open lesson →",
     "close": "Close"
   },
   "academy": {
     "hero": {
+      "eyebrow": "CRA training",
       "title": "Seentrix Academy",
       "description": "Short lessons on the CRA, vulnerability handling, SBOMs, and the obligations behind every field you fill in across Seentrix. Complete tracks to collect audit-ready certificates for each team member."
     },
