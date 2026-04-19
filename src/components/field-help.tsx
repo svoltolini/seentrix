@@ -42,7 +42,7 @@ export function FieldHelp({
 }: {
   title: string;
   body: React.ReactNode;
-  reference?: string;
+  reference?: React.ReactNode;
   relatedTerms?: GlossaryTermId[];
   academyLessonId?: AcademyLessonId;
   className?: string;

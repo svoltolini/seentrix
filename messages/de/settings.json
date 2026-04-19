@@ -76,8 +76,8 @@
         },
         "legalName": {
           "title": "Name der juristischen Person",
-          "body": "Eingetragener Firmenname, genau wie er in Ihren Gründungsunterlagen erscheint (z. B. Acme GmbH, Acme S.A.S.). Kann vom Handelsnamen abweichen — Rechtsformzusatz einschließen.",
-          "ref": "CRA Anhang V(1) — die Konformitätserklärung muss die juristische Person benennen, die sie ausstellt. Ein falscher Name macht die Erklärung ungültig."
+          "body": "Eingetragener Firmenname, genau wie er in Ihren Gründungsunterlagen erscheint (z. B. Acme GmbH, Acme S.A.S.). Kann vom Handelsnamen abweichen — Rechtsformzusatz einschließen. Wird wortwörtlich auf der <g-doc>Konformitätserklärung</g-doc> und jedem <g-ce_marking>CE-gekennzeichneten</g-ce_marking> Produktetikett gedruckt.",
+          "ref": "CRA <g-annex_v>Anhang V(1)</g-annex_v> — die Konformitätserklärung muss die juristische Person benennen, die sie ausstellt. Ein falscher Name macht die Erklärung ungültig."
         },
         "registrationNumber": {
           "title": "Handelsregister- oder USt-Nummer",

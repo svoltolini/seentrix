@@ -10,6 +10,12 @@ import {
   SheetTrigger,
   SheetTitle,
 } from "@/components/ui/sheet";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { HugeIcon } from "@/components/huge-icon";
 import Image from "next/image";
 import { logout } from "@/app/[locale]/auth/actions";
@@ -145,6 +151,31 @@ export function TopBar({ avatarUrl }: { avatarUrl?: string | null }) {
         {/* Divider */}
         <div className="hidden h-5 w-px bg-border lg:block" />
 
+        {/* Help menu — quick access to Glossary and Academy */}
+        <DropdownMenu>
+          <DropdownMenuTrigger
+            render={
+              <button
+                type="button"
+                aria-label={t("nav.help")}
+                className="hidden size-7 items-center justify-center rounded-full bg-muted-foreground/15 text-xs font-bold text-muted-foreground transition-colors hover:bg-primary/15 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 lg:flex"
+              >
+                ?
+              </button>
+            }
+          />
+          <DropdownMenuContent align="end" className="min-w-44">
+            <DropdownMenuItem render={<Link href="/app/help/glossary" />}>
+              <HugeIcon name="sparkles-stroke-rounded" size={14} />
+              {t("nav.glossary")}
+            </DropdownMenuItem>
+            <DropdownMenuItem render={<Link href="/app/academy" />}>
+              <HugeIcon name="chip-stroke-rounded" size={14} />
+              {t("nav.academy")}
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
         {/* User avatar + Logout */}
         <div className="hidden items-center gap-2 lg:flex">
           {avatarUrl && (
@@ -197,6 +228,21 @@ export function TopBar({ avatarUrl }: { avatarUrl?: string | null }) {
                   </Link>
                 );
               })}
+              <div className="my-1 h-px bg-border" />
+              <Link
+                href="/app/help/glossary"
+                className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              >
+                <HugeIcon name="sparkles-stroke-rounded" size={16} />
+                {t("nav.glossary")}
+              </Link>
+              <Link
+                href="/app/academy"
+                className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              >
+                <HugeIcon name="chip-stroke-rounded" size={16} />
+                {t("nav.academy")}
+              </Link>
               <div className="my-1 h-px bg-border" />
               <button
                 onClick={() => logout(locale)}

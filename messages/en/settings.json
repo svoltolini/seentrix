@@ -76,8 +76,8 @@
         },
         "legalName": {
           "title": "Legal entity name",
-          "body": "Registered company name exactly as it appears on your incorporation documents (e.g. Acme GmbH, Acme S.A.S.). May differ from the trading name — include the legal form suffix.",
-          "ref": "CRA Annex V(1) — the Declaration of Conformity must identify the legal person issuing it. Getting this wrong invalidates the declaration."
+          "body": "Registered company name exactly as it appears on your incorporation documents (e.g. Acme GmbH, Acme S.A.S.). May differ from the trading name — include the legal form suffix. Printed verbatim on the <g-doc>Declaration of Conformity</g-doc> and every <g-ce_marking>CE-marked</g-ce_marking> product label.",
+          "ref": "CRA <g-annex_v>Annex V(1)</g-annex_v> — the Declaration of Conformity must identify the legal person issuing it. Getting this wrong invalidates the declaration."
         },
         "registrationNumber": {
           "title": "Registration or VAT number",

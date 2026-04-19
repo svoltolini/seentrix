@@ -11,6 +11,9 @@
     "settings": "Einstellungen",
     "logout": "Abmelden",
     "myAccount": "Mein Konto",
+    "help": "Hilfe",
+    "glossary": "Glossar",
+    "academy": "Academy",
     "error": "Etwas ist schiefgelaufen",
     "errorDescription": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
     "tryAgain": "Erneut versuchen"

@@ -31,7 +31,7 @@ export function HelpSheet({
   eyebrow: string;
   title: string;
   body: React.ReactNode;
-  reference?: string;
+  reference?: React.ReactNode;
   relatedTerms?: GlossaryTermId[];
   academyLessonId?: AcademyLessonId;
   children: React.ReactNode;

@@ -11,6 +11,9 @@
     "settings": "Settings",
     "logout": "Log out",
     "myAccount": "My Account",
+    "help": "Help",
+    "glossary": "Glossary",
+    "academy": "Academy",
     "error": "Something went wrong",
     "errorDescription": "An unexpected error occurred. Please try again.",
     "tryAgain": "Try again"

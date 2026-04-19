@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 import { HugeIcon } from "@/components/huge-icon";
 import { ProfileIncompleteBanner } from "@/components/profile-incomplete-banner";
 import { FieldHelp } from "@/components/field-help";
+import { useGlossaryTags } from "@/components/glossary/use-glossary-tags";
 import { PLAN_USER_LIMITS, type OrgPlan } from "@/lib/constants/plans";
 
 // Role hierarchy from highest to lowest
@@ -38,12 +39,16 @@ export function OrgSettingsContent({
   const { toast } = useToast();
   const [isPending, startTransition] = useTransition();
 
-  // Shortcut so each FieldHelp resolves title/body/ref from settings.json
-  // under the `tooltips.<key>` namespace without three separate t() calls.
+  // Shortcut: resolve title/body/reference for a FieldHelp from settings.json
+  // under the `tooltips.<key>` namespace. Body + reference go through t.rich
+  // with the full glossary-tag renderer so translators can wrap any jargon
+  // word in <g-doc>…</g-doc>, <g-annex_v>…</g-annex_v>, etc. and the
+  // rendered output has a dotted-underline Term that opens the glossary.
+  const glossary = useGlossaryTags();
   const tip = (key: string) => ({
     title: t(`tooltips.${key}.title`),
-    body: t(`tooltips.${key}.body`),
-    reference: t(`tooltips.${key}.ref`),
+    body: t.rich(`tooltips.${key}.body`, glossary),
+    reference: t.rich(`tooltips.${key}.ref`, glossary),
   });
 
   const [name, setName] = useState(org?.name ?? "");
