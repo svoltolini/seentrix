@@ -76,23 +76,24 @@ export async function TeamProgress({ locale }: { locale: LocaleId }) {
             {t("description")}
           </p>
         </div>
-        <div className="flex items-center gap-4">
-          <div className="text-right">
-            <div className="font-heading text-2xl font-bold tabular-nums text-foreground">
-              {orgPct}%
-            </div>
-            <div className="text-[11px] text-muted-foreground">
-              {orgDone}/{memberList.length} {t("complete").toLowerCase()}
-            </div>
+        <div className="text-right">
+          <div className="font-heading text-2xl font-bold tabular-nums text-foreground">
+            {orgPct}%
           </div>
-          <a
-            href="/api/academy/team-progress"
-            download
-            className="inline-flex shrink-0 items-center gap-2 rounded-lg bg-white/[0.06] px-3.5 py-2 text-xs font-medium text-foreground transition-colors hover:bg-white/[0.1]"
-          >
-            {t("exportCsv")} ↓
-          </a>
+          <div className="text-[11px] text-muted-foreground">
+            {orgDone}/{memberList.length} {t("complete").toLowerCase()}
+          </div>
         </div>
+      </div>
+
+      <div className="mb-3 flex items-center justify-end">
+        <a
+          href="/api/academy/team-progress"
+          download
+          className="inline-flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-[11px] font-medium text-muted-foreground transition-colors hover:bg-white/[0.05] hover:text-foreground"
+        >
+          {t("exportCsv")} ↓
+        </a>
       </div>
 
       <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
@@ -160,7 +161,6 @@ function MemberCard({
   return (
     <div className="rounded-2xl bg-white/[0.03] p-5 transition-colors duration-300 hover:bg-white/[0.05]">
       <div className="flex items-start gap-4">
-        <ProgressRing value={pct} color={color} />
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
             <p className="truncate font-heading text-[15px] font-semibold text-foreground">
@@ -184,6 +184,7 @@ function MemberCard({
             </p>
           )}
         </div>
+        <ProgressRing value={pct} color={color} />
       </div>
     </div>
   );

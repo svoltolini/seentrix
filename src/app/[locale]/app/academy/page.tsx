@@ -2,7 +2,9 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { AcademyTabs, type TabKey } from "./academy-tabs";
 import { TeamProgress } from "./team-progress";
-import type { LocaleId } from "@/lib/academy/types";
+import type { LocaleId, RoleId } from "@/lib/academy/types";
+import { requiredLessonsForRole } from "@/lib/academy/lessons";
+import { HugeIcon } from "@/components/huge-icon";
 
 /**
  * Academy hub — Layer 2 landing.
@@ -44,6 +46,19 @@ export default async function AcademyPage({
 
   const isAdminOrCO = role === "admin" || role === "compliance_officer";
 
+  // When the training gate is active, render the blocking banner at the top
+  // of the Academy so users understand why the rest of the app isn't
+  // reachable — without that explanation the redirect feels like a bug.
+  const mustCompleteTraining =
+    user?.app_metadata?.must_complete_training === true;
+  const requiredIds = role
+    ? requiredLessonsForRole(role as RoleId)
+    : [];
+  const requiredDone = requiredIds.filter((id) =>
+    completedLessonIds.includes(id),
+  ).length;
+  const tGate = await getTranslations("academy.gate");
+
   const initialTab: TabKey =
     tab === "glossary"
       ? "glossary"
@@ -55,21 +70,56 @@ export default async function AcademyPage({
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 md:py-12">
-      <div
-        className="mb-8 overflow-hidden rounded-2xl bg-cover bg-center p-6 md:mb-10 md:p-10"
-        style={{ backgroundImage: "url('/images/entity-role-bg.svg')" }}
-      >
-        <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur-sm">
-          <span className="size-1.5 animate-pulse rounded-full bg-[#F59E0B]" />
-          Layer 2
+      {mustCompleteTraining ? (
+        <div
+          className="mb-8 overflow-hidden rounded-2xl bg-cover bg-center p-6 md:mb-10 md:p-10"
+          style={{ backgroundImage: "url('/images/entity-role-bg.svg')" }}
+        >
+          <div className="flex flex-wrap items-start justify-between gap-5">
+            <div className="min-w-0 flex-1">
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur-sm">
+                <span className="size-1.5 animate-pulse rounded-full bg-[#F59E0B]" />
+                {t("hero.title")}
+              </div>
+              <h1 className="font-heading text-2xl font-bold leading-tight text-white md:text-3xl">
+                {tGate("title")}
+              </h1>
+              <p className="mt-2 max-w-xl text-sm text-white/80 md:text-base">
+                {tGate("subtitle")}
+              </p>
+              <p className="mt-3 text-[13px] text-white/75">
+                {tGate("progress", {
+                  done: requiredDone,
+                  total: requiredIds.length,
+                })}
+              </p>
+            </div>
+            <div className="flex size-16 shrink-0 items-center justify-center rounded-full bg-white/10 backdrop-blur-sm">
+              <HugeIcon
+                name="lock-password-stroke-rounded"
+                size={24}
+                className="text-white"
+              />
+            </div>
+          </div>
         </div>
-        <h1 className="font-heading text-2xl font-bold leading-tight text-white md:text-3xl">
-          {t("hero.title")}
-        </h1>
-        <p className="mt-2 max-w-xl text-sm text-white/80 md:text-base">
-          {t("hero.description")}
-        </p>
-      </div>
+      ) : (
+        <div
+          className="mb-8 overflow-hidden rounded-2xl bg-cover bg-center p-6 md:mb-10 md:p-10"
+          style={{ backgroundImage: "url('/images/entity-role-bg.svg')" }}
+        >
+          <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur-sm">
+            <span className="size-1.5 animate-pulse rounded-full bg-[#F59E0B]" />
+            Layer 2
+          </div>
+          <h1 className="font-heading text-2xl font-bold leading-tight text-white md:text-3xl">
+            {t("hero.title")}
+          </h1>
+          <p className="mt-2 max-w-xl text-sm text-white/80 md:text-base">
+            {t("hero.description")}
+          </p>
+        </div>
+      )}
 
       <AcademyTabs
         initialTab={initialTab}
