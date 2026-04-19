@@ -89,29 +89,25 @@ export function DangerZone({
   const isPendingDeletion = !!deletion?.requestedAt;
 
   return (
-    <div className="overflow-hidden rounded-xl border border-destructive/25 bg-destructive/[0.03]">
-      <div className="flex items-start gap-3 border-b border-destructive/20 px-6 py-4">
-        <div className="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-md bg-destructive/15 text-destructive">
-          <HugeIcon name="alert-02" size={14} />
-        </div>
-        <div>
-          <h2 className="text-sm font-semibold text-destructive">
-            {t("title")}
-          </h2>
-          <p className="mt-0.5 text-xs text-muted-foreground/70">
-            {t("subtitle")}
-          </p>
-        </div>
+    <div className="overflow-hidden rounded-xl bg-card">
+      {/* Match the other Settings cards — neutral header, no destructive
+          tint on the container. The destructive affordance lives on the
+          "Delete" button itself, not on the whole card. */}
+      <div className="border-b border-white/[0.06] px-6 py-4">
+        <h2 className="text-sm font-semibold">{t("title")}</h2>
+        <p className="mt-0.5 text-xs text-muted-foreground/60">
+          {t("subtitle")}
+        </p>
       </div>
 
-      <div className="divide-y divide-white/[0.04]">
+      <div className="divide-y divide-white/[0.06]">
         {/* Export — GDPR Art. 20 */}
-        <div className="flex flex-col gap-3 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-3 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
           <div className="pr-4">
             <p className="text-sm font-medium text-foreground">
               {t("exportTitle")}
             </p>
-            <p className="mt-0.5 text-xs text-muted-foreground/70">
+            <p className="mt-0.5 text-xs text-muted-foreground/60">
               {t("exportDescription")}
             </p>
           </div>
@@ -127,12 +123,18 @@ export function DangerZone({
         </div>
 
         {/* Delete — GDPR Art. 17 */}
-        <div className="flex flex-col gap-3 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-3 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
           <div className="pr-4">
-            <p className="text-sm font-medium text-foreground">
+            <p className="flex items-center gap-2 text-sm font-medium text-foreground">
+              <span
+                aria-hidden
+                className="flex size-5 shrink-0 items-center justify-center rounded-md bg-destructive/15 text-destructive"
+              >
+                <HugeIcon name="alert-02" size={11} />
+              </span>
               {t("deleteTitle")}
             </p>
-            <p className="mt-0.5 text-xs text-muted-foreground/70">
+            <p className="mt-1 text-xs text-muted-foreground/60">
               {t("deleteDescription")}
             </p>
           </div>
@@ -159,20 +161,29 @@ export function DangerZone({
           )}
         </div>
 
-        {/* Pending deletion banner — shown inline so admins always see the
-            countdown when this card is on screen. */}
+        {/* Pending deletion banner — only appears when deletion is actually
+            scheduled. This is where the destructive tint belongs because
+            it's an active warning, not a theoretical one. */}
         {isPendingDeletion && (
-          <div className="bg-destructive/10 px-6 py-4">
-            <p className="text-xs font-medium text-destructive">
-              {t("pendingTitle", {
-                days: deletion?.daysRemaining ?? 0,
-              })}
-            </p>
-            <p className="mt-1 text-[11px] text-muted-foreground/70">
-              {t("pendingSubtitle", {
-                date: new Date(deletion!.purgeAt!).toLocaleDateString(),
-              })}
-            </p>
+          <div className="flex items-start gap-3 bg-destructive/[0.08] px-6 py-4">
+            <span
+              aria-hidden
+              className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-md bg-destructive/20 text-destructive"
+            >
+              <HugeIcon name="alert-02" size={11} />
+            </span>
+            <div className="min-w-0">
+              <p className="text-xs font-medium text-destructive">
+                {t("pendingTitle", {
+                  days: deletion?.daysRemaining ?? 0,
+                })}
+              </p>
+              <p className="mt-1 text-[11px] text-muted-foreground/60">
+                {t("pendingSubtitle", {
+                  date: new Date(deletion!.purgeAt!).toLocaleDateString(),
+                })}
+              </p>
+            </div>
           </div>
         )}
       </div>
