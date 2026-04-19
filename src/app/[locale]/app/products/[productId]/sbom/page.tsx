@@ -1,5 +1,6 @@
 import { listSboms } from "./actions";
 import { SbomContent } from "./sbom-content";
+import { ScreenTrainingBanner } from "@/components/screen-training-banner";
 
 export default async function SbomPage({
   params,
@@ -9,5 +10,10 @@ export default async function SbomPage({
   const { productId } = await params;
   const { sboms } = await listSboms(productId);
 
-  return <SbomContent productId={productId} initialSboms={sboms} />;
+  return (
+    <>
+      <ScreenTrainingBanner screenKey="sbom" />
+      <SbomContent productId={productId} initialSboms={sboms} />
+    </>
+  );
 }

@@ -258,7 +258,8 @@
       "quizHeading": "Verständnis prüfen",
       "quizIntro": "Fünf Multiple-Choice-Fragen. Ab 4 von 5 richtig gilt die Lektion als abgeschlossen.",
       "alreadyPassed": "Lektion bestanden — {score}% richtig.",
-      "certificateLabel": "Zertifikat"
+      "certificateLabel": "Zertifikat",
+      "downloadCertificate": "PDF herunterladen"
     },
     "quiz": {
       "threshold": "{percent}%-Bestehensgrenze",

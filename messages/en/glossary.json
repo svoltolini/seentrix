@@ -258,7 +258,8 @@
       "quizHeading": "Check your understanding",
       "quizIntro": "Five multiple-choice questions. Pass 4 of 5 to mark this lesson complete.",
       "alreadyPassed": "You passed this lesson — {score}% correct.",
-      "certificateLabel": "Certificate"
+      "certificateLabel": "Certificate",
+      "downloadCertificate": "Download PDF"
     },
     "quiz": {
       "threshold": "{percent}% pass threshold",
