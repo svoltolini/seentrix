@@ -18,6 +18,9 @@ export default function robots(): MetadataRoute.Robots {
           "/de/auth/",
           "/en/security/",
           "/de/security/",
+          // Sentry tunnel route — proxies client error events to
+          // de.sentry.io. No reason for crawlers to index or probe it.
+          "/monitoring/",
         ],
       },
     ],
