@@ -208,7 +208,48 @@
     },
     "tabs": {
       "lessons": "Lessons",
-      "glossary": "Glossary"
+      "byScreen": "By Screen",
+      "glossary": "Glossary",
+      "teamProgress": "Team Progress"
+    },
+    "byScreen": {
+      "openScreen": "Open",
+      "screens": {
+        "dashboard": "Dashboard",
+        "products": "Products",
+        "sbom": "SBOM",
+        "vulnerabilities": "Vulnerabilities",
+        "conformity": "Conformity",
+        "releases": "Releases",
+        "incidents": "Incidents",
+        "reports": "Vulnerability reports",
+        "settingsOrganization": "Settings → Organization",
+        "settingsEntity": "Settings → Entity role",
+        "settingsTeam": "Settings → Team"
+      }
+    },
+    "teamProgress": {
+      "heading": "Team training status",
+      "description": "Who has passed which required lesson, when, and at what score. Audit-ready — download a CSV for regulators.",
+      "exportCsv": "Download CSV",
+      "noTeam": "No team members yet.",
+      "member": "Member",
+      "role": "Role",
+      "overall": "Overall",
+      "complete": "Complete",
+      "pending": "Pending"
+    },
+    "banner": {
+      "title": "New to this screen?",
+      "body": "{count, plural, one {# lesson covers it in {minutes} min} other {# lessons cover it in {minutes} min}}.",
+      "cta": "Open Academy →",
+      "dismiss": "Not now"
+    },
+    "gate": {
+      "title": "Complete your training to continue",
+      "subtitle": "Every team member must pass the required lessons for their role before using Seentrix. Mandatory under CRA and our organisation's audit policy.",
+      "progress": "{done} of {total} required lessons passed",
+      "continue": "Continue"
     },
     "lesson": {
       "backToAcademy": "Academy",

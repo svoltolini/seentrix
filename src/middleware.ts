@@ -28,8 +28,15 @@ export default async function middleware(request: NextRequest) {
     pathname.startsWith(`/${locale}/auth/login`) ||
     pathname.startsWith(`/${locale}/auth/signup`);
 
+  // Academy routes are exempt from the training gate so users can actually
+  // reach the lessons that unlock it. We also exempt the top-level account
+  // + logout flows so people can still sign out without completing training.
+  const isAcademyRoute = pathname.startsWith(`/${locale}/app/academy`);
+
   const orgId = user?.app_metadata?.org_id;
   const mustChangePassword = user?.app_metadata?.must_change_password === true;
+  const mustCompleteTraining =
+    user?.app_metadata?.must_complete_training === true;
 
   // 3. Redirect rules
 
@@ -80,6 +87,23 @@ export default async function middleware(request: NextRequest) {
   if (user && orgId && isOnboardingRoute) {
     return NextResponse.redirect(
       new URL(`/${locale}/app/dashboard`, request.url)
+    );
+  }
+
+  // Authed with org but training not complete trying to access an app route
+  // that isn't the Academy itself → redirect to Academy. The must_change_
+  // password check above takes priority because a user with a pending
+  // password change shouldn't even see the Academy yet.
+  if (
+    user &&
+    orgId &&
+    !mustChangePassword &&
+    mustCompleteTraining &&
+    isAppRoute &&
+    !isAcademyRoute
+  ) {
+    return NextResponse.redirect(
+      new URL(`/${locale}/app/academy`, request.url)
     );
   }
 

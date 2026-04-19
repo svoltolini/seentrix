@@ -208,7 +208,48 @@
     },
     "tabs": {
       "lessons": "Lektionen",
-      "glossary": "Glossar"
+      "byScreen": "Nach Screen",
+      "glossary": "Glossar",
+      "teamProgress": "Team-Fortschritt"
+    },
+    "byScreen": {
+      "openScreen": "Öffnen",
+      "screens": {
+        "dashboard": "Dashboard",
+        "products": "Produkte",
+        "sbom": "SBOM",
+        "vulnerabilities": "Schwachstellen",
+        "conformity": "Konformität",
+        "releases": "Releases",
+        "incidents": "Vorfälle",
+        "reports": "Meldungen",
+        "settingsOrganization": "Einstellungen → Organisation",
+        "settingsEntity": "Einstellungen → Rolle",
+        "settingsTeam": "Einstellungen → Team"
+      }
+    },
+    "teamProgress": {
+      "heading": "Team-Schulungsstand",
+      "description": "Wer hat welche Pflicht-Lektion mit welchem Ergebnis bestanden. Audit-tauglich — CSV-Download für Aufsichtsbehörden.",
+      "exportCsv": "CSV herunterladen",
+      "noTeam": "Noch keine Teammitglieder.",
+      "member": "Mitglied",
+      "role": "Rolle",
+      "overall": "Gesamt",
+      "complete": "Abgeschlossen",
+      "pending": "Offen"
+    },
+    "banner": {
+      "title": "Neu auf diesem Screen?",
+      "body": "{count, plural, one {# Lektion erklärt ihn in {minutes} min} other {# Lektionen erklären ihn in {minutes} min}}.",
+      "cta": "Academy öffnen →",
+      "dismiss": "Nicht jetzt"
+    },
+    "gate": {
+      "title": "Schließen Sie Ihre Schulung ab, um fortzufahren",
+      "subtitle": "Jedes Teammitglied muss die für seine Rolle erforderlichen Lektionen bestehen, bevor es Seentrix nutzt. Pflicht nach CRA und interner Audit-Richtlinie.",
+      "progress": "{done} von {total} Pflicht-Lektionen bestanden",
+      "continue": "Weiter"
     },
     "lesson": {
       "backToAcademy": "Academy",

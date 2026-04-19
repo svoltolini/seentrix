@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { Term } from "@/components/glossary/term";
 import type { Lesson } from "@/lib/academy/types";
 
@@ -149,7 +150,7 @@ export const lesson: Lesson = {
           ],
           correctIndex: 2,
           explanation:
-            "Pure SaaS is covered by NIS2, not the CRA. The CRA applies to \u201Cproducts with digital elements\u201D \u2014 hardware, software, firmware \u2014 placed on the EU market. A cloud-only service has no on-device digital element being placed on the market.",
+            "Pure SaaS is covered by NIS2, not the CRA. The CRA applies to “products with digital elements” — hardware, software, firmware — placed on the EU market. A cloud-only service has no on-device digital element being placed on the market.",
         },
         {
           question:
@@ -188,7 +189,7 @@ export const lesson: Lesson = {
           ],
           correctIndex: 1,
           explanation:
-            "The CRA sets administrative fines up to \u20AC15M or 2.5% of global annual turnover, whichever is higher \u2014 aligned with the GDPR enforcement ceiling.",
+            "The CRA sets administrative fines up to €15M or 2.5% of global annual turnover, whichever is higher — aligned with the GDPR enforcement ceiling.",
         },
         {
           question:
@@ -335,7 +336,7 @@ export const lesson: Lesson = {
           ],
           correctIndex: 2,
           explanation:
-            "Reines SaaS fällt unter NIS2, nicht unter den CRA. Der CRA betrifft \u201EProdukte mit digitalen Elementen\u201C \u2014 Hardware, Software, Firmware \u2014 die auf dem EU-Markt bereitgestellt werden. Ein reiner Cloud-Service hat kein digitales Element, das auf dem Markt bereitgestellt wird.",
+            "Reines SaaS fällt unter NIS2, nicht unter den CRA. Der CRA betrifft „Produkte mit digitalen Elementen“ — Hardware, Software, Firmware — die auf dem EU-Markt bereitgestellt werden. Ein reiner Cloud-Service hat kein digitales Element, das auf dem Markt bereitgestellt wird.",
         },
         {
           question:

@@ -1,4 +1,14 @@
 import craOneOOne from "@/content/academy/cra-101";
+import annexIEssentialRequirements from "@/content/academy/annex-i-essential-requirements";
+import declarationOfConformity from "@/content/academy/declaration-of-conformity";
+import conformityAssessmentRoutes from "@/content/academy/conformity-assessment-routes";
+import economicOperatorRoles from "@/content/academy/economic-operator-roles";
+import supportPeriodObligations from "@/content/academy/support-period-obligations";
+import article14Reporting from "@/content/academy/article-14-reporting";
+import vulnerabilityHandling101 from "@/content/academy/vulnerability-handling-101";
+import scoringVulnerabilities from "@/content/academy/scoring-vulnerabilities";
+import sbomFundamentals from "@/content/academy/sbom-fundamentals";
+import cvdAndPsirt from "@/content/academy/cvd-and-psirt";
 import type { Lesson, LocaleId, RoleId } from "@/lib/academy/types";
 
 /**
@@ -12,7 +22,16 @@ import type { Lesson, LocaleId, RoleId } from "@/lib/academy/types";
  */
 export const LESSONS: Record<string, Lesson> = {
   [craOneOOne.id]: craOneOOne,
-  // Layer 2, Phase 6: the remaining 10 lessons will be imported here.
+  [annexIEssentialRequirements.id]: annexIEssentialRequirements,
+  [economicOperatorRoles.id]: economicOperatorRoles,
+  [conformityAssessmentRoutes.id]: conformityAssessmentRoutes,
+  [declarationOfConformity.id]: declarationOfConformity,
+  [supportPeriodObligations.id]: supportPeriodObligations,
+  [vulnerabilityHandling101.id]: vulnerabilityHandling101,
+  [scoringVulnerabilities.id]: scoringVulnerabilities,
+  [sbomFundamentals.id]: sbomFundamentals,
+  [article14Reporting.id]: article14Reporting,
+  [cvdAndPsirt.id]: cvdAndPsirt,
 };
 
 export function getLesson(id: string): Lesson | null {
