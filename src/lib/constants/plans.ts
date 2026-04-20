@@ -1,8 +1,12 @@
+// Seentrix plan limits + feature gates — single source of truth consumed by
+// the pricing page, the billing UI, checkout, webhooks, and every gated
+// action across the app (product creation, SBOM upload, etc.).
+
 export const PLAN_PRODUCT_LIMITS = {
   free: 1,
-  professional: 5,
-  business: 25,
-  enterprise: 100,
+  professional: 3,
+  business: 15,
+  enterprise: Infinity,
 } as const;
 
 export type OrgPlan = keyof typeof PLAN_PRODUCT_LIMITS;
@@ -19,7 +23,9 @@ export function canCreateProduct(plan: OrgPlan, currentCount: number): boolean {
 }
 
 export function isChecklistReadOnly(plan: OrgPlan): boolean {
-  return plan === "free";
+  // Free tier now has a writable checklist — the read-only cap was
+  // converting badly. Users need to *feel* the product working to upgrade.
+  return false;
 }
 
 // ---------------------------------------------------------------------------
@@ -28,16 +34,36 @@ export function isChecklistReadOnly(plan: OrgPlan): boolean {
 
 export const PLAN_SBOM_LIMITS = {
   free: 0,
-  professional: 5,
+  professional: Infinity,
   business: Infinity,
   enterprise: Infinity,
 } as const;
 
 export const PLAN_USER_LIMITS = {
   free: 1,
-  professional: 1,
-  business: 5,
+  professional: 3,
+  business: 10,
   enterprise: Infinity,
+} as const;
+
+// Activity-log retention per plan (days). Free keeps it short; Enterprise is
+// unlimited (Infinity stored as 0 in the log query → unbounded).
+export const PLAN_ACTIVITY_LOG_DAYS = {
+  free: 30,
+  professional: 90,
+  business: Infinity,
+  enterprise: Infinity,
+} as const;
+
+// Monitoring frequency — how often the vulnerability scanner re-runs against
+// a product's SBOMs. Controlled by a scheduled Supabase function; Free and
+// Professional run on demand + weekly, Business runs daily, Enterprise gets
+// real-time webhook alerts in addition to daily re-scans.
+export const PLAN_MONITORING_FREQUENCY = {
+  free: "on_demand",
+  professional: "weekly",
+  business: "daily",
+  enterprise: "realtime",
 } as const;
 
 export function canUploadSbom(plan: OrgPlan, currentCount: number): boolean {
@@ -46,6 +72,9 @@ export function canUploadSbom(plan: OrgPlan, currentCount: number): boolean {
 }
 
 export function canGeneratePdf(plan: OrgPlan): boolean {
+  // DoC, end-user info sheet, incident reports — anything that becomes a
+  // legally-weighted document. Free is gated to push conversion at the
+  // moment of first real compliance need.
   return plan !== "free";
 }
 
@@ -57,9 +86,29 @@ export function canUseContinuousMonitoring(plan: OrgPlan): boolean {
   return plan === "business" || plan === "enterprise";
 }
 
+export function canUsePsirt(plan: OrgPlan): boolean {
+  // Public security.txt + /security/<slug> page — a public-surface feature
+  // that needs a baseline of operational maturity, so Business+.
+  return plan === "business" || plan === "enterprise";
+}
+
+export function canUseApi(plan: OrgPlan): boolean {
+  return plan === "business" || plan === "enterprise";
+}
+
 export function hasFeature(
   plan: OrgPlan,
-  feature: "sbom" | "pdf" | "documents" | "monitoring" | "sso"
+  feature:
+    | "sbom"
+    | "pdf"
+    | "documents"
+    | "monitoring"
+    | "sso"
+    | "psirt"
+    | "api"
+    | "vex_csaf"
+    | "custom_branding"
+    | "parent_child_org",
 ): boolean {
   switch (feature) {
     case "sbom":
@@ -70,7 +119,17 @@ export function hasFeature(
       return plan !== "free";
     case "monitoring":
       return plan === "business" || plan === "enterprise";
+    case "psirt":
+      return plan === "business" || plan === "enterprise";
+    case "api":
+      return plan === "business" || plan === "enterprise";
+    case "vex_csaf":
+      return plan === "business" || plan === "enterprise";
     case "sso":
+      return plan === "enterprise";
+    case "custom_branding":
+      return plan === "enterprise";
+    case "parent_child_org":
       return plan === "enterprise";
     default:
       return false;
@@ -107,3 +166,15 @@ export function getPlanFromPriceId(priceId: string): OrgPlan {
   }
   return "free";
 }
+
+// ---------------------------------------------------------------------------
+// Displayed prices (EUR). Driven by the value-metric bands we set — change
+// here when the pricing page needs to update, and create matching price IDs
+// in Stripe separately.
+// ---------------------------------------------------------------------------
+export const PLAN_PRICES_EUR = {
+  free: { monthly: 0, annual: 0 },
+  professional: { monthly: 59, annual: 590 }, // 2 months free
+  business: { monthly: 199, annual: 1990 }, // 2 months free
+  enterprise: { monthly: 749, annual: 7490 }, // 2 months free
+} as const;

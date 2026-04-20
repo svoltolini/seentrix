@@ -1,13 +1,13 @@
 {
   "pricing": {
     "title": "Einfache, transparente Preise",
-    "subtitle": "Wählen Sie den Plan, der zu Ihren CRA-Compliance-Anforderungen passt.",
+    "subtitle": "Wählen Sie den Plan, der zu Ihren CRA-Compliance-Anforderungen passt. Jeder Plan enthält EU-Datenhaltung und vollen Academy-Zugriff.",
     "monthly": "Monatlich",
     "annual": "Jährlich",
-    "savePercent": "16% sparen",
-    "perMonth": "Mo.",
+    "savePercent": "2 Monate gratis",
+    "perMonth": "Mt.",
     "billedAnnually": "€{total} jährlich abgerechnet",
-    "mostPopular": "Beliebteste",
+    "mostPopular": "Meistgewählt",
     "getStarted": "Loslegen",
     "subscribe": "Abonnieren",
     "contactSales": "Vertrieb kontaktieren",
@@ -15,47 +15,195 @@
     "plans": {
       "free": {
         "name": "Free",
-        "description": "Für Einzelpersonen, die CRA-Anforderungen erkunden.",
+        "description": "CRA-Anforderungen für ein Produkt kennenlernen.",
         "features": {
-          "f1": "1 Produkt",
-          "f2": "Grundlegende CRA-Bewertung",
-          "f3": "Nur-Lese-Compliance-Checkliste",
-          "f4": "Community-Support"
+          "f1": "1 Produkt · 1 Nutzer",
+          "f2": "CRA-Scope-Assessment + Produktklassifizierung",
+          "f3": "Vollständige Compliance-Checkliste (Anhang I)",
+          "f4": "Academy + Glossar (voller Zugriff)",
+          "f5": "30-Tage-Aktivitätsprotokoll",
+          "f6": "Community-Support"
         }
       },
       "professional": {
         "name": "Professional",
-        "description": "Für Teams, die CRA-Compliance aktiv verwalten.",
+        "description": "Für Solo-Gründer und Hersteller mit 1–3 Produkten.",
         "features": {
-          "f1": "5 Produkte",
-          "f2": "Vollständige Compliance-Checklisten",
-          "f3": "SBOM-Uploads mit Schwachstellen-Scan",
-          "f4": "Dokumentvorlagen mit PDF-Export",
-          "f5": "E-Mail-Support"
+          "f1": "3 Produkte · 3 Nutzer",
+          "f2": "Alles aus Free, plus:",
+          "f3": "Unbegrenzte SBOM-Uploads + Schwachstellen-Scan",
+          "f4": "Konformitätserklärung + Endnutzer-Infoblatt-PDFs",
+          "f5": "Vorfallmeldung (24h / 72h / 14d)",
+          "f6": "90-Tage-Aktivitätsprotokoll",
+          "f7": "E-Mail-Support (48h Reaktion)"
         }
       },
       "business": {
         "name": "Business",
-        "description": "Für Organisationen mit mehreren Produktlinien.",
+        "description": "Für Hersteller mit mehreren Produktlinien und aktivem Compliance-Team.",
         "features": {
-          "f1": "25 Produkte",
-          "f2": "Unbegrenzte SBOM-Uploads",
-          "f3": "Kontinuierliche Schwachstellenüberwachung",
-          "f4": "5 Benutzerplätze",
-          "f5": "Prioritäts-Support",
-          "f6": "Alle Dokumentvorlagen"
+          "f1": "15 Produkte · 10 Nutzer",
+          "f2": "Alles aus Professional, plus:",
+          "f3": "Tägliches kontinuierliches Schwachstellen-Monitoring",
+          "f4": "Öffentliche PSIRT-Seite + security.txt",
+          "f5": "Komplette Dokument-Vorlagenbibliothek",
+          "f6": "API-Zugriff (1000 Anfragen/Tag)",
+          "f7": "Priority-Support (8h) + geführtes Onboarding",
+          "f8": "99,5% SLA"
         }
       },
       "enterprise": {
         "name": "Enterprise",
-        "description": "Für große Organisationen mit individuellen Anforderungen.",
+        "description": "Für große Organisationen, regulierte Branchen und Mutter-Tochter-Konstruktionen.",
         "features": {
-          "f1": "100 Produkte",
-          "f2": "Alles unbegrenzt",
-          "f3": "SSO / SAML-Integration",
-          "f4": "Dediziertes Onboarding",
-          "f5": "Telefon-Support",
-          "f6": "Individuelle Integrationen"
+          "f1": "Unbegrenzte Produkte · unbegrenzte Nutzer",
+          "f2": "Alles aus Business, plus:",
+          "f3": "Echtzeit-Schwachstellen-Alarme",
+          "f4": "SSO / SAML · Mutter-Tochter-Verknüpfung",
+          "f5": "Voller API-Zugriff · individuelle Integrationen",
+          "f6": "Dedizierter CSM + Telefon-Support",
+          "f7": "2-Wochen-geführtes Onboarding · individueller MSA",
+          "f8": "99,9% SLA + individuelle Datenhaltung"
+        }
+      }
+    },
+    "comparison": {
+      "title": "Pläne vergleichen",
+      "subtitle": "Alle Funktionen auf allen Tarifen.",
+      "comingSoon": "Bald verfügbar",
+      "yes": "Enthalten",
+      "no": "Nicht enthalten",
+      "unlimited": "Unbegrenzt",
+      "categories": {
+        "limits": {
+          "title": "Limits",
+          "rows": {
+            "products": "Produkte",
+            "users": "Teammitglieder",
+            "sbomUploads": "SBOM-Uploads",
+            "activityLogRetention": "Aktivitätsprotokoll-Aufbewahrung"
+          }
+        },
+        "craCompliance": {
+          "title": "CRA-Compliance",
+          "rows": {
+            "scopeAssessment": "CRA-Scope-Assessment-Assistent",
+            "productClassification": "Produktklassifizierung (Standard / wichtig / kritisch)",
+            "complianceChecklist": "Anhang I Compliance-Checkliste",
+            "conformityAssessment": "Konformitätsbewertung (Modul A / B+C / H)",
+            "entityRoleObligations": "Wirtschaftsakteur-Pflichten (Hersteller / Importeur / Händler / Bevollmächtigter)",
+            "notifiedBodyTracking": "Notified-Body-Verfolgung"
+          }
+        },
+        "sbomVulns": {
+          "title": "SBOM + Schwachstellen",
+          "rows": {
+            "sbomUpload": "SBOM-Upload (CycloneDX + SPDX)",
+            "componentCatalog": "Komponentenkatalog",
+            "vulnScanning": "Schwachstellen-Scan (OSV.dev)",
+            "kevFlagging": "CISA-KEV-Markierung",
+            "cvssBucketing": "CVSS-Schweregrad-Klassifizierung",
+            "triageMttr": "Triage-Workflow + MTTR-Tracking",
+            "activelyExploited": "Aktiv-ausgenutzt-Markierung",
+            "monitoringFrequency": "Kontinuierliche Monitoring-Frequenz",
+            "vexCsafExport": "VEX / CSAF-Export"
+          }
+        },
+        "documents": {
+          "title": "Dokumente + PDFs",
+          "rows": {
+            "docPdf": "Konformitätserklärung-PDF",
+            "endUserInfoPdf": "Endnutzer-Infoblatt-PDF (Anhang II(3))",
+            "docTemplates": "Dokument-Vorlagenbibliothek",
+            "technicalFileBuilder": "Technische-Dokumentation-Builder",
+            "customBranding": "Individuelles Branding auf PDFs"
+          }
+        },
+        "incidents": {
+          "title": "Vorfall-Management",
+          "rows": {
+            "incidentReporting": "Vorfallmeldung (Artikel 14)",
+            "deadlineTracking": "24h / 72h / 14d-Frist-Tracking",
+            "incidentPdf": "Vorfallbericht-PDF-Exporte",
+            "enisaFilingAssist": "ENISA-Einreichungs-Unterstützung",
+            "cveLinkage": "CVE-Verknüpfung aus Vorfällen"
+          }
+        },
+        "psirt": {
+          "title": "Öffentliche Sicherheit (PSIRT)",
+          "rows": {
+            "publicPsirtPage": "Öffentliche PSIRT-Seite (/security/<slug>)",
+            "securityTxt": "security.txt (RFC 9116)",
+            "publicVulnIntake": "Öffentliche Schwachstellen-Meldungs-Eingabe",
+            "psirtTriageWorkflow": "PSIRT-Triage-Workflow"
+          }
+        },
+        "lifecycle": {
+          "title": "Produktlebenszyklus",
+          "rows": {
+            "releasesTracking": "Release-Tracking + behobene CVEs",
+            "supportPeriodTracking": "Supportzeitraum-Tracking",
+            "updateChannelTracking": "Update-Kanal-Tracking"
+          }
+        },
+        "training": {
+          "title": "Schulung + Hilfe",
+          "rows": {
+            "academyLessons": "Academy (10 CRA-Lektionen)",
+            "quizzesCertificates": "Quiz + PDF-Zertifikate",
+            "teamProgressTracking": "Team-Fortschritts-Tracking",
+            "csvExport": "CSV-Export des Teamfortschritts",
+            "byScreenRecommendations": "Bildschirmbezogene Lektionsempfehlungen",
+            "glossary": "CRA-Glossar (50+ Begriffe)"
+          }
+        },
+        "dataExports": {
+          "title": "Daten + Exporte",
+          "rows": {
+            "gdprExport": "DSGVO-Datenexport (Art. 20)",
+            "gdprDelete": "DSGVO-Löschrecht (Art. 17)",
+            "activityCsv": "Aktivitätsprotokoll-CSV-Export",
+            "siemLogExport": "SIEM-Log-Export",
+            "dataResidency": "Datenhaltung"
+          }
+        },
+        "integrations": {
+          "title": "Integrationen",
+          "rows": {
+            "apiAccess": "REST-API-Zugriff",
+            "webhooks": "Webhooks",
+            "ssoSaml": "SSO / SAML",
+            "parentChildOrgs": "Mutter-Tochter-Organisations-Verknüpfung",
+            "marketSurveillanceBundle": "Marktüberwachungs-Nachweispaket"
+          }
+        },
+        "security": {
+          "title": "Sicherheit",
+          "rows": {
+            "twoFactor": "Zwei-Faktor-Authentifizierung (TOTP)",
+            "roleBasedAccess": "Rollenbasierter Zugriff (5 Rollen)",
+            "multiAdminDeletion": "Mehrfach-Admin-Löschbestätigung",
+            "auditLog": "Audit-Log",
+            "rowLevelSecurity": "Row-Level-Security (Org-Isolation)",
+            "rateLimiting": "Missbrauchs-Rate-Limiting auf öffentlichen Endpunkten"
+          }
+        },
+        "support": {
+          "title": "Support + SLA",
+          "rows": {
+            "supportChannel": "Support-Kanal",
+            "responseTime": "Reaktionszeit (Erstantwort)",
+            "onboarding": "Onboarding",
+            "sla": "Service-Level-Agreement",
+            "customMsa": "Individueller MSA / Rechtliche Konditionen"
+          }
+        },
+        "localization": {
+          "title": "Lokalisierung",
+          "rows": {
+            "languages": "UI-Sprachen",
+            "currencyBilling": "Abrechnungswährung"
+          }
         }
       }
     }

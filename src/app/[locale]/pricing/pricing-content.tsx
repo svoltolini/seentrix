@@ -9,19 +9,21 @@ import { cn } from "@/lib/utils";
 import { createCheckoutSession } from "@/lib/stripe/actions";
 import { Link } from "@/i18n/navigation";
 import type { OrgPlan } from "@/lib/constants/plans";
+import { PLAN_PRICES_EUR } from "@/lib/constants/plans";
+import {
+  FEATURE_CATEGORIES,
+  type CellValue,
+  type FeatureRow,
+  getCell,
+} from "@/lib/constants/pricing-features";
 
 type BillingInterval = "monthly" | "annual";
 
-const TIERS: {
-  plan: OrgPlan;
-  priceMonthly: number;
-  priceAnnual: number;
-  highlighted?: boolean;
-}[] = [
-  { plan: "free", priceMonthly: 0, priceAnnual: 0 },
-  { plan: "professional", priceMonthly: 49, priceAnnual: 490, highlighted: true },
-  { plan: "business", priceMonthly: 199, priceAnnual: 1990 },
-  { plan: "enterprise", priceMonthly: 499, priceAnnual: 4990 },
+const TIERS: { plan: OrgPlan; highlighted?: boolean }[] = [
+  { plan: "free" },
+  { plan: "professional", highlighted: true },
+  { plan: "business" },
+  { plan: "enterprise" },
 ];
 
 export function PricingContent() {
@@ -40,7 +42,7 @@ export function PricingContent() {
     const result = await createCheckoutSession(
       plan as Exclude<OrgPlan, "free">,
       interval,
-      locale
+      locale,
     );
 
     if (result.url) {
@@ -71,7 +73,7 @@ export function PricingContent() {
             "rounded-lg px-4 py-2 text-sm font-medium transition-colors",
             interval === "monthly"
               ? "bg-foreground text-background"
-              : "text-muted-foreground hover:text-foreground"
+              : "text-muted-foreground hover:text-foreground",
           )}
         >
           {t("monthly")}
@@ -83,7 +85,7 @@ export function PricingContent() {
             "flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors",
             interval === "annual"
               ? "bg-foreground text-background"
-              : "text-muted-foreground hover:text-foreground"
+              : "text-muted-foreground hover:text-foreground",
           )}
         >
           {t("annual")}
@@ -97,15 +99,11 @@ export function PricingContent() {
           const isPro = tier.highlighted;
           const isEnterprise = tier.plan === "enterprise";
           const isFree = tier.plan === "free";
-          const price =
-            isEnterprise
-              ? tier.priceMonthly
-              : interval === "annual"
-                ? tier.priceAnnual
-                : tier.priceMonthly;
+          const prices = PLAN_PRICES_EUR[tier.plan];
+          const price = interval === "annual" ? prices.annual : prices.monthly;
           const displayPrice =
-            isEnterprise || isFree
-              ? price
+            isFree || prices.monthly === 0
+              ? 0
               : interval === "annual"
                 ? Math.round(price / 12)
                 : price;
@@ -122,7 +120,7 @@ export function PricingContent() {
                 "relative flex h-full flex-col p-6 transition-all duration-300 hover:-translate-y-1",
                 isPro
                   ? "bg-white/[0.06]"
-                  : "rounded-2xl bg-white/[0.03] hover:bg-white/[0.05]"
+                  : "rounded-2xl bg-white/[0.03] hover:bg-white/[0.05]",
               )}
             >
               <div className="mb-1">
@@ -140,7 +138,7 @@ export function PricingContent() {
                     "text-5xl font-extrabold",
                     isPro
                       ? "bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] bg-clip-text text-transparent"
-                      : "text-foreground"
+                      : "text-foreground",
                   )}
                 >
                   €{displayPrice}
@@ -150,7 +148,7 @@ export function PricingContent() {
                 </span>
               </div>
 
-              {interval === "annual" && !isFree && !isEnterprise && (
+              {interval === "annual" && !isFree && (
                 <p className="mt-1 text-xs text-muted-foreground">
                   {t("billedAnnually", { total: price })}
                 </p>
@@ -193,7 +191,10 @@ export function PricingContent() {
                     </Button>
                   </Link>
                 ) : isEnterprise ? (
-                  <a href="mailto:sales@seentrix.com" className="block w-full">
+                  <a
+                    href="mailto:sales@seentrix.com"
+                    className="block w-full"
+                  >
                     <Button
                       variant="default"
                       size="sm"
@@ -208,12 +209,14 @@ export function PricingContent() {
                     className={cn(
                       "w-full",
                       !isPro &&
-                        "bg-white/[0.08] text-foreground hover:bg-white/[0.12]"
+                        "bg-white/[0.08] text-foreground hover:bg-white/[0.12]",
                     )}
                     onClick={() => handleSelectPlan(tier.plan)}
                     disabled={loading === tier.plan}
                   >
-                    {loading === tier.plan ? t("redirecting") : t("subscribe")}
+                    {loading === tier.plan
+                      ? t("redirecting")
+                      : t("subscribe")}
                   </Button>
                 )}
               </div>
@@ -226,7 +229,7 @@ export function PricingContent() {
               className={cn(
                 "relative",
                 isPro &&
-                  "rounded-[16px] bg-gradient-to-b from-[#3B82F6] via-[#8B5CF6] to-[#F97316] p-px"
+                  "rounded-[16px] bg-gradient-to-b from-[#3B82F6] via-[#8B5CF6] to-[#F97316] p-px",
               )}
             >
               {isPro && (
@@ -250,6 +253,152 @@ export function PricingContent() {
           );
         })}
       </div>
+
+      {/* Comparison matrix */}
+      <ComparisonTable />
     </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Comparison matrix — every feature, every tier.
+// Data lives in src/lib/constants/pricing-features.ts; labels come from
+// messages/*/pricing.json under comparison.categories.*.rows.*.
+// ---------------------------------------------------------------------------
+
+function ComparisonTable() {
+  const t = useTranslations("pricing");
+  const tc = useTranslations("pricing.comparison");
+
+  const plans: OrgPlan[] = ["free", "professional", "business", "enterprise"];
+
+  return (
+    <section className="mt-24">
+      <div className="mx-auto mb-10 max-w-2xl text-center">
+        <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+          {tc("title")}
+        </h2>
+        <p className="mt-3 text-sm text-muted-foreground">
+          {tc("subtitle")}
+        </p>
+      </div>
+
+      <div className="overflow-hidden rounded-2xl bg-white/[0.02]">
+        {/* Sticky header with plan names */}
+        <div className="sticky top-0 z-10 grid grid-cols-[minmax(0,2fr)_repeat(4,minmax(0,1fr))] border-b border-white/[0.06] bg-background/90 px-4 py-3 backdrop-blur-md sm:px-6">
+          <div />
+          {plans.map((p) => (
+            <div
+              key={p}
+              className="text-center text-xs font-semibold uppercase tracking-wider text-muted-foreground"
+            >
+              {t(`plans.${p}.name`)}
+            </div>
+          ))}
+        </div>
+
+        {/* Category blocks */}
+        {FEATURE_CATEGORIES.map((category) => (
+          <div key={category.key}>
+            <div className="grid grid-cols-[minmax(0,2fr)_repeat(4,minmax(0,1fr))] border-b border-white/[0.06] bg-white/[0.03] px-4 py-3 sm:px-6">
+              <div className="col-span-5 text-[11px] font-semibold uppercase tracking-wider text-foreground/80">
+                {tc(`categories.${category.key}.title`)}
+              </div>
+            </div>
+            {category.rows.map((row, idx) => (
+              <ComparisonRow
+                key={row.key}
+                category={category.key}
+                row={row}
+                plans={plans}
+                striped={idx % 2 === 1}
+              />
+            ))}
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function ComparisonRow({
+  category,
+  row,
+  plans,
+  striped,
+}: {
+  category: string;
+  row: FeatureRow;
+  plans: OrgPlan[];
+  striped: boolean;
+}) {
+  const tc = useTranslations("pricing.comparison");
+  return (
+    <div
+      className={cn(
+        "grid grid-cols-[minmax(0,2fr)_repeat(4,minmax(0,1fr))] items-center border-b border-white/[0.04] px-4 py-3 text-sm sm:px-6",
+        striped && "bg-white/[0.01]",
+      )}
+    >
+      <div className="pr-4 text-foreground/90">
+        {tc(`categories.${category}.rows.${row.key}`)}
+      </div>
+      {plans.map((p) => (
+        <Cell key={p} value={getCell(row, p)} />
+      ))}
+    </div>
+  );
+}
+
+function Cell({ value }: { value: CellValue }) {
+  const tc = useTranslations("pricing.comparison");
+  return (
+    <div className="flex items-center justify-center text-center">
+      {value === true ? (
+        <IconCheck />
+      ) : value === false ? (
+        <IconDash />
+      ) : value === "unlimited" ? (
+        <span className="text-xl leading-none text-foreground/80">∞</span>
+      ) : value === "coming-soon" ? (
+        <span className="inline-flex items-center rounded-full bg-[#D97706]/10 px-2 py-0.5 text-[10px] font-medium text-[#D97706]">
+          {tc("comingSoon")}
+        </span>
+      ) : (
+        <span className="text-[13px] text-muted-foreground">{value}</span>
+      )}
+    </div>
+  );
+}
+
+function IconCheck() {
+  return (
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 16 16"
+      fill="none"
+      className="text-primary"
+      aria-label="Included"
+    >
+      <path
+        d="M13.3 4.3 6.5 11.1 2.7 7.3"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function IconDash() {
+  return (
+    <span
+      className="text-muted-foreground/40"
+      aria-label="Not included"
+    >
+      —
+    </span>
   );
 }

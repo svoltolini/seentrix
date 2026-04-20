@@ -90,53 +90,53 @@
     },
     "pricingPreview": {
       "title": "Simple, Transparent Pricing",
-      "subtitle": "Start free and upgrade as your compliance needs grow.",
+      "subtitle": "Start free and upgrade as your compliance needs grow. See the full comparison table on the pricing page.",
       "free": {
         "name": "Free",
         "price": "€0",
         "description": "Explore CRA requirements",
         "features": {
-          "f1": "1 product",
-          "f2": "Basic scope assessment",
-          "f3": "Read-only checklist"
+          "f1": "1 product · 1 user",
+          "f2": "Full compliance checklist",
+          "f3": "Academy + glossary"
         }
       },
       "professional": {
         "name": "Professional",
-        "price": "€49",
+        "price": "€59",
         "period": "/mo",
-        "description": "Active compliance management",
+        "description": "Solo founders, 1–3 products",
         "badge": "Most Popular",
         "features": {
-          "f1": "5 products",
-          "f2": "Full compliance checklists",
-          "f3": "SBOM with vulnerability scanning",
-          "f4": "Document templates & PDF export"
+          "f1": "3 products · 3 users",
+          "f2": "SBOM + vulnerability scanning",
+          "f3": "DoC + end-user info PDFs",
+          "f4": "Incident reporting (Art. 14)"
         }
       },
       "business": {
         "name": "Business",
         "price": "€199",
         "period": "/mo",
-        "description": "Multi-product organizations",
+        "description": "Compliance teams, multiple products",
         "features": {
-          "f1": "25 products",
-          "f2": "Unlimited SBOM uploads",
-          "f3": "Continuous monitoring",
-          "f4": "5 user seats"
+          "f1": "15 products · 10 users",
+          "f2": "Daily continuous monitoring",
+          "f3": "Public PSIRT + security.txt",
+          "f4": "API access · Priority support"
         }
       },
       "enterprise": {
         "name": "Enterprise",
-        "price": "€499",
+        "price": "€749",
         "period": "/mo",
-        "description": "For large organizations",
+        "description": "Large orgs, SSO, SLA, CSM",
         "cta": "Contact Sales",
         "features": {
-          "f1": "100 products",
-          "f2": "SSO / SAML integration",
-          "f3": "Dedicated onboarding",
-          "f4": "Custom integrations"
+          "f1": "Unlimited products + users",
+          "f2": "SSO / SAML · parent-child orgs",
+          "f3": "Dedicated CSM + 99.9% SLA",
+          "f4": "Custom MSA + data residency"
         }
       },
       "getStarted": "Get Started",

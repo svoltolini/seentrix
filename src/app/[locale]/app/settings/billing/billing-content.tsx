@@ -10,9 +10,9 @@ import type { OrgPlan } from "@/lib/constants/plans";
 
 const PLAN_PRICE: Record<string, number> = {
   free: 0,
-  professional: 49,
+  professional: 59,
   business: 199,
-  enterprise: 499,
+  enterprise: 749,
 };
 
 export function BillingContent({

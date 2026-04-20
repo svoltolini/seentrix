@@ -90,53 +90,53 @@
     },
     "pricingPreview": {
       "title": "Einfache, transparente Preise",
-      "subtitle": "Starten Sie kostenlos und upgraden Sie, wenn Ihre Compliance-Anforderungen wachsen.",
+      "subtitle": "Starten Sie kostenlos und upgraden Sie, wenn Ihre Compliance-Anforderungen wachsen. Vollständiger Vergleich auf der Preisseite.",
       "free": {
         "name": "Free",
         "price": "€0",
         "description": "CRA-Anforderungen erkunden",
         "features": {
-          "f1": "1 Produkt",
-          "f2": "Grundlegende Scope-Bewertung",
-          "f3": "Nur-Lese-Checkliste"
+          "f1": "1 Produkt · 1 Nutzer",
+          "f2": "Vollständige Compliance-Checkliste",
+          "f3": "Academy + Glossar"
         }
       },
       "professional": {
         "name": "Professional",
-        "price": "€49",
+        "price": "€59",
         "period": "/Mo.",
-        "description": "Aktives Compliance-Management",
+        "description": "Solo-Gründer, 1–3 Produkte",
         "badge": "Beliebteste",
         "features": {
-          "f1": "5 Produkte",
-          "f2": "Vollständige Compliance-Checklisten",
-          "f3": "SBOM mit Schwachstellen-Scanning",
-          "f4": "Dokumentvorlagen & PDF-Export"
+          "f1": "3 Produkte · 3 Nutzer",
+          "f2": "SBOM + Schwachstellen-Scan",
+          "f3": "DoC + Endnutzer-Infoblatt-PDFs",
+          "f4": "Vorfallmeldung (Art. 14)"
         }
       },
       "business": {
         "name": "Business",
         "price": "€199",
         "period": "/Mo.",
-        "description": "Multi-Produkt-Organisationen",
+        "description": "Compliance-Teams, mehrere Produkte",
         "features": {
-          "f1": "25 Produkte",
-          "f2": "Unbegrenzte SBOM-Uploads",
-          "f3": "Kontinuierliche Überwachung",
-          "f4": "5 Benutzerplätze"
+          "f1": "15 Produkte · 10 Nutzer",
+          "f2": "Tägliches kontinuierliches Monitoring",
+          "f3": "Öffentliche PSIRT + security.txt",
+          "f4": "API-Zugriff · Priority-Support"
         }
       },
       "enterprise": {
         "name": "Enterprise",
-        "price": "€499",
+        "price": "€749",
         "period": "/Mo.",
-        "description": "Für große Organisationen",
+        "description": "Große Organisationen, SSO, SLA, CSM",
         "cta": "Vertrieb kontaktieren",
         "features": {
-          "f1": "100 Produkte",
-          "f2": "SSO / SAML-Integration",
-          "f3": "Dediziertes Onboarding",
-          "f4": "Individuelle Integrationen"
+          "f1": "Unbegrenzte Produkte + Nutzer",
+          "f2": "SSO / SAML · Mutter-Tochter-Orgs",
+          "f3": "Dedizierter CSM + 99,9% SLA",
+          "f4": "Individueller MSA + Datenhaltung"
         }
       },
       "getStarted": "Jetzt starten",
