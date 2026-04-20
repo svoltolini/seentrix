@@ -1,10 +1,16 @@
-import { streamText, convertToModelMessages, type UIMessage } from "ai";
+import {
+  streamText,
+  convertToModelMessages,
+  stepCountIs,
+  type UIMessage,
+} from "ai";
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { mistral, MISTRAL_CHAT_MODEL } from "@/lib/copilot/mistral";
 import { retrieveChunks } from "@/lib/copilot/retrieval";
 import { buildSystemPrompt } from "@/lib/copilot/prompt";
 import { enrichPageContext } from "@/lib/copilot/context-enrichment";
+import { buildCopilotTools } from "@/lib/copilot/tools";
 import { checkQuota } from "@/lib/copilot/quota";
 
 /**
@@ -165,11 +171,17 @@ export async function POST(req: Request) {
   // --- 10. Stream the response ---------------------------------------------
   const startedAt = Date.now();
   const modelMessages = await convertToModelMessages(trimmed);
+  const tools = buildCopilotTools({ supabase, orgId });
   const result = streamText({
     model: mistral(MISTRAL_CHAT_MODEL),
     system,
     messages: modelMessages,
     temperature: 0.3,
+    tools,
+    // Let the model chain up to 5 steps (tool call + follow-up text) in
+    // one turn. 5 is enough to search → inspect → link without letting
+    // the model thrash on a bad plan.
+    stopWhen: stepCountIs(5),
     onError: ({ error }) => {
       const e = error as {
         message?: string;

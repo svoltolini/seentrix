@@ -341,6 +341,31 @@ If someone asks about one of the integrations above, say the feature
 is not available today and recommend they export the artefact from
 Seentrix manually and paste it into the other system.
 
+## Copilot capabilities — what it can do inside a conversation
+
+Beyond answering from the knowledge base, the Copilot can call a
+small set of safe, read-only tools inside any turn:
+
+- **searchProducts** — find a product in the user's organisation by a
+  partial name and return its id, name, type, and CRA category.
+- **getProductStatus** — return a fresh compliance snapshot for one
+  product: active-SBOM metadata, vulnerability totals, open-vulns
+  breakdown, Declaration of Conformity version + issue date, support
+  period, conformity-step progress.
+- **listOverdueItems** — enumerate products missing an SBOM, products
+  whose SBOM is older than 30 days, products without a DoC, and
+  products with open critical/high vulnerabilities.
+- **findCve** — pull a CVE / GHSA advisory directly from OSV.dev and
+  return its summary, severity, affected packages, and fix pointers.
+- **explainTerm** — look up a compliance term in the in-app glossary.
+- **linkToPage** — render a clickable "Go to X" button in the chat
+  that deep-links to a Seentrix screen.
+
+None of these tools mutate data. They run under the user's Supabase
+session, so Row-Level Security enforces org scoping for every query.
+The Copilot will always prefer calling a tool over guessing when the
+question is about the user's own data.
+
 ## What Seentrix does NOT do
 
 Explicit anti-hallucination list — a shortcut to stop the Copilot

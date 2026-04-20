@@ -1,6 +1,8 @@
 "use client";
 
 import type { UIMessage } from "ai";
+import { Link } from "@/i18n/navigation";
+import { HugeIcon } from "@/components/huge-icon";
 import { cn } from "@/lib/utils";
 
 /**
@@ -9,18 +11,22 @@ import { cn } from "@/lib/utils";
  * Three roles we care about in the UI:
  *  - user      → right-aligned subtle card, user's raw text
  *  - assistant → left-aligned prose, light markdown + citation pills
+ *                + inline "Go to X" buttons from the linkToPage tool
  *  - system    → skipped (the server prompt is not shown to the user)
  *
- * Inline formatter handles **bold**, `code`, numbered / bulleted / H2 / H3
- * / H4 / HR blocks, plus citation tags like `[cra · Article 13(2)]` which
- * render as strong uppercase blue pills. Swap for react-markdown in phase
- * 2 if content grows richer.
+ * Inline formatter handles **bold**, `code`, numbered / bulleted / H2 /
+ * H3 / H4 / HR blocks, plus citation tags like `[cra · Article 13(2)]`
+ * which render as strong uppercase blue pills. Tool parts are streamed
+ * interleaved with text parts — we walk them in order so a tool button
+ * lands exactly where the model emitted it.
  */
 export function CopilotMessage({ message }: { message: UIMessage }) {
   if (message.role === "system") return null;
 
   const text = extractText(message);
-  if (!text) return null;
+  const linkParts = extractLinkParts(message);
+
+  if (!text && linkParts.length === 0) return null;
 
   const isUser = message.role === "user";
 
@@ -31,10 +37,23 @@ export function CopilotMessage({ message }: { message: UIMessage }) {
           "max-w-[88%] text-sm leading-relaxed",
           isUser
             ? "rounded-2xl rounded-br-md bg-white/[0.06] px-3.5 py-2 text-foreground"
-            : "text-foreground/92",
+            : "flex flex-col gap-3 text-foreground/92",
         )}
       >
-        {isUser ? text : <AssistantBody text={text} />}
+        {isUser ? (
+          text
+        ) : (
+          <>
+            {text && <AssistantBody text={text} />}
+            {linkParts.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {linkParts.map((p, i) => (
+                  <LinkButton key={i} path={p.path} label={p.label} />
+                ))}
+              </div>
+            )}
+          </>
+        )}
       </div>
     </div>
   );
@@ -47,6 +66,53 @@ function extractText(m: UIMessage): string {
     .map((p) => p.text)
     .join("\n")
     .trim();
+}
+
+/**
+ * Pull out any `linkToPage` tool-result parts that have finished
+ * resolving. Each one becomes a button we render after the prose.
+ *
+ * The AI SDK v6 tool-part type is `tool-<toolName>` and we only care
+ * about the output-available state — upstream states (input-streaming,
+ * input-available) are model-internal and shouldn't show anything.
+ */
+interface LinkPart {
+  path: string;
+  label: string;
+}
+function extractLinkParts(m: UIMessage): LinkPart[] {
+  if (!m.parts) return [];
+  const out: LinkPart[] = [];
+  for (const p of m.parts as Array<{
+    type: string;
+    state?: string;
+    output?: { path?: string; label?: string };
+  }>) {
+    if (p.type !== "tool-linkToPage") continue;
+    if (p.state !== "output-available") continue;
+    const path = p.output?.path;
+    const label = p.output?.label;
+    if (typeof path === "string" && typeof label === "string") {
+      out.push({ path, label });
+    }
+  }
+  return out;
+}
+
+function LinkButton({ path, label }: { path: string; label: string }) {
+  return (
+    <Link
+      href={path}
+      className="inline-flex items-center gap-1.5 rounded-lg bg-white/[0.06] px-3 py-1.5 text-xs font-medium text-foreground ring-1 ring-white/[0.08] transition hover:bg-white/[0.1] hover:ring-[#60A5FA]/30"
+    >
+      <HugeIcon
+        name="arrow-right-01-stroke-rounded"
+        size={12}
+        className="text-[#60A5FA]"
+      />
+      {label}
+    </Link>
+  );
 }
 
 // ---------------------------------------------------------------------------
