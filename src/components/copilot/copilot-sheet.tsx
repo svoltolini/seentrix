@@ -14,6 +14,7 @@ import { HugeIcon } from "@/components/huge-icon";
 import { cn } from "@/lib/utils";
 import { useCopilot } from "./copilot-context";
 import { CopilotMessage } from "./copilot-message";
+import { CopilotFeedback } from "./copilot-feedback";
 import { clearCopilotHistory } from "@/app/[locale]/app/settings/copilot-actions";
 import { useToast } from "@/components/ui/toast";
 
@@ -47,12 +48,30 @@ export function CopilotSheet() {
     pathnameRef.current = pathname;
   }, [locale, pathname]);
 
+  // We also render the session id in-component (for the feedback row), so
+  // keep a state mirror that updates after each POST returns its
+  // x-copilot-session header.
+  const [sessionId, setSessionId] = useState<string | null>(null);
+
   /* eslint-disable react-hooks/refs */
   const [transport] = useState(
     () =>
       new DefaultChatTransport({
         api: "/api/copilot/chat",
         credentials: "include",
+        // Hijack fetch so we can snapshot the x-copilot-session header
+        // the server returns — we need it both to continue the same
+        // session on the next turn and to key feedback on a real
+        // chat_sessions.id.
+        fetch: async (input, init) => {
+          const res = await fetch(input, init);
+          const returnedSessionId = res.headers.get("x-copilot-session");
+          if (returnedSessionId) {
+            sessionIdRef.current = returnedSessionId;
+            setSessionId(returnedSessionId);
+          }
+          return res;
+        },
         prepareSendMessagesRequest: ({ messages }) => ({
           body: {
             messages,
@@ -135,12 +154,13 @@ export function CopilotSheet() {
         side="right"
         showCloseButton={false}
         className={cn(
-          // Let the base Sheet control sizing. Earlier iterations set
-          // `!max-w-none w-full` here, which — via Tailwind's `!important`
-          // override — blew past the base `sm:max-w-sm` (~384 px) and made
-          // the drawer take the full viewport width on desktop. Removing
-          // that restores the same width used by the glossary HelpSheet.
+          // Override the base Sheet's `sm:max-w-sm` (384 px). Copilot
+          // conversations need more horizontal space for code blocks,
+          // citation pills, and multi-paragraph drafts than a side-panel
+          // drawer. `xl` = 576 px — roughly 50 % wider than the default
+          // and still leaves the page content visible behind it.
           "flex-col gap-0 border-l border-white/[0.06] bg-[#09090B] p-0",
+          "data-[side=right]:sm:max-w-xl",
         )}
       >
         <SheetTitle className="sr-only">{t("title")}</SheetTitle>
@@ -196,8 +216,21 @@ export function CopilotSheet() {
             <EmptyState />
           ) : (
             <div className="flex flex-col gap-6">
-              {messages.map((m) => (
-                <CopilotMessage key={m.id} message={m} />
+              {messages.map((m, i) => (
+                <div key={m.id} className="flex flex-col">
+                  <CopilotMessage message={m} />
+                  {m.role === "assistant" &&
+                    // Only offer feedback once streaming of this turn is
+                    // done — still-streaming messages would get rated
+                    // mid-sentence.
+                    (i < messages.length - 1 || status === "ready") && (
+                      <CopilotFeedback
+                        sessionId={sessionId}
+                        message={m}
+                        precedingUserText={findPrecedingUserText(messages, i)}
+                      />
+                    )}
+                </div>
               ))}
               {status === "submitted" && <ThinkingBubble />}
             </div>
@@ -310,6 +343,27 @@ function EmptyState() {
       </div>
     </div>
   );
+}
+
+/**
+ * Walk backwards from the assistant message at `index` to the most
+ * recent user message. Used to snapshot the question alongside the
+ * rating so the admin review page is self-contained.
+ */
+function findPrecedingUserText(
+  messages: import("ai").UIMessage[],
+  index: number,
+): string {
+  for (let i = index - 1; i >= 0; i--) {
+    const m = messages[i];
+    if (m.role !== "user" || !m.parts) continue;
+    return m.parts
+      .filter((p): p is { type: "text"; text: string } => p.type === "text")
+      .map((p) => p.text)
+      .join("\n")
+      .trim();
+  }
+  return "";
 }
 
 function ThinkingBubble() {

@@ -11,6 +11,12 @@
     "clearHistoryConfirm": "Delete every Copilot conversation from your history? This cannot be undone.",
     "clearHistoryDone": "Copilot history cleared.",
     "clearHistoryFailed": "Could not clear history. Please try again.",
+    "feedback": {
+      "helpful": "Helpful",
+      "notHelpful": "Not helpful",
+      "whatWentWrong": "What went wrong? (optional)",
+      "submit": "Send"
+    },
     "placeholder": "Ask about CRA or Seentrix",
     "footer": "Powered by Mistral AI · hosted in the EU · not legal advice",
     "error": "Something went wrong. Please try again.",

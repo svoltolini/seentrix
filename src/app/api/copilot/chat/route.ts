@@ -3,7 +3,8 @@ import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { mistral, MISTRAL_CHAT_MODEL } from "@/lib/copilot/mistral";
 import { retrieveChunks } from "@/lib/copilot/retrieval";
-import { buildSystemPrompt, type CopilotContext } from "@/lib/copilot/prompt";
+import { buildSystemPrompt } from "@/lib/copilot/prompt";
+import { enrichPageContext } from "@/lib/copilot/context-enrichment";
 import { checkQuota } from "@/lib/copilot/quota";
 
 /**
@@ -117,16 +118,29 @@ export async function POST(req: Request) {
   }
 
   // --- 7. Build system prompt ----------------------------------------------
-  const context: CopilotContext = {
-    locale,
-    orgName: (org?.name as string | undefined) ?? undefined,
-    orgCountry: (org?.country as string | undefined) ?? undefined,
-    plan,
-    pageTitle: payload.page?.title,
-    pagePath: payload.page?.path,
-    productName: payload.product?.name,
-    productType: payload.product?.type,
-  };
+  // Server enriches page + product context from the current path so the
+  // client only has to send the URL it's on. Any failure is swallowed and
+  // the base context (locale + org + plan) is still used.
+  let context;
+  try {
+    context = await enrichPageContext({
+      supabase,
+      orgId,
+      plan,
+      locale,
+      pagePath: payload.page?.path,
+      orgName: (org?.name as string | undefined) ?? undefined,
+      orgCountry: (org?.country as string | undefined) ?? undefined,
+    });
+  } catch (err) {
+    console.error("[copilot] context enrichment failed", err);
+    context = {
+      locale,
+      plan,
+      orgName: (org?.name as string | undefined) ?? undefined,
+      orgCountry: (org?.country as string | undefined) ?? undefined,
+    };
+  }
   const system = buildSystemPrompt({ passages, context });
 
   // --- 8. Compress old turns (keep last 8 full, summarise older) ------------
@@ -182,6 +196,9 @@ export async function POST(req: Request) {
           retrieved_sections: passages
             .map((p) => (p.section ? `${p.doc_id}#${p.section}` : p.doc_id))
             .slice(0, 8),
+          // Mark turns that fell through to the "I don't know" path so
+          // the admin review page can surface them as KB-gap candidates.
+          no_retrieval: passages.length === 0,
           token_usage_in: usage?.inputTokens ?? null,
           token_usage_out: usage?.outputTokens ?? null,
           latency_ms: Date.now() - startedAt,

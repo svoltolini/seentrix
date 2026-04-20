@@ -27,6 +27,12 @@ export interface CopilotContext {
   pagePath?: string;
   productName?: string;
   productType?: string;
+  /**
+   * Multi-line pre-rendered situation summary for the current product
+   * (open vulns, SBOM age, DoC status). Empty when the user is not on a
+   * product detail page.
+   */
+  situation?: string;
 }
 
 export function buildSystemPrompt({
@@ -76,12 +82,27 @@ export function buildSystemPrompt({
         : "## User context\n") + contextLines.join("\n")
     : "";
 
+  // Situation summary lives in its own labelled block so the model treats
+  // it as authoritative facts about the user's data, not as prose to
+  // paraphrase loosely.
+  const situationBlock = context.situation
+    ? (context.locale === "de"
+        ? "## Aktuelle Lage für das aktive Produkt\n"
+        : "## Current situation for the active product\n") + context.situation
+    : "";
+
   const referencesHeader =
     context.locale === "de"
       ? "## Referenzpassagen (bei Bedarf mit der angegebenen Kennung zitieren)"
       : "## Reference passages (cite these inline by their label when relevant)";
 
-  return [header, referencesHeader, passageBlock, contextBlock]
+  return [
+    header,
+    referencesHeader,
+    passageBlock,
+    contextBlock,
+    situationBlock,
+  ]
     .filter(Boolean)
     .join("\n\n");
 }
