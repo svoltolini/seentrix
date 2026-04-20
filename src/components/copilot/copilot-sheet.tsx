@@ -214,42 +214,50 @@ export function CopilotSheet() {
           onSubmit={onSubmit}
           className="flex flex-col gap-2 border-t border-white/[0.06] bg-[#0B0B12] px-4 pt-3 pb-4"
         >
-          <div className="relative rounded-2xl bg-white/[0.04] ring-1 ring-white/[0.08] transition focus-within:bg-white/[0.06] focus-within:ring-[#60A5FA]/40">
+          {/*
+            Flex row with `items-end` — when the textarea is one line
+            (32 px tall) the button (32 px tall) aligns at the bottom of
+            the container which, combined with the container's symmetric
+            py-2, reads as vertically centred. When the textarea grows
+            past one line the button stays in the bottom-right corner,
+            matching the ChatGPT composer convention.
+          */}
+          <div className="flex items-end gap-2 rounded-2xl bg-white/[0.04] px-3.5 py-2 ring-1 ring-white/[0.08] transition focus-within:bg-white/[0.06] focus-within:ring-[#60A5FA]/40">
             <textarea
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={onComposerKey}
               placeholder={t("placeholder")}
               rows={1}
-              className="block max-h-[160px] min-h-[56px] w-full resize-none bg-transparent px-4 py-3.5 pr-14 text-sm leading-relaxed text-foreground outline-none placeholder:text-muted-foreground/50"
+              // Single-line height = 32 px so it matches the button.
+              // leading-6 + py-1 gives 24 + 4 + 4 = 32.
+              className="max-h-[180px] min-h-[32px] flex-1 resize-none bg-transparent py-1 text-sm leading-6 text-foreground outline-none placeholder:text-muted-foreground/55"
               disabled={isStreaming}
             />
-            <div className="absolute bottom-2 right-2">
-              {isStreaming ? (
-                <button
-                  type="button"
-                  onClick={stop}
-                  aria-label={t("stop")}
-                  className="flex size-8 items-center justify-center rounded-full text-muted-foreground transition hover:bg-white/[0.06] hover:text-foreground"
-                >
-                  <HugeIcon name="stop-circle-stroke-rounded" size={18} />
-                </button>
-              ) : (
-                <button
-                  type="submit"
-                  disabled={!input.trim()}
-                  aria-label={t("send")}
-                  className={cn(
-                    "flex size-8 items-center justify-center rounded-full transition",
-                    input.trim()
-                      ? "bg-[#3B82F6] text-white hover:bg-[#2563EB]"
-                      : "bg-white/[0.06] text-muted-foreground/40",
-                  )}
-                >
-                  <HugeIcon name="sent-stroke-rounded" size={15} />
-                </button>
-              )}
-            </div>
+            {isStreaming ? (
+              <button
+                type="button"
+                onClick={stop}
+                aria-label={t("stop")}
+                className="flex size-8 shrink-0 items-center justify-center rounded-full text-muted-foreground transition hover:bg-white/[0.06] hover:text-foreground"
+              >
+                <HugeIcon name="stop-circle-stroke-rounded" size={18} />
+              </button>
+            ) : (
+              <button
+                type="submit"
+                disabled={!input.trim()}
+                aria-label={t("send")}
+                className={cn(
+                  "flex size-8 shrink-0 items-center justify-center rounded-full transition",
+                  input.trim()
+                    ? "bg-[#3B82F6] text-white hover:bg-[#2563EB]"
+                    : "bg-white/[0.06] text-muted-foreground/40",
+                )}
+              >
+                <HugeIcon name="sent-stroke-rounded" size={15} />
+              </button>
+            )}
           </div>
           <p className="px-1 text-[10px] leading-relaxed text-muted-foreground/70">
             {t("footer")}
