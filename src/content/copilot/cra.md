@@ -4,6 +4,14 @@ A condensed plain-language companion to Regulation (EU) 2024/2847. Each
 section below is chunked by article so the Copilot can cite them by
 exact label.
 
+> **Verify against the official text.** The article + paragraph numbers
+> in this summary follow the regulation as adopted in 2024, but
+> numbering in earlier Commission proposals and member-state
+> transpositions may differ. When a user needs the exact legal
+> reference (e.g. for a regulatory filing), point them to the
+> authoritative text on EUR-Lex rather than relying on the numbers
+> below alone.
+
 The authoritative text is on EUR-Lex:
 https://eur-lex.europa.eu/eli/reg/2024/2847/oj
 
