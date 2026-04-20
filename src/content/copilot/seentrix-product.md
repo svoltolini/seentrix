@@ -25,15 +25,40 @@ Academy training progress, and activity log.
 
 ## SBOM
 
-The Software Bill of Materials is a CycloneDX 1.6 JSON file the user
-uploads on the product's SBOM tab. Seentrix then:
+Seentrix **manages** and **analyses** Software Bills of Materials — it
+does **not generate** them. The user produces an SBOM externally with
+an open-source scanner and uploads the resulting file on the
+product's SBOM tab. Seentrix then:
 
 1. Parses every component and stores its name, version, and licence.
 2. Queries OSV.dev for known vulnerabilities affecting each component.
 3. Enriches each vulnerability with full CVE detail from `/v1/vulns/{id}`.
 4. Maps CVSS scores to severity (critical / high / medium / low).
 
-SBOM freshness is tracked — an SBOM older than 30 days is flagged.
+Accepted format: **CycloneDX 1.5 or 1.6 JSON**. SPDX is not currently
+supported — convert with `cyclonedx-cli convert` if needed. SBOM
+freshness is tracked; an SBOM older than 30 days is flagged on the
+product detail page.
+
+## Generating an SBOM (external, not inside Seentrix)
+
+Manufacturers produce the SBOM file with one of these free tools,
+then drag-and-drop the resulting JSON into Seentrix:
+
+- **Syft** (Anchore) — `syft scan dir:. -o cyclonedx-json=sbom.json`.
+  Works on filesystems, container images, and archives.
+- **Trivy** (Aqua Security) — `trivy fs --format cyclonedx --output sbom.json .`.
+  Also does vulnerability scanning in the same pass.
+- **cdxgen** (OWASP) — multi-language, produces CycloneDX directly.
+- **GitHub dependency-graph export** — `gh sbom` if the repo is hosted
+  on GitHub.
+- **Your CI pipeline** — most vendors (GitLab, Jenkins, CircleCI) have
+  first-class SBOM steps that emit CycloneDX artefacts.
+
+Seentrix does not ship an SBOM generator and does not scan the user's
+source code or binaries. The manufacturer keeps the tooling that
+knows their build — Seentrix picks up the conversation once the
+resulting SBOM file exists.
 
 ---
 
