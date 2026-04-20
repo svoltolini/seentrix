@@ -11,10 +11,12 @@ export default function PrivacyPage() {
 
       <h2>1. Who we are</h2>
       <p>
-        <strong>{"{LEGAL_ENTITY_NAME}"}</strong>, registered at{" "}
-        <strong>{"{REGISTERED_ADDRESS}"}</strong>, is the data controller
-        for personal data processed through Seentrix. You can reach our
-        privacy team at <strong>{"{PRIVACY_CONTACT_EMAIL}"}</strong>.
+        <strong>Seentrix Ltd</strong> (company number{" "}
+        <strong>17169165</strong>, registered in England and Wales at{" "}
+        <strong>167-169 Great Portland Street, London, England, W1W 5PF</strong>)
+        is the data controller for personal data processed through Seentrix.
+        You can reach our privacy team at{" "}
+        <a href="mailto:support@seentrix.com">support@seentrix.com</a>.
       </p>
 
       <h2>2. Data we collect</h2>
@@ -117,11 +119,17 @@ export default function PrivacyPage() {
         <li><strong>Portability:</strong> export your data in a machine-readable format.</li>
         <li><strong>Restriction / objection:</strong> pause or stop specific processing.</li>
         <li><strong>Withdraw consent:</strong> any time, with no impact on past processing.</li>
-        <li><strong>Complain:</strong> to your national data-protection authority (in Germany: the BfDI).</li>
+        <li>
+          <strong>Complain:</strong> to the UK Information Commissioner's
+          Office (<a href="https://ico.org.uk/make-a-complaint/" target="_blank" rel="noreferrer">ico.org.uk</a>)
+          or to the data-protection authority in your EU country of residence
+          (e.g. the BfDI in Germany, the CNIL in France).
+        </li>
       </ul>
       <p>
-        Exercise any right by emailing <strong>{"{PRIVACY_CONTACT_EMAIL}"}</strong>.
-        We respond within 30 days.
+        Exercise any right by emailing{" "}
+        <a href="mailto:support@seentrix.com">support@seentrix.com</a>. We
+        respond within 30 days.
       </p>
 
       <h2>8. Security</h2>
@@ -149,6 +157,10 @@ export default function PrivacyPage() {
       <p>
         Material changes will be notified by email. We keep a changelog
         below once this policy is reviewed by counsel.
+      </p>
+      <p className="mt-6 text-xs text-muted-foreground/70">
+        Seentrix Ltd · Company number 17169165 · Registered in England and Wales ·
+        167-169 Great Portland Street, London W1W 5PF, United Kingdom
       </p>
     </>
   );

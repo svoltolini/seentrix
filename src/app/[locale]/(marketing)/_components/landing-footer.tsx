@@ -22,6 +22,10 @@ export function LandingFooter() {
             <span className="text-sm text-muted-foreground">
               {t("location")}
             </span>
+            <span className="text-xs text-muted-foreground/60">
+              Seentrix Ltd · Company no. 17169165 · Registered in England
+              and Wales
+            </span>
           </div>
 
           {/* Product */}

@@ -76,7 +76,12 @@ export default function CookiesPage() {
 
       <h2>Contact</h2>
       <p>
-        Questions about cookies: <strong>{"{PRIVACY_CONTACT_EMAIL}"}</strong>.
+        Questions about cookies:{" "}
+        <a href="mailto:support@seentrix.com">support@seentrix.com</a>.
+      </p>
+      <p className="mt-6 text-xs text-muted-foreground/70">
+        Seentrix Ltd · Company number 17169165 · Registered in England and Wales ·
+        167-169 Great Portland Street, London W1W 5PF, United Kingdom
       </p>
     </>
   );

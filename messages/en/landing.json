@@ -183,12 +183,12 @@
     },
     "trust": {
       "title": "Built by Compliance Engineers",
-      "subtitle": "Developed in Switzerland by a team with deep roots in industrial automation and cybersecurity standards.",
+      "subtitle": "Built in the United Kingdom by a team with deep roots in industrial automation and cybersecurity standards. Your data stays in the EU.",
       "badges": {
         "iec": "IEC 62443",
         "etsi": "ETSI EN 303 645",
         "gdpr": "EU GDPR Compliant",
-        "swiss": "Made in Switzerland"
+        "eu_data": "EU data residency"
       }
     },
     "faq": {
@@ -232,7 +232,7 @@
       "duplicate": "You're already subscribed. Check your inbox for the latest updates."
     },
     "footer": {
-      "location": "Rotkreuz, Switzerland",
+      "location": "London, United Kingdom",
       "impressum": "Impressum",
       "privacy": "Privacy Policy",
       "terms": "Terms of Service",

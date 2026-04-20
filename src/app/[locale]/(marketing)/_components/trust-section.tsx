@@ -5,7 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useTranslations } from "next-intl";
 
-const badges = ["iec", "etsi", "gdpr", "swiss"] as const;
+const badges = ["iec", "etsi", "gdpr", "eu_data"] as const;
 
 export function TrustSection() {
   const t = useTranslations("landing.trust");

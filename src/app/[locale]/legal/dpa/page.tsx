@@ -12,10 +12,12 @@ export default function DpaPage() {
       <p>
         This Data Processing Agreement ("DPA") forms part of the{" "}
         <Link href="/legal/terms">Terms of Service</Link> between{" "}
-        <strong>{"{LEGAL_ENTITY_NAME}"}</strong> ("Processor", "Seentrix") and
-        you or the entity you represent ("Controller", "Customer"). It
-        applies whenever Seentrix processes personal data on behalf of the
-        Controller in connection with the Service.
+        <strong>Seentrix Ltd</strong> (company number 17169165, registered in
+        England and Wales at 167-169 Great Portland Street, London W1W 5PF;
+        "Processor", "Seentrix") and you or the entity you represent
+        ("Controller", "Customer"). It applies whenever Seentrix processes
+        personal data on behalf of the Controller in connection with the
+        Service.
       </p>
 
       <h2>1. Definitions</h2>
@@ -164,7 +166,11 @@ export default function DpaPage() {
 
       <p>
         Sign a counter-signed copy of this DPA by emailing{" "}
-        <strong>{"{PRIVACY_CONTACT_EMAIL}"}</strong>.
+        <a href="mailto:support@seentrix.com">support@seentrix.com</a>.
+      </p>
+      <p className="mt-6 text-xs text-muted-foreground/70">
+        Seentrix Ltd · Company number 17169165 · Registered in England and Wales ·
+        167-169 Great Portland Street, London W1W 5PF, United Kingdom
       </p>
     </>
   );

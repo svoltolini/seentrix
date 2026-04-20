@@ -183,12 +183,12 @@
     },
     "trust": {
       "title": "Entwickelt von Compliance-Ingenieuren",
-      "subtitle": "In der Schweiz entwickelt von einem Team mit tiefen Wurzeln in industrieller Automatisierung und Cybersicherheitsstandards.",
+      "subtitle": "Im Vereinigten Königreich entwickelt von einem Team mit tiefen Wurzeln in industrieller Automatisierung und Cybersicherheitsstandards. Ihre Daten bleiben in der EU.",
       "badges": {
         "iec": "IEC 62443",
         "etsi": "ETSI EN 303 645",
         "gdpr": "EU-DSGVO-konform",
-        "swiss": "Made in Switzerland"
+        "eu_data": "Datenhaltung in der EU"
       }
     },
     "faq": {
@@ -232,7 +232,7 @@
       "duplicate": "Sie sind bereits abonniert. Prüfen Sie Ihren Posteingang für die neuesten Updates."
     },
     "footer": {
-      "location": "Rotkreuz, Schweiz",
+      "location": "London, Vereinigtes Königreich",
       "impressum": "Impressum",
       "privacy": "Datenschutzerklärung",
       "terms": "Nutzungsbedingungen",

@@ -13,10 +13,12 @@ export default function TermsPage() {
       <p>
         These Terms of Service ("Terms") govern your access to and use of the
         Seentrix platform ("Service") operated by{" "}
-        <strong>{"{LEGAL_ENTITY_NAME}"}</strong> ("we", "us", "Seentrix"),
-        registered at <strong>{"{REGISTERED_ADDRESS}"}</strong>. By creating
-        an account or using the Service, you agree to be bound by these
-        Terms. If you do not agree, do not use the Service.
+        <strong>Seentrix Ltd</strong> ("we", "us", "Seentrix"), a private
+        limited company registered in England and Wales with company number{" "}
+        <strong>17169165</strong>, registered office at{" "}
+        <strong>167-169 Great Portland Street, London, England, W1W 5PF, United Kingdom</strong>.
+        By creating an account or using the Service, you agree to be bound by
+        these Terms. If you do not agree, do not use the Service.
       </p>
 
       <h2>2. Service description</h2>
@@ -56,10 +58,10 @@ export default function TermsPage() {
       <h2>5. Subscription and fees</h2>
       <p>
         Paid plans are billed through Stripe based on the pricing published
-        at <strong>{"{PRICING_PAGE_URL}"}</strong>. Fees are non-refundable
-        except where required by law. You may cancel at any time via the
-        billing portal; cancellation takes effect at the end of the current
-        billing period. Unpaid invoices past <strong>{"{GRACE_PERIOD}"}</strong>{" "}
+        at <Link href="/pricing">seentrix.com/pricing</Link>. Fees are
+        non-refundable except where required by law. You may cancel at any
+        time via the billing portal; cancellation takes effect at the end of
+        the current billing period. Unpaid invoices past <strong>14</strong>{" "}
         days may result in suspension.
       </p>
 
@@ -76,9 +78,9 @@ export default function TermsPage() {
       <h2>7. Service availability and support</h2>
       <p>
         We aim to maintain high availability but do not guarantee uninterrupted
-        service. Planned maintenance is announced at{" "}
-        <strong>{"{STATUS_PAGE_URL}"}</strong>. Support channels and response
-        targets are described in your plan.
+        service. Planned maintenance is announced by email to the address on
+        file. Support channels and response targets are described in your
+        plan.
       </p>
 
       <h2>8. Warranty disclaimer</h2>
@@ -109,9 +111,9 @@ export default function TermsPage() {
       <h2>11. Governing law</h2>
       <p>
         These Terms are governed by the laws of{" "}
-        <strong>{"{JURISDICTION}"}</strong>, without regard to conflict-of-
+        <strong>England and Wales</strong>, without regard to conflict-of-
         laws rules. Any dispute will be brought exclusively before the
-        courts of <strong>{"{VENUE}"}</strong>.
+        courts of <strong>London, England</strong>.
       </p>
 
       <h2>12. Changes to these Terms</h2>
@@ -125,7 +127,11 @@ export default function TermsPage() {
       <h2>13. Contact</h2>
       <p>
         Questions about these Terms? Contact{" "}
-        <strong>{"{SUPPORT_EMAIL}"}</strong>.
+        <a href="mailto:support@seentrix.com">support@seentrix.com</a>.
+      </p>
+      <p className="mt-6 text-xs text-muted-foreground/70">
+        Seentrix Ltd · Company number 17169165 · Registered in England and Wales ·
+        167-169 Great Portland Street, London W1W 5PF, United Kingdom
       </p>
     </>
   );
