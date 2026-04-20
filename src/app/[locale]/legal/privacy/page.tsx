@@ -132,9 +132,12 @@ export default function PrivacyPage() {
         <li>Backups: 30 days rolling.</li>
         <li>Sentry error traces: 90 days.</li>
         <li>
-          Seentrix Copilot chat transcripts: 180 days in our EU database.
-          Admins can clear their organisation's history at any time from
-          Settings. Mistral AI does not retain any of your prompt content
+          Seentrix Copilot chat transcripts: retained in our EU database
+          on a plan-tiered schedule — Free 7 days, Professional 90 days,
+          Business 180 days, Enterprise 365 days. A scheduled daily job
+          deletes conversations older than the tier's window. Users can
+          also clear their own history at any time from the Copilot
+          drawer. Mistral AI does not retain any of your prompt content
           under our zero-retention agreement.
         </li>
       </ul>

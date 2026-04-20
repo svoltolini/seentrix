@@ -55,6 +55,17 @@ export const PLAN_ACTIVITY_LOG_DAYS = {
   enterprise: Infinity,
 } as const;
 
+// Copilot chat transcript retention per plan (days). A scheduled daily
+// job purges chat_sessions + chat_messages older than this window.
+// Free is deliberately short — conversations are disposable and the
+// upgrade lever is "keep your reasoning trail".
+export const PLAN_COPILOT_RETENTION_DAYS = {
+  free: 7,
+  professional: 90,
+  business: 180,
+  enterprise: 365,
+} as const;
+
 // Monitoring frequency — how often the vulnerability scanner re-runs against
 // a product's SBOMs. Controlled by a scheduled Supabase function; Free and
 // Professional run on demand + weekly, Business runs daily, Enterprise gets

@@ -284,6 +284,23 @@ and Enterprise unlimited** (no hardcoded ten-year floor —
 manufacturers on Free/Pro who need Article 13 evidence beyond the
 plan's retention window must export and store it themselves).
 
+## Copilot transcript retention
+
+Copilot conversations are retained in Seentrix's EU database on the
+same plan-tiered pattern the activity log uses:
+
+- **Free** — 7 days
+- **Professional** — 90 days
+- **Business** — 180 days
+- **Enterprise** — 365 days
+
+A scheduled daily job deletes chat_sessions whose last activity is
+older than the tier's window (chat_messages + feedback cascade).
+Users can also clear their own history any time from the drawer
+header. Mistral does not retain prompt content under Seentrix's
+zero-retention agreement — the retention above is only for what
+Seentrix stores in Supabase.
+
 ## Where your data lives
 
 - Database + authentication + file storage: **Supabase** in
