@@ -97,8 +97,23 @@ export async function POST(req: Request) {
       ? await retrieveChunks({ query: latestQuery, language: locale, k: 8 })
       : [];
   } catch (err) {
-    // Non-fatal: we'll fall through to a "no passages" answer.
-    console.error("[copilot] retrieval failed", err);
+    // Non-fatal: we'll fall through to a "no passages" answer. Log every
+    // field we can pull off an AI_APICallError so the surfaced message in
+    // Vercel logs is self-diagnosing (status, URL, API response body).
+    const e = err as {
+      message?: string;
+      statusCode?: number;
+      url?: string;
+      responseBody?: unknown;
+      cause?: unknown;
+    };
+    console.error("[copilot] retrieval failed", {
+      message: e?.message,
+      statusCode: e?.statusCode,
+      url: e?.url,
+      responseBody: e?.responseBody,
+      cause: e?.cause,
+    });
   }
 
   // --- 7. Build system prompt ----------------------------------------------
@@ -141,6 +156,20 @@ export async function POST(req: Request) {
     system,
     messages: modelMessages,
     temperature: 0.3,
+    onError: ({ error }) => {
+      const e = error as {
+        message?: string;
+        statusCode?: number;
+        url?: string;
+        responseBody?: unknown;
+      };
+      console.error("[copilot] streamText error", {
+        message: e?.message,
+        statusCode: e?.statusCode,
+        url: e?.url,
+        responseBody: e?.responseBody,
+      });
+    },
     onFinish: async ({ text, usage }) => {
       // Persist the assistant's final text + usage for auditability and to
       // power the "usage" view in settings. Failures here are logged but
