@@ -337,5 +337,8 @@ export async function resetPassword(
 export async function logout(locale: string): Promise<void> {
   const supabase = await createClient();
   await supabase.auth.signOut();
-  redirect(`/${locale}/auth/login`);
+  // Send signed-out users to the marketing landing rather than the login
+  // screen. Otherwise they see a login form with no context — landing gives
+  // them a sensible place (pricing, docs, or a clear log-in CTA) to reorient.
+  redirect(`/${locale}/`);
 }

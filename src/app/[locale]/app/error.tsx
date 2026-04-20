@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { HugeIcon } from "@/components/huge-icon";
@@ -30,9 +31,20 @@ export default function AppError({
               {t("errorDescription")}
             </p>
           </div>
-          <Button onClick={reset} size="sm">
-            {t("tryAgain")}
-          </Button>
+          {/* Two escape hatches: retry (fixes transient failures) and a
+              dashboard link (fixes 'this page itself is broken — get me
+              out'). Without the second, a persistently failing page traps
+              the user on the error screen. */}
+          <div className="flex items-center gap-2">
+            <Button onClick={reset} size="sm">
+              {t("tryAgain")}
+            </Button>
+            <Link href="/app/dashboard">
+              <Button variant="outline" size="sm">
+                {t("dashboard")}
+              </Button>
+            </Link>
+          </div>
         </CardContent>
       </Card>
     </div>

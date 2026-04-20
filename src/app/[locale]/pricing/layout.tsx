@@ -13,8 +13,13 @@ export default function PricingLayout({
   return (
     <div className="min-h-dvh bg-muted/30">
       <header className="flex h-16 items-center justify-between border-b border-border bg-background px-6">
-        <Link href="/app/dashboard" className="flex items-center gap-2.5">
-          <Logo size={13} />
+        {/* Brand goes to landing. Previously linked to /app/dashboard
+            which middleware bounces unauthed visitors back to /auth/login —
+            a dead-end loop from the pricing page for anyone not yet
+            signed up. brightness-0 invert makes the near-black logo
+            visible against the dark background. */}
+        <Link href="/" className="flex items-center gap-2.5">
+          <Logo size={13} className="shrink-0 brightness-0 invert" />
           <span className="text-lg font-semibold tracking-tight">
             {t("app.name")}
           </span>

@@ -1,12 +1,14 @@
 "use client";
 
 import { useEffect, useState, useTransition } from "react";
+import { useLocale } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { HugeIcon } from "@/components/huge-icon";
+import { logout } from "../actions";
 
 /**
  * TOTP challenge screen shown after a password-only login when the user
@@ -15,11 +17,13 @@ import { HugeIcon } from "@/components/huge-icon";
  */
 export function MfaChallenge() {
   const router = useRouter();
+  const locale = useLocale();
   const [code, setCode] = useState("");
   const [factorId, setFactorId] = useState<string | null>(null);
   const [challengeId, setChallengeId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
+  const [isCancelling, startCancel] = useTransition();
 
   useEffect(() => {
     let cancelled = false;
@@ -115,6 +119,21 @@ export function MfaChallenge() {
       >
         {isPending ? "Verifying…" : "Verify"}
       </Button>
+
+      {/* Escape hatch: if a user lost their authenticator (phone wiped,
+          factor gone), they'd otherwise be stuck here forever. Signs
+          them out completely and sends them back to login where they
+          can recover via password + support request. */}
+      <button
+        type="button"
+        onClick={() => startCancel(() => logout(locale))}
+        disabled={isCancelling || isPending}
+        className="mt-4 w-full text-center text-xs text-muted-foreground transition-colors hover:text-foreground disabled:opacity-50"
+      >
+        {isCancelling
+          ? "Signing out…"
+          : "Lost your authenticator? Sign out and contact support."}
+      </button>
     </div>
   );
 }

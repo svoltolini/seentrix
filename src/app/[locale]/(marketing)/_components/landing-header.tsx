@@ -25,7 +25,7 @@ const pageLinks = [
   { href: "/blog", key: "blog" },
 ] as const;
 
-export function LandingHeader() {
+export function LandingHeader({ isAuthed = false }: { isAuthed?: boolean }) {
   const t = useTranslations("landing.header");
   const locale = useLocale();
   const router = useRouter();
@@ -63,7 +63,7 @@ export function LandingHeader() {
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         {/* Left: Logo */}
         <Link href="/" className="flex items-center gap-2">
-          <Logo size={18} />
+          <Logo size={18} className="shrink-0 brightness-0 invert" />
           <span className="text-lg font-bold tracking-tight text-foreground">
             Seentrix
           </span>
@@ -149,11 +149,26 @@ export function LandingHeader() {
             </button>
           </div>
 
-          {/* Desktop auth buttons */}
+          {/* Desktop auth buttons — swap in 'Dashboard' if the visitor is
+              already signed in. Keeps the header honest: logged-in users
+              were previously shown 'Log in' and had to click it to find
+              out they were already authed, which is dissonant. */}
           <div className="hidden items-center gap-2 lg:flex">
-            <Link href="/auth/login" className={buttonVariants({ variant: "ghost", size: "sm" })}>
-              {t("login")}
-            </Link>
+            {isAuthed ? (
+              <Link
+                href="/app/dashboard"
+                className={buttonVariants({ variant: "default", size: "sm" })}
+              >
+                {t("dashboard")}
+              </Link>
+            ) : (
+              <Link
+                href="/auth/login"
+                className={buttonVariants({ variant: "ghost", size: "sm" })}
+              >
+                {t("login")}
+              </Link>
+            )}
           </div>
 
           {/* Mobile hamburger */}
@@ -188,12 +203,21 @@ export function LandingHeader() {
                   </Link>
                 ))}
                 <hr className="my-2 border-border" />
-                <Link
-                  href="/auth/login"
-                  className="flex items-center rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  {t("login")}
-                </Link>
+                {isAuthed ? (
+                  <Link
+                    href="/app/dashboard"
+                    className="flex items-center rounded-lg bg-primary px-3 py-2.5 text-sm font-semibold text-primary-foreground transition-colors"
+                  >
+                    {t("dashboard")}
+                  </Link>
+                ) : (
+                  <Link
+                    href="/auth/login"
+                    className="flex items-center rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    {t("login")}
+                  </Link>
+                )}
               </nav>
             </SheetContent>
           </Sheet>
