@@ -135,11 +135,12 @@ export function CopilotSheet() {
         side="right"
         showCloseButton={false}
         className={cn(
-          "!max-w-none w-full flex-col gap-0 border-l border-white/[0.06] bg-[#09090B] p-0",
-          // Match the default right-side sheet width (~384 px) so the drawer
-          // lines up with other panels in the app (HelpSheet, etc.) and leaves
-          // more page context visible behind it.
-          "data-[side=right]:sm:max-w-sm",
+          // Let the base Sheet control sizing. Earlier iterations set
+          // `!max-w-none w-full` here, which — via Tailwind's `!important`
+          // override — blew past the base `sm:max-w-sm` (~384 px) and made
+          // the drawer take the full viewport width on desktop. Removing
+          // that restores the same width used by the glossary HelpSheet.
+          "flex-col gap-0 border-l border-white/[0.06] bg-[#09090B] p-0",
         )}
       >
         <SheetTitle className="sr-only">{t("title")}</SheetTitle>
