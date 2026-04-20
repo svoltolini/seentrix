@@ -20,11 +20,7 @@ export function LandingFooter() {
               </span>
             </div>
             <span className="text-sm text-muted-foreground">
-              {t("location")}
-            </span>
-            <span className="text-xs text-muted-foreground/60">
-              Seentrix Ltd · Company no. 17169165 · Registered in England
-              and Wales
+              Seentrix Ltd · Companies House 17169165
             </span>
           </div>
 
@@ -64,9 +60,24 @@ export function LandingFooter() {
               {t("legal")}
             </span>
             <nav className="flex flex-col gap-2 text-sm text-muted-foreground">
-              <span>{t("impressum")}</span>
-              <span>{t("privacy")}</span>
-              <span>{t("terms")}</span>
+              <Link
+                href="/legal/impressum"
+                className="transition-colors hover:text-foreground"
+              >
+                {t("impressum")}
+              </Link>
+              <Link
+                href="/legal/privacy"
+                className="transition-colors hover:text-foreground"
+              >
+                {t("privacy")}
+              </Link>
+              <Link
+                href="/legal/terms"
+                className="transition-colors hover:text-foreground"
+              >
+                {t("terms")}
+              </Link>
             </nav>
           </div>
         </div>

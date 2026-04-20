@@ -66,27 +66,37 @@ export default function PrivacyPage() {
         </li>
       </ul>
 
-      <h2>4. Who we share data with</h2>
+      <h2>4. Where your data lives</h2>
+      <p>
+        Your data never leaves the EU. Both the application database and
+        the web application itself are hosted in EU datacentres.
+      </p>
       <ul>
         <li>
-          <strong>Supabase (database + auth):</strong> EU-based infrastructure.
-          Processes all application data on our behalf.
+          <strong>Supabase (database, auth, file storage):</strong> region
+          <code> eu-west-2</code>, London, United Kingdom. Stores all
+          application data — organisations, products, SBOMs,
+          vulnerabilities, incidents, generated PDFs.
         </li>
         <li>
-          <strong>Vercel (hosting):</strong> serves our web application.
-          Logs IP and request metadata for 30 days.
+          <strong>Vercel (web hosting):</strong> region <code>fra1</code>,
+          Frankfurt, Germany. Serves the Seentrix web application. Keeps
+          request + IP logs for 30 days for anti-abuse and diagnostics.
         </li>
         <li>
-          <strong>Stripe (billing):</strong> processes payment information.
-          We never see your card number.
+          <strong>Sentry (error tracking):</strong> region{" "}
+          <code>de.sentry.io</code> (Germany). Receives masked error
+          traces; session replays have all text + media blocked so CRA
+          form data never leaves the browser.
         </li>
         <li>
-          <strong>Resend / postal provider:</strong> delivers transactional
-          email (password reset, invites).
+          <strong>Stripe (billing):</strong> global infrastructure under
+          PCI-DSS compliance. Card numbers are tokenised by Stripe — we
+          never see them.
         </li>
         <li>
-          <strong>Sentry (error tracking):</strong> receives anonymised
-          error traces when enabled; no PII is intentionally included.
+          <strong>Resend (transactional email):</strong> delivers password
+          resets, invitations, and notifications.
         </li>
       </ul>
       <p>

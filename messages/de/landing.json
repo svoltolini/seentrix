@@ -183,7 +183,8 @@
     },
     "trust": {
       "title": "Entwickelt von Compliance-Ingenieuren",
-      "subtitle": "Im Vereinigten Königreich entwickelt von einem Team mit tiefen Wurzeln in industrieller Automatisierung und Cybersicherheitsstandards. Ihre Daten bleiben in der EU.",
+      "subtitle": "Im Vereinigten Königreich entwickelt von einem Team mit tiefen Wurzeln in industrieller Automatisierung und Cybersicherheitsstandards.",
+      "hosting": "Ihre Daten verlassen die EU nie. Datenbank + Dateispeicher bei Supabase in London (eu-west-2), Web-Anwendung bei Vercel in Frankfurt (fra1), Fehler-Tracking bei Sentry in Deutschland (de.sentry.io).",
       "badges": {
         "iec": "IEC 62443",
         "etsi": "ETSI EN 303 645",

@@ -55,6 +55,9 @@ export function TrustSection() {
             <p className="mt-6 text-lg leading-relaxed text-white/70">
               {t("subtitle")}
             </p>
+            <p className="mt-4 text-sm leading-relaxed text-white/55">
+              {t("hosting")}
+            </p>
           </div>
 
           <div className="mt-12 flex flex-wrap items-center justify-center gap-4">

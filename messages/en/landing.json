@@ -183,7 +183,8 @@
     },
     "trust": {
       "title": "Built by Compliance Engineers",
-      "subtitle": "Built in the United Kingdom by a team with deep roots in industrial automation and cybersecurity standards. Your data stays in the EU.",
+      "subtitle": "Built in the United Kingdom by a team with deep roots in industrial automation and cybersecurity standards.",
+      "hosting": "Your data never leaves the EU. Database + file storage on Supabase in London (eu-west-2), web application on Vercel in Frankfurt (fra1), error tracking on Sentry in Germany (de.sentry.io).",
       "badges": {
         "iec": "IEC 62443",
         "etsi": "ETSI EN 303 645",

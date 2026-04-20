@@ -23,6 +23,12 @@ export default function LegalLayout({
           </Link>
           <nav className="flex gap-6 text-sm text-muted-foreground">
             <Link
+              href="/legal/impressum"
+              className="transition-colors hover:text-foreground"
+            >
+              Impressum
+            </Link>
+            <Link
               href="/legal/terms"
               className="transition-colors hover:text-foreground"
             >

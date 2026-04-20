@@ -20,7 +20,10 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: "landing" });
 
   return {
-    title: `Seentrix — ${t("hero.titleLine1")} ${t("hero.titleLine2")}`,
+    // `absolute` skips the root-level "%s — Seentrix" template so the
+    // homepage tab / share preview reads as just "Seentrix" instead of
+    // "Seentrix — Your CRA Compliance Platform … — Seentrix".
+    title: { absolute: "Seentrix" },
     description: t("hero.subtitle"),
   };
 }
