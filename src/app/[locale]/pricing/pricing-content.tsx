@@ -273,7 +273,7 @@ function ComparisonTable() {
   const plans: OrgPlan[] = ["free", "professional", "business", "enterprise"];
 
   return (
-    <section className="mt-24">
+    <section id="compare" className="mt-24 scroll-mt-20">
       <div className="mx-auto mb-10 max-w-2xl text-center">
         <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
           {tc("title")}

@@ -180,6 +180,39 @@ export function PricingPreview() {
             );
           })}
         </div>
+
+        {/* CTA — links directly to the #compare anchor on /pricing so
+            the user lands on the full feature matrix without scrolling
+            past the cards again. Deliberately loud (gradient background,
+            large target) because this is the primary 'learn more'
+            affordance and it was previously missing. */}
+        <div className="mt-12 flex flex-col items-center gap-2">
+          <Link
+            href="/pricing#compare"
+            className="group inline-flex items-center gap-2 rounded-full bg-white/[0.05] px-5 py-3 text-sm font-semibold text-foreground ring-1 ring-white/[0.08] transition-colors hover:bg-white/[0.08] hover:ring-white/[0.16]"
+          >
+            <span>{t("compareAllFeatures")}</span>
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
+              className="transition-transform group-hover:translate-x-0.5"
+              aria-hidden
+            >
+              <path
+                d="M3 7h8M7 3l4 4-4 4"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </Link>
+          <p className="text-xs text-muted-foreground/60">
+            {t("compareAllFeaturesHint")}
+          </p>
+        </div>
       </div>
     </section>
   );

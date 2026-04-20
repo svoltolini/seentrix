@@ -140,7 +140,9 @@
         }
       },
       "getStarted": "Get Started",
-      "cta": "View Full Pricing"
+      "cta": "View Full Pricing",
+      "compareAllFeatures": "Compare all 60+ features",
+      "compareAllFeaturesHint": "Full feature matrix across every tier, including upcoming additions."
     },
     "timeline": {
       "title": "CRA Timeline: Key Deadlines",

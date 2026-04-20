@@ -140,7 +140,9 @@
         }
       },
       "getStarted": "Jetzt starten",
-      "cta": "Alle Preise ansehen"
+      "cta": "Alle Preise ansehen",
+      "compareAllFeatures": "Alle 60+ Funktionen vergleichen",
+      "compareAllFeaturesHint": "Vollständige Funktionsmatrix über alle Tarife, inklusive kommender Erweiterungen."
     },
     "timeline": {
       "title": "CRA-Zeitplan: Wichtige Fristen",
