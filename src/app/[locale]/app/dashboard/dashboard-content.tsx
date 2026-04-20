@@ -657,10 +657,20 @@ export function DashboardContent(
             data-reveal
             className="overflow-hidden rounded-2xl border border-white/[0.06] bg-card"
           >
-            <div className="border-b border-white/[0.06] px-5 py-3">
-              <span className="text-sm font-semibold">
+            {/* Eyebrow + heading pattern (demo from the MFA screen). If you
+                like this rhythm on the dashboard, the same three-line shape
+                applies to every other card header — eyebrow signals the
+                category, heading is the label, subtext is the one-liner. */}
+            <div className="border-b border-white/[0.06] px-5 py-4">
+              <p className="text-[10px] font-semibold uppercase tracking-[2.5px] text-primary">
+                {t("activityEyebrow")}
+              </p>
+              <h2 className="mt-1 font-heading text-base font-bold text-foreground">
                 {t("recentActivity")}
-              </span>
+              </h2>
+              <p className="mt-0.5 text-xs text-muted-foreground/60">
+                {t("activitySubtitle")}
+              </p>
             </div>
             {recentActivity.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-16 text-center">

@@ -30,7 +30,10 @@ export default function AuthLayout({
 
   return (
     <div className="flex min-h-dvh flex-col items-center justify-center bg-background px-6 py-12">
-      <div ref={containerRef} className="w-full max-w-[340px]">
+      {/* 400px is the sweet spot for single-column auth forms: email
+          fields breathe properly, and the 6-digit MFA code boxes get
+          enough horizontal room without looking stretched. */}
+      <div ref={containerRef} className="w-full max-w-[400px]">
         {/* Logo + wordmark link to landing. brightness-0 invert flips
             the SVG's near-black fill (#020A0F) to white so it's visible
             on the dark background — same pattern as the landing footer.

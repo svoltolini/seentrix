@@ -56,6 +56,8 @@
     "sbomUploaded": "Uploaded",
     "sbomMissing": "Missing",
     "recentActivity": "Recent Activity",
+    "activityEyebrow": "Audit trail",
+    "activitySubtitle": "The last 10 actions across your organisation, pulled from the audit log.",
     "activity": {
       "assessment": "Assessment answered for {product}",
       "checklist": "Checklist updated for {product}",

@@ -56,6 +56,8 @@
     "sbomUploaded": "Hochgeladen",
     "sbomMissing": "Fehlt",
     "recentActivity": "Letzte Aktivitäten",
+    "activityEyebrow": "Audit-Spur",
+    "activitySubtitle": "Die letzten 10 Aktionen in Ihrer Organisation, aus dem Audit-Log.",
     "activity": {
       "assessment": "Bewertung beantwortet für {product}",
       "checklist": "Checkliste aktualisiert für {product}",
