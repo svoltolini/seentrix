@@ -220,42 +220,34 @@ export function CopilotSheet() {
               onKeyDown={onComposerKey}
               placeholder={t("placeholder")}
               rows={1}
-              className="block max-h-[160px] min-h-[72px] w-full resize-none bg-transparent px-4 pt-3.5 pr-14 pb-10 text-sm leading-relaxed text-foreground outline-none placeholder:text-muted-foreground/50"
+              className="block max-h-[160px] min-h-[56px] w-full resize-none bg-transparent px-4 py-3.5 pr-14 text-sm leading-relaxed text-foreground outline-none placeholder:text-muted-foreground/50"
               disabled={isStreaming}
             />
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-center justify-between px-3 pb-2">
-              <span className="text-[10px] font-medium text-muted-foreground/50">
-                {isStreaming ? t("streaming") : t("hintEnter")}
-              </span>
-              <div className="pointer-events-auto">
-                {isStreaming ? (
-                  <button
-                    type="button"
-                    onClick={stop}
-                    aria-label={t("stop")}
-                    className="flex size-8 items-center justify-center rounded-full text-muted-foreground transition hover:bg-white/[0.06] hover:text-foreground"
-                  >
-                    <HugeIcon
-                      name="stop-circle-stroke-rounded"
-                      size={18}
-                    />
-                  </button>
-                ) : (
-                  <button
-                    type="submit"
-                    disabled={!input.trim()}
-                    aria-label={t("send")}
-                    className={cn(
-                      "flex size-8 items-center justify-center rounded-full transition",
-                      input.trim()
-                        ? "bg-[#3B82F6] text-white hover:bg-[#2563EB]"
-                        : "bg-white/[0.06] text-muted-foreground/40",
-                    )}
-                  >
-                    <HugeIcon name="sent-stroke-rounded" size={15} />
-                  </button>
-                )}
-              </div>
+            <div className="absolute bottom-2 right-2">
+              {isStreaming ? (
+                <button
+                  type="button"
+                  onClick={stop}
+                  aria-label={t("stop")}
+                  className="flex size-8 items-center justify-center rounded-full text-muted-foreground transition hover:bg-white/[0.06] hover:text-foreground"
+                >
+                  <HugeIcon name="stop-circle-stroke-rounded" size={18} />
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  disabled={!input.trim()}
+                  aria-label={t("send")}
+                  className={cn(
+                    "flex size-8 items-center justify-center rounded-full transition",
+                    input.trim()
+                      ? "bg-[#3B82F6] text-white hover:bg-[#2563EB]"
+                      : "bg-white/[0.06] text-muted-foreground/40",
+                  )}
+                >
+                  <HugeIcon name="sent-stroke-rounded" size={15} />
+                </button>
+              )}
             </div>
           </div>
           <p className="px-1 text-[10px] leading-relaxed text-muted-foreground/70">

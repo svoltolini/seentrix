@@ -7,8 +7,6 @@
     "close": "Schließen",
     "send": "Senden",
     "stop": "Stopp",
-    "streaming": "Copilot denkt nach…",
-    "hintEnter": "Enter zum Senden · Shift+Enter für neue Zeile",
     "clearHistory": "Verlauf löschen",
     "clearHistoryConfirm": "Alle Copilot-Unterhaltungen aus deinem Verlauf löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
     "clearHistoryDone": "Copilot-Verlauf wurde gelöscht.",
