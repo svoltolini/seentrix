@@ -86,3 +86,5 @@ export default function CookiesPage() {
     </>
   );
 }
+
+export const metadata = { title: "Cookie policy" };

@@ -6,3 +6,5 @@ export default async function AccountPage() {
 
   return <AccountContent account={account} />;
 }
+
+export const metadata = { title: "Account" };

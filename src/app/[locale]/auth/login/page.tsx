@@ -8,3 +8,5 @@ export default async function LoginPage({
   const { locale } = await params;
   return <LoginForm locale={locale} />;
 }
+
+export const metadata = { title: "Log in" };

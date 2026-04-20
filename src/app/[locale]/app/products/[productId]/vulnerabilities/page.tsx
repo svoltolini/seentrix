@@ -30,3 +30,5 @@ export default async function VulnerabilitiesPage({
     </>
   );
 }
+
+export const metadata = { title: "Vulnerabilities" };

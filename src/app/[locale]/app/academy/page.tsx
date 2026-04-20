@@ -133,3 +133,5 @@ export default async function AcademyPage({
     </div>
   );
 }
+
+export const metadata = { title: "Academy" };

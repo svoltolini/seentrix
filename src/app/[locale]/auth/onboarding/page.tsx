@@ -19,3 +19,5 @@ export default async function OnboardingPage({
 
   return <OnboardingForm locale={locale} />;
 }
+
+export const metadata = { title: "Onboarding" };

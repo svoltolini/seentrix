@@ -16,3 +16,5 @@ export default async function ProductsPage() {
     />
   );
 }
+
+export const metadata = { title: "Products" };

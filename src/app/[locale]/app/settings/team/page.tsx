@@ -27,3 +27,5 @@ export default async function TeamPage() {
     />
   );
 }
+
+export const metadata = { title: "Team" };

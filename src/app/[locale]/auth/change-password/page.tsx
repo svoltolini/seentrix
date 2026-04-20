@@ -24,3 +24,5 @@ export default async function ChangePasswordPage({
 
   return <ChangePasswordForm locale={locale} />;
 }
+
+export const metadata = { title: "Change password" };

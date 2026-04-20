@@ -97,7 +97,11 @@ export function ComplianceTrendChart({ data, className }: Props) {
           {t("complianceTrend.subtitle")}
         </p>
       </div>
-      <div className="min-h-[240px] flex-1">
+      {/* Explicit pixel height — previously flex-1 + h-full was inherited
+          from the 2/3 grid row, which this chart no longer sits in after
+          going full-width. ResponsiveContainer renders nothing when its
+          parent reports height 0, which is what was happening. */}
+      <div className="h-[280px]">
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={chartData}>
           <CartesianGrid

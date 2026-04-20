@@ -13,3 +13,5 @@ export default async function LegacyGlossaryRedirect({
   const { locale } = await params;
   redirect(`/${locale}/app/academy?tab=glossary`);
 }
+
+export const metadata = { title: "Glossary" };

@@ -227,3 +227,5 @@ function Impressum_de() {
     </>
   );
 }
+
+export const metadata = { title: "Impressum" };

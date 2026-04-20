@@ -19,3 +19,5 @@ export default async function OrganizationPage() {
     />
   );
 }
+
+export const metadata = { title: "Organization" };

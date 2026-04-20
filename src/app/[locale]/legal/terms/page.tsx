@@ -136,3 +136,5 @@ export default function TermsPage() {
     </>
   );
 }
+
+export const metadata = { title: "Terms of Service" };

@@ -17,3 +17,5 @@ export default async function SbomPage({
     </>
   );
 }
+
+export const metadata = { title: "SBOM" };

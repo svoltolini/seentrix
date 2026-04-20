@@ -28,3 +28,5 @@ export default async function ConformityPage({
     </>
   );
 }
+
+export const metadata = { title: "Conformity" };

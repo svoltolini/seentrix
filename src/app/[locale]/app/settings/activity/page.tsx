@@ -6,3 +6,5 @@ export default async function ActivityPage() {
 
   return <ActivityContent activities={activities} />;
 }
+
+export const metadata = { title: "Activity log" };

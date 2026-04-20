@@ -14,3 +14,5 @@ export default async function NewProductPage() {
     </div>
   );
 }
+
+export const metadata = { title: "New product" };

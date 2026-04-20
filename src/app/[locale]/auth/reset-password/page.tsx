@@ -8,3 +8,5 @@ export default async function ResetPasswordPage({
   const { locale } = await params;
   return <ResetPasswordForm locale={locale} />;
 }
+
+export const metadata = { title: "Reset password" };

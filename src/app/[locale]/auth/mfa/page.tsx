@@ -11,3 +11,5 @@ export default function MfaPage() {
     </div>
   );
 }
+
+export const metadata = { title: "Two-factor verification" };

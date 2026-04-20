@@ -28,7 +28,11 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     default: `${SITE_NAME} — ${SITE_TAGLINE}`,
-    template: `%s — ${SITE_NAME}`,
+    // 'Seentrix — <page>' (brand first) reads like a clean file path in
+    // the browser tab and matches how most B2B SaaS tabs are titled.
+    // Each page sets its own simple label (e.g. 'Dashboard') and the
+    // template prepends the brand automatically.
+    template: `${SITE_NAME} — %s`,
   },
   description: SITE_DESCRIPTION,
   applicationName: SITE_NAME,

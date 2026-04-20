@@ -8,3 +8,5 @@ export default async function ForgotPasswordPage({
   const { locale } = await params;
   return <ForgotPasswordForm locale={locale} />;
 }
+
+export const metadata = { title: "Forgot password" };

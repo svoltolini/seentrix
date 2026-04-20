@@ -25,3 +25,5 @@ export default async function SecurityPage() {
     />
   );
 }
+
+export const metadata = { title: "Security" };

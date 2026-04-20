@@ -21,3 +21,5 @@ export default async function IncidentsPage() {
     </>
   );
 }
+
+export const metadata = { title: "Incidents" };

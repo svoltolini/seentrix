@@ -11,3 +11,5 @@ export default async function DocumentsPage({
 
   return <DocumentsContent productId={productId} initialDocuments={documents} />;
 }
+
+export const metadata = { title: "Documents" };

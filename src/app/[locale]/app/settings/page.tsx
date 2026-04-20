@@ -10,3 +10,5 @@ export default async function SettingsPage({
   setRequestLocale(locale);
   redirect(`/${locale}/app/settings/organization`);
 }
+
+export const metadata = { title: "Settings" };

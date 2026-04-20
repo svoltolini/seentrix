@@ -14,3 +14,5 @@ export default async function EntityPage() {
 
   return <EntityContent initial={state} currentUserRole={role} />;
 }
+
+export const metadata = { title: "Entity role" };

@@ -11,3 +11,5 @@ export default async function PricingPage({
 
   return <PricingContent />;
 }
+
+export const metadata = { title: "Pricing" };

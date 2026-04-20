@@ -9,3 +9,5 @@ export default async function SignupPage({
 
   return <SignupForm locale={locale} />;
 }
+
+export const metadata = { title: "Sign up" };

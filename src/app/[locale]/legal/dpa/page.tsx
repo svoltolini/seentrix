@@ -175,3 +175,5 @@ export default function DpaPage() {
     </>
   );
 }
+
+export const metadata = { title: "Data Processing Agreement" };

@@ -13,3 +13,5 @@ export default async function AssessPage({
 
   return <AssessExistingProduct product={product} locale={locale} />;
 }
+
+export const metadata = { title: "Assessment" };
