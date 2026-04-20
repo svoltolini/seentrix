@@ -11,7 +11,7 @@
     "clearHistoryConfirm": "Alle Copilot-Unterhaltungen aus deinem Verlauf löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
     "clearHistoryDone": "Copilot-Verlauf wurde gelöscht.",
     "clearHistoryFailed": "Verlauf konnte nicht gelöscht werden. Bitte erneut versuchen.",
-    "placeholder": "Frag zum CRA oder wie man etwas in Seentrix macht…",
+    "placeholder": "Frag zu CRA oder Seentrix",
     "footer": "Betrieben von Mistral AI · in der EU gehostet · keine Rechtsberatung",
     "error": "Etwas ist schiefgelaufen. Bitte erneut versuchen.",
     "emptyEyebrow": "Dein CRA-Assistent",
