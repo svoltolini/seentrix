@@ -12,6 +12,7 @@
     "medium": "Medium",
     "low": "Low",
     "vulnChart": "Vulnerability Breakdown",
+    "vulnChartEyebrow": "Severity",
     "vulnChartSubtitle": "Across all your products, ranked by severity",
     "noVulnerabilities": "No vulnerabilities found",
     "actionNeeded": {
@@ -38,7 +39,9 @@
     "compliance": "Compliance",
     "notAssessed": "Not assessed",
     "productTable": {
+      "eyebrow": "Products",
       "title": "Product Compliance",
+      "subtitle": "Checklist progress and vulnerability load per product.",
       "name": "Product",
       "category": "Category",
       "compliance": "Compliance",
@@ -79,6 +82,8 @@
     "greeting": "Welcome back, {name}",
     "greetingSubtitle": "Here's your compliance overview for today.",
     "deadlines": "Upcoming Deadlines",
+    "deadlinesEyebrow": "Regulation",
+    "deadlinesSubtitle": "Key CRA milestones on the enforcement calendar.",
     "deadlineDescription": "Key CRA regulatory milestones",
     "timeElapsed": "Time elapsed",
     "deadline": {
@@ -107,12 +112,15 @@
       "editor": "Editor"
     },
     "complianceTrend": {
+      "eyebrow": "Trend",
       "title": "Compliance Trend",
+      "subtitle": "Checklist score over the last 12 weeks, per product and org average.",
       "orgAverage": "Org Average",
       "score": "Score",
       "noData": "No compliance history yet. Scores are tracked as you update checklists."
     },
     "vulnAging": {
+      "eyebrow": "Risk",
       "title": "Vulnerability Aging",
       "openVulns": "Open Vulnerabilities",
       "mttr": "MTTR",
@@ -121,6 +129,7 @@
       "noData": "No open vulnerabilities to display."
     },
     "checklistProgress": {
+      "eyebrow": "Progress",
       "title": "Checklist Progress",
       "summary": "{pct}% avg completion · {count, plural, one {# product} other {# products}}",
       "pending": "Pending",
@@ -130,12 +139,14 @@
       "noData": "No checklist data available."
     },
     "overdueTasks": {
+      "eyebrow": "Attention",
       "title": "Overdue Tasks",
       "allOnTrack": "All tasks on track",
       "allOnTrackDescription": "No overdue checklist items.",
       "daysOverdue": "{days}d overdue"
     },
     "activityVelocity": {
+      "eyebrow": "Velocity",
       "title": "Team Activity",
       "actions": "{count} actions",
       "totalLast30d": "actions · last 30 days",

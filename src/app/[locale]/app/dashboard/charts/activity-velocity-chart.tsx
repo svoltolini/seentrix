@@ -29,8 +29,11 @@ export function ActivityVelocityChart({ data }: Props) {
 
   if (!hasData) {
     return (
-      <div className="rounded-2xl border border-white/[0.06] bg-card p-6">
-        <h2 className="mb-3 text-sm font-semibold">
+      <div className="rounded-2xl bg-white/[0.03] p-6">
+        <p className="text-[10px] font-semibold uppercase tracking-[2.5px] text-primary">
+          {t("activityVelocity.eyebrow")}
+        </p>
+        <h2 className="mt-1 font-heading text-base font-bold text-foreground">
           {t("activityVelocity.title")}
         </h2>
         <p className="py-12 text-center text-xs text-muted-foreground/50">
@@ -55,13 +58,16 @@ export function ActivityVelocityChart({ data }: Props) {
   };
 
   return (
-    <div className="rounded-2xl border border-white/[0.06] bg-card p-6">
-      <div className="mb-6 flex items-start justify-between">
+    <div className="rounded-2xl bg-white/[0.03] p-6">
+      <div className="mb-6 flex items-start justify-between gap-4">
         <div>
-          <h2 className="text-sm font-semibold">
+          <p className="text-[10px] font-semibold uppercase tracking-[2.5px] text-primary">
+            {t("activityVelocity.eyebrow")}
+          </p>
+          <h2 className="mt-1 font-heading text-base font-bold text-foreground">
             {t("activityVelocity.title")}
           </h2>
-          <div className="mt-1.5 flex items-baseline gap-2">
+          <div className="mt-3 flex items-baseline gap-2">
             <span className="text-3xl font-bold tabular-nums text-foreground">
               {totalActions}
             </span>

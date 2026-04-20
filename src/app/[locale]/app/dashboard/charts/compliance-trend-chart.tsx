@@ -32,11 +32,14 @@ export function ComplianceTrendChart({ data, className }: Props) {
     return (
       <div
         className={cn(
-          "rounded-2xl border border-white/[0.06] bg-card p-5",
+          "rounded-2xl bg-white/[0.03] p-5",
           className,
         )}
       >
-        <h2 className="mb-3 text-sm font-semibold">
+        <p className="text-[10px] font-semibold uppercase tracking-[2.5px] text-primary">
+          {t("complianceTrend.eyebrow")}
+        </p>
+        <h2 className="mt-1 font-heading text-base font-bold text-foreground">
           {t("complianceTrend.title")}
         </h2>
         <p className="py-12 text-center text-xs text-muted-foreground/50">
@@ -79,13 +82,21 @@ export function ComplianceTrendChart({ data, className }: Props) {
   return (
     <div
       className={cn(
-        "flex flex-col rounded-2xl border border-white/[0.06] bg-card p-5",
+        "flex flex-col rounded-2xl bg-white/[0.03] p-5",
         className,
       )}
     >
-      <h2 className="mb-4 text-sm font-semibold">
-        {t("complianceTrend.title")}
-      </h2>
+      <div className="mb-4">
+        <p className="text-[10px] font-semibold uppercase tracking-[2.5px] text-primary">
+          {t("complianceTrend.eyebrow")}
+        </p>
+        <h2 className="mt-1 font-heading text-base font-bold text-foreground">
+          {t("complianceTrend.title")}
+        </h2>
+        <p className="mt-0.5 text-[11px] text-muted-foreground/60">
+          {t("complianceTrend.subtitle")}
+        </p>
+      </div>
       <div className="min-h-[240px] flex-1">
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={chartData}>

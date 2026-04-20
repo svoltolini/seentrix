@@ -26,12 +26,17 @@ export function VulnAgingChart({ buckets, mttr, openCount }: Props) {
   );
 
   return (
-    <div className="flex h-full flex-col rounded-2xl border border-white/[0.06] bg-card p-6">
-      {/* Header row: open count + MTTR */}
-      <div className="mb-6 flex items-start justify-between">
+    <div className="flex h-full flex-col rounded-2xl bg-white/[0.03] p-6">
+      {/* Header row: eyebrow + title + MTTR pillar */}
+      <div className="mb-6 flex items-start justify-between gap-4">
         <div>
-          <h2 className="text-sm font-semibold">{t("vulnAging.title")}</h2>
-          <div className="mt-1.5 flex items-baseline gap-2">
+          <p className="text-[10px] font-semibold uppercase tracking-[2.5px] text-primary">
+            {t("vulnAging.eyebrow")}
+          </p>
+          <h2 className="mt-1 font-heading text-base font-bold text-foreground">
+            {t("vulnAging.title")}
+          </h2>
+          <div className="mt-3 flex items-baseline gap-2">
             <span className="text-3xl font-bold tabular-nums text-foreground">
               {openCount}
             </span>

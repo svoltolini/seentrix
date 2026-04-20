@@ -21,8 +21,15 @@ export function OverdueTasksWidget({ count, items }: Props) {
   const t = useTranslations("dashboard");
 
   return (
-    <div className="flex h-full flex-col rounded-2xl border border-white/[0.06] bg-card p-5">
-      <h2 className="mb-4 text-sm font-semibold">{t("overdueTasks.title")}</h2>
+    <div className="flex h-full flex-col rounded-2xl bg-white/[0.03] p-5">
+      <div className="mb-4">
+        <p className="text-[10px] font-semibold uppercase tracking-[2.5px] text-primary">
+          {t("overdueTasks.eyebrow")}
+        </p>
+        <h2 className="mt-1 font-heading text-base font-bold text-foreground">
+          {t("overdueTasks.title")}
+        </h2>
+      </div>
 
       {count === 0 ? (
         <div className="flex flex-1 flex-col items-center justify-center py-6 text-center">

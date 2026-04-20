@@ -19,8 +19,11 @@ export function ChecklistProgressChart({ data }: Props) {
 
   if (data.length === 0) {
     return (
-      <div className="rounded-2xl border border-white/[0.06] bg-card p-6">
-        <h2 className="mb-3 text-sm font-semibold">
+      <div className="rounded-2xl bg-white/[0.03] p-6">
+        <p className="text-[10px] font-semibold uppercase tracking-[2.5px] text-primary">
+          {t("checklistProgress.eyebrow")}
+        </p>
+        <h2 className="mt-1 font-heading text-base font-bold text-foreground">
           {t("checklistProgress.title")}
         </h2>
         <p className="py-8 text-center text-xs text-muted-foreground/50">
@@ -53,14 +56,17 @@ export function ChecklistProgressChart({ data }: Props) {
   };
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-white/[0.06] bg-card">
+    <div className="overflow-hidden rounded-2xl bg-white/[0.03]">
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/[0.06] px-6 py-4">
         <div>
-          <h2 className="text-sm font-semibold">
+          <p className="text-[10px] font-semibold uppercase tracking-[2.5px] text-primary">
+            {t("checklistProgress.eyebrow")}
+          </p>
+          <h2 className="mt-1 font-heading text-base font-bold text-foreground">
             {t("checklistProgress.title")}
           </h2>
-          <p className="mt-1 text-[11px] text-muted-foreground/60">
+          <p className="mt-0.5 text-[11px] text-muted-foreground/60">
             {t("checklistProgress.summary", {
               pct: avgPct,
               count: rows.length,

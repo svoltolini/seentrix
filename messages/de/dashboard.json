@@ -12,6 +12,7 @@
     "medium": "Mittel",
     "low": "Niedrig",
     "vulnChart": "Schwachstellen-Aufschlüsselung",
+    "vulnChartEyebrow": "Schweregrad",
     "vulnChartSubtitle": "Über alle Produkte, nach Schweregrad sortiert",
     "noVulnerabilities": "Keine Schwachstellen gefunden",
     "actionNeeded": {
@@ -38,7 +39,9 @@
     "compliance": "Compliance",
     "notAssessed": "Nicht bewertet",
     "productTable": {
+      "eyebrow": "Produkte",
       "title": "Produkt-Compliance",
+      "subtitle": "Checklisten-Fortschritt und Schwachstellen pro Produkt.",
       "name": "Produkt",
       "category": "Kategorie",
       "compliance": "Compliance",
@@ -79,6 +82,8 @@
     "greeting": "Willkommen zurück, {name}",
     "greetingSubtitle": "Hier ist Ihre Compliance-Übersicht für heute.",
     "deadlines": "Anstehende Fristen",
+    "deadlinesEyebrow": "Regulierung",
+    "deadlinesSubtitle": "Wichtige CRA-Meilensteine im Durchsetzungskalender.",
     "deadlineDescription": "Wichtige regulatorische CRA-Meilensteine",
     "timeElapsed": "Verstrichene Zeit",
     "deadline": {
@@ -107,12 +112,15 @@
       "editor": "Bearbeiter"
     },
     "complianceTrend": {
+      "eyebrow": "Trend",
       "title": "Compliance-Trend",
+      "subtitle": "Checklisten-Score der letzten 12 Wochen, pro Produkt und Org-Durchschnitt.",
       "orgAverage": "Org-Durchschnitt",
       "score": "Score",
       "noData": "Noch keine Compliance-Historie. Scores werden erfasst, sobald Sie Checklisten aktualisieren."
     },
     "vulnAging": {
+      "eyebrow": "Risiko",
       "title": "Schwachstellen-Alter",
       "openVulns": "Offene Schwachstellen",
       "mttr": "MTTR",
@@ -121,6 +129,7 @@
       "noData": "Keine offenen Schwachstellen vorhanden."
     },
     "checklistProgress": {
+      "eyebrow": "Fortschritt",
       "title": "Checklisten-Fortschritt",
       "summary": "{pct}% Ø Fertigstellung · {count, plural, one {# Produkt} other {# Produkte}}",
       "pending": "Ausstehend",
@@ -130,12 +139,14 @@
       "noData": "Keine Checklisten-Daten verfügbar."
     },
     "overdueTasks": {
+      "eyebrow": "Aufmerksamkeit",
       "title": "Überfällige Aufgaben",
       "allOnTrack": "Alle Aufgaben im Plan",
       "allOnTrackDescription": "Keine überfälligen Checklisten-Einträge.",
       "daysOverdue": "{days}T überfällig"
     },
     "activityVelocity": {
+      "eyebrow": "Geschwindigkeit",
       "title": "Team-Aktivität",
       "actions": "{count} Aktionen",
       "totalLast30d": "Aktionen · letzte 30 Tage",

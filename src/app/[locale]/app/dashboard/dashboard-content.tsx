@@ -431,14 +431,22 @@ export function DashboardContent(
             className="grid gap-6 lg:grid-cols-3"
           >
             {/* Product Compliance Table — 2/3 */}
-            <div className="overflow-hidden rounded-2xl border border-white/[0.06] bg-card lg:col-span-2">
-              <div className="flex items-center justify-between border-b border-white/[0.06] px-5 py-3">
-                <span className="text-sm font-semibold">
-                  {t("productTable.title")}
-                </span>
+            <div className="overflow-hidden rounded-2xl bg-white/[0.03] lg:col-span-2">
+              <div className="flex items-start justify-between border-b border-white/[0.06] px-5 py-4">
+                <div>
+                  <p className="text-[10px] font-semibold uppercase tracking-[2.5px] text-primary">
+                    {t("productTable.eyebrow")}
+                  </p>
+                  <h2 className="mt-1 font-heading text-base font-bold text-foreground">
+                    {t("productTable.title")}
+                  </h2>
+                  <p className="mt-0.5 text-xs text-muted-foreground/60">
+                    {t("productTable.subtitle")}
+                  </p>
+                </div>
                 <Link
                   href="/app/products"
-                  className="text-xs font-medium text-primary hover:underline"
+                  className="shrink-0 text-xs font-medium text-primary hover:underline"
                 >
                   {t("viewAll")}
                 </Link>
@@ -543,8 +551,16 @@ export function DashboardContent(
             </div>
 
             {/* CRA Deadlines — 1/3 */}
-            <div className="rounded-2xl border border-white/[0.06] bg-card p-5">
-              <h2 className="mb-4 text-sm font-semibold">{t("deadlines")}</h2>
+            <div className="rounded-2xl bg-white/[0.03] p-5">
+              <p className="text-[10px] font-semibold uppercase tracking-[2.5px] text-primary">
+                {t("deadlinesEyebrow")}
+              </p>
+              <h2 className="mt-1 font-heading text-base font-bold text-foreground">
+                {t("deadlines")}
+              </h2>
+              <p className="mb-4 mt-0.5 text-xs text-muted-foreground/60">
+                {t("deadlinesSubtitle")}
+              </p>
               <div className="space-y-4">
                 {deadlines.map((dl) => {
                   const days = getDaysUntil(dl.date);
@@ -655,7 +671,7 @@ export function DashboardContent(
         {totalProducts > 0 && (
           <div
             data-reveal
-            className="overflow-hidden rounded-2xl border border-white/[0.06] bg-card"
+            className="overflow-hidden rounded-2xl bg-white/[0.03]"
           >
             {/* Eyebrow + heading pattern (demo from the MFA screen). If you
                 like this rhythm on the dashboard, the same three-line shape
@@ -732,7 +748,7 @@ function SupportWatchStrip({
   ].filter((t) => t.show);
 
   return (
-    <div className="flex flex-wrap items-center gap-3 rounded-2xl border border-white/[0.06] bg-card p-4">
+    <div className="flex flex-wrap items-center gap-3 rounded-2xl bg-white/[0.03] p-4">
       <div className="flex items-center gap-2">
         <HugeIcon
           name="time-quarter-02-stroke-rounded"
@@ -938,9 +954,14 @@ function VulnBreakdownCard({
 
   if (total === 0) {
     return (
-      <div className="flex h-full flex-col rounded-2xl border border-white/[0.06] bg-card p-6">
-        <h2 className="mb-2 text-sm font-semibold">{t("vulnChart")}</h2>
-        <p className="text-xs text-muted-foreground/60">
+      <div className="flex h-full flex-col rounded-2xl bg-white/[0.03] p-6">
+        <p className="text-[10px] font-semibold uppercase tracking-[2.5px] text-primary">
+          {t("vulnChartEyebrow")}
+        </p>
+        <h2 className="mt-1 font-heading text-base font-bold text-foreground">
+          {t("vulnChart")}
+        </h2>
+        <p className="mt-0.5 text-xs text-muted-foreground/60">
           {t("vulnChartSubtitle")}
         </p>
         <p className="mt-10 flex-1 text-center text-xs text-muted-foreground/50">
@@ -973,11 +994,16 @@ function VulnBreakdownCard({
           .join(", ")})`;
 
   return (
-    <div className="flex h-full flex-col rounded-2xl border border-white/[0.06] bg-card p-6">
+    <div className="flex h-full flex-col rounded-2xl bg-white/[0.03] p-6">
       {/* Header */}
       <div className="mb-6">
-        <h2 className="text-sm font-semibold">{t("vulnChart")}</h2>
-        <p className="mt-1 text-[11px] text-muted-foreground/60">
+        <p className="text-[10px] font-semibold uppercase tracking-[2.5px] text-primary">
+          {t("vulnChartEyebrow")}
+        </p>
+        <h2 className="mt-1 font-heading text-base font-bold text-foreground">
+          {t("vulnChart")}
+        </h2>
+        <p className="mt-0.5 text-[11px] text-muted-foreground/60">
           {t("vulnChartSubtitle")}
         </p>
       </div>
