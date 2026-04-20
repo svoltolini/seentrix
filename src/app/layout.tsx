@@ -5,6 +5,7 @@ import "./globals.css";
 import {
   SITE_DESCRIPTION,
   SITE_NAME,
+  SITE_OG_TITLE,
   SITE_TAGLINE,
   SITE_URL,
 } from "@/lib/site";
@@ -58,7 +59,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: SITE_NAME,
-    title: `${SITE_NAME} — ${SITE_TAGLINE}`,
+    title: SITE_OG_TITLE,
     description: SITE_DESCRIPTION,
     url: SITE_URL,
     locale: "en_US",
@@ -66,7 +67,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE_NAME} — ${SITE_TAGLINE}`,
+    title: SITE_OG_TITLE,
     description: SITE_DESCRIPTION,
     creator: "@seentrix",
   },

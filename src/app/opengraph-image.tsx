@@ -1,29 +1,27 @@
 import { ImageResponse } from "next/og";
-import { readFile } from "node:fs/promises";
-import { join } from "node:path";
 
 // OG image rendered by next/og at build time. Shown when a Seentrix link
-// is shared on Slack, LinkedIn, Twitter/X, WhatsApp, etc.
+// is shared on Slack, LinkedIn, X, WhatsApp, iMessage, etc.
 //
-// We layer the brand over the custom 1920×1088 backdrop shipped at
-// /public/images/og-background.png — the design asset the founder
-// produced for the share card. Rendering with ImageResponse (instead of
-// serving the PNG directly) lets us overlay type that stays crisp at
-// 1200×630 and can be updated in code without re-exporting the raster.
+// The previous iteration layered text over a 1.6 MB raster gradient. That
+// pushed the final PNG past the 600 KB WhatsApp ceiling (~835 KB observed).
+// We now synthesise the gradient in-place with four radial blobs on a
+// navy base — the render stays on-brand (teal → pink → orange) but the
+// bytes stay well under 200 KB because satori only has to rasterise the
+// composed gradient, not re-encode a source raster.
+//
+// Layout: content anchored to the bottom-left so the eyebrow and tagline
+// line up visually with the link-card title + domain the OG chrome
+// renders directly beneath the image. Left padding is 48 px (matches
+// typical card chrome padding on Slack / LinkedIn / WhatsApp so the
+// column feels continuous rather than stepped).
 
-export const alt = "Seentrix — CRA compliance platform for manufacturers";
+export const alt =
+  "Seentrix — CRA Compliance Platform for EU manufacturers";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 export default async function Image() {
-  // Read the backdrop off disk as a base64 data URL — /v1/og renders at
-  // runtime and can't fetch from `/public` by URL, so inlining the bytes
-  // is the portable way to reference a local raster asset.
-  const bg = await readFile(
-    join(process.cwd(), "public/images/og-background.png"),
-  );
-  const bgSrc = `data:image/png;base64,${bg.toString("base64")}`;
-
   return new ImageResponse(
     (
       <div
@@ -31,79 +29,71 @@ export default async function Image() {
           width: "100%",
           height: "100%",
           display: "flex",
-          position: "relative",
+          flexDirection: "column",
+          justifyContent: "flex-end",
+          padding: "48px",
           fontFamily: "system-ui, -apple-system, Segoe UI, sans-serif",
+          color: "white",
+          backgroundColor: "#0B0B1D",
+          backgroundImage: [
+            // Five coloured blobs painted as radial gradients with
+            // no shape keyword so satori falls back to its default
+            // ellipse — the supported syntax across @vercel/og versions.
+            "radial-gradient(at 12% 18%, #5EEAD4 0%, rgba(94,234,212,0) 55%)",
+            "radial-gradient(at 55% 12%, #EC4899 0%, rgba(236,72,153,0) 55%)",
+            "radial-gradient(at 90% 20%, #F97316 0%, rgba(249,115,22,0) 55%)",
+            "radial-gradient(at 98% 45%, #EF4444 0%, rgba(239,68,68,0) 55%)",
+            "radial-gradient(at 18% 65%, #1E40AF 0%, rgba(30,64,175,0) 55%)",
+            // Bottom scrim for text legibility.
+            "linear-gradient(180deg, rgba(11,11,29,0) 40%, rgba(11,11,29,0.55) 85%, rgba(11,11,29,0.85) 100%)",
+          ].join(", "),
         }}
       >
-        {/* Full-bleed custom backdrop */}
-        <img
-          src={bgSrc}
-          alt=""
-          width={1200}
-          height={630}
-          style={{
-            position: "absolute",
-            inset: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-          }}
-        />
+        <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+          {/* Eyebrow — mirrors the card title text so the image and
+              card read as one continuous column. */}
+          <div
+            style={{
+              display: "flex",
+              fontSize: 22,
+              fontWeight: 600,
+              color: "#93C5FD",
+              textTransform: "uppercase",
+              letterSpacing: 3,
+            }}
+          >
+            CRA Compliance Platform
+          </div>
 
-        {/* Dark scrim so the wordmark reads cleanly no matter what the
-            backdrop contains. Top half stays darker than the bottom so
-            the brand sits above the horizon line. */}
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            background:
-              "linear-gradient(180deg, rgba(5,8,11,0.55) 0%, rgba(5,8,11,0.15) 55%, rgba(5,8,11,0.65) 100%)",
-          }}
-        />
+          {/* Hero line. */}
+          <div
+            style={{
+              display: "flex",
+              fontSize: 68,
+              fontWeight: 700,
+              letterSpacing: -1.5,
+              lineHeight: 1.05,
+              maxWidth: 1040,
+              textShadow: "0 2px 20px rgba(0,0,0,0.55)",
+            }}
+          >
+            Ship CRA-ready products without the paperwork.
+          </div>
 
-        {/* Content column — eyebrow + tagline anchored to the bottom-left
-            so they visually flow into the link-card title + domain that
-            Slack/LinkedIn/Twitter render directly beneath the image. The
-            top two-thirds of the frame is left clear for the backdrop. */}
-        <div
-          style={{
-            position: "relative",
-            width: "100%",
-            height: "100%",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "flex-end",
-            padding: "64px 72px",
-            color: "white",
-          }}
-        >
-          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            <div
-              style={{
-                display: "flex",
-                fontSize: 22,
-                fontWeight: 600,
-                color: "#60A5FA",
-                textTransform: "uppercase",
-                letterSpacing: 3,
-              }}
-            >
-              CRA Compliance Platform
-            </div>
-            <div
-              style={{
-                display: "flex",
-                fontSize: 64,
-                fontWeight: 700,
-                letterSpacing: -1.5,
-                lineHeight: 1.05,
-                maxWidth: 1000,
-                textShadow: "0 2px 16px rgba(0,0,0,0.5)",
-              }}
-            >
-              Ship CRA-ready products without the paperwork.
-            </div>
+          {/* Call-to-action — small but visible, echoes the domain that
+              appears in the link card below so the reader has a clear
+              next step rather than only a brand statement. */}
+          <div
+            style={{
+              display: "flex",
+              marginTop: 18,
+              fontSize: 24,
+              fontWeight: 500,
+              color: "rgba(255,255,255,0.82)",
+              letterSpacing: 0.2,
+            }}
+          >
+            Start free at seentrix.com →
           </div>
         </div>
       </div>
