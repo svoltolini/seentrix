@@ -36,7 +36,6 @@ export default async function Image() {
         }}
       >
         {/* Full-bleed custom backdrop */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={bgSrc}
           alt=""
@@ -63,9 +62,10 @@ export default async function Image() {
           }}
         />
 
-        {/* Content column — wordmark top-left, tagline bottom-left, so
-            the top-third of the image remains available for the backdrop
-            focal point. */}
+        {/* Content column — eyebrow + tagline anchored to the bottom-left
+            so they visually flow into the link-card title + domain that
+            Slack/LinkedIn/Twitter render directly beneath the image. The
+            top two-thirds of the frame is left clear for the backdrop. */}
         <div
           style={{
             position: "relative",
@@ -73,24 +73,11 @@ export default async function Image() {
             height: "100%",
             display: "flex",
             flexDirection: "column",
-            justifyContent: "space-between",
+            justifyContent: "flex-end",
             padding: "64px 72px",
             color: "white",
           }}
         >
-          <div
-            style={{
-              display: "flex",
-              fontSize: 112,
-              fontWeight: 800,
-              letterSpacing: -3,
-              lineHeight: 1,
-              textShadow: "0 4px 24px rgba(0,0,0,0.45)",
-            }}
-          >
-            Seentrix
-          </div>
-
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             <div
               style={{
@@ -107,11 +94,11 @@ export default async function Image() {
             <div
               style={{
                 display: "flex",
-                fontSize: 42,
+                fontSize: 64,
                 fontWeight: 700,
-                letterSpacing: -1,
-                lineHeight: 1.1,
-                maxWidth: 900,
+                letterSpacing: -1.5,
+                lineHeight: 1.05,
+                maxWidth: 1000,
                 textShadow: "0 2px 16px rgba(0,0,0,0.5)",
               }}
             >
