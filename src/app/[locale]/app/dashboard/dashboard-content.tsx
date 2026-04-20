@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { HugeIcon } from "@/components/huge-icon";
 import { StaggerReveal } from "@/components/stagger-reveal";
 import { StatCard } from "@/components/stat-card";
+import { AlertBanner } from "@/components/alert-banner";
 import { SEVERITY_CHART_COLORS } from "../products/[productId]/constants";
 import type {
   DashboardStats,
@@ -790,8 +791,8 @@ function ActiveIncidentsBanner({
   tInc: ReturnType<typeof useTranslations>;
 }) {
   // Keep the countdown fresh without calling Date.now() inline during
-  // render (the React purity rules forbid that). We seed from a lazy
-  // initializer and tick each minute inside an effect.
+  // render (React purity rules forbid that). Seed lazily, tick once per
+  // minute from an effect.
   const [now, setNow] = useState<number>(() => Date.now());
   useEffect(() => {
     const id = setInterval(() => setNow(Date.now()), 60_000);
@@ -807,56 +808,28 @@ function ActiveIncidentsBanner({
   const absD = Math.floor(absH / 24);
   const timeText = absD >= 1 ? `${absD}d ${absH % 24}h` : `${absH}h`;
 
+  const countdownText =
+    deadline && data.nextDeadlinePhase
+      ? `${
+          overdue
+            ? tInc("deadline.overdueBy", { time: timeText })
+            : tInc("deadline.in", { time: timeText })
+        } · ${tInc(`phase.${data.nextDeadlinePhase}`)}`
+      : undefined;
+
   return (
-    <div
-      className="group relative overflow-hidden rounded-2xl border border-[#DC2626]/40"
-      style={{
-        background:
-          "linear-gradient(135deg, rgba(220,38,38,0.25), rgba(217,119,6,0.15))",
+    <AlertBanner
+      tone="critical"
+      eyebrow={tInc("kpi.active")}
+      title={tInc("banner.headline", { count: data.activeCount })}
+      description={countdownText}
+      cta={{
+        label: tInc("breadcrumb"),
+        href: data.nextIncidentId
+          ? `/app/incidents/${data.nextIncidentId}`
+          : "/app/incidents",
       }}
-    >
-      <div className="flex flex-col gap-4 p-6 md:flex-row md:items-center md:justify-between">
-        <div className="flex items-start gap-3">
-          <div className="mt-0.5 flex size-10 shrink-0 items-center justify-center rounded-full bg-[#DC2626]/25">
-            <span
-              data-pulse
-              className="flex size-6 items-center justify-center rounded-full bg-[#DC2626]"
-            >
-              <HugeIcon name="alert-02" size={14} className="text-white" />
-            </span>
-          </div>
-          <div className="min-w-0">
-            <p className="text-[10px] font-semibold uppercase tracking-wider text-[#DC2626]">
-              {tInc("kpi.active")}
-            </p>
-            <h2 className="mt-1 font-heading text-lg font-bold leading-snug text-foreground md:text-xl">
-              {tInc("banner.headline", { count: data.activeCount })}
-            </h2>
-            {deadline && data.nextDeadlinePhase && (
-              <p className="mt-1 text-[13px] text-muted-foreground">
-                {overdue
-                  ? tInc("deadline.overdueBy", { time: timeText })
-                  : tInc("deadline.in", { time: timeText })}
-                <span className="ml-1.5 text-[12px]">
-                  · {tInc(`phase.${data.nextDeadlinePhase}`)}
-                </span>
-              </p>
-            )}
-          </div>
-        </div>
-        <Link
-          href={
-            data.nextIncidentId
-              ? `/app/incidents/${data.nextIncidentId}`
-              : "/app/incidents"
-          }
-          className="inline-flex shrink-0 items-center gap-2 rounded-lg bg-white px-4 py-2.5 text-sm font-semibold text-black shadow-sm transition-transform hover:-translate-y-0.5"
-        >
-          {tInc("breadcrumb")}
-          <HugeIcon name="arrow-right-01-stroke-rounded" size={16} />
-        </Link>
-      </div>
-    </div>
+    />
   );
 }
 
@@ -872,57 +845,43 @@ function ActionNeededBanner({
   t: ReturnType<typeof useTranslations>;
 }) {
   return (
-    <div
-      className="overflow-hidden rounded-2xl bg-cover bg-center"
-      style={{ backgroundImage: "url('/images/empty-state-bg.png')" }}
+    <AlertBanner
+      tone="attention"
+      eyebrow={t("actionNeeded.eyebrow")}
+      title={t("actionNeeded.headline", {
+        product: product.name,
+        deadline: deadlineName,
+      })}
+      cta={{
+        label: t("actionNeeded.cta"),
+        href: `/app/products/${product.id}/checklist`,
+      }}
     >
-      <div className="flex flex-col gap-5 p-6 md:flex-row md:items-center md:justify-between md:p-8">
-        <div className="min-w-0 flex-1">
-          <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur-sm">
-            <span
-              data-pulse
-              className="size-1.5 rounded-full bg-[#F59E0B]"
-            />
-            {t("actionNeeded.eyebrow")}
-          </div>
-          <h2 className="font-heading text-xl font-bold leading-snug text-white md:text-2xl">
-            {t("actionNeeded.headline", {
-              product: product.name,
-              deadline: deadlineName,
-            })}
-          </h2>
-          <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px]">
-            <span className="flex items-center gap-1.5 text-white/70">
-              <span className="font-semibold text-white tabular-nums">
-                {daysLeft}
-              </span>
-              {t("actionNeeded.daysLeft")}
-            </span>
-            <span className="flex items-center gap-1.5 text-white/70">
-              <span
-                className="size-1.5 rounded-full"
-                style={{ backgroundColor: scoreColor(product.compliance_score) }}
-              />
-              <span
-                className="font-semibold tabular-nums"
-                style={{ color: scoreColor(product.compliance_score) }}
-              >
-                {product.compliance_score}%
-              </span>
-              {t("actionNeeded.compliance")}
-            </span>
-          </div>
-        </div>
-
-        <Link
-          href={`/app/products/${product.id}/checklist`}
-          className="inline-flex shrink-0 items-center gap-2 rounded-lg bg-white px-4 py-2.5 text-sm font-semibold text-black shadow-sm transition-transform hover:-translate-y-0.5"
-        >
-          {t("actionNeeded.cta")}
-          <HugeIcon name="arrow-right-01-stroke-rounded" size={16} />
-        </Link>
+      {/* Custom description — two metric pills (days left + compliance %)
+          instead of a single-line description. The scoreColor accent on
+          the compliance metric carries the urgency signal. */}
+      <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px]">
+        <span className="flex items-center gap-1.5 text-white/70">
+          <span className="font-semibold text-white tabular-nums">
+            {daysLeft}
+          </span>
+          {t("actionNeeded.daysLeft")}
+        </span>
+        <span className="flex items-center gap-1.5 text-white/70">
+          <span
+            className="size-1.5 rounded-full"
+            style={{ backgroundColor: scoreColor(product.compliance_score) }}
+          />
+          <span
+            className="font-semibold tabular-nums"
+            style={{ color: scoreColor(product.compliance_score) }}
+          >
+            {product.compliance_score}%
+          </span>
+          {t("actionNeeded.compliance")}
+        </span>
       </div>
-    </div>
+    </AlertBanner>
   );
 }
 
