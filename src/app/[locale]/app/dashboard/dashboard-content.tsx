@@ -22,7 +22,6 @@ import type { SupportWidgetData } from "../products/[productId]/releases/actions
 import type { CompanyProfileStatus } from "../settings/actions";
 import { ProfileIncompleteBanner } from "@/components/profile-incomplete-banner";
 import { ComplianceTrendChart } from "./charts/compliance-trend-chart";
-import { VulnAgingChart } from "./charts/vuln-aging-chart";
 import { ChecklistProgressChart } from "./charts/checklist-progress-chart";
 import { OverdueTasksWidget } from "./charts/overdue-tasks-widget";
 import { ActivityVelocityChart } from "./charts/activity-velocity-chart";
@@ -616,23 +615,15 @@ export function DashboardContent(
           </div>
         )}
 
-        {/* ── Vuln Breakdown (½) + Vuln Aging (½) ── */}
+        {/* ── Vulnerability Breakdown (full width) ── */}
         {totalProducts > 0 && (
-          <div
-            data-reveal
-            className="grid gap-6 lg:grid-cols-2"
-          >
+          <div data-reveal>
             <VulnBreakdownCard
               critical={criticalCount}
               high={highCount}
               medium={mediumCount}
               low={lowCount}
               t={t}
-            />
-            <VulnAgingChart
-              buckets={stats.vulnAging}
-              mttr={stats.mttr}
-              openCount={stats.openVulnCount}
             />
           </div>
         )}
