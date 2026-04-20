@@ -218,7 +218,7 @@ export function TopBar({ avatarUrl }: { avatarUrl?: string | null }) {
                 onClick={() => copilot.open()}
                 className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-white/[0.04]"
               >
-                <HugeIcon name="sparkles-stroke-rounded" size={16} className="text-[#60A5FA]" />
+                <HugeIcon name="ai-magic-stroke-rounded" size={16} className="text-[#60A5FA]" />
                 {t("copilot.triggerLabel")}
               </button>
               <button

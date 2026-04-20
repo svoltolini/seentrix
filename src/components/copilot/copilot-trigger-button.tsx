@@ -6,8 +6,12 @@ import { cn } from "@/lib/utils";
 import { useCopilot } from "./copilot-context";
 
 /**
- * Topbar trigger for the Copilot drawer. Rendered inside the authenticated
- * app topbar; shows the ⌘K / Ctrl+K hint on desktop.
+ * Topbar trigger for the Copilot drawer.
+ *
+ * Distinct from the surrounding nav items — gets a subtle gradient tint
+ * and a coloured AI-magic icon so it reads as a special affordance, not
+ * just another link. No keyboard-shortcut chip (the shortcut still works
+ * globally via CopilotProvider).
  */
 export function CopilotTriggerButton({ className }: { className?: string }) {
   const t = useTranslations("copilot");
@@ -18,16 +22,17 @@ export function CopilotTriggerButton({ className }: { className?: string }) {
       type="button"
       onClick={toggle}
       className={cn(
-        "hidden items-center gap-2 rounded-lg border border-white/[0.08] bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-foreground/85 transition hover:border-white/[0.14] hover:bg-white/[0.06] lg:inline-flex",
+        "hidden items-center gap-2 rounded-lg bg-gradient-to-r from-[#3B82F6]/18 via-[#6366F1]/14 to-[#8B5CF6]/12 px-3.5 py-1.5 text-xs font-semibold text-foreground ring-1 ring-[#3B82F6]/25 transition hover:from-[#3B82F6]/28 hover:via-[#6366F1]/22 hover:to-[#8B5CF6]/20 hover:ring-[#3B82F6]/45 lg:inline-flex",
         className,
       )}
       aria-label={t("triggerAria")}
     >
-      <HugeIcon name="sparkles-stroke-rounded" size={14} className="text-[#60A5FA]" />
+      <HugeIcon
+        name="ai-magic-stroke-rounded"
+        size={14}
+        className="text-[#60A5FA]"
+      />
       {t("triggerLabel")}
-      <kbd className="ml-1 hidden items-center gap-0.5 rounded border border-white/[0.08] bg-white/[0.04] px-1.5 py-0.5 text-[10px] font-mono text-muted-foreground lg:inline-flex">
-        ⌘K
-      </kbd>
     </button>
   );
 }

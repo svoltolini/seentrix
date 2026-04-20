@@ -7,6 +7,8 @@
     "close": "Close",
     "send": "Send",
     "stop": "Stop",
+    "streaming": "Copilot is thinking…",
+    "hintEnter": "Enter to send · Shift+Enter for new line",
     "clearHistory": "Clear history",
     "clearHistoryConfirm": "Delete every Copilot conversation from your history? This cannot be undone.",
     "clearHistoryDone": "Copilot history cleared.",

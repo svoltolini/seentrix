@@ -11,10 +11,10 @@ import { cn } from "@/lib/utils";
  *  - assistant → left-aligned prose, light markdown + citation pills
  *  - system    → skipped (the server prompt is not shown to the user)
  *
- * We run a tiny inline formatter (not full markdown — v1 scope) that
- * handles **bold**, newlines, ordered/unordered lists, and turns citation
- * tags like `[cra · Article 13(2)]` into styled pills. Swap this for
- * react-markdown in phase 2 if the content grows richer.
+ * Inline formatter handles **bold**, `code`, numbered / bulleted / H2 / H3
+ * / H4 / HR blocks, plus citation tags like `[cra · Article 13(2)]` which
+ * render as strong uppercase blue pills. Swap for react-markdown in phase
+ * 2 if content grows richer.
  */
 export function CopilotMessage({ message }: { message: UIMessage }) {
   if (message.role === "system") return null;
@@ -28,10 +28,10 @@ export function CopilotMessage({ message }: { message: UIMessage }) {
     <div className={cn("flex", isUser ? "justify-end" : "justify-start")}>
       <div
         className={cn(
-          "max-w-[85%] text-sm leading-relaxed",
+          "max-w-[88%] text-sm leading-relaxed",
           isUser
-            ? "rounded-2xl rounded-br-md bg-white/[0.05] px-3.5 py-2 text-foreground"
-            : "text-foreground/95",
+            ? "rounded-2xl rounded-br-md bg-white/[0.06] px-3.5 py-2 text-foreground"
+            : "text-foreground/92",
         )}
       >
         {isUser ? text : <AssistantBody text={text} />}
@@ -50,50 +50,92 @@ function extractText(m: UIMessage): string {
 }
 
 // ---------------------------------------------------------------------------
-// Tiny formatter — good enough for phase 1.
+// Block-level renderer
 // ---------------------------------------------------------------------------
+
+type Block =
+  | { type: "p"; text: string }
+  | { type: "h2"; text: string }
+  | { type: "h3"; text: string }
+  | { type: "h4"; text: string }
+  | { type: "hr" }
+  | { type: "ol"; items: string[] }
+  | { type: "ul"; items: string[] };
 
 function AssistantBody({ text }: { text: string }) {
   const blocks = blockify(text);
   return (
-    <div className="flex flex-col gap-2.5">
+    <div className="flex flex-col gap-3">
       {blocks.map((b, i) => {
-        if (b.type === "ol") {
-          return (
-            <ol key={i} className="ml-4 list-decimal space-y-1.5">
-              {b.items.map((item, j) => (
-                <li key={j} className="pl-1">
-                  {renderInline(item)}
-                </li>
-              ))}
-            </ol>
-          );
+        switch (b.type) {
+          case "h2":
+            return (
+              <h2
+                key={i}
+                className="mt-1 font-heading text-base font-semibold text-foreground"
+              >
+                {renderInline(b.text)}
+              </h2>
+            );
+          case "h3":
+            return (
+              <h3
+                key={i}
+                className="mt-2 flex items-center gap-2 font-heading text-[13px] font-semibold uppercase tracking-[0.14em] text-[#93C5FD]"
+              >
+                <span className="h-1 w-1 rounded-full bg-[#60A5FA]" />
+                {renderInline(b.text)}
+              </h3>
+            );
+          case "h4":
+            return (
+              <h4
+                key={i}
+                className="mt-1 font-heading text-[13px] font-semibold text-foreground"
+              >
+                {renderInline(b.text)}
+              </h4>
+            );
+          case "hr":
+            return (
+              <hr
+                key={i}
+                className="my-1 border-0 border-t border-white/[0.06]"
+              />
+            );
+          case "ol":
+            return (
+              <ol key={i} className="ml-4 space-y-1.5 list-decimal marker:text-[#60A5FA] marker:font-semibold">
+                {b.items.map((item, j) => (
+                  <li key={j} className="pl-1">
+                    {renderInline(item)}
+                  </li>
+                ))}
+              </ol>
+            );
+          case "ul":
+            return (
+              <ul key={i} className="ml-1 space-y-1.5">
+                {b.items.map((item, j) => (
+                  <li key={j} className="flex items-start gap-2">
+                    <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-[#60A5FA]" />
+                    <span className="flex-1">{renderInline(item)}</span>
+                  </li>
+                ))}
+              </ul>
+            );
+          case "p":
+          default:
+            return (
+              <p key={i} className="whitespace-pre-wrap">
+                {renderInline(b.text)}
+              </p>
+            );
         }
-        if (b.type === "ul") {
-          return (
-            <ul key={i} className="ml-4 list-disc space-y-1.5">
-              {b.items.map((item, j) => (
-                <li key={j} className="pl-1">
-                  {renderInline(item)}
-                </li>
-              ))}
-            </ul>
-          );
-        }
-        return (
-          <p key={i} className="whitespace-pre-wrap">
-            {renderInline(b.text)}
-          </p>
-        );
       })}
     </div>
   );
 }
-
-type Block =
-  | { type: "p"; text: string }
-  | { type: "ol"; items: string[] }
-  | { type: "ul"; items: string[] };
 
 function blockify(text: string): Block[] {
   const lines = text.split("\n");
@@ -112,9 +154,41 @@ function blockify(text: string): Block[] {
       list = null;
     }
   }
+  function flushAll() {
+    flushList();
+    flushParagraph();
+  }
 
   for (const raw of lines) {
     const line = raw.trimEnd();
+
+    // Headings — match first since they should break any open list/paragraph.
+    const h4 = line.match(/^\s*####\s+(.+?)\s*#*\s*$/);
+    const h3 = line.match(/^\s*###\s+(.+?)\s*#*\s*$/);
+    const h2 = line.match(/^\s*##\s+(.+?)\s*#*\s*$/);
+    if (h4) {
+      flushAll();
+      blocks.push({ type: "h4", text: h4[1] });
+      continue;
+    }
+    if (h3) {
+      flushAll();
+      blocks.push({ type: "h3", text: h3[1] });
+      continue;
+    }
+    if (h2) {
+      flushAll();
+      blocks.push({ type: "h2", text: h2[1] });
+      continue;
+    }
+
+    // Horizontal rule.
+    if (/^\s*(---|\*\*\*|___)\s*$/.test(line)) {
+      flushAll();
+      blocks.push({ type: "hr" });
+      continue;
+    }
+
     const ol = line.match(/^\s*(\d+)[.)]\s+(.*)$/);
     const ul = line.match(/^\s*[-*•]\s+(.*)$/);
     if (ol) {
@@ -135,13 +209,14 @@ function blockify(text: string): Block[] {
       list.items.push(ul[1]);
       continue;
     }
-    if (list) {
-      // A continuation line within the current list item.
-      if (line.trim()) {
-        list.items[list.items.length - 1] += " " + line.trim();
-        continue;
-      }
+    // Continuation of the current list item?
+    if (list && line.trim() && /^\s{2,}/.test(raw)) {
+      list.items[list.items.length - 1] += " " + line.trim();
+      continue;
+    }
+    if (list && !line.trim()) {
       flushList();
+      continue;
     }
     if (!line.trim()) {
       flushParagraph();
@@ -149,40 +224,47 @@ function blockify(text: string): Block[] {
     }
     buf.push(line);
   }
-  flushList();
-  flushParagraph();
+  flushAll();
   return blocks;
 }
 
-// Render inline spans: **bold**, `code`, and [doc · section] citation pills.
+// ---------------------------------------------------------------------------
+// Inline-span renderer — bold / code / citation pills.
+// ---------------------------------------------------------------------------
+
 function renderInline(text: string): React.ReactNode {
   const out: React.ReactNode[] = [];
-  let i = 0;
-  // Pattern: [...] citation OR **bold** OR `code` OR plain text chunk.
+  let key = 0;
+  // Priority: citation [doc · section] > bold **x** > code `x`.
   const pattern = /\[([^[\]\n]+?)\]|\*\*([^*\n]+?)\*\*|`([^`\n]+?)`/g;
   let m: RegExpExecArray | null;
   let last = 0;
   while ((m = pattern.exec(text))) {
     if (m.index > last) out.push(text.slice(last, m.index));
     if (m[1] !== undefined) {
-      // Citation — only render as a pill if it smells like a section
-      // reference ("cra · Article 13(2)", "seentrix-product · SBOM").
-      if (m[1].includes("·") || /^(Article|Annex|Artikel|Anhang)\s/.test(m[1])) {
-        out.push(<CitationPill key={i++} label={m[1]} />);
+      // Only treat as citation if it smells like one — either has the
+      // "doc · section" separator, or starts with a known regulatory
+      // keyword. Otherwise let the raw `[...]` through (e.g. a markdown
+      // link anchor that happens to slip in).
+      if (
+        m[1].includes("·") ||
+        /^(Article|Annex|Artikel|Anhang|cra|seentrix)/i.test(m[1])
+      ) {
+        out.push(<CitationPill key={key++} label={m[1]} />);
       } else {
         out.push(m[0]);
       }
     } else if (m[2] !== undefined) {
       out.push(
-        <strong key={i++} className="font-semibold text-foreground">
+        <strong key={key++} className="font-semibold text-foreground">
           {m[2]}
         </strong>,
       );
     } else if (m[3] !== undefined) {
       out.push(
         <code
-          key={i++}
-          className="rounded bg-white/[0.06] px-1 py-0.5 text-[12px] font-mono text-foreground"
+          key={key++}
+          className="rounded bg-white/[0.08] px-1.5 py-0.5 text-[12px] font-mono text-foreground"
         >
           {m[3]}
         </code>,
@@ -194,10 +276,22 @@ function renderInline(text: string): React.ReactNode {
   return out;
 }
 
+/**
+ * Citation pill — strong brand colour, uppercase typography, tight
+ * corners. Replaces the subtle translucent version used in v1; the user
+ * asked for punchier pills that match the rest of the app's chip design.
+ */
 function CitationPill({ label }: { label: string }) {
+  // Normalise the separator to a middle dot and uppercase everything
+  // so the pill renders consistently regardless of how the model wrote
+  // the tag (e.g. "cra · Article 13(2)", "CRA - Art 13", etc.).
+  const display = label
+    .trim()
+    .replace(/\s*[·•–—-]\s*/g, " · ")
+    .toUpperCase();
   return (
-    <span className="mx-0.5 inline-flex items-center rounded-full bg-[#60A5FA]/12 px-2 py-0.5 align-baseline text-[11px] font-medium text-[#93C5FD] ring-1 ring-[#60A5FA]/20">
-      {label}
+    <span className="mx-0.5 inline-flex items-center rounded-md bg-[#3B82F6] px-1.5 py-[2px] align-[1px] text-[9px] font-bold uppercase tracking-wider text-white shadow-[0_0_0_1px_rgba(59,130,246,0.35)]">
+      {display}
     </span>
   );
 }

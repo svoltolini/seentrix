@@ -10,7 +10,6 @@ import {
   SheetContent,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
 import { HugeIcon } from "@/components/huge-icon";
 import { cn } from "@/lib/utils";
 import { useCopilot } from "./copilot-context";
@@ -22,9 +21,10 @@ import { useToast } from "@/components/ui/toast";
  * Seentrix Copilot — the actual drawer.
  *
  * Rendered once at app-layout level (via CopilotProvider) so state persists
- * across navigations. The sheet slides in from the right; on mobile it
- * drops from the bottom via the base-ui Sheet primitive's side="right"
- * responsive behaviour.
+ * across navigations. The sheet slides in from the right at ~384 px (the
+ * same width as every other right-side panel in the app), dropping from
+ * the bottom on mobile via the base-ui Sheet primitive's responsive
+ * behaviour.
  *
  * Chat state is owned by `useChat` from @ai-sdk/react. The transport is
  * an HTTP POST to /api/copilot/chat; page + locale metadata are attached
@@ -35,10 +35,10 @@ export function CopilotSheet() {
   const t = useTranslations("copilot");
   const locale = useLocale() as "en" | "de";
   const pathname = usePathname();
-  // Stable refs that the transport closure reads lazily at request time.
-  // Using refs (instead of the raw closure values) means we don't have to
-  // recreate the DefaultChatTransport instance — and reset the chat — on
-  // every navigation or locale toggle.
+
+  // Stable refs so the transport closure can read the latest locale + page
+  // at send time without having to be recreated on every render (which would
+  // reset the chat mid-stream).
   const sessionIdRef = useRef<string | null>(null);
   const localeRef = useRef(locale);
   const pathnameRef = useRef(pathname);
@@ -47,11 +47,6 @@ export function CopilotSheet() {
     pathnameRef.current = pathname;
   }, [locale, pathname]);
 
-  // Lazy-init the transport once; the prepareSendMessagesRequest callback
-  // runs only when a message is actually being sent, so the ref reads are
-  // safe. react-hooks/refs can't statically prove that (it treats any ref
-  // passed into a function as "may be read during render"), so the whole
-  // call is wrapped in an eslint-disable block.
   /* eslint-disable react-hooks/refs */
   const [transport] = useState(
     () =>
@@ -92,7 +87,6 @@ export function CopilotSheet() {
     });
   }
 
-  // If a caller opened the drawer with a seed question, inject it once.
   useEffect(() => {
     if (isOpen && seed) {
       setInput(seed);
@@ -106,9 +100,7 @@ export function CopilotSheet() {
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
-    if (stuckToBottomRef.current) {
-      el.scrollTop = el.scrollHeight;
-    }
+    if (stuckToBottomRef.current) el.scrollTop = el.scrollHeight;
   }, [messages]);
 
   function onScroll() {
@@ -129,7 +121,6 @@ export function CopilotSheet() {
   }
 
   function onComposerKey(e: React.KeyboardEvent<HTMLTextAreaElement>) {
-    // Enter sends; Shift+Enter inserts newline. ⌘/Ctrl+Enter also sends.
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       (e.currentTarget.form as HTMLFormElement | null)?.requestSubmit();
@@ -145,7 +136,10 @@ export function CopilotSheet() {
         showCloseButton={false}
         className={cn(
           "!max-w-none w-full flex-col gap-0 border-l border-white/[0.06] bg-[#09090B] p-0",
-          "data-[side=right]:sm:max-w-[440px]",
+          // Match the default right-side sheet width (~384 px) so the drawer
+          // lines up with other panels in the app (HelpSheet, etc.) and leaves
+          // more page context visible behind it.
+          "data-[side=right]:sm:max-w-sm",
         )}
       >
         <SheetTitle className="sr-only">{t("title")}</SheetTitle>
@@ -154,7 +148,7 @@ export function CopilotSheet() {
         <div className="flex items-center justify-between border-b border-white/[0.06] px-5 py-4">
           <div className="flex flex-col gap-0.5">
             <span className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#60A5FA]">
-              <HugeIcon name="sparkles-stroke-rounded" size={12} />
+              <HugeIcon name="ai-magic-stroke-rounded" size={12} />
               {t("eyebrow")}
               <span className="rounded-full bg-white/[0.08] px-1.5 py-0.5 text-[9px] font-medium tracking-normal text-muted-foreground">
                 beta
@@ -170,19 +164,24 @@ export function CopilotSheet() {
                 type="button"
                 onClick={onClearHistory}
                 disabled={clearing}
-                className="rounded-md px-2 py-1 text-[11px] font-medium text-muted-foreground transition hover:text-foreground disabled:opacity-50"
+                aria-label={t("clearHistory")}
+                title={t("clearHistory")}
+                className="flex size-8 items-center justify-center rounded-md text-muted-foreground transition hover:bg-white/[0.04] hover:text-foreground disabled:opacity-50"
               >
-                {t("clearHistory")}
+                <HugeIcon name="comment-remove-02-stroke-rounded" size={16} />
               </button>
             )}
-            <Button
-              variant="ghost"
-              size="icon-sm"
-              aria-label={t("close")}
+            <button
+              type="button"
               onClick={close}
+              aria-label={t("close")}
+              className="flex size-8 items-center justify-center rounded-md text-muted-foreground transition hover:bg-white/[0.04] hover:text-foreground"
             >
-              <CloseGlyph />
-            </Button>
+              <HugeIcon
+                name="cancel-circle-half-dot-stroke-rounded"
+                size={18}
+              />
+            </button>
           </div>
         </div>
 
@@ -190,12 +189,12 @@ export function CopilotSheet() {
         <div
           ref={scrollRef}
           onScroll={onScroll}
-          className="flex-1 overflow-y-auto px-5 py-4"
+          className="flex-1 overflow-y-auto px-5 py-5"
         >
           {empty ? (
             <EmptyState />
           ) : (
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-6">
               {messages.map((m) => (
                 <CopilotMessage key={m.id} message={m} />
               ))}
@@ -212,40 +211,54 @@ export function CopilotSheet() {
         {/* Composer -------------------------------------------------------- */}
         <form
           onSubmit={onSubmit}
-          className="flex flex-col gap-2 border-t border-white/[0.06] bg-[#0B0B12] p-4"
+          className="flex flex-col gap-2 border-t border-white/[0.06] bg-[#0B0B12] px-4 pt-3 pb-4"
         >
-          <div className="flex items-end gap-2 rounded-2xl bg-white/[0.04] px-3 py-2 ring-1 ring-white/[0.06] focus-within:ring-white/[0.14]">
+          <div className="relative rounded-2xl bg-white/[0.04] ring-1 ring-white/[0.08] transition focus-within:bg-white/[0.06] focus-within:ring-[#60A5FA]/40">
             <textarea
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={onComposerKey}
               placeholder={t("placeholder")}
               rows={1}
-              className="max-h-[140px] min-h-[32px] flex-1 resize-none bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground/60"
+              className="block max-h-[160px] min-h-[72px] w-full resize-none bg-transparent px-4 pt-3.5 pr-14 pb-10 text-sm leading-relaxed text-foreground outline-none placeholder:text-muted-foreground/50"
               disabled={isStreaming}
             />
-            {isStreaming ? (
-              <Button
-                type="button"
-                size="icon-sm"
-                variant="ghost"
-                onClick={stop}
-                aria-label={t("stop")}
-              >
-                <StopGlyph />
-              </Button>
-            ) : (
-              <Button
-                type="submit"
-                size="icon-sm"
-                disabled={!input.trim()}
-                aria-label={t("send")}
-              >
-                <SendGlyph />
-              </Button>
-            )}
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-center justify-between px-3 pb-2">
+              <span className="text-[10px] font-medium text-muted-foreground/50">
+                {isStreaming ? t("streaming") : t("hintEnter")}
+              </span>
+              <div className="pointer-events-auto">
+                {isStreaming ? (
+                  <button
+                    type="button"
+                    onClick={stop}
+                    aria-label={t("stop")}
+                    className="flex size-8 items-center justify-center rounded-full text-muted-foreground transition hover:bg-white/[0.06] hover:text-foreground"
+                  >
+                    <HugeIcon
+                      name="stop-circle-stroke-rounded"
+                      size={18}
+                    />
+                  </button>
+                ) : (
+                  <button
+                    type="submit"
+                    disabled={!input.trim()}
+                    aria-label={t("send")}
+                    className={cn(
+                      "flex size-8 items-center justify-center rounded-full transition",
+                      input.trim()
+                        ? "bg-[#3B82F6] text-white hover:bg-[#2563EB]"
+                        : "bg-white/[0.06] text-muted-foreground/40",
+                    )}
+                  >
+                    <HugeIcon name="sent-stroke-rounded" size={15} />
+                  </button>
+                )}
+              </div>
+            </div>
           </div>
-          <p className="text-[10px] leading-relaxed text-muted-foreground/70">
+          <p className="px-1 text-[10px] leading-relaxed text-muted-foreground/70">
             {t("footer")}
           </p>
         </form>
@@ -295,53 +308,6 @@ function EmptyState() {
         ))}
       </div>
     </div>
-  );
-}
-
-// Inline SVG glyphs — simple geometric primitives kept inline so we don't
-// pull in lucide-react or add extra assets to /public/icons for three
-// universal UI affordances (close, send, stop).
-
-function CloseGlyph() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
-      <path
-        d="M6 6l12 12M18 6L6 18"
-        stroke="currentColor"
-        strokeWidth="1.75"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-
-function SendGlyph() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
-      <path
-        d="M12 19V6M6 11l6-6 6 6"
-        stroke="currentColor"
-        strokeWidth="1.75"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-      />
-    </svg>
-  );
-}
-
-function StopGlyph() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
-      <rect
-        x="7"
-        y="7"
-        width="10"
-        height="10"
-        rx="2"
-        fill="currentColor"
-      />
-    </svg>
   );
 }
 
