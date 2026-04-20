@@ -5,7 +5,6 @@ import { useTranslations } from "next-intl";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Link } from "@/i18n/navigation";
-import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { HugeIcon } from "@/components/huge-icon";
 import { StaggerReveal } from "@/components/stagger-reveal";
@@ -256,31 +255,13 @@ export function DashboardContent(
         ease="power3.out"
       >
         {/* ── Header ── */}
-        <div
-          data-reveal
-          className="flex items-end justify-between gap-4"
-        >
-          <div>
-            <h1 className="font-heading text-[28px] font-bold tracking-tight">
-              {firstName ? t("greeting", { name: firstName }) : t("title")}
-            </h1>
-            <p className="mt-1.5 text-[13px] text-muted-foreground">
-              {firstName ? t("greetingSubtitle") : t("subtitle")}
-            </p>
-          </div>
-          {totalProducts > 0 && (
-            <Link
-              href="/app/products/new"
-              className={buttonVariants({ size: "sm" })}
-            >
-              <HugeIcon
-                name="plus-sign-square-stroke-rounded"
-                size={14}
-                className="text-current"
-              />
-              {t("addProduct")}
-            </Link>
-          )}
+        <div data-reveal>
+          <h1 className="font-heading text-[28px] font-bold tracking-tight">
+            {firstName ? t("greeting", { name: firstName }) : t("title")}
+          </h1>
+          <p className="mt-1.5 text-[13px] text-muted-foreground">
+            {firstName ? t("greetingSubtitle") : t("subtitle")}
+          </p>
         </div>
 
         {/* ── Stat Cards ── */}
@@ -424,14 +405,10 @@ export function DashboardContent(
           </div>
         )}
 
-        {/* ── Two-column: Product Table + Deadlines sidebar ── */}
+        {/* ── Product Compliance Table (full width) ── */}
         {totalProducts > 0 && (
-          <div
-            data-reveal
-            className="grid gap-6 lg:grid-cols-3"
-          >
-            {/* Product Compliance Table — 2/3 */}
-            <div className="overflow-hidden rounded-2xl bg-white/[0.03] lg:col-span-2">
+          <div data-reveal>
+            <div className="overflow-hidden rounded-2xl bg-white/[0.03]">
               <div className="flex items-start justify-between border-b border-white/[0.06] px-5 py-4">
                 <div>
                   <p className="text-[10px] font-semibold uppercase tracking-[2.5px] text-primary">
@@ -549,69 +526,6 @@ export function DashboardContent(
                 })}
               </div>
             </div>
-
-            {/* CRA Deadlines — 1/3 */}
-            <div className="rounded-2xl bg-white/[0.03] p-5">
-              <p className="text-[10px] font-semibold uppercase tracking-[2.5px] text-primary">
-                {t("deadlinesEyebrow")}
-              </p>
-              <h2 className="mt-1 font-heading text-base font-bold text-foreground">
-                {t("deadlines")}
-              </h2>
-              <p className="mb-4 mt-0.5 text-xs text-muted-foreground/60">
-                {t("deadlinesSubtitle")}
-              </p>
-              <div className="space-y-4">
-                {deadlines.map((dl) => {
-                  const days = getDaysUntil(dl.date);
-                  const isPast = days <= 0;
-                  const isUrgent = !isPast && days < 90;
-                  return (
-                    <div key={dl.date} className="flex items-start gap-3">
-                      <div className="mt-0.5">
-                        {isPast ? (
-                          <HugeIcon
-                            name="checkmark-circle-01-stroke-rounded"
-                            size={16}
-                            className="text-[#16A34A]"
-                          />
-                        ) : isUrgent ? (
-                          <HugeIcon
-                            name="circle-arrow-right-double-stroke-rounded"
-                            size={16}
-                            className="text-[#D97706]"
-                          />
-                        ) : (
-                          <HugeIcon
-                            name="circle-stroke-rounded"
-                            size={16}
-                            className="text-muted-foreground/40"
-                          />
-                        )}
-                      </div>
-                      <div className="flex-1">
-                        <p className="text-xs font-medium">{dl.name}</p>
-                        <p className="text-[11px] text-muted-foreground/50">
-                          {dl.dateLabel}
-                        </p>
-                      </div>
-                      <span
-                        className={cn(
-                          "shrink-0 text-xs font-semibold tabular-nums",
-                          isPast
-                            ? "text-[#16A34A]"
-                            : isUrgent
-                              ? "text-[#D97706]"
-                              : "text-muted-foreground/50",
-                        )}
-                      >
-                        {isPast ? t("passed") : t("daysRemaining", { days })}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
           </div>
         )}
 
@@ -642,20 +556,24 @@ export function DashboardContent(
           </div>
         )}
 
-        {/* ── Compliance Trend (⅔) + Overdue Tasks (⅓) ── */}
+        {/* ── Compliance Trend (full width) ── */}
+        {totalProducts > 0 && (
+          <div data-reveal>
+            <ComplianceTrendChart data={stats.complianceTrend} />
+          </div>
+        )}
+
+        {/* ── Overdue Tasks (½) + Upcoming Deadlines (½) ── */}
         {totalProducts > 0 && (
           <div
             data-reveal
-            className="grid items-stretch gap-6 lg:grid-cols-3"
+            className="grid items-stretch gap-6 lg:grid-cols-2"
           >
-            <ComplianceTrendChart
-              data={stats.complianceTrend}
-              className="h-full lg:col-span-2"
-            />
             <OverdueTasksWidget
               count={stats.overdueCount}
               items={stats.overdueItems}
             />
+            <UpcomingDeadlinesCard deadlines={deadlines} t={t} />
           </div>
         )}
 
@@ -704,6 +622,84 @@ export function DashboardContent(
           </div>
         )}
       </StaggerReveal>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// UpcomingDeadlinesCard — CRA regulatory milestone list. Extracted from an
+// inline sidebar so the same card can sit side-by-side with Overdue Tasks
+// in the 2-column row near the bottom of the dashboard.
+// ---------------------------------------------------------------------------
+
+function UpcomingDeadlinesCard({
+  deadlines,
+  t,
+}: {
+  deadlines: { name: string; date: string; dateLabel: string }[];
+  t: ReturnType<typeof useTranslations>;
+}) {
+  return (
+    <div className="flex h-full flex-col rounded-2xl bg-white/[0.03] p-5">
+      <p className="text-[10px] font-semibold uppercase tracking-[2.5px] text-primary">
+        {t("deadlinesEyebrow")}
+      </p>
+      <h2 className="mt-1 font-heading text-base font-bold text-foreground">
+        {t("deadlines")}
+      </h2>
+      <p className="mb-4 mt-0.5 text-xs text-muted-foreground/60">
+        {t("deadlinesSubtitle")}
+      </p>
+      <div className="flex-1 space-y-4">
+        {deadlines.map((dl) => {
+          const days = getDaysUntil(dl.date);
+          const isPast = days <= 0;
+          const isUrgent = !isPast && days < 90;
+          return (
+            <div key={dl.date} className="flex items-start gap-3">
+              <div className="mt-0.5">
+                {isPast ? (
+                  <HugeIcon
+                    name="checkmark-circle-01-stroke-rounded"
+                    size={16}
+                    className="text-[#16A34A]"
+                  />
+                ) : isUrgent ? (
+                  <HugeIcon
+                    name="circle-arrow-right-double-stroke-rounded"
+                    size={16}
+                    className="text-[#D97706]"
+                  />
+                ) : (
+                  <HugeIcon
+                    name="circle-stroke-rounded"
+                    size={16}
+                    className="text-muted-foreground/40"
+                  />
+                )}
+              </div>
+              <div className="flex-1">
+                <p className="text-xs font-medium">{dl.name}</p>
+                <p className="text-[11px] text-muted-foreground/50">
+                  {dl.dateLabel}
+                </p>
+              </div>
+              <span
+                className={cn(
+                  "shrink-0 text-xs font-semibold tabular-nums",
+                  isPast
+                    ? "text-[#16A34A]"
+                    : isUrgent
+                      ? "text-[#D97706]"
+                      : "text-muted-foreground/50",
+                )}
+              >
+                {isPast ? t("passed") : t("daysRemaining", { days })}
+              </span>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
