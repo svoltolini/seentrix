@@ -11,6 +11,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { HugeIcon } from "@/components/huge-icon";
+import { CopilotTriggerButton } from "@/components/copilot/copilot-trigger-button";
 import Image from "next/image";
 import { logout } from "@/app/[locale]/auth/actions";
 
@@ -47,11 +48,14 @@ const navItems = [
   },
 ];
 
+import { useCopilot } from "@/components/copilot/copilot-context";
+
 export function TopBar({ avatarUrl }: { avatarUrl?: string | null }) {
   const t = useTranslations();
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
+  const copilot = useCopilot();
 
   function switchLocale(newLocale: string) {
     router.replace(pathname, { locale: newLocale });
@@ -88,8 +92,15 @@ export function TopBar({ avatarUrl }: { avatarUrl?: string | null }) {
         </nav>
       </div>
 
-      {/* Right: Language switcher + User + Mobile menu */}
+      {/* Right: Copilot + Language switcher + User + Mobile menu */}
       <div className="flex items-center gap-2">
+        {/* Copilot trigger — desktop only; mobile users hit it from the
+            sheet menu (added below) or via ⌘K. */}
+        <CopilotTriggerButton />
+
+        {/* Divider (only if the trigger is visible) */}
+        <div className="hidden h-5 w-px bg-border lg:block" />
+
         {/* Language switcher */}
         <div className="flex items-center gap-1">
           <button
@@ -203,6 +214,13 @@ export function TopBar({ avatarUrl }: { avatarUrl?: string | null }) {
                 );
               })}
               <div className="my-1 h-px bg-border" />
+              <button
+                onClick={() => copilot.open()}
+                className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-white/[0.04]"
+              >
+                <HugeIcon name="sparkles-stroke-rounded" size={16} className="text-[#60A5FA]" />
+                {t("copilot.triggerLabel")}
+              </button>
               <button
                 onClick={() => logout(locale)}
                 className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-destructive transition-colors hover:bg-destructive/10"

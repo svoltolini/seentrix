@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { HeroSection } from "./_components/hero-section";
 import { ProblemSection } from "./_components/problem-section";
 import { FeaturesSection } from "./_components/features-section";
+import { CopilotSection } from "./_components/copilot-section";
 import { HowItWorksSection } from "./_components/how-it-works-section";
 import { AudienceSection } from "./_components/audience-section";
 import { TrustSection } from "./_components/trust-section";
@@ -41,6 +42,7 @@ export default async function LandingPage({
       <HeroSection />
       <ProblemSection />
       <FeaturesSection />
+      <CopilotSection />
       <HowItWorksSection />
       <AudienceSection />
       <TrustSection />

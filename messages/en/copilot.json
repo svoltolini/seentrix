@@ -1,0 +1,84 @@
+{
+  "copilot": {
+    "triggerLabel": "Ask Copilot",
+    "triggerAria": "Open Seentrix Copilot",
+    "eyebrow": "Copilot",
+    "title": "Seentrix Copilot",
+    "close": "Close",
+    "send": "Send",
+    "stop": "Stop",
+    "clearHistory": "Clear history",
+    "clearHistoryConfirm": "Delete every Copilot conversation from your history? This cannot be undone.",
+    "clearHistoryDone": "Copilot history cleared.",
+    "clearHistoryFailed": "Could not clear history. Please try again.",
+    "placeholder": "Ask about the CRA or how to do something in Seentrix…",
+    "footer": "Powered by Mistral AI · hosted in the EU · not legal advice",
+    "error": "Something went wrong. Please try again.",
+    "emptyEyebrow": "Your CRA assistant",
+    "emptyTitle": "Ask me anything about the Cyber Resilience Act.",
+    "emptyBody": "I can explain articles, walk you through Seentrix workflows, and point you to the right screen. Every answer cites the source regulation or product doc.",
+    "tryAsking": "Try asking",
+    "examples": {
+      "art13": "What does Article 13 of the CRA require?",
+      "sbom": "Explain my SBOM — what should I do with it?",
+      "incident": "How do the 24h / 72h / 14d incident deadlines work?"
+    },
+    "marketing": {
+      "eyebrow": "AI Copilot",
+      "title": "The only CRA copilot that doesn't send your data to a US AI company.",
+      "lede": "A CRA-specialist assistant built into Seentrix. Ask questions in plain English or German and get answers grounded in the regulation itself — with the data-residency story your procurement team will love.",
+      "bullets": {
+        "sovereign": {
+          "title": "EU-sovereign AI",
+          "body": "Powered by Mistral AI (Paris). No US entity in the processing chain."
+        },
+        "grounded": {
+          "title": "Grounded in the regulation",
+          "body": "Every answer cites the specific article, annex, or Seentrix page it was drawn from."
+        },
+        "context": {
+          "title": "Context-aware",
+          "body": "Knows which screen, product, and organisation you're looking at. Replaces \"where's that feature again?\"."
+        },
+        "actionable": {
+          "title": "Actionable",
+          "body": "Deep-links to the right page, drafts incident narratives on request, and explains what's missing before you issue a DoC."
+        }
+      },
+      "ctaPrimary": "Start free",
+      "ctaSecondary": "See how it works",
+      "learnMore": "Learn more →"
+    },
+    "learnMore": {
+      "title": "Seentrix Copilot",
+      "subtitle": "Your EU-hosted CRA expert — built into the product.",
+      "section1": {
+        "heading": "Why a copilot",
+        "body": "The CRA is 120+ pages of regulation. Most manufacturers don't have a compliance lawyer on staff. The Copilot reads the regulation for you, answers questions in plain language, and points you to the right Seentrix screen when there's something to do."
+      },
+      "section2": {
+        "heading": "What it actually knows",
+        "body": "The curated CRA text (articles and annexes), ENISA guidance, the Seentrix Academy lessons, and every help string in the product. Every answer cites its source so you can verify."
+      },
+      "section3": {
+        "heading": "Where your data lives",
+        "body": "Every hop in the pipeline is on EU infrastructure. Inference runs at Mistral AI in Paris. Retrieval runs in our own Supabase in London. The web app serves from Vercel in Frankfurt. No US company in the processing chain — including your prompts."
+      },
+      "section4": {
+        "heading": "Privacy and retention",
+        "body": "Conversations are stored encrypted on your own organisation's row in our EU database and purged after 180 days. Admins can clear history any time. Mistral AI does not train on your data (zero-retention agreement)."
+      },
+      "section5": {
+        "heading": "When it says \"I don't know\"",
+        "body": "If the retrieved passages don't clearly support an answer, the Copilot says so rather than guessing. You'll also see \"not legal advice — confirm with qualified counsel\" on every regulatory answer. It's a tool, not a lawyer."
+      },
+      "quota": {
+        "title": "What you get",
+        "free": "10 messages/month",
+        "professional": "200 messages/month",
+        "business": "1,000 messages/month",
+        "enterprise": "10,000 messages/month"
+      }
+    }
+  }
+}

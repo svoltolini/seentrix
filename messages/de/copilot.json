@@ -1,0 +1,84 @@
+{
+  "copilot": {
+    "triggerLabel": "Copilot fragen",
+    "triggerAria": "Seentrix Copilot öffnen",
+    "eyebrow": "Copilot",
+    "title": "Seentrix Copilot",
+    "close": "Schließen",
+    "send": "Senden",
+    "stop": "Stopp",
+    "clearHistory": "Verlauf löschen",
+    "clearHistoryConfirm": "Alle Copilot-Unterhaltungen aus deinem Verlauf löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
+    "clearHistoryDone": "Copilot-Verlauf wurde gelöscht.",
+    "clearHistoryFailed": "Verlauf konnte nicht gelöscht werden. Bitte erneut versuchen.",
+    "placeholder": "Frag zum CRA oder wie man etwas in Seentrix macht…",
+    "footer": "Betrieben von Mistral AI · in der EU gehostet · keine Rechtsberatung",
+    "error": "Etwas ist schiefgelaufen. Bitte erneut versuchen.",
+    "emptyEyebrow": "Dein CRA-Assistent",
+    "emptyTitle": "Frag mich alles zum Cyber Resilience Act.",
+    "emptyBody": "Ich erkläre Artikel, führe dich durch Seentrix-Workflows und zeige dir den richtigen Bildschirm. Jede Antwort zitiert die zugrunde liegende Regulierung oder Produkt-Doku.",
+    "tryAsking": "Frag zum Beispiel",
+    "examples": {
+      "art13": "Was verlangt Artikel 13 des CRA?",
+      "sbom": "Erkläre meine SBOM — was mache ich damit?",
+      "incident": "Wie funktionieren die 24h / 72h / 14-Tage-Fristen für Incidents?"
+    },
+    "marketing": {
+      "eyebrow": "KI-Copilot",
+      "title": "Der einzige CRA-Copilot, der deine Daten nicht an ein US-KI-Unternehmen schickt.",
+      "lede": "Ein CRA-Spezialist direkt in Seentrix integriert. Stell Fragen auf Deutsch oder Englisch und erhalte Antworten, die in der Regulierung selbst verankert sind — mit der Datenresidenz-Story, die deine Einkaufs-Abteilung liebt.",
+      "bullets": {
+        "sovereign": {
+          "title": "EU-souveräne KI",
+          "body": "Betrieben von Mistral AI (Paris). Kein US-Unternehmen in der Verarbeitungskette."
+        },
+        "grounded": {
+          "title": "In der Regulierung verankert",
+          "body": "Jede Antwort zitiert den konkreten Artikel, Anhang oder die Seentrix-Seite, auf die sie sich stützt."
+        },
+        "context": {
+          "title": "Kontextbewusst",
+          "body": "Weiß, welchen Bildschirm, welches Produkt und welche Organisation du gerade ansiehst. Ersetzt das „wo war die Funktion noch gleich?\"."
+        },
+        "actionable": {
+          "title": "Handlungsorientiert",
+          "body": "Verlinkt direkt zur richtigen Seite, entwirft auf Anfrage Incident-Narrative und erklärt, was noch fehlt, bevor du eine DoC ausstellst."
+        }
+      },
+      "ctaPrimary": "Kostenlos starten",
+      "ctaSecondary": "Mehr erfahren",
+      "learnMore": "Mehr erfahren →"
+    },
+    "learnMore": {
+      "title": "Seentrix Copilot",
+      "subtitle": "Dein EU-gehosteter CRA-Experte — direkt im Produkt.",
+      "section1": {
+        "heading": "Warum ein Copilot",
+        "body": "Der CRA umfasst über 120 Seiten Regulierung. Die meisten Hersteller haben keinen Compliance-Anwalt im Haus. Der Copilot liest die Regulierung für dich, beantwortet Fragen in verständlicher Sprache und verweist dich zur richtigen Seentrix-Seite, wenn etwas zu tun ist."
+      },
+      "section2": {
+        "heading": "Was er wirklich weiß",
+        "body": "Der kuratierte CRA-Text (Artikel und Anhänge), ENISA-Leitlinien, die Lektionen der Seentrix-Akademie und jeden Hilfetext im Produkt. Jede Antwort nennt ihre Quelle, damit du sie überprüfen kannst."
+      },
+      "section3": {
+        "heading": "Wo deine Daten liegen",
+        "body": "Jeder Schritt der Pipeline läuft auf EU-Infrastruktur. Die Inferenz läuft bei Mistral AI in Paris. Der Retrieval läuft in unserer eigenen Supabase in London. Die Webanwendung wird von Vercel in Frankfurt ausgeliefert. Kein US-Unternehmen in der Verarbeitungskette — auch nicht für deine Prompts."
+      },
+      "section4": {
+        "heading": "Datenschutz und Aufbewahrung",
+        "body": "Unterhaltungen werden verschlüsselt in der Zeile deiner Organisation in unserer EU-Datenbank gespeichert und nach 180 Tagen gelöscht. Admins können den Verlauf jederzeit löschen. Mistral AI trainiert nicht auf deinen Daten (Zero-Retention-Vereinbarung)."
+      },
+      "section5": {
+        "heading": "Wenn er „Ich weiß es nicht\" sagt",
+        "body": "Wenn die abgerufenen Passagen eine Antwort nicht eindeutig stützen, sagt der Copilot das, statt zu raten. Bei jeder regulatorischen Antwort steht zudem „Keine Rechtsberatung — bitte mit qualifiziertem Rechtsbeistand bestätigen\". Er ist ein Werkzeug, kein Anwalt."
+      },
+      "quota": {
+        "title": "Was du bekommst",
+        "free": "10 Nachrichten/Monat",
+        "professional": "200 Nachrichten/Monat",
+        "business": "1.000 Nachrichten/Monat",
+        "enterprise": "10.000 Nachrichten/Monat"
+      }
+    }
+  }
+}

@@ -161,6 +161,16 @@ export default function DpaPage() {
             <td>Error monitoring</td>
             <td>US</td>
           </tr>
+          <tr>
+            <td>Mistral AI SAS</td>
+            <td>Seentrix Copilot — LLM inference + embeddings</td>
+            <td>France (EU)</td>
+          </tr>
+          <tr>
+            <td>Upstash, Inc.</td>
+            <td>Rate-limit store for Copilot quotas</td>
+            <td>Ireland (EU)</td>
+          </tr>
         </tbody>
       </table>
 

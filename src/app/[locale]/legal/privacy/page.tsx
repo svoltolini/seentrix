@@ -98,6 +98,18 @@ export default function PrivacyPage() {
           <strong>Resend (transactional email):</strong> delivers password
           resets, invitations, and notifications.
         </li>
+        <li>
+          <strong>Mistral AI (Seentrix Copilot):</strong> region{" "}
+          <strong>Paris, France</strong>. Processes your Copilot prompts
+          and returns the assistant's replies. Mistral AI does not train
+          on your data (zero-retention agreement) and is a French-
+          incorporated company — no US entity is in the processing chain.
+        </li>
+        <li>
+          <strong>Upstash (Copilot rate-limit store):</strong> region{" "}
+          <strong>Ireland</strong>. Stores only a per-user message counter
+          used to enforce plan quotas. No message content is written here.
+        </li>
       </ul>
       <p>
         Each processor has signed a data-processing agreement. Details and
@@ -119,6 +131,12 @@ export default function PrivacyPage() {
         <li>Declarations of Conformity + technical documentation: 10 years after the last product unit was placed on the market (CRA requirement).</li>
         <li>Backups: 30 days rolling.</li>
         <li>Sentry error traces: 90 days.</li>
+        <li>
+          Seentrix Copilot chat transcripts: 180 days in our EU database.
+          Admins can clear their organisation's history at any time from
+          Settings. Mistral AI does not retain any of your prompt content
+          under our zero-retention agreement.
+        </li>
       </ul>
 
       <h2>7. Your rights (GDPR)</h2>
