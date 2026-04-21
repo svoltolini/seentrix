@@ -1,7 +1,7 @@
-# Seentrix — product overview for Copilot
+# Seentrix — product overview for Seentrix AI
 
 Ground-truth description of what the Seentrix platform actually does,
-organised the way users ask about it. The Copilot cites this to answer
+organised the way users ask about it. Seentrix AI cites this to answer
 "how do I do X in Seentrix" questions.
 
 The rule: if something is not written here, it is not a Seentrix feature.
@@ -284,9 +284,9 @@ and Enterprise unlimited** (no hardcoded ten-year floor —
 manufacturers on Free/Pro who need Article 13 evidence beyond the
 plan's retention window must export and store it themselves).
 
-## Copilot transcript retention
+## Seentrix AI transcript retention
 
-Copilot conversations are retained in Seentrix's EU database on the
+Seentrix AI conversations are retained in Seentrix's EU database on the
 same plan-tiered pattern the activity log uses:
 
 - **Free** — 7 days
@@ -308,7 +308,7 @@ Seentrix stores in Supabase.
 - Web application: **Vercel** in `fra1` (Frankfurt).
 - Error monitoring: **Sentry** at `de.sentry.io` (Germany), PII
   disabled, session replays masked.
-- Copilot (AI): **Mistral AI** (Paris, France).
+- Seentrix AI (inference): **Mistral AI** (Paris, France).
 - Payments: **Stripe Payments Europe Ltd.** (Ireland), card data
   tokenised.
 - Transactional email: **Resend** (US infrastructure — documented
@@ -341,9 +341,9 @@ If someone asks about one of the integrations above, say the feature
 is not available today and recommend they export the artefact from
 Seentrix manually and paste it into the other system.
 
-## Copilot capabilities — what it can do inside a conversation
+## Seentrix AI capabilities — what it can do inside a conversation
 
-Beyond answering from the knowledge base, the Copilot can call a
+Beyond answering from the knowledge base, Seentrix AI can call a
 small set of safe, read-only tools inside any turn:
 
 - **searchProducts** — find a product in the user's organisation by a
@@ -363,12 +363,12 @@ small set of safe, read-only tools inside any turn:
 
 None of these tools mutate data. They run under the user's Supabase
 session, so Row-Level Security enforces org scoping for every query.
-The Copilot will always prefer calling a tool over guessing when the
+Seentrix AI will always prefer calling a tool over guessing when the
 question is about the user's own data.
 
 ### Drafting tools (Professional plan and above)
 
-On paid plans the Copilot can also produce ready-to-review markdown
+On paid plans Seentrix AI can also produce ready-to-review markdown
 drafts pre-filled from the user's actual data:
 
 - **draftDeclarationOfConformity** — Annex IV-aligned DoC draft built
@@ -390,12 +390,12 @@ signed DoCs are still generated there; the draft is a working
 starting point the user can copy, edit, and paste.
 
 Drafts are a **Professional-plan feature**; Free-tier users will see
-the Copilot explain manually what fields to fill and point them to
+Seentrix AI explain manually what fields to fill and point them to
 `/pricing`.
 
 ## What Seentrix does NOT do
 
-Explicit anti-hallucination list — a shortcut to stop the Copilot
+Explicit anti-hallucination list — a shortcut to stop Seentrix AI
 inventing plausible-sounding features that do not exist:
 
 - **No SBOM generator** — Seentrix only ingests SBOMs produced
@@ -420,5 +420,5 @@ inventing plausible-sounding features that do not exist:
 - **No free trial of paid plans** — the Free tier is the free trial.
 - **No GBP / USD pricing** — EUR only.
 - **No Jira / GitHub / Jenkins / Slack / Okta / SCIM integrations.**
-- **No tenant-owned AI model** — the Copilot uses our Mistral account;
+- **No tenant-owned AI model** — Seentrix AI uses our Mistral account;
   customers cannot swap it for their own key or their own model.

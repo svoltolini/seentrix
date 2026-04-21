@@ -1,15 +1,15 @@
 {
   "copilot": {
-    "triggerLabel": "Copilot fragen",
-    "triggerAria": "Seentrix Copilot öffnen",
-    "eyebrow": "Copilot",
-    "title": "Seentrix Copilot",
+    "triggerLabel": "Seentrix AI fragen",
+    "triggerAria": "Seentrix AI öffnen",
+    "eyebrow": "Seentrix AI",
+    "title": "Seentrix AI",
     "close": "Schließen",
     "send": "Senden",
     "stop": "Stopp",
     "clearHistory": "Verlauf löschen",
-    "clearHistoryConfirm": "Alle Copilot-Unterhaltungen aus deinem Verlauf löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
-    "clearHistoryDone": "Copilot-Verlauf wurde gelöscht.",
+    "clearHistoryConfirm": "Alle Seentrix-AI-Unterhaltungen aus deinem Verlauf löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
+    "clearHistoryDone": "Seentrix-AI-Verlauf wurde gelöscht.",
     "clearHistoryFailed": "Verlauf konnte nicht gelöscht werden. Bitte erneut versuchen.",
     "feedback": {
       "helpful": "Hilfreich",
@@ -30,8 +30,8 @@
       "incident": "Wie funktionieren die 24h / 72h / 14-Tage-Fristen für Incidents?"
     },
     "marketing": {
-      "eyebrow": "KI-Copilot",
-      "title": "Der einzige CRA-Copilot, der deine Daten nicht an ein US-KI-Unternehmen schickt.",
+      "eyebrow": "Seentrix AI",
+      "title": "Der einzige CRA-Assistent, der deine Daten nicht an ein US-KI-Unternehmen schickt.",
       "lede": "Ein CRA-Spezialist direkt in Seentrix integriert. Stell Fragen auf Deutsch oder Englisch und erhalte Antworten, die in der Regulierung selbst verankert sind — mit der Datenresidenz-Story, die deine Einkaufs-Abteilung liebt.",
       "bullets": {
         "sovereign": {
@@ -56,11 +56,11 @@
       "learnMore": "Mehr erfahren →"
     },
     "learnMore": {
-      "title": "Seentrix Copilot",
+      "title": "Seentrix AI",
       "subtitle": "Dein EU-gehosteter CRA-Experte — direkt im Produkt.",
       "section1": {
-        "heading": "Warum ein Copilot",
-        "body": "Der CRA umfasst über 120 Seiten Regulierung. Die meisten Hersteller haben keinen Compliance-Anwalt im Haus. Der Copilot liest die Regulierung für dich, beantwortet Fragen in verständlicher Sprache und verweist dich zur richtigen Seentrix-Seite, wenn etwas zu tun ist."
+        "heading": "Warum ein KI-Assistent",
+        "body": "Der CRA umfasst über 120 Seiten Regulierung. Die meisten Hersteller haben keinen Compliance-Anwalt im Haus. Seentrix AI liest die Regulierung für dich, beantwortet Fragen in verständlicher Sprache und verweist dich zur richtigen Seentrix-Seite, wenn etwas zu tun ist."
       },
       "section2": {
         "heading": "Was er wirklich weiß",
@@ -72,11 +72,11 @@
       },
       "section4": {
         "heading": "Datenschutz und Aufbewahrung",
-        "body": "Unterhaltungen werden verschlüsselt in der Zeile deiner Organisation in unserer EU-Datenbank gespeichert und nach 180 Tagen gelöscht. Admins können den Verlauf jederzeit löschen. Mistral AI trainiert nicht auf deinen Daten (Zero-Retention-Vereinbarung)."
+        "body": "Unterhaltungen werden verschlüsselt in der Zeile deiner Organisation in unserer EU-Datenbank gespeichert und nach einem plan-abhängigen Zeitplan gelöscht (Free 7 Tage / Pro 90 / Business 180 / Enterprise 365). Nutzer können den Verlauf jederzeit löschen. Mistral AI trainiert nicht auf deinen Daten (Zero-Retention-Vereinbarung)."
       },
       "section5": {
         "heading": "Wenn er „Ich weiß es nicht\" sagt",
-        "body": "Wenn die abgerufenen Passagen eine Antwort nicht eindeutig stützen, sagt der Copilot das, statt zu raten. Bei jeder regulatorischen Antwort steht zudem „Keine Rechtsberatung — bitte mit qualifiziertem Rechtsbeistand bestätigen\". Er ist ein Werkzeug, kein Anwalt."
+        "body": "Wenn die abgerufenen Passagen eine Antwort nicht eindeutig stützen, sagt Seentrix AI das, statt zu raten. Bei jeder regulatorischen Antwort steht zudem „Keine Rechtsberatung — bitte mit qualifiziertem Rechtsbeistand bestätigen\". Er ist ein Werkzeug, kein Anwalt."
       },
       "quota": {
         "title": "Was du bekommst",

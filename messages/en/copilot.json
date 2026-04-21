@@ -1,15 +1,15 @@
 {
   "copilot": {
-    "triggerLabel": "Ask Copilot",
-    "triggerAria": "Open Seentrix Copilot",
-    "eyebrow": "Copilot",
-    "title": "Seentrix Copilot",
+    "triggerLabel": "Ask Seentrix AI",
+    "triggerAria": "Open Seentrix AI",
+    "eyebrow": "Seentrix AI",
+    "title": "Seentrix AI",
     "close": "Close",
     "send": "Send",
     "stop": "Stop",
     "clearHistory": "Clear history",
-    "clearHistoryConfirm": "Delete every Copilot conversation from your history? This cannot be undone.",
-    "clearHistoryDone": "Copilot history cleared.",
+    "clearHistoryConfirm": "Delete every Seentrix AI conversation from your history? This cannot be undone.",
+    "clearHistoryDone": "Seentrix AI history cleared.",
     "clearHistoryFailed": "Could not clear history. Please try again.",
     "feedback": {
       "helpful": "Helpful",
@@ -30,8 +30,8 @@
       "incident": "How do the 24h / 72h / 14d incident deadlines work?"
     },
     "marketing": {
-      "eyebrow": "AI Copilot",
-      "title": "The only CRA copilot that doesn't send your data to a US AI company.",
+      "eyebrow": "Seentrix AI",
+      "title": "The only CRA assistant that doesn't send your data to a US AI company.",
       "lede": "A CRA-specialist assistant built into Seentrix. Ask questions in plain English or German and get answers grounded in the regulation itself — with the data-residency story your procurement team will love.",
       "bullets": {
         "sovereign": {
@@ -56,11 +56,11 @@
       "learnMore": "Learn more →"
     },
     "learnMore": {
-      "title": "Seentrix Copilot",
+      "title": "Seentrix AI",
       "subtitle": "Your EU-hosted CRA expert — built into the product.",
       "section1": {
-        "heading": "Why a copilot",
-        "body": "The CRA is 120+ pages of regulation. Most manufacturers don't have a compliance lawyer on staff. The Copilot reads the regulation for you, answers questions in plain language, and points you to the right Seentrix screen when there's something to do."
+        "heading": "Why an AI assistant",
+        "body": "The CRA is 120+ pages of regulation. Most manufacturers don't have a compliance lawyer on staff. Seentrix AI reads the regulation for you, answers questions in plain language, and points you to the right Seentrix screen when there's something to do."
       },
       "section2": {
         "heading": "What it actually knows",
@@ -72,11 +72,11 @@
       },
       "section4": {
         "heading": "Privacy and retention",
-        "body": "Conversations are stored encrypted on your own organisation's row in our EU database and purged after 180 days. Admins can clear history any time. Mistral AI does not train on your data (zero-retention agreement)."
+        "body": "Conversations are stored encrypted on your own organisation's row in our EU database and purged on a plan-tiered schedule (Free 7 days / Pro 90 / Business 180 / Enterprise 365). Users can clear history any time. Mistral AI does not train on your data (zero-retention agreement)."
       },
       "section5": {
         "heading": "When it says \"I don't know\"",
-        "body": "If the retrieved passages don't clearly support an answer, the Copilot says so rather than guessing. You'll also see \"not legal advice — confirm with qualified counsel\" on every regulatory answer. It's a tool, not a lawyer."
+        "body": "If the retrieved passages don't clearly support an answer, Seentrix AI says so rather than guessing. You'll also see \"not legal advice — confirm with qualified counsel\" on every regulatory answer. It's a tool, not a lawyer."
       },
       "quota": {
         "title": "What you get",

@@ -1,7 +1,7 @@
 # Cyber Resilience Act — curated reference
 
 A condensed plain-language companion to Regulation (EU) 2024/2847. Each
-section below is chunked by article so the Copilot can cite them by
+section below is chunked by article so Seentrix AI can cite them by
 exact label.
 
 > **Verify against the official text.** The article + paragraph numbers

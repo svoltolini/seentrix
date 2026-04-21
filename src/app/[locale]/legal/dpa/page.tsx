@@ -163,12 +163,12 @@ export default function DpaPage() {
           </tr>
           <tr>
             <td>Mistral AI SAS</td>
-            <td>Seentrix Copilot — LLM inference + embeddings</td>
+            <td>Seentrix AI — LLM inference + embeddings</td>
             <td>France (EU)</td>
           </tr>
           <tr>
             <td>Upstash, Inc.</td>
-            <td>Rate-limit store for Copilot quotas</td>
+            <td>Rate-limit store for Seentrix AI quotas</td>
             <td>Ireland (EU)</td>
           </tr>
         </tbody>

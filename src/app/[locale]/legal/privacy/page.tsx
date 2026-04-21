@@ -99,7 +99,7 @@ export default function PrivacyPage() {
           resets, invitations, and notifications.
         </li>
         <li>
-          <strong>Mistral AI (Seentrix Copilot):</strong> region{" "}
+          <strong>Mistral AI (Seentrix AI):</strong> region{" "}
           <strong>Paris, France</strong>. Processes your Copilot prompts
           and returns the assistant's replies. Mistral AI does not train
           on your data (zero-retention agreement) and is a French-
@@ -132,7 +132,7 @@ export default function PrivacyPage() {
         <li>Backups: 30 days rolling.</li>
         <li>Sentry error traces: 90 days.</li>
         <li>
-          Seentrix Copilot chat transcripts: retained in our EU database
+          Seentrix AI chat transcripts: retained in our EU database
           on a plan-tiered schedule — Free 7 days, Professional 90 days,
           Business 180 days, Enterprise 365 days. A scheduled daily job
           deletes conversations older than the tier's window. Users can

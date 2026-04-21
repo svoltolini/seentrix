@@ -138,7 +138,7 @@ function AiContent() {
 }
 
 export const metadata = {
-  title: "AI Copilot",
+  title: "Seentrix AI",
   description:
-    "The only CRA-specialist AI copilot that runs entirely in the EU. Built into Seentrix.",
+    "The only CRA-specialist AI assistant that runs entirely in the EU. Built into Seentrix.",
 };
