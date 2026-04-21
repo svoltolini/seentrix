@@ -100,13 +100,14 @@ export default function PrivacyPage() {
         </li>
         <li>
           <strong>Mistral AI (Seentrix AI):</strong> region{" "}
-          <strong>Paris, France</strong>. Processes your Copilot prompts
-          and returns the assistant's replies. Mistral AI does not train
-          on your data (zero-retention agreement) and is a French-
-          incorporated company — no US entity is in the processing chain.
+          <strong>Paris, France</strong>. Processes your Seentrix AI
+          prompts and returns the assistant's replies. Mistral AI is a
+          French-incorporated company and does not train on your data
+          (zero-retention agreement) — your prompts stay on European
+          infrastructure throughout.
         </li>
         <li>
-          <strong>Upstash (Copilot rate-limit store):</strong> region{" "}
+          <strong>Upstash (Seentrix AI rate-limit store):</strong> region{" "}
           <strong>Ireland</strong>. Stores only a per-user message counter
           used to enforce plan quotas. No message content is written here.
         </li>

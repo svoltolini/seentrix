@@ -40,12 +40,12 @@
     },
     "marketing": {
       "eyebrow": "Seentrix AI",
-      "title": "Der einzige CRA-Assistent, der deine Daten nicht an ein US-KI-Unternehmen schickt.",
-      "lede": "Ein CRA-Spezialist direkt in Seentrix integriert. Stell Fragen auf Deutsch oder Englisch und erhalte Antworten, die in der Regulierung selbst verankert sind — mit der Datenresidenz-Story, die deine Einkaufs-Abteilung liebt.",
+      "title": "Ein CRA-Assistent, komplett auf europäischen Technologien aufgebaut.",
+      "lede": "Ein CRA-Spezialist direkt in Seentrix integriert. Stell Fragen auf Deutsch oder Englisch und erhalte Antworten, die in der Regulierung selbst verankert sind — betrieben Ende-zu-Ende auf Infrastruktur europäischer Unternehmen.",
       "bullets": {
         "sovereign": {
-          "title": "EU-souveräne KI",
-          "body": "Betrieben von Mistral AI (Paris). Kein US-Unternehmen in der Verarbeitungskette."
+          "title": "Europäisch konzipiert",
+          "body": "Betrieben von Mistral AI in Paris. Jeder Schritt der Pipeline läuft auf europäischer Infrastruktur."
         },
         "grounded": {
           "title": "In der Regulierung verankert",
@@ -77,7 +77,7 @@
       },
       "section3": {
         "heading": "Wo deine Daten liegen",
-        "body": "Jeder Schritt der Pipeline läuft auf EU-Infrastruktur. Die Inferenz läuft bei Mistral AI in Paris. Der Retrieval läuft in unserer eigenen Supabase in London. Die Webanwendung wird von Vercel in Frankfurt ausgeliefert. Kein US-Unternehmen in der Verarbeitungskette — auch nicht für deine Prompts."
+        "body": "Jeder Schritt der Pipeline läuft auf europäischer Infrastruktur. Die Inferenz läuft bei Mistral AI in Paris. Der Retrieval läuft in unserer eigenen Supabase in London. Die Webanwendung wird von Vercel in Frankfurt ausgeliefert. Deine Prompts und Transkripte bleiben Ende-zu-Ende in der europäischen Region."
       },
       "section4": {
         "heading": "Datenschutz und Aufbewahrung",

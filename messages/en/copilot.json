@@ -40,12 +40,12 @@
     },
     "marketing": {
       "eyebrow": "Seentrix AI",
-      "title": "The only CRA assistant that doesn't send your data to a US AI company.",
-      "lede": "A CRA-specialist assistant built into Seentrix. Ask questions in plain English or German and get answers grounded in the regulation itself — with the data-residency story your procurement team will love.",
+      "title": "A CRA assistant built entirely on European technologies.",
+      "lede": "A CRA-specialist assistant built into Seentrix. Ask questions in plain English or German and get answers grounded in the regulation itself — on infrastructure operated end-to-end by European companies.",
       "bullets": {
         "sovereign": {
-          "title": "EU-sovereign AI",
-          "body": "Powered by Mistral AI (Paris). No US entity in the processing chain."
+          "title": "European by design",
+          "body": "Powered by Mistral AI in Paris. Every hop in the pipeline runs on European infrastructure."
         },
         "grounded": {
           "title": "Grounded in the regulation",
@@ -77,7 +77,7 @@
       },
       "section3": {
         "heading": "Where your data lives",
-        "body": "Every hop in the pipeline is on EU infrastructure. Inference runs at Mistral AI in Paris. Retrieval runs in our own Supabase in London. The web app serves from Vercel in Frankfurt. No US company in the processing chain — including your prompts."
+        "body": "Every hop in the pipeline runs on European infrastructure. Inference runs at Mistral AI in Paris. Retrieval runs in our own Supabase in London. The web app serves from Vercel in Frankfurt. Your prompts and transcripts stay inside the European region end-to-end."
       },
       "section4": {
         "heading": "Privacy and retention",
