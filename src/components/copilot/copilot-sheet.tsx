@@ -15,6 +15,7 @@ import { cn } from "@/lib/utils";
 import { useCopilot } from "./copilot-context";
 import { CopilotMessage } from "./copilot-message";
 import { CopilotFeedback } from "./copilot-feedback";
+import { CopilotHistory } from "./copilot-history";
 import { clearCopilotHistory } from "@/app/[locale]/app/settings/copilot-actions";
 import { useToast } from "@/components/ui/toast";
 
@@ -91,6 +92,7 @@ export function CopilotSheet() {
 
   const { toast } = useToast();
   const [clearing, startClear] = useTransition();
+  const [historyOpen, setHistoryOpen] = useState(false);
 
   function onClearHistory() {
     if (!window.confirm(t("clearHistoryConfirm"))) return;
@@ -180,6 +182,15 @@ export function CopilotSheet() {
             </span>
           </div>
           <div className="flex items-center gap-1">
+            <button
+              type="button"
+              onClick={() => setHistoryOpen(true)}
+              aria-label={t("history.open")}
+              title={t("history.open")}
+              className="flex size-8 items-center justify-center rounded-md text-muted-foreground transition hover:bg-white/[0.04] hover:text-foreground"
+            >
+              <HugeIcon name="time-quarter-02-stroke-rounded" size={16} />
+            </button>
             {messages.length > 0 && (
               <button
                 type="button"
@@ -205,6 +216,21 @@ export function CopilotSheet() {
             </button>
           </div>
         </div>
+
+        {/* History overlay — covers the entire content area (including
+            header) so there's no awkward scroll interaction with the
+            transcript beneath. Has its own header + close button. */}
+        <CopilotHistory
+          open={historyOpen}
+          onClose={() => setHistoryOpen(false)}
+          onResume={(id, resumedMessages) => {
+            sessionIdRef.current = id;
+            setSessionId(id);
+            setMessages(resumedMessages);
+            stuckToBottomRef.current = true;
+            setHistoryOpen(false);
+          }}
+        />
 
         {/* Transcript / empty state --------------------------------------- */}
         <div

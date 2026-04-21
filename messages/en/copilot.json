@@ -11,6 +11,15 @@
     "clearHistoryConfirm": "Delete every Seentrix AI conversation from your history? This cannot be undone.",
     "clearHistoryDone": "Seentrix AI history cleared.",
     "clearHistoryFailed": "Could not clear history. Please try again.",
+    "history": {
+      "open": "Past conversations",
+      "eyebrow": "History",
+      "title": "Past conversations",
+      "untitled": "New conversation",
+      "empty": "No past conversations yet.",
+      "loadError": "Couldn't load your conversations. Please retry.",
+      "delete": "Delete"
+    },
     "feedback": {
       "helpful": "Helpful",
       "notHelpful": "Not helpful",

@@ -11,6 +11,15 @@
     "clearHistoryConfirm": "Alle Seentrix-AI-Unterhaltungen aus deinem Verlauf löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
     "clearHistoryDone": "Seentrix-AI-Verlauf wurde gelöscht.",
     "clearHistoryFailed": "Verlauf konnte nicht gelöscht werden. Bitte erneut versuchen.",
+    "history": {
+      "open": "Frühere Unterhaltungen",
+      "eyebrow": "Verlauf",
+      "title": "Frühere Unterhaltungen",
+      "untitled": "Neue Unterhaltung",
+      "empty": "Noch keine früheren Unterhaltungen.",
+      "loadError": "Unterhaltungen konnten nicht geladen werden. Bitte erneut versuchen.",
+      "delete": "Löschen"
+    },
     "feedback": {
       "helpful": "Hilfreich",
       "notHelpful": "Nicht hilfreich",
