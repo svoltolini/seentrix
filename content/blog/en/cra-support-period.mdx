@@ -1,0 +1,105 @@
+---
+title: "The CRA Support Period: How Long You Must Patch, and What Happens When the Clock Runs Out"
+description: "Article 13(8) of the Cyber Resilience Act turns the support period into a hard legal obligation. Here is how to set it, why five years is the wrong default answer, and what actually happens at end-of-support."
+date: "2026-05-10"
+category: "Regulation"
+author: "Seentrix Team"
+---
+
+Before the Cyber Resilience Act, the support period for a product was a marketing choice. After the CRA, it is a regulatory obligation — and one of the most misunderstood clauses in the entire regulation. Article 13(8) fixes a floor of five years, but the operative words are "not shorter than the expected product use" — meaning five years is only the floor, not the answer. For most products, the right number is longer, and manufacturers who default to five years without doing the analysis will find themselves explaining that decision to a market-surveillance authority.
+
+This article walks through what Article 13(8) actually requires, how to decide a defensible support period for your product, what you must communicate to users, and what the end of the support period legally means.
+
+## What Article 13(8) Actually Says
+
+The core text, paraphrased for clarity: the manufacturer shall determine the support period based on the duration for which the product is expected to be used, taking into account, in particular, consumer expectations, the nature of the product, and the relevant Union law. The period shall be not shorter than five years, except where the product is reasonably expected to be used for a shorter time.
+
+Three points follow from that wording:
+
+1. **Five years is the floor**, not the default. A longer period is required if the product is expected to be used longer.
+2. **The period must be defensible.** "We picked five years because the competitor did" is not a valid justification. The manufacturer must have considered the product's actual expected use.
+3. **Shorter periods are permitted only in narrow cases** — products with a genuine expected useful life under five years, such as disposable consumer electronics.
+
+## How to Decide the Support Period for Your Product
+
+A defensible support period derives from a simple question: *for how long are users reasonably expected to keep using this product?* Answering it requires evidence from three sources.
+
+### 1. Market evidence
+
+How long do similar products stay in deployment in practice? For consumer IoT, field studies typically show 5–8 years. For industrial controllers, 15–25 years. For enterprise networking equipment, 7–12 years. For smart-home hubs and app-paired devices, 4–7 years (limited in practice by the longevity of the accompanying mobile app, not the hardware).
+
+### 2. Regulatory peers
+
+Some product categories already have minimum support periods under sector-specific rules. Medical devices under the MDR typically have a post-market surveillance period that runs for the product's useful life. Machinery under the Machinery Regulation similarly anchors its obligations to useful life. The CRA does not override these; it adds a floor of five years beneath them.
+
+### 3. Consumer expectation
+
+What did the buyer reasonably expect at the point of sale? A consumer spending €2,000 on a smart fridge reasonably expects ten-plus years of use. A consumer spending €30 on a budget smart bulb reasonably expects three to five. The price point, the marketing claims, and the commercial positioning all inform consumer expectation — and all are legitimate factors a regulator will consider.
+
+Put the three together: **market evidence × regulatory peer × consumer expectation** gives you a number. Round conservatively. "Seven years" is easier to defend than "five years and one month".
+
+## What the Support Period Obligation Covers
+
+During the support period, Annex I Part II requires the manufacturer to:
+
+- **Identify and document vulnerabilities** — keep an up-to-date SBOM.
+- **Address and remediate vulnerabilities without delay** — ship fixes.
+- **Test product security regularly.**
+- **Disclose fixed vulnerabilities publicly** via advisories.
+- **Operate a coordinated vulnerability disclosure policy.**
+- **Facilitate information sharing** about the product's security state.
+- **Provide secure update distribution mechanisms.**
+- **Disseminate security patches free of charge and without delay**, with clear advisory messaging about what the patch fixes.
+
+Critically, Article 13(8) adds: security updates must be **separated from functionality updates** and available for the full support period. A manufacturer cannot withhold a security patch because the user has not also upgraded to the latest feature release.
+
+## What Must Be Communicated to Users
+
+Annex II(6) requires the manufacturer to communicate the support-period end date to users in the product documentation. "Security updates are provided for five years from the date of purchase" is not specific enough — the regulation requires "the point at which technical support ends, expressed as a date".
+
+In practice, this means:
+
+- **On-product documentation:** the end-of-support date in the user manual or an equivalent accompanying document.
+- **Online:** a product-specific support page that shows the date and is discoverable from the product.
+- **In-product, where possible:** firmware builds should know their own EOS date and surface it in a settings screen.
+
+The end date is fixed at manufacture, not at first sale. A unit sitting on a retailer's shelf for two years before sale still hits its published EOS on the original date — which is one reason most manufacturers set the support-period floor at a date slightly later than the minimum, to absorb distribution delay.
+
+## What Happens at End-of-Support
+
+When the support period ends, two things change simultaneously.
+
+**For the manufacturer:**
+
+- The Annex I Part II obligations (vulnerability handling, security updates, disclosure) no longer apply to units of that product placed on the market before the EOS date. They still apply to units placed on the market *after* EOS, if any — which effectively means the manufacturer must stop shipping the product.
+- The ten-year retention obligation (Article 13(20)) for the Declaration of Conformity and technical documentation starts running from the last unit placed on the market, not from EOS. Documentation must be kept for ten years *after* the last sale.
+
+**For the user:**
+
+- Security patches stop being shipped.
+- The product's cybersecurity posture effectively freezes in time. Any new vulnerability discovered after EOS may remain unpatched.
+- Consumer-protection law in many member states requires the manufacturer to clearly communicate that the product is no longer receiving security support, so users can decide whether to continue using it.
+
+The regulatory design intent is that end-of-support is an *information event*, not a *failure event*. Users are entitled to know. Manufacturers are entitled to stop supporting. What is not entitled: silently stopping support while continuing to market the product as "secure".
+
+## Common Pitfalls
+
+**Setting the period too short.** Five years for a product that is actually deployed for eight creates a two-year liability window where users still use the product, authorities consider them in scope of "consumer expectation", and the manufacturer no longer ships patches. The resulting regulatory exposure is worse than simply declaring seven years up front.
+
+**Setting it without technical capacity.** Committing to ten years of support requires a build pipeline, dependency graph, and staff continuity that can still produce secure builds ten years from now. Legacy toolchains, deprecated SDKs, and lost internal knowledge all make long support periods operationally brittle.
+
+**Not communicating EOS.** If the EOS date is not clearly on the product, in the manual, on the website, and ideally in the product itself, the manufacturer has breached Annex II(6) separately from any Article 13(8) issue.
+
+**Resetting the clock on refresh releases.** A minor refresh of a product (new SKU, new colour, updated firmware) does not extend the support period for already-shipped units. Each unit's EOS is fixed at the date it was placed on the market; only a new product type with a new SKU starts a new support clock.
+
+## How to Document the Decision
+
+The support-period decision belongs in the technical documentation file — specifically in the risk assessment (Annex VII(3)) and in a dedicated "support period rationale" note that references the three evidence sources above. A regulator who questions the period gets pointed to that note.
+
+The rationale does not need to be long. One page, with the three evidence inputs, the number chosen, and why. But it must exist and must be datable.
+
+## How Seentrix Fits In
+
+The product setup flow in Seentrix asks for a support-period start and end date and uses them to drive three things: the end-user cybersecurity information sheet (where the EOS date appears in the user-facing document), the public PSIRT page (which declares the supported versions), and the dashboard countdown so a support period about to expire becomes visible months before the date, not afterwards.
+
+If you are setting a support period for the first time, the questions above are the homework. If you want the date itself to propagate into the user-facing documents and the technical file automatically, that is what the Seentrix Documents tab does.

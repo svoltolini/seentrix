@@ -1,0 +1,133 @@
+---
+title: "CRA for Small Teams: Running a Compliance Programme Without a Compliance Department"
+description: "The Cyber Resilience Act was written for manufacturers with legal, quality, and security functions in the same building. Most small product teams have none of those. Here is how to run a compliant CRA programme at 5, 15, or 50 people — without hiring for it."
+date: "2026-05-15"
+category: "Compliance"
+author: "Seentrix Team"
+---
+
+The Cyber Resilience Act applies to every manufacturer placing a product with digital elements on the EU market — a smart-thermostat company with twelve engineers is held to the same essential requirements as a multinational with a dedicated CRA programme office. The regulation's proportionality language helps a little, but the underlying obligations do not scale down. The SBOM obligation is the same. The 24-hour incident-reporting window is the same. The ten-year technical-file retention requirement is the same.
+
+For most small manufacturers, the realistic question is not "how do we build a proper compliance department?" — there is no budget for one — but "how do we meet our CRA obligations with the people and tools we already have?". This article is a practical answer.
+
+## Start by Scoping the Problem Honestly
+
+Before you decide how to run a CRA programme, decide how much programme you actually need. Three product attributes drive most of the cost:
+
+1. **CRA class** — default, Important Class I, Important Class II, or Critical. Default class never needs a notified body; Important Class II always does. The gap between those two cost profiles is six figures.
+2. **Product count** — a company with one product can centralise compliance artefacts on a single person. A company with ten products needs a process.
+3. **Support-period length** — a five-year support period means five years of vulnerability-handling capacity. A ten-year support period on an industrial product is a much bigger operational commitment.
+
+For a typical small team with one or two default-class consumer products and a 5-year support period, CRA compliance is achievable as a fractional responsibility split across existing roles. For a small team with a Class II product and a 10-year support period, CRA compliance demands dedicated headcount. Know which you are before you plan.
+
+## Map the Obligations to Existing Roles
+
+The CRA does not prescribe an org chart. Nothing in the regulation requires a "Chief Compliance Officer" or a "Security Program Manager". Obligations can be discharged by whoever is accountable, provided they are discharged.
+
+A workable mapping for a 10–30 person product team:
+
+- **CTO or Head of Engineering** — owns the Article 13 essential-requirements compliance, the Annex I security-by-design evidence, the SDLC documentation, and the SBOM toolchain.
+- **Lead engineer on each product** — owns the product-specific risk assessment, the Annex I control mapping, and the technical documentation file for that product.
+- **Founder, CEO, or operations lead** — owns the Declaration of Conformity as legal signatory, the notified-body relationship if one exists, and the Article 14 incident-reporting submissions.
+- **Anyone who talks to customers** — owns awareness of incoming security reports, with a hand-off path to the incident-response owner.
+
+The key word is "owns". Each obligation needs a named person accountable for it, and that person needs enough authority to act. If the Article 14 early-warning submission has to wait for the CEO's approval at 03:00 on a Saturday, it will miss the 24-hour clock.
+
+## The Five Operational Capabilities You Actually Need
+
+Boiling the CRA down to what must be operationally real:
+
+### 1. An SBOM pipeline for every release
+
+Not a one-off scan — an automated pipeline that produces a CycloneDX SBOM on every release candidate and retains it alongside the build artefact. This is the single highest-leverage capability. Without it, vulnerability-handling obligations (Article 13(2), Annex I Part II) are unenforceable on your own codebase.
+
+For a small team with existing CI, Syft or Trivy in the pipeline is a one-afternoon add. Upload the result somewhere it persists for the product's ten-year retention window.
+
+### 2. A coordinated vulnerability disclosure policy with a single public contact
+
+Annex I Part II(5) requires a VDP. Article 13 Part II(1)(c) implicitly requires a single point of contact for reports. The minimum viable version is a public page at `example.com/security` that states:
+
+- Scope (which products are covered).
+- Reporting channel (an email or web form).
+- What the reporter can expect (acknowledgement within X days, resolution timeline).
+- Legal safe-harbour for good-faith researchers.
+
+Setting this up takes a day. Operating it is a fractional responsibility — most small teams get one to five inbound reports per year.
+
+### 3. A vulnerability-handling cadence
+
+When a new CVE affects one of your dependencies, you need a process that — within days, not weeks — decides whether it applies, whether to ship a patch, and whether to notify customers. For a small team, this looks like:
+
+- A Slack channel or equivalent that receives SBOM-driven alerts on new CVEs.
+- A weekly 15-minute triage meeting to disposition each alert.
+- A documented SLA for fix timing (e.g. Critical within 7 days, High within 30, Medium within 90).
+
+The SLA numbers matter less than having them written down — the CRA does not prescribe SLAs but auditors expect them to exist and to be followed.
+
+### 4. A 24-hour awareness funnel
+
+Article 14 demands that a "severe incident" or "actively exploited vulnerability" be reported within 24 hours of the manufacturer becoming aware. "Becoming aware" is a company-level event, not a person-level one. The funnel is:
+
+- A single inbox (e.g. `security@example.com` or an internal ticket queue) where all incoming signals land.
+- A rule that says anyone receiving a potentially severe signal forwards it to that inbox within 2 hours.
+- Ownership that says a named person checks the inbox at least daily — ideally with on-call rotation for weekends and holidays.
+
+Small teams rarely need enterprise-grade incident response tooling; they need a reliable inbox and a rule about what lands in it.
+
+### 5. A technical-file folder that is actually maintained
+
+Annex VII is a content requirement, but it is also a discipline. A folder per product, organised by the eleven Annex I requirements and the eleven Annex VII sections, maintained in a shared document-management system, updated every time a material decision is made.
+
+Small teams fail here not because they cannot build the folder but because nobody updates it after the initial build. The counter-discipline is linking the technical-file folder to engineering changes: every product pull request that affects security or the product's external interfaces gets a required checkbox — "technical file updated?". It is low-overhead once in place and near-impossible to retrofit.
+
+## What You Can Skip (for Now)
+
+A small team does not need:
+
+- **A dedicated compliance hire.** Until the product portfolio grows or the CRA class escalates, fractional ownership across existing roles is enough.
+- **A full ISO 27001 programme.** Useful eventually, not prerequisite for CRA.
+- **Enterprise GRC tooling.** A shared drive and a spreadsheet beats unused software.
+- **A full IEC 62443-4-1 SDLC certification.** Valuable for industrial products; overkill for consumer.
+- **A third-party penetration test for every release.** Annual is defensible for most Class I products; per-release is overinvestment.
+
+The CRA proportionality principle explicitly contemplates these things being graduated based on product risk and manufacturer scale. What matters is that the essential requirements are met — not that the meeting of them is maximally formal.
+
+## What You Cannot Skip
+
+You cannot skip:
+
+- The **Declaration of Conformity** for every product placed on the market.
+- The **SBOM** (at least top-level dependencies) for every release.
+- The **vulnerability disclosure policy**, publicly reachable.
+- The **risk assessment** for each product.
+- The **ten-year retention** of the technical file.
+- The **24-hour awareness funnel** for Article 14 events.
+
+None of those are optional at any company size, and all of them become exponentially harder to build under audit pressure than up front.
+
+## A Realistic 12-Week Runway for a Small Team
+
+If you are starting from zero with one product in scope and want to be CRA-ready by a specific date, a twelve-week programme looks like:
+
+- **Weeks 1–2:** Scope the product. Determine CRA category, conformity-assessment route, support-period decision. Assign obligation ownership to existing roles.
+- **Weeks 3–4:** Stand up the SBOM pipeline. Publish the VDP. Set up the security inbox.
+- **Weeks 5–7:** Run the risk assessment. Produce the first pass at the technical file.
+- **Weeks 8–9:** Apply harmonised standards to the product. Document gaps and remediation.
+- **Weeks 10–11:** Internal review. Penetration test if needed. Finalise technical file.
+- **Week 12:** Sign the Declaration of Conformity. Affix CE marking. Place on market.
+
+That timeline works for a default-class or self-assessable Class I product. A Class II product requiring notified-body engagement adds 6–12 months and should be planned accordingly.
+
+## The Biggest Small-Team Mistake
+
+Treating CRA compliance as a one-time project. The obligations — vulnerability handling, incident reporting, support-period maintenance, technical-file retention — continue for the entire product life. A programme that lands the DoC on time but does not build ongoing capability is worse than one that misses the DoC by a month but runs sustainably afterwards.
+
+Build for the ten-year horizon, not for the launch date.
+
+## How Seentrix Fits In
+
+Seentrix was built explicitly for manufacturers who do not have a compliance department — the five-person IoT startup, the fifteen-person automation vendor, the fifty-person enterprise-software team. The platform handles the structured parts of the programme (DoC generation, technical-file skeleton, SBOM ingestion and vulnerability tracking, Article 14 incident workflow, PSIRT page) so that compliance is a fractional responsibility, not a full-time role.
+
+What Seentrix does not do is think for you. The decisions above — CRA category, support period, SLA, risk appetite, team ownership — are yours. The platform makes the downstream work cheaper to do well.
+
+A small team running a CRA programme well looks a lot like a big team running it well, with less management overhead. The regulation does not shrink for you; your leverage over it comes from shrinking the unnecessary parts of compliance work, not from lowering the bar.

@@ -1,0 +1,141 @@
+---
+title: "Technical Documentation Under CRA Annex VII: A Working Contents List for Your Product File"
+description: "The technical documentation file is where a market-surveillance audit lives or dies. Here is what Annex VII actually requires, organised as a working contents list you can copy into a folder structure today."
+date: "2026-04-29"
+category: "Technical"
+author: "Seentrix Team"
+---
+
+When a market-surveillance authority knocks on your door under the Cyber Resilience Act, they are not asking to see your product. They are asking to see your technical documentation file. Article 13(19) requires every manufacturer to draw up the file before placing a product on the market. Article 13(20) requires it to be retained for ten years after the last unit ships. Annex VII specifies what must be in it.
+
+Unlike the Declaration of Conformity — which is a single page — the technical file is a body of evidence. It is the record that shows how you designed security into the product, how you tested it, how you handle vulnerabilities, and what standards you applied. It is also the most time-consuming artefact to assemble, because the individual items live in different departments and different tools and need to be reconciled into a single, auditable source of truth.
+
+This article walks through each Annex VII requirement, translates the legal language into a concrete artefact, and ends with a folder structure you can copy into your document-management system today.
+
+## What Annex VII Literally Asks For
+
+Annex VII is organised as a numbered list. Nothing in it is optional; every item must be present (or explicitly marked "not applicable" with a reason).
+
+### 1. General Description of the Product
+
+The product, what it does, and how it is used. Include photographs or design drawings that show external features, internal architecture at a block level, and the position of any user interface or physical controls.
+
+**In the folder:** `01-general-description/` with `product-overview.md`, `external-photos/`, `architecture-diagram.pdf`.
+
+### 2. Design, Development, Production, and Vulnerability-Handling Processes
+
+The processes — plural — by which the product is produced. This is the audit of how you work: your SDLC, your security review gates, your code-review requirements, your release-engineering pipeline, your build integrity controls, and the process by which you handle vulnerabilities over the support period.
+
+**In the folder:** `02-processes/` with `sdlc-overview.md`, `security-review-gate.md`, `build-integrity.md`, `vulnerability-handling-policy.md`, `release-process.md`.
+
+The trick here is to not write this from scratch. Most of these processes already exist inside engineering but are not documented for external audiences. The work is translation, not invention.
+
+### 3. Cybersecurity Risk Assessment
+
+The formal risk assessment required by Article 13(3). The document identifies the threats the product is designed to address, the likelihood and impact of each, the controls in place, and the residual risk after controls.
+
+**In the folder:** `03-risk-assessment/` with `risk-register.md`, `threat-model-stride.md`, `data-flow-diagrams/`, `review-minutes.md`.
+
+A single sentence from Article 13(3) often misses a practical point: the risk assessment must be *updated* during the support period. Keep the risk register under version control; keep review minutes that show it was re-evaluated after material changes.
+
+### 4. Relevant Harmonised Standards Applied
+
+A list of the harmonised standards that were applied in full or in part. For each, reference the version you used.
+
+**In the folder:** `04-standards-applied/` with `standards-list.md` and a subfolder per standard containing the test plan, test results, and any deviation notes.
+
+### 5. Solutions Adopted Where Harmonised Standards Were Not Applied
+
+Where a harmonised standard was not applied (because none existed, because you used a different technical specification, or because you only applied part of the standard), describe the solution you adopted to meet the essential requirement anyway.
+
+**In the folder:** `05-alternative-solutions/` with one file per essential requirement not fully covered by a standard.
+
+This is the part of the technical file regulators read most closely. It is also where undocumented engineering decisions come back to bite the compliance programme.
+
+### 6. Reports of Tests Carried Out
+
+The actual test reports that demonstrate conformity. Functional tests, security tests, penetration-testing reports, and the specific tests required by Annex I Part II(3) ("effective and regular tests and reviews of product security").
+
+**In the folder:** `06-test-reports/` organised by test type, with each report dated and signed (electronically or otherwise).
+
+The common mistake here is relying entirely on automated test results. A market-surveillance auditor wants to see penetration-test reports, red-team exercises, or independent security reviews — not only unit-test pass/fail summaries.
+
+### 7. Copy of the EU Declaration of Conformity
+
+The signed DoC goes in the file alongside the evidence that supports it. If the DoC has been revised, all prior versions stay in the file — deletions are a red flag.
+
+**In the folder:** `07-doc/` with the current version and an archive subfolder for past versions.
+
+### 8. Software Bill of Materials
+
+The SBOM required by Annex I Part II(1), in a machine-readable format (CycloneDX or SPDX). The file should include the SBOM for each release placed on the market during the technical-file retention period.
+
+**In the folder:** `08-sbom/` with one file per release version.
+
+A mistake worth avoiding: SBOMs must cover at least top-level dependencies. Auditors will look for transitive dependencies too; omitting them invites follow-up questions.
+
+### 9. Vulnerability Disclosure Policy
+
+The coordinated-vulnerability-disclosure policy required by Annex I Part II(5). Including the public contact point, the expected response timeline, and the scope (which products are covered).
+
+**In the folder:** `09-vulnerability-disclosure/` with the policy document, a link to the public page, and a log of incoming reports + dispositions.
+
+### 10. Where Applicable: Notified-Body Certificate
+
+If your conformity-assessment route involved a notified body, their certificate (or quality-system approval for Module H) goes in the file.
+
+**In the folder:** `10-notified-body/` with the certificate PDF and any surveillance-audit reports.
+
+### 11. Additional Information Required by Sector-Specific Legislation
+
+If the product also falls under the Radio Equipment Directive, the Medical Device Regulation, the Machinery Regulation, or any other harmonisation legislation, additional documentation required by those acts goes here.
+
+**In the folder:** `11-sector-specific/` with one subfolder per overlapping regulation.
+
+## A Working Folder Structure
+
+Combining all of the above, a minimum-viable technical file looks like:
+
+```
+technical-documentation/
+  <product-id>/
+    01-general-description/
+    02-processes/
+    03-risk-assessment/
+    04-standards-applied/
+    05-alternative-solutions/
+    06-test-reports/
+    07-doc/
+    08-sbom/
+    09-vulnerability-disclosure/
+    10-notified-body/
+    11-sector-specific/
+    CHANGELOG.md
+```
+
+The `CHANGELOG.md` is not required by Annex VII but is near-essential in practice. It records every material change to any artefact in the file — who made it, when, why. Ten years is long enough that institutional memory will fail you; the changelog is how you reconstruct decisions.
+
+## How Long Each Piece Takes to Build (Realistically)
+
+From a standing start, for a moderately complex product:
+
+- **General description + architecture diagrams:** 3–5 days.
+- **Process documentation (SDLC, build, release, vuln handling):** 2–4 weeks, because it requires translating existing engineering practice into external-facing prose.
+- **Risk assessment:** 1–3 weeks for a formal threat model and risk register, followed by continuous maintenance.
+- **Standards application + test reports:** weeks to months, depending on whether you need external penetration testing.
+- **SBOM + vulnerability disclosure policy:** days, assuming an SBOM toolchain is in place.
+- **Declaration of Conformity:** hours, once the rest of the file supports it.
+
+First-time CRA programmes commonly underestimate this by a factor of two to three. The December 2027 deadline is not as far away as it looks.
+
+## Where Things Go Wrong After the File Is Built
+
+The biggest post-build risk is drift. Engineering ships a new firmware release that changes authentication; the technical file still references the old scheme. A process gets updated in the team wiki; the technical-file copy stays frozen. Six months later, a market-surveillance request arrives and the file on record no longer describes the product that is on the market.
+
+The defence is a change-control process that treats the technical file as a first-class artefact: pull requests to the technical-file repository reviewed alongside the product pull requests that triggered them.
+
+## How Seentrix Fits In
+
+Inside each Seentrix product, the Documents tab generates the first-party artefacts directly — the Declaration of Conformity, the end-user cybersecurity information sheet, the vulnerability disclosure policy, the technical-documentation skeleton — all filled in from the product data and organisation details already on file. The Vulnerabilities tab logs every incoming vuln report and its disposition, which is the content of §9 above. The SBOM tab retains every version you upload, which is the content of §8.
+
+Seentrix does not replace the technical-file folder — your own document-management system still owns test reports, penetration-testing output, and internal process docs — but it shortens the assembly time for the CRA-specific artefacts from weeks to an afternoon, and it keeps them version-controlled alongside the product they describe.

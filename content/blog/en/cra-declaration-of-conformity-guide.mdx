@@ -1,0 +1,112 @@
+---
+title: "Writing Your CRA Declaration of Conformity: A Practical Guide to Annex IV"
+description: "The EU Declaration of Conformity is the single page your product lives or dies by under the CRA. Here is what Annex IV actually requires, written the way a compliance officer needs to read it."
+date: "2026-04-30"
+category: "Compliance"
+author: "Seentrix Team"
+---
+
+Under Article 13(19) of the Cyber Resilience Act, you cannot affix the CE marking to a product with digital elements — and therefore cannot place it on the EU market — until you have drawn up an EU Declaration of Conformity. The document is short, often a single page, and it is the artefact every market-surveillance authority will ask for first. A missing or incomplete DoC is not a technicality. It is the single fastest way to get your product withdrawn from the Union market.
+
+This article walks through Annex IV item by item — what the regulation literally asks for, the common mistakes manufacturers make at each line, and how to structure the document so that reading it is easy for an auditor who has never heard of your product.
+
+## What the Declaration of Conformity Actually Is
+
+The DoC is the manufacturer's own written statement that a specific product complies with Regulation (EU) 2024/2847 and any other Union harmonisation legislation that applies. It is issued "under the sole responsibility" of the manufacturer — no third party signs it, no notified body counter-signs it (even when one was involved in the conformity assessment route). The manufacturer alone stands behind the statement.
+
+Three consequences follow from that structure:
+
+1. **The document must be true.** Signing a DoC that misrepresents the product or the standards applied is a breach of Article 13 that exposes the company and, in some member states, its directors, to administrative fines of up to €15 million or 2.5% of global turnover.
+2. **It must be kept for ten years after the last unit of the product was placed on the market** (Article 13(20)). That is longer than most support periods, longer than most company-retention policies, and longer than many products' actual commercial life.
+3. **It must accompany the product** or be made available electronically (Annex II(9)). Printing it on the box is allowed; linking to a stable URL is also allowed.
+
+## The Nine Mandatory Fields of Annex IV
+
+Annex IV spells out the minimum content of the DoC. In practice most regulators expect the fields in roughly this order.
+
+### 1. Unique Identification of the Product
+
+A serial number, batch code, or product code that lets a specific unit be traced back to the declaration. For software, a version number and a cryptographic hash of the release artefact are acceptable.
+
+**Common mistake:** using the marketing name without a version. "Acme Smart Gateway" is not identification. "Acme Smart Gateway, hardware revision C, firmware 3.1.2" is.
+
+### 2. Manufacturer's Name and Registered Address
+
+The legal entity that is responsible, with its statutory address. A trading name is not enough — the entity on Companies House / the Handelsregister is what belongs here.
+
+**Common mistake:** listing a distribution subsidiary instead of the entity that actually manufactures. The CRA follows the "who designs / develops / has manufactured" rule of Article 3(13), not whoever appears on the invoice.
+
+### 3. Statement of Responsibility
+
+A single sentence: *"This Declaration of Conformity is issued under the sole responsibility of the manufacturer."* No embellishment needed.
+
+### 4. Object of the Declaration
+
+A description of the product sufficient to allow traceability. If the product has variants (different SKUs sharing the same firmware, say), either list them all or issue separate DoCs. Including a photograph is optional but often helpful for inspectors.
+
+### 5. Reference to the CRA
+
+Literally: *"The object of the declaration described above is in conformity with the relevant Union harmonisation legislation: Regulation (EU) 2024/2847 (the Cyber Resilience Act)"* — plus any other regulation the product also falls under (RED, Machinery, MDR, and so on).
+
+### 6. Harmonised Standards or Technical Specifications Applied
+
+This is the field that does the most work. You list the standards you relied on to claim conformity — for example EN 18031-1 (cybersecurity for radio equipment), ETSI EN 303 645 (consumer IoT baseline), or IEC 62443-4-2 (industrial automation). If you applied a technical specification instead, reference it and its date.
+
+**Common mistake:** listing a standard you partially applied without explaining which requirements you did not meet. The declaration can apply a standard "in full or in part" but the technical documentation (Annex VII) must then explain how the remaining Annex I requirements were satisfied by other means.
+
+### 7. Notified Body Details
+
+If your conformity-assessment route involved a notified body (required for Important Class II, Critical products, and Class I without harmonised standards), list the body's name, four-digit identification number, and the certificate number they issued. If the product uses self-assessment (Module A), this block is omitted entirely.
+
+### 8. Additional Information Required by Other Union Law
+
+Some products are in scope of more than one regulation. A medical-device / software hybrid, for example, needs information required by the MDR as well. Use this block to list anything the CRA alone does not cover.
+
+### 9. Place, Date, Signature, Name, Function of Signatory
+
+Any authorised signatory of the manufacturer can sign — in practice, a director or a compliance officer with written authority. The date is the date of issue, not the date of market placement. An electronic signature is fine; a typed name on a branded letterhead is fine; a hand-wet signature is fine. What matters is that the signatory can be tied to the manufacturer in company records.
+
+## A Worked Example
+
+A hypothetical DoC for a Wi-Fi router — a Class I product falling under both the CRA and the RED — reads like this:
+
+> **EU Declaration of Conformity — Acme Router Pro · v1 · Issued 11 September 2026**
+>
+> Acme Networks Ltd, 12 Example Street, London EC1A 1AA, United Kingdom (Companies House 12345678), issues this Declaration of Conformity under its sole responsibility.
+>
+> Object of the declaration: Acme Router Pro, model AR-100, hardware revision B, firmware 2.0.4 (sha-256: 9f2a…). Photograph attached at page 2.
+>
+> The object of the declaration described above is in conformity with Regulation (EU) 2024/2847 (the Cyber Resilience Act) and Directive 2014/53/EU (the Radio Equipment Directive).
+>
+> Harmonised standards applied in full: EN 18031-1:2024, EN 301 489-17 v3.2.6, ETSI EN 300 328 v2.2.2.
+>
+> Notified body: Acme is not required to engage a notified body because the product falls under Important Class I and the applied harmonised standards cover all essential requirements.
+>
+> Signed in London, 11 September 2026.
+> Jane Smith, Director — Acme Networks Ltd.
+
+That is a complete DoC. It fits on one page. An inspector can read it in thirty seconds and tell you immediately what else they need to see in the technical documentation file.
+
+## What to Keep Alongside the DoC
+
+The DoC itself does not travel with internal evidence — that lives in the technical documentation file (Annex VII) and must be retained for the same ten-year period. The supporting artefacts a market-surveillance authority will typically ask for include:
+
+- The signed Declaration itself
+- The technical documentation (risk assessment, test reports, SBOM, vulnerability-handling policy)
+- Evidence that the harmonised standards listed were actually applied (test reports, internal audit notes)
+- The notified-body certificate, if the route involved one
+- The list of changes between versions, so the DoC can be traced to a specific release
+
+## Common Post-Issuance Mistakes
+
+Even after a well-drafted DoC is signed, compliance is not static:
+
+- **Firmware updates** can change the scope of the declaration. A material change to the product's security architecture requires re-assessment and may require a new DoC.
+- **Standards updates** mean the harmonised standard you listed may have been superseded. The DoC remains valid for units already placed on the market, but new units should reference the current standard.
+- **Organisational changes** — a merger, a change of legal name, a new address — mean the manufacturer on the DoC no longer exists as described. The DoC file needs an annotated record of the succession.
+
+## How Seentrix Fits In
+
+The DoC generator inside Seentrix walks through every Annex IV field using the product data you have already entered. It flags the common gaps — an organisation legal name that has not been set, a notified body field required by the product's CRA category but left empty, a firmware version that changed since the last DoC was issued — and produces the final document as a versioned PDF stored alongside the rest of the ten-year technical file.
+
+If you are about to write your first DoC by hand, the Annex IV structure above is the skeleton. If you would rather have your product data fill itself into the skeleton automatically, that is what the Documents tab of every Seentrix product is for.

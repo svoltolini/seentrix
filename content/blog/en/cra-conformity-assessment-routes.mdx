@@ -1,0 +1,113 @@
+---
+title: "CRA Conformity Assessment Routes: Module A, B+C, H, and European Certification Explained"
+description: "Choosing the wrong conformity-assessment route under the CRA costs you between a few weeks and several hundred thousand euros. Here is how the four routes actually work, which one applies to your product, and when you need a notified body."
+date: "2026-05-03"
+category: "Compliance"
+author: "Seentrix Team"
+---
+
+Not every product with digital elements goes through the same compliance path. The Cyber Resilience Act borrows the European approach to conformity assessment from the New Legislative Framework: a menu of standardised "modules" that scale from pure self-declaration through to a full third-party quality-system audit. Picking the right one is the single most consequential decision in your CRA programme, because it determines how long compliance takes, how much it costs, and whether a notified body needs to be involved at all.
+
+This article walks through each of the four routes Article 32 of the CRA makes available — what they require, when you must use them, and the common mistakes teams make at the selection stage.
+
+## First: Which CRA Category Is Your Product In?
+
+Before you can pick a route, you need to know which class the CRA puts your product in. Article 6 defines three classes plus a "default" group:
+
+- **Default (Article 6(1))** — the large majority of products with digital elements. No specific listing in Annex III.
+- **Important — Class I (Annex III(1))** — higher-risk products such as password managers, identity-management systems, browsers, VPNs, routers, firewalls, smart-home controllers, and networked security cameras.
+- **Important — Class II (Annex III(2))** — higher-still risk products such as operating systems, hypervisors, public-key-infrastructure products, network HSMs, and general-purpose security products.
+- **Critical (Article 7 + Annex IV)** — a short list of products with the highest systemic importance, such as hardware security devices, smart meters, and smartcards; also subject to mandatory European cybersecurity certification.
+
+The class determines which routes are permitted. Picking a lighter route than your class allows is a breach of Article 32; picking a heavier route is always allowed but costs you time and money you may not need to spend.
+
+## Module A — Internal Production Control (Self-Assessment)
+
+Module A is the lightest route the CRA offers. The manufacturer alone performs the conformity assessment: they apply the relevant harmonised standards, produce the technical documentation, and sign a Declaration of Conformity. No notified body is involved.
+
+**Who can use Module A:**
+
+- Default-class products.
+- Important Class I products *if and only if* the manufacturer applies harmonised standards (or common specifications, or a European cybersecurity certification scheme) that cover all applicable essential requirements of Annex I.
+
+**What Module A actually requires:**
+
+1. Draw up the technical documentation (Annex VII).
+2. Apply the harmonised standards listed in the Official Journal for your product category.
+3. Perform the risk assessment required by Article 13(3).
+4. Run sufficient testing to verify that the product meets the Annex I requirements.
+5. Issue the Declaration of Conformity (Annex IV) and affix the CE marking.
+
+**Operational cost:** weeks to months of internal effort. No third-party fees.
+
+**When Module A fails you:** the moment a harmonised standard covering your category does not exist yet, or covers only part of Annex I. In that case you cannot claim full conformity via self-assessment even for a Class I product — you fall into either Module B+C or Module H.
+
+## Module B + C — EU-Type Examination + Conformity to Type
+
+Module B+C is a two-stage process where a notified body is involved.
+
+In **Module B**, the notified body examines the technical design: the manufacturer submits the technical documentation and representative samples, the body assesses whether the design meets the essential requirements, and if satisfied it issues an **EU-type examination certificate** naming the product.
+
+**Module C** is the ongoing production-side compliance: the manufacturer declares that each unit placed on the market conforms to the approved type. The notified body is not involved unit-by-unit, but reserves the right to audit.
+
+**Who uses Module B+C:**
+
+- Important Class I products where no complete harmonised standard exists.
+- Any Important Class II product (alongside Module H as the alternative).
+- Voluntarily, by any manufacturer that wants an independent opinion before going to market.
+
+**Operational cost:** months, plus notified-body fees in the tens of thousands of euros. Expect 6–12 months from first contact to certificate for a moderately complex product.
+
+**The biggest pitfall:** treating the Module B certificate as a one-time gate. A material change to the product's security architecture — a new authentication scheme, a significant firmware rewrite, a changed update channel — requires the manufacturer to go back to the notified body and re-assess. This is the clause most frequently caught out at post-market surveillance.
+
+## Module H — Full Quality Assurance
+
+Module H replaces per-type examination with an audit of the manufacturer's entire quality system. The notified body evaluates how the manufacturer designs, develops, and manufactures products with digital elements as a whole — their processes, their documentation control, their security-by-design practices — and issues a quality-system approval that covers all products within the defined scope.
+
+**Who uses Module H:**
+
+- Any Important Class II manufacturer that prefers an ongoing audit relationship over per-product type examinations.
+- Multi-product manufacturers where the per-product overhead of Module B+C would dominate compliance cost.
+
+**Operational cost:** highest initial investment — notified-body audit of the quality system typically takes 3–6 months, plus surveillance audits annually. But cost per product afterwards is low, because each new product falls under the existing QMS approval rather than requiring its own examination.
+
+**Strategic signal:** Module H is often the right choice if CRA compliance is only one of several cybersecurity regimes you operate under (IEC 62443 for industrial products, ISO 27001 at the organisation level, Cyber Essentials Plus for UK-facing products). The QMS artefacts all feed each other.
+
+## European Cybersecurity Certification Schemes
+
+For critical products listed in Annex IV of the CRA, conformity with a European cybersecurity certification scheme adopted under the Cybersecurity Act (Regulation (EU) 2019/881) is mandatory. The relevant schemes at the time of writing include:
+
+- **EUCC** — the EU Common Criteria scheme for information-security products.
+- **EUCS** — the EU Cloud Services scheme (where relevant to cloud-embedded products).
+- **Sector-specific schemes** — still emerging; watch ENISA's scheme catalogue.
+
+Certification under these schemes is conducted by accredited conformity-assessment bodies, not generic notified bodies, and is the most rigorous route available. Operational cost is measured in hundreds of thousands of euros and timelines of 12–24 months.
+
+## A Decision Tree
+
+To decide your route, walk through these questions in order:
+
+1. **Is your product in Annex IV (critical)?** If yes → European cybersecurity certification scheme is mandatory.
+2. **Is it Important Class II (Annex III(2))?** If yes → Module B+C **or** Module H.
+3. **Is it Important Class I (Annex III(1))?**
+   - If **harmonised standards cover all applicable essential requirements of Annex I** → Module A (self-assessment) is allowed.
+   - Otherwise → Module B+C or Module H.
+4. **Otherwise (default class)** → Module A.
+
+Most default-class manufacturers will use Module A. Most Class I manufacturers will find that applicable harmonised standards exist by the time the CRA becomes mandatory in December 2027 and therefore will also use Module A. The Module B+C / Module H / European certification routes are proportionately the smaller share of the market but overwhelmingly the more expensive share.
+
+## Common Mistakes at the Selection Stage
+
+**Assuming your product is "default" without checking Annex III.** "Smart home products" is Class I. "Network management systems" is Class I. "Routers, switches, WiFi access points" is Class I. A quick read of Annex III is worth the twenty minutes.
+
+**Treating Module A as "no work".** Self-assessment requires the full technical documentation, the full risk assessment, and the full SBOM and vulnerability-handling process. It just does not require a notified body to sign off on it.
+
+**Picking the cheapest route without budgeting for change control.** Module A is cheapest per product but requires the manufacturer's own internal process maturity. Module H is most expensive upfront but easiest to extend to a second or third product.
+
+**Starting notified-body engagement late.** Notified bodies under the CRA are still being designated by member states. Availability is constrained. A Module B certificate request made in Q3 2027 is unlikely to complete before the December 2027 deadline.
+
+## How Seentrix Fits In
+
+The product-creation flow inside Seentrix asks for the CRA category and the conformity-assessment route up front, and uses them to pre-populate the right technical-documentation template, the right conformity-step checklist, and the right Declaration-of-Conformity skeleton. When a product flips from Class I to Class II mid-development — because a new feature brings it into a different Annex III category — the platform flags it and walks through the implications for your route choice.
+
+You still own the decision, and you still own the compliance evidence. The platform's job is to make sure you never carry the wrong route in your head.

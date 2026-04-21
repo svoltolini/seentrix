@@ -1,0 +1,118 @@
+---
+title: "CRA for Contract Manufacturers: Who Is the 'Manufacturer' When the Brand Isn't on the Label?"
+description: "White-label products, OEM relationships, and contract manufacturing blur the line between who builds a product and who is legally responsible under the CRA. Here is how the regulation allocates the manufacturer role — and why getting it wrong shifts liability to the wrong company."
+date: "2026-05-12"
+category: "Regulation"
+author: "Seentrix Team"
+---
+
+The Cyber Resilience Act assumes a tidy world: a single manufacturer designs a product, produces it, places it on the EU market under their own name, and is responsible for its security throughout the support period. Many real supply chains do not look like that. An industrial sensor is designed by one company, manufactured by a contract-manufacturing partner in another country, sold by a third-party distributor under a brand the buyer has never heard of, and integrated into a larger machine by a fourth party before it reaches the end user.
+
+Who is the "manufacturer" under the CRA when five companies have touched the product between design and deployment? This article walks through how Article 3 and Articles 19–20 allocate the role, why it matters for compliance responsibility, and how typical contract-manufacturing and white-label arrangements look under the regulation.
+
+## What the CRA Means by "Manufacturer"
+
+Article 3(13) defines a manufacturer as "any natural or legal person who develops or manufactures products with digital elements, or has products with digital elements designed, developed, or manufactured, and markets them under its name or trademark, whether for payment or free of charge."
+
+Three phrases in that definition do most of the work:
+
+1. **"Develops or manufactures … or has … designed, developed, or manufactured"** — you do not have to physically produce the product to be the manufacturer. Outsourcing design or production does not remove the role; it extends it.
+2. **"Markets them under its name or trademark"** — the brand on the label is a decisive signal. The company whose trademark appears is the presumptive manufacturer.
+3. **"Whether for payment or free of charge"** — open-source projects that distribute compiled artefacts under their own project name are manufacturers too. The absence of commercial sale does not exempt the role.
+
+In practice, the manufacturer is the company whose brand is on the product at the point of EU market placement, regardless of who designed or built it.
+
+## Three Common Supply-Chain Shapes
+
+### Case 1: White-label resale
+
+A consumer-electronics retailer commissions a contract manufacturer to produce a smart thermostat, which the retailer then sells under its own brand. The retailer provides the branding, customer-facing documentation, and warranty commitment; the contract manufacturer provides the design and production.
+
+**Who is the manufacturer under the CRA?** The retailer. Their brand is on the product, they place it on the market, and Article 3(13) puts the manufacturer role on the party whose name or trademark appears. The contract manufacturer — however much they designed and built — is not the Article 3(13) manufacturer.
+
+**Practical consequence:** the retailer is on the hook for the technical documentation, the Declaration of Conformity, Article 14 incident reporting, and the support-period obligations. Most retailers in this shape under-invest in building that capability because they think of themselves as resellers. They are not, under the CRA, resellers. They are manufacturers.
+
+### Case 2: OEM with private-label firmware
+
+An industrial-automation vendor sources a base hardware platform from an original equipment manufacturer, then ships it with their own firmware, branding, and support commitment. The OEM provides hardware components (processor board, radio module, enclosure) but does not touch the software stack.
+
+**Who is the manufacturer?** The industrial-automation vendor. Their firmware is what makes this a "product with digital elements" — the hardware without their software would not meet the CRA scope definition — and their brand is on the product.
+
+**Practical consequence:** the vendor's technical documentation must describe the full product including the hardware they did not design. They need the OEM to provide documentation, SBOMs for any bootloader or baseband firmware, and vulnerability-disclosure cooperation through the support period. These commitments must be contractual.
+
+### Case 3: Embedded component sold under the component vendor's brand
+
+A radio-module supplier sells a Wi-Fi module that ends up embedded inside dozens of downstream products. The module is branded and marketed by the supplier; the downstream-product manufacturer buys it as a named component.
+
+**Who is the manufacturer?** Both, but at different scopes.
+
+- The module supplier is the manufacturer of the module as a standalone product placed on the market. They are responsible for the module's CRA compliance.
+- The downstream-product company is the manufacturer of the finished product, which includes the module as a component. Their technical documentation must describe how they used the module securely, and their Declaration of Conformity covers the product as a whole.
+
+This is the most common and most misunderstood shape. Component vendors have CRA obligations *for the component*. Downstream manufacturers have CRA obligations *for the product they ship*. Neither can discharge their own obligations by pointing at the other.
+
+## Importer and Distributor Roles (Articles 19 and 20)
+
+When a non-EU manufacturer sells into the EU through a European distributor, Articles 19 and 20 create supporting roles. These are not the manufacturer — but they carry non-trivial responsibilities.
+
+### The Importer (Article 19)
+
+The importer is the EU-established legal entity that places a product from a non-EU manufacturer on the EU market. They must:
+
+- Verify the manufacturer has complied with their CRA obligations.
+- Indicate their name, registered trade name or mark, and a contact address on the product or on the packaging or in a document accompanying the product.
+- Keep a copy of the Declaration of Conformity for ten years.
+- Ensure, while the product is under their responsibility, that storage and transport conditions do not compromise CRA compliance.
+- Cooperate with market-surveillance authorities.
+
+In practice, the importer becomes the EU-facing face of a non-EU manufacturer's product. If the manufacturer disappears (insolvency, corporate acquisition that drops the product line), the importer is the authority's first point of contact.
+
+### The Distributor (Article 20)
+
+A distributor is any entity in the supply chain other than the manufacturer or importer who makes a product with digital elements available on the market. They must:
+
+- Verify before making the product available that CE marking, Declaration of Conformity, and user documentation are all in place.
+- Verify the manufacturer and importer (where applicable) have complied with their traceability obligations.
+- Cooperate with market-surveillance authorities on requests.
+
+Distributors do not take on the manufacturer's technical-file or support obligations. But they are not passive either — shipping a product without verifying its paperwork is itself a breach of Article 20.
+
+## When the Role Shifts
+
+Article 22 creates a sobering clause: a distributor, importer, or any other person becomes the manufacturer — and inherits the full manufacturer obligations — if they:
+
+1. **Place a product with digital elements on the market under their own name or trademark**, or
+2. **Modify a product with digital elements already placed on the market in a way that affects its compliance** with the CRA.
+
+The second case matters for anyone who integrates or customises third-party products. An industrial integrator who flashes custom firmware onto a bought-in controller is, under Article 22, potentially transforming themselves into the manufacturer of the modified product.
+
+The threshold for "modify in a way that affects compliance" is not a line you want to test by accident. Any change to the product's security surface — new auth schemes, new network interfaces, new update mechanisms — is likely to qualify.
+
+## What This Means for Your Contracts
+
+If you operate in any of the shapes above, your supplier and customer contracts need clauses the CRA did not exist when most of them were drafted. At minimum:
+
+- **SBOM pass-through.** If you source components, your contracts require the component vendor to provide machine-readable SBOMs for what they supply, kept up to date through your support period.
+- **Vulnerability cooperation.** Your suppliers commit to coordinated disclosure and to shipping patches for vulnerabilities in their components during your product's support period, not just during theirs.
+- **Article 14 information flow.** If your supplier discovers an actively exploited vulnerability that affects your product, they are contractually required to inform you within a window (typically 24–48 hours) that lets you meet your own 24-hour early-warning obligation.
+- **End-of-life handover.** If a supplier EOLs a component still in one of your supported products, they commit to either extended support or a documented handover that lets you maintain it yourself.
+
+Contracts that do not contain these clauses are not CRA-breaching *per se*, but they make the manufacturer role vastly harder to discharge.
+
+## A Decision Tree
+
+Who is the manufacturer of a specific product under CRA scope?
+
+1. **Whose name or trademark is on the product?** That entity is the presumptive manufacturer.
+2. **Is the product placed on the market under more than one name?** Each name that goes to market is a separate product under the CRA; each has its own manufacturer.
+3. **Did a later party in the supply chain modify the product in a way that affected compliance?** If yes, Article 22 transfers the manufacturer role to the modifier.
+4. **If the original manufacturer is outside the EU, who is the importer?** They take on the Article 19 role.
+5. **Are there distributors in the chain?** They carry Article 20 verification duties but not manufacturer duties.
+
+## How Seentrix Fits In
+
+Seentrix is built around the manufacturer role. Every product in the platform belongs to a single organisation, with a clear registered-office, signatory, and Declaration-of-Conformity flow scoped to that entity. If you operate under a white-label or contract-manufacturing arrangement and are the CRA manufacturer, you create a product in your own organisation and the platform's DoC generator uses your legal name, not your supplier's.
+
+What the platform does not do (and should not do) is let a reseller automatically "inherit" their supplier's technical documentation. That inheritance is a legal choice, not a database query — and the clauses above spell out why the manufacturer role lives with one specific entity, not the whole supply chain.
+
+Your supply-chain shape is yours to design. The CRA only asks that somebody, somewhere, owns the manufacturer role for each product that reaches the EU market. Under Article 3(13), that somebody is almost always the entity whose brand is on the label — regardless of who actually built it.

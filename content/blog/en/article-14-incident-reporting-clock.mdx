@@ -1,0 +1,104 @@
+---
+title: "The Article 14 Incident Reporting Clock: How the 24h / 72h / 14-Day Deadlines Actually Work"
+description: "The CRA's reporting obligations are the compliance requirement most likely to land you in front of a regulator — because they trigger fast and they trigger often. Here is exactly how the three deadlines work, when each clock starts, and what has to be in each submission."
+date: "2026-05-06"
+category: "Regulation"
+author: "Seentrix Team"
+---
+
+Every other deadline in the Cyber Resilience Act gives you months. Article 14 gives you hours. When a manufacturer becomes aware of an actively exploited vulnerability or a severe cybersecurity incident in one of their products, three clocks start at once. Miss any of them and you are in breach of Article 14 — independently of whether the underlying issue ever got fixed.
+
+This is also the single clause most compliance programs under-invest in. Teams build SBOM pipelines and write DoCs years in advance, then discover on day one of an incident that no one has thought through who submits the early warning, in what format, to which authority, at four o'clock on a Saturday morning.
+
+This article walks through each of the three reporting phases — what triggers them, exactly what the submission must contain, and the operational capabilities you need in place before any of them matters.
+
+## When the Clock Starts
+
+The phrase the regulation uses throughout Article 14 is "becomes aware". Awareness is broader than certainty — it does not require proof, a confirmed root cause, or a reproduction of the exploit. It requires that you have credible information that:
+
+- a vulnerability in your product is being actively exploited in the wild, or
+- a cybersecurity incident has occurred that severely impacts the security of the product or its processing environment.
+
+"Credible information" is what a reasonable compliance officer would accept as actionable. It includes CISA KEV additions, threat-intel reports naming your product, log evidence of an ongoing attack, or a legitimate vulnerability report from a researcher. It does not include speculative forum posts or unverified Twitter threads.
+
+One practical consequence: awareness is not a decision one person makes alone. Sales, support, security, and engineering all typically see signals first, and the official reporting clock cannot start until someone in the compliance chain has been handed the information. Build that hand-off path before you need it.
+
+## The 24-Hour Early Warning
+
+Article 14(1)(a) requires the manufacturer to submit an "early warning notification" within 24 hours of becoming aware. This is not the detailed report. It is the regulator's heads-up that something is happening — terse, factual, and submitted even when you do not yet know the full scope.
+
+The submission goes to the CSIRT designated as coordinator under the CRA (in practice, your national CSIRT such as BSI in Germany, CERT-FR in France, NCSC in the UK for products sold there) and to ENISA via the single reporting platform Article 16 contemplates.
+
+Minimum content:
+
+- **Who the manufacturer is** — legal entity and contact.
+- **Which product and version** are affected, with identifiers sufficient to disambiguate.
+- **The type of event** — actively exploited vulnerability or severe incident.
+- **What you know right now** — a one-paragraph description. Evidence of exploitation if you have it.
+- **Whether the issue is suspected or confirmed.**
+- **Initial scope indicators** — geography, customer segments, roughly how many units.
+- **A commitment to submit the 72-hour report on schedule.**
+
+That is it. The regulator does not expect a root-cause analysis at the 24-hour mark. They expect you to have noticed and to have told them.
+
+## The 72-Hour Report
+
+Within 72 hours of becoming aware, Article 14(1)(b) requires a more substantive "intermediate" report. The scope of impact should by now be clearer, immediate mitigations should be in place, and you should be able to describe what is known and what remains open.
+
+Expected contents:
+
+- **Updated scope of impact** — specific systems, specific user segments, specific geographies.
+- **Mitigations applied** — what controls have been deployed, who is covered, who is still exposed.
+- **Mitigations planned** — what is rolling out in the next week.
+- **Severity assessment** — CVSS or equivalent, plus a plain-language description.
+- **Initial root-cause indicators** — not a final analysis, but what your investigation points to.
+- **Next milestone** — a commitment to submit the final report within 14 days.
+
+The 72-hour report is the first document a regulator is likely to scrutinise in detail. Sloppy wording at this stage ("we think the issue is probably limited to customers in Germany") can and does land in regulatory correspondence a year later.
+
+## The 14-Day Final Report (for Vulnerabilities)
+
+Article 14(1)(c) requires the final notification within 14 days of the awareness trigger, for actively exploited vulnerabilities. The report should read like a post-mortem aimed at a technical audience that has no prior knowledge of your product:
+
+- **Confirmed root cause** — the defect or design flaw in plain language.
+- **Remediation delivered** — the patch version, the release date, the distribution mechanism (auto-update, email, in-product notification).
+- **Customer coverage metrics** — percentage of active installations on patched versions.
+- **Impact summary** — what an exploiter could have achieved while the vulnerability was live, personal data (if any) involved, operational effect on customers.
+- **Corrective + preventive actions** — process changes, tooling changes, timelines.
+- **Coordinated disclosure URL** — the public advisory you have published.
+- **CVE identifier** — if assigned.
+
+For severe cybersecurity *incidents* rather than vulnerabilities, the final-report deadline extends to one month (Article 14(1)(c)). The expected contents are largely the same; the extra time accounts for the forensic work incidents typically require.
+
+## What the Deadlines Do Not Give You
+
+Article 14 creates reporting obligations, not fix obligations. The 24 / 72 / 14-day clocks run independently of whether the patch is ready. A manufacturer who is still diagnosing the issue at the 72-hour mark must still submit the intermediate report with the information then available — "root cause not yet confirmed" is a legitimate answer.
+
+Conversely, a manufacturer who has shipped a patch at hour 18 must still submit the 24-hour early warning. "Already fixed" does not exempt you; in fact, a fast fix is a strong signal of a mature process and is noted favourably in regulator commentary.
+
+## User Notification — The Parallel Obligation
+
+Article 14(3) adds a requirement that often gets overlooked: when an actively exploited vulnerability or severe incident affects users, the manufacturer must inform them "without undue delay" and provide mitigations. "Without undue delay" is shorter than the regulatory reporting clock — typically 48–72 hours once the facts are stable enough to communicate responsibly.
+
+A user-notification template should contain:
+
+- What happened, in plain language.
+- Which product and version is affected.
+- What the user should do right now (install update X, rotate credentials, isolate the device).
+- When a fix will be available if one is not yet ready.
+- A contact channel for questions.
+
+## The Capabilities You Need in Place First
+
+No amount of prose on the regulation will help you meet Article 14 without four specific operational capabilities:
+
+1. **Awareness funnel** — a single inbox or ticketing queue where vulnerability reports, threat-intel alerts, and incident triggers converge. If these signals are fragmented across Slack channels and personal emails, the 24-hour clock is effectively unenforceable.
+2. **On-call escalation with compliance authority** — someone has to be empowered to classify an event as "CRA-reportable" outside business hours.
+3. **Pre-drafted submission templates** — in the hour you discover Log4Shell in your product, no one has time to design a new form.
+4. **User-notification channel** — the email list, in-product banner, or push channel you will use to reach affected users.
+
+## How Seentrix Fits In
+
+The Incidents screen inside Seentrix is built around this exact workflow. Each incident records its awareness timestamp, exposes the three reporting deadlines as countdown rings, and pre-fills draft narratives for each phase using the product, SBOM, and linked-vulnerability data already on file. When the 24-hour clock starts, the early-warning draft is already populated; the 72-hour and 14-day submissions build on the previous phase rather than being written from scratch.
+
+That does not make the report itself easier to write — Article 14 is a serious legal instrument and deserves serious attention — but it means the first time you use the workflow is not at 04:00 on a Saturday morning.

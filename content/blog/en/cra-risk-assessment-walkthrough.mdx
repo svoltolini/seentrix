@@ -1,0 +1,126 @@
+---
+title: "CRA Risk Assessment: A Step-by-Step Walkthrough of Article 13(3)"
+description: "The Article 13(3) risk assessment is the backbone of the entire CRA technical file. Here is how to produce one from first principles, structured the way an auditor expects to read it."
+date: "2026-05-04"
+category: "Technical"
+author: "Seentrix Team"
+---
+
+Buried in the middle of Article 13 of the Cyber Resilience Act is one sentence that, in practice, drives about thirty percent of the compliance work for a typical product: *"Manufacturers shall, when placing a product with digital elements on the market, carry out a cybersecurity risk assessment of the product and document it."* The risk assessment is not an annex or a supporting document. It is the backbone of the technical file. Every decision you make about controls, standards, and support scope must be traceable back to it.
+
+This article walks through how to produce a CRA-ready risk assessment from first principles — what it must cover, how auditors read it, and how to keep it maintainable over the product's ten-year retention horizon.
+
+## What Article 13(3) Actually Requires
+
+The operative language gives you five distinct obligations:
+
+1. **Carry out** a risk assessment, meaning perform one — not just adopt a template.
+2. **Cover the cybersecurity risks** of the product specifically — not of your organisation, not of the sector.
+3. **Document it** in a form that survives independent review.
+4. **Use the assessment** to determine the Annex I essential requirements that apply and the solutions adopted to satisfy them.
+5. **Update it during the support period** when the risk profile changes.
+
+Annex VII(3) then requires the risk assessment to be retained in the technical file for ten years.
+
+## The Four Pillars of a CRA Risk Assessment
+
+A complete assessment covers four pillars. Miss any one and you have a partial document.
+
+### 1. Asset identification
+
+List what the product protects. Not what it *does* — what it *protects*. For a smart lock, the assets are the physical security of the home and the user's identity. For a payment terminal, the card data. For a smart meter, billing integrity and grid data.
+
+**Common mistake:** describing assets at the wrong granularity. "User data" is too broad. "Customer credentials (username + password hash)" + "payment card PAN during checkout" + "audit log entries" is usable.
+
+### 2. Threat identification
+
+For each asset, identify the threats — the credible adverse actions an attacker could take. Use a recognisable model (STRIDE is the most common for this category: Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, Elevation of privilege). For each, name the threat actor: opportunistic script-kiddie, motivated criminal, nation-state, insider.
+
+The discipline here is that threats are specific, not generic. "Attacker could steal user data" is a category. "Attacker on the same Wi-Fi network could sniff plaintext credentials during first-time setup" is a threat.
+
+### 3. Risk scoring
+
+For each threat, score likelihood and impact on consistent scales. A 1–5 scale per axis is sufficient. Likelihood considers attacker capability, attack-surface exposure, and prevalence of similar attacks in the wild. Impact considers harm to users, reputational damage, and regulatory consequences.
+
+The product of the two gives a risk rating. Thresholds (e.g. "any risk scored ≥ 15 must be mitigated before product release") should be set in advance and applied consistently.
+
+### 4. Control mapping
+
+For each threat, list the controls that reduce it — product controls, process controls, user-facing mitigations — and the residual risk after controls. Cross-reference each control to the Annex I essential requirement it satisfies.
+
+This is the pillar most teams skip. Without explicit control → Annex I mapping, the risk assessment does not actually *drive* the essential-requirements compliance story. It just documents threats in the abstract.
+
+## A Step-by-Step Method
+
+The method below produces a CRA-ready risk assessment in roughly two weeks of dedicated work for a moderately complex product. Adjust the timeline to the product's complexity.
+
+### Day 1–2: Bound the scope
+
+Define the system boundary. What is inside the assessment (the product, its update channels, its companion app, its cloud services if any) and what is outside (the user's home network, third-party services the user connects to, the physical environment). A single architecture diagram at a block level is the right artefact to start from.
+
+Write down an assumption list: what you are treating as outside attacker control (TLS 1.3, the user's account credentials, the integrity of the update server). Every assumption becomes a testable claim later — or a residual risk you acknowledge.
+
+### Day 3–5: Identify assets and data flows
+
+Produce data-flow diagrams at two levels — block-level overview and per-interface detail. Label every data flow with what data crosses it, in which direction, with what protections (encryption, authentication, integrity).
+
+List the assets the product protects. Three to ten is normal. More than fifteen suggests you have mixed asset and threat definitions.
+
+### Day 6–10: Enumerate threats
+
+For each asset, walk the STRIDE model and enumerate threats. Work systematically — avoid the trap of enumerating threats that are interesting versus threats that are comprehensive.
+
+Expect this stage to produce 30–80 threats for a typical product. Fewer than 20 is suspicious; you have not been granular enough. More than 150 is unmanageable; you have mixed threats with attack vectors.
+
+### Day 11–12: Score and prioritise
+
+Apply your likelihood × impact matrix. Sort by risk score. The top 10–20 threats become priority for mitigation planning.
+
+### Day 13–14: Map controls, identify gaps, write up
+
+For each priority threat, list the controls you plan to implement, the controls already implemented, and the residual risk. Cross-reference each control to Annex I essential requirements.
+
+Gaps (threats with high residual risk and no control) are input to the engineering backlog. Every gap should have a clear disposition: "will fix before release", "will accept as residual risk with user-facing mitigation", or "out of scope".
+
+## What the Documented Assessment Looks Like
+
+A CRA-ready risk assessment is typically a 15–40 page document. Shorter than that, and it does not have enough granularity to survive scrutiny; longer, and it probably has unfocused content.
+
+Recommended structure:
+
+1. **Scope and system overview** (1–2 pages) — product description, boundary, architecture diagram.
+2. **Assumptions** (1 page) — what you are treating as outside the analysis.
+3. **Asset register** (1–2 pages) — numbered table of assets with criticality.
+4. **Threat model** (5–15 pages) — numbered table of threats, STRIDE category, threat actor, affected asset.
+5. **Risk register** (3–8 pages) — numbered table of risks with likelihood × impact scoring.
+6. **Control catalogue** (3–10 pages) — implemented and planned controls, each cross-referenced to Annex I.
+7. **Residual risk statement** (1 page) — summary of risks that are accepted rather than mitigated, with rationale.
+8. **Review history** (appendix) — who reviewed, when, what changed.
+
+Every table uses persistent identifiers (A-01, T-05, R-12, C-08) so you can cross-reference from elsewhere in the technical file.
+
+## Keeping It Alive Over Ten Years
+
+The risk assessment is a living document. Article 13(3) requires updates when the risk profile changes. In practice, that means:
+
+- A **new threat intelligence signal** (CVE against a dependency, new attack class published in research, industry incident) triggers a review — even if it does not result in a change.
+- A **material product change** (new feature, new interface, new integration) requires incremental assessment.
+- An **annual formal review** is a good baseline regardless of specific triggers. Many mature teams run one every release cycle.
+
+Each review generates a new row in the review history with a date, reviewer, summary of changes. Years later, if a regulator asks why a risk that materialised was not caught earlier, the review history is the evidence.
+
+## Common Pitfalls
+
+**Producing it after the product ships.** The assessment is supposed to drive design decisions, not rationalise them. A post-hoc risk assessment reads as theatre.
+
+**Using a generic organisational threat model.** The CRA risk assessment is product-specific. Inheriting an ISO 27001 or IEC 62443 organisational risk register without re-doing the product-level analysis is insufficient.
+
+**Scoring everything as "medium".** If the assessment lands with 80% of risks at medium, the scoring scale is not informative. Calibrate so the distribution has a clear head and tail.
+
+**No owner.** A document without a named owner rots. Designate one engineer and one compliance-side reviewer per product, put their names in the review history, and rotate at known intervals.
+
+## How Seentrix Fits In
+
+The Seentrix product-conformity workflow includes a risk-assessment step that prompts for the four pillars above, stores the resulting document against the product, and flags it for re-review whenever a material change is detected (a new SBOM upload with new components, a change to the product's CRA category, a new linked incident). The full assessment document itself lives in your own document-management system — Seentrix does not replace the structured analysis — but the re-review prompts and the version history mean the assessment does not silently drift out of date.
+
+A risk assessment you can show a market-surveillance auditor five years from now is the kind of artefact the CRA was written to require. Write it once properly, keep it current, and the rest of the technical file flows from it.

@@ -1,0 +1,121 @@
+---
+title: "Notified Bodies Under the CRA: When You Need One and How to Actually Pick One"
+description: "Engaging a notified body is the most expensive step in CRA compliance. Here is exactly when the regulation requires it, when it does not, and how to choose a body once you know you need to."
+date: "2026-05-08"
+category: "Compliance"
+author: "Seentrix Team"
+---
+
+A notified body is a conformity-assessment organisation designated by an EU member state under the New Legislative Framework. For most manufacturers under the Cyber Resilience Act, engaging one is either unnecessary or unavoidable — there is very little middle ground. Choosing well matters because the fees run into the tens of thousands of euros, the timeline runs into months, and the working relationship may last the commercial life of the product.
+
+This article covers the three things you actually need to decide before you call anyone: whether your product requires a notified body at all, which module of conformity assessment the notified body will perform, and which body to pick once you know those answers.
+
+## When the CRA Requires a Notified Body
+
+The short version: notified bodies are mandatory for some Important products and for all Critical products. Default-class products never need one.
+
+Working through the specifics:
+
+### Default-class products
+
+No notified body. Self-assessment under Module A. Done.
+
+### Important Class I (Annex III(1))
+
+Notified body required **only if** no harmonised standard exists that covers all applicable essential requirements of Annex I for your product category.
+
+In practice, for most Class I product types (routers, VPNs, password managers, smart home controllers), harmonised standards are being finalised on a schedule that aligns with the December 2027 deadline. Manufacturers who track the Official Journal of the EU and apply those standards in full can use Module A (self-assessment) and avoid notified-body engagement entirely.
+
+If the standard is not yet harmonised for your category by the time you need to place the product on the market — a real possibility for niche Class I products in 2026–2027 — Module B+C or Module H is mandatory and a notified body is involved.
+
+### Important Class II (Annex III(2))
+
+Notified body always involved. You choose between Module B+C (EU-type examination plus conformity to type) and Module H (full quality assurance). Both involve a notified body; they differ on whether the body assesses each product type or your entire quality management system.
+
+### Critical products (Annex IV + Article 7)
+
+Not a generic notified body but an accredited conformity-assessment body operating under a European cybersecurity certification scheme (EUCC, EUCS, or the sector-specific schemes emerging under Regulation 2019/881). These organisations have stricter accreditation requirements than standard notified bodies.
+
+## The First Decision: Do You Actually Need One?
+
+Before you engage anyone, run through this check:
+
+1. **Look up your product in Annex III** (Class I and II are listed by name).
+2. **If Class I, check whether the harmonised standards for your category cover the complete set of Annex I requirements applicable to you.** This check is not always obvious. Read the "Relevant Essential Requirements" annex of each candidate standard, and cross-reference against the Annex I essential requirements that apply to your product.
+3. **If harmonised coverage is complete, Module A is available.** Skip to writing the technical file — no notified body required.
+4. **If harmonised coverage is incomplete**, or if the product is Class II or Critical, continue to the next section.
+
+Teams frequently assume a notified body is required when Module A would have worked. A half-day of standards-review up front saves five to six figures of notified-body fees.
+
+## The Second Decision: Module B+C or Module H?
+
+If a notified body is required, you still have a choice between per-type examination (B+C) and full-quality-system audit (H).
+
+**Choose Module B+C when:**
+
+- You have a small product portfolio (one or two products under CRA scope).
+- The product has a stable design you do not expect to change materially over its life.
+- You want a clearly-bounded one-time engagement rather than an ongoing relationship.
+
+**Choose Module H when:**
+
+- You have or plan to have multiple products under CRA scope.
+- You already operate an ISO 27001, IEC 62443-4-1, or similar quality management system.
+- Your engineering practice changes fast enough that per-type recertification would be operationally disruptive.
+- You want notified-body engagement to scale roughly linearly with product count rather than quadratically.
+
+In absolute terms, Module H costs more up front (the QMS audit is more thorough) but is cheaper per product thereafter. Module B+C costs less for the first product and more for each additional one.
+
+## The Third Decision: Which Notified Body?
+
+Notified bodies are designated by member states. The European Commission's NANDO database (New Approach Notified and Designated Organisations) lists every notified body, which directives and regulations they are designated for, and in which member states. For the CRA, filter the NANDO results by "Regulation (EU) 2024/2847".
+
+Early in CRA implementation, the list of designated bodies is still growing. Availability varies sharply by region — bodies in Germany (TÜV SÜD, TÜV Rheinland, DEKRA), the Netherlands (BSI Group), and France (LNE, Bureau Veritas) tend to accept CRA engagements earlier than bodies elsewhere.
+
+When evaluating a body, five factors matter in practice:
+
+### 1. CRA designation + sectoral experience
+
+Confirm the body is designated specifically for Regulation 2024/2847 (not just for RED or Machinery). Then confirm they have assessed products in your category. A body designated for the CRA that has only done medical-device work will charge learning-curve hours on your project.
+
+### 2. Throughput
+
+Ask how long certification is taking for a product comparable to yours. By mid-2026, lead times of 6–12 months are normal; by 2027 they are expected to stretch. A 4-month commitment from one body and a 10-month commitment from another is worth the price difference.
+
+### 3. Surveillance-audit expectations
+
+Module B requires re-examination on material change; Module H requires ongoing surveillance audits. Ask how frequently, what they look for, and whether they accept remote audits.
+
+### 4. Cost structure
+
+Most bodies quote a fixed fee for the initial assessment plus an hourly rate for follow-up. Fees of €20,000–€60,000 for a straightforward Module B engagement are normal in 2026; Module H on a mid-size manufacturer is closer to €80,000–€150,000 including first surveillance cycle.
+
+### 5. Language and geography
+
+A French-language body and a UK-English-primary engineering team will burn weeks on translation and back-and-forth. This matters more than most procurement processes weigh it.
+
+## Five Questions to Ask Every Notified Body
+
+Before you commit:
+
+1. **What is your current lead time for a CRA Module B (or H) engagement in our product category?**
+2. **What will we need to provide on day one of the engagement?** (If they cannot give you a concrete list, they are not ready to engage.)
+3. **How do you handle material-change re-assessment? Is the fee structure per-change or subscription?**
+4. **Which of your reviewers will be assigned to our file? Can we see their résumés or past publications?**
+5. **Who are two of your past clients willing to reference your CRA work?**
+
+If a body cannot answer all five inside 30 minutes, they are not ready for your engagement.
+
+## Common Timing Mistakes
+
+**Engaging after the technical file is complete.** Most bodies expect to review the draft technical file while you are still writing it — early feedback is faster than late rework. Start notified-body conversations in parallel with internal preparation, not afterwards.
+
+**Underestimating the material-change clock.** Once you are certified under Module B, any material change to the product's security architecture requires returning to the notified body. Plan release cadence accordingly — quarterly Module B re-assessment is operationally painful; annual is manageable.
+
+**Treating Module H as a one-time audit.** Module H includes ongoing surveillance (typically annual). Budget for it as a recurring line item, not a one-off.
+
+## How Seentrix Fits In
+
+When you create a product in Seentrix, the platform identifies whether a notified body is required based on the CRA category and the standards you intend to apply. If the answer is "not required," the Declaration-of-Conformity template omits the notified-body block entirely. If required, the template prompts for the body's name, four-digit ID, and certificate number, and the product-detail page gains a timeline for surveillance audits so you do not miss the re-assessment window.
+
+Seentrix does not select or replace the notified body — that decision is yours, and the engagement is between your organisation and theirs. What the platform does is make sure you always know whether one is required, for which route, and where their certificate sits in your technical file.
