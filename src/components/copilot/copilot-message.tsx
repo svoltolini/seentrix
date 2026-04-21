@@ -494,12 +494,18 @@ function blockify(text: string): Block[] {
 function renderInline(text: string): React.ReactNode {
   const out: React.ReactNode[] = [];
   let key = 0;
-  // Priority: markdown link [text](url) > bold **x** > italic *x* >
-  // citation [doc · section] > code `x`.
-  // The link pattern is evaluated before the bare-bracket citation so we
-  // don't strip it first.
+  // Priority (left to right):
+  //   1. Markdown link      [label](/url)
+  //   2. Parenthesised path (/app/products/new)   ← renders as pill
+  //   3. Bold               **text**
+  //   4. Italic             *text*
+  //   5. Citation bracket   [CRA · Article 13]
+  //   6. Inline code        `open`
+  //
+  // The markdown-link pattern is evaluated before the parenthesised-path
+  // pattern so `[Open](/foo)` doesn't get split into link + loose parens.
   const pattern =
-    /\[([^\[\]\n]+?)\]\(([^)\s]+)\)|\*\*([^*\n]+?)\*\*|(?<![*\w])\*([^*\n]+?)\*(?!\*)|\[([^[\]\n]+?)\]|`([^`\n]+?)`/g;
+    /\[([^\[\]\n]+?)\]\(([^)\s]+)\)|\((\/(?:app|pricing|ai|blog|legal)(?:\/[a-zA-Z0-9_\-/]+)?)\)|\*\*([^*\n]+?)\*\*|(?<![*\w])\*([^*\n]+?)\*(?!\*)|\[([^[\]\n]+?)\]|`([^`\n]+?)`/g;
   let m: RegExpExecArray | null;
   let last = 0;
   while ((m = pattern.exec(text))) {
@@ -508,36 +514,46 @@ function renderInline(text: string): React.ReactNode {
       // Markdown link [label](href).
       out.push(<InlineLink key={key++} label={m[1]} href={m[2]} />);
     } else if (m[3] !== undefined) {
-      // Bold **text**.
-      out.push(
-        <strong key={key++} className="font-semibold text-foreground">
-          {m[3]}
-        </strong>,
-      );
-    } else if (m[4] !== undefined) {
-      // Italic *text*.
-      out.push(
-        <em key={key++} className="italic text-foreground/90">
-          {m[4]}
-        </em>,
-      );
-    } else if (m[5] !== undefined) {
-      // Bare bracket — citation pill if it smells like one, else raw.
-      if (
-        m[5].includes("·") ||
-        /^(Article|Annex|Artikel|Anhang|cra|seentrix)/i.test(m[5])
-      ) {
-        out.push(<CitationPill key={key++} label={m[5]} />);
+      // Parenthesised in-app path — render as a compact white pill so
+      // the user can click through. If the path carries an unresolved
+      // `{placeholder}` we leave it as raw text instead of rendering a
+      // broken button.
+      if (isRenderableLinkPath(m[3])) {
+        out.push(<PathPill key={key++} path={m[3]} />);
       } else {
         out.push(m[0]);
       }
+    } else if (m[4] !== undefined) {
+      // Bold **text**.
+      out.push(
+        <strong key={key++} className="font-semibold text-foreground">
+          {m[4]}
+        </strong>,
+      );
+    } else if (m[5] !== undefined) {
+      // Italic *text*.
+      out.push(
+        <em key={key++} className="italic text-foreground/90">
+          {m[5]}
+        </em>,
+      );
     } else if (m[6] !== undefined) {
+      // Bare bracket — citation pill if it smells like one, else raw.
+      if (
+        m[6].includes("·") ||
+        /^(Article|Annex|Artikel|Anhang|cra|seentrix)/i.test(m[6])
+      ) {
+        out.push(<CitationPill key={key++} label={m[6]} />);
+      } else {
+        out.push(m[0]);
+      }
+    } else if (m[7] !== undefined) {
       out.push(
         <code
           key={key++}
           className="rounded bg-white/[0.08] px-1.5 py-0.5 text-[12px] font-mono text-foreground"
         >
-          {m[6]}
+          {m[7]}
         </code>,
       );
     }
@@ -564,6 +580,29 @@ function CitationPill({ label }: { label: string }) {
     <span className="mx-0.5 inline-flex items-center rounded-md bg-[#3B82F6] px-1.5 py-[2px] align-[1px] text-[9px] font-bold uppercase tracking-wider text-white shadow-[0_0_0_1px_rgba(59,130,246,0.35)]">
       {display}
     </span>
+  );
+}
+
+/**
+ * Compact "Open" pill rendered in place of a parenthesised in-app path
+ * like `(/app/products/new)`. Clicking routes through the locale-aware
+ * i18n Link so the user always lands on the correct `/en/…` or `/de/…`
+ * prefixed URL — a bare `/app/products/new` typed by hand would 404
+ * because the middleware matcher only sees locale-prefixed routes.
+ */
+function PathPill({ path }: { path: string }) {
+  return (
+    <Link
+      href={path}
+      className="mx-1 inline-flex -translate-y-[1px] items-center gap-1 rounded-full bg-white px-2 py-[2px] align-baseline text-[11px] font-semibold text-[#09090B] shadow-[0_0_0_1px_rgba(255,255,255,0.4)] transition hover:bg-white/90"
+    >
+      <HugeIcon
+        name="arrow-right-01-stroke-rounded"
+        size={10}
+        className="text-[#09090B]"
+      />
+      Open
+    </Link>
   );
 }
 
