@@ -185,10 +185,14 @@ export default function PrivacyPage() {
         16. We do not knowingly collect data from children.
       </p>
 
-      <h2>11. Changes</h2>
+      <h2>11. Changes to this policy</h2>
       <p>
-        Material changes will be notified by email. We keep a changelog
-        below once this policy is reviewed by counsel.
+        We may update this Privacy Policy to reflect changes in the law,
+        new features, or new sub-processors. Material changes will be
+        notified to the email address on file at least 30 days before
+        they take effect. The "Last updated" date at the top of this
+        page always reflects the most recent revision; minor edits
+        (typos, clarifications) are made silently.
       </p>
       <p className="mt-6 text-xs text-muted-foreground/70">
         Seentrix Ltd · Company number 17169165 · Registered in England and Wales ·

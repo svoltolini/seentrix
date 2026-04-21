@@ -12,8 +12,6 @@ import { Link } from "@/i18n/navigation";
  *
  * The page doubles as the UK "registered office" notice under the
  * Companies (Trading Disclosures) Regulations 2008 — same data, one place.
- *
- * When a lawyer reviews the legal pages, they'll want this one too.
  */
 export default async function ImpressumPage() {
   const locale = await getLocale();
@@ -60,11 +58,15 @@ function Impressum_en() {
 
       <h2>EU representative (GDPR Art. 27)</h2>
       <p>
-        As a UK controller of personal data belonging to EU residents,
-        Seentrix Ltd has appointed an EU representative under Art. 27 GDPR.
-        Contact details will be published here as soon as the designation
-        is finalised. In the interim you can reach us directly at{" "}
+        As a UK-established controller of personal data belonging to
+        individuals in the EU, Seentrix Ltd acts as its own point of
+        contact for GDPR matters while its customer base remains within
+        the scope of Art. 27(2) (occasional processing, no large-scale
+        special-category data). Data subjects and supervisory
+        authorities can reach us at{" "}
         <a href="mailto:support@seentrix.com">support@seentrix.com</a>.
+        Where a formal Art. 27 representative is required we will
+        designate one and update this page.
       </p>
 
       <h2>Data protection</h2>
@@ -78,8 +80,10 @@ function Impressum_en() {
 
       <h2>VAT</h2>
       <p>
-        Seentrix Ltd is not currently registered for VAT. This page will be
-        updated when registration is completed.
+        Seentrix Ltd is below the UK VAT-registration threshold and is
+        therefore not VAT-registered. Invoices issued via Stripe do not
+        include VAT. We will register once turnover approaches the
+        £90,000 statutory threshold.
       </p>
 
       <h2>Dispute resolution</h2>
@@ -163,12 +167,16 @@ function Impressum_de() {
 
       <h2>EU-Vertreter (Art. 27 DSGVO)</h2>
       <p>
-        Als britischer Verantwortlicher für personenbezogene Daten von in
-        der EU ansässigen Personen hat Seentrix Ltd einen EU-Vertreter
-        gemäß Art. 27 DSGVO benannt. Die Kontaktdaten werden hier
-        veröffentlicht, sobald die Benennung abgeschlossen ist. In der
-        Zwischenzeit erreichen Sie uns direkt unter{" "}
+        Als im Vereinigten Königreich ansässiger Verantwortlicher für
+        personenbezogene Daten von in der EU ansässigen Personen
+        fungiert Seentrix Ltd selbst als Ansprechpartner für
+        Datenschutzfragen, solange die Verarbeitung unter Art. 27
+        Abs. 2 DSGVO fällt (gelegentliche Verarbeitung, keine
+        groß-skaligen besonderen Datenkategorien). Betroffene Personen
+        und Aufsichtsbehörden erreichen uns unter{" "}
         <a href="mailto:support@seentrix.com">support@seentrix.com</a>.
+        Sobald eine förmliche Benennung nach Art. 27 erforderlich wird,
+        benennen wir einen Vertreter und aktualisieren diese Seite.
       </p>
 
       <h2>Datenschutz</h2>
@@ -182,8 +190,12 @@ function Impressum_de() {
 
       <h2>Umsatzsteuer</h2>
       <p>
-        Seentrix Ltd ist derzeit nicht umsatzsteuerlich registriert. Diese
-        Seite wird aktualisiert, sobald eine Registrierung erfolgt ist.
+        Seentrix Ltd liegt unterhalb der britischen
+        Umsatzsteuer-Registrierungsschwelle und ist daher nicht
+        umsatzsteuerlich registriert. Die über Stripe ausgestellten
+        Rechnungen enthalten keine Mehrwertsteuer. Sobald der Umsatz
+        sich der gesetzlichen Schwelle von £90.000 nähert, erfolgt die
+        Registrierung.
       </p>
 
       <h2>Streitbeilegung</h2>
