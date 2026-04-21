@@ -376,38 +376,41 @@ function blockify(text: string): Block[] {
 function renderInline(text: string): React.ReactNode {
   const out: React.ReactNode[] = [];
   let key = 0;
-  // Priority: citation [doc · section] > bold **x** > code `x`.
-  const pattern = /\[([^[\]\n]+?)\]|\*\*([^*\n]+?)\*\*|`([^`\n]+?)`/g;
+  // Priority: markdown link [text](url) > citation [doc · section] >
+  // bold **x** > code `x`. The link pattern must come first because
+  // it's a superset of the bare-bracket citation pattern.
+  const pattern =
+    /\[([^\[\]\n]+?)\]\(([^)\s]+)\)|\[([^[\]\n]+?)\]|\*\*([^*\n]+?)\*\*|`([^`\n]+?)`/g;
   let m: RegExpExecArray | null;
   let last = 0;
   while ((m = pattern.exec(text))) {
     if (m.index > last) out.push(text.slice(last, m.index));
-    if (m[1] !== undefined) {
-      // Only treat as citation if it smells like one — either has the
-      // "doc · section" separator, or starts with a known regulatory
-      // keyword. Otherwise let the raw `[...]` through (e.g. a markdown
-      // link anchor that happens to slip in).
+    if (m[1] !== undefined && m[2] !== undefined) {
+      // Markdown link [label](href).
+      out.push(<InlineLink key={key++} label={m[1]} href={m[2]} />);
+    } else if (m[3] !== undefined) {
+      // Bare bracket — citation pill if it smells like one, else raw.
       if (
-        m[1].includes("·") ||
-        /^(Article|Annex|Artikel|Anhang|cra|seentrix)/i.test(m[1])
+        m[3].includes("·") ||
+        /^(Article|Annex|Artikel|Anhang|cra|seentrix)/i.test(m[3])
       ) {
-        out.push(<CitationPill key={key++} label={m[1]} />);
+        out.push(<CitationPill key={key++} label={m[3]} />);
       } else {
         out.push(m[0]);
       }
-    } else if (m[2] !== undefined) {
+    } else if (m[4] !== undefined) {
       out.push(
         <strong key={key++} className="font-semibold text-foreground">
-          {m[2]}
+          {m[4]}
         </strong>,
       );
-    } else if (m[3] !== undefined) {
+    } else if (m[5] !== undefined) {
       out.push(
         <code
           key={key++}
           className="rounded bg-white/[0.08] px-1.5 py-0.5 text-[12px] font-mono text-foreground"
         >
-          {m[3]}
+          {m[5]}
         </code>,
       );
     }
@@ -434,5 +437,40 @@ function CitationPill({ label }: { label: string }) {
     <span className="mx-0.5 inline-flex items-center rounded-md bg-[#3B82F6] px-1.5 py-[2px] align-[1px] text-[9px] font-bold uppercase tracking-wider text-white shadow-[0_0_0_1px_rgba(59,130,246,0.35)]">
       {display}
     </span>
+  );
+}
+
+/**
+ * Render a markdown `[label](url)` pair as a real anchor. Internal
+ * paths (`/app/…`, `/legal/…`, `/ai`, `/pricing`) route through the
+ * locale-aware i18n Link so the user stays in-app; external URLs
+ * open in a new tab with noreferrer.
+ */
+function InlineLink({ label, href }: { label: string; href: string }) {
+  const className =
+    "font-medium text-[#93C5FD] underline decoration-[#60A5FA]/40 decoration-1 underline-offset-2 transition hover:text-[#60A5FA] hover:decoration-[#60A5FA]";
+  if (href.startsWith("/")) {
+    return (
+      <Link href={href} className={className}>
+        {label}
+      </Link>
+    );
+  }
+  if (/^https?:\/\//i.test(href)) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noreferrer"
+        className={className}
+      >
+        {label}
+      </a>
+    );
+  }
+  return (
+    <a href={href} className={className}>
+      {label}
+    </a>
   );
 }

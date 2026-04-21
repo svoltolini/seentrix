@@ -267,17 +267,23 @@ export function buildCopilotTools({ supabase, orgId, plan }: Ctx) {
     // -------------------------------------------------------------------
     linkToPage: tool({
       description:
-        "Surface a clickable button in the chat that takes the user to a specific Seentrix screen. Use this instead of embedding a URL in prose whenever you reference a concrete in-product location. Valid path patterns: /app/dashboard, /app/products, /app/products/{productId}, /app/products/{productId}/sbom, /app/products/{productId}/vulnerabilities, /app/products/{productId}/documents, /app/incidents, /app/vulnerability-reports, /app/academy, /app/settings, /app/settings/{tab}.",
+        "Surface a clickable 'Go to X' button in the chat that takes the user to a real Seentrix screen. Call this instead of writing a URL in prose every time you want the user to navigate somewhere. Valid paths (nothing else exists — never invent a path): " +
+        "/app/dashboard · /app/products · /app/products/new · /app/products/{productId} · /app/products/{productId}/sbom · /app/products/{productId}/vulnerabilities · /app/products/{productId}/documents · /app/products/{productId}/technical-documentation · /app/products/{productId}/conformity · /app/products/{productId}/releases · /app/products/{productId}/incidents · /app/incidents · /app/vulnerability-reports · /app/academy · /app/settings/organization · /app/settings/entity · /app/settings/team · /app/settings/billing · /app/settings/activity · /app/settings/account · /app/settings/security · /pricing · /ai · /blog · /legal/privacy · /legal/terms · /legal/dpa · /legal/cookies · /legal/impressum. " +
+        "When a 'where do I start' question comes in, call this tool once per step of the onboarding walkthrough so every step becomes a clickable button.",
       inputSchema: z.object({
         path: z
           .string()
-          .regex(/^\/app\//)
-          .describe("Path starting with /app/"),
+          .regex(/^\/(app|pricing|ai|blog|legal)(\/|$)/)
+          .describe(
+            "Path starting with /app/, /pricing, /ai, /blog, or /legal/",
+          ),
         label: z
           .string()
           .min(1)
           .max(60)
-          .describe("Short label shown on the button."),
+          .describe(
+            "Short, action-oriented label shown on the button ('Open Products', 'Fill entity details', 'Upload SBOM').",
+          ),
       }),
       execute: async ({ path, label }) => {
         // Pure UI primitive — the client renders a link button from this

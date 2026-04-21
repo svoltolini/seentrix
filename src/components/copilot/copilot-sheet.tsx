@@ -158,11 +158,11 @@ export function CopilotSheet() {
         className={cn(
           // Override the base Sheet's `sm:max-w-sm` (384 px). Copilot
           // conversations need more horizontal space for code blocks,
-          // citation pills, and multi-paragraph drafts than a side-panel
-          // drawer. `xl` = 576 px — roughly 50 % wider than the default
-          // and still leaves the page content visible behind it.
+          // citation pills, link buttons, and multi-paragraph drafts
+          // than a side-panel drawer. `2xl` = 672 px — ~75 % wider
+          // than the default, still leaves the page visible behind it.
           "flex-col gap-0 border-l border-white/[0.06] bg-[#09090B] p-0",
-          "data-[side=right]:sm:max-w-xl",
+          "data-[side=right]:sm:max-w-2xl",
         )}
       >
         <SheetTitle className="sr-only">{t("title")}</SheetTitle>
