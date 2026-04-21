@@ -10,18 +10,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { createProduct, type ProductActionState } from "../actions";
 import type { OrgPlan } from "@/lib/constants/plans";
 import { PLAN_PRODUCT_LIMITS } from "@/lib/constants/plans";
-import { HugeIcon } from "@/components/huge-icon";
 import { FieldHelp } from "@/components/field-help";
-import { ImageIcon, XIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const PRODUCT_TYPES = ["hardware", "software", "firmware", "iot"] as const;
-
-const TYPE_ICON: Record<string, { bg: string; text: string }> = {
-  hardware: { bg: "bg-[#2563EB]/15", text: "text-[#2563EB]" },
-  software: { bg: "bg-[#7C3AED]/15", text: "text-[#7C3AED]" },
-  firmware: { bg: "bg-[#EA580C]/15", text: "text-[#EA580C]" },
-  iot: { bg: "bg-[#0891B2]/15", text: "text-[#0891B2]" },
-};
 
 export function CreateProductForm({
   canCreate,
@@ -46,6 +38,7 @@ export function CreateProductForm({
   );
   const [startAssessment, setStartAssessment] = useState(false);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [selectedType, setSelectedType] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -71,7 +64,9 @@ export function CreateProductForm({
     }
   }, [state, router, startAssessment]);
 
-  // Plan limit reached
+  // --------------------------------------------------------------------
+  // Plan-limit state — reached the product cap.
+  // --------------------------------------------------------------------
   if (!canCreate) {
     const limit = PLAN_PRODUCT_LIMITS[plan];
     const nextPlan =
@@ -82,21 +77,21 @@ export function CreateProductForm({
           : "enterprise";
 
     return (
-      <div className="space-y-8">
-        <div>
-          <h1 className="font-heading text-[28px] font-bold tracking-tight">
+      <div className="flex flex-col gap-10">
+        <header className="flex flex-col gap-2">
+          <h1 className="font-heading text-3xl font-bold tracking-tight">
             {t("create.title")}
           </h1>
-          <p className="mt-1.5 text-[13px] text-muted-foreground">
+          <p className="text-sm text-muted-foreground">
             {t("create.subtitle")}
           </p>
-        </div>
+        </header>
 
-        <div className="overflow-hidden rounded-xl bg-card">
-          <div className="flex flex-col items-center px-6 py-14 text-center">
-            {/* Usage ring */}
-            <div className="relative mb-5 flex size-20 items-center justify-center">
-              <svg viewBox="0 0 36 36" className="size-20 -rotate-90">
+        <div className="flex flex-col items-start gap-6 rounded-2xl bg-white/[0.03] p-8">
+          {/* Usage ring */}
+          <div className="flex items-center gap-4">
+            <div className="relative flex size-16 items-center justify-center">
+              <svg viewBox="0 0 36 36" className="size-16 -rotate-90">
                 <circle
                   cx="18"
                   cy="18"
@@ -118,69 +113,73 @@ export function CreateProductForm({
                   className="text-primary"
                 />
               </svg>
-              <span className="absolute text-sm font-bold tabular-nums">
+              <span className="absolute text-xs font-bold tabular-nums">
                 {productCount}/{limit}
               </span>
             </div>
-
-            <h2 className="text-lg font-semibold">{t("limits.reached")}</h2>
-            <p className="mt-1.5 max-w-md text-sm text-muted-foreground">
-              {limit === 1
-                ? t("limits.reachedDescription", {
-                    plan: plan.charAt(0).toUpperCase() + plan.slice(1),
-                    limit,
-                  })
-                : t("limits.reachedDescriptionPlural", {
-                    plan: plan.charAt(0).toUpperCase() + plan.slice(1),
-                    limit,
-                  })}
-            </p>
-
-            {/* Plan comparison */}
-            <div className="mt-8 grid w-full max-w-md grid-cols-2 gap-3">
-              <div className="rounded-xl bg-white/[0.03] p-4 text-left">
-                <p className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground/50">
-                  {t("limits.currentPlan")}
-                </p>
-                <p className="mt-1 text-sm font-semibold capitalize">
-                  {plan}
-                </p>
-                <p className="mt-2 text-xs text-muted-foreground">
-                  {t(`limits.planFeatures.${plan}`)}
-                </p>
-              </div>
-              <div className="rounded-xl border border-primary/20 bg-primary/5 p-4 text-left">
-                <p className="text-[11px] font-medium uppercase tracking-wider text-primary">
-                  Recommended
-                </p>
-                <p className="mt-1 text-sm font-semibold capitalize">
-                  {nextPlan}
-                </p>
-                <p className="mt-2 text-xs text-muted-foreground">
-                  {t(`limits.planFeatures.${nextPlan}`)}
-                </p>
-              </div>
+            <div>
+              <h2 className="font-heading text-lg font-semibold">
+                {t("limits.reached")}
+              </h2>
+              <p className="mt-1 text-sm text-muted-foreground">
+                {limit === 1
+                  ? t("limits.reachedDescription", {
+                      plan: plan.charAt(0).toUpperCase() + plan.slice(1),
+                      limit,
+                    })
+                  : t("limits.reachedDescriptionPlural", {
+                      plan: plan.charAt(0).toUpperCase() + plan.slice(1),
+                      limit,
+                    })}
+              </p>
             </div>
+          </div>
 
-            <div className="mt-8 flex items-center gap-3">
-              <Link
-                href="/app/products"
-                className={buttonVariants({ variant: "outline", size: "sm" })}
-              >
-                {t("limits.backToProducts")}
-              </Link>
-              <Link
-                href="/app/settings/billing"
-                className={buttonVariants({ size: "sm" })}
-              >
-                {t("limits.upgrade")}
-              </Link>
+          <div className="grid w-full gap-3 sm:grid-cols-2">
+            <div className="rounded-xl bg-white/[0.03] p-4">
+              <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground/60">
+                {t("limits.currentPlan")}
+              </p>
+              <p className="mt-1 text-sm font-semibold capitalize">{plan}</p>
+              <p className="mt-2 text-xs text-muted-foreground">
+                {t(`limits.planFeatures.${plan}`)}
+              </p>
             </div>
+            <div className="rounded-xl bg-primary/8 p-4 ring-1 ring-primary/25">
+              <p className="text-[11px] font-semibold uppercase tracking-wider text-primary">
+                Recommended
+              </p>
+              <p className="mt-1 text-sm font-semibold capitalize">
+                {nextPlan}
+              </p>
+              <p className="mt-2 text-xs text-muted-foreground">
+                {t(`limits.planFeatures.${nextPlan}`)}
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <Link
+              href="/app/products"
+              className={buttonVariants({ variant: "ghost", size: "sm" })}
+            >
+              {t("limits.backToProducts")}
+            </Link>
+            <Link
+              href="/app/settings/billing"
+              className={buttonVariants({ size: "sm" })}
+            >
+              {t("limits.upgrade")}
+            </Link>
           </div>
         </div>
       </div>
     );
   }
+
+  // --------------------------------------------------------------------
+  // Create form.
+  // --------------------------------------------------------------------
 
   const errorMessage = state?.error
     ? t.has(`errors.${state.error}`)
@@ -193,165 +192,178 @@ export function CreateProductForm({
   }
 
   return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="font-heading text-[28px] font-bold tracking-tight">
+    <form
+      action={handleSubmit}
+      className="flex flex-col gap-10"
+    >
+      {/* Header */}
+      <header className="flex flex-col gap-2">
+        <h1 className="font-heading text-3xl font-bold tracking-tight">
           {t("create.title")}
         </h1>
-        <p className="mt-1.5 text-[13px] text-muted-foreground">
+        <p className="text-sm text-muted-foreground">
           {t("create.subtitle")}
         </p>
+      </header>
+
+      {errorMessage && (
+        <p className="rounded-lg bg-destructive/10 px-4 py-3 text-sm text-destructive">
+          {errorMessage}
+        </p>
+      )}
+
+      {/* Name */}
+      <div className="flex flex-col gap-2">
+        <Label htmlFor="name" className="text-sm font-medium">
+          {t("create.nameLabel")}
+          <FieldHelp {...tip("name")} />
+        </Label>
+        <Input
+          id="name"
+          name="name"
+          required
+          placeholder={t("create.namePlaceholder")}
+          className="h-11"
+        />
       </div>
 
-      <div className="overflow-hidden rounded-xl bg-card">
-        <form action={handleSubmit} className="flex flex-col gap-6 p-6">
-          {errorMessage && (
-            <p className="rounded-lg bg-destructive/10 px-3 py-2.5 text-sm text-destructive">
-              {errorMessage}
-            </p>
-          )}
-
-          {/* Name */}
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="name">
-              {t("create.nameLabel")}
-              <FieldHelp {...tip("name")} />
-            </Label>
-            <Input
-              id="name"
-              name="name"
-              required
-              placeholder={t("create.namePlaceholder")}
-            />
-          </div>
-
-          {/* Type selection */}
-          <div className="flex flex-col gap-2">
-            <Label>
-              {t("create.typeLabel")}
-              <FieldHelp {...tip("type")} />
-            </Label>
-            <div className="grid grid-cols-2 gap-2">
-              {PRODUCT_TYPES.map((type) => {
-                const ts = TYPE_ICON[type];
-                return (
-                  <label
-                    key={type}
-                    className="flex cursor-pointer items-center gap-3 rounded-xl border border-white/[0.06] px-4 py-3 transition-all has-[:checked]:border-primary/40 has-[:checked]:bg-primary/5"
-                  >
-                    <input
-                      type="radio"
-                      name="type"
-                      value={type}
-                      required
-                      className="sr-only"
-                    />
-                    <div
-                      className={`flex size-8 shrink-0 items-center justify-center rounded-lg text-xs font-bold ${ts.bg} ${ts.text}`}
-                    >
-                      {type[0].toUpperCase()}
-                    </div>
-                    <span className="text-sm font-medium">
-                      {t(`types.${type}`)}
-                    </span>
-                  </label>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Description */}
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="description">
-              {t("create.descriptionLabel")}
-              <FieldHelp {...tip("description")} />
-            </Label>
-            <Textarea
-              id="description"
-              name="description"
-              rows={3}
-              placeholder={t("create.descriptionPlaceholder")}
-            />
-          </div>
-
-          {/* Product image */}
-          <div className="flex flex-col gap-2">
-            <Label>
-              {t("create.imageLabel")}
-              <FieldHelp {...tip("image")} />
-            </Label>
-            {imagePreview ? (
-              <div className="relative w-fit">
-                <img
-                  src={imagePreview}
-                  alt="Product preview"
-                  className="size-24 rounded-xl border border-white/[0.06] object-cover"
+      {/* Type — segmented pills without icons */}
+      <div className="flex flex-col gap-2">
+        <Label className="text-sm font-medium">
+          {t("create.typeLabel")}
+          <FieldHelp {...tip("type")} />
+        </Label>
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+          {PRODUCT_TYPES.map((type) => {
+            const active = selectedType === type;
+            return (
+              <label
+                key={type}
+                className={cn(
+                  "relative flex cursor-pointer items-center justify-center rounded-xl px-3 py-3 text-sm font-medium transition",
+                  active
+                    ? "bg-primary/15 text-primary ring-1 ring-primary/40"
+                    : "bg-white/[0.04] text-foreground/80 hover:bg-white/[0.07] hover:text-foreground",
+                )}
+              >
+                <input
+                  type="radio"
+                  name="type"
+                  value={type}
+                  required
+                  className="sr-only"
+                  checked={active}
+                  onChange={() => setSelectedType(type)}
                 />
-                <button
-                  type="button"
-                  onClick={removeImage}
-                  className="absolute -right-2 -top-2 flex size-6 items-center justify-center rounded-full bg-card text-muted-foreground transition-colors hover:bg-destructive hover:text-white"
-                >
-                  <XIcon className="size-3.5" />
-                </button>
-              </div>
-            ) : (
+                {t(`types.${type}`)}
+              </label>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Description */}
+      <div className="flex flex-col gap-2">
+        <Label htmlFor="description" className="text-sm font-medium">
+          {t("create.descriptionLabel")}
+          <FieldHelp {...tip("description")} />
+        </Label>
+        <Textarea
+          id="description"
+          name="description"
+          rows={3}
+          placeholder={t("create.descriptionPlaceholder")}
+          className="resize-none"
+        />
+      </div>
+
+      {/* Image — compact, borderless, optional */}
+      <div className="flex flex-col gap-2">
+        <Label className="text-sm font-medium">
+          {t("create.imageLabel")}
+          <FieldHelp {...tip("image")} />
+        </Label>
+        <div className="flex items-center gap-4">
+          {imagePreview ? (
+            <div className="relative">
+              <img
+                src={imagePreview}
+                alt="Product preview"
+                className="size-20 rounded-xl object-cover"
+              />
               <button
                 type="button"
-                onClick={() => fileInputRef.current?.click()}
-                className="flex size-24 flex-col items-center justify-center gap-1.5 rounded-xl border border-dashed border-white/[0.08] text-muted-foreground/40 transition-colors hover:border-white/[0.15] hover:text-muted-foreground/60"
+                onClick={removeImage}
+                aria-label={t("create.imageRemove")}
+                className="absolute -right-2 -top-2 flex size-6 items-center justify-center rounded-full bg-[#0B0B12] text-muted-foreground ring-1 ring-white/[0.1] transition hover:bg-destructive hover:text-white hover:ring-destructive"
               >
-                <ImageIcon className="size-5" />
-                <span className="text-[10px] font-medium">
-                  {t("create.imageUpload")}
-                </span>
+                <svg
+                  viewBox="0 0 24 24"
+                  className="h-3.5 w-3.5"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M6 6l12 12M18 6L6 18"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                </svg>
               </button>
-            )}
-            <input
-              ref={fileInputRef}
-              type="file"
-              name="image"
-              accept="image/jpeg,image/png,image/webp"
-              onChange={handleImageChange}
-              className="hidden"
-            />
-            <p className="text-[11px] text-muted-foreground/40">
-              {t("create.imageHint")}
-            </p>
-          </div>
-
-          {/* Start assessment checkbox */}
-          <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-white/[0.06] px-4 py-3.5 transition-all has-[:checked]:border-primary/40 has-[:checked]:bg-primary/5">
-            <input
-              type="checkbox"
-              checked={startAssessment}
-              onChange={(e) => setStartAssessment(e.target.checked)}
-              className="mt-0.5 size-4 shrink-0 accent-primary"
-            />
-            <div>
-              <span className="text-sm font-medium">
-                {t("create.startAssessment")}
-              </span>
-              <p className="mt-0.5 text-xs text-muted-foreground">
-                {t("create.startAssessmentDescription")}
-              </p>
             </div>
-          </label>
-
-          {/* Actions */}
-          <div className="flex justify-end gap-2 pt-2">
-            <Link
-              href="/app/products"
-              className={buttonVariants({ variant: "outline", size: "sm" })}
+          ) : (
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              className="flex size-20 items-center justify-center rounded-xl bg-white/[0.03] text-xs font-medium text-muted-foreground/70 transition hover:bg-white/[0.06] hover:text-foreground"
             >
-              {t("create.cancel")}
-            </Link>
-            <Button type="submit" size="sm" disabled={isPending}>
-              {t("create.submit")}
-            </Button>
-          </div>
-        </form>
+              {t("create.imageUpload")}
+            </button>
+          )}
+          <p className="text-xs text-muted-foreground/60">
+            {t("create.imageHint")}
+          </p>
+        </div>
+        <input
+          ref={fileInputRef}
+          type="file"
+          name="image"
+          accept="image/jpeg,image/png,image/webp"
+          onChange={handleImageChange}
+          className="hidden"
+        />
       </div>
-    </div>
+
+      {/* Start-assessment — inline row, no card */}
+      <label className="flex cursor-pointer items-start gap-3">
+        <input
+          type="checkbox"
+          checked={startAssessment}
+          onChange={(e) => setStartAssessment(e.target.checked)}
+          className="mt-0.5 size-4 shrink-0 accent-primary"
+        />
+        <div>
+          <span className="text-sm font-medium">
+            {t("create.startAssessment")}
+          </span>
+          <p className="mt-0.5 text-xs text-muted-foreground">
+            {t("create.startAssessmentDescription")}
+          </p>
+        </div>
+      </label>
+
+      {/* Actions */}
+      <div className="flex items-center justify-between pt-2">
+        <Link
+          href="/app/products"
+          className={buttonVariants({ variant: "ghost", size: "sm" })}
+        >
+          {t("create.cancel")}
+        </Link>
+        <Button type="submit" disabled={isPending}>
+          {isPending ? t("create.submitting") : t("create.submit")}
+        </Button>
+      </div>
+    </form>
   );
 }

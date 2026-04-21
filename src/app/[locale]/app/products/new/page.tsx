@@ -5,7 +5,7 @@ export default async function NewProductPage() {
   const orgInfo = await getOrgProductInfo();
 
   return (
-    <div className="mx-auto max-w-lg py-8">
+    <div className="mx-auto max-w-2xl py-10">
       <CreateProductForm
         canCreate={orgInfo.canCreate}
         plan={orgInfo.plan}
