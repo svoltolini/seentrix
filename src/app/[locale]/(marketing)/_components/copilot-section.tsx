@@ -51,7 +51,28 @@ export function CopilotSection() {
     return () => ctx.revert();
   }, []);
 
-  const bullets = ["sovereign", "grounded", "context", "actionable"] as const;
+  // Each cell gets its own gradient so the row reads as a spectrum
+  // rather than four copies of the same number. All four pairs are
+  // saturated enough to work on the dark band, and they stay inside
+  // Seentrix's accent palette (blue → violet → pink → amber → emerald).
+  const bullets = [
+    {
+      key: "sovereign",
+      gradient: "from-[#3B82F6] to-[#8B5CF6]", // blue → violet
+    },
+    {
+      key: "grounded",
+      gradient: "from-[#8B5CF6] to-[#EC4899]", // violet → pink
+    },
+    {
+      key: "context",
+      gradient: "from-[#F59E0B] to-[#F97316]", // amber → orange
+    },
+    {
+      key: "actionable",
+      gradient: "from-[#10B981] to-[#06B6D4]", // emerald → cyan
+    },
+  ] as const;
 
   return (
     <section
@@ -85,13 +106,15 @@ export function CopilotSection() {
             brand blue→violet gradient — same treatment the Problem
             section uses for its stat counters. */}
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
-          {bullets.map((key, i) => (
+          {bullets.map(({ key, gradient }, i) => (
             <div
               key={key}
               data-copilot-cell
               className="flex flex-col items-start text-left"
             >
-              <span className="bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] bg-clip-text font-heading text-6xl font-extrabold leading-none tracking-tight text-transparent sm:text-7xl">
+              <span
+                className={`bg-gradient-to-r ${gradient} bg-clip-text font-heading text-6xl font-extrabold leading-none tracking-tight text-transparent sm:text-7xl`}
+              >
                 {String(i + 1).padStart(2, "0")}
               </span>
               <h3 className="mt-6 font-heading text-lg font-semibold text-foreground">
