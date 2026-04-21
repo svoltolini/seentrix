@@ -1,0 +1,105 @@
+---
+title: "Der CRA-Support-Zeitraum: Wie lange du patchen musst — und was passiert, wenn die Uhr abläuft"
+description: "Artikel 13(8) des Cyber Resilience Act macht den Support-Zeitraum zur harten Rechtspflicht. Hier steht, wie du ihn festsetzt, warum fünf Jahre selten die richtige Antwort ist, und was Ende-der-Unterstützung rechtlich bedeutet."
+date: "2026-05-10"
+category: "Regulation"
+author: "Seentrix Team"
+---
+
+Vor dem Cyber Resilience Act war der Support-Zeitraum eine Marketing-Entscheidung. Nach dem CRA ist er eine regulatorische Pflicht — und eine der am häufigsten missverstandenen Klauseln. Artikel 13(8) setzt fünf Jahre als Untergrenze, aber die entscheidenden Worte lauten „nicht kürzer als die erwartete Produktnutzung" — fünf Jahre sind also der Boden, nicht die Antwort. Für die meisten Produkte ist die richtige Zahl länger, und Hersteller, die ohne Analyse standardmäßig fünf Jahre setzen, werden diese Entscheidung einer Marktüberwachungsbehörde begründen müssen.
+
+Dieser Artikel behandelt, was Artikel 13(8) genau verlangt, wie du einen verteidigbaren Zeitraum festlegst, was du Nutzern mitteilen musst und was Ende-der-Unterstützung rechtlich bedeutet.
+
+## Was Artikel 13(8) fordert
+
+Kern der Regelung: Der Hersteller legt den Support-Zeitraum anhand der voraussichtlichen Produktnutzung fest, insbesondere unter Berücksichtigung der Erwartung der Verbraucher, der Art des Produkts und einschlägigen Unionsrechts. Der Zeitraum darf nicht kürzer als fünf Jahre sein, außer das Produkt wird vernünftigerweise kürzer genutzt.
+
+Drei Punkte ergeben sich daraus:
+
+1. **Fünf Jahre sind der Boden**, nicht der Standard. Ein längerer Zeitraum ist erforderlich, wenn die erwartete Nutzung länger ist.
+2. **Der Zeitraum muss verteidigbar sein.** „Wir haben fünf Jahre gewählt, weil der Wettbewerber das auch tut" ist keine gültige Begründung.
+3. **Kürzere Zeiträume sind nur in engen Fällen zulässig** — Produkte mit tatsächlich kürzerer Nutzungsdauer, etwa Einweg-Elektronik.
+
+## Wie du einen verteidigbaren Zeitraum festlegst
+
+Ein verteidigbarer Support-Zeitraum folgt aus der schlichten Frage: *Wie lange werden Nutzer dieses Produkt vernünftigerweise weiter nutzen?* Antworten entstehen aus drei Quellen.
+
+### 1. Marktnachweis
+
+Wie lange bleiben ähnliche Produkte im Einsatz? Verbraucher-IoT: typisch 5–8 Jahre. Industrielle Steuerungen: 15–25 Jahre. Enterprise-Netzwerktechnik: 7–12 Jahre. Smart-Home-Hubs und app-gekoppelte Geräte: 4–7 Jahre (in der Praxis durch die Lebensdauer der Begleit-App begrenzt, nicht durch die Hardware).
+
+### 2. Regulatorische Peers
+
+Einige Kategorien haben bereits Mindest-Support-Zeiträume aus sektoralem Recht. Medizinprodukte unter der MDR haben eine Post-Market-Surveillance über die Nutzungsdauer; Maschinen unter der Maschinenverordnung orientieren sich ähnlich. Der CRA überschreibt diese nicht; er legt fünf Jahre als Boden darunter.
+
+### 3. Verbrauchererwartung
+
+Was erwartete der Käufer am Verkaufspunkt vernünftigerweise? Ein Verbraucher, der 2.000 € für einen Smart-Kühlschrank ausgibt, erwartet zehn+ Jahre Nutzung. Ein Verbraucher, der 30 € für eine günstige Smart-Lampe ausgibt, erwartet drei bis fünf. Preispunkt, Marketing-Aussagen und kommerzielle Positionierung fließen in die Verbrauchererwartung ein — und alles davon berücksichtigt eine Behörde.
+
+Die drei zusammen: **Markt × Peer × Erwartung** ergeben eine Zahl. Konservativ runden. „Sieben Jahre" ist leichter zu verteidigen als „fünf Jahre und einen Monat".
+
+## Was die Pflicht im Support-Zeitraum umfasst
+
+Während des Support-Zeitraums verlangt Anhang I Teil II:
+
+- **Schwachstellen identifizieren und dokumentieren** — aktuelle SBOM halten.
+- **Schwachstellen ohne Verzögerung adressieren und beheben** — Patches ausliefern.
+- **Sicherheit regelmäßig testen.**
+- **Behobene Schwachstellen öffentlich bekannt geben** via Advisories.
+- **Richtlinie zur koordinierten Offenlegung betreiben.**
+- **Informationsaustausch über den Sicherheitsstand ermöglichen.**
+- **Sichere Update-Verteilmechanismen bereitstellen.**
+- **Sicherheitspatches unverzüglich und kostenfrei verteilen**, mit klarer Hinweismeldung, was der Patch behebt.
+
+Wichtig: Artikel 13(8) fordert, dass Sicherheitsupdates **von Funktionsupdates getrennt** und über den vollen Support-Zeitraum verfügbar sein müssen. Ein Hersteller darf einen Sicherheitspatch nicht zurückhalten, weil der Nutzer nicht auch auf das aktuelle Feature-Release wechselt.
+
+## Was Nutzern mitgeteilt werden muss
+
+Anhang II(6) verlangt die Kommunikation des Endes des Support-Zeitraums in der Produktdokumentation. „Sicherheitsupdates werden fünf Jahre ab Kauf bereitgestellt" ist nicht präzise genug — die Verordnung verlangt „den Zeitpunkt, ab dem der technische Support endet, als Datum".
+
+In der Praxis:
+
+- **Auf dem Produkt:** End-of-Support-Datum im Handbuch oder einem vergleichbaren Begleitdokument.
+- **Online:** produktspezifische Support-Seite mit dem Datum, vom Produkt aus auffindbar.
+- **Im Produkt, wo möglich:** Firmware kennt ihr eigenes EOS-Datum und zeigt es in einer Einstellung.
+
+Das End-Datum ist bei Herstellung fixiert, nicht beim Erstverkauf. Eine Einheit, die zwei Jahre im Lager steht, erreicht ihr veröffentlichtes EOS am ursprünglichen Datum — ein Grund, warum Hersteller den Floor etwas über das Minimum setzen, um Distributionslatenz zu puffern.
+
+## Was am Ende-der-Unterstützung passiert
+
+Wenn der Support-Zeitraum endet, ändern sich zwei Dinge gleichzeitig.
+
+**Für den Hersteller:**
+
+- Die Pflichten aus Anhang I Teil II (Schwachstellenhandhabung, Sicherheitsupdates, Offenlegung) gelten nicht mehr für vor EOS in Verkehr gebrachte Einheiten. Für nach EOS in Verkehr gebrachte Einheiten gelten sie weiter — das heißt effektiv, der Hersteller muss den Vertrieb einstellen.
+- Die zehnjährige Aufbewahrungspflicht (Artikel 13(20)) für DoC und technisches Dossier läuft ab der letzten in Verkehr gebrachten Einheit, nicht ab EOS. Dokumentation zehn Jahre *nach dem letzten Verkauf*.
+
+**Für den Nutzer:**
+
+- Sicherheitspatches werden eingestellt.
+- Die Cybersicherheits­lage des Produkts friert faktisch ein. Nach EOS entdeckte Schwachstellen bleiben u. U. ungepatcht.
+- Verbraucherschutzrecht in vielen Mitgliedstaaten verlangt klare Kommunikation, dass das Produkt keinen Sicherheitssupport mehr erhält, damit Nutzer entscheiden können, ob sie es weiter nutzen wollen.
+
+Regulatorisch ist EOS ein *Informationsereignis*, kein *Versagensereignis*. Nutzer haben ein Recht auf Information. Hersteller dürfen Support einstellen. Was nicht erlaubt ist: still Support einstellen und das Produkt weiter als „sicher" bewerben.
+
+## Typische Fehler
+
+**Zu kurz setzen.** Fünf Jahre für ein Produkt, das acht Jahre im Einsatz ist, erzeugt ein zweijähriges Haftungsfenster. Dann sind Nutzer noch am Gerät, Behörden werten sie in der „Verbrauchererwartung", und der Hersteller schickt keine Patches mehr. Das regulatorische Risiko ist größer, als gleich sieben Jahre zu versprechen.
+
+**Ohne technische Kapazität festsetzen.** Zehn Jahre Support verlangen eine Build-Pipeline, einen Dependency-Graphen und personelle Kontinuität, die in zehn Jahren noch sichere Builds produzieren. Veraltete Toolchains und verlorenes Know-how machen lange Zeiträume operativ spröde.
+
+**EOS nicht kommunizieren.** Ist das EOS-Datum nicht klar auf dem Produkt, im Handbuch, auf der Website und idealerweise im Produkt selbst, verletzt der Hersteller Anhang II(6) unabhängig von Artikel 13(8).
+
+**Uhr bei Refresh-Releases zurücksetzen.** Ein kleines Refresh (neue SKU, neue Farbe, aktualisierte Firmware) verlängert nicht den Support-Zeitraum bereits ausgelieferter Einheiten. Jede Einheit hat ihr EOS ab Inverkehrbringen fixiert; erst ein neuer Produkttyp mit neuer SKU startet eine neue Uhr.
+
+## Die Entscheidung dokumentieren
+
+Die Support-Zeitraum-Entscheidung gehört ins technische Dossier — konkret in die Risikobewertung (Anhang VII(3)) und in eine dedizierte „Begründung des Support-Zeitraums" mit Verweisen auf die drei Quellen oben. Einer Behörde, die nachfragt, zeigt man diese Notiz.
+
+Die Begründung muss nicht lang sein. Eine Seite reicht. Aber sie muss existieren und datiert sein.
+
+## Wo Seentrix ansetzt
+
+Der Produktsetup in Seentrix fragt Start- und Enddatum des Support-Zeitraums ab und nutzt sie für drei Dinge: das Endnutzer-Informationsblatt (wo das EOS-Datum im nutzerseitigen Dokument erscheint), die öffentliche PSIRT-Seite (Deklaration unterstützter Versionen) und das Dashboard mit einem Countdown, damit ein auslaufender Zeitraum Monate vorher sichtbar wird.
+
+Wenn du den Zeitraum zum ersten Mal festlegst, sind die obigen Fragen die Hausaufgabe. Wenn das Datum automatisch in die nutzerseitigen Dokumente und das technische Dossier fließen soll, ist das der Documents-Tab.

@@ -1,0 +1,113 @@
+---
+title: "Konformitätsbewertungsverfahren nach CRA: Modul A, B+C, H und europäische Zertifizierung erklärt"
+description: "Das falsche Konformitätsbewertungsverfahren unter dem CRA zu wählen, kostet dich zwischen wenigen Wochen und mehreren hunderttausend Euro. Hier steht, wie die vier Verfahren wirklich funktionieren, welches für dein Produkt gilt und wann du eine benannte Stelle brauchst."
+date: "2026-05-03"
+category: "Compliance"
+author: "Seentrix Team"
+---
+
+Nicht jedes Produkt mit digitalen Elementen durchläuft denselben Compliance-Pfad. Der Cyber Resilience Act übernimmt den europäischen Ansatz der Konformitätsbewertung aus dem Neuen Rechtsrahmen: ein Menü standardisierter „Module", die von reiner Selbsterklärung bis zum vollständigen Drittaudit des Qualitätssystems reichen. Die Wahl des richtigen Moduls ist die folgenreichste Entscheidung im CRA-Programm, weil sie bestimmt, wie lange Compliance dauert, wie viel sie kostet und ob überhaupt eine benannte Stelle involviert sein muss.
+
+Dieser Artikel geht durch die vier Verfahren aus Artikel 32 — was sie verlangen, wann du sie verwenden musst und welche Fehler Teams bei der Auswahl typischerweise machen.
+
+## Zuerst: In welche CRA-Kategorie fällt dein Produkt?
+
+Bevor du ein Verfahren wählst, musst du wissen, welche Klasse der CRA deinem Produkt zuweist. Artikel 6 definiert drei Klassen plus eine „Standard"-Gruppe:
+
+- **Standard (Artikel 6(1))** — die große Mehrheit der Produkte mit digitalen Elementen. Keine spezifische Nennung in Anhang III.
+- **Wichtig — Klasse I (Anhang III(1))** — Produkte mit höherem Risiko, z. B. Passwortmanager, Identitätsverwaltung, Browser, VPNs, Router, Firewalls, Smart-Home-Controller, vernetzte Sicherheitskameras.
+- **Wichtig — Klasse II (Anhang III(2))** — noch höheres Risiko, z. B. Betriebssysteme, Hypervisoren, PKI-Produkte, Netzwerk-HSMs, allgemeine Sicherheitsprodukte.
+- **Kritisch (Artikel 7 + Anhang IV)** — kurze Liste mit systemisch wichtigsten Produkten wie Hardware-Security-Bausteinen, Smart Metern und Chipkarten; unterliegen zusätzlich einer verpflichtenden europäischen Cybersicherheits­zertifizierung.
+
+Die Klasse bestimmt, welche Verfahren zulässig sind. Ein leichteres Verfahren als erlaubt zu wählen, verstößt gegen Artikel 32; ein schwereres ist immer erlaubt, kostet aber unnötig Zeit und Geld.
+
+## Modul A — Interne Fertigungskontrolle (Selbstbewertung)
+
+Modul A ist das leichteste Verfahren. Der Hersteller führt die Konformitätsbewertung selbst durch: Er wendet die einschlägigen harmonisierten Normen an, erstellt die technische Dokumentation und unterzeichnet eine Konformitätserklärung. Keine benannte Stelle beteiligt.
+
+**Wer darf Modul A nutzen:**
+
+- Produkte der Standardklasse.
+- Produkte der wichtigen Klasse I, *wenn und nur wenn* der Hersteller harmonisierte Normen (oder gemeinsame Spezifikationen oder ein europäisches Cybersicherheits­zertifikat) anwendet, die alle einschlägigen wesentlichen Anforderungen aus Anhang I abdecken.
+
+**Was Modul A konkret verlangt:**
+
+1. Erstellung der technischen Dokumentation (Anhang VII).
+2. Anwendung der im Amtsblatt gelisteten harmonisierten Normen für die Produktkategorie.
+3. Durchführung der Risikobewertung nach Artikel 13(3).
+4. Ausreichende Tests, um die Erfüllung der Anhang-I-Anforderungen zu belegen.
+5. Ausstellung der Konformitätserklärung (Anhang IV) und Anbringung der CE-Kennzeichnung.
+
+**Operativer Aufwand:** Wochen bis Monate intern. Keine Gebühren Dritter.
+
+**Wann Modul A scheitert:** sobald für deine Kategorie (noch) keine harmonisierte Norm existiert oder sie nur Teile von Anhang I abdeckt. Dann fällst du — selbst bei Klasse-I-Produkten — in Modul B+C oder Modul H.
+
+## Modul B + C — EU-Baumusterprüfung + Konformität mit dem Baumuster
+
+Modul B+C ist ein zweistufiges Verfahren mit Beteiligung einer benannten Stelle.
+
+In **Modul B** prüft die benannte Stelle das technische Design: Der Hersteller reicht die technische Dokumentation und repräsentative Muster ein, die Stelle bewertet, ob das Design die wesentlichen Anforderungen erfüllt, und stellt bei Zustimmung eine **EU-Baumusterprüfbescheinigung** aus.
+
+**Modul C** ist die laufende Konformität in der Produktion: Der Hersteller erklärt, dass jede in Verkehr gebrachte Einheit dem geprüften Baumuster entspricht. Die benannte Stelle wird nicht pro Einheit eingebunden, behält sich aber Audits vor.
+
+**Wer nutzt Modul B+C:**
+
+- Klasse-I-Produkte ohne vollständige harmonisierte Norm.
+- Alle Klasse-II-Produkte (neben Modul H als Alternative).
+- Freiwillig von jedem Hersteller, der vor Markteintritt eine unabhängige Einschätzung wünscht.
+
+**Operativer Aufwand:** Monate plus Gebühren im fünfstelligen Bereich. 6–12 Monate vom Erstkontakt bis zum Zertifikat sind für ein mäßig komplexes Produkt üblich.
+
+**Größte Falle:** das Modul-B-Zertifikat als einmaliges Tor zu behandeln. Eine wesentliche Änderung der Sicherheitsarchitektur (neues Authentifizierungsschema, größerer Firmware-Rewrite, geänderter Update-Kanal) erfordert erneuten Gang zur benannten Stelle. Das ist die in der Marktüberwachung am häufigsten beanstandete Klausel.
+
+## Modul H — Umfassendes Qualitätssicherungssystem
+
+Modul H ersetzt die Baumusterprüfung durch ein Audit des gesamten Qualitätssystems des Herstellers. Die benannte Stelle bewertet Designprozesse, Entwicklung, Fertigung, Dokumentation und Security-by-Design-Praxis in Summe und erteilt eine QMS-Zulassung, die alle Produkte im definierten Scope abdeckt.
+
+**Wer nutzt Modul H:**
+
+- Klasse-II-Hersteller, die eine laufende Auditbeziehung gegenüber Einzel-Baumusterprüfungen bevorzugen.
+- Mehrproduktehersteller, bei denen der produktbezogene Overhead von B+C die Compliance-Kosten dominieren würde.
+
+**Operativer Aufwand:** höchste Anfangsinvestition — QMS-Audit typischerweise 3–6 Monate plus jährliche Überwachungsaudits. Die Kosten pro Produkt danach sind gering, weil jedes neue Produkt in die bestehende QMS-Zulassung fällt.
+
+**Strategisches Signal:** Modul H ist oft die richtige Wahl, wenn CRA-Compliance nur eines von mehreren Sicherheitsregimen ist (IEC 62443 für Industrieprodukte, ISO 27001 auf Organisationsebene, Cyber Essentials Plus für UK-Markt). Die QMS-Artefakte speisen sich gegenseitig.
+
+## Europäische Cybersicherheits­zertifizierungsschemata
+
+Für kritische Produkte aus Anhang IV ist die Konformität mit einem europäischen Cybersicherheits­zertifizierungsschema nach der Cybersicherheitsverordnung ((EU) 2019/881) verpflichtend. Relevante Schemata zum Zeitpunkt der Erstellung:
+
+- **EUCC** — EU-Common-Criteria-Schema für Informationssicherheitsprodukte.
+- **EUCS** — EU-Cloud-Services-Schema (relevant für Cloud-Produkte).
+- **Sektorale Schemata** — in Entwicklung; den ENISA-Katalog beobachten.
+
+Die Zertifizierung erfolgt durch akkreditierte Konformitätsbewertungsstellen, nicht durch generische benannte Stellen. Kosten im sechsstelligen Bereich, Zeiträume 12–24 Monate.
+
+## Ein Entscheidungsbaum
+
+So findest du dein Verfahren:
+
+1. **Ist dein Produkt in Anhang IV (kritisch)?** Falls ja → europäische Cybersicherheits­zertifizierung Pflicht.
+2. **Wichtig Klasse II (Anhang III(2))?** Falls ja → Modul B+C **oder** Modul H.
+3. **Wichtig Klasse I (Anhang III(1))?**
+   - Wenn **harmonisierte Normen alle einschlägigen Anhang-I-Anforderungen abdecken** → Modul A erlaubt.
+   - Sonst → Modul B+C oder Modul H.
+4. **Sonst (Standard)** → Modul A.
+
+Die meisten Standardklassen-Hersteller nutzen Modul A. Die meisten Klasse-I-Hersteller werden bis Dezember 2027 anwendbare harmonisierte Normen vorfinden und ebenfalls Modul A wählen. B+C / H / europäische Zertifizierung sind der kleinere, aber teurere Teil.
+
+## Typische Auswahlfehler
+
+**Annehmen, das Produkt sei „Standard", ohne Anhang III zu prüfen.** „Smart-Home-Produkte" ist Klasse I. „Netzwerkmanagement-Systeme" ist Klasse I. „Router, Switches, WLAN-Access-Points" ist Klasse I. Zwanzig Minuten Anhang III lesen lohnt sich.
+
+**Modul A als „keine Arbeit" auffassen.** Selbstbewertung verlangt die vollständige technische Dokumentation, die vollständige Risikobewertung und den vollständigen SBOM-/Schwachstellenprozess. Nur ohne benannte Stelle.
+
+**Billigste Route wählen ohne Blick auf Änderungsmanagement.** Modul A ist pro Produkt am günstigsten, verlangt aber Prozessreife im Haus. Modul H ist teurer am Anfang, skaliert aber besser auf zweite und dritte Produkte.
+
+**Kontakt mit der benannten Stelle zu spät.** Benannte Stellen sind unter dem CRA noch im Zulassungsprozess. Kapazität ist knapp. Eine Anfrage im dritten Quartal 2027 wird kaum vor Dezember 2027 fertig.
+
+## Wo Seentrix ansetzt
+
+Der Produktanlage-Flow in Seentrix fragt CRA-Kategorie und Bewertungsverfahren vorab ab und verwendet sie, um die passende technische-Dokumentations-Vorlage, die richtige Konformitätsschritt-Checkliste und das passende DoC-Gerüst zu vorzufüllen. Wechselt ein Produkt mitten in der Entwicklung von Klasse I zu Klasse II — weil eine neue Funktion es in eine andere Anhang-III-Kategorie zieht — flaggt die Plattform das und zeigt die Auswirkung auf die Verfahrenswahl.
+
+Die Entscheidung gehört weiterhin dir, und die Compliance-Nachweise ebenfalls. Die Plattform sorgt dafür, dass du nie das falsche Verfahren im Kopf mit dir herumträgst.

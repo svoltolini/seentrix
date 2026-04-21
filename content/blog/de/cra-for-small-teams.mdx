@@ -1,0 +1,131 @@
+---
+title: "CRA für kleine Teams: Ein Compliance-Programm ohne Compliance-Abteilung"
+description: "Der Cyber Resilience Act wurde für Hersteller geschrieben, die Recht, Qualität und Security im selben Haus haben. Die meisten kleinen Produktteams haben nichts davon. Hier steht, wie man mit 5, 15 oder 50 Leuten ein konformes CRA-Programm fährt — ohne dafür einzustellen."
+date: "2026-05-15"
+category: "Compliance"
+author: "Seentrix Team"
+---
+
+Der Cyber Resilience Act gilt für jeden Hersteller, der ein Produkt mit digitalen Elementen in der EU in Verkehr bringt — ein Smart-Thermostat-Unternehmen mit zwölf Ingenieuren steht unter denselben wesentlichen Anforderungen wie ein Konzern mit dediziertem CRA-Programmbüro. Die Proportionalitätssprache der Verordnung hilft etwas, aber die zugrundeliegenden Pflichten skalieren nicht nach unten. Die SBOM-Pflicht ist dieselbe. Die 24-Stunden-Uhr ist dieselbe. Die zehnjährige Aufbewahrung ist dieselbe.
+
+Für die meisten kleinen Hersteller lautet die realistische Frage nicht „Wie bauen wir eine richtige Compliance-Abteilung?" — dafür ist kein Budget — sondern „Wie erfüllen wir die CRA-Pflichten mit den Leuten und Werkzeugen, die wir schon haben?". Dieser Artikel ist eine praktische Antwort.
+
+## Erst den Umfang ehrlich bemessen
+
+Bevor du entscheidest, wie du das Programm aufziehst, entscheide, wie viel Programm du eigentlich brauchst. Drei Produktattribute treiben die Kosten:
+
+1. **CRA-Klasse** — Standard, Klasse I, Klasse II oder kritisch. Standard braucht nie eine benannte Stelle; Klasse II immer. Die Kostenkluft dazwischen ist sechsstellig.
+2. **Produktanzahl** — ein Produkt kannst du auf einer Person zentralisieren. Bei zehn Produkten brauchst du einen Prozess.
+3. **Support-Zeitraum** — fünf Jahre Support bedeuten fünf Jahre Schwachstellenhandhabungs-Kapazität. Zehn Jahre Support auf einem Industrieprodukt ist ein deutlich größeres operatives Commitment.
+
+Für ein typisches kleines Team mit ein, zwei Standardklasse-Consumer-Produkten und 5-Jahres-Support ist CRA-Compliance als Teilverantwortung auf bestehenden Rollen machbar. Bei einem Klasse-II-Produkt mit 10-Jahres-Support braucht es dediziertes Headcount.
+
+## Pflichten auf bestehende Rollen mappen
+
+Der CRA schreibt kein Org-Chart vor. Nichts verlangt einen „Chief Compliance Officer" oder „Security Program Manager". Pflichten können von jedem wahrgenommen werden, der verantwortlich ist — solange sie wahrgenommen werden.
+
+Tragfähiges Mapping für ein 10–30-Personen-Produktteam:
+
+- **CTO / Head of Engineering** — Artikel-13-Konformität, Anhang-I-Security-by-Design-Nachweise, SDLC-Doku, SBOM-Toolchain.
+- **Lead Engineer pro Produkt** — produktspezifische Risikobewertung, Anhang-I-Kontroll-Mapping, technisches Dossier für dieses Produkt.
+- **Gründer / CEO / Operations-Lead** — DoC als juristische Unterzeichnerin, Beziehung zur benannten Stelle (falls vorhanden), Artikel-14-Meldungen.
+- **Jeder mit Kundenkontakt** — Awareness für eingehende Sicherheitsmeldungen, mit Übergabepfad an den Incident-Owner.
+
+Schlüsselwort: „owner". Jede Pflicht braucht eine namentlich benannte Verantwortliche mit genug Befugnis zum Handeln. Muss die Artikel-14-Erstwarnung am Samstag um 03:00 auf die CEO-Freigabe warten, verpasst sie die 24-Stunden-Uhr.
+
+## Die fünf operativen Fähigkeiten, die wirklich stehen müssen
+
+Der CRA eingedampft auf das, was operativ real sein muss:
+
+### 1. Eine SBOM-Pipeline pro Release
+
+Keine Einmal-Scans — eine automatische Pipeline, die pro Release-Kandidaten eine CycloneDX-SBOM erzeugt und sie neben dem Build-Artefakt speichert. Das ist die höchste Einzelhebelwirkung. Ohne sie sind die Pflichten aus Artikel 13(2) und Anhang I Teil II in deinem Code nicht durchsetzbar.
+
+Für ein kleines Team mit bestehender CI ist Syft oder Trivy in der Pipeline ein Nachmittagsaufwand. Ergebnis an einem Ort ablegen, der den zehnjährigen Horizont überdauert.
+
+### 2. Richtlinie zur koordinierten Offenlegung mit einem öffentlichen Kontakt
+
+Anhang I Teil II(5) verlangt eine VDP. Artikel 13 Teil II(1)(c) verlangt implizit einen zentralen Kontaktpunkt. Minimal tragfähig: eine öffentliche Seite auf `example.com/security` mit:
+
+- Scope (welche Produkte abgedeckt sind).
+- Meldekanal (E-Mail oder Formular).
+- Was der Melder erwarten darf (Bestätigung innerhalb X Tagen, Lösungszeitplan).
+- Safe-Harbour-Klausel für redliche Forschung.
+
+Einmal aufgesetzt, ist der Betrieb Teilverantwortung — die meisten kleinen Teams haben ein bis fünf eingehende Meldungen pro Jahr.
+
+### 3. Eine Schwachstellen-Kadenz
+
+Wenn eine neue CVE eine deiner Abhängigkeiten betrifft, brauchst du einen Prozess, der — innerhalb Tagen, nicht Wochen — entscheidet, ob sie zutrifft, ob gepatcht wird und ob Kunden informiert werden. Für ein kleines Team:
+
+- Slack-Kanal (o. ä.) mit SBOM-gesteuerten Alerts bei neuen CVEs.
+- Wöchentliches 15-Minuten-Triage.
+- Dokumentiertes SLA für Fix-Timing (z. B. Critical innerhalb 7 Tagen, High innerhalb 30, Medium innerhalb 90).
+
+Die SLA-Zahlen zählen weniger als ihre Existenz — der CRA verlangt kein konkretes SLA, aber Prüfer erwarten ihre Existenz und Befolgung.
+
+### 4. Ein 24-Stunden-Awareness-Trichter
+
+Artikel 14 verlangt Meldung schwerwiegender Vorfälle oder aktiv ausgenutzter Schwachstellen innerhalb von 24 Stunden nach Kenntniserlangung. „Kenntnis" ist ein Unternehmens-, kein Personen-Ereignis. Der Trichter:
+
+- Ein zentraler Eingang (z. B. `security@example.com` oder interne Queue), an dem alle Signale landen.
+- Regel: Wer ein potenziell schwerwiegendes Signal empfängt, leitet es innerhalb von 2 Stunden dorthin weiter.
+- Verantwortung: Eine benannte Person prüft den Eingang mindestens täglich — idealerweise mit On-Call für Wochenenden und Feiertage.
+
+Kleine Teams brauchen selten Enterprise-IR-Tooling; sie brauchen einen verlässlichen Eingang und eine Regel, was dort landet.
+
+### 5. Ein Dossier-Ordner, der gepflegt wird
+
+Anhang VII ist eine Inhaltsanforderung, aber auch eine Disziplin. Ein Ordner pro Produkt, organisiert nach den elf Anhang-I-Anforderungen und den elf Anhang-VII-Abschnitten, im gemeinsamen DMS gepflegt, aktualisiert bei jeder wesentlichen Entscheidung.
+
+Kleine Teams scheitern nicht am Erstaufbau, sondern an der Pflege. Gegenmittel: Dossier-Änderungen an Engineering-Änderungen koppeln — jeder PR, der Sicherheit oder Außenschnittstellen berührt, bekommt eine Checkbox „Dossier aktualisiert?". Niedriger Overhead, wenn einmal etabliert; nahezu unmöglich nachzurüsten.
+
+## Was du (vorerst) weglassen kannst
+
+Ein kleines Team braucht nicht:
+
+- **Eine dedizierte Compliance-Einstellung.** Bis Portfolio oder Klasse wachsen, reicht verteilte Teilverantwortung.
+- **Ein volles ISO-27001-Programm.** Irgendwann nützlich, kein CRA-Vorab.
+- **Enterprise-GRC-Tooling.** Ein geteiltes Laufwerk und eine Tabelle schlagen ungenutzte Software.
+- **Volle IEC-62443-4-1-SDLC-Zertifizierung.** Wertvoll für Industrie, Overkill für Consumer.
+- **Drittparteien-Pentest pro Release.** Jährlich ist für die meisten Klasse-I-Produkte verteidigbar.
+
+## Was du nicht weglassen kannst
+
+Nicht optional:
+
+- **DoC** pro in Verkehr gebrachtem Produkt.
+- **SBOM** (mindestens Top-Level) pro Release.
+- **VDP** öffentlich erreichbar.
+- **Risikobewertung** pro Produkt.
+- **Zehnjährige Aufbewahrung** des Dossiers.
+- **24-Stunden-Awareness-Trichter** für Artikel-14-Ereignisse.
+
+Keines davon ist bei irgendeiner Unternehmensgröße verzichtbar, und alles wird unter Auditdruck exponentiell schwerer als im Vorlauf.
+
+## Realistischer 12-Wochen-Plan
+
+Für ein Produkt im Scope, Start bei Null, CRA-ready zum gesetzten Datum:
+
+- **Woche 1–2:** Produkt bestimmen. CRA-Kategorie, Bewertungsverfahren, Support-Zeitraum entscheiden. Pflichten-Ownership zuordnen.
+- **Woche 3–4:** SBOM-Pipeline aufsetzen. VDP veröffentlichen. Security-Inbox einrichten.
+- **Woche 5–7:** Risikobewertung durchführen. Erster Durchgang des Dossiers.
+- **Woche 8–9:** Harmonisierte Normen anwenden. Lücken und Remediation dokumentieren.
+- **Woche 10–11:** Interner Review. Bei Bedarf Pentest. Dossier abschließen.
+- **Woche 12:** DoC unterzeichnen. CE-Kennzeichnung anbringen. In Verkehr bringen.
+
+Funktioniert für Standard- oder selbstbewertbare Klasse-I-Produkte. Klasse II mit benannter Stelle braucht 6–12 zusätzliche Monate.
+
+## Der größte Fehler kleiner Teams
+
+CRA-Compliance als einmaliges Projekt behandeln. Die Pflichten — Schwachstellenhandhabung, Meldepflichten, Support-Zeitraum, Dossier-Aufbewahrung — laufen das gesamte Produktleben. Ein Programm, das die DoC rechtzeitig erreicht, aber keine laufende Kapazität aufbaut, ist schlechter als eines, das die DoC um einen Monat verfehlt, aber danach nachhaltig läuft.
+
+Bauen für den Zehn-Jahres-Horizont, nicht fürs Launch-Datum.
+
+## Wo Seentrix ansetzt
+
+Seentrix ist explizit für Hersteller ohne Compliance-Abteilung gebaut — den Fünf-Personen-IoT-Startup, den 15-Personen-Automatisierer, das 50-Personen-Enterprise-Softwareteam. Die Plattform übernimmt die strukturierten Teile (DoC-Generierung, Dossier-Skelett, SBOM-Ingestion und Schwachstellenverfolgung, Artikel-14-Workflow, PSIRT-Seite), damit Compliance Teilverantwortung bleibt statt Vollzeitrolle.
+
+Was Seentrix nicht tut, ist für dich denken. Die Entscheidungen oben — CRA-Kategorie, Support-Zeitraum, SLA, Risikoappetit, Team-Ownership — bleiben bei dir. Die Plattform macht die nachgelagerte Arbeit günstiger gut zu machen.
+
+Ein kleines Team, das ein CRA-Programm gut fährt, sieht aus wie ein großes Team, das es gut fährt — mit weniger Management-Overhead. Die Verordnung schrumpft nicht für dich; dein Hebel entsteht daraus, unnötige Teile der Compliance-Arbeit zu schrumpfen, nicht die Latte zu senken.
