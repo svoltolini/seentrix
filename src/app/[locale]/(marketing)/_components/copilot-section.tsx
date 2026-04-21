@@ -84,7 +84,7 @@ export function CopilotSection() {
         <div className="mx-auto mb-16 max-w-3xl text-center">
           <span
             data-copilot-heading
-            className="inline-flex items-center gap-2 rounded-full bg-[#60A5FA]/12 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#93C5FD] ring-1 ring-[#60A5FA]/20"
+            className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#60A5FA]"
           >
             {t("eyebrow")}
           </span>
