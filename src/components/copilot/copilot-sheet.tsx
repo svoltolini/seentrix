@@ -261,7 +261,7 @@ export function CopilotSheet() {
               {status === "submitted" && <ThinkingBubble />}
             </div>
           )}
-          {error && (
+          {error && !hasStreamedContent(messages) && (
             <div className="mt-4 rounded-xl bg-red-500/10 px-4 py-3 text-xs text-red-300">
               {t("error")}
             </div>
@@ -369,6 +369,34 @@ function EmptyState() {
       </div>
     </div>
   );
+}
+
+/**
+ * Has the most recent assistant turn produced any visible content? We
+ * use this to suppress the generic "Something went wrong" banner when
+ * the user actually got a full answer — a stray post-stream error
+ * (e.g. a trailing tool call that 4xx'd on quota, or a mid-stream
+ * timeout after the final token) shouldn't scare them. If no
+ * content came through, the banner still surfaces so they know to
+ * retry.
+ */
+function hasStreamedContent(messages: import("ai").UIMessage[]): boolean {
+  for (let i = messages.length - 1; i >= 0; i--) {
+    const m = messages[i];
+    if (m.role !== "assistant") continue;
+    if (!m.parts) return false;
+    for (const p of m.parts as Array<{
+      type: string;
+      text?: string;
+      state?: string;
+    }>) {
+      if (p.type === "text" && p.text && p.text.trim().length > 0) return true;
+      if (p.type.startsWith("tool-") && p.state === "output-available")
+        return true;
+    }
+    return false;
+  }
+  return false;
 }
 
 /**

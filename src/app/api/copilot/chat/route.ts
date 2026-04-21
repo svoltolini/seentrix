@@ -178,10 +178,15 @@ export async function POST(req: Request) {
     messages: modelMessages,
     temperature: 0.3,
     tools,
-    // Let the model chain up to 5 steps (tool call + follow-up text) in
-    // one turn. 5 is enough to search → inspect → link without letting
-    // the model thrash on a bad plan.
-    stopWhen: stepCountIs(5),
+    // Let the model chain up to 12 steps in one turn. A guided
+    // onboarding walk-through ("where do I start?") emits roughly
+    // 6 `linkToPage` tool calls interleaved with prose, so the old
+    // limit of 5 was cutting answers mid-sentence and surfacing as
+    // the "Something went wrong" banner in the drawer. 12 leaves
+    // headroom for tool-heavy answers (searchProducts →
+    // getProductStatus → listOverdueItems + 5-6 link buttons +
+    // closing prose) without letting the model thrash.
+    stopWhen: stepCountIs(12),
     onError: ({ error }) => {
       const e = error as {
         message?: string;

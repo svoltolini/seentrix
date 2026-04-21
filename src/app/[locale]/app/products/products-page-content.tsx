@@ -180,8 +180,8 @@ export function ProductsPageContent({
 
       {/* Table or empty state */}
       {products.length === 0 ? (
-        <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-white/[0.06] py-20 text-center">
-          <div className="mb-5 flex size-14 items-center justify-center rounded-full bg-primary/10">
+        <div className="flex flex-col items-center justify-center py-24 text-center">
+          <div className="mb-6 flex size-14 items-center justify-center rounded-full bg-primary/10">
             <HugeIcon
               name="package-open-stroke-rounded"
               size={28}

@@ -11,57 +11,112 @@ import { cn } from "@/lib/utils";
  *
  * Three roles we care about in the UI:
  *  - user      → right-aligned subtle card, user's raw text
- *  - assistant → left-aligned prose, light markdown + citation pills
- *                + inline "Go to X" buttons from the linkToPage tool
+ *  - assistant → left-aligned prose, rich markdown + citation pills
+ *                + inline "Go to X" buttons + draft cards, in exactly
+ *                the order the model emitted them
  *  - system    → skipped (the server prompt is not shown to the user)
  *
- * Inline formatter handles **bold**, `code`, numbered / bulleted / H2 /
- * H3 / H4 / HR blocks, plus citation tags like `[cra · Article 13(2)]`
- * which render as strong uppercase blue pills. Tool parts are streamed
- * interleaved with text parts — we walk them in order so a tool button
- * lands exactly where the model emitted it.
+ * Key design decision: we walk `message.parts` in order and render text
+ * runs and tool-result parts interleaved, so a `linkToPage` button lands
+ * right after the "Action:" line that introduced it instead of being
+ * hoisted to the bottom of the message.
  */
 export function CopilotMessage({ message }: { message: UIMessage }) {
   if (message.role === "system") return null;
-
-  const text = extractText(message);
-  const linkParts = extractLinkParts(message);
-  const draftParts = extractDraftParts(message);
-
-  if (!text && linkParts.length === 0 && draftParts.length === 0) return null;
-
   const isUser = message.role === "user";
 
+  if (isUser) {
+    const text = extractText(message);
+    if (!text) return null;
+    return (
+      <div className="flex justify-end">
+        <div className="max-w-[88%] rounded-2xl rounded-br-md bg-white/[0.06] px-3.5 py-2 text-sm leading-relaxed text-foreground">
+          {text}
+        </div>
+      </div>
+    );
+  }
+
+  if (!message.parts?.length) return null;
+  const children = groupPartsInOrder(message.parts);
+  if (children.length === 0) return null;
+
   return (
-    <div className={cn("flex", isUser ? "justify-end" : "justify-start")}>
-      <div
-        className={cn(
-          "max-w-[88%] text-sm leading-relaxed",
-          isUser
-            ? "rounded-2xl rounded-br-md bg-white/[0.06] px-3.5 py-2 text-foreground"
-            : "flex flex-col gap-3 text-foreground/92",
-        )}
-      >
-        {isUser ? (
-          text
-        ) : (
-          <>
-            {text && <AssistantBody text={text} />}
-            {draftParts.map((d, i) => (
-              <DraftBlock key={`d-${i}`} title={d.title} draft={d.draft} />
-            ))}
-            {linkParts.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                {linkParts.map((p, i) => (
-                  <LinkButton key={`l-${i}`} path={p.path} label={p.label} />
-                ))}
-              </div>
-            )}
-          </>
-        )}
+    <div className="flex justify-start">
+      <div className="flex max-w-[88%] flex-col gap-3 text-[14px] leading-[1.65] text-foreground/92">
+        {children.map((c, i) => {
+          if (c.kind === "text") return <AssistantBody key={i} text={c.text} />;
+          if (c.kind === "link")
+            return <LinkButton key={i} path={c.path} label={c.label} />;
+          if (c.kind === "draft")
+            return <DraftBlock key={i} title={c.title} draft={c.draft} />;
+          return null;
+        })}
       </div>
     </div>
   );
+}
+
+// ---------------------------------------------------------------------------
+// Parts ordering — keep tool-result parts in their emitted position.
+// ---------------------------------------------------------------------------
+
+type Child =
+  | { kind: "text"; text: string }
+  | { kind: "link"; path: string; label: string }
+  | { kind: "draft"; title: string; draft: string };
+
+const DRAFT_TOOLS: Record<string, string> = {
+  "tool-draftDeclarationOfConformity": "Declaration of Conformity",
+  "tool-draftIncidentNarrative": "Incident narrative",
+  "tool-draftVulnerabilityResponse": "Researcher acknowledgement",
+};
+
+function groupPartsInOrder(
+  parts: NonNullable<UIMessage["parts"]>,
+): Child[] {
+  const out: Child[] = [];
+  let textBuf = "";
+  const flushText = () => {
+    const trimmed = textBuf.trim();
+    if (trimmed) out.push({ kind: "text", text: trimmed });
+    textBuf = "";
+  };
+  for (const raw of parts as Array<{
+    type: string;
+    text?: string;
+    state?: string;
+    output?: { path?: string; label?: string; draft?: string };
+  }>) {
+    if (raw.type === "text" && typeof raw.text === "string") {
+      textBuf += raw.text;
+      continue;
+    }
+    if (raw.type === "tool-linkToPage" && raw.state === "output-available") {
+      flushText();
+      const path = raw.output?.path;
+      const label = raw.output?.label;
+      if (typeof path === "string" && typeof label === "string") {
+        out.push({ kind: "link", path, label });
+      }
+      continue;
+    }
+    const draftTitle = DRAFT_TOOLS[raw.type];
+    if (
+      draftTitle &&
+      raw.state === "output-available" &&
+      typeof raw.output?.draft === "string"
+    ) {
+      flushText();
+      out.push({ kind: "draft", title: draftTitle, draft: raw.output.draft });
+      continue;
+    }
+    // Everything else (reasoning parts, in-progress tool calls, data parts)
+    // is intentionally ignored — they'd either duplicate the final text or
+    // produce mid-stream flicker with no real value to the user.
+  }
+  flushText();
+  return out;
 }
 
 function extractText(m: UIMessage): string {
@@ -69,71 +124,8 @@ function extractText(m: UIMessage): string {
   return m.parts
     .filter((p): p is { type: "text"; text: string } => p.type === "text")
     .map((p) => p.text)
-    .join("\n")
+    .join("")
     .trim();
-}
-
-/**
- * Pull out any `linkToPage` tool-result parts that have finished
- * resolving. Each one becomes a button we render after the prose.
- *
- * The AI SDK v6 tool-part type is `tool-<toolName>` and we only care
- * about the output-available state — upstream states (input-streaming,
- * input-available) are model-internal and shouldn't show anything.
- */
-interface LinkPart {
-  path: string;
-  label: string;
-}
-function extractLinkParts(m: UIMessage): LinkPart[] {
-  if (!m.parts) return [];
-  const out: LinkPart[] = [];
-  for (const p of m.parts as Array<{
-    type: string;
-    state?: string;
-    output?: { path?: string; label?: string };
-  }>) {
-    if (p.type !== "tool-linkToPage") continue;
-    if (p.state !== "output-available") continue;
-    const path = p.output?.path;
-    const label = p.output?.label;
-    if (typeof path === "string" && typeof label === "string") {
-      out.push({ path, label });
-    }
-  }
-  return out;
-}
-
-/**
- * Pull out `draft*` tool-result parts (DoC / incident / vulnerability).
- * These are Pillar-4 "drafts the user copies" — they come back as long
- * markdown blocks that deserve their own collapsible card with a copy
- * button, not a line in the assistant's prose.
- */
-interface DraftPart {
-  title: string;
-  draft: string;
-}
-const DRAFT_TOOLS: Record<string, string> = {
-  "tool-draftDeclarationOfConformity": "Declaration of Conformity",
-  "tool-draftIncidentNarrative": "Incident narrative",
-  "tool-draftVulnerabilityResponse": "Researcher acknowledgement",
-};
-function extractDraftParts(m: UIMessage): DraftPart[] {
-  if (!m.parts) return [];
-  const out: DraftPart[] = [];
-  for (const p of m.parts as Array<{
-    type: string;
-    state?: string;
-    output?: { draft?: string };
-  }>) {
-    const title = DRAFT_TOOLS[p.type];
-    if (!title) continue;
-    if (p.state !== "output-available") continue;
-    if (typeof p.output?.draft !== "string") continue;
-    out.push({ title, draft: p.output.draft });
-  }
-  return out;
 }
 
 function DraftBlock({ title, draft }: { title: string; draft: string }) {
@@ -178,11 +170,11 @@ function LinkButton({ path, label }: { path: string; label: string }) {
   return (
     <Link
       href={path}
-      className="inline-flex items-center gap-1.5 rounded-lg bg-white/[0.06] px-3 py-1.5 text-xs font-medium text-foreground ring-1 ring-white/[0.08] transition hover:bg-white/[0.1] hover:ring-[#60A5FA]/30"
+      className="inline-flex w-fit items-center gap-2 rounded-lg bg-[#3B82F6]/10 px-3.5 py-2 text-[13px] font-medium text-[#93C5FD] ring-1 ring-[#3B82F6]/25 transition hover:bg-[#3B82F6]/15 hover:text-white hover:ring-[#3B82F6]/50"
     >
       <HugeIcon
         name="arrow-right-01-stroke-rounded"
-        size={12}
+        size={13}
         className="text-[#60A5FA]"
       />
       {label}
@@ -197,11 +189,13 @@ function LinkButton({ path, label }: { path: string; label: string }) {
 type Block =
   | { type: "p"; text: string }
   | { type: "h2"; text: string }
-  | { type: "h3"; text: string }
+  | { type: "h3"; text: string; numeral?: string }
   | { type: "h4"; text: string }
   | { type: "hr" }
   | { type: "ol"; items: string[] }
-  | { type: "ul"; items: string[] };
+  | { type: "ul"; items: string[] }
+  | { type: "quote"; text: string }
+  | { type: "code"; text: string };
 
 function AssistantBody({ text }: { text: string }) {
   const blocks = blockify(text);
@@ -213,7 +207,7 @@ function AssistantBody({ text }: { text: string }) {
             return (
               <h2
                 key={i}
-                className="mt-1 font-heading text-base font-semibold text-foreground"
+                className="mt-2 font-heading text-[17px] font-semibold leading-snug text-foreground"
               >
                 {renderInline(b.text)}
               </h2>
@@ -222,17 +216,21 @@ function AssistantBody({ text }: { text: string }) {
             return (
               <h3
                 key={i}
-                className="mt-2 flex items-center gap-2 font-heading text-[13px] font-semibold uppercase tracking-[0.14em] text-[#93C5FD]"
+                className="mt-3 flex items-baseline gap-2 font-heading text-[13px] font-semibold uppercase tracking-[0.16em] text-[#93C5FD]"
               >
-                <span className="h-1 w-1 rounded-full bg-[#60A5FA]" />
-                {renderInline(b.text)}
+                {b.numeral && (
+                  <span className="rounded-md bg-[#3B82F6]/15 px-1.5 py-0.5 font-mono text-[11px] font-bold tracking-normal text-[#60A5FA]">
+                    {b.numeral}
+                  </span>
+                )}
+                <span>{renderInline(b.text)}</span>
               </h3>
             );
           case "h4":
             return (
               <h4
                 key={i}
-                className="mt-1 font-heading text-[13px] font-semibold text-foreground"
+                className="mt-2 font-heading text-[13px] font-semibold text-foreground"
               >
                 {renderInline(b.text)}
               </h4>
@@ -246,7 +244,10 @@ function AssistantBody({ text }: { text: string }) {
             );
           case "ol":
             return (
-              <ol key={i} className="ml-4 space-y-1.5 list-decimal marker:text-[#60A5FA] marker:font-semibold">
+              <ol
+                key={i}
+                className="ml-5 space-y-1.5 list-decimal marker:text-[#60A5FA] marker:font-semibold"
+              >
                 {b.items.map((item, j) => (
                   <li key={j} className="pl-1">
                     {renderInline(item)}
@@ -258,12 +259,30 @@ function AssistantBody({ text }: { text: string }) {
             return (
               <ul key={i} className="ml-1 space-y-1.5">
                 {b.items.map((item, j) => (
-                  <li key={j} className="flex items-start gap-2">
-                    <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-[#60A5FA]" />
+                  <li key={j} className="flex items-start gap-2.5">
+                    <span className="mt-[9px] h-1 w-1 shrink-0 rounded-full bg-[#60A5FA]" />
                     <span className="flex-1">{renderInline(item)}</span>
                   </li>
                 ))}
               </ul>
+            );
+          case "quote":
+            return (
+              <blockquote
+                key={i}
+                className="border-l-2 border-[#3B82F6]/40 bg-white/[0.02] pl-3 pr-2 py-1.5 italic text-muted-foreground"
+              >
+                {renderInline(b.text)}
+              </blockquote>
+            );
+          case "code":
+            return (
+              <pre
+                key={i}
+                className="overflow-x-auto rounded-lg bg-[#0B0B12] px-3 py-2 text-[12px] leading-relaxed text-foreground/90 ring-1 ring-white/[0.06]"
+              >
+                <code>{b.text}</code>
+              </pre>
             );
           case "p":
           default:
@@ -283,6 +302,7 @@ function blockify(text: string): Block[] {
   const blocks: Block[] = [];
   let buf: string[] = [];
   let list: { kind: "ol" | "ul"; items: string[] } | null = null;
+  let codeFence: { lang: string; lines: string[] } | null = null;
 
   function flushParagraph() {
     const joined = buf.join("\n").trim();
@@ -303,7 +323,24 @@ function blockify(text: string): Block[] {
   for (const raw of lines) {
     const line = raw.trimEnd();
 
-    // Headings — match first since they should break any open list/paragraph.
+    // Fenced code block — greedy capture.
+    const fence = line.match(/^\s*```(\w*)\s*$/);
+    if (codeFence) {
+      if (fence) {
+        blocks.push({ type: "code", text: codeFence.lines.join("\n") });
+        codeFence = null;
+      } else {
+        codeFence.lines.push(raw);
+      }
+      continue;
+    }
+    if (fence) {
+      flushAll();
+      codeFence = { lang: fence[1] || "", lines: [] };
+      continue;
+    }
+
+    // Headings first — break any open list/paragraph.
     const h4 = line.match(/^\s*####\s+(.+?)\s*#*\s*$/);
     const h3 = line.match(/^\s*###\s+(.+?)\s*#*\s*$/);
     const h2 = line.match(/^\s*##\s+(.+?)\s*#*\s*$/);
@@ -330,9 +367,28 @@ function blockify(text: string): Block[] {
       continue;
     }
 
+    // Blockquote.
+    const quote = line.match(/^\s*>\s?(.*)$/);
+    if (quote) {
+      flushAll();
+      blocks.push({ type: "quote", text: quote[1] });
+      continue;
+    }
+
     const ol = line.match(/^\s*(\d+)[.)]\s+(.*)$/);
     const ul = line.match(/^\s*[-*•]\s+(.*)$/);
+
+    // Auto-promote all-caps numbered section labels to H3 headings. The
+    // model frequently writes "1. BASIC PRODUCT DETAILS" as a section
+    // header; without this we render it as a list item and the following
+    // sub-content drifts visually.
     if (ol) {
+      const body = ol[2].trim();
+      if (body.length >= 4 && /^[A-Z0-9][A-Z0-9 &()\-/]*$/.test(body)) {
+        flushAll();
+        blocks.push({ type: "h3", text: body, numeral: `${ol[1]}.` });
+        continue;
+      }
       flushParagraph();
       if (!list || list.kind !== "ol") {
         flushList();
@@ -355,32 +411,35 @@ function blockify(text: string): Block[] {
       list.items[list.items.length - 1] += " " + line.trim();
       continue;
     }
-    if (list && !line.trim()) {
-      flushList();
-      continue;
-    }
     if (!line.trim()) {
-      flushParagraph();
+      flushAll();
       continue;
     }
+    // Non-list non-empty line — if a list was open, close it first so the
+    // paragraph doesn't silently attach to the list.
+    flushList();
     buf.push(line);
+  }
+  if (codeFence) {
+    blocks.push({ type: "code", text: codeFence.lines.join("\n") });
   }
   flushAll();
   return blocks;
 }
 
 // ---------------------------------------------------------------------------
-// Inline-span renderer — bold / code / citation pills.
+// Inline-span renderer — bold / italic / code / links / citation pills.
 // ---------------------------------------------------------------------------
 
 function renderInline(text: string): React.ReactNode {
   const out: React.ReactNode[] = [];
   let key = 0;
-  // Priority: markdown link [text](url) > citation [doc · section] >
-  // bold **x** > code `x`. The link pattern must come first because
-  // it's a superset of the bare-bracket citation pattern.
+  // Priority: markdown link [text](url) > bold **x** > italic *x* >
+  // citation [doc · section] > code `x`.
+  // The link pattern is evaluated before the bare-bracket citation so we
+  // don't strip it first.
   const pattern =
-    /\[([^\[\]\n]+?)\]\(([^)\s]+)\)|\[([^[\]\n]+?)\]|\*\*([^*\n]+?)\*\*|`([^`\n]+?)`/g;
+    /\[([^\[\]\n]+?)\]\(([^)\s]+)\)|\*\*([^*\n]+?)\*\*|(?<![*\w])\*([^*\n]+?)\*(?!\*)|\[([^[\]\n]+?)\]|`([^`\n]+?)`/g;
   let m: RegExpExecArray | null;
   let last = 0;
   while ((m = pattern.exec(text))) {
@@ -389,28 +448,36 @@ function renderInline(text: string): React.ReactNode {
       // Markdown link [label](href).
       out.push(<InlineLink key={key++} label={m[1]} href={m[2]} />);
     } else if (m[3] !== undefined) {
+      // Bold **text**.
+      out.push(
+        <strong key={key++} className="font-semibold text-foreground">
+          {m[3]}
+        </strong>,
+      );
+    } else if (m[4] !== undefined) {
+      // Italic *text*.
+      out.push(
+        <em key={key++} className="italic text-foreground/90">
+          {m[4]}
+        </em>,
+      );
+    } else if (m[5] !== undefined) {
       // Bare bracket — citation pill if it smells like one, else raw.
       if (
-        m[3].includes("·") ||
-        /^(Article|Annex|Artikel|Anhang|cra|seentrix)/i.test(m[3])
+        m[5].includes("·") ||
+        /^(Article|Annex|Artikel|Anhang|cra|seentrix)/i.test(m[5])
       ) {
-        out.push(<CitationPill key={key++} label={m[3]} />);
+        out.push(<CitationPill key={key++} label={m[5]} />);
       } else {
         out.push(m[0]);
       }
-    } else if (m[4] !== undefined) {
-      out.push(
-        <strong key={key++} className="font-semibold text-foreground">
-          {m[4]}
-        </strong>,
-      );
-    } else if (m[5] !== undefined) {
+    } else if (m[6] !== undefined) {
       out.push(
         <code
           key={key++}
           className="rounded bg-white/[0.08] px-1.5 py-0.5 text-[12px] font-mono text-foreground"
         >
-          {m[5]}
+          {m[6]}
         </code>,
       );
     }
