@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import type { UIMessage } from "ai";
 import { Link } from "@/i18n/navigation";
 import { HugeIcon } from "@/components/huge-icon";
@@ -25,8 +26,9 @@ export function CopilotMessage({ message }: { message: UIMessage }) {
 
   const text = extractText(message);
   const linkParts = extractLinkParts(message);
+  const draftParts = extractDraftParts(message);
 
-  if (!text && linkParts.length === 0) return null;
+  if (!text && linkParts.length === 0 && draftParts.length === 0) return null;
 
   const isUser = message.role === "user";
 
@@ -45,10 +47,13 @@ export function CopilotMessage({ message }: { message: UIMessage }) {
         ) : (
           <>
             {text && <AssistantBody text={text} />}
+            {draftParts.map((d, i) => (
+              <DraftBlock key={`d-${i}`} title={d.title} draft={d.draft} />
+            ))}
             {linkParts.length > 0 && (
               <div className="flex flex-wrap gap-2">
                 {linkParts.map((p, i) => (
-                  <LinkButton key={i} path={p.path} label={p.label} />
+                  <LinkButton key={`l-${i}`} path={p.path} label={p.label} />
                 ))}
               </div>
             )}
@@ -97,6 +102,76 @@ function extractLinkParts(m: UIMessage): LinkPart[] {
     }
   }
   return out;
+}
+
+/**
+ * Pull out `draft*` tool-result parts (DoC / incident / vulnerability).
+ * These are Pillar-4 "drafts the user copies" — they come back as long
+ * markdown blocks that deserve their own collapsible card with a copy
+ * button, not a line in the assistant's prose.
+ */
+interface DraftPart {
+  title: string;
+  draft: string;
+}
+const DRAFT_TOOLS: Record<string, string> = {
+  "tool-draftDeclarationOfConformity": "Declaration of Conformity",
+  "tool-draftIncidentNarrative": "Incident narrative",
+  "tool-draftVulnerabilityResponse": "Researcher acknowledgement",
+};
+function extractDraftParts(m: UIMessage): DraftPart[] {
+  if (!m.parts) return [];
+  const out: DraftPart[] = [];
+  for (const p of m.parts as Array<{
+    type: string;
+    state?: string;
+    output?: { draft?: string };
+  }>) {
+    const title = DRAFT_TOOLS[p.type];
+    if (!title) continue;
+    if (p.state !== "output-available") continue;
+    if (typeof p.output?.draft !== "string") continue;
+    out.push({ title, draft: p.output.draft });
+  }
+  return out;
+}
+
+function DraftBlock({ title, draft }: { title: string; draft: string }) {
+  const [copied, setCopied] = useState(false);
+  async function onCopy() {
+    try {
+      await navigator.clipboard.writeText(draft);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch {
+      // No clipboard access (rare) — fall through silently.
+    }
+  }
+  return (
+    <div className="flex flex-col gap-2 rounded-2xl bg-white/[0.04] p-3 ring-1 ring-white/[0.08]">
+      <header className="flex items-center justify-between gap-2">
+        <span className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#60A5FA]">
+          <HugeIcon name="ai-magic-stroke-rounded" size={11} />
+          Draft · {title}
+        </span>
+        <button
+          type="button"
+          onClick={onCopy}
+          className={cn(
+            "rounded-md px-2 py-1 text-[11px] font-medium transition",
+            copied
+              ? "bg-emerald-500/15 text-emerald-300"
+              : "bg-white/[0.06] text-muted-foreground hover:bg-white/[0.1] hover:text-foreground",
+          )}
+        >
+          {copied ? "Copied" : "Copy"}
+        </button>
+      </header>
+      <pre className="max-h-[420px] overflow-auto whitespace-pre-wrap rounded-lg bg-[#0B0B12] px-3 py-2 text-xs leading-relaxed text-foreground/90 ring-1 ring-white/[0.04]">
+        {draft}
+      </pre>
+    </div>
+  );
 }
 
 function LinkButton({ path, label }: { path: string; label: string }) {

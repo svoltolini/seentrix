@@ -21,9 +21,11 @@ type SB = Awaited<ReturnType<typeof createClient>>;
 interface Ctx {
   supabase: SB;
   orgId: string;
+  plan: string;
 }
 
-export function buildCopilotTools({ supabase, orgId }: Ctx) {
+export function buildCopilotTools({ supabase, orgId, plan }: Ctx) {
+  const isPaid = plan !== "free";
   return {
     // -------------------------------------------------------------------
     // searchProducts — "my router product" → [{id, name, type}]
@@ -343,5 +345,381 @@ export function buildCopilotTools({ supabase, orgId }: Ctx) {
         };
       },
     }),
+
+    // ===================================================================
+    // Draft tools — paid-tier only. Each one returns a structured
+    // markdown draft the model hands to the user for review. Never
+    // mutates a DB row; never bypasses the existing signed-document
+    // flow (DoC generator, incident form, etc.). Every draft carries
+    // a "Review before use — not legal advice" footer.
+    // ===================================================================
+
+    ...(isPaid
+      ? {
+          // ----------------------------------------------------------
+          // draftDeclarationOfConformity
+          // ----------------------------------------------------------
+          draftDeclarationOfConformity: tool({
+            description:
+              "Produce a Declaration of Conformity (CRA Annex IV) draft for one of the user's products, pre-filled with manufacturer details, product identification, the notified body info if the product needs one, and placeholders for harmonised standards that the user must confirm. Output is markdown the user reviews; it does NOT issue a DoC. For the real signed document, the user still uses the Documents tab in the product page.",
+            inputSchema: z.object({
+              productId: z
+                .string()
+                .uuid()
+                .describe("Product id from searchProducts."),
+            }),
+            execute: async ({ productId }) => {
+              const [{ data: product }, { data: org }] = await Promise.all([
+                supabase
+                  .from("products")
+                  .select(
+                    "name, type, cra_category, conformity_route, intended_use, connectivity, requires_notified_body, notified_body_name, notified_body_id, notified_body_scope, declaration_version, declaration_issued_at",
+                  )
+                  .eq("id", productId)
+                  .eq("org_id", orgId)
+                  .maybeSingle(),
+                supabase
+                  .from("organizations")
+                  .select(
+                    "legal_name, name, registration_number, address_line1, address_line2, postal_code, city, country, website, signatory_name, signatory_position",
+                  )
+                  .eq("id", orgId)
+                  .maybeSingle(),
+              ]);
+              if (!product) return { error: "product_not_found" };
+              if (!org) return { error: "org_not_found" };
+
+              const p = product as Record<string, string | boolean | null>;
+              const o = org as Record<string, string | null>;
+              const placeholders: string[] = [];
+              const warnings: string[] = [];
+
+              const manufacturerName =
+                (o.legal_name || o.name) ?? "[Manufacturer legal name]";
+              if (!o.legal_name) {
+                placeholders.push("manufacturer legal name");
+                warnings.push(
+                  "Organisation legal name is not set — update Settings → Entity.",
+                );
+              }
+              const addressLines = [
+                o.address_line1,
+                o.address_line2,
+                [o.postal_code, o.city].filter(Boolean).join(" "),
+                o.country,
+              ].filter(Boolean);
+              if (addressLines.length === 0) {
+                placeholders.push("manufacturer address");
+                warnings.push(
+                  "Registered address is blank — fill it in on Settings → Entity before issuing.",
+                );
+              }
+
+              const needsNB = p.requires_notified_body === true;
+              const nbBlock = needsNB
+                ? `| Notified body | ${p.notified_body_name || "[name]"} |
+| Notified body ID | ${p.notified_body_id || "[four-digit number]"} |
+| Scope | ${p.notified_body_scope || "[scope of the certificate]"} |`
+                : "> This product's CRA category does not require a notified body (module A self-assessment).";
+
+              const version = (p.declaration_version as string) || "1";
+              const today = new Date().toISOString().slice(0, 10);
+
+              const draft = `# Declaration of Conformity (draft) — v${version}
+
+**${manufacturerName}**
+${addressLines.join(", ") || "[address]"}
+${o.registration_number ? `Companies register no. ${o.registration_number}` : "[registration number]"}
+${o.website ? `${o.website}` : ""}
+
+This Declaration of Conformity is issued under the sole responsibility of the manufacturer.
+
+## Object of the declaration
+
+| Field | Value |
+|---|---|
+| Product | ${p.name ?? "[product name]"} |
+| Type | ${p.type ?? "[product type]"} |
+| CRA category | ${(p.cra_category as string) ?? "default"} |
+| Conformity-assessment route | ${(p.conformity_route as string) ?? "[module a / b+c / h / european certification]"} |
+| Intended use | ${p.intended_use ?? "[intended use]"} |
+| Connectivity | ${p.connectivity ?? "[connectivity summary]"} |
+
+## Statement of conformity
+
+The object described above is in conformity with Regulation (EU) 2024/2847 (the Cyber Resilience Act) and the other Union harmonisation legislation applicable to this product.
+
+## Harmonised standards applied
+
+> Replace this block with the specific standards you relied on. Common ones for products with digital elements include:
+> - EN 18031-1 (common cybersecurity requirements — radio equipment)
+> - ETSI EN 303 645 (consumer IoT baseline)
+> - IEC 62443-4-2 (industrial automation)
+>
+> If you applied a technical specification instead of a harmonised standard, note the reference.
+
+${nbBlock}
+
+## Signed
+
+| | |
+|---|---|
+| Place | ${o.city || "[city]"} |
+| Date | ${today} |
+| For and on behalf of | ${manufacturerName} |
+| Name | ${o.signatory_name || "[full name]"} |
+| Position | ${o.signatory_position || "[role]"} |
+| Signature | _________________________ |
+
+---
+*Review before use — not legal advice. The binding DoC is generated from the Documents tab on the product page; this markdown is a working draft.*`;
+
+              return { draft, placeholders, warnings };
+            },
+          }),
+
+          // ----------------------------------------------------------
+          // draftIncidentNarrative
+          // ----------------------------------------------------------
+          draftIncidentNarrative: tool({
+            description:
+              "Produce a draft narrative for one of the three Article 14 reporting phases: `early_warning` (24-hour notification), `incident_report` (72-hour update with assessment + mitigations), or `final_report` (14-day vuln final / one-month incident final). Pulls from the incident record, affected products, and any linked vulnerability. Output is markdown the user reviews and pastes into the incident form in Seentrix.",
+            inputSchema: z.object({
+              incidentId: z
+                .string()
+                .uuid()
+                .describe("Incident id (from the Incidents screen)."),
+              phase: z
+                .enum(["early_warning", "incident_report", "final_report"])
+                .describe("Which reporting phase to draft."),
+            }),
+            execute: async ({ incidentId, phase }) => {
+              const { data: incident } = await supabase
+                .from("incidents")
+                .select(
+                  "type, severity, title, description, aware_at, affected_product_ids, linked_cve_id, linked_vulnerability_id, early_warning_submitted_at, early_warning_notes, incident_report_submitted_at, incident_report_notes, final_report_notes",
+                )
+                .eq("id", incidentId)
+                .eq("org_id", orgId)
+                .maybeSingle();
+              if (!incident) return { error: "incident_not_found" };
+
+              const i = incident as Record<string, string | string[] | null>;
+
+              // Resolve affected product names for readability.
+              let productNames: string[] = [];
+              const productIds =
+                (i.affected_product_ids as string[] | null) ?? [];
+              if (productIds.length) {
+                const { data: products } = await supabase
+                  .from("products")
+                  .select("id, name")
+                  .in("id", productIds)
+                  .eq("org_id", orgId);
+                productNames =
+                  (products as { name: string }[] | null)?.map((p) => p.name) ??
+                  [];
+              }
+              const productList = productNames.length
+                ? productNames.join(", ")
+                : "[affected product(s)]";
+
+              const awareIso = i.aware_at as string | null;
+              const awareLabel = awareIso
+                ? new Date(awareIso).toISOString().replace("T", " ").slice(0, 16)
+                : "[UTC timestamp of detection]";
+              const cveLine = i.linked_cve_id
+                ? ` (${i.linked_cve_id})`
+                : "";
+              const title =
+                (i.title as string) || "[concise title of the incident]";
+              const description =
+                (i.description as string) ||
+                "[one-paragraph plain-language description of what happened]";
+
+              const common = `**Organisation:** ${orgId}
+**Incident:** ${title}${cveLine}
+**Type:** ${(i.type as string) === "security_incident" ? "Severe security incident" : "Actively exploited vulnerability"}
+**Severity:** ${(i.severity as string) || "[critical / high / medium / low]"}
+**Became aware:** ${awareLabel} UTC
+**Affected product(s):** ${productList}
+`;
+
+              let draft: string;
+              switch (phase) {
+                case "early_warning":
+                  draft = `# Early warning notification (24 h) — draft
+
+${common}
+
+## Summary (early warning)
+
+${description}
+
+## What we know right now
+
+- **Scope of impact:** [systems / geographies / customer segments affected]
+- **Evidence of exploitation:** [logs, threat intelligence, public PoC, CSIRT report]
+- **Immediate containment in progress:** [mitigations deployed in the last few hours]
+
+## What we do not yet know
+
+- Root cause
+- Full list of affected versions
+- Mitigation coverage across the fleet
+
+## Next reporting milestone
+
+We will submit the intermediate incident report within 72 hours of the timestamp above.
+
+---
+*Review before use — not legal advice. Submit to the CSIRT designated as coordinator + ENISA via your Member-State channel.*`;
+                  break;
+                case "incident_report":
+                  draft = `# Incident report (72 h) — draft
+
+${common}
+
+## Updated assessment
+
+${i.early_warning_notes ? `### Early-warning context\n${i.early_warning_notes}\n\n` : ""}${description}
+
+## Mitigations applied
+
+- [List the specific controls deployed since the early warning — patches, rules, segment isolations]
+- [Indicate which customers / products are covered; which are still exposed]
+
+## Impact assessment
+
+- **Users affected:** [number / percentage]
+- **Data involved:** [personal data, configuration, operational telemetry]
+- **Operational impact:** [downtime, degraded functionality, none]
+
+## Next steps
+
+- Remaining remediation: [work planned for the next 7–14 days]
+- Final report will follow within 14 days of awareness.
+
+---
+*Review before use — not legal advice.*`;
+                  break;
+                case "final_report":
+                  draft = `# Final report (14 days / 1 month) — draft
+
+${common}
+
+## Root cause
+
+${i.final_report_notes ? i.final_report_notes + "\n\n" : "[Plain-language explanation of the root cause — design flaw, dependency vulnerability, misconfiguration, supply-chain compromise.]\n\n"}
+
+## Remediation
+
+- **Patch or fix released:** [version, date]
+- **Distribution mechanism:** [auto-update, advisory email, manual]
+- **Detection for customers:** [how a customer knows they are affected]
+
+## Corrective / preventive actions
+
+- Process changes: [testing, code review, SBOM coverage]
+- Tooling changes: [new scanners, SCA coverage, telemetry]
+- Timelines: [when each action completes]
+
+## Coordinated disclosure
+
+- Public advisory URL: [link once published]
+- CVE id assigned: ${i.linked_cve_id || "[CVE id if applicable]"}
+
+---
+*Review before use — not legal advice. Submit before the Article 14 deadline (14 days for actively-exploited vulnerabilities, one month for severe incidents).*`;
+                  break;
+              }
+
+              return { draft, phase };
+            },
+          }),
+
+          // ----------------------------------------------------------
+          // draftVulnerabilityResponse
+          // ----------------------------------------------------------
+          draftVulnerabilityResponse: tool({
+            description:
+              "Produce a short coordinated-disclosure acknowledgement email addressed to the researcher who submitted a vulnerability report through the public PSIRT intake. Pulls the reporter's details + the report body. Output is markdown; the user copies it into their email client.",
+            inputSchema: z.object({
+              reportId: z
+                .string()
+                .uuid()
+                .describe("Vulnerability-report id (from the Reports screen)."),
+            }),
+            execute: async ({ reportId }) => {
+              const [{ data: report }, { data: org }] = await Promise.all([
+                supabase
+                  .from("vulnerability_reports")
+                  .select(
+                    "reporter_name, reporter_email, reporter_handle, title, affected_product, severity_suggested, status, created_at",
+                  )
+                  .eq("id", reportId)
+                  .eq("org_id", orgId)
+                  .maybeSingle(),
+                supabase
+                  .from("organizations")
+                  .select("name, legal_name, security_contact_email")
+                  .eq("id", orgId)
+                  .maybeSingle(),
+              ]);
+              if (!report) return { error: "report_not_found" };
+              if (!org) return { error: "org_not_found" };
+
+              const r = report as Record<string, string | null>;
+              const o = org as Record<string, string | null>;
+              const orgName = o.legal_name || o.name || "[Organisation]";
+              const sig = o.security_contact_email
+                ? `The ${orgName} Security Team\n${o.security_contact_email}`
+                : `The ${orgName} Security Team`;
+
+              const to =
+                r.reporter_email ||
+                `[researcher email — not provided in the report]`;
+              const name =
+                r.reporter_name ||
+                r.reporter_handle ||
+                "[researcher name or handle]";
+
+              const reportedOn = r.created_at
+                ? new Date(r.created_at as string)
+                    .toISOString()
+                    .slice(0, 10)
+                : "[date reported]";
+
+              const draft = `# Researcher acknowledgement (draft)
+
+**To:** ${to}
+**Subject:** ${orgName} · Vulnerability report received — ${r.title ?? "[report title]"}
+
+Hi ${name},
+
+Thank you for reporting a potential security issue to ${orgName} on ${reportedOn}. We have received the report titled "${r.title ?? "[title]"}" covering ${r.affected_product ?? "[affected product]"} and logged it for triage.
+
+Our current assessment:
+- Severity (preliminary): ${r.severity_suggested ?? "[pending triage]"}
+- Status: ${r.status ?? "triage in progress"}
+
+Next steps from our side:
+1. We will complete an initial technical validation within five business days.
+2. If the report is confirmed, we will agree a coordinated-disclosure timeline with you before any public advisory.
+3. We will keep you in the loop as we move from triage to fix to release.
+
+If you have additional details — proof-of-concept, reproduction steps, CVSS vector — please reply to this thread. We do not ask you to hold the report beyond what is needed to protect users.
+
+Kind regards,
+${sig}
+
+---
+*Review before use — not legal advice. Adjust the timeline to match your actual VDP SLA before sending.*`;
+
+              return { draft };
+            },
+          }),
+        }
+      : {}),
   };
 }

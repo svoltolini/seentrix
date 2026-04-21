@@ -366,6 +366,33 @@ session, so Row-Level Security enforces org scoping for every query.
 The Copilot will always prefer calling a tool over guessing when the
 question is about the user's own data.
 
+### Drafting tools (Professional plan and above)
+
+On paid plans the Copilot can also produce ready-to-review markdown
+drafts pre-filled from the user's actual data:
+
+- **draftDeclarationOfConformity** — Annex IV-aligned DoC draft built
+  from the product fields, the manufacturer details on Settings →
+  Entity, and the notified-body info when the product's CRA category
+  requires one. Harmonised standards stay as placeholders the user
+  must confirm.
+- **draftIncidentNarrative** — three-phase Article 14 narrative
+  (24 h early warning / 72 h intermediate report / 14-day or 1-month
+  final report), built from the incident record, affected products,
+  and the linked vulnerability if any.
+- **draftVulnerabilityResponse** — coordinated-disclosure
+  acknowledgement email addressed to a researcher who filed a report
+  through the public PSIRT intake.
+
+Every draft carries a footer: *"Review before use — not legal
+advice."* The draft does NOT replace the existing Documents tab —
+signed DoCs are still generated there; the draft is a working
+starting point the user can copy, edit, and paste.
+
+Drafts are a **Professional-plan feature**; Free-tier users will see
+the Copilot explain manually what fields to fill and point them to
+`/pricing`.
+
 ## What Seentrix does NOT do
 
 Explicit anti-hallucination list — a shortcut to stop the Copilot

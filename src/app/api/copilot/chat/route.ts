@@ -171,7 +171,7 @@ export async function POST(req: Request) {
   // --- 10. Stream the response ---------------------------------------------
   const startedAt = Date.now();
   const modelMessages = await convertToModelMessages(trimmed);
-  const tools = buildCopilotTools({ supabase, orgId });
+  const tools = buildCopilotTools({ supabase, orgId, plan });
   const result = streamText({
     model: mistral(MISTRAL_CHAT_MODEL),
     system,
