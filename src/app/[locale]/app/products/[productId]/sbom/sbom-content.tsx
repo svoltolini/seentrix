@@ -17,6 +17,7 @@ import {
   type VulnerabilityRecord,
 } from "./actions";
 import { SbomUploadZone } from "./sbom-upload-zone";
+import { AskSeentrixAI } from "@/components/copilot/ask-seentrix-ai";
 import { SbomListItem } from "./sbom-list-item";
 import { SbomDeleteDialog } from "./sbom-delete-dialog";
 
@@ -199,6 +200,16 @@ export function SbomContent({
         uploading={uploading}
         uploadError={uploadError}
       />
+
+      {/* First-time nudge — only shown before any SBOM has been uploaded. */}
+      {!aggregateStats.hasData && (
+        <AskSeentrixAI
+          variant="banner"
+          seed="I don't know much about SBOMs — how do I generate one for my product and then upload it to Seentrix?"
+          label="New to SBOMs?"
+          sublabel="Ask Seentrix AI how to generate one with Syft, Trivy, or a GitHub dependency-graph export — then upload the result above."
+        />
+      )}
 
       {/* Severity overview — aggregated from active SBOMs */}
       {aggregateStats.hasData && (

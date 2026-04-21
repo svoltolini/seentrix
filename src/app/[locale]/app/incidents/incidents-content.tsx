@@ -14,6 +14,7 @@ import { StaggerReveal } from "@/components/stagger-reveal";
 import { StatCard } from "@/components/stat-card";
 import { useToast } from "@/components/ui/toast";
 import { useLocaleDate } from "@/lib/locale-date";
+import { AskSeentrixAI } from "@/components/copilot/ask-seentrix-ai";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -308,6 +309,14 @@ export function IncidentsContent({
                 ? t("empty.description")
                 : t("empty.filteredDescription")}
             </p>
+            {incidents.length === 0 && (
+              <div className="mt-6 flex justify-center">
+                <AskSeentrixAI
+                  seed="Walk me through the three Article 14 reporting phases — 24-hour early warning, 72-hour intermediate report, 14-day final report. When does each clock start?"
+                  label="Explain the Article 14 reporting clocks"
+                />
+              </div>
+            )}
           </div>
         ) : (
           <div

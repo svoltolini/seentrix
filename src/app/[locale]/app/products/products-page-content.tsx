@@ -7,6 +7,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { HugeIcon } from "@/components/huge-icon";
 import { PlusIcon, SearchIcon, ArrowUpDownIcon, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { AskSeentrixAI } from "@/components/copilot/ask-seentrix-ai";
 import type { ProductListItem } from "./actions";
 import type { OrgPlan } from "@/lib/constants/plans";
 import { PLAN_PRODUCT_LIMITS } from "@/lib/constants/plans";
@@ -200,6 +201,11 @@ export function ProductsPageContent({
               {t("addProduct")}
             </Link>
           )}
+          <AskSeentrixAI
+            className="mt-5"
+            seed="I'm setting up my first product in Seentrix — what CRA fields do I actually need to fill in?"
+            label="New to CRA? Ask Seentrix AI how to set up a product."
+          />
         </div>
       ) : (
         <div className="overflow-hidden rounded-2xl border border-white/[0.06] bg-card">
