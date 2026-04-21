@@ -59,7 +59,7 @@ export function AcademyTabs({
       {isAdminOrCO && (
         <TabsContent value="team-progress" className="mt-6">
           {teamProgress ?? (
-            <p className="rounded-xl border border-white/[0.06] bg-card p-6 text-sm text-muted-foreground">
+            <p className="rounded-xl bg-white/[0.03] p-6 text-sm text-muted-foreground">
               —
             </p>
           )}

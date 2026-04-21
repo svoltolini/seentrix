@@ -218,7 +218,7 @@ function PhaseSection({
   return (
     <div
       className={cn(
-        "rounded-2xl border border-white/[0.06] bg-card p-5",
+        "rounded-2xl bg-white/[0.03] p-5",
         submitted && "opacity-90",
       )}
     >
@@ -473,7 +473,7 @@ export function IncidentDetailContent({
         {!isClosed && (
           <div
             data-reveal
-            className="grid grid-cols-1 gap-4 rounded-2xl border border-white/[0.06] bg-card p-6 sm:grid-cols-3"
+            className="grid grid-cols-1 gap-4 rounded-2xl bg-white/[0.03] p-6 sm:grid-cols-3"
           >
             <PhaseRing
               phase="early_warning"
@@ -578,7 +578,7 @@ export function IncidentDetailContent({
         {/* User notification composer (Article 14 user notify obligation) */}
         <div
           data-reveal
-          className="rounded-2xl border border-white/[0.06] bg-card p-5"
+          className="rounded-2xl bg-white/[0.03] p-5"
         >
           <div className="flex items-start justify-between gap-3">
             <div>

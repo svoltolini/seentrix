@@ -115,7 +115,7 @@ export function Quiz({
       ))}
 
       {outcome.kind === "idle" && (
-        <div className="flex items-center justify-between gap-3 rounded-xl border border-white/[0.06] bg-card px-5 py-4">
+        <div className="flex items-center justify-between gap-3 rounded-xl bg-white/[0.03] px-5 py-4">
           <p className="text-xs text-muted-foreground">
             {t("threshold", { percent: Math.round(QUIZ_PASS_THRESHOLD * 100) })}
           </p>
@@ -200,7 +200,7 @@ function QuestionCard({
     <fieldset
       disabled={locked}
       aria-labelledby={legendId}
-      className="rounded-xl border border-white/[0.06] bg-card p-5"
+      className="rounded-xl bg-white/[0.03] p-5"
     >
       <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/60">
         {tCard("questionPrefix")}

@@ -321,7 +321,7 @@ export function IncidentsContent({
         ) : (
           <div
             data-reveal
-            className="overflow-hidden rounded-2xl border border-white/[0.06] bg-card"
+            className="overflow-hidden rounded-2xl bg-white/[0.03]"
           >
             <div className="flex items-center border-b border-white/[0.06] px-5 py-2.5 text-[11px] text-muted-foreground/60">
               <span className="flex-1">{t("table.incident")}</span>
@@ -463,7 +463,7 @@ function SegmentedControl({
   onChange: (v: string) => void;
 }) {
   return (
-    <div className="inline-flex gap-1 rounded-lg border border-white/[0.06] bg-card p-1">
+    <div className="inline-flex gap-1 rounded-lg bg-white/[0.03] p-1">
       {options.map((o) => (
         <button
           key={o.value}

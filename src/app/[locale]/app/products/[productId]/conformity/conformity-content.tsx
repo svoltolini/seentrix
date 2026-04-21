@@ -171,7 +171,7 @@ export function ConformityContent({
         {/* Hero: route + progress ring */}
         <div
           data-reveal
-          className="overflow-hidden rounded-2xl border border-white/[0.06] bg-card p-6"
+          className="overflow-hidden rounded-2xl bg-white/[0.03] p-6"
         >
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div className="min-w-0">
@@ -212,7 +212,7 @@ export function ConformityContent({
         {notifiedBodyRequired && (
           <div
             data-reveal
-            className="rounded-2xl border border-white/[0.06] bg-card p-6"
+            className="rounded-2xl bg-white/[0.03] p-6"
           >
             <div className="mb-4">
               <h2 className="text-sm font-semibold">{t("notifiedBody.title")}</h2>
@@ -268,7 +268,7 @@ export function ConformityContent({
         {/* Steps */}
         <div
           data-reveal
-          className="overflow-hidden rounded-2xl border border-white/[0.06] bg-card"
+          className="overflow-hidden rounded-2xl bg-white/[0.03]"
         >
           <div className="border-b border-white/[0.06] px-5 py-3">
             <span className="text-sm font-semibold">{t("steps.title")}</span>

@@ -67,7 +67,7 @@ export function GlossaryIndex() {
       </div>
 
       {grouped.length === 0 ? (
-        <p className="mt-8 rounded-xl border border-white/[0.06] bg-card p-6 text-center text-sm text-muted-foreground">
+        <p className="mt-8 rounded-xl bg-white/[0.03] p-6 text-center text-sm text-muted-foreground">
           —
         </p>
       ) : (
@@ -100,7 +100,7 @@ function GlossaryCard({
   body: string;
 }) {
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-card p-4 transition-colors hover:border-white/[0.1]">
+    <div className="rounded-xl bg-white/[0.03] p-4 transition-colors hover:border-white/[0.1]">
       <Term id={id} className="font-heading text-sm font-semibold text-foreground no-underline hover:text-primary">
         {title}
       </Term>

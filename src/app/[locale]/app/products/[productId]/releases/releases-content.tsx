@@ -106,7 +106,7 @@ export function ReleasesContent({
         {/* Support period block */}
         <div
           data-reveal
-          className="overflow-hidden rounded-2xl border border-white/[0.06] bg-card p-6"
+          className="overflow-hidden rounded-2xl bg-white/[0.03] p-6"
         >
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
@@ -235,7 +235,7 @@ export function ReleasesContent({
               </p>
             </div>
           ) : (
-            <div className="overflow-hidden rounded-2xl border border-white/[0.06] bg-card">
+            <div className="overflow-hidden rounded-2xl bg-white/[0.03]">
               <div className="divide-y divide-white/[0.04]">
                 {releases.map((r) => (
                   <ReleaseRow

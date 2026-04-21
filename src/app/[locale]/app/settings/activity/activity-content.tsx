@@ -93,7 +93,7 @@ export function ActivityContent({ activities }: { activities: Activity[] }) {
                 className="fixed inset-0 z-40"
                 onClick={() => setShowExportMenu(false)}
               />
-              <div className="absolute right-0 top-full z-50 mt-1.5 w-48 overflow-hidden rounded-lg border border-white/[0.08] bg-card py-1 shadow-xl">
+              <div className="absolute right-0 top-full z-50 mt-1.5 w-48 overflow-hidden rounded-lg bg-white/[0.03] py-1 shadow-xl">
                 {EXPORT_PERIODS.map((months) => (
                   <button
                     key={months}

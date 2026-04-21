@@ -208,7 +208,7 @@ export function ProductsPageContent({
           />
         </div>
       ) : (
-        <div className="overflow-hidden rounded-2xl border border-white/[0.06] bg-card">
+        <div className="overflow-hidden rounded-2xl bg-white/[0.03]">
           {/* Column headers */}
           <div className="flex items-center border-b border-white/[0.06] px-5 py-2.5">
             {/* Product column (takes flex-1 space) */}

@@ -202,7 +202,7 @@ export function EntityContent({
         {/* Obligations list */}
         <div
           data-reveal
-          className="overflow-hidden rounded-2xl border border-white/[0.06] bg-card"
+          className="overflow-hidden rounded-2xl bg-white/[0.03]"
         >
           <div className="border-b border-white/[0.06] px-5 py-3">
             <span className="text-sm font-semibold">

@@ -409,7 +409,7 @@ export function VulnerabilitiesContent({
         {/* ── Filter bar ── */}
         <div
           data-reveal
-          className="overflow-hidden rounded-xl border border-white/[0.06] bg-card"
+          className="overflow-hidden rounded-xl bg-white/[0.03]"
         >
           {/* Search row — takes full width for scannability */}
           <div className="border-b border-white/[0.04] p-3">
@@ -594,7 +594,7 @@ export function VulnerabilitiesContent({
         {/* ── Table ── */}
         <div
           data-reveal
-          className="overflow-hidden rounded-2xl border border-white/[0.06] bg-card"
+          className="overflow-hidden rounded-2xl bg-white/[0.03]"
         >
           <div className="flex items-center border-b border-white/[0.06] px-4 py-2.5 text-[11px] text-muted-foreground/60">
             {canWrite && (
