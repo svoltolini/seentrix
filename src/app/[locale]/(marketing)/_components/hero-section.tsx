@@ -6,7 +6,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { CountdownTimer } from "./countdown-timer";
 
 export function HeroSection() {
@@ -64,13 +63,12 @@ export function HeroSection() {
       />
 
       <div className="relative mx-auto flex max-w-5xl flex-col items-center gap-8 text-center">
-        <Badge
+        <span
           data-hero-reveal
-          variant="default"
-          className="px-4 py-1.5 text-sm font-medium"
+          className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#60A5FA]"
         >
           {t("badge")}
-        </Badge>
+        </span>
 
         <h1 data-hero-reveal className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl [&>span:last-child]:font-black">
           <span className="text-foreground">{t("titleLine1")}</span>

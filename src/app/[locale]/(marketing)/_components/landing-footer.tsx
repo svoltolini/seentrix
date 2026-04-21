@@ -32,6 +32,13 @@ export function LandingFooter() {
             <div className="flex flex-col gap-0.5 pl-6 text-sm text-muted-foreground">
               <span>Seentrix Ltd</span>
               <span>Companies House 17169165</span>
+              <span className="mt-2 leading-relaxed">
+                167-169 Great Portland Street
+                <br />
+                London W1W 5PF
+                <br />
+                United Kingdom
+              </span>
             </div>
           </div>
 
