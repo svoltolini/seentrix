@@ -96,7 +96,11 @@ function groupPartsInOrder(
       flushText();
       const path = raw.output?.path;
       const label = raw.output?.label;
-      if (typeof path === "string" && typeof label === "string") {
+      if (
+        typeof path === "string" &&
+        typeof label === "string" &&
+        isRenderableLinkPath(path)
+      ) {
         out.push({ kind: "link", path, label });
       }
       continue;
@@ -126,6 +130,41 @@ function extractText(m: UIMessage): string {
     .map((p) => p.text)
     .join("")
     .trim();
+}
+
+/**
+ * Guard against two known failure modes before we render a link button:
+ *  - Unresolved `{placeholder}` segments (e.g. `/app/products/{productId}/sbom`)
+ *    that would 404 if clicked. Happens when the model tries to link to
+ *    a product-specific page but the user hasn't picked a product yet.
+ *  - Empty or malformed paths.
+ * The scheme also blocks any path that isn't under an in-app namespace —
+ * this mirrors the tool's input-schema regex so hallucinated fake tags
+ * can't sneak through arbitrary URLs.
+ */
+function isRenderableLinkPath(path: string): boolean {
+  if (!path) return false;
+  if (path.includes("{") || path.includes("}")) return false;
+  return /^\/(app|pricing|ai|blog|legal)(\/|$)/.test(path);
+}
+
+/**
+ * Match a hallucinated `<linkToPage path="..." label="..." />` tag the
+ * model sometimes writes as prose instead of invoking the tool properly.
+ * Attribute order is flexible — we accept path-first or label-first —
+ * and the closing slash is optional (`< … >` or `< … />`). Returns
+ * `null` when the line isn't a tag, so the caller can fall through
+ * to normal paragraph handling.
+ */
+function parseHallucinatedLinkTag(
+  line: string,
+): { path: string; label: string } | null {
+  const trimmed = line.trim();
+  if (!trimmed.startsWith("<linkToPage")) return null;
+  const path = trimmed.match(/\bpath\s*=\s*["']([^"']+)["']/i)?.[1];
+  const label = trimmed.match(/\blabel\s*=\s*["']([^"']+)["']/i)?.[1];
+  if (!path || !label) return null;
+  return { path, label };
 }
 
 function DraftBlock({ title, draft }: { title: string; draft: string }) {
@@ -195,7 +234,8 @@ type Block =
   | { type: "ol"; items: string[] }
   | { type: "ul"; items: string[] }
   | { type: "quote"; text: string }
-  | { type: "code"; text: string };
+  | { type: "code"; text: string }
+  | { type: "link"; path: string; label: string };
 
 function AssistantBody({ text }: { text: string }) {
   const blocks = blockify(text);
@@ -284,6 +324,8 @@ function AssistantBody({ text }: { text: string }) {
                 <code>{b.text}</code>
               </pre>
             );
+          case "link":
+            return <LinkButton key={i} path={b.path} label={b.label} />;
           case "p":
           default:
             return (
@@ -364,6 +406,24 @@ function blockify(text: string): Block[] {
     if (/^\s*(---|\*\*\*|___)\s*$/.test(line)) {
       flushAll();
       blocks.push({ type: "hr" });
+      continue;
+    }
+
+    // Hallucinated tool-call syntax — the model sometimes writes
+    // `<linkToPage path="..." label="..." />` as literal text instead of
+    // invoking the tool. Rescue it so the user still sees a working
+    // button, and silently drop buttons with `{placeholder}` paths
+    // that would 404 on click.
+    const hallucinatedLink = parseHallucinatedLinkTag(line);
+    if (hallucinatedLink) {
+      flushAll();
+      if (isRenderableLinkPath(hallucinatedLink.path)) {
+        blocks.push({
+          type: "link",
+          path: hallucinatedLink.path,
+          label: hallucinatedLink.label,
+        });
+      }
       continue;
     }
 
