@@ -33,8 +33,12 @@ import { checkQuota } from "@/lib/copilot/quota";
  */
 
 export const runtime = "nodejs";
-// Streaming can take up to ~30 s for a long answer; Vercel default is 10 s.
-export const maxDuration = 60;
+// Streaming a long multi-step answer (prose + several tool calls +
+// follow-up prose) can legitimately take >60 s, especially when the
+// question is broad like "what does Article 13 require?" and the
+// answer is ~2,000 tokens. 120 s gives headroom without letting the
+// function hang indefinitely.
+export const maxDuration = 120;
 
 interface ChatPayload {
   messages: UIMessage[];
@@ -178,6 +182,12 @@ export async function POST(req: Request) {
     messages: modelMessages,
     temperature: 0.3,
     tools,
+    // Generous per-step output budget. A comprehensive answer to
+    // "what does Article 13 require?" enumerating 12 essential
+    // requirements + 7 vulnerability handling requirements + scope +
+    // Seentrix steps runs ~2,500 tokens. The Mistral provider's
+    // default can cut a long answer mid-word; 4,000 is a safe ceiling.
+    maxOutputTokens: 4000,
     // Let the model chain up to 12 steps in one turn. A guided
     // onboarding walk-through ("where do I start?") emits roughly
     // 6 `linkToPage` tool calls interleaved with prose, so the old

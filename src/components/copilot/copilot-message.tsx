@@ -157,6 +157,48 @@ function isRenderableLinkPath(path: string): boolean {
  * to normal paragraph handling.
  */
 /**
+ * Does this line read like a section heading even though the model
+ * didn't prefix it with `##`? Catches the common English and German
+ * patterns the model keeps emitting as bare prose:
+ *
+ *   "Who does Article 13 apply to?"
+ *   "How to comply with Article 13 in Seentrix"
+ *   "What about exceptions?"
+ *   "Key deadlines"
+ *   "Next steps"
+ *   "Wer ist betroffen?"
+ *
+ * Keep this list conservative — false positives turn real prose into
+ * big shouting headings. Everything here starts a sentence that a
+ * human would naturally read as a section marker.
+ */
+function looksLikeSentenceHeading(line: string): boolean {
+  if (/^[-*\d]/.test(line)) return false; // list markers
+  if (line.includes(",") || line.includes(";")) return false; // prose
+  const wordCount = line.split(/\s+/).length;
+  if (wordCount > 12) return false;
+  // Question-word patterns (EN + DE).
+  if (
+    /^(Who|What|How|When|Where|Why|Which|Wer|Was|Wie|Wann|Wo|Warum|Welche|Welcher|Welches)\b.*\?$/.test(
+      line,
+    )
+  ) {
+    return true;
+  }
+  // "How to …" / "Wie …" without a question mark.
+  if (/^(How to|Wie man)\b/.test(line)) return true;
+  // Short bare phrases that are almost always section markers.
+  if (
+    /^(Key\s|Next\s|Exceptions?$|Scope$|Important\s|Notes?$|Summary$|In summary|Bottom line$|Practical steps|Kernpunkte$|Nächste Schritte|Ausnahmen?$|Zusammenfassung$|Wichtig$|Hinweise?$|Fazit$)/i.test(
+      line,
+    )
+  ) {
+    return true;
+  }
+  return false;
+}
+
+/**
  * Re-case an all-caps line into sentence case so an auto-promoted
  * heading doesn't shout at the user. First letter capitalised; the
  * rest lowercase; small standalone tokens that are genuine acronyms
@@ -462,6 +504,32 @@ function blockify(text: string): Block[] {
     ) {
       flushAll();
       blocks.push({ type: "h2", text: toTitleCase(trimmed) });
+      continue;
+    }
+
+    // Sentence-case section-header lines that the model forgot to
+    // mark with `##`. Common patterns:
+    //   - "Who does X apply to?"
+    //   - "What is X?"
+    //   - "How to comply with X"
+    //   - "When does X take effect"
+    //   - "Why X matters"
+    //   - "Key deadlines"  (no leading question word, but known stem)
+    //   - German equivalents (Wer / Was / Wie / Wann / Wo / Warum)
+    // Conservative: line must be short (<= 80 chars), on its own
+    // (preceded by a blank line or no preceding content), not end
+    // with a full stop (which would be a sentence), and start with
+    // a known heading word.
+    if (
+      trimmed.length > 0 &&
+      trimmed.length <= 80 &&
+      !/[.]$/.test(trimmed) &&
+      looksLikeSentenceHeading(trimmed) &&
+      !list &&
+      buf.length === 0
+    ) {
+      flushAll();
+      blocks.push({ type: "h2", text: trimmed });
       continue;
     }
 
