@@ -244,6 +244,23 @@ function toTitleCase(s: string): string {
     .join("");
 }
 
+/**
+ * A line that contains only a markdown link `[label](url)` (optionally
+ * preceded by a bullet or numbered marker) becomes a full-size action
+ * button — same visual treatment as the old `linkToPage` tool result.
+ * This is the primary way the model now emits "Go to X" affordances.
+ * Returns `null` when the line is plain prose or the markdown link is
+ * mixed with other text (in which case it stays inline).
+ */
+function parseBareMarkdownLink(
+  line: string,
+): { path: string; label: string } | null {
+  const stripped = line.replace(/^\s*(?:[-*•]|\d+[.)])\s*/, "").trim();
+  const match = stripped.match(/^\[([^\[\]\n]+?)\]\(([^)\s]+)\)\s*$/);
+  if (!match) return null;
+  return { label: match[1], path: match[2] };
+}
+
 function parseHallucinatedLinkTag(
   line: string,
 ): { path: string; label: string } | null {
@@ -555,6 +572,22 @@ function blockify(text: string): Block[] {
           label: hallucinatedLink.label,
         });
       }
+      continue;
+    }
+
+    // A line that is just a markdown link pointing at an in-app path
+    // becomes a full-size action button. This is the primary way the
+    // model emits "Go to X" affordances now that the `linkToPage`
+    // tool is gone. Bullets / numbered markers in front of the link
+    // are also accepted so the model can write lists of actions.
+    const bareLink = parseBareMarkdownLink(line);
+    if (bareLink && isRenderableLinkPath(bareLink.path)) {
+      flushAll();
+      blocks.push({
+        type: "link",
+        path: bareLink.path,
+        label: bareLink.label,
+      });
       continue;
     }
 
