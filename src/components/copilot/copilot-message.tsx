@@ -156,6 +156,52 @@ function isRenderableLinkPath(path: string): boolean {
  * `null` when the line isn't a tag, so the caller can fall through
  * to normal paragraph handling.
  */
+/**
+ * Re-case an all-caps line into sentence case so an auto-promoted
+ * heading doesn't shout at the user. First letter capitalised; the
+ * rest lowercase; small standalone tokens that are genuine acronyms
+ * (≤ 4 chars, all consonants-or-digits, and in a known allow-list)
+ * stay uppercase. Article / annex numbering is preserved.
+ */
+function toTitleCase(s: string): string {
+  const ACRONYMS = new Set([
+    "CRA",
+    "EU",
+    "UK",
+    "US",
+    "SBOM",
+    "SPDX",
+    "CVE",
+    "CVSS",
+    "GHSA",
+    "IoT",
+    "API",
+    "TLS",
+    "MFA",
+    "GDPR",
+    "DoC",
+    "KEV",
+    "ENISA",
+    "CSIRT",
+    "OS",
+    "VDP",
+    "CE",
+    "OEM",
+    "SaaS",
+    "VPN",
+  ]);
+  return s
+    .split(/(\s+)/)
+    .map((token) => {
+      if (/^\s+$/.test(token)) return token;
+      const bare = token.replace(/[()?&:,.\-/]/g, "");
+      if (ACRONYMS.has(bare.toUpperCase())) return token.toUpperCase();
+      if (/^\d+(?:[.)]|$)/.test(token)) return token;
+      return token.charAt(0) + token.slice(1).toLowerCase();
+    })
+    .join("");
+}
+
 function parseHallucinatedLinkTag(
   line: string,
 ): { path: string; label: string } | null {
@@ -402,6 +448,23 @@ function blockify(text: string): Block[] {
       continue;
     }
 
+    // Bare all-caps lines like "KEY REQUIREMENTS OF ARTICLE 13",
+    // "ANNEX I: FURTHER DETAILS", "WHO DOES ARTICLE 13 APPLY TO?" —
+    // the model sometimes writes these instead of using `##`. Promote
+    // them to H2 so the structure reads right. Gate on minimum length
+    // (so two-letter tokens like "EU" aren't promoted) and that the
+    // line contains at least one space (so "SBOM" alone isn't).
+    const trimmed = line.trim();
+    if (
+      trimmed.length >= 8 &&
+      trimmed.includes(" ") &&
+      /^[A-Z0-9][A-Z0-9 :()?&\-/]{6,}$/.test(trimmed)
+    ) {
+      flushAll();
+      blocks.push({ type: "h2", text: toTitleCase(trimmed) });
+      continue;
+    }
+
     // Horizontal rule.
     if (/^\s*(---|\*\*\*|___)\s*$/.test(line)) {
       flushAll();
@@ -615,6 +678,14 @@ function PathPill({ path }: { path: string }) {
 function InlineLink({ label, href }: { label: string; href: string }) {
   const className =
     "font-medium text-[#93C5FD] underline decoration-[#60A5FA]/40 decoration-1 underline-offset-2 transition hover:text-[#60A5FA] hover:decoration-[#60A5FA]";
+
+  // An internal path with an unresolved `{placeholder}` segment would
+  // render as a clickable link that 404s on click — worse UX than plain
+  // text. Show just the label as foreground prose so the user at least
+  // understands what the model was pointing at.
+  if (href.startsWith("/") && (href.includes("{") || href.includes("}"))) {
+    return <span className="font-medium text-foreground">{label}</span>;
+  }
   if (href.startsWith("/")) {
     return (
       <Link href={href} className={className}>
