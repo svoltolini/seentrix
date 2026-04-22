@@ -185,9 +185,11 @@ export async function POST(req: Request) {
     // Generous per-step output budget. A comprehensive answer to
     // "what does Article 13 require?" enumerating 12 essential
     // requirements + 7 vulnerability handling requirements + scope +
-    // Seentrix steps runs ~2,500 tokens. The Mistral provider's
-    // default can cut a long answer mid-word; 4,000 is a safe ceiling.
-    maxOutputTokens: 4000,
+    // Seentrix steps easily runs past 3,000 tokens. The Mistral
+    // provider's default can cut a long answer mid-word; 6,000 is
+    // high enough for even the longest legitimate answer while
+    // staying inside Mistral Large's per-completion ceiling.
+    maxOutputTokens: 6000,
     // Let the model chain up to 12 steps in one turn. A guided
     // onboarding walk-through ("where do I start?") emits roughly
     // 6 `linkToPage` tool calls interleaved with prose, so the old
@@ -211,10 +213,19 @@ export async function POST(req: Request) {
         responseBody: e?.responseBody,
       });
     },
-    onFinish: async ({ text, usage }) => {
+    onFinish: async ({ text, usage, finishReason, steps }) => {
       // Persist the assistant's final text + usage for auditability and to
       // power the "usage" view in settings. Failures here are logged but
       // don't break the response already delivered to the user.
+      console.log("[copilot] finished", {
+        finishReason,
+        inputTokens: usage?.inputTokens,
+        outputTokens: usage?.outputTokens,
+        totalTokens: usage?.totalTokens,
+        stepCount: steps?.length,
+        textLength: text.length,
+        latencyMs: Date.now() - startedAt,
+      });
       try {
         await supabase.from("chat_messages").insert({
           session_id: sessionId,
