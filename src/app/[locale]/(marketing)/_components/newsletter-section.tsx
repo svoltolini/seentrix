@@ -4,14 +4,13 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useActionState } from "react";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { subscribeNewsletter, type NewsletterState } from "./actions";
 
 export function NewsletterSection() {
   const t = useTranslations("landing.newsletter");
-  const locale = useLocale();
   const [state, action, isPending] = useActionState<NewsletterState, FormData>(
     subscribeNewsletter,
     undefined
@@ -61,7 +60,6 @@ export function NewsletterSection() {
             action={action}
             className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center"
           >
-            <input type="hidden" name="locale" value={locale} />
             <Input
               type="email"
               name="email"

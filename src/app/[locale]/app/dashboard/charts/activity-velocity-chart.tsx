@@ -1,6 +1,6 @@
 "use client";
 
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import {
   AreaChart,
   Area,
@@ -16,13 +16,14 @@ interface Props {
   data: ActivityVelocityPoint[];
 }
 
+// Pinned locale tag — the product is English-only, but we still need an
+// explicit tag (rather than `undefined`) so the server and client agree on
+// formatting. Without it, Node uses its default and the browser uses the
+// user's system locale, which causes a hydration mismatch.
+const DATE_LOCALE = "en-US";
+
 export function ActivityVelocityChart({ data }: Props) {
   const t = useTranslations("dashboard");
-  // Pin the locale so server and client render the date identically; using
-  // `undefined` falls back to Node's default on the server and the user's
-  // browser default on the client, which causes a hydration mismatch.
-  const locale = useLocale();
-  const dateLocale = locale === "de" ? "de-DE" : "en-US";
 
   const totalActions = data.reduce((s, d) => s + d.count, 0);
   const hasData = totalActions > 0;
@@ -51,7 +52,7 @@ export function ActivityVelocityChart({ data }: Props) {
 
   const formatDate = (dateStr: string) => {
     const d = new Date(dateStr + "T00:00:00");
-    return d.toLocaleDateString(dateLocale, {
+    return d.toLocaleDateString(DATE_LOCALE, {
       month: "short",
       day: "numeric",
     });

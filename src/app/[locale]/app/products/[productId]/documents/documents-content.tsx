@@ -2,7 +2,6 @@
 
 import { useState, useCallback } from "react";
 import { useTranslations } from "next-intl";
-import { useParams } from "next/navigation";
 import { useRouter } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -95,8 +94,6 @@ export function DocumentsContent({
 }) {
   const t = useTranslations("documents");
   const router = useRouter();
-  const params = useParams();
-  const locale = (params.locale as string) || "en";
   const [documents, setDocuments] = useState(initialDocuments);
   const [editingType, setEditingType] = useState<DocumentType | null>(null);
   const [saving, setSaving] = useState(false);
@@ -165,7 +162,7 @@ export function DocumentsContent({
     setPdfError(null);
     setPdfSuccess(false);
 
-    const result = await generateDocumentPdf(docId, locale);
+    const result = await generateDocumentPdf(docId);
 
     if (result.error) {
       const errorKey = `editor.errors.${result.error}`;
@@ -438,7 +435,7 @@ export function DocumentsContent({
                       ? t("grid.lastUpdated", {
                           date: new Date(
                             doc.updated_at
-                          ).toLocaleDateString(locale),
+                          ).toLocaleDateString("en-US"),
                         })
                       : t("grid.neverEdited")}
                   </span>

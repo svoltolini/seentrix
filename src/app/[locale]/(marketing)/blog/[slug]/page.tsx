@@ -40,16 +40,12 @@ export async function generateMetadata({
     description: post.description,
     authors: [{ name: post.author }],
     alternates: {
-      canonical: `${baseUrl}/${locale}/blog/${slug}`,
-      languages: {
-        en: `${baseUrl}/en/blog/${slug}`,
-        de: `${baseUrl}/de/blog/${slug}`,
-      },
+      canonical: `${baseUrl}/blog/${slug}`,
     },
     openGraph: {
       title: post.title,
       description: post.description,
-      url: `${baseUrl}/${locale}/blog/${slug}`,
+      url: `${baseUrl}/blog/${slug}`,
       type: "article",
       publishedTime: post.date,
       authors: [post.author],
@@ -95,10 +91,11 @@ export default async function BlogPostPage({
         <div className="mt-4 flex items-center gap-4 text-sm text-muted-foreground">
           <span className="flex items-center gap-1.5">
             <Icon name="Calendar" className="size-4" />
-            {new Date(post.date).toLocaleDateString(
-              locale === "de" ? "de-DE" : "en-US",
-              { year: "numeric", month: "long", day: "numeric" }
-            )}
+            {new Date(post.date).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
           </span>
           <span className="flex items-center gap-1.5">
             <Icon name="Clock" className="size-4" />

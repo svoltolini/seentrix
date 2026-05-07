@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useLocale, useTranslations } from "next-intl";
-import { usePathname, useRouter, Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
+import { useRouter, Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/sheet";
 import { Icon } from "@/components/icon";
 import { Logo } from "@/components/logo";
-import Image from "next/image";
 
 const anchors = [
   { href: "#features", key: "features" },
@@ -27,9 +26,7 @@ const pageLinks = [
 
 export function LandingHeader({ isAuthed = false }: { isAuthed?: boolean }) {
   const t = useTranslations("landing.header");
-  const locale = useLocale();
   const router = useRouter();
-  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -39,10 +36,6 @@ export function LandingHeader({ isAuthed = false }: { isAuthed?: boolean }) {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  function switchLocale(newLocale: string) {
-    router.replace(pathname, { locale: newLocale });
-  }
 
   function scrollTo(id: string) {
     const el = document.querySelector(id);
@@ -91,42 +84,6 @@ export function LandingHeader({ isAuthed = false }: { isAuthed?: boolean }) {
 
         {/* Right */}
         <div className="flex items-center gap-2">
-          {/* Language switcher */}
-          <div className="flex items-center gap-1">
-            <button
-              onClick={() => switchLocale("en")}
-              className={cn(
-                "flex items-center rounded-sm p-1.5 transition-opacity",
-                locale === "en" ? "opacity-100" : "opacity-40 hover:opacity-70"
-              )}
-              aria-label="English"
-            >
-              <Image
-                src="/flags/united-kingdom.png"
-                alt="English"
-                width={22}
-                height={22}
-                className="shrink-0 rounded-full"
-              />
-            </button>
-            <button
-              onClick={() => switchLocale("de")}
-              className={cn(
-                "flex items-center rounded-sm p-1.5 transition-opacity",
-                locale === "de" ? "opacity-100" : "opacity-40 hover:opacity-70"
-              )}
-              aria-label="Deutsch"
-            >
-              <Image
-                src="/flags/germany.png"
-                alt="Deutsch"
-                width={22}
-                height={22}
-                className="shrink-0 rounded-full"
-              />
-            </button>
-          </div>
-
           {/* Desktop auth buttons — swap in 'Dashboard' if the visitor is
               already signed in. Keeps the header honest: logged-in users
               were previously shown 'Log in' and had to click it to find

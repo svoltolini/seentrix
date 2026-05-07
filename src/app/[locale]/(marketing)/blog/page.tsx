@@ -1,48 +1,31 @@
-import { setRequestLocale } from "next-intl/server";
 import { getTranslations } from "next-intl/server";
 import { getAllPosts } from "@/lib/blog";
 import { BlogCard } from "./_components/blog-card";
 import { StaggerReveal } from "@/components/stagger-reveal";
 import type { Metadata } from "next";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}): Promise<Metadata> {
-  const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "blog" });
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations({ locale: "en", namespace: "blog" });
   const baseUrl = "https://seentrix.com";
 
   return {
     title: `${t("meta.title")} — Seentrix`,
     description: t("meta.description"),
     alternates: {
-      canonical: `${baseUrl}/${locale}/blog`,
-      languages: {
-        en: `${baseUrl}/en/blog`,
-        de: `${baseUrl}/de/blog`,
-      },
+      canonical: `${baseUrl}/blog`,
     },
     openGraph: {
       title: t("meta.title"),
       description: t("meta.description"),
-      url: `${baseUrl}/${locale}/blog`,
+      url: `${baseUrl}/blog`,
       type: "website",
     },
   };
 }
 
-export default async function BlogPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
-  const { locale } = await params;
-  setRequestLocale(locale);
-
-  const t = await getTranslations({ locale, namespace: "blog" });
-  const posts = getAllPosts(locale);
+export default async function BlogPage() {
+  const t = await getTranslations({ locale: "en", namespace: "blog" });
+  const posts = getAllPosts("en");
 
   return (
     <section className="mx-auto max-w-6xl px-6 py-24">

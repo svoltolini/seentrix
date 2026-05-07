@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { renderToBuffer } from "@react-pdf/renderer";
 import { createClient } from "@/lib/supabase/server";
 import { EndUserInfoPdf } from "@/lib/pdf/templates/end-user-info";
-import type { Locale } from "@/lib/pdf/i18n/pdf-messages";
 
 /**
  * Stream the End-User Cybersecurity Information Sheet — the document
@@ -60,17 +59,13 @@ export async function GET(
     o.country,
   ].filter(Boolean);
 
-  const acceptLang = req.headers.get("accept-language") ?? "";
-  const locale: Locale = acceptLang.toLowerCase().startsWith("de")
-    ? "de"
-    : "en";
-
   const fmt = (iso: string | null | undefined) =>
     iso
-      ? new Date(iso).toLocaleDateString(
-          locale === "de" ? "de-DE" : "en-US",
-          { year: "numeric", month: "long", day: "numeric" },
-        )
+      ? new Date(iso).toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })
       : "";
 
   const origin = new URL(req.url).origin;
@@ -79,9 +74,7 @@ export async function GET(
       .security_public_enabled,
   );
   const disclosureUrl =
-    securityPublicEnabled && o.slug
-      ? `${origin}/${locale}/security/${o.slug}`
-      : "";
+    securityPublicEnabled && o.slug ? `${origin}/security/${o.slug}` : "";
 
   const data: Record<string, string> = {
     productName: p.name ?? "",
@@ -100,76 +93,43 @@ export async function GET(
     declarationIssuedAt: fmt(p.declaration_issued_at),
   };
 
-  const messages =
-    locale === "de"
-      ? {
-          title: "Cybersicherheits-Informationen für Endnutzer",
-          subtitle:
-            "Dokument gemäß CRA Artikel 13 und Anhang II(3). Begleitet das Produkt beim Inverkehrbringen.",
-          section1: "1. Produktidentifizierung",
-          productName: "Produktname",
-          productType: "Typ",
-          productIdentification: "Kennzeichnung",
-          section2: "2. Hersteller und Cybersicherheits-Kontakt",
-          manufacturer: "Hersteller",
-          manufacturerAddress: "Anschrift",
-          cybersecurityContact: "Cybersicherheits-Kontakt",
-          website: "Website",
-          section3: "3. Support-Zeitraum und Update-Kanal",
-          supportStart: "Support beginnt",
-          supportEnd: "Support endet",
-          updateChannel: "Update-Kanal",
-          updateChannelTbd: "Wird dem Nutzer beim Rollout bekannt gegeben",
-          supportNote:
-            "Sicherheitsupdates werden innerhalb des Support-Zeitraums kostenfrei und ohne ungebührliche Verzögerung bereitgestellt (CRA Artikel 13(8)).",
-          section4: "4. Schwachstellen melden",
-          disclosureIntro:
-            "Wir führen eine Richtlinie zur koordinierten Offenlegung. Bitte melden Sie sicherheitsrelevante Probleme über folgenden Kanal — wir bestätigen innerhalb von 5 Arbeitstagen.",
-          disclosureUrl: "Meldeseite",
-          section5: "5. Hinweise zur sicheren Nutzung",
-          secureUseDefault:
-            "Verwenden Sie das Produkt gemäß der beiliegenden Bedienungsanleitung. Halten Sie das Produkt stets auf dem neuesten Stand. Konfigurieren Sie Zugangsdaten selbst und ersetzen Sie Werkseinstellungen, bevor das Produkt in Betrieb geht.",
-          section6: "6. Bezug zur Konformitätserklärung",
-          docVersion: "Version der DoC",
-          docIssued: "Ausgestellt am",
-        }
-      : {
-          title: "End-User Cybersecurity Information",
-          subtitle:
-            "Document required by CRA Article 13 and Annex II(3). Accompanies the product when placed on the EU market.",
-          section1: "1. Product identification",
-          productName: "Product name",
-          productType: "Type",
-          productIdentification: "Identification",
-          section2: "2. Manufacturer and cybersecurity contact",
-          manufacturer: "Manufacturer",
-          manufacturerAddress: "Address",
-          cybersecurityContact: "Cybersecurity contact",
-          website: "Website",
-          section3: "3. Support period and update channel",
-          supportStart: "Support starts",
-          supportEnd: "Support ends",
-          updateChannel: "Update channel",
-          updateChannelTbd:
-            "Communicated to users at product rollout",
-          supportNote:
-            "Security updates are provided free of charge and without undue delay throughout the support period (CRA Article 13(8)).",
-          section4: "4. Reporting vulnerabilities",
-          disclosureIntro:
-            "We operate a coordinated vulnerability disclosure policy. Please report security issues through the channel below — we acknowledge within 5 business days.",
-          disclosureUrl: "Reporting URL",
-          section5: "5. Secure-use guidance",
-          secureUseDefault:
-            "Use the product according to the accompanying user manual. Keep the product current with security updates. Replace any factory-default credentials before deployment.",
-          section6: "6. Declaration of Conformity reference",
-          docVersion: "DoC version",
-          docIssued: "Issued on",
-        };
+  const messages = {
+    title: "End-User Cybersecurity Information",
+    subtitle:
+      "Document required by CRA Article 13 and Annex II(3). Accompanies the product when placed on the EU market.",
+    section1: "1. Product identification",
+    productName: "Product name",
+    productType: "Type",
+    productIdentification: "Identification",
+    section2: "2. Manufacturer and cybersecurity contact",
+    manufacturer: "Manufacturer",
+    manufacturerAddress: "Address",
+    cybersecurityContact: "Cybersecurity contact",
+    website: "Website",
+    section3: "3. Support period and update channel",
+    supportStart: "Support starts",
+    supportEnd: "Support ends",
+    updateChannel: "Update channel",
+    updateChannelTbd: "Communicated to users at product rollout",
+    supportNote:
+      "Security updates are provided free of charge and without undue delay throughout the support period (CRA Article 13(8)).",
+    section4: "4. Reporting vulnerabilities",
+    disclosureIntro:
+      "We operate a coordinated vulnerability disclosure policy. Please report security issues through the channel below — we acknowledge within 5 business days.",
+    disclosureUrl: "Reporting URL",
+    section5: "5. Secure-use guidance",
+    secureUseDefault:
+      "Use the product according to the accompanying user manual. Keep the product current with security updates. Replace any factory-default credentials before deployment.",
+    section6: "6. Declaration of Conformity reference",
+    docVersion: "DoC version",
+    docIssued: "Issued on",
+  };
 
-  const generatedAt = new Date().toLocaleDateString(
-    locale === "de" ? "de-DE" : "en-US",
-    { year: "numeric", month: "long", day: "numeric" },
-  );
+  const generatedAt = new Date().toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 
   const buffer = await renderToBuffer(
     <EndUserInfoPdf data={data} messages={messages} generatedAt={generatedAt} />,

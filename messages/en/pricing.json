@@ -74,6 +74,7 @@
       "yes": "Included",
       "no": "Not included",
       "unlimited": "Unlimited",
+      "featuresLabel": "Feature",
       "categories": {
         "limits": {
           "title": "Limits",

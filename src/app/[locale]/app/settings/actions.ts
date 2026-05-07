@@ -40,7 +40,6 @@ export interface OrgSettings {
   id: string;
   name: string;
   plan: OrgPlan;
-  language: string | null;
   address_line1: string | null;
   address_line2: string | null;
   postal_code: string | null;
@@ -73,7 +72,6 @@ export async function loadOrgSettings(): Promise<OrgSettings | null> {
     id: orgId,
     name: (record.name as string) ?? "",
     plan: ((record.plan as string) ?? "free") as OrgPlan,
-    language: (record.language as string) ?? null,
     address_line1: (record.address_line1 as string) ?? null,
     address_line2: (record.address_line2 as string) ?? null,
     postal_code: (record.postal_code as string) ?? null,
@@ -111,7 +109,6 @@ export async function updateOrganization(
     updateData[dbCol ?? key] = value ? value : null;
   };
 
-  setIfPresent("language");
   setIfPresent("address_line1");
   setIfPresent("address_line2");
   setIfPresent("postal_code");

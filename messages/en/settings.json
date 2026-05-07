@@ -16,8 +16,6 @@
       "subtitle": "Manage your organization details and preferences.",
       "nameLabel": "Organization name",
       "namePlaceholder": "Acme Inc.",
-      "languageLabel": "Default language",
-      "languageDescription": "Sets the default language for your organization.",
       "legalTitle": "Legal identity",
       "legalDescription": "Required on every Declaration of Conformity and technical file. Fill this in exactly as it appears on your incorporation documents.",
       "legalName": "Legal entity name",
@@ -97,11 +95,6 @@
           "title": "Organization name",
           "body": "The trading or display name users and teammates see inside Seentrix. This is the friendly name — it does not have to match your registered legal entity.",
           "ref": "Internal only. The legally-binding name on compliance documents is the Legal entity name field below."
-        },
-        "language": {
-          "title": "Default language",
-          "body": "Sets the default locale for every team member's Seentrix UI and the language used when generating compliance PDFs (Declaration of Conformity, Incident Reports, Technical Documentation). Individuals can override this later from their account.",
-          "ref": "Affects the language of the EU Declaration of Conformity under Annex V — customs authorities in the destination country may require a translation regardless."
         },
         "legalName": {
           "title": "Legal entity name",

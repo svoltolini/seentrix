@@ -3,7 +3,6 @@ import { renderToBuffer } from "@react-pdf/renderer";
 import { createClient } from "@/lib/supabase/server";
 import { getLesson, getLessonContent } from "@/lib/academy/lessons";
 import { AcademyCertificatePdf } from "@/lib/pdf/templates/academy-certificate";
-import type { LocaleId } from "@/lib/academy/types";
 
 /**
  * Stream a one-page PDF certificate of completion for a lesson the caller
@@ -12,7 +11,7 @@ import type { LocaleId } from "@/lib/academy/types";
  * identifier auditors can verify against the DB.
  */
 export async function GET(
-  req: Request,
+  _req: Request,
   ctx: { params: Promise<{ lessonId: string }> },
 ) {
   const { lessonId } = await ctx.params;
@@ -72,47 +71,31 @@ export async function GET(
     legal_name: string | null;
   };
 
-  const acceptLang = req.headers.get("accept-language") ?? "";
-  const locale: LocaleId = acceptLang.toLowerCase().startsWith("de") ? "de" : "en";
-  const content = getLessonContent(lesson, locale);
+  const content = getLessonContent(lesson, "en");
 
   const completedDate = new Date(row.completed_at).toLocaleDateString(
-    locale === "de" ? "de-DE" : "en-US",
+    "en-US",
     { year: "numeric", month: "long", day: "numeric" },
   );
-  const generatedAt = new Date().toLocaleDateString(
-    locale === "de" ? "de-DE" : "en-US",
-    { year: "numeric", month: "long", day: "numeric" },
-  );
+  const generatedAt = new Date().toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 
-  const messages =
-    locale === "de"
-      ? {
-          headerTitle: "Seentrix Academy — Zertifikat",
-          eyebrow: "Zertifikat",
-          title: "Abschlussbescheinigung",
-          subtitle: "Bestätigt durch Seentrix Academy",
-          recipientLabel: "Ausgestellt an",
-          completedBody:
-            "hat die folgende Lektion absolviert und die zugehörige Quizprüfung bestanden:",
-          dateLabel: "Abschlussdatum",
-          certIdLabel: "Zertifikat-ID",
-          disclaimer:
-            "Bildungsmaterial, keine Rechtsberatung. Die Zertifikat-ID ist ein SHA-256-Hash und kann gegen den academy_completions-Datensatz des ausstellenden Organisationskontos verifiziert werden.",
-        }
-      : {
-          headerTitle: "Seentrix Academy — Certificate",
-          eyebrow: "Certificate",
-          title: "Certificate of completion",
-          subtitle: "Issued by the Seentrix Academy",
-          recipientLabel: "Awarded to",
-          completedBody:
-            "has completed the following lesson and passed its knowledge check:",
-          dateLabel: "Completion date",
-          certIdLabel: "Certificate ID",
-          disclaimer:
-            "Educational material, not legal advice. The certificate ID is a SHA-256 hash that can be verified against the issuing organisation's academy_completions record.",
-        };
+  const messages = {
+    headerTitle: "Seentrix Academy — Certificate",
+    eyebrow: "Certificate",
+    title: "Certificate of completion",
+    subtitle: "Issued by the Seentrix Academy",
+    recipientLabel: "Awarded to",
+    completedBody:
+      "has completed the following lesson and passed its knowledge check:",
+    dateLabel: "Completion date",
+    certIdLabel: "Certificate ID",
+    disclaimer:
+      "Educational material, not legal advice. The certificate ID is a SHA-256 hash that can be verified against the issuing organisation's academy_completions record.",
+  };
 
   const buffer = await renderToBuffer(
     <AcademyCertificatePdf

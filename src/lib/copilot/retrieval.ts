@@ -57,7 +57,7 @@ export async function embedText(text: string): Promise<number[]> {
  * Run a top-k similarity search against the knowledge base.
  *
  * @param query     The user's question (last turn) + light conversation context.
- * @param language  Filter chunks to this language ('en' or 'de'); NULL = no filter.
+ * @param language  Filter chunks to this language ('en'); NULL = no filter.
  * @param k         How many chunks to return. Default 8.
  */
 export async function retrieveChunks({
@@ -66,7 +66,7 @@ export async function retrieveChunks({
   k = 8,
 }: {
   query: string;
-  language?: "en" | "de" | null;
+  language?: "en" | null;
   k?: number;
 }): Promise<RetrievedChunk[]> {
   if (!query.trim()) return [];

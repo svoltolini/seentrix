@@ -27,8 +27,7 @@ async function getAuthContext() {
 
 export async function createCheckoutSession(
   plan: Exclude<OrgPlan, "free">,
-  interval: "monthly" | "annual",
-  locale: string
+  interval: "monthly" | "annual"
 ): Promise<{ url?: string; error?: string }> {
   const { supabase, user, orgId } = await getAuthContext();
 
@@ -70,8 +69,8 @@ export async function createCheckoutSession(
     customer: stripeCustomerId,
     mode: "subscription",
     line_items: [{ price: priceId, quantity: 1 }],
-    success_url: `${baseUrl}/${locale}/app/settings/billing?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${baseUrl}/${locale}/pricing`,
+    success_url: `${baseUrl}/app/settings/billing?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${baseUrl}/pricing`,
     metadata: { org_id: orgId },
     subscription_data: {
       metadata: { org_id: orgId },
@@ -87,9 +86,10 @@ export async function createCheckoutSession(
 // Create Customer Portal Session
 // ---------------------------------------------------------------------------
 
-export async function createPortalSession(
-  locale: string
-): Promise<{ url?: string; error?: string }> {
+export async function createPortalSession(): Promise<{
+  url?: string;
+  error?: string;
+}> {
   const { supabase, user, orgId } = await getAuthContext();
 
   if (!user || !orgId) return { error: "notAuthenticated" };
@@ -109,7 +109,7 @@ export async function createPortalSession(
 
   const session = await getStripe().billingPortal.sessions.create({
     customer: stripeCustomerId,
-    return_url: `${baseUrl}/${locale}/app/settings/billing`,
+    return_url: `${baseUrl}/app/settings/billing`,
   });
 
   return { url: session.url };

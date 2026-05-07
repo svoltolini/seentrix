@@ -43,7 +43,6 @@ export const maxDuration = 120;
 interface ChatPayload {
   messages: UIMessage[];
   sessionId?: string;
-  locale?: "en" | "de";
   page?: { title?: string; path?: string };
   product?: { name?: string; type?: string };
 }
@@ -73,7 +72,6 @@ export async function POST(req: Request) {
   if (!messages.length) {
     return NextResponse.json({ error: "empty_messages" }, { status: 400 });
   }
-  const locale: "en" | "de" = payload.locale === "de" ? "de" : "en";
 
   // --- 3. Resolve org + plan for quota + context ----------------------------
   const { data: org } = await supabase
@@ -105,7 +103,7 @@ export async function POST(req: Request) {
   let passages: Awaited<ReturnType<typeof retrieveChunks>> = [];
   try {
     passages = latestQuery
-      ? await retrieveChunks({ query: latestQuery, language: locale, k: 8 })
+      ? await retrieveChunks({ query: latestQuery, language: "en", k: 8 })
       : [];
   } catch (err) {
     // Non-fatal: we'll fall through to a "no passages" answer. Log every
@@ -137,7 +135,7 @@ export async function POST(req: Request) {
       supabase,
       orgId,
       plan,
-      locale,
+      locale: "en",
       pagePath: payload.page?.path,
       orgName: (org?.name as string | undefined) ?? undefined,
       orgCountry: (org?.country as string | undefined) ?? undefined,
@@ -145,7 +143,7 @@ export async function POST(req: Request) {
   } catch (err) {
     console.error("[copilot] context enrichment failed", err);
     context = {
-      locale,
+      locale: "en" as const,
       plan,
       orgName: (org?.name as string | undefined) ?? undefined,
       orgCountry: (org?.country as string | undefined) ?? undefined,

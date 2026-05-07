@@ -182,7 +182,6 @@ export async function updateDocumentStatus(
 
 export async function generateDocumentPdf(
   documentId: string,
-  locale: string
 ): Promise<{ url?: string; error?: string }> {
   const { supabase, user, orgId } = await getAuthContext();
 
@@ -215,11 +214,10 @@ export async function generateDocumentPdf(
 
   // 2. Generate PDF buffer
   const { generatePdfBuffer } = await import("@/lib/pdf/generate");
-  const pdfLocale = locale === "de" ? "de" : "en";
   const buffer = await generatePdfBuffer({
     documentType: doc.document_type as DocumentType,
     content: doc.content,
-    locale: pdfLocale as "en" | "de",
+    locale: "en",
   });
 
   // 3. Delete old PDF if exists

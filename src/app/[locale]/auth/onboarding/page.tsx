@@ -2,22 +2,17 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { OnboardingForm } from "./onboarding-form";
 
-export default async function OnboardingPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
-  const { locale } = await params;
+export default async function OnboardingPage() {
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect(`/${locale}/auth/login`);
+    redirect("/auth/login");
   }
 
-  return <OnboardingForm locale={locale} />;
+  return <OnboardingForm />;
 }
 
 export const metadata = { title: "Onboarding" };

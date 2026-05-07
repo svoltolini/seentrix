@@ -40,12 +40,12 @@ const STEP_FIELDS: Record<Step, (keyof OnboardingValues)[]> = {
   3: ["signatoryName", "signatoryPosition", "contactEmail"],
 };
 
-export function OnboardingForm({ locale }: { locale: string }) {
+export function OnboardingForm() {
   const t = useTranslations("auth");
   const [step, setStep] = useState<Step>(1);
   const [isPending, startTransition] = useTransition();
   const [state, formAction] = useActionState<AuthState, FormData>(
-    completeOnboarding.bind(null, locale),
+    completeOnboarding.bind(null, "en"),
     undefined,
   );
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);

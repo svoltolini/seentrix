@@ -5,13 +5,8 @@ import { redirect } from "next/navigation";
  * Kept as a 308 redirect so old bookmarks and the links embedded in earlier
  * commits still resolve.
  */
-export default async function LegacyGlossaryRedirect({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
-  const { locale } = await params;
-  redirect(`/${locale}/app/academy?tab=glossary`);
+export default function LegacyGlossaryRedirect() {
+  redirect("/app/academy?tab=glossary");
 }
 
 export const metadata = { title: "Glossary" };

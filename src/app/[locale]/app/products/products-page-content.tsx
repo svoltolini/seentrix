@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { buttonVariants } from "@/components/ui/button";
 import { Icon } from "@/components/icon";
@@ -58,7 +58,6 @@ export function ProductsPageContent({
   productCount: number;
 }) {
   const t = useTranslations("products");
-  const locale = useLocale();
   const [search, setSearch] = useState("");
   const [sortField, setSortField] = useState<SortField>("created");
   const [sortDir, setSortDir] = useState<SortDir>("desc");
@@ -253,12 +252,12 @@ export function ProductsPageContent({
             <ProductGridCard
               key={p.id}
               product={p}
-              href={`/${locale}/app/products/${p.id}`}
+              href={`/app/products/${p.id}`}
             />
           ))}
         </div>
       ) : view === "timeline" ? (
-        <ProductTimeline products={sorted} basePath={`/${locale}/app/products`} />
+        <ProductTimeline products={sorted} basePath="/app/products" />
       ) : (
         <div className="overflow-hidden rounded-md bg-muted">
           {/* Column headers */}
@@ -411,7 +410,7 @@ export function ProductsPageContent({
                   <div className="hidden w-24 lg:block">
                     <p className="text-p4 text-foreground">
                       {new Date(product.created_at).toLocaleDateString(
-                        locale,
+                        "en-US",
                         { month: "short", day: "numeric", year: "numeric" }
                       )}
                     </p>

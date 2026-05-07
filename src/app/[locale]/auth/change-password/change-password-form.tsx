@@ -34,13 +34,13 @@ const strengthColors = [
   "bg-success",
 ];
 
-export function ChangePasswordForm({ locale }: { locale: string }) {
+export function ChangePasswordForm() {
   const t = useTranslations("auth");
   const [isPending, startTransition] = useTransition();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [state, formAction] = useActionState<AuthState, FormData>(
-    forceChangePassword.bind(null, locale),
+    forceChangePassword.bind(null, "en"),
     undefined
   );
 

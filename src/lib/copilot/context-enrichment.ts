@@ -20,7 +20,7 @@ interface EnrichArgs {
   >;
   orgId: string;
   plan: string;
-  locale: "en" | "de";
+  locale: "en";
   pagePath?: string;
   orgName?: string;
   orgCountry?: string;
@@ -62,7 +62,7 @@ export async function enrichPageContext(
 
   if (!pagePath) return base;
 
-  const path = pagePath.replace(/^\/(en|de)(\/|$)/, "/");
+  const path = pagePath.replace(/^\/en(\/|$)/, "/");
 
   // ---- Top-level section title -------------------------------------------
   const sectionMatch = path.match(/^\/app\/([^/?#]+)/);

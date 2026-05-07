@@ -9,7 +9,6 @@ import {
   type ClipboardEvent,
   type KeyboardEvent,
 } from "react";
-import { useLocale } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -31,7 +30,6 @@ import { logout } from "../actions";
  */
 export function MfaChallenge() {
   const router = useRouter();
-  const locale = useLocale();
   const [digits, setDigits] = useState<string[]>(() => Array(6).fill(""));
   const [factorId, setFactorId] = useState<string | null>(null);
   const [challengeId, setChallengeId] = useState<string | null>(null);
@@ -232,7 +230,7 @@ export function MfaChallenge() {
           it reads as a last resort, not the primary action. */}
       <button
         type="button"
-        onClick={() => startCancel(() => logout(locale))}
+        onClick={() => startCancel(() => logout())}
         disabled={isCancelling || isPending}
         className="mt-5 block w-full text-center text-p4 text-muted-foreground transition-colors hover:text-foreground disabled:opacity-50"
       >

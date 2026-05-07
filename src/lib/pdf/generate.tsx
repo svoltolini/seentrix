@@ -20,10 +20,11 @@ export async function generatePdfBuffer({
 }: GenerateOptions): Promise<Buffer> {
   const data = JSON.parse(content) as Record<string, string>;
   const messages = getPdfMessages(locale, documentType);
-  const generatedAt = new Date().toLocaleDateString(
-    locale === "de" ? "de-DE" : "en-US",
-    { year: "numeric", month: "long", day: "numeric" }
-  );
+  const generatedAt = new Date().toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 
   const templateMap: Record<DocumentType, React.JSX.Element> = {
     declaration_of_conformity: (

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { createPortalSession } from "@/lib/stripe/actions";
@@ -27,15 +26,13 @@ export function BillingContent({
   isAdmin: boolean;
 }) {
   const t = useTranslations("billing");
-  const params = useParams();
-  const locale = (params.locale as string) || "en";
   const [loading, setLoading] = useState(false);
 
   const price = PLAN_PRICE[plan] ?? 0;
 
   async function handleManageSubscription() {
     setLoading(true);
-    const result = await createPortalSession(locale);
+    const result = await createPortalSession();
 
     if (result.url) {
       window.location.href = result.url;
@@ -70,7 +67,7 @@ export function BillingContent({
               <p className="mt-1.5 text-p4 text-white">
                 {t("nextBillingDate", {
                   date: new Date(billingPeriodEnd).toLocaleDateString(
-                    locale === "de" ? "de-DE" : "en-US",
+                    "en-US",
                     { year: "numeric", month: "long", day: "numeric" }
                   ),
                 })}

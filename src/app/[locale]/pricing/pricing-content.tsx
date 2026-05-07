@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -28,8 +27,6 @@ const TIERS: { plan: OrgPlan; highlighted?: boolean }[] = [
 
 export function PricingContent() {
   const t = useTranslations("pricing");
-  const params = useParams();
-  const locale = (params.locale as string) || "en";
   const [interval, setInterval] = useState<BillingInterval>("monthly");
   const [loading, setLoading] = useState<string | null>(null);
 
@@ -42,7 +39,6 @@ export function PricingContent() {
     const result = await createCheckoutSession(
       plan as Exclude<OrgPlan, "free">,
       interval,
-      locale,
     );
 
     if (result.url) {

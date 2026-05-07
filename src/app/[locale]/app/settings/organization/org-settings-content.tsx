@@ -56,7 +56,6 @@ export function OrgSettingsContent({
   });
 
   const [name, setName] = useState(org?.name ?? "");
-  const [language, setLanguage] = useState(org?.language ?? "en");
   const [addressLine1, setAddressLine1] = useState(org?.address_line1 ?? "");
   const [addressLine2, setAddressLine2] = useState(org?.address_line2 ?? "");
   const [postalCode, setPostalCode] = useState(org?.postal_code ?? "");
@@ -95,7 +94,6 @@ export function OrgSettingsContent({
 
     const formData = new FormData();
     formData.set("name", name);
-    formData.set("language", language);
     formData.set("address_line1", addressLine1);
     formData.set("address_line2", addressLine2);
     formData.set("postal_code", postalCode);
@@ -150,37 +148,6 @@ export function OrgSettingsContent({
               />
             </div>
 
-            <div className="flex flex-col gap-2">
-              <Label size="lg">
-                {t("languageLabel")}
-                <FieldHelp {...tip("language")} />
-              </Label>
-              <p className="text-p3 text-muted-foreground">
-                {t("languageDescription")}
-              </p>
-              <div className="flex gap-2">
-                {(["en", "de"] as const).map((lang) => (
-                  <label
-                    key={lang}
-                    className={cn(
-                      "flex items-center gap-2 rounded-md border-[1.5px] border-border-outline bg-card px-4 py-2.5 text-l6 transition-all has-[:checked]:border-primary has-[:checked]:bg-primary/5",
-                      isAdmin ? "cursor-pointer" : "cursor-default opacity-60"
-                    )}
-                  >
-                    <input
-                      type="radio"
-                      name="language"
-                      value={lang}
-                      checked={language === lang}
-                      onChange={() => isAdmin && setLanguage(lang)}
-                      disabled={!isAdmin}
-                      className="sr-only"
-                    />
-                    {lang === "en" ? "English" : "Deutsch"}
-                  </label>
-                ))}
-              </div>
-            </div>
           </div>
         </div>
 

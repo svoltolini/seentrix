@@ -54,7 +54,7 @@ export async function signup(
     return { error: "generic" };
   }
 
-  redirect(`/${locale}/auth/onboarding`);
+  redirect(`/auth/onboarding`);
 }
 
 export async function login(
@@ -82,7 +82,7 @@ export async function login(
     return { error: "invalidCredentials" };
   }
 
-  redirect(`/${locale}/app/dashboard`);
+  redirect(`/app/dashboard`);
 }
 
 export async function completeOnboarding(
@@ -200,7 +200,7 @@ export async function completeOnboarding(
     targetName: result.data.organizationName,
   });
 
-  redirect(`/${locale}/app/welcome`);
+  redirect(`/app/welcome`);
 }
 
 export async function forceChangePassword(
@@ -262,7 +262,7 @@ export async function forceChangePassword(
 
   await logActivity({ action: "password.changed", targetType: "user", targetId: user.id });
 
-  redirect(`/${locale}/app/dashboard`);
+  redirect(`/app/dashboard`);
 }
 
 export async function forgotPassword(
@@ -331,14 +331,14 @@ export async function resetPassword(
     return { error: "generic" };
   }
 
-  redirect(`/${locale}/auth/login`);
+  redirect("/auth/login");
 }
 
-export async function logout(locale: string): Promise<void> {
+export async function logout(): Promise<void> {
   const supabase = await createClient();
   await supabase.auth.signOut();
   // Send signed-out users to the marketing landing rather than the login
   // screen. Otherwise they see a login form with no context — landing gives
   // them a sensible place (pricing, docs, or a clear log-in CTA) to reorient.
-  redirect(`/${locale}/`);
+  redirect("/");
 }

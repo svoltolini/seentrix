@@ -1,10 +1,8 @@
 "use client";
 
-import Image from "next/image";
-import { useLocale, useTranslations } from "next-intl";
-import { usePathname, useRouter } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
+import { usePathname } from "@/i18n/navigation";
 
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { SearchInput } from "@/components/ui/search-input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -24,9 +22,6 @@ import { MobileSidebarTrigger } from "./app-sidebar";
  *   left:    page title (driven by pathname) + mobile hamburger
  *   center:  search box (333×48 filled) — placeholder action for now
  *   right:   "+ New Product" dark CTA, notification bell, profile cluster
- *
- * The locale switcher tucks into the avatar dropdown so we keep the feature
- * without crowding the bar.
  */
 
 type AppTopbarProps = {
@@ -65,9 +60,6 @@ function usePageTitle() {
 
 export function AppTopbar({ user, orgName, hasUnread }: AppTopbarProps) {
   const t = useTranslations();
-  const locale = useLocale();
-  const router = useRouter();
-  const pathname = usePathname();
   const title = usePageTitle();
 
   const initials = (user?.name ?? user?.email ?? "U")
@@ -76,10 +68,6 @@ export function AppTopbar({ user, orgName, hasUnread }: AppTopbarProps) {
     .map((s) => s[0]?.toUpperCase())
     .filter(Boolean)
     .join("");
-
-  function switchLocale(next: "en" | "de") {
-    router.replace(pathname, { locale: next });
-  }
 
   return (
     <header className="flex h-[110px] shrink-0 items-center gap-4 border-b-[1.5px] border-border bg-card px-4 lg:px-8">
@@ -103,9 +91,7 @@ export function AppTopbar({ user, orgName, hasUnread }: AppTopbarProps) {
         <Button
           variant="dark"
           size="default"
-          render={
-            <a href={`/${locale}/app/products/new`} />
-          }
+          render={<a href="/app/products/new" />}
           className="hidden lg:inline-flex"
         >
           <Icon name="Add" size={20} />
@@ -148,56 +134,18 @@ export function AppTopbar({ user, orgName, hasUnread }: AppTopbarProps) {
             <Icon name="ChevronDownIcon" size={20} className="hidden text-muted-foreground lg:inline-block" />
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="min-w-[220px]">
-            <DropdownMenuItem
-              render={<a href={`/${locale}/app/settings/account`} />}
-            >
+            <DropdownMenuItem render={<a href="/app/settings/account" />}>
               <Icon name="Setting2" size={16} />
               {t("nav.myAccount") ?? "Account"}
             </DropdownMenuItem>
-            <DropdownMenuItem
-              render={<a href={`/${locale}/app/help/glossary`} />}
-            >
+            <DropdownMenuItem render={<a href="/app/help/glossary" />}>
               <Icon name="MessageQuestion" size={16} />
               {t("nav.help") ?? "Help"}
             </DropdownMenuItem>
 
             <DropdownMenuSeparator />
 
-            {/* Locale switcher */}
-            <div className="px-2 py-1.5">
-              <p className="mb-1.5 text-l6-plus text-muted-foreground">
-                {t("topbar.language") ?? "Language"}
-              </p>
-              <div className="flex items-center gap-1.5">
-                <button
-                  onClick={() => switchLocale("en")}
-                  className={cn(
-                    "flex items-center gap-2 rounded-sm px-2 py-1 text-l6 transition-opacity",
-                    locale === "en" ? "opacity-100" : "opacity-50 hover:opacity-100",
-                  )}
-                >
-                  <Image src="/flags/united-kingdom.png" alt="" width={18} height={18} className="rounded-full" />
-                  EN
-                </button>
-                <button
-                  onClick={() => switchLocale("de")}
-                  className={cn(
-                    "flex items-center gap-2 rounded-sm px-2 py-1 text-l6 transition-opacity",
-                    locale === "de" ? "opacity-100" : "opacity-50 hover:opacity-100",
-                  )}
-                >
-                  <Image src="/flags/germany.png" alt="" width={18} height={18} className="rounded-full" />
-                  DE
-                </button>
-              </div>
-            </div>
-
-            <DropdownMenuSeparator />
-
-            <DropdownMenuItem
-              variant="destructive"
-              onClick={() => logout(locale)}
-            >
+            <DropdownMenuItem variant="destructive" onClick={() => logout()}>
               <Icon name="LogoutCurve" size={16} />
               {t("nav.logout")}
             </DropdownMenuItem>

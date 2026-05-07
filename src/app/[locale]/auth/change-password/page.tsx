@@ -2,27 +2,21 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { ChangePasswordForm } from "./change-password-form";
 
-export default async function ChangePasswordPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
-  const { locale } = await params;
+export default async function ChangePasswordPage() {
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect(`/${locale}/auth/login`);
+    redirect("/auth/login");
   }
 
-  // If user doesn't need to change password, redirect to dashboard
   if (!user.app_metadata?.must_change_password) {
-    redirect(`/${locale}/app/dashboard`);
+    redirect("/app/dashboard");
   }
 
-  return <ChangePasswordForm locale={locale} />;
+  return <ChangePasswordForm />;
 }
 
 export const metadata = { title: "Change password" };

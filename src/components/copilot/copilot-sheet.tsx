@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, useTransition } from "react";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { usePathname } from "@/i18n/navigation";
 import {
   Sheet,
@@ -29,25 +29,22 @@ import { useToast } from "@/components/ui/toast";
  * behaviour.
  *
  * Chat state is owned by `useChat` from @ai-sdk/react. The transport is
- * an HTTP POST to /api/copilot/chat; page + locale metadata are attached
- * as extra body fields so the server can personalise retrieval.
+ * an HTTP POST to /api/copilot/chat; page metadata is attached as an extra
+ * body field so the server can personalise retrieval.
  */
 export function CopilotSheet() {
   const { isOpen, close, seed, clearSeed } = useCopilot();
   const t = useTranslations("copilot");
-  const locale = useLocale() as "en" | "de";
   const pathname = usePathname();
 
-  // Stable refs so the transport closure can read the latest locale + page
-  // at send time without having to be recreated on every render (which would
-  // reset the chat mid-stream).
+  // Stable ref so the transport closure can read the latest page at send
+  // time without being recreated on every render (which would reset the
+  // chat mid-stream).
   const sessionIdRef = useRef<string | null>(null);
-  const localeRef = useRef(locale);
   const pathnameRef = useRef(pathname);
   useEffect(() => {
-    localeRef.current = locale;
     pathnameRef.current = pathname;
-  }, [locale, pathname]);
+  }, [pathname]);
 
   // We also render the session id in-component (for the feedback row), so
   // keep a state mirror that updates after each POST returns its
@@ -77,7 +74,7 @@ export function CopilotSheet() {
           body: {
             messages,
             sessionId: sessionIdRef.current ?? undefined,
-            locale: localeRef.current,
+            locale: "en",
             page: { path: pathnameRef.current },
           },
         }),

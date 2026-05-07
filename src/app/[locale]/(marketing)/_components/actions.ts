@@ -41,13 +41,11 @@ export async function subscribeNewsletter(
     return { status: "error", message: "Invalid email address." };
   }
 
-  const locale = (formData.get("locale") as string) || "en";
-
   const supabase = await createClient();
 
   const { error } = await supabase.from("newsletter_subscribers").insert({
     email: parsed.data.email,
-    locale,
+    locale: "en",
     source: "landing_page",
   });
 

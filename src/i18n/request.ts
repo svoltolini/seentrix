@@ -1,39 +1,40 @@
 import { getRequestConfig } from "next-intl/server";
-import { routing } from "./routing";
-import { hasLocale } from "next-intl";
 
-export default getRequestConfig(async ({ requestLocale }) => {
-  const requested = await requestLocale;
-  const locale = hasLocale(routing.locales, requested)
-    ? requested
-    : routing.defaultLocale;
-
+/**
+ * English-only request config.
+ *
+ * Loads every namespace under `messages/en/` and merges it into a single
+ * flat dictionary so existing `useTranslations()` / `getTranslations()`
+ * callers can resolve any key. The locale is hard-coded to `"en"` —
+ * there is no per-request locale negotiation.
+ */
+export default getRequestConfig(async () => {
   return {
-    locale,
+    locale: "en",
     messages: {
-      ...(await import(`../../messages/${locale}/common.json`)).default,
-      ...(await import(`../../messages/${locale}/dashboard.json`)).default,
-      ...(await import(`../../messages/${locale}/auth.json`)).default,
-      ...(await import(`../../messages/${locale}/assessment.json`)).default,
-      ...(await import(`../../messages/${locale}/checklist.json`)).default,
-      ...(await import(`../../messages/${locale}/products.json`)).default,
-      ...(await import(`../../messages/${locale}/sbom.json`)).default,
-      ...(await import(`../../messages/${locale}/vulnerabilities.json`)).default,
-      ...(await import(`../../messages/${locale}/incidents.json`)).default,
-      ...(await import(`../../messages/${locale}/releases.json`)).default,
-      ...(await import(`../../messages/${locale}/conformity.json`)).default,
-      ...(await import(`../../messages/${locale}/reports.json`)).default,
-      ...(await import(`../../messages/${locale}/public-security.json`)).default,
-      ...(await import(`../../messages/${locale}/entity.json`)).default,
-      ...(await import(`../../messages/${locale}/documents.json`)).default,
-      ...(await import(`../../messages/${locale}/pricing.json`)).default,
-      ...(await import(`../../messages/${locale}/billing.json`)).default,
-      ...(await import(`../../messages/${locale}/upgrade.json`)).default,
-      ...(await import(`../../messages/${locale}/landing.json`)).default,
-      ...(await import(`../../messages/${locale}/blog.json`)).default,
-      ...(await import(`../../messages/${locale}/settings.json`)).default,
-      ...(await import(`../../messages/${locale}/glossary.json`)).default,
-      ...(await import(`../../messages/${locale}/copilot.json`)).default,
+      ...(await import("../../messages/en/common.json")).default,
+      ...(await import("../../messages/en/dashboard.json")).default,
+      ...(await import("../../messages/en/auth.json")).default,
+      ...(await import("../../messages/en/assessment.json")).default,
+      ...(await import("../../messages/en/checklist.json")).default,
+      ...(await import("../../messages/en/products.json")).default,
+      ...(await import("../../messages/en/sbom.json")).default,
+      ...(await import("../../messages/en/vulnerabilities.json")).default,
+      ...(await import("../../messages/en/incidents.json")).default,
+      ...(await import("../../messages/en/releases.json")).default,
+      ...(await import("../../messages/en/conformity.json")).default,
+      ...(await import("../../messages/en/reports.json")).default,
+      ...(await import("../../messages/en/public-security.json")).default,
+      ...(await import("../../messages/en/entity.json")).default,
+      ...(await import("../../messages/en/documents.json")).default,
+      ...(await import("../../messages/en/pricing.json")).default,
+      ...(await import("../../messages/en/billing.json")).default,
+      ...(await import("../../messages/en/upgrade.json")).default,
+      ...(await import("../../messages/en/landing.json")).default,
+      ...(await import("../../messages/en/blog.json")).default,
+      ...(await import("../../messages/en/settings.json")).default,
+      ...(await import("../../messages/en/glossary.json")).default,
+      ...(await import("../../messages/en/copilot.json")).default,
     },
   };
 });
