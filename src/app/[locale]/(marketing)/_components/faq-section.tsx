@@ -43,14 +43,14 @@ export function FaqSection() {
   return (
     <section
       ref={sectionRef}
-      className="border-t border-border/50 bg-card/50 py-24 lg:py-32"
+      className="border-t border-border bg-card py-24 lg:py-32"
     >
       <div className="mx-auto max-w-6xl px-6">
         <div className="mx-auto mb-16 max-w-2xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
             {t("title")}
           </h2>
-          <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
+          <p className="mt-6 text-p1 text-muted-foreground">
             {t("subtitle")}
           </p>
         </div>
@@ -63,14 +63,14 @@ export function FaqSection() {
                 <div
                   key={key}
                   data-faq-item
-                  className="rounded-xl bg-muted"
+                  className="rounded-md border border-border bg-background"
                 >
                   <button
                     type="button"
                     onClick={() => setOpenIndex(isOpen ? null : i)}
                     className="flex w-full items-center justify-between gap-4 p-6 text-left"
                   >
-                    <span className="text-base font-semibold text-foreground">
+                    <span className="text-l5 text-foreground">
                       {t(`items.${key}.question`)}
                     </span>
                     <svg
@@ -98,7 +98,7 @@ export function FaqSection() {
                     )}
                   >
                     <div className="overflow-hidden">
-                      <p className="px-6 pb-6 text-sm leading-relaxed text-muted-foreground">
+                      <p className="px-6 pb-6 text-p3 text-muted-foreground">
                         {t(`items.${key}.answer`)}
                       </p>
                     </div>

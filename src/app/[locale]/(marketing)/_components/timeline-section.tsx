@@ -65,14 +65,14 @@ export function TimelineSection() {
     <section
       ref={sectionRef}
       id="timeline"
-      className="scroll-mt-20 border-t border-border/50 bg-card/50 py-24 lg:py-32"
+      className="scroll-mt-20 border-t border-border bg-card py-24 lg:py-32"
     >
       <div className="mx-auto max-w-6xl px-6">
         <div className="mx-auto mb-16 max-w-2xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
             {t("title")}
           </h2>
-          <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
+          <p className="mt-6 text-p1 text-muted-foreground">
             {t("subtitle")}
           </p>
         </div>
@@ -83,7 +83,7 @@ export function TimelineSection() {
           {/* Each column is 1/3 width, dot is centered, so line goes from 1/6 to 5/6 */}
           <div
             ref={trackRef}
-            className="absolute top-[9px] hidden h-[2px] bg-border/40 md:block"
+            className="absolute top-[9px] hidden h-[2px] bg-border md:block"
             style={{ left: "calc(100% / 6)", right: "calc(100% / 6)" }}
           />
           <div
@@ -109,22 +109,22 @@ export function TimelineSection() {
                     <div className="h-1.5 w-1.5 rounded-full bg-white" />
                   </div>
                   <div
-                    className="pointer-events-none absolute inset-0 rounded-full blur-[8px] opacity-50"
+                    className="pointer-events-none absolute inset-0 rounded-full opacity-50 blur-[8px]"
                     style={{ background: ms.color }}
                   />
                 </div>
 
                 {/* Content — no card background */}
                 <span
-                  className="inline-flex rounded-full px-3 py-1 text-xs font-bold text-white"
+                  className="inline-flex rounded-sm px-3 py-1 text-l6-plus text-white"
                   style={{ backgroundColor: ms.color }}
                 >
                   {t(`milestones.${ms.key}.date`)}
                 </span>
-                <h3 className="mt-4 text-lg font-bold text-foreground">
+                <h3 className="mt-4 text-h4 text-foreground">
                   {t(`milestones.${ms.key}.title`)}
                 </h3>
-                <p className="mt-2 max-w-xs text-sm leading-relaxed text-muted-foreground">
+                <p className="mt-2 max-w-xs text-p3 text-muted-foreground">
                   {t(`milestones.${ms.key}.description`)}
                 </p>
               </div>

@@ -26,10 +26,10 @@ export function OutOfScopeCard({
           <Icon name="shield-check" size={28} className="text-success" />
         </div>
         <div className="flex flex-col gap-1.5">
-          <h3 className="text-lg font-semibold text-foreground">
+          <h3 className="text-h3 text-foreground">
             {t("outOfScope.title")}
           </h3>
-          <p className="max-w-md text-sm leading-relaxed text-muted-foreground">
+          <p className="max-w-md text-p3 leading-relaxed text-muted-foreground">
             {t(`outOfScope.reasons.${reason}`)}
           </p>
         </div>

@@ -78,9 +78,13 @@ export const STATUS_CHART_COLORS: Record<string, string> = {
   not_applicable: "var(--border)",
 };
 
-/** Per-product line colors for trend charts */
+/** Per-product line colors for trend charts — Nask palette */
 export const PRODUCT_LINE_COLORS = [
-  "#066DE6", "#6F4FE0", "#06B6D4", "#FF6D00", "#22C55E",
+  "var(--primary)",
+  "#6F4FE0",
+  "#22D3EE",
+  "var(--accent)",
+  "var(--success)",
 ];
 
 /** Org-wide average line color */

@@ -117,14 +117,14 @@ export function CopilotHistory({
   if (!open) return null;
 
   return (
-    <div className="absolute inset-0 z-10 flex flex-col bg-[#09090B]">
+    <div className="absolute inset-0 z-10 flex flex-col bg-card">
       <header className="flex items-center justify-between border-b border-border px-5 py-4">
         <div className="flex flex-col gap-0.5">
-          <span className="flex items-center gap-2 text-l6-plus uppercase tracking-[0.18em] text-[#066DE6]">
+          <span className="flex items-center gap-2 text-l6-plus uppercase tracking-[0.18em] text-primary">
             <Icon name="ai-magic-stroke-rounded" size={12} />
             {t("history.eyebrow")}
           </span>
-          <span className="font-heading text-base font-semibold text-foreground">
+          <span className="text-h5 text-foreground">
             {t("history.title")}
           </span>
         </div>
@@ -144,18 +144,18 @@ export function CopilotHistory({
             {Array.from({ length: 4 }).map((_, i) => (
               <div
                 key={i}
-                className="h-14 animate-pulse rounded-xl bg-muted"
+                className="h-14 animate-pulse rounded-md bg-muted"
               />
             ))}
           </div>
         )}
         {error && (
-          <div className="rounded-xl bg-red-500/10 px-4 py-3 text-xs text-red-300">
+          <div className="rounded-md bg-destructive/10 px-4 py-3 text-p4 text-destructive">
             {t("history.loadError")}
           </div>
         )}
         {sessions?.length === 0 && (
-          <div className="flex flex-col items-center gap-2 rounded-xl bg-muted px-6 py-10 text-center text-sm text-muted-foreground">
+          <div className="flex flex-col items-center gap-2 rounded-md bg-muted px-6 py-10 text-center text-p3 text-muted-foreground">
             <Icon
               name="bubble-chat-question-stroke-rounded"
               size={24}
@@ -170,7 +170,7 @@ export function CopilotHistory({
               <div
                 key={s.id}
                 className={cn(
-                  "group flex items-center gap-2 rounded-xl bg-muted p-3 ring-1 ring-white/[0.06] transition hover:bg-muted hover:ring-[#066DE6]/25",
+                  "group flex items-center gap-2 rounded-md bg-muted p-3 border border-border-outline transition hover:bg-muted/60 hover:border-primary/25",
                   resumingId === s.id && "opacity-50",
                 )}
               >
@@ -180,10 +180,10 @@ export function CopilotHistory({
                   disabled={resumingId !== null}
                   className="flex flex-1 flex-col items-start gap-0.5 text-left"
                 >
-                  <span className="line-clamp-1 text-sm font-medium text-foreground">
+                  <span className="line-clamp-1 text-l6 text-foreground">
                     {s.title || t("history.untitled")}
                   </span>
-                  <span className="text-[11px] text-muted-foreground">
+                  <span className="text-p4 text-muted-foreground">
                     {new Date(s.updated_at).toLocaleString()}
                   </span>
                 </button>
@@ -193,7 +193,7 @@ export function CopilotHistory({
                   disabled={deletingId}
                   aria-label={t("history.delete")}
                   title={t("history.delete")}
-                  className="flex size-8 items-center justify-center rounded-md text-muted-foreground opacity-0 transition hover:bg-muted hover:text-rose-400 group-hover:opacity-100 disabled:opacity-30"
+                  className="flex size-8 items-center justify-center rounded-sm text-muted-foreground opacity-0 transition hover:bg-card hover:text-destructive group-hover:opacity-100 disabled:opacity-30"
                 >
                   <Icon
                     name="comment-remove-02-stroke-rounded"

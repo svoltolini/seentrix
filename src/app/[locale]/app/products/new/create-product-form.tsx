@@ -82,7 +82,7 @@ export function CreateProductForm({
           <h1 className="text-h1 tracking-tight">
             {t("create.title")}
           </h1>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-p2 text-muted-foreground">
             {t("create.subtitle")}
           </p>
         </header>
@@ -99,7 +99,7 @@ export function CreateProductForm({
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2.5"
-                  className="text-white/[0.06]"
+                  className="text-border"
                 />
                 <circle
                   cx="18"
@@ -113,15 +113,15 @@ export function CreateProductForm({
                   className="text-primary"
                 />
               </svg>
-              <span className="absolute text-xs font-bold tabular-nums">
+              <span className="absolute text-l6-plus tabular-nums">
                 {productCount}/{limit}
               </span>
             </div>
             <div>
-              <h2 className="font-heading text-lg font-semibold">
+              <h2 className="text-h3 text-foreground">
                 {t("limits.reached")}
               </h2>
-              <p className="mt-1 text-sm text-muted-foreground">
+              <p className="mt-1 text-p3 text-muted-foreground">
                 {limit === 1
                   ? t("limits.reachedDescription", {
                       plan: plan.charAt(0).toUpperCase() + plan.slice(1),
@@ -136,23 +136,23 @@ export function CreateProductForm({
           </div>
 
           <div className="grid w-full gap-3 sm:grid-cols-2">
-            <div className="rounded-xl bg-muted p-4">
+            <div className="rounded-md bg-card border border-border-outline p-4">
               <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
                 {t("limits.currentPlan")}
               </p>
-              <p className="mt-1 text-sm font-semibold capitalize">{plan}</p>
-              <p className="mt-2 text-xs text-muted-foreground">
+              <p className="mt-1 text-l5 text-foreground capitalize">{plan}</p>
+              <p className="mt-2 text-p4 text-muted-foreground">
                 {t(`limits.planFeatures.${plan}`)}
               </p>
             </div>
-            <div className="rounded-xl bg-primary/8 p-4 ring-1 ring-primary/25">
+            <div className="rounded-md bg-primary/5 p-4 border-[1.5px] border-primary/40">
               <p className="text-l6-plus uppercase tracking-wider text-primary">
                 Recommended
               </p>
-              <p className="mt-1 text-sm font-semibold capitalize">
+              <p className="mt-1 text-l5 text-foreground capitalize">
                 {nextPlan}
               </p>
-              <p className="mt-2 text-xs text-muted-foreground">
+              <p className="mt-2 text-p4 text-muted-foreground">
                 {t(`limits.planFeatures.${nextPlan}`)}
               </p>
             </div>
@@ -201,20 +201,20 @@ export function CreateProductForm({
         <h1 className="text-h1 tracking-tight">
           {t("create.title")}
         </h1>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-p2 text-muted-foreground">
           {t("create.subtitle")}
         </p>
       </header>
 
       {errorMessage && (
-        <p className="rounded-lg bg-destructive/10 px-4 py-3 text-sm text-destructive">
+        <p className="rounded-md bg-destructive/10 px-4 py-3 text-p3 text-destructive">
           {errorMessage}
         </p>
       )}
 
       {/* Name */}
       <div className="flex flex-col gap-2">
-        <Label htmlFor="name" className="text-sm font-medium">
+        <Label size="lg" htmlFor="name">
           {t("create.nameLabel")}
           <FieldHelp {...tip("name")} />
         </Label>
@@ -229,7 +229,7 @@ export function CreateProductForm({
 
       {/* Type — segmented pills without icons */}
       <div className="flex flex-col gap-2">
-        <Label className="text-sm font-medium">
+        <Label size="lg">
           {t("create.typeLabel")}
           <FieldHelp {...tip("type")} />
         </Label>
@@ -240,10 +240,10 @@ export function CreateProductForm({
               <label
                 key={type}
                 className={cn(
-                  "relative flex cursor-pointer items-center justify-center rounded-xl px-3 py-3 text-sm font-medium transition",
+                  "relative flex cursor-pointer items-center justify-center rounded-md px-3 py-3 text-l6 transition",
                   active
-                    ? "bg-primary/15 text-primary ring-1 ring-primary/40"
-                    : "bg-muted text-foreground/80 hover:bg-muted hover:text-foreground",
+                    ? "bg-primary/15 text-primary border-[1.5px] border-primary/40"
+                    : "bg-card border-[1.5px] border-border-outline text-muted-foreground hover:text-foreground",
                 )}
               >
                 <input
@@ -264,7 +264,7 @@ export function CreateProductForm({
 
       {/* Description */}
       <div className="flex flex-col gap-2">
-        <Label htmlFor="description" className="text-sm font-medium">
+        <Label size="lg" htmlFor="description">
           {t("create.descriptionLabel")}
           <FieldHelp {...tip("description")} />
         </Label>
@@ -279,7 +279,7 @@ export function CreateProductForm({
 
       {/* Image — compact, borderless, optional */}
       <div className="flex flex-col gap-2">
-        <Label className="text-sm font-medium">
+        <Label size="lg">
           {t("create.imageLabel")}
           <FieldHelp {...tip("image")} />
         </Label>
@@ -289,13 +289,13 @@ export function CreateProductForm({
               <img
                 src={imagePreview}
                 alt="Product preview"
-                className="size-20 rounded-xl object-cover"
+                className="size-20 rounded-md object-cover"
               />
               <button
                 type="button"
                 onClick={removeImage}
                 aria-label={t("create.imageRemove")}
-                className="absolute -right-2 -top-2 flex size-6 items-center justify-center rounded-full bg-[#0B0B12] text-muted-foreground ring-1 ring-white/[0.1] transition hover:bg-destructive hover:text-white hover:ring-destructive"
+                className="absolute -right-2 -top-2 flex size-6 items-center justify-center rounded-full bg-card shadow-card-sm text-muted-foreground border border-border-outline transition hover:bg-destructive hover:text-white hover:border-destructive"
               >
                 <svg
                   viewBox="0 0 24 24"
@@ -315,12 +315,12 @@ export function CreateProductForm({
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="flex size-20 items-center justify-center rounded-xl bg-muted text-xs font-medium text-muted-foreground transition hover:bg-muted hover:text-foreground"
+              className="flex size-20 items-center justify-center rounded-md bg-muted text-l6-plus text-muted-foreground transition hover:bg-muted/60 hover:text-foreground"
             >
               {t("create.imageUpload")}
             </button>
           )}
-          <p className="text-xs text-muted-foreground">
+          <p className="text-p4 text-muted-foreground">
             {t("create.imageHint")}
           </p>
         </div>
@@ -343,10 +343,10 @@ export function CreateProductForm({
           className="mt-0.5 size-4 shrink-0 accent-primary"
         />
         <div>
-          <span className="text-sm font-medium">
+          <span className="text-l6 text-foreground">
             {t("create.startAssessment")}
           </span>
-          <p className="mt-0.5 text-xs text-muted-foreground">
+          <p className="mt-0.5 text-p4 text-muted-foreground">
             {t("create.startAssessmentDescription")}
           </p>
         </div>

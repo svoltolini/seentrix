@@ -55,7 +55,7 @@ export function ForgotPasswordForm({ locale }: { locale: string }) {
 
       <div className="mt-8">
         {state?.success ? (
-          <p className="text-center text-sm leading-relaxed text-muted-foreground">
+          <p className="text-center text-p3 leading-relaxed text-muted-foreground">
             {t("forgotPassword.success")}
           </p>
         ) : (
@@ -64,7 +64,7 @@ export function ForgotPasswordForm({ locale }: { locale: string }) {
             className="flex flex-col gap-5"
           >
             {errorMessage && (
-              <p className="rounded-md bg-destructive/10 px-3 py-2.5 text-sm text-destructive">
+              <p className="rounded-md bg-destructive/10 px-3 py-2.5 text-p3 text-destructive">
                 {errorMessage}
               </p>
             )}
@@ -80,7 +80,7 @@ export function ForgotPasswordForm({ locale }: { locale: string }) {
                 {...register("email")}
               />
               {errors.email && (
-                <p className="text-xs text-destructive">
+                <p className="text-p4 text-destructive">
                   {t("errors.invalidEmail")}
                 </p>
               )}

@@ -76,9 +76,9 @@ export function AccountContent({ account }: { account: AccountInfo | null }) {
   return (
     <div className="space-y-6">
       {/* Profile */}
-      <div className="rounded-xl bg-card">
+      <div className="rounded-md bg-card shadow-card-lg">
         <div className="border-b border-border px-6 py-4">
-          <h2 className="text-sm font-semibold">{t("profileTitle")}</h2>
+          <h2 className="text-h4 text-foreground">{t("profileTitle")}</h2>
         </div>
         <form onSubmit={handleProfileSubmit}>
           <div className="flex flex-col gap-6 px-6 py-5 sm:flex-row sm:gap-6">
@@ -87,7 +87,7 @@ export function AccountContent({ account }: { account: AccountInfo | null }) {
               <button
                 type="button"
                 onClick={() => fileRef.current?.click()}
-                className="group relative flex size-20 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-muted transition-colors sm:h-full sm:w-28 sm:rounded-xl hover:bg-muted/80"
+                className="group relative flex size-20 shrink-0 items-center justify-center overflow-hidden rounded-md bg-muted transition-colors sm:h-full sm:w-28 sm:rounded-md hover:bg-muted/80"
               >
                 {avatarPreview ? (
                   <Image
@@ -103,7 +103,7 @@ export function AccountContent({ account }: { account: AccountInfo | null }) {
                   <Icon name="Camera" className="size-5 text-white" />
                 </div>
               </button>
-              <p className="text-[11px] text-muted-foreground sm:hidden">
+              <p className="text-p4 text-muted-foreground sm:hidden">
                 {t("avatarHint")}
               </p>
               <input
@@ -118,7 +118,7 @@ export function AccountContent({ account }: { account: AccountInfo | null }) {
             {/* Fields — right column */}
             <div className="min-w-0 flex-1 space-y-5">
               <div className="flex flex-col gap-1.5">
-                <Label htmlFor="fullName">{t("nameLabel")}</Label>
+                <Label size="lg" htmlFor="fullName">{t("nameLabel")}</Label>
                 <Input
                   id="fullName"
                   value={fullName}
@@ -128,13 +128,13 @@ export function AccountContent({ account }: { account: AccountInfo | null }) {
                 />
               </div>
               <div className="flex flex-col gap-1.5">
-                <Label>{t("emailLabel")}</Label>
+                <Label size="lg">{t("emailLabel")}</Label>
                 <Input
                   value={account?.email ?? ""}
                   disabled
                   className="opacity-50"
                 />
-                <p className="text-[11px] text-muted-foreground">
+                <p className="text-p4 text-muted-foreground">
                   {t("emailDescription")}
                 </p>
               </div>
@@ -150,14 +150,14 @@ export function AccountContent({ account }: { account: AccountInfo | null }) {
       </div>
 
       {/* Password */}
-      <div className="rounded-xl bg-card">
+      <div className="rounded-md bg-card shadow-card-lg">
         <div className="border-b border-border px-6 py-4">
-          <h2 className="text-sm font-semibold">{t("passwordTitle")}</h2>
+          <h2 className="text-h4 text-foreground">{t("passwordTitle")}</h2>
         </div>
         <div className="px-6 py-5">
           <form onSubmit={handlePasswordSubmit} className="space-y-5">
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="newPassword">{t("newPassword")}</Label>
+              <Label size="lg" htmlFor="newPassword">{t("newPassword")}</Label>
               <Input
                 id="newPassword"
                 type="password"

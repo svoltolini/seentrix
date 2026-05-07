@@ -57,7 +57,7 @@ export function LoginForm({ locale }: { locale: string }) {
         className="mt-8 flex flex-col gap-5"
       >
         {errorMessage && (
-          <p className="rounded-md bg-destructive/10 px-3 py-2.5 text-sm text-destructive">
+          <p className="rounded-md bg-destructive/10 px-3 py-2.5 text-p3 text-destructive">
             {errorMessage}
           </p>
         )}
@@ -73,7 +73,7 @@ export function LoginForm({ locale }: { locale: string }) {
             {...register("email")}
           />
           {errors.email && (
-            <p className="text-xs text-destructive">
+            <p className="text-p4 text-destructive">
               {t("errors.invalidEmail")}
             </p>
           )}
@@ -84,7 +84,7 @@ export function LoginForm({ locale }: { locale: string }) {
             <Label htmlFor="password">{t("fields.password")}</Label>
             <Link
               href="/auth/forgot-password"
-              className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+              className="text-p4 text-muted-foreground transition-colors hover:text-foreground"
             >
               {t("login.forgotPassword")}
             </Link>
@@ -113,7 +113,7 @@ export function LoginForm({ locale }: { locale: string }) {
             </button>
           </div>
           {errors.password && (
-            <p className="text-xs text-destructive">
+            <p className="text-p4 text-destructive">
               {t("errors.required")}
             </p>
           )}

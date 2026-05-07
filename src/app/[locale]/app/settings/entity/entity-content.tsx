@@ -23,10 +23,10 @@ const ENTITY_ORDER: EntityType[] = [
 ];
 
 const STATUS_COLOR: Record<ObligationStatus, string> = {
-  pending: "#6B7280",
-  in_progress: "#D97706",
-  complete: "#16A34A",
-  not_applicable: "#6B7280",
+  pending: "var(--muted-foreground)",
+  in_progress: "var(--warning)",
+  complete: "var(--success)",
+  not_applicable: "var(--muted-foreground)",
 };
 
 const ENTITY_ICON: Record<EntityType, string> = {
@@ -111,7 +111,7 @@ export function EntityContent({
         ease="power3.out"
       >
         <div data-reveal>
-          <h1 className="text-h2">
+          <h1 className="text-h1 text-foreground">
             {t("title")}
           </h1>
           <p className="mt-1 text-p3 text-muted-foreground">
@@ -130,21 +130,21 @@ export function EntityContent({
         >
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
-              <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur-sm">
+              <div className="mb-3 inline-flex items-center gap-2 rounded-sm bg-white/10 px-3 py-1 text-l6-plus uppercase tracking-wider text-white backdrop-blur-sm">
                 <span
                   className={cn(
                     "size-1.5 rounded-full",
                     progress === 100
-                      ? "bg-[#16A34A]"
-                      : "animate-pulse bg-[#F59E0B]",
+                      ? "bg-success"
+                      : "animate-pulse bg-warning",
                   )}
                 />
                 {t("progressLabel")}
               </div>
-              <h2 className="text-h3 leading-snug text-white md:text-2xl">
+              <h2 className="text-h3 leading-snug text-white">
                 {t("type.title")}
               </h2>
-              <p className="mt-2 max-w-md text-sm text-white">
+              <p className="mt-2 max-w-md text-p3 text-white">
                 {t("type.description")}
               </p>
             </div>
@@ -161,10 +161,10 @@ export function EntityContent({
                   disabled={!canEdit}
                   onClick={() => handleTypeChange(ty)}
                   className={cn(
-                    "group flex items-start gap-3 rounded-xl border p-4 text-left backdrop-blur-md transition-all",
+                    "group flex items-start gap-3 rounded-md border-[1.5px] p-4 text-left backdrop-blur-md transition-all",
                     active
                       ? "border-white/60 bg-white/15 shadow-lg shadow-black/20"
-                      : "border-white/15 bg-muted hover:-translate-y-0.5 hover:border-white/40 hover:bg-white/10",
+                      : "border-white/15 bg-white/5 hover:-translate-y-0.5 hover:border-white/40 hover:bg-white/10",
                     !canEdit && "cursor-not-allowed opacity-70",
                   )}
                 >
@@ -180,16 +180,16 @@ export function EntityContent({
                   </span>
                   <div className="min-w-0">
                     <div className="flex items-center gap-2">
-                      <p className="text-sm font-semibold text-white">
+                      <p className="text-l6 text-white">
                         {tType(`${ty}.title`)}
                       </p>
                       {active && (
-                        <span className="rounded-full bg-white/20 px-2 py-0.5 text-l6-plus uppercase tracking-wide text-white">
+                        <span className="rounded-sm bg-white/20 px-2 py-0.5 text-l6-plus uppercase tracking-wide text-white">
                           {t("type.current")}
                         </span>
                       )}
                     </div>
-                    <p className="mt-1 text-[11px] leading-relaxed text-white">
+                    <p className="mt-1 text-p4 leading-relaxed text-white">
                       {tType(`${ty}.description`)}
                     </p>
                   </div>
@@ -205,11 +205,11 @@ export function EntityContent({
           className="overflow-hidden rounded-md bg-muted"
         >
           <div className="border-b border-border px-5 py-3">
-            <span className="text-sm font-semibold">
+            <span className="text-h4 text-foreground">
               {t("obligations.title", { entity: tType(`${state.entityType}.title`) })}
             </span>
           </div>
-          <div className="divide-y divide-white/[0.04]">
+          <div className="divide-y divide-border">
             {state.obligations.map((ob) => {
               const color = STATUS_COLOR[ob.status];
               const expanded = expandedKey === ob.key;
@@ -220,7 +220,7 @@ export function EntityContent({
                     onClick={() =>
                       setExpandedKey((prev) => (prev === ob.key ? null : ob.key))
                     }
-                    className="flex w-full items-center gap-3 px-5 py-4 text-left transition-colors hover:bg-muted"
+                    className="flex w-full items-center gap-3 px-5 py-4 text-left transition-colors hover:bg-muted/60"
                   >
                     <span
                       className="flex size-5 shrink-0 items-center justify-center rounded-full border"
@@ -245,15 +245,15 @@ export function EntityContent({
                       )}
                     </span>
                     <div className="min-w-0 flex-1">
-                      <p className="text-sm font-medium text-foreground">
+                      <p className="text-l6 text-foreground">
                         {t(`obligation.${state.entityType}.${ob.key}.title`)}
                       </p>
-                      <p className="mt-0.5 text-[11px] text-muted-foreground">
+                      <p className="mt-0.5 text-p4 text-muted-foreground">
                         {t(`obligation.${state.entityType}.${ob.key}.description`)}
                       </p>
                     </div>
                     <span
-                      className="shrink-0 rounded-full px-2.5 py-0.5 text-l6-plus"
+                      className="shrink-0 rounded-sm px-2.5 py-0.5 text-l6-plus"
                       style={{
                         backgroundColor: `${color}1A`,
                         color,
@@ -286,10 +286,10 @@ export function EntityContent({
                             type="button"
                             onClick={() => applyStatus(ob.key, st, ob.notes ?? undefined)}
                             className={cn(
-                              "rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors",
+                              "rounded-sm border-[1.5px] px-3 py-1.5 text-l6-plus transition-colors",
                               ob.status === st
                                 ? "border-[color:var(--c)] bg-[color:var(--c)]/10 text-[color:var(--c)]"
-                                : "border-border text-muted-foreground hover:text-foreground",
+                                : "border-border-outline bg-card text-muted-foreground hover:text-foreground",
                             )}
                             style={{ ["--c" as string]: STATUS_COLOR[st] }}
                           >
@@ -332,10 +332,10 @@ function ProgressRing({
   const color = onDark
     ? "#ffffff"
     : value >= 100
-      ? "#16A34A"
+      ? "var(--success)"
       : value >= 50
-        ? "#D97706"
-        : "#066DE6";
+        ? "var(--warning)"
+        : "var(--primary)";
   return (
     <div className="flex flex-col items-center">
       <div className="relative" style={{ width: SIZE, height: SIZE }}>
@@ -363,7 +363,7 @@ function ProgressRing({
           />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-sm font-bold tabular-nums" style={{ color }}>
+          <span className="text-l6 tabular-nums" style={{ color }}>
             {value}%
           </span>
         </div>
@@ -371,7 +371,7 @@ function ProgressRing({
       {label && (
         <span
           className={cn(
-            "mt-1 text-[9px] uppercase tracking-wide",
+            "mt-1 text-l6-plus uppercase tracking-wide",
             onDark ? "text-white" : "text-muted-foreground",
           )}
         >
@@ -396,7 +396,7 @@ function NotesField({
   const [local, setLocal] = useState(initial);
   return (
     <div className="mt-3">
-      <label className="text-xs font-medium text-muted-foreground">
+      <label className="text-l6-plus uppercase tracking-[1.5px] text-muted-foreground">
         {label}
       </label>
       <Textarea

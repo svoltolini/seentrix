@@ -45,14 +45,14 @@ export function HowItWorksSection() {
   return (
     <section
       ref={sectionRef}
-      className="border-t border-border/50 bg-card/50 py-24 lg:py-32"
+      className="border-t border-border bg-card py-24 lg:py-32"
     >
       <div className="mx-auto max-w-6xl px-6">
         <div className="mx-auto mb-16 max-w-2xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
             {t("title")}
           </h2>
-          <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
+          <p className="mt-6 text-p1 text-muted-foreground">
             {t("subtitle")}
           </p>
         </div>
@@ -62,7 +62,7 @@ export function HowItWorksSection() {
             <div
               key={step.key}
               data-step-card
-              className="relative rounded-md bg-muted p-8"
+              className="relative rounded-md bg-background p-8"
             >
               <span
                 className="text-5xl font-extrabold leading-none"
@@ -70,10 +70,10 @@ export function HowItWorksSection() {
               >
                 {String(i + 1).padStart(2, "0")}
               </span>
-              <h3 className="mt-4 text-lg font-bold text-foreground">
+              <h3 className="mt-4 text-h4 text-foreground">
                 {t(`steps.${step.key}.title`)}
               </h3>
-              <p className="mt-3 text-base leading-relaxed text-muted-foreground">
+              <p className="mt-3 text-p2-r text-muted-foreground">
                 {t(`steps.${step.key}.description`)}
               </p>
             </div>

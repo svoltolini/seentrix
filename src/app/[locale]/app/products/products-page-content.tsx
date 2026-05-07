@@ -20,23 +20,23 @@ type ViewMode = "list" | "grid" | "timeline";
 // ---------------------------------------------------------------------------
 
 const TYPE_ICON_BG: Record<string, string> = {
-  hardware: "bg-[#066DE6]",
+  hardware: "bg-primary",
   software: "bg-[#6F4FE0]",
-  firmware: "bg-[#EA580C]",
-  iot: "bg-[#0891B2]",
+  firmware: "bg-accent",
+  iot: "bg-[#22D3EE]",
 };
 
 const CATEGORY_PILL: Record<string, string> = {
-  default: "bg-[#066DE6]",
-  important_class_i: "bg-[#D97706]",
-  important_class_ii: "bg-[#EA580C]",
-  critical: "bg-[#DC2626]",
+  default: "bg-primary",
+  important_class_i: "bg-warning",
+  important_class_ii: "bg-accent",
+  critical: "bg-destructive",
 };
 
 function scoreColor(score: number): string {
-  if (score >= 75) return "#16A34A";
-  if (score >= 40) return "#D97706";
-  return "#DC2626";
+  if (score >= 75) return "var(--success)";
+  if (score >= 40) return "var(--warning)";
+  return "var(--destructive)";
 }
 
 type SortField = "name" | "compliance" | "created";
@@ -113,7 +113,7 @@ export function ProductsPageContent({
                 placeholder={t("searchPlaceholder")}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="h-9 w-52 rounded-lg border border-border bg-muted pl-9 pr-3 text-xs text-foreground outline-none placeholder:text-muted-foreground focus:border-primary"
+                className="h-9 w-52 rounded-md bg-input pl-9 pr-3 text-p4 text-foreground outline-none placeholder:text-muted-foreground border-[1.5px] border-transparent focus:bg-card focus:border-primary/30"
               />
             </div>
           )}
@@ -161,7 +161,7 @@ export function ProductsPageContent({
 
       {/* Plan limit banner */}
       {products.length > 0 && !canCreate && (
-        <div className="flex items-center gap-4 overflow-hidden rounded-xl bg-card px-5 py-4">
+        <div className="flex items-center gap-4 overflow-hidden rounded-md bg-card p-[18px] shadow-card-lg">
           <div className="relative flex size-10 shrink-0 items-center justify-center">
             <svg viewBox="0 0 36 36" className="size-10 -rotate-90">
               <circle
@@ -171,7 +171,7 @@ export function ProductsPageContent({
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2.5"
-                className="text-white/[0.06]"
+                className="text-border"
               />
               <circle
                 cx="18"
@@ -190,8 +190,8 @@ export function ProductsPageContent({
             </span>
           </div>
           <div className="flex-1">
-            <p className="text-sm font-medium">{t("limits.reached")}</p>
-            <p className="mt-0.5 text-xs text-muted-foreground">
+            <p className="text-p3 text-foreground">{t("limits.reached")}</p>
+            <p className="mt-0.5 text-p4 text-muted-foreground">
               {limit === 1
                 ? t("limits.reachedDescription", {
                     plan: plan.charAt(0).toUpperCase() + plan.slice(1),
@@ -222,8 +222,8 @@ export function ProductsPageContent({
               className="text-primary"
             />
           </div>
-          <h3 className="text-base font-semibold">{t("noProducts")}</h3>
-          <p className="mt-2 max-w-md text-sm text-muted-foreground">
+          <h3 className="text-h4 text-foreground">{t("noProducts")}</h3>
+          <p className="mt-2 max-w-md text-p3 text-muted-foreground">
             {t("noProductsDescription")}
           </p>
           {canCreate && (
@@ -263,7 +263,7 @@ export function ProductsPageContent({
               onClick={() => toggleSort("name")}
               className="flex flex-1 items-center gap-1.5 text-left"
             >
-              <span className="text-[11px] text-muted-foreground">
+              <span className="text-h6 text-muted-foreground">
                 {t("columns.name")}
               </span>
               <Icon name="ArrowUpDownIcon"
@@ -275,7 +275,7 @@ export function ProductsPageContent({
             </button>
 
             {/* Category */}
-            <span className="hidden w-36 text-[11px] text-muted-foreground sm:block">
+            <span className="hidden w-36 text-h6 text-muted-foreground sm:block">
               {t("columns.category")}
             </span>
 
@@ -285,7 +285,7 @@ export function ProductsPageContent({
               onClick={() => toggleSort("compliance")}
               className="hidden w-44 items-center gap-1.5 md:flex"
             >
-              <span className="text-[11px] text-muted-foreground">
+              <span className="text-h6 text-muted-foreground">
                 {t("columns.compliance")}
               </span>
               <Icon name="ArrowUpDownIcon"
@@ -302,7 +302,7 @@ export function ProductsPageContent({
               onClick={() => toggleSort("created")}
               className="hidden w-24 items-center gap-1.5 lg:flex"
             >
-              <span className="text-[11px] text-muted-foreground">
+              <span className="text-h6 text-muted-foreground">
                 {t("columns.created")}
               </span>
               <Icon name="ArrowUpDownIcon"
@@ -318,7 +318,7 @@ export function ProductsPageContent({
           </div>
 
           {/* Rows */}
-          <div className="divide-y divide-white/[0.04]">
+          <div className="divide-y divide-border">
             {sorted.map((product) => {
               const iconBg =
                 TYPE_ICON_BG[product.type ?? ""] ?? "bg-muted";
@@ -326,7 +326,7 @@ export function ProductsPageContent({
                 <Link
                   key={product.id}
                   href={`/app/products/${product.id}`}
-                  className="group flex items-center px-5 py-3.5 transition-colors hover:bg-muted"
+                  className="group flex items-center px-5 py-3.5 transition-colors hover:bg-muted/60"
                 >
                   {/* Product: image/icon + name + type */}
                   <div className="flex min-w-0 flex-1 items-center gap-3">
@@ -348,10 +348,10 @@ export function ProductsPageContent({
                       </span>
                     )}
                     <div className="min-w-0">
-                      <p className="truncate text-sm font-semibold text-foreground transition-colors group-hover:text-primary">
+                      <p className="truncate text-l6 text-foreground transition-colors group-hover:text-primary">
                         {product.name}
                       </p>
-                      <p className="mt-0.5 text-[11px] capitalize text-muted-foreground">
+                      <p className="mt-0.5 text-p4 capitalize text-muted-foreground">
                         {product.type
                           ? t(`types.${product.type}`)
                           : "\u2014"}
@@ -364,7 +364,7 @@ export function ProductsPageContent({
                     {product.cra_category ? (
                       <span
                         className={cn(
-                          "inline-flex w-28 justify-center rounded-full px-2.5 py-0.5 text-l6-plus text-white",
+                          "inline-flex w-28 justify-center rounded-sm px-2.5 py-0.5 text-l6-plus text-white",
                           CATEGORY_PILL[product.cra_category] ??
                             CATEGORY_PILL.default
                         )}
@@ -372,7 +372,7 @@ export function ProductsPageContent({
                         {t(`categories.${product.cra_category}`)}
                       </span>
                     ) : (
-                      <span className="text-[11px] text-muted-foreground">
+                      <span className="text-p4 text-muted-foreground">
                         {t("notAssessed")}
                       </span>
                     )}
@@ -380,9 +380,9 @@ export function ProductsPageContent({
 
                   {/* Compliance */}
                   <div className="hidden w-44 items-center gap-2.5 md:flex">
-                    <div className="h-3 w-24 overflow-hidden rounded-[3px] bg-[#191919]">
+                    <div className="h-3 w-24 overflow-hidden rounded-sm bg-border">
                       <div
-                        className="h-full rounded-[3px] transition-all"
+                        className="h-full rounded-sm transition-all"
                         style={{
                           width: `${product.compliance_score}%`,
                           backgroundColor: scoreColor(
@@ -392,7 +392,7 @@ export function ProductsPageContent({
                       />
                     </div>
                     <span
-                      className="text-xs font-semibold tabular-nums"
+                      className="text-l6-plus tabular-nums"
                       style={{
                         color: scoreColor(product.compliance_score),
                       }}
@@ -403,7 +403,7 @@ export function ProductsPageContent({
 
                   {/* Date */}
                   <div className="hidden w-24 lg:block">
-                    <p className="text-xs font-medium text-foreground">
+                    <p className="text-p4 text-foreground">
                       {new Date(product.created_at).toLocaleDateString(
                         locale,
                         { month: "short", day: "numeric", year: "numeric" }

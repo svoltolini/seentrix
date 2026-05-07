@@ -27,7 +27,7 @@ export function StepIndicator({
               <div className="flex flex-col items-center gap-2">
                 <div
                   className={cn(
-                    "relative flex size-8 items-center justify-center rounded-full text-xs font-semibold transition-all duration-200",
+                    "relative flex size-8 items-center justify-center rounded-full text-l6-plus transition-all duration-200",
                     isCompleted &&
                       "bg-primary text-primary-foreground",
                     isActive &&
@@ -45,12 +45,12 @@ export function StepIndicator({
                 </div>
                 <span
                   className={cn(
-                    "hidden text-[11px] leading-tight sm:block",
+                    "hidden text-p4 leading-tight sm:block",
                     isActive
-                      ? "font-semibold text-foreground"
+                      ? "text-l6 text-foreground"
                       : isCompleted
-                        ? "font-medium text-foreground/70"
-                        : "font-medium text-muted-foreground"
+                        ? "text-l6 text-muted-foreground"
+                        : "text-l6 text-muted-foreground"
                   )}
                 >
                   {label}

@@ -62,20 +62,20 @@ export async function ScreenTrainingBanner({
     <div
       data-screen-training-banner={screenKey}
       data-storage-key={storageKey}
-      className="mb-5 flex flex-wrap items-center gap-3 rounded-xl border border-[#D97706]/25 bg-[#D97706]/[0.06] p-4"
+      className="mb-5 flex flex-wrap items-center gap-3 rounded-md border border-warning/25 bg-warning/5 p-4"
     >
-      <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-[#D97706]/15 text-[#D97706]">
+      <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-warning/15 text-warning">
         <Icon name="elearning-exchange-stroke-rounded" size={16} />
       </div>
       <div className="min-w-0 flex-1">
-        <p className="text-sm font-semibold text-foreground">{t("title")}</p>
+        <p className="text-l5 text-foreground">{t("title")}</p>
         <p className="mt-0.5 text-p3 text-muted-foreground">
           {t("body", { count: pending.length, minutes: totalMinutes })}
         </p>
       </div>
       <Link
         href={href}
-        className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-[#D97706] px-3.5 py-2 text-xs font-semibold text-white transition-transform hover:-translate-y-0.5"
+        className="inline-flex shrink-0 items-center gap-1.5 rounded-sm bg-warning px-3.5 py-2 text-l6 text-white transition-transform hover:-translate-y-0.5"
       >
         {t("cta")}
       </Link>

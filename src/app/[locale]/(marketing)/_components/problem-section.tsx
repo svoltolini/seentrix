@@ -70,14 +70,14 @@ export function ProblemSection() {
   return (
     <section
       ref={sectionRef}
-      className="border-t border-border/50 bg-card/50 py-24 lg:py-32"
+      className="border-t border-border bg-card py-24 lg:py-32"
     >
       <div className="mx-auto max-w-6xl px-6">
         <div className="mx-auto mb-16 max-w-3xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
             {t("title")}
           </h2>
-          <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
+          <p className="mt-6 text-p1 text-muted-foreground">
             {t("subtitle")}
           </p>
         </div>
@@ -95,10 +95,10 @@ export function ProblemSection() {
               >
                 {t(`stats.${key}.value`)}
               </span>
-              <span className="mt-4 text-base font-semibold text-foreground">
+              <span className="mt-4 text-l5 text-foreground">
                 {t(`stats.${key}.label`)}
               </span>
-              <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted-foreground">
+              <p className="mt-3 max-w-xs text-p3 text-muted-foreground">
                 {t(`stats.${key}.description`)}
               </p>
             </div>

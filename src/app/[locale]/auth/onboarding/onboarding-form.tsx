@@ -139,7 +139,7 @@ export function OnboardingForm({ locale }: { locale: string }) {
         className="mt-6 flex flex-col gap-4"
       >
         {errorMessage && (
-          <p className="rounded-md bg-destructive/10 px-3 py-2.5 text-sm text-destructive">
+          <p className="rounded-md bg-destructive/10 px-3 py-2.5 text-p3 text-destructive">
             {errorMessage}
           </p>
         )}
@@ -173,7 +173,7 @@ export function OnboardingForm({ locale }: { locale: string }) {
                 onChange={handleAvatarChange}
                 className="hidden"
               />
-              <p className="text-[11px] text-muted-foreground">
+              <p className="text-p4 text-muted-foreground">
                 {t("onboarding.avatarHint")}
               </p>
             </div>
@@ -227,7 +227,7 @@ export function OnboardingForm({ locale }: { locale: string }) {
               <select
                 aria-invalid={!!errors.entityType}
                 {...register("entityType")}
-                className="flex h-9 w-full rounded-md border border-input bg-background px-3 text-sm shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                className="flex h-11 w-full rounded-md bg-input px-4 text-p2 transition-colors focus-visible:outline-none focus-visible:bg-card focus-visible:border-primary/30 border-[1.5px] border-transparent disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {ENTITY_OPTIONS.map((v) => (
                   <option key={v} value={v}>
@@ -391,16 +391,16 @@ function Field({
       <div className="flex items-baseline gap-2">
         <Label>{label}</Label>
         {optional && (
-          <span className="text-[10px] uppercase tracking-wider text-muted-foreground">
+          <span className="text-l6-plus uppercase tracking-wider text-muted-foreground">
             optional
           </span>
         )}
       </div>
       {children}
       {hint && !error && (
-        <p className="text-[11px] text-muted-foreground">{hint}</p>
+        <p className="text-p4 text-muted-foreground">{hint}</p>
       )}
-      {error && <p className="text-xs text-destructive">{error}</p>}
+      {error && <p className="text-p4 text-destructive">{error}</p>}
     </div>
   );
 }

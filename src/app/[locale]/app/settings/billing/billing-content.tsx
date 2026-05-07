@@ -47,15 +47,15 @@ export function BillingContent({
   return (
     <div className="space-y-4">
       {!isAdmin && (
-        <div className="rounded-lg bg-muted px-4 py-3 text-center text-xs text-muted-foreground">
+        <div className="rounded-md bg-muted px-4 py-3 text-center text-p3 text-muted-foreground">
           {t("readOnly")}
         </div>
       )}
 
       {/* Current plan */}
       <div
-        className="overflow-hidden rounded-xl"
-        style={{ background: "linear-gradient(135deg, #D97706, #EA580C)" }}
+        className="overflow-hidden rounded-md"
+        style={{ background: "linear-gradient(135deg, #FF9E55, #FF6D00)" }}
       >
         <div className="flex items-center justify-between px-6 py-6">
           {/* Left — plan info */}
@@ -63,11 +63,11 @@ export function BillingContent({
             <p className="text-l6-plus text-white">
               {t("currentPlan")}
             </p>
-            <p className="mt-1 text-xl font-bold tracking-tight text-white">
+            <p className="mt-1 text-h3 tracking-tight text-white">
               {t(`plans.${plan}`)}
             </p>
             {billingPeriodEnd && (
-              <p className="mt-1.5 text-xs text-white">
+              <p className="mt-1.5 text-p4 text-white">
                 {t("nextBillingDate", {
                   date: new Date(billingPeriodEnd).toLocaleDateString(
                     locale === "de" ? "de-DE" : "en-US",
@@ -77,7 +77,7 @@ export function BillingContent({
               </p>
             )}
             {plan === "free" && (
-              <p className="mt-1.5 max-w-xs text-xs text-white">
+              <p className="mt-1.5 max-w-xs text-p4 text-white">
                 {t("upgradeDescription")}
               </p>
             )}
@@ -85,11 +85,11 @@ export function BillingContent({
 
           {/* Right — price */}
           <div className="text-right">
-            <p className="text-4xl font-bold tracking-tight text-white">
+            <p className="text-h1 tracking-tight text-white">
               {price > 0 ? `€${price}` : t(`plans.free`)}
             </p>
             {price > 0 && (
-              <p className="mt-0.5 text-xs text-white">
+              <p className="mt-0.5 text-p4 text-white">
                 {t("perMonth")}
               </p>
             )}

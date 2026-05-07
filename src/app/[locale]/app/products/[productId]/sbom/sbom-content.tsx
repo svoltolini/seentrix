@@ -178,17 +178,17 @@ export function SbomContent({
   }
 
   const SEVERITY_CARDS = [
-    { key: "critical" as const, gradient: "linear-gradient(135deg, #DC2626, #E11D48)" },
-    { key: "high" as const, gradient: "linear-gradient(135deg, #D97706, #EA580C)" },
-    { key: "medium" as const, gradient: "linear-gradient(135deg, #0891B2, #0E7490)" },
-    { key: "low" as const, gradient: "linear-gradient(135deg, #52525B, #3F3F46)" },
+    { key: "critical" as const, gradient: "linear-gradient(135deg, #E60019, #6F4FE0 60%, #066DE6)" },
+    { key: "high" as const, gradient: "linear-gradient(135deg, #FF9E55, #FF6D00)" },
+    { key: "medium" as const, gradient: "linear-gradient(135deg, #066DE6, #22D3EE)" },
+    { key: "low" as const, gradient: "linear-gradient(135deg, #2C3659, #4B5670)" },
   ];
 
   return (
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h2 className="text-lg font-semibold text-foreground">{t("title")}</h2>
+        <h2 className="text-h3 text-foreground">{t("title")}</h2>
         <p className="mt-0.5 text-p3 text-muted-foreground">
           {t("subtitle")}
         </p>
@@ -218,16 +218,16 @@ export function SbomContent({
             {SEVERITY_CARDS.map((s, i) => (
               <div
                 key={s.key}
-                className="overflow-hidden rounded-xl px-4 py-3 opacity-0"
+                className="overflow-hidden rounded-md px-4 py-3 opacity-0"
                 style={{
                   background: s.gradient,
                   animation: `fade-in-up 0.5s ease-out ${i * 100}ms forwards`,
                 }}
               >
-                <p className="text-[10px] font-semibold uppercase tracking-wider text-white">
+                <p className="text-l6-plus uppercase tracking-wider text-white">
                   {t(`scan.severity.${s.key}`)}
                 </p>
-                <p className="mt-1 text-2xl font-bold tabular-nums text-white">
+                <p className="mt-1 text-h2 tabular-nums text-white">
                   {aggregateStats[s.key]}
                 </p>
               </div>
@@ -235,10 +235,10 @@ export function SbomContent({
           </div>
           {aggregateStats.kev > 0 && (
             <div className="flex items-center gap-2">
-              <span className="rounded-full bg-destructive px-2.5 py-0.5 text-l6-plus text-white">
+              <span className="rounded-sm bg-destructive px-2.5 py-0.5 text-l6-plus text-white">
                 KEV {aggregateStats.kev}
               </span>
-              <span className="text-xs text-muted-foreground">
+              <span className="text-p4 text-muted-foreground">
                 {t("scan.kevLabel")}
               </span>
             </div>
@@ -249,20 +249,19 @@ export function SbomContent({
       {/* SBOM list */}
       {sboms.length === 0 ? (
         <div
-          className="flex flex-col items-center justify-center overflow-hidden rounded-xl bg-cover bg-center py-16 text-center"
-          style={{ backgroundImage: "url('/images/empty-state-bg.png')" }}
+          className="flex flex-col items-center justify-center overflow-hidden rounded-md bg-card shadow-card-md py-16 text-center"
         >
-          <div className="mb-5 flex size-14 items-center justify-center rounded-full bg-black/20">
+          <div className="mb-5 flex size-14 items-center justify-center rounded-full bg-primary/10">
             <Icon
               name="chip-stroke-rounded"
               size={28}
-              className="text-white"
+              className="text-primary"
             />
           </div>
-          <p className="text-base font-semibold text-white">
+          <p className="text-h4 text-foreground">
             {t("list.empty")}
           </p>
-          <p className="mt-2 max-w-sm text-sm text-white">
+          <p className="mt-2 max-w-sm text-p3 text-muted-foreground">
             {t("list.emptyDescription")}
           </p>
         </div>

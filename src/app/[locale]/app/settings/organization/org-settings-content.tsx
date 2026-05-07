@@ -19,11 +19,11 @@ import type { DeletionStatus } from "../gdpr-types";
 
 // Role hierarchy from highest to lowest
 const ROLE_HIERARCHY: { key: string; color: string; bg: string; icon: string }[] = [
-  { key: "admin", color: "text-[#066DE6]", bg: "bg-[#066DE6]", icon: "crown-stroke-rounded" },
-  { key: "cto", color: "text-[#EA580C]", bg: "bg-[#EA580C]", icon: "terminal-stroke-rounded" },
+  { key: "admin", color: "text-primary", bg: "bg-primary", icon: "crown-stroke-rounded" },
+  { key: "cto", color: "text-accent", bg: "bg-accent", icon: "terminal-stroke-rounded" },
   { key: "compliance_officer", color: "text-[#6F4FE0]", bg: "bg-[#6F4FE0]", icon: "task-done-02-stroke-rounded" },
-  { key: "editor", color: "text-[#0891B2]", bg: "bg-[#0891B2]", icon: "pencil-edit-02-stroke-rounded" },
-  { key: "viewer", color: "text-[#94A3B8]", bg: "bg-[#94A3B8]", icon: "glasses-stroke-rounded" },
+  { key: "editor", color: "text-[#22D3EE]", bg: "bg-[#22D3EE]", icon: "pencil-edit-02-stroke-rounded" },
+  { key: "viewer", color: "text-muted-foreground", bg: "bg-muted-foreground", icon: "glasses-stroke-rounded" },
 ];
 
 export function OrgSettingsContent({
@@ -123,20 +123,20 @@ export function OrgSettingsContent({
     <div className="space-y-6">
       {/* Read-only banner for non-admins */}
       {!isAdmin && (
-        <div className="rounded-lg bg-muted px-4 py-3 text-center text-xs text-muted-foreground">
+        <div className="rounded-md bg-muted px-4 py-3 text-center text-p3 text-muted-foreground">
           {t("readOnly")}
         </div>
       )}
 
       {/* General */}
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="rounded-xl bg-card">
+        <div className="rounded-md bg-card shadow-card-lg">
           <div className="border-b border-border px-6 py-4">
-            <h2 className="text-sm font-semibold">{t("title")}</h2>
+            <h2 className="text-h4 text-foreground">{t("title")}</h2>
           </div>
           <div className="space-y-5 px-6 py-5">
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="name">
+              <Label size="lg" htmlFor="name">
                 {t("nameLabel")}
                 <FieldHelp {...tip("name")} />
               </Label>
@@ -151,11 +151,11 @@ export function OrgSettingsContent({
             </div>
 
             <div className="flex flex-col gap-2">
-              <Label>
+              <Label size="lg">
                 {t("languageLabel")}
                 <FieldHelp {...tip("language")} />
               </Label>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-p3 text-muted-foreground">
                 {t("languageDescription")}
               </p>
               <div className="flex gap-2">
@@ -163,7 +163,7 @@ export function OrgSettingsContent({
                   <label
                     key={lang}
                     className={cn(
-                      "flex items-center gap-2 rounded-xl border border-border px-4 py-2.5 text-sm font-medium transition-all has-[:checked]:border-primary/40 has-[:checked]:bg-primary/5",
+                      "flex items-center gap-2 rounded-md border-[1.5px] border-border-outline bg-card px-4 py-2.5 text-l6 transition-all has-[:checked]:border-primary has-[:checked]:bg-primary/5",
                       isAdmin ? "cursor-pointer" : "cursor-default opacity-60"
                     )}
                   >
@@ -198,16 +198,16 @@ export function OrgSettingsContent({
         )}
 
         {/* Legal entity (CRA-mandatory) */}
-        <div className="rounded-xl bg-card">
+        <div className="rounded-md bg-card shadow-card-lg">
           <div className="border-b border-border px-6 py-4">
-            <h2 className="text-sm font-semibold">{t("legalTitle")}</h2>
-            <p className="mt-0.5 text-xs text-muted-foreground">
+            <h2 className="text-h4 text-foreground">{t("legalTitle")}</h2>
+            <p className="mt-0.5 text-p3 text-muted-foreground">
               {t("legalDescription")}
             </p>
           </div>
           <div className="space-y-5 px-6 py-5">
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="legal_name">
+              <Label size="lg" htmlFor="legal_name">
                 {t("legalName")}
                 <FieldHelp {...tip("legalName")} />
               </Label>
@@ -218,12 +218,12 @@ export function OrgSettingsContent({
                 placeholder={t("legalNamePlaceholder")}
                 disabled={!isAdmin}
               />
-              <p className="text-[11px] text-muted-foreground">
+              <p className="text-p4 text-muted-foreground">
                 {t("legalNameHint")}
               </p>
             </div>
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="registration_number">
+              <Label size="lg" htmlFor="registration_number">
                 {t("registrationNumber")}
                 <FieldHelp {...tip("registrationNumber")} />
               </Label>
@@ -234,7 +234,7 @@ export function OrgSettingsContent({
                 placeholder={t("registrationNumberPlaceholder")}
                 disabled={!isAdmin}
               />
-              <p className="text-[11px] text-muted-foreground">
+              <p className="text-p4 text-muted-foreground">
                 {t("registrationNumberHint")}
               </p>
             </div>
@@ -242,17 +242,17 @@ export function OrgSettingsContent({
         </div>
 
         {/* Signatory + public contact */}
-        <div className="rounded-xl bg-card">
+        <div className="rounded-md bg-card shadow-card-lg">
           <div className="border-b border-border px-6 py-4">
-            <h2 className="text-sm font-semibold">{t("signatoryTitle")}</h2>
-            <p className="mt-0.5 text-xs text-muted-foreground">
+            <h2 className="text-h4 text-foreground">{t("signatoryTitle")}</h2>
+            <p className="mt-0.5 text-p3 text-muted-foreground">
               {t("signatoryDescription")}
             </p>
           </div>
           <div className="space-y-5 px-6 py-5">
             <div className="grid gap-5 sm:grid-cols-2">
               <div className="flex flex-col gap-1.5">
-                <Label htmlFor="signatory_name">
+                <Label size="lg" htmlFor="signatory_name">
                   {t("signatoryName")}
                   <FieldHelp {...tip("signatoryName")} />
                 </Label>
@@ -265,7 +265,7 @@ export function OrgSettingsContent({
                 />
               </div>
               <div className="flex flex-col gap-1.5">
-                <Label htmlFor="signatory_position">
+                <Label size="lg" htmlFor="signatory_position">
                   {t("signatoryPosition")}
                   <FieldHelp {...tip("signatoryPosition")} />
                 </Label>
@@ -280,7 +280,7 @@ export function OrgSettingsContent({
             </div>
             <div className="grid gap-5 sm:grid-cols-2">
               <div className="flex flex-col gap-1.5">
-                <Label htmlFor="contact_email">
+                <Label size="lg" htmlFor="contact_email">
                   {t("contactEmail")}
                   <FieldHelp {...tip("contactEmail")} />
                 </Label>
@@ -294,7 +294,7 @@ export function OrgSettingsContent({
                 />
               </div>
               <div className="flex flex-col gap-1.5">
-                <Label htmlFor="website">
+                <Label size="lg" htmlFor="website">
                   {t("website")}
                   <FieldHelp {...tip("website")} />
                 </Label>
@@ -312,16 +312,16 @@ export function OrgSettingsContent({
         </div>
 
         {/* Address */}
-        <div className="rounded-xl bg-card">
+        <div className="rounded-md bg-card shadow-card-lg">
           <div className="border-b border-border px-6 py-4">
-            <h2 className="text-sm font-semibold">{t("addressTitle")}</h2>
-            <p className="mt-0.5 text-xs text-muted-foreground">
+            <h2 className="text-h4 text-foreground">{t("addressTitle")}</h2>
+            <p className="mt-0.5 text-p3 text-muted-foreground">
               {t("addressDescription")}
             </p>
           </div>
           <div className="space-y-5 px-6 py-5">
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="address_line1">
+              <Label size="lg" htmlFor="address_line1">
                 {t("addressLine1")}
                 <FieldHelp {...tip("addressLine1")} />
               </Label>
@@ -334,7 +334,7 @@ export function OrgSettingsContent({
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="address_line2">
+              <Label size="lg" htmlFor="address_line2">
                 {t("addressLine2")}
                 <FieldHelp {...tip("addressLine2")} />
               </Label>
@@ -348,7 +348,7 @@ export function OrgSettingsContent({
             </div>
             <div className="grid gap-5 sm:grid-cols-2">
               <div className="flex flex-col gap-1.5">
-                <Label htmlFor="postal_code">
+                <Label size="lg" htmlFor="postal_code">
                   {t("postalCode")}
                   <FieldHelp {...tip("postalCode")} />
                 </Label>
@@ -361,7 +361,7 @@ export function OrgSettingsContent({
                 />
               </div>
               <div className="flex flex-col gap-1.5">
-                <Label htmlFor="city">
+                <Label size="lg" htmlFor="city">
                   {t("city")}
                   <FieldHelp {...tip("city")} />
                 </Label>
@@ -375,7 +375,7 @@ export function OrgSettingsContent({
               </div>
             </div>
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="country">
+              <Label size="lg" htmlFor="country">
                 {t("country")}
                 <FieldHelp {...tip("country")} />
               </Label>
@@ -445,10 +445,10 @@ function OrganizationChart({
   const nearCap = !unlimited && used / limit >= 0.8;
   const atCap = !unlimited && used >= limit;
   const capacityColor = atCap
-    ? "#DC2626"
+    ? "var(--destructive)"
     : nearCap
-      ? "#D97706"
-      : "#16A34A";
+      ? "var(--warning)"
+      : "var(--success)";
 
   const tiers = ROLE_HIERARCHY.map((tier) => ({
     ...tier,
@@ -456,17 +456,17 @@ function OrganizationChart({
   }));
 
   return (
-    <div className="overflow-hidden rounded-xl bg-card">
+    <div className="overflow-hidden rounded-md bg-card shadow-card-lg">
       <div className="border-b border-border px-6 py-4">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
-            <h2 className="text-sm font-semibold">{t("orgChart")}</h2>
-            <p className="mt-0.5 text-xs text-muted-foreground">
+            <h2 className="text-h4 text-foreground">{t("orgChart")}</h2>
+            <p className="mt-0.5 text-p3 text-muted-foreground">
               {t("orgChartDescription")}
             </p>
           </div>
           <div className="flex items-center gap-3">
-            <span className="text-xs tabular-nums text-muted-foreground">
+            <span className="text-p3 tabular-nums text-muted-foreground">
               {unlimited
                 ? t("seatsUsedUnlimited", { count: used })
                 : t("seatsUsed", { count: used, limit })}
@@ -474,7 +474,7 @@ function OrganizationChart({
             {isAdmin && !unlimited && nearCap && (
               <Link
                 href="/app/settings/billing"
-                className="text-xs font-medium text-primary hover:underline"
+                className="text-l6 text-primary hover:underline"
               >
                 {t("upgrade")}
               </Link>
@@ -482,9 +482,9 @@ function OrganizationChart({
           </div>
         </div>
         {!unlimited && (
-          <div className="mt-3 h-1.5 overflow-hidden rounded-[3px] bg-[#191919]">
+          <div className="mt-3 h-1.5 overflow-hidden rounded-sm bg-border">
             <div
-              className="h-full rounded-[3px] transition-all duration-500"
+              className="h-full rounded-sm transition-all duration-500"
               style={{ width: `${pct}%`, backgroundColor: capacityColor }}
             />
           </div>
@@ -540,8 +540,8 @@ function RoleBranch({
   const STUB_Y = 22;
   const RADIUS = 8;
   const STROKE = {
-    stroke: "white",
-    strokeOpacity: "0.1",
+    stroke: "var(--border)",
+    strokeOpacity: "1",
     strokeWidth: "1",
     vectorEffect: "non-scaling-stroke" as const,
   };
@@ -605,17 +605,17 @@ function RoleBranch({
       <div className="flex items-center gap-2.5">
         <div
           className={cn(
-            "flex size-11 shrink-0 items-center justify-center rounded-lg text-white shadow-sm",
+            "flex size-11 shrink-0 items-center justify-center rounded-md text-white shadow-card-sm",
             tier.bg,
           )}
         >
           <Icon name={tier.icon} size={18} />
         </div>
         <div>
-          <p className="text-sm font-semibold" style={{ color: hex }}>
+          <p className="text-l5" style={{ color: hex }}>
             {tTeam(`roles.${tier.key}` as Parameters<typeof tTeam>[0])}
           </p>
-          <p className="mt-0.5 text-[10px] tabular-nums text-muted-foreground">
+          <p className="mt-0.5 text-p4 tabular-nums text-muted-foreground">
             {tier.members.length === 1
               ? tTeam("memberCount", { count: tier.members.length })
               : tTeam("memberCountPlural", { count: tier.members.length })}
@@ -630,9 +630,9 @@ function RoleBranch({
           <Link
             key={member.id}
             href="/app/settings/team"
-            className="group flex items-center gap-3 rounded-lg border border-transparent px-3 py-2 transition-all hover:-translate-y-0.5 hover:border-border hover:bg-muted"
+            className="group flex items-center gap-3 rounded-md border border-transparent px-3 py-2 transition-all hover:-translate-y-0.5 hover:border-border-outline hover:bg-muted"
           >
-            <div className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-muted text-[12px] font-bold text-muted-foreground">
+            <div className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-muted text-l6-plus text-muted-foreground">
               {member.avatar_url ? (
                 <img
                   src={member.avatar_url}
@@ -644,10 +644,10 @@ function RoleBranch({
               )}
             </div>
             <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-medium text-foreground group-hover:text-primary">
+              <p className="truncate text-l6 text-foreground group-hover:text-primary">
                 {member.full_name ?? member.email}
               </p>
-              <p className="truncate text-[11px] text-muted-foreground">
+              <p className="truncate text-p4 text-muted-foreground">
                 {member.email}
               </p>
             </div>
@@ -663,7 +663,7 @@ function RoleBranch({
           (isAdmin ? (
             <Link
               href="/app/settings/team"
-              className="flex items-center gap-3 rounded-lg border border-dashed px-3 py-2.5 transition-colors hover:bg-muted"
+              className="flex items-center gap-3 rounded-md border border-dashed px-3 py-2.5 transition-colors hover:bg-muted/60"
               style={{ borderColor: `${hex}50` }}
             >
               <span
@@ -672,13 +672,13 @@ function RoleBranch({
               >
                 <Icon name="add-01" size={13} />
               </span>
-              <span className="text-sm font-medium" style={{ color: hex }}>
+              <span className="text-l6" style={{ color: hex }}>
                 {inviteLabel}
               </span>
             </Link>
           ) : (
-            <div className="flex items-center gap-3 rounded-lg border border-dashed border-border px-3 py-2.5">
-              <span className="text-sm text-muted-foreground">
+            <div className="flex items-center gap-3 rounded-md border border-dashed border-border-outline px-3 py-2.5">
+              <span className="text-p3 text-muted-foreground">
                 {emptyLabel}
               </span>
             </div>

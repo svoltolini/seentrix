@@ -19,10 +19,10 @@ import {
 } from "./actions";
 
 const STATUS_COLOR: Record<ConformityStepStatus, string> = {
-  pending: "#6B7280",
-  in_progress: "#D97706",
-  complete: "#16A34A",
-  not_applicable: "#6B7280",
+  pending: "var(--muted-foreground)",
+  in_progress: "var(--warning)",
+  complete: "var(--success)",
+  not_applicable: "var(--muted-foreground)",
 };
 
 const ROLES_CAN_WRITE = new Set([
@@ -181,7 +181,7 @@ export function ConformityContent({
               <h2 className="mt-1 text-h3">
                 {tRoute(`${state.route}.title`)}
               </h2>
-              <p className="mt-2 max-w-xl text-xs text-muted-foreground">
+              <p className="mt-2 max-w-xl text-p3 text-muted-foreground">
                 {tRoute(`${state.route}.description`)}
               </p>
             </div>
@@ -215,8 +215,8 @@ export function ConformityContent({
             className="rounded-md bg-muted p-6"
           >
             <div className="mb-4">
-              <h2 className="text-sm font-semibold">{t("notifiedBody.title")}</h2>
-              <p className="mt-1 text-xs text-muted-foreground">
+              <h2 className="text-h4 text-foreground">{t("notifiedBody.title")}</h2>
+              <p className="mt-1 text-p3 text-muted-foreground">
                 {t("notifiedBody.description")}
               </p>
             </div>
@@ -271,9 +271,9 @@ export function ConformityContent({
           className="overflow-hidden rounded-md bg-muted"
         >
           <div className="border-b border-border px-5 py-3">
-            <span className="text-sm font-semibold">{t("steps.title")}</span>
+            <span className="text-h4 text-foreground">{t("steps.title")}</span>
           </div>
-          <div className="divide-y divide-white/[0.04]">
+          <div className="divide-y divide-border">
             {state.steps.map((step) => {
               const color = STATUS_COLOR[step.status];
               const expanded = expandedKey === step.key;
@@ -286,7 +286,7 @@ export function ConformityContent({
                         prev === step.key ? null : step.key,
                       )
                     }
-                    className="group flex w-full items-center gap-3 px-5 py-3.5 text-left transition-colors hover:bg-muted"
+                    className="group flex w-full items-center gap-3 px-5 py-3.5 text-left transition-colors hover:bg-muted/60"
                   >
                     <span
                       className="flex size-5 shrink-0 items-center justify-center rounded-full border"
@@ -311,15 +311,15 @@ export function ConformityContent({
                       )}
                     </span>
                     <span className="min-w-0 flex-1">
-                      <span className="block text-sm font-medium text-foreground">
+                      <span className="block text-l6 text-foreground">
                         {tStep(`${step.key}.title`)}
                       </span>
-                      <span className="block text-[11px] text-muted-foreground">
+                      <span className="block text-p4 text-muted-foreground">
                         {tStep(`${step.key}.description`)}
                       </span>
                     </span>
                     <span
-                      className="shrink-0 rounded-full px-2.5 py-0.5 text-l6-plus"
+                      className="shrink-0 rounded-sm px-2.5 py-0.5 text-l6-plus"
                       style={{
                         backgroundColor: `${color}1A`,
                         color,
@@ -354,10 +354,10 @@ export function ConformityContent({
                               startTransition(() => applyStep(step.key, st))
                             }
                             className={cn(
-                              "rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors",
+                              "rounded-sm border-[1.5px] px-3 py-1.5 text-l6-plus transition-colors",
                               step.status === st
                                 ? "border-[color:var(--c)] bg-[color:var(--c)]/10 text-[color:var(--c)]"
-                                : "border-border text-muted-foreground hover:text-foreground",
+                                : "border-border-outline bg-card text-muted-foreground hover:text-foreground",
                             )}
                             style={{
                               ["--c" as string]: STATUS_COLOR[st],
@@ -397,25 +397,25 @@ export function ConformityContent({
         >
           <div className="flex flex-wrap items-start justify-between gap-4 p-6 md:p-8">
             <div className="min-w-0 flex-1">
-              <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur-sm">
+              <div className="mb-3 inline-flex items-center gap-2 rounded-sm bg-white/10 px-3 py-1 text-l6-plus uppercase tracking-wider text-white backdrop-blur-sm">
                 <span
                   className={cn(
                     "size-1.5 rounded-full",
                     allStepsComplete
-                      ? "bg-[#16A34A]"
-                      : "animate-pulse bg-[#F59E0B]",
+                      ? "bg-success"
+                      : "animate-pulse bg-warning",
                   )}
                 />
                 {t("doc.eyebrow")}
               </div>
-              <h2 className="text-h3 leading-snug text-white md:text-2xl">
+              <h2 className="text-h3 leading-snug text-white">
                 {t("doc.title")}
               </h2>
-              <p className="mt-2 max-w-xl text-sm text-white">
+              <p className="mt-2 max-w-xl text-p3 text-white">
                 {t("doc.description")}
               </p>
               {state.declarationIssuedAt && state.declarationVersion && (
-                <p className="mt-3 font-mono text-[11px] text-white">
+                <p className="mt-3 font-mono text-p4 text-white">
                   {state.declarationVersion} ·{" "}
                   {t("doc.issuedOn", {
                     date: formatDate(state.declarationIssuedAt),
@@ -428,7 +428,7 @@ export function ConformityContent({
                 <button
                   type="button"
                   onClick={handleDownload}
-                  className="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-white/10 px-4 py-2.5 text-sm font-semibold text-white backdrop-blur-sm transition-colors hover:bg-white/15"
+                  className="inline-flex items-center gap-2 rounded-sm border border-white/20 bg-white/10 px-4 py-2.5 text-l6 text-white backdrop-blur-sm transition-colors hover:bg-white/15"
                 >
                   <Icon name="pdf-01-stroke-rounded" size={14} />
                   {t("doc.download")}
@@ -439,7 +439,7 @@ export function ConformityContent({
                   type="button"
                   onClick={handleIssue}
                   disabled={!allStepsComplete || issuing}
-                  className="inline-flex items-center gap-2 rounded-lg bg-white px-4 py-2.5 text-sm font-semibold text-black shadow-sm transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0"
+                  className="inline-flex items-center gap-2 rounded-sm bg-white px-4 py-2.5 text-l6 text-foreground shadow-card-sm transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0"
                 >
                   <Icon
                     name="checkmark-circle-01-stroke-rounded"
@@ -468,7 +468,7 @@ function ProgressRing({ value, label }: { value: number; label: string }) {
   const R = (SIZE - STROKE) / 2;
   const CIRC = 2 * Math.PI * R;
   const offset = CIRC * (1 - value / 100);
-  const color = value >= 100 ? "#16A34A" : value >= 50 ? "#D97706" : "#066DE6";
+  const color = value >= 100 ? "var(--success)" : value >= 50 ? "var(--warning)" : "var(--primary)";
   return (
     <div className="flex flex-col items-center">
       <div className="relative" style={{ width: SIZE, height: SIZE }}>
@@ -497,14 +497,14 @@ function ProgressRing({ value, label }: { value: number; label: string }) {
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
           <span
-            className="text-lg font-bold tabular-nums"
+            className="text-h5 tabular-nums"
             style={{ color }}
           >
             {value}%
           </span>
         </div>
       </div>
-      <span className="mt-2 text-[10px] uppercase tracking-wide text-muted-foreground">
+      <span className="mt-2 text-l6-plus uppercase tracking-wide text-muted-foreground">
         {label}
       </span>
     </div>
@@ -522,17 +522,17 @@ function GateTile({
   okLabel: string;
   notLabel: string;
 }) {
-  const color = ok ? "#16A34A" : "#D97706";
+  const color = ok ? "var(--success)" : "var(--warning)";
   return (
     <div
-      className="rounded-lg border px-4 py-3"
+      className="rounded-md border px-4 py-3"
       style={{ borderColor: `${color}33` }}
     >
       <p className="text-l6-plus uppercase tracking-wide text-muted-foreground">
         {label}
       </p>
       <p
-        className="mt-1 flex items-center gap-1.5 text-sm font-semibold"
+        className="mt-1 flex items-center gap-1.5 text-l6"
         style={{ color }}
       >
         <span
@@ -563,7 +563,7 @@ function BodyField({
   const [local, setLocal] = useState(value);
   return (
     <div>
-      <label className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+      <label className="flex items-center gap-2 text-l6-plus uppercase tracking-[1.5px] text-muted-foreground">
         {label}
         {help}
       </label>
@@ -597,7 +597,7 @@ function StepNotes({
   const [local, setLocal] = useState(initialValue);
   return (
     <div className="mt-3">
-      <label className="text-xs font-medium text-muted-foreground">
+      <label className="text-l6-plus uppercase tracking-[1.5px] text-muted-foreground">
         {label}
       </label>
       <Textarea

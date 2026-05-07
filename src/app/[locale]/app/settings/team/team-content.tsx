@@ -23,10 +23,10 @@ import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 
 const ROLE_STYLE: Record<string, string> = {
-  admin: "bg-[#066DE6]/15 text-[#066DE6]",
+  admin: "bg-primary/15 text-primary",
   compliance_officer: "bg-[#6F4FE0]/15 text-[#6F4FE0]",
-  cto: "bg-[#EA580C]/15 text-[#EA580C]",
-  editor: "bg-[#0891B2]/15 text-[#0891B2]",
+  cto: "bg-accent/15 text-accent",
+  editor: "bg-[#22D3EE]/15 text-[#22D3EE]",
   viewer: "bg-muted text-muted-foreground",
 };
 
@@ -117,7 +117,7 @@ export function TeamContent({
     <div className="space-y-6">
       {/* Plan limit banner */}
       {!canAdd && (
-        <div className="flex items-center gap-4 overflow-hidden rounded-xl bg-card px-5 py-4">
+        <div className="flex items-center gap-4 overflow-hidden rounded-md bg-card p-[18px] shadow-card-lg">
           <div className="relative flex size-10 shrink-0 items-center justify-center">
             <svg viewBox="0 0 36 36" className="size-10 -rotate-90">
               <circle
@@ -127,7 +127,7 @@ export function TeamContent({
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2.5"
-                className="text-white/[0.06]"
+                className="text-border"
               />
               <circle
                 cx="18"
@@ -146,8 +146,8 @@ export function TeamContent({
             </span>
           </div>
           <div className="flex-1">
-            <p className="text-sm font-medium">{t("limits.reached")}</p>
-            <p className="mt-0.5 text-xs text-muted-foreground">
+            <p className="text-l6 text-foreground">{t("limits.reached")}</p>
+            <p className="mt-0.5 text-p4 text-muted-foreground">
               {limit === 1
                 ? t("limits.reachedDescription", {
                     plan: plan.charAt(0).toUpperCase() + plan.slice(1),
@@ -177,16 +177,16 @@ export function TeamContent({
       )}
 
       {/* Members list */}
-      <div className="rounded-xl bg-card">
+      <div className="rounded-md bg-card shadow-card-lg">
         <div className="flex items-center justify-between border-b border-border px-6 py-4">
-          <h2 className="text-sm font-semibold">{t("members")}</h2>
-          <span className="text-xs text-muted-foreground">
+          <h2 className="text-h4 text-foreground">{t("members")}</h2>
+          <span className="text-p4 text-muted-foreground">
             {count === 1
               ? t("memberCount", { count })
               : t("memberCountPlural", { count })}
           </span>
         </div>
-        <div className="divide-y divide-white/[0.04]">
+        <div className="divide-y divide-border">
           {members.map((member) => {
             const isCurrentUser = member.id === currentUserId;
             return (
@@ -195,7 +195,7 @@ export function TeamContent({
                 className="flex items-center gap-4 px-6 py-3.5"
               >
                 {/* Avatar */}
-                <div className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-primary/15 text-xs font-bold text-primary">
+                <div className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-primary/15 text-l6-plus text-primary">
                   {member.avatar_url ? (
                     <img
                       src={member.avatar_url}
@@ -209,20 +209,20 @@ export function TeamContent({
 
                 {/* Name / email */}
                 <div className="min-w-0 flex-1">
-                  <p className="flex items-center gap-2 truncate text-sm font-medium">
+                  <p className="flex items-center gap-2 truncate text-l6 text-foreground">
                     {member.full_name ?? member.email}
                     {isCurrentUser && (
-                      <span className="shrink-0 rounded bg-primary/10 px-1.5 py-0.5 text-[10px] font-semibold text-primary">
+                      <span className="shrink-0 rounded-sm bg-primary/10 px-1.5 py-0.5 text-l6-plus text-primary">
                         {t("you")}
                       </span>
                     )}
                     {member.must_change_password && (
-                      <span className="shrink-0 rounded bg-warning/10 px-1.5 py-0.5 text-[10px] font-semibold text-warning">
+                      <span className="shrink-0 rounded-sm bg-warning/10 px-1.5 py-0.5 text-l6-plus text-warning">
                         {t("pendingPassword")}
                       </span>
                     )}
                   </p>
-                  <p className="truncate text-xs text-muted-foreground">
+                  <p className="truncate text-p4 text-muted-foreground">
                     {member.email}
                   </p>
                 </div>
@@ -239,7 +239,7 @@ export function TeamContent({
                           }
                         }}
                         className={cn(
-                          "rounded-full px-2 py-0.5 text-[10px] font-semibold transition-all",
+                          "rounded-sm px-2 py-0.5 text-l6-plus transition-all",
                           role === member.role
                             ? ROLE_STYLE[role]
                             : "text-muted-foreground hover:text-muted-foreground"
@@ -252,7 +252,7 @@ export function TeamContent({
                 ) : (
                   <span
                     className={cn(
-                      "shrink-0 rounded-full px-2.5 py-0.5 text-l6-plus",
+                      "shrink-0 rounded-sm px-2.5 py-0.5 text-l6-plus",
                       ROLE_STYLE[member.role] ?? ROLE_STYLE.viewer
                     )}
                   >
@@ -399,10 +399,10 @@ function CreateMemberSection({
   }
 
   return (
-    <div className="rounded-xl bg-card">
+    <div className="rounded-md bg-card shadow-card-lg">
       <div className="border-b border-border px-6 py-4">
-        <h2 className="text-sm font-semibold">{t("createTitle")}</h2>
-        <p className="mt-1 text-xs text-muted-foreground">
+        <h2 className="text-h4 text-foreground">{t("createTitle")}</h2>
+        <p className="mt-1 text-p3 text-muted-foreground">
           {t("createDescription")}
         </p>
       </div>
@@ -410,7 +410,7 @@ function CreateMemberSection({
         <form onSubmit={handleCreate} className="space-y-4">
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="memberEmail">
+              <Label size="lg" htmlFor="memberEmail">
                 {t("createEmail")}
                 <FieldHelp {...tip("email")} />
               </Label>
@@ -424,7 +424,7 @@ function CreateMemberSection({
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="memberName">
+              <Label size="lg" htmlFor="memberName">
                 {t("createName")}
                 <FieldHelp {...tip("fullName")} />
               </Label>
@@ -441,7 +441,7 @@ function CreateMemberSection({
 
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="memberRole">
+              <Label size="lg" htmlFor="memberRole">
                 {t("createRoleLabel")}
                 <FieldHelp {...tip("role")} />
               </Label>
@@ -449,7 +449,7 @@ function CreateMemberSection({
                 id="memberRole"
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
-                className="h-9 rounded-lg border border-border bg-muted px-3 text-sm text-foreground outline-none focus:border-primary"
+                className="h-11 rounded-md bg-input px-3 text-p2 text-foreground outline-none border-[1.5px] border-transparent focus:bg-card focus:border-primary/30"
               >
                 {ASSIGNABLE_ROLES.map((r) => (
                   <option key={r} value={r}>
@@ -459,7 +459,7 @@ function CreateMemberSection({
               </select>
             </div>
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="memberPassword">
+              <Label size="lg" htmlFor="memberPassword">
                 {t("createPassword")}
                 <FieldHelp {...tip("password")} />
               </Label>
@@ -499,16 +499,16 @@ function CreateMemberSection({
 
         {/* Show credentials after creation */}
         {createdCredentials && (
-          <div className="mt-4 rounded-lg border border-emerald-500/20 bg-emerald-500/5 p-4">
+          <div className="mt-4 rounded-md border border-success/20 bg-success/5 p-4">
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0 flex-1">
-                <p className="text-sm font-medium text-emerald-400">
+                <p className="text-l6 text-success">
                   {t("credentialsTitle")}
                 </p>
-                <p className="mt-1 text-xs text-muted-foreground">
+                <p className="mt-1 text-p4 text-muted-foreground">
                   {t("credentialsHint")}
                 </p>
-                <div className="mt-3 space-y-1 font-mono text-xs text-foreground">
+                <div className="mt-3 space-y-1 font-mono text-p3 text-foreground">
                   <p>
                     <span className="text-muted-foreground">Email:</span>{" "}
                     {createdCredentials.email}
@@ -526,7 +526,7 @@ function CreateMemberSection({
                 className="shrink-0"
               >
                 {copied ? (
-                  <Icon name="CheckIcon" className="size-3.5 text-emerald-400" />
+                  <Icon name="CheckIcon" className="size-3.5 text-success" />
                 ) : (
                   <Icon name="CopyIcon" className="size-3.5" />
                 )}
@@ -547,7 +547,7 @@ function TeamUpgradePrompt() {
   const t = useTranslations("settings.team");
 
   return (
-    <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-border py-20 text-center">
+    <div className="flex flex-col items-center justify-center rounded-md border border-dashed border-border-outline bg-card py-20 text-center">
       <div className="mb-5 flex size-14 items-center justify-center rounded-full bg-primary/10">
         <Icon
           name="lock-password-stroke-rounded"
@@ -555,10 +555,10 @@ function TeamUpgradePrompt() {
           className="text-primary"
         />
       </div>
-      <h3 className="text-base font-semibold text-foreground">
+      <h3 className="text-h4 text-foreground">
         {t("title")}
       </h3>
-      <p className="mt-2 max-w-sm text-sm text-muted-foreground">
+      <p className="mt-2 max-w-sm text-p3 text-muted-foreground">
         {t("subtitle")}
       </p>
       <Link href="/pricing">

@@ -8,17 +8,17 @@ import type { SbomComponentRecord, VulnerabilityRecord } from "./actions";
 const PREVIEW_LIMIT = 20;
 
 const SEVERITY_DOT: Record<string, string> = {
-  critical: "bg-[#DC2626]",
-  high: "bg-[#D97706]",
-  medium: "bg-[#0891B2]",
-  low: "bg-[#52525B]",
+  critical: "bg-destructive",
+  high: "bg-warning",
+  medium: "bg-primary",
+  low: "bg-muted-foreground",
 };
 
 const SEVERITY_PILL: Record<string, string> = {
-  critical: "bg-[#DC2626]",
-  high: "bg-[#D97706]",
-  medium: "bg-[#0891B2]",
-  low: "bg-[#52525B]",
+  critical: "bg-destructive",
+  high: "bg-warning",
+  medium: "bg-primary",
+  low: "bg-muted-foreground",
 };
 
 function getVulnUrl(cveId: string): string {
@@ -152,28 +152,28 @@ export function SbomComponentTable({
                 </div>
 
                 <div className="min-w-0 flex-1 truncate">
-                  <span className="text-[13px] font-medium text-foreground">
+                  <span className="text-l6 text-foreground">
                     {comp.component_name}
                   </span>
                 </div>
 
                 <div className="hidden w-32 shrink-0 items-center justify-center sm:flex">
                   {comp.component_version ? (
-                    <span className="max-w-full truncate rounded-md bg-muted px-2 py-0.5 text-l6-plus tabular-nums text-muted-foreground">
+                    <span className="max-w-full truncate rounded-sm bg-card px-2 py-0.5 text-l6-plus tabular-nums text-muted-foreground border border-border-outline">
                       {comp.component_version}
                     </span>
                   ) : (
-                    <span className="text-xs text-muted-foreground">—</span>
+                    <span className="text-p4 text-muted-foreground">—</span>
                   )}
                 </div>
 
                 <div className="hidden w-36 shrink-0 items-center justify-center md:flex">
                   {comp.license ? (
-                    <span className="max-w-full truncate rounded-md bg-muted px-2 py-0.5 text-[11px] text-muted-foreground">
+                    <span className="max-w-full truncate rounded-sm bg-card px-2 py-0.5 text-l6-plus text-muted-foreground border border-border-outline">
                       {comp.license}
                     </span>
                   ) : (
-                    <span className="text-xs text-muted-foreground">—</span>
+                    <span className="text-p4 text-muted-foreground">—</span>
                   )}
                 </div>
 
@@ -182,12 +182,12 @@ export function SbomComponentTable({
                     {hasCompVulns ? (
                       <>
                         {comp.critical_vulnerability_count > 0 && (
-                          <span className="inline-flex size-5 items-center justify-center rounded-full bg-[#DC2626] text-l6-plus text-white">
+                          <span className="inline-flex size-5 items-center justify-center rounded-full bg-destructive text-l6-plus text-white">
                             {comp.critical_vulnerability_count}
                           </span>
                         )}
                         {comp.high_vulnerability_count > 0 && (
-                          <span className="inline-flex size-5 items-center justify-center rounded-full bg-[#D97706] text-l6-plus text-white">
+                          <span className="inline-flex size-5 items-center justify-center rounded-full bg-warning text-l6-plus text-white">
                             {comp.high_vulnerability_count}
                           </span>
                         )}
@@ -198,7 +198,7 @@ export function SbomComponentTable({
                         )}
                       </>
                     ) : (
-                      <span className="text-[11px] text-muted-foreground">
+                      <span className="text-p4 text-muted-foreground">
                         —
                       </span>
                     )}
@@ -210,7 +210,7 @@ export function SbomComponentTable({
               {isCompExpanded && (
                 <div className="pb-3 pl-[52px] pr-5 pt-0.5">
                   {isVulnLoading ? (
-                    <div className="py-4 text-center text-xs text-muted-foreground">
+                    <div className="py-4 text-center text-p4 text-muted-foreground">
                       {t("scan.loadingVulns")}
                     </div>
                   ) : vulns && vulns.length > 0 ? (
@@ -231,7 +231,7 @@ export function SbomComponentTable({
                             <div
                               className={cn(
                                 "mt-[5px] size-2 shrink-0 rounded-full",
-                                SEVERITY_DOT[v.severity] ?? "bg-[#52525B]"
+                                SEVERITY_DOT[v.severity] ?? "bg-muted-foreground"
                               )}
                             />
 
@@ -243,43 +243,43 @@ export function SbomComponentTable({
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   onClick={(e) => e.stopPropagation()}
-                                  className="inline-flex items-center gap-1 text-xs font-semibold text-foreground transition-colors hover:text-primary"
+                                  className="inline-flex items-center gap-1 text-l6 text-foreground transition-colors hover:text-primary"
                                 >
                                   {v.cve_id}
                                   <Icon name="ExternalLinkIcon" className="size-2.5 text-muted-foreground" />
                                 </a>
                                 <span
                                   className={cn(
-                                    "rounded-full px-1.5 py-px text-[10px] font-semibold text-white",
-                                    SEVERITY_PILL[v.severity] ?? "bg-[#52525B]"
+                                    "rounded-sm px-1.5 py-px text-l6-plus text-white",
+                                    SEVERITY_PILL[v.severity] ?? "bg-muted-foreground"
                                   )}
                                 >
                                   {t(`scan.severity.${v.severity}`)}
                                 </span>
                                 {v.cvss_score !== null && (
-                                  <span className="text-[10px] tabular-nums text-muted-foreground">
+                                  <span className="text-p4 tabular-nums text-muted-foreground">
                                     CVSS {v.cvss_score.toFixed(1)}
                                   </span>
                                 )}
                                 {v.cisa_kev && (
-                                  <span className="rounded-full bg-destructive px-1.5 py-px text-[9px] font-bold text-white">
+                                  <span className="rounded-sm bg-destructive px-1.5 py-px text-l6-plus text-white">
                                     KEV
                                   </span>
                                 )}
                               </div>
                               {v.description ? (
-                                <p className="mt-0.5 line-clamp-2 text-[11px] leading-relaxed text-muted-foreground">
+                                <p className="mt-0.5 line-clamp-2 text-p4 leading-relaxed text-muted-foreground">
                                   {v.description}
                                 </p>
                               ) : (
-                                <p className="mt-0.5 text-[11px] text-muted-foreground">
+                                <p className="mt-0.5 text-p4 text-muted-foreground">
                                   {t("scan.noDescription")}{" "}
                                   <a
                                     href={vulnUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     onClick={(e) => e.stopPropagation()}
-                                    className="text-primary/50 hover:text-primary hover:underline"
+                                    className="text-primary hover:underline"
                                   >
                                     {t("scan.viewDetails")}
                                   </a>
@@ -291,7 +291,7 @@ export function SbomComponentTable({
                       })}
                     </div>
                   ) : (
-                    <div className="py-4 text-center text-xs text-muted-foreground">
+                    <div className="py-4 text-center text-p4 text-muted-foreground">
                       {t("scan.noVulnsForComp")}
                     </div>
                   )}
@@ -308,7 +308,7 @@ export function SbomComponentTable({
           <button
             type="button"
             onClick={onToggleShowAll}
-            className="text-xs font-medium text-primary hover:underline"
+            className="text-l6 text-primary hover:underline"
           >
             {showAll
               ? t("components.showLess")

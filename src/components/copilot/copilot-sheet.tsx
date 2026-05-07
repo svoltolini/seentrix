@@ -161,7 +161,7 @@ export function CopilotSheet() {
           // citation pills, link buttons, and multi-paragraph drafts
           // than a side-panel drawer. `2xl` = 672 px — ~75 % wider
           // than the default, still leaves the page visible behind it.
-          "flex-col gap-0 border-l border-border bg-[#09090B] p-0",
+          "flex-col gap-0 border-l border-border bg-card p-0",
           "data-[side=right]:sm:max-w-2xl",
         )}
       >
@@ -170,14 +170,14 @@ export function CopilotSheet() {
         {/* Header ---------------------------------------------------------- */}
         <div className="flex items-center justify-between border-b border-border px-5 py-4">
           <div className="flex flex-col gap-0.5">
-            <span className="flex items-center gap-2 text-l6-plus uppercase tracking-[0.18em] text-[#066DE6]">
+            <span className="flex items-center gap-2 text-l6-plus uppercase tracking-[0.18em] text-primary">
               <Icon name="ai-magic-stroke-rounded" size={12} />
               {t("eyebrow")}
-              <span className="rounded-full bg-muted px-1.5 py-0.5 text-[9px] font-medium tracking-normal text-muted-foreground">
+              <span className="rounded-sm bg-muted px-1.5 py-0.5 text-l6-plus tracking-normal text-muted-foreground">
                 beta
               </span>
             </span>
-            <span className="font-heading text-base font-semibold text-foreground">
+            <span className="text-h5 text-foreground">
               {t("title")}
             </span>
           </div>
@@ -262,7 +262,7 @@ export function CopilotSheet() {
             </div>
           )}
           {error && !hasStreamedContent(messages) && (
-            <div className="mt-4 rounded-xl bg-red-500/10 px-4 py-3 text-xs text-red-300">
+            <div className="mt-4 rounded-md bg-destructive/10 px-4 py-3 text-p3 text-destructive">
               {t("error")}
             </div>
           )}
@@ -271,7 +271,7 @@ export function CopilotSheet() {
         {/* Composer -------------------------------------------------------- */}
         <form
           onSubmit={onSubmit}
-          className="flex flex-col gap-2 border-t border-border bg-[#0B0B12] px-4 pt-3 pb-4"
+          className="flex flex-col gap-2 border-t border-border bg-card px-4 pt-3 pb-4"
         >
           {/*
             Flex row with `items-end` — when the textarea is one line
@@ -281,7 +281,7 @@ export function CopilotSheet() {
             past one line the button stays in the bottom-right corner,
             matching the ChatGPT composer convention.
           */}
-          <div className="flex items-end gap-2 rounded-md bg-muted px-3.5 py-2 ring-1 ring-white/[0.08] transition focus-within:bg-muted focus-within:ring-[#066DE6]/40">
+          <div className="flex items-end gap-2 rounded-md bg-input px-3.5 py-2 border-[1.5px] border-transparent transition focus-within:bg-card focus-within:border-primary/30">
             <textarea
               value={input}
               onChange={(e) => setInput(e.target.value)}
@@ -290,7 +290,7 @@ export function CopilotSheet() {
               rows={1}
               // Single-line height = 32 px so it matches the button.
               // leading-6 + py-1 gives 24 + 4 + 4 = 32.
-              className="max-h-[180px] min-h-[32px] flex-1 resize-none bg-transparent py-1 text-sm leading-6 text-foreground outline-none placeholder:text-muted-foreground"
+              className="max-h-[180px] min-h-[32px] flex-1 resize-none bg-transparent py-1 text-p2 leading-6 text-foreground outline-none placeholder:text-muted-foreground"
               disabled={isStreaming}
             />
             {isStreaming ? (
@@ -310,7 +310,7 @@ export function CopilotSheet() {
                 className={cn(
                   "flex size-8 shrink-0 items-center justify-center rounded-full transition",
                   input.trim()
-                    ? "bg-[#066DE6] text-white hover:bg-[#066DE6]"
+                    ? "bg-primary text-white hover:bg-primary/90"
                     : "bg-muted text-muted-foreground",
                 )}
               >
@@ -318,7 +318,7 @@ export function CopilotSheet() {
               </button>
             )}
           </div>
-          <p className="px-1 text-[10px] leading-relaxed text-muted-foreground">
+          <p className="px-1 text-p4 leading-relaxed text-muted-foreground">
             {t("footer")}
           </p>
         </form>
@@ -338,13 +338,13 @@ function EmptyState() {
   return (
     <div className="flex h-full flex-col items-start gap-6 py-2">
       <div className="flex flex-col gap-2">
-        <span className="text-l6-plus uppercase tracking-[0.18em] text-[#066DE6]">
+        <span className="text-l6-plus uppercase tracking-[0.18em] text-primary">
           {t("emptyEyebrow")}
         </span>
-        <h2 className="font-heading text-xl font-semibold text-foreground">
+        <h2 className="text-h3 text-foreground">
           {t("emptyTitle")}
         </h2>
-        <p className="text-sm leading-relaxed text-muted-foreground">
+        <p className="text-p3 leading-relaxed text-muted-foreground">
           {t("emptyBody")}
         </p>
       </div>
@@ -356,12 +356,12 @@ function EmptyState() {
           <button
             key={ex}
             onClick={() => open(ex)}
-            className="flex w-full items-start gap-2 rounded-xl bg-muted px-3 py-3 text-left text-sm text-foreground/90 transition hover:bg-muted"
+            className="flex w-full items-start gap-2 rounded-md bg-muted px-3 py-3 text-left text-p3 text-foreground transition hover:bg-muted/60"
           >
             <Icon
               name="arrow-right-01-stroke-rounded"
               size={14}
-              className="mt-1 shrink-0 text-[#066DE6]"
+              className="mt-1 shrink-0 text-primary"
             />
             <span>{ex}</span>
           </button>
@@ -422,10 +422,10 @@ function findPrecedingUserText(
 
 function ThinkingBubble() {
   return (
-    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+    <div className="flex items-center gap-2 text-p4 text-muted-foreground">
       <span className="relative flex h-2 w-2">
-        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#066DE6] opacity-75" />
-        <span className="relative inline-flex h-2 w-2 rounded-full bg-[#066DE6]" />
+        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
+        <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
       </span>
       <span>Thinking…</span>
     </div>

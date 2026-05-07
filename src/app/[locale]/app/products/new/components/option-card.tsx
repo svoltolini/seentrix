@@ -21,19 +21,19 @@ export function OptionCard({
       type="button"
       onClick={onSelect}
       className={cn(
-        "group flex w-full items-start gap-3 rounded-xl border px-4 py-3.5 text-left transition-all duration-150",
+        "group flex w-full items-start gap-3 rounded-md border-[1.5px] bg-card px-4 py-3.5 text-left transition-all duration-150",
         selected
           ? "border-primary/40 bg-primary/5"
-          : "border-border hover:border-primary/25 hover:bg-muted/40",
+          : "border-border-outline hover:border-primary/25 hover:bg-muted/40",
         className
       )}
     >
       <div
         className={cn(
-          "mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full border-2 transition-all duration-150",
+          "mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full border-[1.5px] transition-all duration-150",
           selected
             ? "border-primary bg-primary"
-            : "border-muted-foreground/30 group-hover:border-muted-foreground/50"
+            : "border-border-outline group-hover:border-muted-foreground"
         )}
       >
         {selected && (
@@ -41,9 +41,9 @@ export function OptionCard({
         )}
       </div>
       <div className="flex flex-col gap-0.5">
-        <span className={cn("text-sm font-medium", selected ? "text-foreground" : "text-foreground")}>{title}</span>
+        <span className="text-l6 text-foreground">{title}</span>
         {description && (
-          <span className="text-[13px] leading-snug text-muted-foreground">{description}</span>
+          <span className="text-p3 leading-snug text-muted-foreground">{description}</span>
         )}
       </div>
     </button>

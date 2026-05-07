@@ -67,8 +67,8 @@ export function ActivityContent({ activities }: { activities: Activity[] }) {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-sm font-semibold">{t("title")}</h2>
-          <p className="mt-1 text-xs text-muted-foreground">
+          <h2 className="text-h4 text-foreground">{t("title")}</h2>
+          <p className="mt-1 text-p3 text-muted-foreground">
             {t("subtitle")}
           </p>
         </div>
@@ -90,12 +90,12 @@ export function ActivityContent({ activities }: { activities: Activity[] }) {
                 className="fixed inset-0 z-40"
                 onClick={() => setShowExportMenu(false)}
               />
-              <div className="absolute right-0 top-full z-50 mt-1.5 w-48 overflow-hidden rounded-lg bg-muted py-1 shadow-xl">
+              <div className="absolute right-0 top-full z-50 mt-1.5 w-48 overflow-hidden rounded-md bg-card shadow-card-md py-1">
                 {EXPORT_PERIODS.map((months) => (
                   <button
                     key={months}
                     onClick={() => handleExport(months)}
-                    className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-foreground transition-colors hover:bg-muted"
+                    className="flex w-full items-center gap-2 px-3 py-2 text-left text-p3 text-foreground transition-colors hover:bg-muted/60"
                   >
                     <Icon name="Download" className="size-3.5 text-muted-foreground" />
                     {t(`exportPeriod.${months}` as Parameters<typeof t>[0])}
@@ -109,12 +109,12 @@ export function ActivityContent({ activities }: { activities: Activity[] }) {
 
       {/* Activity list */}
       {activities.length === 0 ? (
-        <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-border py-16 text-center">
-          <p className="text-sm text-muted-foreground">{t("empty")}</p>
+        <div className="flex flex-col items-center justify-center rounded-md border border-dashed border-border-outline bg-card py-16 text-center">
+          <p className="text-p3 text-muted-foreground">{t("empty")}</p>
         </div>
       ) : (
-        <div className="rounded-xl bg-card">
-          <div className="divide-y divide-white/[0.04]">
+        <div className="rounded-md bg-card shadow-card-lg">
+          <div className="divide-y divide-border">
             {activities.map((activity) => {
               const initials = activity.actor_name
                 ? activity.actor_name.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase()
@@ -140,8 +140,8 @@ export function ActivityContent({ activities }: { activities: Activity[] }) {
 
                   {/* Content */}
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm">
-                      <span className="font-medium">
+                    <p className="text-p3">
+                      <span className="text-l6 text-foreground">
                         {activity.actor_name ?? activity.actor_email ?? "System"}
                       </span>{" "}
                       <span className="text-muted-foreground">
@@ -154,13 +154,13 @@ export function ActivityContent({ activities }: { activities: Activity[] }) {
                           <span className="mx-1 text-muted-foreground">
                             ·
                           </span>
-                          <span className="font-medium">
+                          <span className="text-l6 text-foreground">
                             {activity.target_name}
                           </span>
                         </>
                       )}
                     </p>
-                    <p className="mt-0.5 text-[11px] text-muted-foreground">
+                    <p className="mt-0.5 text-p4 text-muted-foreground">
                       {relativeTime(activity.created_at)}
                     </p>
                   </div>

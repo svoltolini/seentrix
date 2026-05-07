@@ -36,13 +36,13 @@ export function ComplianceTrendChart({ data, className }: Props) {
           className,
         )}
       >
-        <p className="text-[10px] font-semibold uppercase tracking-[2.5px] text-primary">
+        <p className="text-l6-plus uppercase tracking-[2.5px] text-primary">
           {t("complianceTrend.eyebrow")}
         </p>
         <h2 className="mt-1 text-h5 text-foreground">
           {t("complianceTrend.title")}
         </h2>
-        <p className="py-12 text-center text-xs text-muted-foreground">
+        <p className="py-12 text-center text-p4 text-muted-foreground">
           {t("complianceTrend.noData")}
         </p>
       </div>
@@ -87,13 +87,13 @@ export function ComplianceTrendChart({ data, className }: Props) {
       )}
     >
       <div className="mb-4">
-        <p className="text-[10px] font-semibold uppercase tracking-[2.5px] text-primary">
+        <p className="text-l6-plus uppercase tracking-[2.5px] text-primary">
           {t("complianceTrend.eyebrow")}
         </p>
         <h2 className="mt-1 text-h5 text-foreground">
           {t("complianceTrend.title")}
         </h2>
-        <p className="mt-0.5 text-[11px] text-muted-foreground">
+        <p className="mt-0.5 text-p4 text-muted-foreground">
           {t("complianceTrend.subtitle")}
         </p>
       </div>
@@ -128,8 +128,8 @@ export function ComplianceTrendChart({ data, className }: Props) {
             content={({ payload, label }) => {
               if (!payload?.length || !label) return null;
               return (
-                <div className="rounded-lg bg-muted px-3 py-1.5 text-xs shadow-md">
-                  <p className="mb-1 font-medium">{formatDate(String(label))}</p>
+                <div className="rounded-md bg-card px-3 py-1.5 text-p4 shadow-card-sm">
+                  <p className="mb-1 text-p4 text-foreground">{formatDate(String(label))}</p>
                   {payload.map((entry) => (
                     <div
                       key={entry.dataKey as string}
@@ -145,7 +145,7 @@ export function ComplianceTrendChart({ data, className }: Props) {
                           : productNames[entry.dataKey as string] ??
                             entry.dataKey}
                       </span>
-                      <span className="ml-auto tabular-nums font-medium">
+                      <span className="ml-auto tabular-nums text-p4 text-foreground">
                         {entry.value}%
                       </span>
                     </div>

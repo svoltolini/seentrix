@@ -57,7 +57,7 @@ export function SbomListItem({
   return (
     <div
       className={cn(
-        "overflow-hidden rounded-xl bg-card transition-opacity",
+        "overflow-hidden rounded-md bg-card shadow-card-sm transition-opacity",
         isArchived && "opacity-50"
       )}
     >
@@ -72,29 +72,29 @@ export function SbomListItem({
             onToggleExpand();
           }
         }}
-        className="flex w-full cursor-pointer items-center gap-3 px-5 py-4 text-left transition-colors hover:bg-muted"
+        className="flex w-full cursor-pointer items-center gap-3 px-5 py-4 text-left transition-colors hover:bg-muted/60"
       >
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="truncate text-sm font-medium text-foreground">
+            <span className="truncate text-l6 text-foreground">
               {sbom.file_name ?? "SBOM"}
             </span>
-            <span className="shrink-0 rounded-full bg-muted px-2.5 py-0.5 text-l6-plus text-muted-foreground">
+            <span className="shrink-0 rounded-sm bg-muted px-2.5 py-0.5 text-l6-plus text-muted-foreground">
               {t(`formats.${sbom.sbom_format}`)}
             </span>
             {isArchived && (
-              <span className="shrink-0 rounded-full bg-muted px-2 py-0.5 text-l6-plus text-muted-foreground">
+              <span className="shrink-0 rounded-sm bg-muted px-2 py-0.5 text-l6-plus text-muted-foreground">
                 {t("list.archived")}
               </span>
             )}
           </div>
-          <div className="mt-1 flex items-center gap-3 text-xs text-muted-foreground">
+          <div className="mt-1 flex items-center gap-3 text-p4 text-muted-foreground">
             <span>
               {sbom.total_components}{" "}
               {sbom.total_components === 1 ? "component" : "components"}
             </span>
             {hasScanned && hasVulns && (
-              <span className="font-medium text-destructive">
+              <span className="text-l6 text-destructive">
                 {sbom.vulnerability_count}{" "}
                 {sbom.vulnerability_count === 1
                   ? t("scan.vuln")
@@ -102,7 +102,7 @@ export function SbomListItem({
               </span>
             )}
             {hasScanned && !hasVulns && (
-              <span className="text-[#16A34A]">{t("scan.noVulns")}</span>
+              <span className="text-success">{t("scan.noVulns")}</span>
             )}
           </div>
         </div>
@@ -149,7 +149,7 @@ export function SbomListItem({
         <div className="border-t border-border">
           {isLoading ? (
             <div className="flex items-center justify-center py-8">
-              <p className="text-sm text-muted-foreground">
+              <p className="text-p3 text-muted-foreground">
                 {t("components.loading")}
               </p>
             </div>
@@ -158,7 +158,7 @@ export function SbomListItem({
               {/* Scan actions */}
               <div className="px-5 py-4">
                 {!hasScanned ? (
-                  <div className="flex flex-col items-center gap-3 rounded-lg bg-muted py-6">
+                  <div className="flex flex-col items-center gap-3 rounded-md bg-muted py-6">
                     <Button
                       size="sm"
                       disabled={isScanning}
@@ -179,7 +179,7 @@ export function SbomListItem({
                         : t("scan.scanButton")}
                     </Button>
                     {isScanning && (
-                      <span className="text-xs text-muted-foreground">
+                      <span className="text-p4 text-muted-foreground">
                         {t("scan.scanningDescription")}
                       </span>
                     )}
@@ -205,12 +205,12 @@ export function SbomListItem({
                       {isScanning ? t("scan.scanning") : t("scan.rescan")}
                     </Button>
                     {sbom.kev_count > 0 && (
-                      <span className="rounded-full bg-destructive px-2.5 py-0.5 text-l6-plus text-white">
+                      <span className="rounded-sm bg-destructive px-2.5 py-0.5 text-l6-plus text-white">
                         KEV {sbom.kev_count}
                       </span>
                     )}
                     {isScanning && (
-                      <span className="text-xs text-muted-foreground">
+                      <span className="text-p4 text-muted-foreground">
                         {t("scan.scanningDescription")}
                       </span>
                     )}

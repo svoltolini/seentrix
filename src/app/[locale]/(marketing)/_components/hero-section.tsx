@@ -82,7 +82,7 @@ export function HeroSection() {
 
         <p
           data-hero-reveal
-          className="max-w-2xl text-p2 text-muted-foreground sm:text-lg"
+          className="max-w-2xl text-p1 text-muted-foreground"
         >
           {t("subtitle")}
         </p>
@@ -100,7 +100,7 @@ export function HeroSection() {
         </div>
 
         <div data-hero-reveal className="mt-4">
-          <p className="mb-4 text-sm font-medium text-muted-foreground">
+          <p className="mb-4 text-p3 text-muted-foreground">
             {t("countdown.title")}
           </p>
           <CountdownTimer />

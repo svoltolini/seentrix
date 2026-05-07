@@ -6,10 +6,10 @@ import { Icon } from "@/components/icon";
 import type { OverdueItem } from "../../products/actions";
 
 const PRIORITY_DOT: Record<string, string> = {
-  critical: "bg-[#DC2626]",
-  high: "bg-[#D97706]",
-  medium: "bg-[#066DE6]",
-  low: "bg-[#6B7280]",
+  critical: "bg-destructive",
+  high: "bg-warning",
+  medium: "bg-primary",
+  low: "bg-muted-foreground",
 };
 
 interface Props {
@@ -23,7 +23,7 @@ export function OverdueTasksWidget({ count, items }: Props) {
   return (
     <div className="flex h-full flex-col rounded-md bg-muted p-5">
       <div className="mb-4">
-        <p className="text-[10px] font-semibold uppercase tracking-[2.5px] text-primary">
+        <p className="text-l6-plus uppercase tracking-[2.5px] text-primary">
           {t("overdueTasks.eyebrow")}
         </p>
         <h2 className="mt-1 text-h5 text-foreground">
@@ -36,18 +36,18 @@ export function OverdueTasksWidget({ count, items }: Props) {
           <Icon
             name="checkmark-circle-01-stroke-rounded"
             size={40}
-            className="mb-3 text-[#16A34A]"
+            className="mb-3 text-success"
           />
-          <p className="text-sm font-medium text-[#16A34A]">
+          <p className="text-p3 text-success">
             {t("overdueTasks.allOnTrack")}
           </p>
-          <p className="mt-1 text-xs text-muted-foreground">
+          <p className="mt-1 text-p4 text-muted-foreground">
             {t("overdueTasks.allOnTrackDescription")}
           </p>
         </div>
       ) : (
         <>
-          <p className="mb-3 text-3xl font-bold tabular-nums text-[#DC2626]">
+          <p className="mb-3 text-h2 tabular-nums text-destructive">
             {count}
           </p>
           <div className="space-y-2.5">
@@ -55,20 +55,20 @@ export function OverdueTasksWidget({ count, items }: Props) {
               <Link
                 key={item.id}
                 href={`/app/products/${item.productId}/checklist`}
-                className="group flex items-start gap-2.5 rounded-lg px-2 py-1.5 transition-colors hover:bg-muted"
+                className="group flex items-start gap-2.5 rounded-sm px-2 py-1.5 transition-colors hover:bg-card"
               >
                 <span
                   className={`mt-1.5 size-2 shrink-0 rounded-full ${PRIORITY_DOT[item.priority] ?? PRIORITY_DOT.medium}`}
                 />
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-xs font-medium text-foreground transition-colors group-hover:text-primary">
+                  <p className="truncate text-p4 text-foreground transition-colors group-hover:text-primary">
                     {item.title}
                   </p>
-                  <p className="text-[11px] text-muted-foreground">
+                  <p className="text-p4 text-muted-foreground">
                     {item.productName}
                   </p>
                 </div>
-                <span className="shrink-0 text-l6-plus tabular-nums text-[#DC2626]">
+                <span className="shrink-0 text-l6-plus tabular-nums text-destructive">
                   {t("overdueTasks.daysOverdue", { days: item.daysOverdue })}
                 </span>
               </Link>

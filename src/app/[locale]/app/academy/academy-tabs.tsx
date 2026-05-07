@@ -59,7 +59,7 @@ export function AcademyTabs({
       {isAdminOrCO && (
         <TabsContent value="team-progress" className="mt-6">
           {teamProgress ?? (
-            <p className="rounded-xl bg-muted p-6 text-sm text-muted-foreground">
+            <p className="rounded-md bg-muted p-6 text-p3 text-muted-foreground">
               —
             </p>
           )}
@@ -107,21 +107,21 @@ function LessonCard({
   return (
     <Link
       href={`/app/academy/${id}`}
-      className="group flex items-start gap-4 rounded-md bg-muted p-6 transition-colors duration-300 hover:bg-muted"
+      className="group flex items-start gap-4 rounded-md bg-card shadow-card-sm p-6 transition-colors duration-300 hover:bg-muted/30"
     >
       <div className="min-w-0 flex-1">
-        <p className="font-heading text-[15px] font-semibold text-foreground group-hover:text-primary">
+        <p className="text-h5 text-foreground group-hover:text-primary">
           {title}
         </p>
-        <div className="mt-1.5 flex items-center gap-2 text-[11px]">
+        <div className="mt-1.5 flex items-center gap-2 text-p4">
           <span className="text-muted-foreground">{duration}</span>
           <span className="text-muted-foreground">·</span>
           {done ? (
-            <span className="inline-flex items-center gap-1 rounded-full bg-[#16A34A]/10 px-2 py-0.5 font-medium text-[#16A34A]">
+            <span className="inline-flex items-center gap-1 rounded-sm bg-success/10 px-2 py-0.5 text-l6-plus text-success">
               {completedLabel}
             </span>
           ) : (
-            <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2 py-0.5 font-medium text-primary">
+            <span className="inline-flex items-center gap-1 rounded-sm bg-primary/10 px-2 py-0.5 text-l6-plus text-primary">
               {openLabel}
             </span>
           )}
@@ -174,13 +174,13 @@ function ScreenCard({
   const doneCount = screen.lessons.filter((id) => completed.has(id)).length;
 
   return (
-    <div className="rounded-md bg-muted p-6 transition-colors duration-300 hover:bg-muted">
+    <div className="rounded-md bg-card shadow-card-sm p-6 transition-colors duration-300 hover:bg-muted/30">
       <div className="flex items-center gap-3">
         <div className="min-w-0 flex-1">
-          <p className="font-heading text-[15px] font-semibold text-foreground">
+          <p className="text-h5 text-foreground">
             {screenName}
           </p>
-          <p className="mt-0.5 text-[11px] text-muted-foreground">
+          <p className="mt-0.5 text-p4 text-muted-foreground">
             {tCard("meta", {
               count: screen.lessons.length,
               minutes: totalMinutes,
@@ -191,7 +191,7 @@ function ScreenCard({
         </div>
         <Link
           href={screen.href}
-          className="shrink-0 rounded-md px-2.5 py-1 text-l6-plus text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+          className="shrink-0 rounded-sm px-2.5 py-1 text-l6-plus text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
         >
           {openLabel} →
         </Link>
@@ -205,7 +205,7 @@ function ScreenCard({
             <li key={id}>
               <Link
                 href={`/app/academy/${id}`}
-                className="group flex items-center gap-2 rounded-md px-2 py-1.5 text-[12px] transition-colors hover:bg-muted"
+                className="group flex items-center gap-2 rounded-sm px-2 py-1.5 text-p4 transition-colors hover:bg-muted/60"
               >
                 <Icon
                   name={
@@ -214,7 +214,7 @@ function ScreenCard({
                       : "circle-stroke-rounded"
                   }
                   size={14}
-                  className={done ? "text-[#16A34A]" : "text-muted-foreground"}
+                  className={done ? "text-success" : "text-muted-foreground"}
                 />
                 <span className="flex-1 truncate text-foreground group-hover:text-primary">
                   {lesson.title}

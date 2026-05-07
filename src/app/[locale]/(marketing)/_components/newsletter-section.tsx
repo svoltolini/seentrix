@@ -53,7 +53,7 @@ export function NewsletterSection() {
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
             {t("title")}
           </h2>
-          <p className="mt-4 text-lg text-muted-foreground">
+          <p className="mt-4 text-p1 text-muted-foreground">
             {t("subtitle")}
           </p>
 
@@ -81,22 +81,22 @@ export function NewsletterSection() {
           </form>
 
           {state?.status === "success" && (
-            <p className="mt-4 text-sm font-medium text-success">
+            <p className="mt-4 text-p3 text-success">
               {t("success")}
             </p>
           )}
           {state?.status === "error" && (
-            <p className="mt-4 text-sm font-medium text-destructive">
+            <p className="mt-4 text-p3 text-destructive">
               {t("error")}
             </p>
           )}
           {state?.status === "duplicate" && (
-            <p className="mt-4 text-sm font-medium text-warning">
+            <p className="mt-4 text-p3 text-warning">
               {t("duplicate")}
             </p>
           )}
 
-          <p className="mt-4 text-xs text-muted-foreground">
+          <p className="mt-4 text-p4-r text-muted-foreground">
             {t("privacy")}
           </p>
         </div>

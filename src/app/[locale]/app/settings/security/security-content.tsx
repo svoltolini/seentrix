@@ -114,10 +114,10 @@ export function SecurityContent({
   return (
     <div className="space-y-6">
       {/* Current state */}
-      <div className="rounded-xl bg-card">
+      <div className="rounded-md bg-card shadow-card-lg">
         <div className="border-b border-border px-6 py-4">
-          <h2 className="text-sm font-semibold">Two-factor authentication</h2>
-          <p className="mt-0.5 text-xs text-muted-foreground">
+          <h2 className="text-h4 text-foreground">Two-factor authentication</h2>
+          <p className="mt-0.5 text-p3 text-muted-foreground">
             Adds a second step on sign-in — a 6-digit code from an
             authenticator app on your phone. Strongly recommended, required
             for admins of organisations on a paid plan.
@@ -126,19 +126,19 @@ export function SecurityContent({
 
         <div className="px-6 py-5">
           {hasTotp ? (
-            <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-[#16A34A]/30 bg-[#16A34A]/[0.06] p-4">
+            <div className="flex flex-wrap items-center justify-between gap-3 rounded-md border border-success/30 bg-success/5 p-4">
               <div className="flex items-start gap-3">
-                <div className="flex size-8 items-center justify-center rounded-full bg-[#16A34A]/20 text-[#16A34A]">
+                <div className="flex size-8 items-center justify-center rounded-full bg-success/20 text-success">
                   <Icon
                     name="checkmark-circle-01-stroke-rounded"
                     size={16}
                   />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-foreground">
+                  <p className="text-l6 text-foreground">
                     2FA is enabled
                   </p>
-                  <p className="mt-0.5 text-xs text-muted-foreground">
+                  <p className="mt-0.5 text-p4 text-muted-foreground">
                     {friendlyName ?? "TOTP authenticator"}
                   </p>
                 </div>
@@ -154,7 +154,7 @@ export function SecurityContent({
             </div>
           ) : state.kind === "idle" || state.kind === "done" ? (
             <div>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-p3 text-muted-foreground">
                 2FA is not yet set up on this account.
               </p>
               <Button onClick={startEnrolment} size="sm" className="mt-3">
@@ -198,18 +198,18 @@ function EnrolStep({
   return (
     <div className="space-y-5">
       <div>
-        <p className="text-sm font-semibold text-foreground">
+        <p className="text-l5 text-foreground">
           1. Scan the QR code
         </p>
-        <p className="mt-1 text-xs text-muted-foreground">
+        <p className="mt-1 text-p3 text-muted-foreground">
           Open your authenticator app (1Password, Authy, Google Authenticator,
           etc.) and scan this QR code, or paste the secret manually.
         </p>
         <div
-          className="mt-4 inline-block rounded-xl bg-white p-3"
+          className="mt-4 inline-block rounded-md bg-white p-3 shadow-card-sm"
           dangerouslySetInnerHTML={{ __html: state.qrSvg }}
         />
-        <p className="mt-3 text-[11px] text-muted-foreground">
+        <p className="mt-3 text-p4 text-muted-foreground">
           Manual secret:{" "}
           <code className="rounded-md bg-muted px-1.5 py-0.5 font-mono">
             {state.secret}
@@ -218,7 +218,7 @@ function EnrolStep({
       </div>
 
       <div>
-        <Label htmlFor="mfa-code" className="text-sm font-semibold">
+        <Label htmlFor="mfa-code" size="lg">
           2. Enter the 6-digit code
         </Label>
         <Input

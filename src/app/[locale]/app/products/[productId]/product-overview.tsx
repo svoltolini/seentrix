@@ -26,24 +26,11 @@ import { PRODUCT_TYPES } from "./constants";
 import { FieldHelp } from "@/components/field-help";
 
 const TYPE_STYLE: Record<string, { bg: string; text: string }> = {
-  hardware: { bg: "bg-[#066DE6]/15", text: "text-[#066DE6]" },
+  hardware: { bg: "bg-primary/15", text: "text-primary" },
   software: { bg: "bg-[#6F4FE0]/15", text: "text-[#6F4FE0]" },
-  firmware: { bg: "bg-[#EA580C]/15", text: "text-[#EA580C]" },
-  iot: { bg: "bg-[#0891B2]/15", text: "text-[#0891B2]" },
+  firmware: { bg: "bg-accent/15", text: "text-accent" },
+  iot: { bg: "bg-[#22D3EE]/15", text: "text-[#22D3EE]" },
 };
-
-const CATEGORY_PILL: Record<string, string> = {
-  default: "bg-[#066DE6]",
-  important_class_i: "bg-[#D97706]",
-  important_class_ii: "bg-[#EA580C]",
-  critical: "bg-[#DC2626]",
-};
-
-function scoreColor(score: number): string {
-  if (score >= 75) return "#16A34A";
-  if (score >= 40) return "#D97706";
-  return "#DC2626";
-}
 
 export function ProductOverview({
   product,
@@ -127,7 +114,7 @@ export function ProductOverview({
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         {/* Type — purple */}
         <div
-          className="overflow-hidden rounded-xl"
+          className="overflow-hidden rounded-md"
           style={{ background: "linear-gradient(135deg, #6F4FE0, #066DE6)" }}
         >
           <div className="p-5">
@@ -135,7 +122,7 @@ export function ProductOverview({
               {t("detail.overview.type")}
             </p>
             <div className="mt-2">
-              <span className="inline-block rounded-full bg-black/20 px-2.5 py-0.5 text-xs font-semibold text-white">
+              <span className="inline-block rounded-sm bg-white/20 px-2.5 py-0.5 text-l6-plus text-white">
                 {product.type ? t(`types.${product.type}`) : "\u2014"}
               </span>
             </div>
@@ -144,17 +131,17 @@ export function ProductOverview({
 
         {/* CRA Category */}
         <div
-          className="overflow-hidden rounded-xl"
+          className="overflow-hidden rounded-md"
           style={{
             background: product.cra_category
               ? product.cra_category === "critical"
-                ? "linear-gradient(135deg, #DC2626, #E11D48)"
+                ? "linear-gradient(135deg, #E60019, #6F4FE0 60%, #066DE6)"
                 : product.cra_category === "important_class_ii"
-                  ? "linear-gradient(135deg, #EA580C, #DC2626)"
+                  ? "linear-gradient(135deg, #FF6D00, #6F4FE0 60%, #066DE6)"
                   : product.cra_category === "important_class_i"
-                    ? "linear-gradient(135deg, #D97706, #EA580C)"
-                    : "linear-gradient(135deg, #066DE6, #0891B2)"
-              : "linear-gradient(135deg, #52525B, #3F3F46)",
+                    ? "linear-gradient(135deg, #FF9E55, #066DE6)"
+                    : "linear-gradient(135deg, #066DE6, #22D3EE)"
+              : "linear-gradient(135deg, #2C3659, #4B5670)",
           }}
         >
           <div className="p-5">
@@ -163,7 +150,7 @@ export function ProductOverview({
             </p>
             {product.cra_category ? (
               <div className="mt-2">
-                <span className="inline-block rounded-full bg-black/20 px-2.5 py-0.5 text-xs font-semibold text-white">
+                <span className="inline-block rounded-sm bg-white/20 px-2.5 py-0.5 text-l6-plus text-white">
                   {t(`categories.${product.cra_category}`)}
                 </span>
               </div>
@@ -171,7 +158,7 @@ export function ProductOverview({
               <div className="mt-2">
                 <Link
                   href={`/app/products/${product.id}/assess`}
-                  className="text-xs font-medium text-white hover:underline"
+                  className="text-l6 text-white hover:underline"
                 >
                   {t("detail.overview.runAssessment")} &rarr;
                 </Link>
@@ -182,24 +169,24 @@ export function ProductOverview({
 
         {/* Compliance — green */}
         <div
-          className="overflow-hidden rounded-xl"
+          className="overflow-hidden rounded-md"
           style={{
             background: hasChecklist
-              ? "linear-gradient(135deg, #16A34A, #15803D)"
-              : "linear-gradient(135deg, #52525B, #3F3F46)",
+              ? "linear-gradient(135deg, #4CD964, #16A34A)"
+              : "linear-gradient(135deg, #2C3659, #4B5670)",
           }}
         >
           <div className="p-5">
             <p className="text-l6-plus text-white">
               {t("detail.overview.complianceScore")}
             </p>
-            <p className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white">
+            <p className="mt-2 text-h2 tabular-nums tracking-tight text-white">
               {hasChecklist ? `${complianceScore}%` : "\u2014"}
             </p>
             {hasChecklist && (
-              <div className="mt-2.5 h-3 overflow-hidden rounded-[3px] bg-black/25">
+              <div className="mt-2.5 h-3 overflow-hidden rounded-sm bg-white/25">
                 <div
-                  className="h-full rounded-[3px] bg-white transition-all duration-500"
+                  className="h-full rounded-sm bg-white transition-all duration-500"
                   style={{ width: `${complianceScore}%` }}
                 />
               </div>
@@ -209,20 +196,20 @@ export function ProductOverview({
 
         {/* Conformity Route — blue */}
         <div
-          className="overflow-hidden rounded-xl"
-          style={{ background: "linear-gradient(135deg, #066DE6, #0891B2)" }}
+          className="overflow-hidden rounded-md"
+          style={{ background: "linear-gradient(135deg, #066DE6, #22D3EE)" }}
         >
           <div className="p-5">
             <p className="text-l6-plus text-white">
               {t("detail.overview.conformityRoute")}
             </p>
-            <p className="mt-2 text-sm font-semibold text-white">
+            <p className="mt-2 text-l6 text-white">
               {product.conformity_route
                 ? tAssessment(`result.routes.${product.conformity_route}`)
                 : "\u2014"}
             </p>
             {product.requires_notified_body && (
-              <p className="mt-1 text-[11px] text-white">
+              <p className="mt-1 text-p4 text-white">
                 {t("detail.overview.notifiedBody")}: {t("detail.overview.yes")}
               </p>
             )}
@@ -270,7 +257,7 @@ export function ProductOverview({
           <div className="px-4 pb-6">
             <form action={handleEdit} className="flex flex-col gap-5">
               {editState?.error && (
-                <p className="rounded-lg bg-destructive/10 px-3 py-2.5 text-sm text-destructive">
+                <p className="rounded-md bg-destructive/10 px-3 py-2.5 text-p3 text-destructive">
                   {t.has(`errors.${editState.error}`)
                     ? t(`errors.${editState.error}`)
                     : t("errors.generic")}
@@ -302,7 +289,7 @@ export function ProductOverview({
                     return (
                       <label
                         key={type}
-                        className="flex cursor-pointer items-center gap-2.5 rounded-xl border border-border px-3 py-2.5 text-sm transition-all has-[:checked]:border-primary/40 has-[:checked]:bg-primary/5"
+                        className="flex cursor-pointer items-center gap-2.5 rounded-md border-[1.5px] border-border-outline bg-card px-3 py-2.5 text-p3 transition-all has-[:checked]:border-primary has-[:checked]:bg-primary/5"
                       >
                         <input
                           type="radio"
@@ -312,11 +299,11 @@ export function ProductOverview({
                           className="sr-only"
                         />
                         <div
-                          className={`flex size-6 shrink-0 items-center justify-center rounded text-l6-plus ${typeStyle.bg} ${typeStyle.text}`}
+                          className={`flex size-6 shrink-0 items-center justify-center rounded-sm text-l6-plus ${typeStyle.bg} ${typeStyle.text}`}
                         >
                           {type[0].toUpperCase()}
                         </div>
-                        <span className="font-medium">{t(`types.${type}`)}</span>
+                        <span className="text-l6">{t(`types.${type}`)}</span>
                       </label>
                     );
                   })}
@@ -347,12 +334,12 @@ export function ProductOverview({
                     <img
                       src={imagePreview}
                       alt="Product"
-                      className="size-24 rounded-xl border border-border object-cover"
+                      className="size-24 rounded-md border border-border object-cover"
                     />
                     <button
                       type="button"
                       onClick={handleRemoveImage}
-                      className="absolute -right-2 -top-2 flex size-6 items-center justify-center rounded-full bg-card text-muted-foreground transition-colors hover:bg-destructive hover:text-white"
+                      className="absolute -right-2 -top-2 flex size-6 items-center justify-center rounded-full bg-card shadow-card-sm text-muted-foreground transition-colors hover:bg-destructive hover:text-white"
                     >
                       <Icon name="XIcon" className="size-3.5" />
                     </button>
@@ -361,7 +348,7 @@ export function ProductOverview({
                   <button
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
-                    className="flex size-24 flex-col items-center justify-center gap-1.5 rounded-xl border border-dashed border-border text-muted-foreground transition-colors hover:border-border hover:text-muted-foreground"
+                    className="flex size-24 flex-col items-center justify-center gap-1.5 rounded-md border border-dashed border-border-outline bg-card text-muted-foreground transition-colors hover:border-primary hover:text-primary"
                   >
                     <Icon name="ImageIcon" className="size-5" />
                     <span className="text-l6-plus">
@@ -377,7 +364,7 @@ export function ProductOverview({
                   onChange={handleImageChange}
                   className="hidden"
                 />
-                <p className="text-[11px] text-muted-foreground">
+                <p className="text-p4 text-muted-foreground">
                   {t("create.imageHint")}
                 </p>
               </div>

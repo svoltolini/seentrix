@@ -45,7 +45,7 @@ export function CopilotMessage({ message }: { message: UIMessage }) {
 
   return (
     <div className="flex justify-start">
-      <div className="flex max-w-[88%] flex-col gap-3 text-[14px] leading-[1.65] text-foreground/92">
+      <div className="flex max-w-[88%] flex-col gap-3 text-p3 leading-[1.65] text-foreground">
         {children.map((c, i) => {
           if (c.kind === "text") return <AssistantBody key={i} text={c.text} />;
           if (c.kind === "link")
@@ -316,12 +316,12 @@ function LinkButton({ path, label }: { path: string; label: string }) {
   return (
     <Link
       href={path}
-      className="inline-flex w-fit items-center gap-2 rounded-lg bg-[#066DE6]/10 px-3.5 py-2 text-[13px] font-medium text-[#93C5FD] ring-1 ring-[#066DE6]/25 transition hover:bg-[#066DE6]/15 hover:text-white hover:ring-[#066DE6]/50"
+      className="inline-flex w-fit items-center gap-2 rounded-sm bg-primary/10 px-3.5 py-2 text-l6 text-primary border-[1.5px] border-primary/25 transition hover:bg-primary/15 hover:border-primary/50"
     >
       <Icon
         name="arrow-right-01-stroke-rounded"
         size={13}
-        className="text-[#066DE6]"
+        className="text-primary"
       />
       {label}
     </Link>
@@ -354,7 +354,7 @@ function AssistantBody({ text }: { text: string }) {
             return (
               <h2
                 key={i}
-                className="mt-2 font-heading text-[17px] font-semibold leading-snug text-foreground"
+                className="mt-2 text-h4 leading-snug text-foreground"
               >
                 {renderInline(b.text)}
               </h2>
@@ -363,10 +363,10 @@ function AssistantBody({ text }: { text: string }) {
             return (
               <h3
                 key={i}
-                className="mt-3 flex items-baseline gap-2 font-heading text-[13px] font-semibold uppercase tracking-[0.16em] text-[#93C5FD]"
+                className="mt-3 flex items-baseline gap-2 text-l6-plus uppercase tracking-[0.16em] text-primary"
               >
                 {b.numeral && (
-                  <span className="rounded-md bg-[#066DE6]/15 px-1.5 py-0.5 font-mono text-[11px] font-bold tracking-normal text-[#066DE6]">
+                  <span className="rounded-sm bg-primary/15 px-1.5 py-0.5 font-mono text-l6-plus tracking-normal text-primary">
                     {b.numeral}
                   </span>
                 )}
@@ -377,7 +377,7 @@ function AssistantBody({ text }: { text: string }) {
             return (
               <h4
                 key={i}
-                className="mt-2 font-heading text-[13px] font-semibold text-foreground"
+                className="mt-2 text-l5 text-foreground"
               >
                 {renderInline(b.text)}
               </h4>
@@ -393,7 +393,7 @@ function AssistantBody({ text }: { text: string }) {
             return (
               <ol
                 key={i}
-                className="ml-5 space-y-1.5 list-decimal marker:text-[#066DE6] marker:font-semibold"
+                className="ml-5 space-y-1.5 list-decimal marker:text-primary marker:font-semibold"
               >
                 {b.items.map((item, j) => (
                   <li key={j} className="pl-1">
@@ -407,7 +407,7 @@ function AssistantBody({ text }: { text: string }) {
               <ul key={i} className="ml-1 space-y-1.5">
                 {b.items.map((item, j) => (
                   <li key={j} className="flex items-start gap-2.5">
-                    <span className="mt-[9px] h-1 w-1 shrink-0 rounded-full bg-[#066DE6]" />
+                    <span className="mt-[9px] h-1 w-1 shrink-0 rounded-full bg-primary" />
                     <span className="flex-1">{renderInline(item)}</span>
                   </li>
                 ))}
@@ -417,7 +417,7 @@ function AssistantBody({ text }: { text: string }) {
             return (
               <blockquote
                 key={i}
-                className="border-l-2 border-[#066DE6]/40 bg-muted pl-3 pr-2 py-1.5 italic text-muted-foreground"
+                className="border-l-2 border-primary/40 bg-muted pl-3 pr-2 py-1.5 italic text-muted-foreground"
               >
                 {renderInline(b.text)}
               </blockquote>
@@ -426,7 +426,7 @@ function AssistantBody({ text }: { text: string }) {
             return (
               <pre
                 key={i}
-                className="overflow-x-auto rounded-lg bg-[#0B0B12] px-3 py-2 text-[12px] leading-relaxed text-foreground/90 ring-1 ring-white/[0.06]"
+                className="overflow-x-auto rounded-md bg-foreground px-3 py-2 text-p4 leading-relaxed text-card"
               >
                 <code>{b.text}</code>
               </pre>
@@ -699,7 +699,7 @@ function renderInline(text: string): React.ReactNode {
     } else if (m[5] !== undefined) {
       // Italic *text*.
       out.push(
-        <em key={key++} className="italic text-foreground/90">
+        <em key={key++} className="italic text-foreground">
           {m[5]}
         </em>,
       );
@@ -717,7 +717,7 @@ function renderInline(text: string): React.ReactNode {
       out.push(
         <code
           key={key++}
-          className="rounded bg-muted px-1.5 py-0.5 text-[12px] font-mono text-foreground"
+          className="rounded-sm bg-muted px-1.5 py-0.5 text-p4 font-mono text-foreground"
         >
           {m[7]}
         </code>,
@@ -743,7 +743,7 @@ function CitationPill({ label }: { label: string }) {
     .replace(/\s*[·•–—-]\s*/g, " · ")
     .toUpperCase();
   return (
-    <span className="mx-0.5 inline-flex items-center rounded-md bg-[#066DE6] px-1.5 py-[2px] align-[1px] text-[9px] font-bold uppercase tracking-wider text-white shadow-[0_0_0_1px_rgba(59,130,246,0.35)]">
+    <span className="mx-0.5 inline-flex items-center rounded-sm bg-primary px-1.5 py-[2px] align-[1px] text-l6-plus uppercase tracking-wider text-white">
       {display}
     </span>
   );
@@ -760,12 +760,12 @@ function PathPill({ path }: { path: string }) {
   return (
     <Link
       href={path}
-      className="mx-1 inline-flex -translate-y-[1px] items-center gap-1 rounded-full bg-white px-2 py-[2px] align-baseline text-l6-plus text-[#09090B] shadow-[0_0_0_1px_rgba(255,255,255,0.4)] transition hover:bg-white/90"
+      className="mx-1 inline-flex -translate-y-[1px] items-center gap-1 rounded-sm bg-card border border-border px-2 py-[2px] align-baseline text-l6-plus text-foreground transition hover:bg-muted"
     >
       <Icon
         name="arrow-right-01-stroke-rounded"
         size={10}
-        className="text-[#09090B]"
+        className="text-foreground"
       />
       Open
     </Link>
@@ -780,7 +780,7 @@ function PathPill({ path }: { path: string }) {
  */
 function InlineLink({ label, href }: { label: string; href: string }) {
   const className =
-    "font-medium text-[#93C5FD] underline decoration-[#066DE6]/40 decoration-1 underline-offset-2 transition hover:text-[#066DE6] hover:decoration-[#066DE6]";
+    "font-medium text-primary underline decoration-primary/40 decoration-1 underline-offset-2 transition hover:text-primary hover:decoration-primary";
 
   // An internal path with an unresolved `{placeholder}` segment would
   // render as a clickable link that 404s on click — worse UX than plain

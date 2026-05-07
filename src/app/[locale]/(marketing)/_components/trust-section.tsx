@@ -45,27 +45,41 @@ export function TrustSection() {
     >
       <div className="mx-auto max-w-6xl px-6">
         <div
-          className="overflow-hidden rounded-md bg-cover bg-center px-8 py-16 sm:px-12 sm:py-20 lg:px-16 lg:py-24"
-          style={{ backgroundImage: "url('/images/empty-state-bg.png')" }}
+          className="relative overflow-hidden rounded-md px-8 py-16 sm:px-12 sm:py-20 lg:px-16 lg:py-24"
+          style={{
+            background:
+              "linear-gradient(135deg, #066DE6 0%, #6F4FE0 60%, #FF6D00 100%)",
+          }}
         >
-          <div className="mx-auto max-w-2xl text-center">
+          {/* Soft dot grid overlay so the panel doesn't read as flat fill */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0"
+            style={{
+              backgroundImage:
+                "radial-gradient(circle, rgba(255,255,255,0.12) 1px, transparent 1px)",
+              backgroundSize: "32px 32px",
+            }}
+          />
+
+          <div className="relative mx-auto max-w-2xl text-center">
             <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
               {t("title")}
             </h2>
-            <p className="mt-6 text-lg leading-relaxed text-white">
+            <p className="mt-6 text-p1 text-white/90">
               {t("subtitle")}
             </p>
-            <p className="mt-4 text-sm leading-relaxed text-white">
+            <p className="mt-4 text-p3 text-white/80">
               {t("hosting")}
             </p>
           </div>
 
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-4">
+          <div className="relative mt-12 flex flex-wrap items-center justify-center gap-3">
             {badges.map((key) => (
               <div
                 key={key}
                 data-trust-badge
-                className="rounded-full bg-white/10 px-6 py-3 text-sm font-medium text-white backdrop-blur-sm"
+                className="rounded-sm border-[1.5px] border-white/30 bg-white/15 px-5 py-2.5 text-l6 text-white backdrop-blur-sm"
               >
                 {t(`badges.${key}`)}
               </div>

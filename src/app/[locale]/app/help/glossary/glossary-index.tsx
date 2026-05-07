@@ -57,7 +57,7 @@ export function GlossaryIndex() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder={tMeta("searchPlaceholder")}
-          className="h-11 border-border bg-background/40 pl-10 text-sm"
+          className="h-11 pl-10"
         />
         <Icon
           name="search-02-stroke-rounded"
@@ -67,7 +67,7 @@ export function GlossaryIndex() {
       </div>
 
       {grouped.length === 0 ? (
-        <p className="mt-8 rounded-xl bg-muted p-6 text-center text-sm text-muted-foreground">
+        <p className="mt-8 rounded-md bg-muted p-6 text-center text-p3 text-muted-foreground">
           —
         </p>
       ) : (
@@ -100,11 +100,11 @@ function GlossaryCard({
   body: string;
 }) {
   return (
-    <div className="rounded-xl bg-muted p-4 transition-colors hover:border-border">
-      <Term id={id} className="font-heading text-sm font-semibold text-foreground no-underline hover:text-primary">
+    <div className="rounded-md bg-card shadow-card-sm p-4 transition-colors hover:bg-muted/30">
+      <Term id={id} className="text-h5 text-foreground no-underline hover:text-primary">
         {title}
       </Term>
-      <p className="mt-1.5 line-clamp-3 text-[12.5px] leading-relaxed text-muted-foreground">
+      <p className="mt-1.5 line-clamp-3 text-p3 leading-relaxed text-muted-foreground">
         {body}
       </p>
     </div>

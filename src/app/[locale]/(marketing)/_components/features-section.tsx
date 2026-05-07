@@ -7,9 +7,9 @@ import { useTranslations } from "next-intl";
 
 const modules = [
   { key: "assessment", accent: "#066DE6" },
-  { key: "checklist", accent: "#6366F1" },
-  { key: "sbom", accent: "#6F4FE0" },
-  { key: "documents", accent: "#A855F7" },
+  { key: "checklist", accent: "#6F4FE0" },
+  { key: "sbom", accent: "#FF6D00" },
+  { key: "documents", accent: "#FF9E55" },
 ] as const;
 
 export function FeaturesSection() {
@@ -54,7 +54,7 @@ export function FeaturesSection() {
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
             {t("title")}
           </h2>
-          <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
+          <p className="mt-6 text-p1 text-muted-foreground">
             {t("subtitle")}
           </p>
         </div>
@@ -64,7 +64,7 @@ export function FeaturesSection() {
             <div
               key={mod.key}
               data-feature-card
-              className="group relative rounded-md bg-muted p-8 transition-colors duration-300 hover:bg-muted"
+              className="group relative rounded-md bg-card p-8 shadow-card-md transition-shadow duration-300 hover:shadow-card-lg"
             >
               <div className="flex items-start gap-5">
                 <span
@@ -75,10 +75,10 @@ export function FeaturesSection() {
                 </span>
 
                 <div>
-                  <h3 className="text-lg font-bold text-foreground">
+                  <h3 className="text-h4 text-foreground">
                     {t(`modules.${mod.key}.title`)}
                   </h3>
-                  <p className="mt-2 text-base leading-relaxed text-muted-foreground">
+                  <p className="mt-2 text-p2-r text-muted-foreground">
                     {t(`modules.${mod.key}.description`)}
                   </p>
                 </div>

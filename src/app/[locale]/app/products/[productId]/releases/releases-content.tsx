@@ -24,10 +24,10 @@ import {
 } from "./actions";
 
 const RELEASE_TYPE_COLOR: Record<ReleaseType, string> = {
-  security: "#DC2626",
-  bugfix: "#D97706",
-  feature: "#066DE6",
-  maintenance: "#6B7280",
+  security: "var(--destructive)",
+  bugfix: "var(--warning)",
+  feature: "var(--primary)",
+  maintenance: "var(--muted-foreground)",
 };
 
 const ROLES_CAN_WRITE = new Set([
@@ -78,10 +78,10 @@ export function ReleasesContent({
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const days = daysBetween(today, end);
-    if (days < 0) return { key: "outOfSupport", days, color: "#DC2626" };
+    if (days < 0) return { key: "outOfSupport", days, color: "var(--destructive)" };
     if (days < 90)
-      return { key: "expiringSoon", days, color: "#D97706" };
-    return { key: "inSupport", days, color: "#16A34A" };
+      return { key: "expiringSoon", days, color: "var(--warning)" };
+    return { key: "inSupport", days, color: "var(--success)" };
   }, [support.support_period_end]);
 
   async function handleSupportSave(patch: Partial<ProductSupport>) {
@@ -110,14 +110,14 @@ export function ReleasesContent({
         >
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
-              <h2 className="text-sm font-semibold">{t("support.title")}</h2>
-              <p className="mt-1 text-xs text-muted-foreground">
+              <h2 className="text-h4 text-foreground">{t("support.title")}</h2>
+              <p className="mt-1 text-p3 text-muted-foreground">
                 {t("support.description")}
               </p>
             </div>
             {supportStatus && (
               <span
-                className="rounded-full border px-3 py-1 text-xs font-semibold"
+                className="rounded-sm border px-3 py-1 text-l6"
                 style={{
                   borderColor: `${supportStatus.color}4D`,
                   backgroundColor: `${supportStatus.color}1A`,
@@ -186,23 +186,23 @@ export function ReleasesContent({
           data-reveal
           className="grid grid-cols-2 gap-3 sm:grid-cols-4"
         >
-          <StatCard label={t("kpi.total")} from="#066DE6" to="#0891B2">
-            <p className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white">
+          <StatCard label={t("kpi.total")} from="#066DE6" to="#22D3EE">
+            <p className="mt-2 text-h2 tabular-nums tracking-tight text-white">
               {summary.total}
             </p>
           </StatCard>
-          <StatCard label={t("kpi.security")} from="#DC2626" to="#E11D48">
-            <p className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white">
+          <StatCard label={t("kpi.security")} from="#E60019" to="#6F4FE0">
+            <p className="mt-2 text-h2 tabular-nums tracking-tight text-white">
               {summary.security}
             </p>
           </StatCard>
-          <StatCard label={t("kpi.cvesFixed")} from="#16A34A" to="#15803D">
-            <p className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white">
+          <StatCard label={t("kpi.cvesFixed")} from="#4CD964" to="#16A34A">
+            <p className="mt-2 text-h2 tabular-nums tracking-tight text-white">
               {summary.cves}
             </p>
           </StatCard>
           <StatCard label={t("kpi.latest")} from="#6F4FE0" to="#066DE6">
-            <p className="mt-2 truncate text-lg font-bold tracking-tight text-white">
+            <p className="mt-2 truncate text-h4 tracking-tight text-white">
               {summary.latest ? summary.latest.version : "—"}
             </p>
           </StatCard>
@@ -211,7 +211,7 @@ export function ReleasesContent({
         {/* Releases list */}
         <div data-reveal>
           <div className="mb-3 flex items-center justify-between">
-            <h2 className="text-sm font-semibold">{t("list.title")}</h2>
+            <h2 className="text-h4 text-foreground">{t("list.title")}</h2>
             {canWrite && (
               <Button size="sm" onClick={() => setNewOpen(true)}>
                 <Icon name="plus-sign-square-stroke-rounded" size={14} />
@@ -220,23 +220,20 @@ export function ReleasesContent({
             )}
           </div>
           {releases.length === 0 ? (
-            <div
-              className="overflow-hidden rounded-md bg-cover bg-center px-6 py-20 text-center"
-              style={{ backgroundImage: "url('/images/empty-state-bg.png')" }}
-            >
-              <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-black/25">
-                <Icon name="package" size={28} className="text-white" />
+            <div className="overflow-hidden rounded-md bg-card shadow-card-md px-6 py-20 text-center">
+              <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-primary/10">
+                <Icon name="package" size={28} className="text-primary" />
               </div>
-              <h2 className="mt-5 text-lg font-semibold text-white">
+              <h2 className="mt-5 text-h4 text-foreground">
                 {t("empty.title")}
               </h2>
-              <p className="mt-2 text-sm text-white">
+              <p className="mt-2 text-p3 text-muted-foreground">
                 {t("empty.description")}
               </p>
             </div>
           ) : (
             <div className="overflow-hidden rounded-md bg-muted">
-              <div className="divide-y divide-white/[0.04]">
+              <div className="divide-y divide-border">
                 {releases.map((r) => (
                   <ReleaseRow
                     key={r.id}
@@ -332,7 +329,7 @@ function SupportField({
   const isDate = type === "date";
   return (
     <div>
-      <label className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+      <label className="flex items-center gap-2 text-l6 text-muted-foreground">
         {label}
         {help}
       </label>
@@ -388,25 +385,25 @@ function ReleaseRow({
       <div className="flex min-w-0 flex-1 flex-col gap-1">
         <div className="flex flex-wrap items-center gap-2">
           <span
-            className="rounded-md px-1.5 py-0.5 text-l6-plus uppercase tracking-wide text-white"
+            className="rounded-sm px-1.5 py-0.5 text-l6-plus uppercase tracking-wide text-white"
             style={{ backgroundColor: color }}
           >
             {tType(release.release_type)}
           </span>
-          <span className="font-mono text-sm font-semibold text-foreground">
+          <span className="font-mono text-l6 text-foreground">
             v{release.version}
           </span>
-          <span className="text-xs text-muted-foreground">
+          <span className="text-p4 text-muted-foreground">
             {formatDate(release.released_at)}
           </span>
           {release.is_security_update && release.cves_fixed.length > 0 && (
-            <span className="inline-flex items-center gap-1 rounded-full bg-[#16A34A]/15 px-2 py-0.5 text-l6-plus uppercase tracking-wide text-[#16A34A]">
+            <span className="inline-flex items-center gap-1 rounded-sm bg-success/15 px-2 py-0.5 text-l6-plus uppercase tracking-wide text-success">
               {tCvesFixed}: {release.cves_fixed.length}
             </span>
           )}
         </div>
         {release.release_notes && (
-          <p className="line-clamp-2 text-xs text-muted-foreground">
+          <p className="line-clamp-2 text-p3 text-muted-foreground">
             {release.release_notes}
           </p>
         )}
@@ -415,7 +412,7 @@ function ReleaseRow({
             {release.cves_fixed.map((cve) => (
               <span
                 key={cve}
-                className="rounded-full bg-muted px-2 py-0.5 font-mono text-[10px] text-muted-foreground"
+                className="rounded-sm bg-muted px-2 py-0.5 font-mono text-l6-plus text-muted-foreground"
               >
                 {cve}
               </span>
@@ -423,7 +420,7 @@ function ReleaseRow({
           </div>
         )}
         {release.signed_digest && (
-          <p className="mt-1 font-mono text-[10px] text-muted-foreground">
+          <p className="mt-1 font-mono text-p4 text-muted-foreground">
             {tSignedDigest}: {release.signed_digest.slice(0, 32)}
             {release.signed_digest.length > 32 ? "…" : ""}
           </p>
@@ -524,7 +521,7 @@ function NewReleaseDialog({
       <div className="space-y-3">
         <div className="grid grid-cols-2 gap-2">
           <div>
-            <label className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+            <label className="flex items-center gap-2 text-l6 text-muted-foreground">
               {t("new.versionLabel")}
               <FieldHelp {...tip("version")} />
             </label>
@@ -536,7 +533,7 @@ function NewReleaseDialog({
             />
           </div>
           <div>
-            <label className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+            <label className="flex items-center gap-2 text-l6 text-muted-foreground">
               {t("new.releasedAtLabel")}
               <FieldHelp {...tip("releasedAt")} />
             </label>
@@ -556,7 +553,7 @@ function NewReleaseDialog({
           </div>
         </div>
         <div>
-          <label className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+          <label className="flex items-center gap-2 text-l6 text-muted-foreground">
             {t("new.typeLabel")}
             <FieldHelp {...tip("type")} />
           </label>
@@ -568,10 +565,10 @@ function NewReleaseDialog({
                   type="button"
                   onClick={() => setType(ty)}
                   className={cn(
-                    "rounded-lg border px-2 py-1.5 text-xs font-semibold transition-colors",
+                    "rounded-sm border-[1.5px] px-2 py-1.5 text-l6 transition-colors",
                     type === ty
                       ? "border-[color:var(--c)] bg-[color:var(--c)]/10 text-[color:var(--c)]"
-                      : "border-border text-muted-foreground hover:text-foreground",
+                      : "border-border-outline bg-card text-muted-foreground hover:text-foreground",
                   )}
                   style={{ ["--c" as string]: RELEASE_TYPE_COLOR[ty] }}
                 >
@@ -582,7 +579,7 @@ function NewReleaseDialog({
           </div>
         </div>
         <div>
-          <label className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+          <label className="flex items-center gap-2 text-l6 text-muted-foreground">
             {t("new.cvesLabel")}
             <FieldHelp {...tip("cves")} />
           </label>
@@ -594,7 +591,7 @@ function NewReleaseDialog({
           />
         </div>
         <div>
-          <label className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+          <label className="flex items-center gap-2 text-l6 text-muted-foreground">
             {t("new.notesLabel")}
             <FieldHelp {...tip("notes")} />
           </label>
@@ -606,7 +603,7 @@ function NewReleaseDialog({
           />
         </div>
         <div>
-          <label className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+          <label className="flex items-center gap-2 text-l6 text-muted-foreground">
             {t("new.digestLabel")}
             <FieldHelp {...tip("digest")} />
           </label>

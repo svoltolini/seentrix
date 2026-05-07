@@ -60,7 +60,7 @@ export function PricingPreview() {
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
             {t("title")}
           </h2>
-          <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
+          <p className="mt-6 text-p1 text-muted-foreground">
             {t("subtitle")}
           </p>
         </div>
@@ -71,93 +71,11 @@ export function PricingPreview() {
             const isEnterprise = tier === "enterprise";
             const features = tierFeatures[tier];
 
-            const cardContent = (
-              <div
-                className={cn(
-                  "relative flex h-full flex-col p-6 transition-all duration-300 hover:-translate-y-1",
-                  isPro
-                    ? "bg-muted"
-                    : "rounded-md bg-muted hover:bg-muted"
-                )}
-              >
-                <div className="mb-1">
-                  <h3 className="text-lg font-bold text-foreground">
-                    {t(`${tier}.name`)}
-                  </h3>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    {t(`${tier}.description`)}
-                  </p>
-                </div>
-
-                <div className="mt-4 flex items-baseline gap-1">
-                  <span
-                    className={cn(
-                      "text-5xl font-extrabold",
-                      isPro
-                        ? "bg-gradient-to-r from-[#066DE6] to-[#6F4FE0] bg-clip-text text-transparent"
-                        : "text-foreground"
-                    )}
-                  >
-                    {t(`${tier}.price`)}
-                  </span>
-                  {tier !== "free" && (
-                    <span className="text-sm text-muted-foreground">
-                      {t(`${tier}.period`)}
-                    </span>
-                  )}
-                </div>
-
-                <div className="my-6 h-px bg-border/50" />
-
-                <ul className="flex flex-1 flex-col gap-3 text-sm text-muted-foreground">
-                  {features.map((fk) => (
-                    <li key={fk} className="flex items-start gap-2.5">
-                      <svg
-                        width="16"
-                        height="16"
-                        viewBox="0 0 16 16"
-                        fill="none"
-                        className="mt-0.5 shrink-0 text-primary"
-                      >
-                        <path
-                          d="M13.3 4.3 6.5 11.1 2.7 7.3"
-                          stroke="currentColor"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                      {t(`${tier}.features.${fk}`)}
-                    </li>
-                  ))}
-                </ul>
-
-                <Link
-                  href={isEnterprise ? "/pricing" : "/auth/signup"}
-                  className={buttonVariants({
-                    variant: "default",
-                    size: "sm",
-                    className: cn(
-                      "mt-6 w-full",
-                      !isPro &&
-                        "bg-muted text-foreground hover:bg-muted"
-                    ),
-                  })}
-                >
-                  {isEnterprise ? t("enterprise.cta") : t("getStarted")}
-                </Link>
-              </div>
-            );
-
             return (
               <div
                 key={tier}
                 data-pricing-card
-                className={cn(
-                  "relative",
-                  isPro &&
-                    "rounded-[16px] bg-gradient-to-b from-[#066DE6] via-[#6F4FE0] to-[#FF6D00] p-px"
-                )}
+                className="relative"
               >
                 {isPro && (
                   <div className="absolute -top-3 left-1/2 z-10 -translate-x-1/2">
@@ -169,13 +87,77 @@ export function PricingPreview() {
                     </Badge>
                   </div>
                 )}
-                {isPro ? (
-                  <div className="h-full overflow-hidden rounded-[15px] bg-background">
-                    {cardContent}
+                <div
+                  className={cn(
+                    "relative flex h-full flex-col rounded-md bg-card p-6 shadow-card-md transition-all duration-300 hover:-translate-y-1 hover:shadow-card-lg",
+                    isPro
+                      ? "border-2 border-primary"
+                      : "border border-border",
+                  )}
+                >
+                  <div className="mb-1">
+                    <h3 className="text-h4 text-foreground">
+                      {t(`${tier}.name`)}
+                    </h3>
+                    <p className="mt-1 text-p3 text-muted-foreground">
+                      {t(`${tier}.description`)}
+                    </p>
                   </div>
-                ) : (
-                  cardContent
-                )}
+
+                  <div className="mt-4 flex items-baseline gap-1">
+                    <span
+                      className={cn(
+                        "text-5xl font-extrabold",
+                        isPro
+                          ? "bg-gradient-to-r from-[#066DE6] to-[#6F4FE0] bg-clip-text text-transparent"
+                          : "text-foreground",
+                      )}
+                    >
+                      {t(`${tier}.price`)}
+                    </span>
+                    {tier !== "free" && (
+                      <span className="text-p3 text-muted-foreground">
+                        {t(`${tier}.period`)}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="my-6 h-px bg-border" />
+
+                  <ul className="flex flex-1 flex-col gap-3 text-p3 text-muted-foreground">
+                    {features.map((fk) => (
+                      <li key={fk} className="flex items-start gap-2.5">
+                        <svg
+                          width="16"
+                          height="16"
+                          viewBox="0 0 16 16"
+                          fill="none"
+                          className="mt-0.5 shrink-0 text-primary"
+                        >
+                          <path
+                            d="M13.3 4.3 6.5 11.1 2.7 7.3"
+                            stroke="currentColor"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                        {t(`${tier}.features.${fk}`)}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <Link
+                    href={isEnterprise ? "/pricing" : "/auth/signup"}
+                    className={buttonVariants({
+                      variant: isPro ? "default" : "outline",
+                      size: "default",
+                      className: "mt-6 w-full",
+                    })}
+                  >
+                    {isEnterprise ? t("enterprise.cta") : t("getStarted")}
+                  </Link>
+                </div>
               </div>
             );
           })}
@@ -183,13 +165,11 @@ export function PricingPreview() {
 
         {/* CTA — links directly to the #compare anchor on /pricing so
             the user lands on the full feature matrix without scrolling
-            past the cards again. Deliberately loud (gradient background,
-            large target) because this is the primary 'learn more'
-            affordance and it was previously missing. */}
+            past the cards again. */}
         <div className="mt-12 flex flex-col items-center gap-2">
           <Link
             href="/pricing#compare"
-            className="group inline-flex items-center gap-2 rounded-full bg-muted px-5 py-3 text-sm font-semibold text-foreground ring-1 ring-white/[0.08] transition-colors hover:bg-muted hover:ring-white/[0.16]"
+            className="group inline-flex items-center gap-2 rounded-sm border-[1.5px] border-border-outline bg-card px-5 py-3 text-l6 text-foreground transition-colors hover:bg-muted"
           >
             <span>{t("compareAllFeatures")}</span>
             <svg
@@ -209,7 +189,7 @@ export function PricingPreview() {
               />
             </svg>
           </Link>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-p4-r text-muted-foreground">
             {t("compareAllFeaturesHint")}
           </p>
         </div>

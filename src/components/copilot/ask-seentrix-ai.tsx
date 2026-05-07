@@ -43,24 +43,24 @@ export function AskSeentrixAI({
         type="button"
         onClick={() => open(seed)}
         className={cn(
-          "group flex w-full items-start gap-3 rounded-md bg-muted p-4 text-left ring-1 ring-white/[0.06] transition hover:bg-muted hover:ring-[#066DE6]/25",
+          "group flex w-full items-start gap-3 rounded-md bg-muted p-4 text-left border border-border-outline transition hover:bg-muted/60 hover:border-primary/25",
           className,
         )}
       >
-        <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-[#066DE6]/15 ring-1 ring-[#066DE6]/25 transition group-hover:bg-[#066DE6]/25">
+        <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary/15 border border-primary/25 transition group-hover:bg-primary/25">
           <Icon
             name="ai-magic-stroke-rounded"
             size={16}
-            className="text-[#066DE6]"
+            className="text-primary"
           />
         </span>
         <div className="flex flex-col gap-0.5">
-          <span className="text-l6-plus uppercase tracking-wider text-[#066DE6]">
+          <span className="text-l6-plus uppercase tracking-wider text-primary">
             Ask Seentrix AI
           </span>
-          <span className="text-sm font-medium text-foreground">{label}</span>
+          <span className="text-l6 text-foreground">{label}</span>
           {sublabel && (
-            <span className="text-xs text-muted-foreground">{sublabel}</span>
+            <span className="text-p3 text-muted-foreground">{sublabel}</span>
           )}
         </div>
         <Icon
@@ -77,14 +77,14 @@ export function AskSeentrixAI({
       type="button"
       onClick={() => open(seed)}
       className={cn(
-        "group inline-flex items-center gap-2 rounded-lg bg-muted px-3 py-1.5 text-xs font-medium text-foreground/85 ring-1 ring-white/[0.06] transition hover:bg-muted hover:text-foreground hover:ring-[#066DE6]/25",
+        "group inline-flex items-center gap-2 rounded-sm bg-muted px-3 py-1.5 text-l6 text-foreground border border-border-outline transition hover:bg-muted/60 hover:border-primary/25",
         className,
       )}
     >
       <Icon
         name="ai-magic-stroke-rounded"
         size={12}
-        className="text-[#066DE6] transition group-hover:rotate-12"
+        className="text-primary transition group-hover:rotate-12"
       />
       {label}
     </button>

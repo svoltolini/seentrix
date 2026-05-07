@@ -76,8 +76,8 @@ export function Quiz({
   if (outcome.kind === "passed") {
     return (
       <div
-        className="overflow-hidden rounded-md bg-cover bg-center p-8"
-        style={{ backgroundImage: "url('/images/entity-role-bg.svg')" }}
+        className="overflow-hidden rounded-md p-8"
+        style={{ background: "linear-gradient(135deg, #066DE6 0%, #6F4FE0 60%, #FF6D00 100%)" }}
       >
         <div className="flex size-12 items-center justify-center rounded-full bg-white/15 backdrop-blur-sm">
           <Icon name="checkmark-circle-01-stroke-rounded" size={24} className="text-white" />
@@ -85,10 +85,10 @@ export function Quiz({
         <h3 className="mt-4 text-h3 text-white">
           {t("passedTitle")}
         </h3>
-        <p className="mt-2 text-sm text-white">
+        <p className="mt-2 text-p3 text-white">
           {t("passedBody", { score: Math.round(outcome.score * 100) })}
         </p>
-        <p className="mt-3 font-mono text-[11px] text-white">
+        <p className="mt-3 font-mono text-p4 text-white">
           {t("certificateLabel")}: {outcome.certificateHash.slice(0, 16)}…
         </p>
       </div>
@@ -115,8 +115,8 @@ export function Quiz({
       ))}
 
       {outcome.kind === "idle" && (
-        <div className="flex items-center justify-between gap-3 rounded-xl bg-muted px-5 py-4">
-          <p className="text-xs text-muted-foreground">
+        <div className="flex items-center justify-between gap-3 rounded-md bg-muted px-5 py-4">
+          <p className="text-p3 text-muted-foreground">
             {t("threshold", { percent: Math.round(QUIZ_PASS_THRESHOLD * 100) })}
           </p>
           <Button
@@ -130,14 +130,14 @@ export function Quiz({
       )}
 
       {outcome.kind === "failed" && (
-        <div className="rounded-xl border border-[#DC2626]/30 bg-[#DC2626]/10 p-5">
-          <p className="font-heading text-sm font-semibold text-[#DC2626]">
+        <div className="rounded-md border border-destructive/30 bg-destructive/10 p-5">
+          <p className="text-l5 text-destructive">
             {t("failedTitle", {
               score: Math.round(outcome.score * 100),
               threshold: Math.round(QUIZ_PASS_THRESHOLD * 100),
             })}
           </p>
-          <p className="mt-2 text-xs text-muted-foreground">
+          <p className="mt-2 text-p3 text-muted-foreground">
             {t("failedBody", {
               minutes: minutesUntil(outcome.cooldownUntil),
             })}
@@ -146,11 +146,11 @@ export function Quiz({
       )}
 
       {outcome.kind === "cooldown" && (
-        <div className="rounded-xl border border-[#D97706]/30 bg-[#D97706]/10 p-5">
-          <p className="font-heading text-sm font-semibold text-[#D97706]">
+        <div className="rounded-md border border-warning/30 bg-warning/10 p-5">
+          <p className="text-l5 text-warning">
             {t("cooldownTitle")}
           </p>
-          <p className="mt-2 text-xs text-muted-foreground">
+          <p className="mt-2 text-p3 text-muted-foreground">
             {t("cooldownBody", {
               minutes: minutesUntil(outcome.cooldownUntil),
             })}
@@ -200,13 +200,13 @@ function QuestionCard({
     <fieldset
       disabled={locked}
       aria-labelledby={legendId}
-      className="rounded-xl bg-muted p-5"
+      className="rounded-md bg-card shadow-card-sm p-5"
     >
-      <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+      <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
         {tCard("questionPrefix")}
         {index + 1}
       </p>
-      <legend id={legendId} className="mt-1 text-sm font-semibold text-foreground">
+      <legend id={legendId} className="mt-1 text-h5 text-foreground">
         {question.question}
       </legend>
       <div className="mt-4 space-y-2" role="radiogroup">
@@ -224,11 +224,11 @@ function QuestionCard({
               disabled={locked}
               onClick={() => onSelect(j)}
               className={cn(
-                "flex w-full items-start gap-3 rounded-lg border px-4 py-3 text-left text-[13px] transition-colors",
+                "flex w-full items-start gap-3 rounded-sm border-[1.5px] px-4 py-3 text-left text-p3 transition-colors",
                 !revealCorrect && isSelected && "border-primary bg-primary/10",
-                !revealCorrect && !isSelected && "border-border hover:border-border",
-                showCorrect && "border-[#16A34A]/50 bg-[#16A34A]/10",
-                showWrong && "border-[#DC2626]/50 bg-[#DC2626]/10",
+                !revealCorrect && !isSelected && "border-border-outline bg-card hover:border-primary",
+                showCorrect && "border-success/50 bg-success/10",
+                showWrong && "border-destructive/50 bg-destructive/10",
                 locked && !showCorrect && !showWrong && "opacity-40",
               )}
             >
@@ -239,8 +239,8 @@ function QuestionCard({
                   isSelected
                     ? "border-primary bg-primary text-white"
                     : "border-muted-foreground/40",
-                  showCorrect && "border-[#16A34A] bg-[#16A34A] text-white",
-                  showWrong && "border-[#DC2626] bg-[#DC2626] text-white",
+                  showCorrect && "border-success bg-success text-white",
+                  showWrong && "border-destructive bg-destructive text-white",
                 )}
               >
                 {(isSelected || showCorrect) && (
@@ -253,7 +253,7 @@ function QuestionCard({
         })}
       </div>
       {revealCorrect && (
-        <p className="mt-3 rounded-md bg-muted px-3 py-2 text-[11px] leading-relaxed text-muted-foreground">
+        <p className="mt-3 rounded-sm bg-muted px-3 py-2 text-p3 leading-relaxed text-muted-foreground">
           {question.explanation}
         </p>
       )}

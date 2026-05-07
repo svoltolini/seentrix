@@ -86,7 +86,7 @@ export function ChangePasswordForm({ locale }: { locale: string }) {
         className="mt-8 flex flex-col gap-5"
       >
         {errorMessage && (
-          <p className="rounded-md bg-destructive/10 px-3 py-2.5 text-sm text-destructive">
+          <p className="rounded-md bg-destructive/10 px-3 py-2.5 text-p3 text-destructive">
             {errorMessage}
           </p>
         )}
@@ -128,11 +128,11 @@ export function ChangePasswordForm({ locale }: { locale: string }) {
               ))}
             </div>
           )}
-          <p className="text-xs text-muted-foreground">
+          <p className="text-p4 text-muted-foreground">
             {t("fields.passwordRequirements")}
           </p>
           {errors.password && (
-            <p className="text-xs text-destructive">
+            <p className="text-p4 text-destructive">
               {t("errors.passwordTooShort")}
             </p>
           )}
@@ -166,7 +166,7 @@ export function ChangePasswordForm({ locale }: { locale: string }) {
             </button>
           </div>
           {errors.confirmPassword && (
-            <p className="text-xs text-destructive">
+            <p className="text-p4 text-destructive">
               {t("errors.passwordMismatch")}
             </p>
           )}

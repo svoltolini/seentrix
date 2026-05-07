@@ -48,8 +48,8 @@ export function SbomUploadZone({
         onDrop={handleDrop}
         onClick={() => !uploading && inputRef.current?.click()}
         className={cn(
-          "relative flex cursor-pointer flex-col items-center gap-1.5 rounded-xl px-6 py-8 text-center transition-colors",
-          dragOver ? "bg-primary/5" : "hover:bg-muted",
+          "relative flex cursor-pointer flex-col items-center gap-1.5 rounded-md bg-muted px-6 py-8 text-center transition-colors",
+          dragOver ? "bg-primary/5" : "hover:bg-muted/60",
           uploading && "pointer-events-none opacity-60"
         )}
       >
@@ -85,15 +85,15 @@ export function SbomUploadZone({
         </svg>
 
         {uploading ? (
-          <p className="text-sm text-muted-foreground">
+          <p className="text-p3 text-muted-foreground">
             {t("upload.uploading")}
           </p>
         ) : (
           <>
-            <p className="text-sm font-medium text-foreground">
+            <p className="text-l6 text-foreground">
               {dragOver ? t("upload.dropzoneActive") : t("upload.dropzone")}
             </p>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-p4 text-muted-foreground">
               {t("upload.formats")}
             </p>
           </>
@@ -107,7 +107,7 @@ export function SbomUploadZone({
         />
       </div>
       {uploadError && (
-        <p className="mt-2 rounded-lg bg-destructive/10 px-3 py-2 text-sm text-destructive">
+        <p className="mt-2 rounded-md bg-destructive/10 px-3 py-2 text-p3 text-destructive">
           {uploadError}
         </p>
       )}

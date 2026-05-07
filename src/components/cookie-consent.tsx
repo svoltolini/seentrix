@@ -56,14 +56,14 @@ export function CookieConsent() {
     <div
       role="dialog"
       aria-label="Cookie notice"
-      className="fixed inset-x-4 bottom-4 z-50 mx-auto flex max-w-2xl flex-col gap-3 rounded-xl bg-muted p-4 shadow-xl shadow-black/30 backdrop-blur-md sm:flex-row sm:items-center md:inset-x-auto md:left-1/2 md:-translate-x-1/2"
+      className="fixed inset-x-4 bottom-4 z-50 mx-auto flex max-w-2xl flex-col gap-3 rounded-md bg-card p-4 shadow-card-lg sm:flex-row sm:items-center md:inset-x-auto md:left-1/2 md:-translate-x-1/2"
     >
-      <p className="text-[13px] leading-relaxed text-muted-foreground">
+      <p className="text-p3 leading-relaxed text-muted-foreground">
         Seentrix only uses strictly-necessary cookies (session, language,
         preferences). No tracking, no ads. Read our{" "}
         <Link
           href="/legal/cookies"
-          className="font-medium text-primary underline-offset-2 hover:underline"
+          className="text-l6 text-primary underline-offset-2 hover:underline"
         >
           Cookie Policy
         </Link>
@@ -72,7 +72,7 @@ export function CookieConsent() {
       <button
         type="button"
         onClick={dismiss}
-        className="shrink-0 rounded-lg bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5"
+        className="shrink-0 rounded-sm bg-primary px-4 py-2 text-l6 text-primary-foreground transition-transform hover:-translate-y-0.5"
       >
         Got it
       </button>

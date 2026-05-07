@@ -56,8 +56,8 @@ export function LandingHeader({ isAuthed = false }: { isAuthed?: boolean }) {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur-sm transition-shadow",
-        scrolled && "shadow-sm"
+        "sticky top-0 z-50 border-b border-transparent bg-card/95 backdrop-blur-sm transition-[border,box-shadow]",
+        scrolled && "border-border shadow-card-sm"
       )}
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
@@ -73,7 +73,7 @@ export function LandingHeader({ isAuthed = false }: { isAuthed?: boolean }) {
             <button
               key={a.key}
               onClick={() => scrollTo(a.href)}
-              className="cursor-pointer rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+              className="cursor-pointer rounded-sm px-3 py-2 text-l6 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
             >
               {t(a.key)}
             </button>
@@ -82,7 +82,7 @@ export function LandingHeader({ isAuthed = false }: { isAuthed?: boolean }) {
             <Link
               key={p.key}
               href={p.href}
-              className="rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+              className="rounded-sm px-3 py-2 text-l6 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
             >
               {t(p.key)}
             </Link>
@@ -96,7 +96,7 @@ export function LandingHeader({ isAuthed = false }: { isAuthed?: boolean }) {
             <button
               onClick={() => switchLocale("en")}
               className={cn(
-                "flex items-center rounded-lg p-1.5 transition-opacity",
+                "flex items-center rounded-sm p-1.5 transition-opacity",
                 locale === "en" ? "opacity-100" : "opacity-40 hover:opacity-70"
               )}
               aria-label="English"
@@ -112,7 +112,7 @@ export function LandingHeader({ isAuthed = false }: { isAuthed?: boolean }) {
             <button
               onClick={() => switchLocale("de")}
               className={cn(
-                "relative flex h-[22px] w-[38px] items-center rounded-lg p-1.5 transition-opacity",
+                "relative flex h-[22px] w-[38px] items-center rounded-sm p-1.5 transition-opacity",
                 locale === "de" ? "opacity-100" : "opacity-40 hover:opacity-70"
               )}
               aria-label="Deutsch"
@@ -123,7 +123,7 @@ export function LandingHeader({ isAuthed = false }: { isAuthed?: boolean }) {
                   alt=""
                   width={20}
                   height={20}
-                  className="shrink-0 rounded-full ring-2 ring-background"
+                  className="shrink-0 rounded-full ring-2 ring-card"
                 />
               </div>
               <div className="absolute left-[11px] top-1/2 -translate-y-1/2">
@@ -132,7 +132,7 @@ export function LandingHeader({ isAuthed = false }: { isAuthed?: boolean }) {
                   alt=""
                   width={20}
                   height={20}
-                  className="shrink-0 rounded-full ring-2 ring-background"
+                  className="shrink-0 rounded-full ring-2 ring-card"
                 />
               </div>
               <div className="absolute left-[4px] top-1/2 z-10 -translate-y-1/2">
@@ -141,7 +141,7 @@ export function LandingHeader({ isAuthed = false }: { isAuthed?: boolean }) {
                   alt=""
                   width={20}
                   height={20}
-                  className="shrink-0 rounded-full ring-2 ring-background"
+                  className="shrink-0 rounded-full ring-2 ring-card"
                 />
               </div>
             </button>
@@ -186,7 +186,7 @@ export function LandingHeader({ isAuthed = false }: { isAuthed?: boolean }) {
                   <button
                     key={a.key}
                     onClick={() => scrollTo(a.href)}
-                    className="flex items-center rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                    className="flex items-center rounded-sm px-3 py-2.5 text-l6 text-muted-foreground transition-colors hover:text-foreground"
                   >
                     {t(a.key)}
                   </button>
@@ -195,7 +195,7 @@ export function LandingHeader({ isAuthed = false }: { isAuthed?: boolean }) {
                   <Link
                     key={p.key}
                     href={p.href}
-                    className="flex items-center rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                    className="flex items-center rounded-sm px-3 py-2.5 text-l6 text-muted-foreground transition-colors hover:text-foreground"
                   >
                     {t(p.key)}
                   </Link>
@@ -204,14 +204,14 @@ export function LandingHeader({ isAuthed = false }: { isAuthed?: boolean }) {
                 {isAuthed ? (
                   <Link
                     href="/app/dashboard"
-                    className="flex items-center rounded-lg bg-primary px-3 py-2.5 text-sm font-semibold text-primary-foreground transition-colors"
+                    className="flex items-center rounded-sm bg-primary px-3 py-2.5 text-l5 text-primary-foreground transition-colors"
                   >
                     {t("dashboard")}
                   </Link>
                 ) : (
                   <Link
                     href="/auth/login"
-                    className="flex items-center rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                    className="flex items-center rounded-sm px-3 py-2.5 text-l6 text-muted-foreground transition-colors hover:text-foreground"
                   >
                     {t("login")}
                   </Link>

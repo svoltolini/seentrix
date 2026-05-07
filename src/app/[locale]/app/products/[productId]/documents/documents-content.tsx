@@ -30,7 +30,7 @@ const DOCUMENT_TYPES: {
   {
     type: "declaration_of_conformity",
     iconName: "checkmark-badge-01-stroke-rounded",
-    gradient: "linear-gradient(135deg, #066DE6, #0891B2)",
+    gradient: "linear-gradient(135deg, #066DE6, #22D3EE)",
   },
   {
     type: "vulnerability_disclosure_policy",
@@ -40,17 +40,17 @@ const DOCUMENT_TYPES: {
   {
     type: "incident_report",
     iconName: "alert-02",
-    gradient: "linear-gradient(135deg, #DC2626, #E11D48)",
+    gradient: "linear-gradient(135deg, #E60019, #6F4FE0 60%, #066DE6)",
   },
   {
     type: "risk_assessment",
     iconName: "alert-02",
-    gradient: "linear-gradient(135deg, #D97706, #EA580C)",
+    gradient: "linear-gradient(135deg, #FF9E55, #FF6D00)",
   },
   {
     type: "technical_documentation",
     iconName: "package-open-stroke-rounded",
-    gradient: "linear-gradient(135deg, #16A34A, #15803D)",
+    gradient: "linear-gradient(135deg, #4CD964, #16A34A)",
   },
 ];
 
@@ -225,13 +225,13 @@ export function DocumentsContent({
               setSaveError(null);
               setSaveSuccess(false);
             }}
-            className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+            className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           >
             <Icon name="ChevronLeftIcon" className="size-4" />
           </button>
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2">
-              <h2 className="text-lg font-semibold text-foreground">
+              <h2 className="text-h3 text-foreground">
                 {t(`types.${editingType}.title`)}
               </h2>
               <div className="flex items-center gap-1.5">
@@ -241,7 +241,7 @@ export function DocumentsContent({
                     STATUS_DOT[status]
                   )}
                 />
-                <span className="text-xs text-muted-foreground">
+                <span className="text-p4 text-muted-foreground">
                   {getStatusLabel(status)}
                 </span>
               </div>
@@ -253,7 +253,7 @@ export function DocumentsContent({
         </div>
 
         {/* Form */}
-        <div className="overflow-hidden rounded-xl bg-card">
+        <div className="overflow-hidden rounded-md bg-card shadow-card-lg">
           <div className="p-6">
             <DocumentForm
               documentType={editingType}
@@ -266,7 +266,7 @@ export function DocumentsContent({
 
         {/* Actions */}
         {doc && (
-          <div className="flex flex-wrap items-center gap-3 rounded-xl bg-card px-5 py-4">
+          <div className="flex flex-wrap items-center gap-3 rounded-md bg-card shadow-card-sm px-5 py-4">
             <Button
               variant="outline"
               size="sm"
@@ -334,22 +334,22 @@ export function DocumentsContent({
         {(saveSuccess || saveError || pdfSuccess || pdfError) && (
           <div className="flex flex-col gap-2">
             {saveSuccess && (
-              <p className="rounded-lg bg-[#16A34A]/10 px-3 py-2 text-sm text-[#16A34A]">
+              <p className="rounded-md bg-success/10 px-3 py-2 text-p3 text-success">
                 {t("editor.saved")}
               </p>
             )}
             {saveError && (
-              <p className="rounded-lg bg-destructive/10 px-3 py-2 text-sm text-destructive">
+              <p className="rounded-md bg-destructive/10 px-3 py-2 text-p3 text-destructive">
                 {saveError}
               </p>
             )}
             {pdfSuccess && (
-              <p className="rounded-lg bg-[#16A34A]/10 px-3 py-2 text-sm text-[#16A34A]">
+              <p className="rounded-md bg-success/10 px-3 py-2 text-p3 text-success">
                 {t("editor.pdfGenerated")}
               </p>
             )}
             {pdfError && (
-              <p className="rounded-lg bg-destructive/10 px-3 py-2 text-sm text-destructive">
+              <p className="rounded-md bg-destructive/10 px-3 py-2 text-p3 text-destructive">
                 {pdfError}
               </p>
             )}
@@ -364,7 +364,7 @@ export function DocumentsContent({
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h2 className="text-lg font-semibold text-foreground">{t("title")}</h2>
+        <h2 className="text-h3 text-foreground">{t("title")}</h2>
         <p className="mt-0.5 text-p3 text-muted-foreground">
           {t("subtitle")}
         </p>
@@ -388,12 +388,12 @@ export function DocumentsContent({
               className="group text-left"
             >
               <div
-                className="flex h-full flex-col overflow-hidden rounded-xl transition-all hover:-translate-y-0.5"
+                className="flex h-full flex-col overflow-hidden rounded-md transition-all hover:-translate-y-0.5"
                 style={{ background: config.gradient }}
               >
                 {/* Header: icon + title + status */}
                 <div className="flex items-start gap-3 px-5 pt-5 pb-4">
-                  <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-black/15">
+                  <div className="flex size-10 shrink-0 items-center justify-center rounded-md bg-white/15">
                     <Icon
                       name={config.iconName}
                       size={18}
@@ -401,7 +401,7 @@ export function DocumentsContent({
                     />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <h3 className="text-sm font-semibold text-white">
+                    <h3 className="text-h6 text-white">
                       {t(`types.${config.type}.title`)}
                     </h3>
                     <div className="mt-1 flex items-center gap-1.5">
@@ -411,7 +411,7 @@ export function DocumentsContent({
                           STATUS_DOT[status]
                         )}
                       />
-                      <span className="text-[11px] text-white">
+                      <span className="text-p4 text-white">
                         {getStatusLabel(status)}
                       </span>
                     </div>
@@ -420,20 +420,20 @@ export function DocumentsContent({
 
                 {/* Description */}
                 <div className="flex-1 px-5 pb-4">
-                  <p className="text-xs leading-relaxed text-white">
+                  <p className="text-p3 leading-relaxed text-white">
                     {t(`types.${config.type}.description`)}
                   </p>
                 </div>
 
                 {/* Progress bar + last updated */}
                 <div className="border-t border-black/10 px-5 py-3">
-                  <div className="h-3 w-full overflow-hidden rounded-[3px] bg-black/25">
+                  <div className="h-3 w-full overflow-hidden rounded-sm bg-white/25">
                     <div
-                      className="h-full rounded-[3px] bg-white transition-all"
+                      className="h-full rounded-sm bg-white transition-all"
                       style={{ width: `${completion}%` }}
                     />
                   </div>
-                  <span className="mt-1.5 block text-[10px] text-white">
+                  <span className="mt-1.5 block text-p4 text-white">
                     {doc
                       ? t("grid.lastUpdated", {
                           date: new Date(

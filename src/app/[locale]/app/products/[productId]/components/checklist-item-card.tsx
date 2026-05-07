@@ -34,18 +34,18 @@ function initialsOf(name: string | null, email: string | null): string {
 }
 
 const STATUS_DOT: Record<ChecklistStatus, string> = {
-  pending: "bg-muted-foreground/30",
-  in_progress: "bg-[#D97706]",
-  completed: "bg-[#16A34A]",
-  not_applicable: "bg-muted-foreground/20",
+  pending: "bg-muted-foreground",
+  in_progress: "bg-warning",
+  completed: "bg-success",
+  not_applicable: "bg-border",
 };
 
 const STATUS_SELECTED: Record<ChecklistStatus, string> = {
-  pending: "border-foreground/30 bg-muted text-foreground",
-  in_progress: "border-[#D97706]/40 bg-[#D97706]/10 text-[#D97706]",
-  completed: "border-[#16A34A]/40 bg-[#16A34A]/10 text-[#16A34A]",
+  pending: "border-border-outline bg-muted text-foreground",
+  in_progress: "border-warning/40 bg-warning/10 text-warning",
+  completed: "border-success/40 bg-success/10 text-success",
   not_applicable:
-    "border-muted-foreground/20 bg-muted text-muted-foreground",
+    "border-border-outline bg-muted text-muted-foreground",
 };
 
 interface ChecklistItemCardProps {
@@ -135,10 +135,10 @@ export function ChecklistItemCard({
       <button
         type="button"
         onClick={() => setExpanded(!expanded)}
-        className="flex w-full items-center gap-3 px-5 py-3.5 text-left transition-colors hover:bg-muted"
+        className="flex w-full items-center gap-3 px-5 py-3.5 text-left transition-colors hover:bg-muted/60"
       >
         <div className="min-w-0 flex-1">
-          <span className="text-sm font-medium text-foreground">
+          <span className="text-l6 text-foreground">
             {t(`${translationNs}.${requirementId}.title`)}
           </span>
         </div>
@@ -164,7 +164,7 @@ export function ChecklistItemCard({
             <span
               className={cn("size-1.5 rounded-full", STATUS_DOT[status])}
             />
-            <span className="text-xs text-muted-foreground">
+            <span className="text-p4 text-muted-foreground">
               {t(`statuses.${status}`)}
             </span>
           </div>
@@ -181,28 +181,28 @@ export function ChecklistItemCard({
       {expanded && (
         <div className="flex flex-col gap-5 border-t border-border bg-muted px-5 py-5">
           {/* Article reference */}
-          <span className="w-fit rounded-full bg-muted px-2.5 py-0.5 text-l6-plus text-muted-foreground">
+          <span className="w-fit rounded-sm bg-card px-2.5 py-0.5 text-l6-plus text-muted-foreground">
             {article}
           </span>
 
           {/* Description */}
-          <p className="text-sm leading-relaxed text-muted-foreground">
+          <p className="text-p3 leading-relaxed text-muted-foreground">
             {t(`${translationNs}.${requirementId}.description`)}
           </p>
 
           {/* Guidance */}
-          <div className="rounded-xl bg-muted px-4 py-3">
-            <p className="mb-1 text-xs font-medium text-muted-foreground">
+          <div className="rounded-md bg-card px-4 py-3">
+            <p className="mb-1 text-l6-plus uppercase tracking-[1.5px] text-muted-foreground">
               {t("guidanceLabel")}
             </p>
-            <p className="text-sm leading-relaxed text-muted-foreground">
+            <p className="text-p3 leading-relaxed text-muted-foreground">
               {t(`${translationNs}.${requirementId}.guidance`)}
             </p>
           </div>
 
           {/* Assignee picker */}
           <div className="flex flex-col gap-2">
-            <span className="text-xs font-medium text-muted-foreground">
+            <span className="text-l6-plus uppercase tracking-[1.5px] text-muted-foreground">
               {t("assigneeLabel")}
             </span>
             <DropdownMenu>
@@ -272,7 +272,7 @@ export function ChecklistItemCard({
 
           {/* Status selector */}
           <div className="flex flex-col gap-2">
-            <span className="text-xs font-medium text-muted-foreground">
+            <span className="text-l6-plus uppercase tracking-[1.5px] text-muted-foreground">
               {t("statusLabel")}
             </span>
             <div className="flex flex-wrap gap-2">
@@ -282,10 +282,10 @@ export function ChecklistItemCard({
                   type="button"
                   onClick={() => onStatusChange(id, s)}
                   className={cn(
-                    "flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-all",
+                    "flex items-center gap-1.5 rounded-sm border-[1.5px] px-3 py-1.5 text-l6-plus transition-all",
                     s === status
                       ? STATUS_SELECTED[s]
-                      : "border-border bg-transparent text-muted-foreground hover:bg-muted hover:text-foreground"
+                      : "border-border-outline bg-card text-muted-foreground hover:bg-muted hover:text-foreground"
                   )}
                 >
                   <span
@@ -299,7 +299,7 @@ export function ChecklistItemCard({
 
           {/* Notes */}
           <div className="flex flex-col gap-2">
-            <span className="text-xs font-medium text-muted-foreground">
+            <span className="text-l6-plus uppercase tracking-[1.5px] text-muted-foreground">
               {t("notesLabel")}
             </span>
             <Textarea
@@ -312,7 +312,7 @@ export function ChecklistItemCard({
 
           {/* Evidence */}
           <div className="flex flex-col gap-2">
-            <span className="text-xs font-medium text-muted-foreground">
+            <span className="text-l6-plus uppercase tracking-[1.5px] text-muted-foreground">
               {t("evidenceLabel")}
             </span>
             {parsed.evidence.length > 0 && (
@@ -322,7 +322,7 @@ export function ChecklistItemCard({
                   return (
                     <div
                       key={filePath}
-                      className="flex items-center gap-2 rounded-lg bg-muted px-3 py-1.5 text-sm"
+                      className="flex items-center gap-2 rounded-sm bg-card px-3 py-1.5 text-p3"
                     >
                       <Icon name="FileIcon" className="size-3.5 shrink-0 text-muted-foreground" />
                       <span className="min-w-0 flex-1 truncate text-muted-foreground">

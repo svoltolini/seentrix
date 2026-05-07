@@ -38,17 +38,17 @@ import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 // ---------------------------------------------------------------------------
 
 const SEVERITY_COLOR: Record<VulnSeverity, string> = {
-  critical: "#DC2626",
-  high: "#D97706",
-  medium: "#066DE6",
-  low: "#6B7280",
+  critical: "var(--destructive)",
+  high: "var(--warning)",
+  medium: "var(--primary)",
+  low: "var(--muted-foreground)",
 };
 
 const STATUS_COLOR: Record<VulnStatus, string> = {
-  open: "#6B7280",
-  in_progress: "#D97706",
-  resolved: "#16A34A",
-  accepted: "#066DE6",
+  open: "var(--muted-foreground)",
+  in_progress: "var(--warning)",
+  resolved: "var(--success)",
+  accepted: "var(--primary)",
 };
 
 const STATUS_ORDER: VulnStatus[] = [
@@ -339,20 +339,19 @@ export function VulnerabilitiesContent({
   if (isEmpty) {
     return (
       <div
-        className="overflow-hidden rounded-md bg-cover bg-center px-6 py-20 text-center"
-        style={{ backgroundImage: "url('/images/empty-state-bg.png')" }}
+        className="overflow-hidden rounded-md bg-card shadow-card-md px-6 py-20 text-center"
       >
-        <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-black/25">
+        <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-success/10">
           <Icon
             name="shield-check"
             size={28}
-            className="text-white"
+            className="text-success"
           />
         </div>
-        <h2 className="mt-5 text-lg font-semibold text-white">
+        <h2 className="mt-5 text-h4 text-foreground">
           {t("empty.title")}
         </h2>
-        <p className="mt-2 text-sm text-white">{t("empty.description")}</p>
+        <p className="mt-2 text-p3 text-muted-foreground">{t("empty.description")}</p>
       </div>
     );
   }
@@ -373,34 +372,34 @@ export function VulnerabilitiesContent({
           data-reveal
           className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5"
         >
-          <StatCard label={t("kpi.total")} from="#066DE6" to="#0891B2">
-            <p className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white">
+          <StatCard label={t("kpi.total")} from="#066DE6" to="#22D3EE">
+            <p className="mt-2 text-h2 tabular-nums tracking-tight text-white">
               {kpis.total}
             </p>
           </StatCard>
-          <StatCard label={t("kpi.open")} from="#D97706" to="#EA580C">
-            <p className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white">
+          <StatCard label={t("kpi.open")} from="#FF9E55" to="#FF6D00">
+            <p className="mt-2 text-h2 tabular-nums tracking-tight text-white">
               {kpis.open}
             </p>
           </StatCard>
-          <StatCard label={t("kpi.critical")} from="#DC2626" to="#E11D48">
-            <p className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white">
+          <StatCard label={t("kpi.critical")} from="#E60019" to="#6F4FE0">
+            <p className="mt-2 text-h2 tabular-nums tracking-tight text-white">
               {kpis.critical}
             </p>
           </StatCard>
-          <StatCard label={t("kpi.kev")} from="#E11D48" to="#BE123C">
-            <p className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white">
+          <StatCard label={t("kpi.kev")} from="#E60019" to="#FF6D00">
+            <p className="mt-2 text-h2 tabular-nums tracking-tight text-white">
               {kpis.kev}
             </p>
           </StatCard>
           <StatCard
             label={t("kpi.exploited")}
-            from="#DC2626"
-            to="#7F1D1D"
+            from="#E60019"
+            to="#2C3659"
             accentDot
             pulse={kpis.exploited > 0}
           >
-            <p className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white">
+            <p className="mt-2 text-h2 tabular-nums tracking-tight text-white">
               {kpis.exploited}
             </p>
           </StatCard>
@@ -409,7 +408,7 @@ export function VulnerabilitiesContent({
         {/* ── Filter bar ── */}
         <div
           data-reveal
-          className="overflow-hidden rounded-xl bg-muted"
+          className="overflow-hidden rounded-md bg-muted"
         >
           {/* Search row — takes full width for scannability */}
           <div className="border-b border-border p-3">
@@ -418,7 +417,7 @@ export function VulnerabilitiesContent({
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder={t("filter.searchPlaceholder")}
-                className="h-10 border-border bg-background/40 pl-10 pr-10 text-sm"
+                className="h-10 pl-10 pr-10"
               />
               <Icon
                 name="search-02-stroke-rounded"
@@ -544,7 +543,7 @@ export function VulnerabilitiesContent({
                 <button
                   type="button"
                   onClick={clearAllFilters}
-                  className="rounded-md px-2 py-1 text-xs font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                  className="rounded-sm px-2 py-1 text-l6 text-muted-foreground transition-colors hover:bg-card hover:text-foreground"
                 >
                   {t("filter.clearAll")}
                 </button>
@@ -555,8 +554,8 @@ export function VulnerabilitiesContent({
 
         {/* ── Bulk action bar ── */}
         {selected.size > 0 && canWrite && (
-          <div className="flex flex-wrap items-center gap-2 rounded-xl border border-primary/30 bg-primary/10 p-2 pl-4">
-            <span className="text-sm font-semibold text-primary">
+          <div className="flex flex-wrap items-center gap-2 rounded-md border border-primary/30 bg-primary/10 p-2 pl-4">
+            <span className="text-l6 text-primary">
               {t("bulk.selected", { count: selected.size })}
             </span>
             <div className="ml-auto flex flex-wrap gap-2">
@@ -596,7 +595,7 @@ export function VulnerabilitiesContent({
           data-reveal
           className="overflow-hidden rounded-md bg-muted"
         >
-          <div className="flex items-center border-b border-border px-4 py-2.5 text-[11px] text-muted-foreground">
+          <div className="flex items-center border-b border-border px-4 py-2.5 text-h6 text-muted-foreground">
             {canWrite && (
               <label className="flex w-8 cursor-pointer items-center">
                 <input
@@ -618,7 +617,7 @@ export function VulnerabilitiesContent({
 
           {filteredEmpty ? (
             <div className="flex flex-col items-center justify-center py-16 text-center">
-              <p className="text-sm text-muted-foreground">
+              <p className="text-p3 text-muted-foreground">
                 {t("empty.filtered")}
               </p>
               <Button
@@ -638,7 +637,7 @@ export function VulnerabilitiesContent({
               </Button>
             </div>
           ) : (
-            <div className="divide-y divide-white/[0.04]">
+            <div className="divide-y divide-border">
               {filtered.map((v) => (
                 <VulnRow
                   key={v.id}
@@ -710,7 +709,7 @@ function MultiSelect({
       <DropdownMenuTrigger render={<Button variant="outline" size="sm" />}>
         {label}
         {count > 0 && (
-          <span className="ml-1 rounded-full bg-primary/15 px-1.5 text-[10px] font-semibold tabular-nums text-primary">
+          <span className="ml-1 rounded-sm bg-primary/15 px-1.5 text-l6-plus tabular-nums text-primary">
             {count}
           </span>
         )}
@@ -777,10 +776,10 @@ function ToggleChip({
       type="button"
       onClick={onClick}
       className={cn(
-        "inline-flex h-9 items-center gap-1.5 rounded-md border px-3 text-sm font-medium transition-colors",
+        "inline-flex h-9 items-center gap-1.5 rounded-sm border-[1.5px] px-3 text-l6 transition-colors",
         active
           ? "border-[color:var(--chip)] bg-[color:var(--chip)]/10 text-[color:var(--chip)]"
-          : "border-border bg-transparent text-muted-foreground hover:text-foreground",
+          : "border-border-outline bg-card text-muted-foreground hover:text-foreground",
       )}
       style={{ ["--chip" as string]: color }}
     >
@@ -904,7 +903,7 @@ function VulnRow({
   return (
     <div
       className={cn(
-        "group relative flex items-center px-4 py-3 transition-colors hover:bg-muted",
+        "group relative flex items-center px-4 py-3 transition-colors hover:bg-muted/60",
         selected && "bg-primary/5",
       )}
     >
@@ -930,12 +929,12 @@ function VulnRow({
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-center gap-2">
           <span
-            className="rounded-md px-1.5 py-0.5 text-l6-plus uppercase tracking-wide text-white"
+            className="rounded-sm px-1.5 py-0.5 text-l6-plus uppercase tracking-wide text-white"
             style={{ backgroundColor: SEVERITY_COLOR[vuln.severity] }}
           >
             {tSev(vuln.severity)}
           </span>
-          <span className="font-mono text-sm font-semibold text-foreground">
+          <span className="font-mono text-l6 text-foreground">
             {vuln.cve_id}
           </span>
           {vuln.cvss_score !== null && (
@@ -944,24 +943,24 @@ function VulnRow({
             </span>
           )}
           {vuln.cisa_kev && (
-            <span className="inline-flex items-center gap-1 rounded-full bg-[#DC2626]/15 px-2 py-0.5 text-l6-plus uppercase tracking-wide text-[#DC2626]">
+            <span className="inline-flex items-center gap-1 rounded-sm bg-destructive/15 px-2 py-0.5 text-l6-plus uppercase tracking-wide text-destructive">
               KEV
             </span>
           )}
           {vuln.actively_exploited && (
-            <span className="inline-flex items-center gap-1 rounded-full bg-[#DC2626]/20 px-2 py-0.5 text-l6-plus uppercase tracking-wide text-[#DC2626]">
-              <span className="size-1.5 animate-pulse rounded-full bg-[#DC2626]" />
+            <span className="inline-flex items-center gap-1 rounded-sm bg-destructive/20 px-2 py-0.5 text-l6-plus uppercase tracking-wide text-destructive">
+              <span className="size-1.5 animate-pulse rounded-full bg-destructive" />
               {t("row.actively_exploited")}
             </span>
           )}
           {vuln.resolution_type && (
-            <span className="inline-flex items-center gap-1 rounded-full bg-muted px-2 py-0.5 text-[10px] uppercase tracking-wide text-muted-foreground">
+            <span className="inline-flex items-center gap-1 rounded-sm bg-muted px-2 py-0.5 text-l6-plus uppercase tracking-wide text-muted-foreground">
               {tRes(vuln.resolution_type)}
             </span>
           )}
         </div>
         {vuln.description && (
-          <p className="mt-1 line-clamp-1 text-[11px] text-muted-foreground">
+          <p className="mt-1 line-clamp-1 text-p4 text-muted-foreground">
             {vuln.description}
           </p>
         )}
@@ -969,18 +968,18 @@ function VulnRow({
 
       {/* Component */}
       <div className="hidden w-44 min-w-0 sm:block">
-        <p className="truncate text-xs font-medium text-foreground">
+        <p className="truncate text-l6 text-foreground">
           {vuln.component_name || "—"}
         </p>
         {vuln.component_version && (
-          <p className="truncate text-[11px] text-muted-foreground">
+          <p className="truncate text-p4 text-muted-foreground">
             {vuln.component_version}
           </p>
         )}
       </div>
 
       {/* Age */}
-      <div className="hidden w-14 text-xs text-muted-foreground sm:block">
+      <div className="hidden w-14 text-p4 text-muted-foreground sm:block">
         {age !== null ? t("row.daysOld", { days: age }) : "—"}
       </div>
 
@@ -1004,12 +1003,12 @@ function VulnRow({
                 {initialsOf(vuln.assignee.full_name, vuln.assignee.email)}
               </AvatarFallback>
             </Avatar>
-            <span className="truncate text-xs">
+            <span className="truncate text-p4">
               {vuln.assignee.full_name ?? vuln.assignee.email}
             </span>
           </div>
         ) : (
-          <span className="text-xs text-muted-foreground">
+          <span className="text-p4 text-muted-foreground">
             {t("row.unassigned")}
           </span>
         )}
@@ -1082,7 +1081,7 @@ function StatusPill({
   const pill = (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-semibold transition-transform",
+        "inline-flex items-center gap-1.5 rounded-sm border px-2.5 py-1 text-l6 transition-transform",
         !disabled && "hover:-translate-y-0.5",
       )}
       style={{
@@ -1167,7 +1166,7 @@ function AssigneePicker({
                 {initialsOf(assignee.full_name, assignee.email)}
               </AvatarFallback>
             </Avatar>
-            <span className="truncate text-xs">
+            <span className="truncate text-p4">
               {assignee.full_name ?? assignee.email}
             </span>
           </>
@@ -1176,7 +1175,7 @@ function AssigneePicker({
             <span className="flex size-6 items-center justify-center rounded-full border border-dashed border-muted-foreground/40 text-muted-foreground">
               <Icon name="add-01" size={12} />
             </span>
-            <span className="text-xs text-muted-foreground">
+            <span className="text-p4 text-muted-foreground">
               {assignLabel}
             </span>
           </>
@@ -1268,7 +1267,7 @@ function ResolveModal({
     >
       <div className="space-y-3">
         <div>
-          <label className="text-xs font-medium text-muted-foreground">
+          <label className="text-l6-plus uppercase tracking-[1.5px] text-muted-foreground">
             {t("modal.resolutionTypeLabel")}
           </label>
           <div className="mt-1.5 grid grid-cols-2 gap-2">
@@ -1278,10 +1277,10 @@ function ResolveModal({
                 type="button"
                 onClick={() => setResolutionType(rt)}
                 className={cn(
-                  "rounded-lg border px-3 py-2 text-left text-sm transition-colors",
+                  "rounded-sm border-[1.5px] px-3 py-2 text-left text-p3 transition-colors",
                   resolutionType === rt
                     ? "border-primary bg-primary/10 text-foreground"
-                    : "border-border text-muted-foreground hover:border-muted-foreground/40 hover:text-foreground",
+                    : "border-border-outline bg-card text-muted-foreground hover:border-muted-foreground hover:text-foreground",
                 )}
               >
                 {tRes(rt)}
@@ -1290,14 +1289,14 @@ function ResolveModal({
           </div>
         </div>
         <div>
-          <label className="text-xs font-medium text-muted-foreground">
+          <label className="text-l6-plus uppercase tracking-[1.5px] text-muted-foreground">
             {t("modal.notesLabel")}
           </label>
           <Textarea
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             placeholder={t("modal.notesPlaceholder")}
-            className="mt-1.5 min-h-20 text-sm"
+            className="mt-1.5 min-h-20"
           />
         </div>
       </div>

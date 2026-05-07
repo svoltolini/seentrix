@@ -25,12 +25,6 @@ import {
 
 type ViewMode = "list" | "kanban";
 
-function scoreColor(score: number): string {
-  if (score >= 75) return "#16A34A";
-  if (score >= 40) return "#D97706";
-  return "#DC2626";
-}
-
 export function ComplianceChecklist({
   product,
   initialItems,
@@ -126,7 +120,7 @@ export function ComplianceChecklist({
     <div className="space-y-6">
       {/* Encouragement banner */}
       {allPending && (
-        <div className="flex items-start gap-4 rounded-xl border border-primary/20 bg-primary/5 px-5 py-4">
+        <div className="flex items-start gap-4 rounded-md border border-primary/20 bg-primary/5 p-[18px]">
           <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary/10">
             <Icon
               name="sparkles-stroke-rounded"
@@ -135,10 +129,10 @@ export function ComplianceChecklist({
             />
           </div>
           <div>
-            <p className="text-sm font-semibold text-foreground">
+            <p className="text-h5 text-foreground">
               {t("getStarted")}
             </p>
-            <p className="mt-0.5 text-sm text-muted-foreground">
+            <p className="mt-0.5 text-p3 text-muted-foreground">
               {t("getStartedDescription")}
             </p>
           </div>
@@ -147,18 +141,18 @@ export function ComplianceChecklist({
 
       {/* Score header */}
       <div
-        className="overflow-hidden rounded-xl"
+        className="overflow-hidden rounded-md"
         style={{
           background:
             score >= 75
-              ? "linear-gradient(135deg, #16A34A, #15803D)"
+              ? "linear-gradient(135deg, #4CD964, #16A34A)"
               : score >= 40
-                ? "linear-gradient(135deg, #D97706, #EA580C)"
-                : "linear-gradient(135deg, #DC2626, #E11D48)",
+                ? "linear-gradient(135deg, #FF9E55, #FF6D00)"
+                : "linear-gradient(135deg, #E60019, #6F4FE0 60%, #066DE6)",
         }}
       >
         <div className="flex items-center gap-5 p-5">
-          <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-black/15">
+          <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-white/20">
             <Icon
               name="shield-check"
               size={24}
@@ -169,15 +163,15 @@ export function ComplianceChecklist({
             <p className="text-l6-plus text-white">
               {t("title")}
             </p>
-            <p className="text-3xl font-bold tabular-nums leading-none tracking-tight text-white">
+            <p className="text-h1 tabular-nums leading-none tracking-tight text-white">
               {score}%
             </p>
           </div>
         </div>
         <div className="px-5 pb-5">
-          <div className="h-3 overflow-hidden rounded-[3px] bg-black/25">
+          <div className="h-3 overflow-hidden rounded-sm bg-white/25">
             <div
-              className="h-full rounded-[3px] bg-white transition-all duration-500"
+              className="h-full rounded-sm bg-white transition-all duration-500"
               style={{ width: `${score}%` }}
             />
           </div>
@@ -226,21 +220,21 @@ export function ComplianceChecklist({
             className="shrink-0 text-foreground"
           />
           <div className="min-w-0 flex-1">
-            <h3 className="text-sm font-semibold text-foreground">
+            <h3 className="text-h4 text-foreground">
               {t("partI")}
             </h3>
-            <p className="mt-0.5 text-xs text-muted-foreground">
+            <p className="mt-0.5 text-p3 text-muted-foreground">
               {t("partIDescription")}
             </p>
           </div>
-          <span className="shrink-0 text-xs tabular-nums text-muted-foreground">
+          <span className="shrink-0 text-p4 tabular-nums text-muted-foreground">
             {t("itemCount", {
               completed: partICompleted,
               total: partITotal,
             })}
           </span>
         </div>
-        <div className="divide-y divide-white/[0.04] border-t border-border">
+        <div className="divide-y divide-border border-t border-border">
           {PART_I_REQUIREMENTS.map((req) => {
             const item = findItem(req.id);
             if (!item) return null;
@@ -267,7 +261,7 @@ export function ComplianceChecklist({
       </div>
 
       {/* Part II */}
-      <div className="overflow-hidden rounded-xl bg-card">
+      <div className="overflow-hidden rounded-md bg-card">
         <div className="flex items-center gap-3 px-5 py-4">
           <Icon
             name="two-circle-stroke-rounded"
@@ -275,21 +269,21 @@ export function ComplianceChecklist({
             className="shrink-0 text-foreground"
           />
           <div className="min-w-0 flex-1">
-            <h3 className="text-sm font-semibold text-foreground">
+            <h3 className="text-h4 text-foreground">
               {t("partII")}
             </h3>
-            <p className="mt-0.5 text-xs text-muted-foreground">
+            <p className="mt-0.5 text-p3 text-muted-foreground">
               {t("partIIDescription")}
             </p>
           </div>
-          <span className="shrink-0 text-xs tabular-nums text-muted-foreground">
+          <span className="shrink-0 text-p4 tabular-nums text-muted-foreground">
             {t("itemCount", {
               completed: partIICompleted,
               total: partIITotal,
             })}
           </span>
         </div>
-        <div className="divide-y divide-white/[0.04] border-t border-border">
+        <div className="divide-y divide-border border-t border-border">
           {PART_II_REQUIREMENTS.map((req) => {
             const item = findItem(req.id);
             if (!item) return null;

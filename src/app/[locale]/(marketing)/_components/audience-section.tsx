@@ -10,7 +10,7 @@ import { buttonVariants } from "@/components/ui/button";
 const segments = [
   { key: "industrial", accent: "#066DE6" },
   { key: "iot", accent: "#6F4FE0" },
-  { key: "software", accent: "#6366F1" },
+  { key: "software", accent: "#FF6D00" },
 ] as const;
 
 export function AudienceSection() {
@@ -45,14 +45,14 @@ export function AudienceSection() {
   return (
     <section
       ref={sectionRef}
-      className="border-t border-border/50 bg-card/50 py-24 lg:py-32"
+      className="py-24 lg:py-32"
     >
       <div className="mx-auto max-w-6xl px-6">
         <div className="mx-auto mb-16 max-w-3xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
             {t("title")}
           </h2>
-          <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
+          <p className="mt-6 text-p1 text-muted-foreground">
             {t("subtitle")}
           </p>
         </div>
@@ -62,7 +62,7 @@ export function AudienceSection() {
             <div
               key={seg.key}
               data-audience-row
-              className="flex items-start gap-6 rounded-md bg-muted p-8 lg:gap-8"
+              className="flex items-start gap-6 rounded-md bg-card p-8 shadow-card-md lg:gap-8"
             >
               <span
                 className="shrink-0 text-4xl font-extrabold leading-none lg:text-5xl"
@@ -72,10 +72,10 @@ export function AudienceSection() {
               </span>
 
               <div>
-                <h3 className="text-xl font-bold text-foreground">
+                <h3 className="text-h3 text-foreground">
                   {t(`segments.${seg.key}.title`)}
                 </h3>
-                <p className="mt-3 text-base leading-relaxed text-muted-foreground">
+                <p className="mt-3 text-p2-r text-muted-foreground">
                   {t(`segments.${seg.key}.description`)}
                 </p>
               </div>

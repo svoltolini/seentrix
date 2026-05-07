@@ -59,14 +59,14 @@ export function HelpSheet({
         <SheetPrimitive.Popup
           data-slot="help-sheet"
           className={cn(
-            "fixed inset-y-0 right-0 z-50 flex h-full w-full flex-col bg-card text-sm text-card-foreground shadow-2xl shadow-black/40 transition duration-200 ease-in-out sm:max-w-md",
+            "fixed inset-y-0 right-0 z-50 flex h-full w-full flex-col bg-card text-p3 text-card-foreground shadow-card-lg transition duration-200 ease-in-out sm:max-w-md",
             "data-ending-style:translate-x-[2.5rem] data-ending-style:opacity-0 data-starting-style:translate-x-[2.5rem] data-starting-style:opacity-0",
           )}
         >
           {/* Header */}
           <div className="flex items-start justify-between gap-3 border-b border-border px-6 pt-6 pb-5">
             <div className="min-w-0">
-              <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+              <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
                 {eyebrow}
               </p>
               <SheetPrimitive.Title
@@ -78,7 +78,7 @@ export function HelpSheet({
             </div>
             <SheetPrimitive.Close
               type="button"
-              className="flex size-8 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+              className="flex size-8 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
               aria-label={t("close")}
             >
               <span aria-hidden className="text-lg leading-none">×</span>
@@ -87,19 +87,19 @@ export function HelpSheet({
 
           {/* Scrollable body */}
           <div className="flex-1 space-y-5 overflow-y-auto px-6 py-5">
-            <div className="text-[13px] leading-relaxed text-muted-foreground">
+            <div className="text-p3 leading-relaxed text-muted-foreground">
               {body}
             </div>
 
             {reference && (
               <div
-                className="relative overflow-hidden rounded-xl bg-cover bg-center p-5"
-                style={{ backgroundImage: "url('/images/entity-role-bg.svg')" }}
+                className="relative overflow-hidden rounded-md p-5"
+                style={{ background: "linear-gradient(135deg, #066DE6 0%, #6F4FE0 60%, #FF6D00 100%)" }}
               >
-                <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-white/10 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur-sm">
+                <div className="mb-2 inline-flex items-center gap-2 rounded-sm bg-white/20 px-2.5 py-0.5 text-l6-plus uppercase tracking-wider text-white backdrop-blur-sm">
                   {t("craReference")}
                 </div>
-                <p className="text-[13px] leading-relaxed text-white">
+                <p className="text-p3 leading-relaxed text-white">
                   {reference}
                 </p>
               </div>
@@ -107,7 +107,7 @@ export function HelpSheet({
 
             {relatedTerms && relatedTerms.length > 0 && (
               <div>
-                <p className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                <p className="mb-2 text-l6-plus uppercase tracking-wider text-muted-foreground">
                   {t("relatedTerms")}
                 </p>
                 <div className="flex flex-wrap gap-1.5">
@@ -123,13 +123,13 @@ export function HelpSheet({
             {lesson && effectiveLessonId && (
               <Link
                 href={`/app/academy/${effectiveLessonId}`}
-                className="group block rounded-xl bg-muted p-4 transition-colors hover:bg-muted"
+                className="group block rounded-md bg-muted p-4 transition-colors hover:bg-muted/60"
               >
-                <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
                   {t("academy")}
                 </p>
                 <div className="mt-1 flex items-start justify-between gap-3">
-                  <p className="font-heading text-sm font-semibold text-foreground group-hover:text-primary">
+                  <p className="text-l5 text-foreground group-hover:text-primary">
                     {lesson.title}
                   </p>
                   <Icon
@@ -138,10 +138,10 @@ export function HelpSheet({
                     className="mt-1 shrink-0 text-muted-foreground transition-colors group-hover:text-primary"
                   />
                 </div>
-                <div className="mt-2 flex items-center gap-2 text-[11px] text-muted-foreground">
+                <div className="mt-2 flex items-center gap-2 text-p4 text-muted-foreground">
                   <span>{lesson.duration}</span>
                   <span className="text-muted-foreground">·</span>
-                  <span className="font-medium text-primary">
+                  <span className="text-l6 text-primary">
                     {t("openLesson")}
                   </span>
                 </div>
@@ -189,7 +189,7 @@ function RelatedTermChip({
     >
       <SheetPrimitive.Trigger
         type="button"
-        className="inline-flex items-center gap-1 rounded-full bg-muted px-2.5 py-1 text-l6-plus text-muted-foreground transition-colors hover:bg-primary/10 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+        className="inline-flex items-center gap-1 rounded-sm bg-muted px-2.5 py-1 text-l6-plus text-muted-foreground transition-colors hover:bg-primary/10 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
       >
         {children}
       </SheetPrimitive.Trigger>

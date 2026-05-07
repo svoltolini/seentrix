@@ -30,13 +30,13 @@ export function ActivityVelocityChart({ data }: Props) {
   if (!hasData) {
     return (
       <div className="rounded-md bg-muted p-6">
-        <p className="text-[10px] font-semibold uppercase tracking-[2.5px] text-primary">
+        <p className="text-l6-plus uppercase tracking-[2.5px] text-primary">
           {t("activityVelocity.eyebrow")}
         </p>
         <h2 className="mt-1 text-h5 text-foreground">
           {t("activityVelocity.title")}
         </h2>
-        <p className="py-12 text-center text-xs text-muted-foreground">
+        <p className="py-12 text-center text-p4 text-muted-foreground">
           {t("activityVelocity.noData")}
         </p>
       </div>
@@ -61,29 +61,29 @@ export function ActivityVelocityChart({ data }: Props) {
     <div className="rounded-md bg-muted p-6">
       <div className="mb-6 flex items-start justify-between gap-4">
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-[2.5px] text-primary">
+          <p className="text-l6-plus uppercase tracking-[2.5px] text-primary">
             {t("activityVelocity.eyebrow")}
           </p>
           <h2 className="mt-1 text-h5 text-foreground">
             {t("activityVelocity.title")}
           </h2>
           <div className="mt-3 flex items-baseline gap-2">
-            <span className="text-3xl font-bold tabular-nums text-foreground">
+            <span className="text-h2 tabular-nums text-foreground">
               {totalActions}
             </span>
-            <span className="text-xs text-muted-foreground">
+            <span className="text-p4 text-muted-foreground">
               {t("activityVelocity.totalLast30d")}
             </span>
           </div>
         </div>
         <div className="text-right">
-          <span className="text-[11px] text-muted-foreground">
+          <span className="text-p4 text-muted-foreground">
             {t("activityVelocity.peak")}
           </span>
-          <p className="text-lg font-bold tabular-nums text-foreground">
+          <p className="text-h4 tabular-nums text-foreground">
             {peak.count}
           </p>
-          <p className="text-[10px] text-muted-foreground">
+          <p className="text-p4 text-muted-foreground">
             {formatDate(peak.date)}
           </p>
         </div>
@@ -93,8 +93,8 @@ export function ActivityVelocityChart({ data }: Props) {
         <AreaChart data={data} margin={{ top: 8, right: 8, bottom: 0, left: 0 }}>
           <defs>
             <linearGradient id="activityGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#066DE6" stopOpacity={0.45} />
-              <stop offset="100%" stopColor="#066DE6" stopOpacity={0} />
+              <stop offset="0%" stopColor="var(--primary)" stopOpacity={0.45} />
+              <stop offset="100%" stopColor="var(--primary)" stopOpacity={0} />
             </linearGradient>
           </defs>
           <CartesianGrid
@@ -125,8 +125,8 @@ export function ActivityVelocityChart({ data }: Props) {
               if (!payload?.length || !label) return null;
               const count = payload[0].value as number;
               return (
-                <div className="rounded-lg bg-muted px-3 py-1.5 text-xs shadow-md">
-                  <p className="font-medium">{formatDate(String(label))}</p>
+                <div className="rounded-md bg-card px-3 py-1.5 text-p4 shadow-card-sm">
+                  <p className="text-p4 text-foreground">{formatDate(String(label))}</p>
                   <p className="tabular-nums text-muted-foreground">
                     {t("activityVelocity.actions", { count })}
                   </p>
@@ -137,7 +137,7 @@ export function ActivityVelocityChart({ data }: Props) {
           <Area
             type="monotone"
             dataKey="count"
-            stroke="#066DE6"
+            stroke="var(--primary)"
             strokeWidth={2}
             fill="url(#activityGrad)"
           />

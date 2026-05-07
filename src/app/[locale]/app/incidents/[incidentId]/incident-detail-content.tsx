@@ -20,10 +20,10 @@ import {
 } from "../actions";
 
 const SEVERITY_COLOR: Record<string, string> = {
-  critical: "#DC2626",
-  high: "#D97706",
-  medium: "#066DE6",
-  low: "#6B7280",
+  critical: "var(--destructive)",
+  high: "var(--warning)",
+  medium: "var(--primary)",
+  low: "var(--muted-foreground)",
 };
 
 const PHASE_HOURS: Record<IncidentPhase, number> = {
@@ -33,9 +33,9 @@ const PHASE_HOURS: Record<IncidentPhase, number> = {
 };
 
 const PHASE_COLOR: Record<IncidentPhase, string> = {
-  early_warning: "#DC2626",
-  incident_report: "#D97706",
-  final_report: "#066DE6",
+  early_warning: "var(--destructive)",
+  incident_report: "var(--warning)",
+  final_report: "var(--primary)",
 };
 
 const ROLES_CAN_WRITE = new Set([
@@ -88,13 +88,13 @@ function PhaseRing({
   const CIRC = 2 * Math.PI * R;
 
   const displayColor = submitted
-    ? "#16A34A"
+    ? "var(--success)"
     : overdue
-      ? "#DC2626"
+      ? "var(--destructive)"
       : remaining < 6 * 3600_000
-        ? "#DC2626"
+        ? "var(--destructive)"
         : remaining < 24 * 3600_000
-          ? "#D97706"
+          ? "var(--warning)"
           : PHASE_COLOR[phase];
 
   return (
@@ -129,31 +129,31 @@ function PhaseRing({
               <Icon
                 name="checkmark-circle-01-stroke-rounded"
                 size={28}
-                className="text-[#16A34A]"
+                className="text-success"
               />
-              <span className="mt-1 text-[10px] uppercase tracking-wide text-[#16A34A]">
+              <span className="mt-1 text-l6-plus uppercase tracking-wide text-success">
                 {subLabel}
               </span>
             </>
           ) : (
             <>
               <span
-                className="text-xl font-bold tabular-nums leading-none"
+                className="text-h4 tabular-nums leading-none"
                 style={{ color: displayColor }}
               >
                 {formatRemaining(remaining)}
               </span>
-              <span className="mt-1 text-[9px] uppercase tracking-wide text-muted-foreground">
+              <span className="mt-1 text-l6-plus uppercase tracking-wide text-muted-foreground">
                 {overdue ? subLabel : subLabel}
               </span>
             </>
           )}
         </div>
       </div>
-      <p className="mt-3 text-center text-xs font-semibold text-foreground">
+      <p className="mt-3 text-center text-l6 text-foreground">
         {label}
       </p>
-      <p className="text-[10px] text-muted-foreground">
+      <p className="text-p4 text-muted-foreground">
         {PHASE_HOURS[phase] >= 24
           ? `${PHASE_HOURS[phase] / 24}d window`
           : `${PHASE_HOURS[phase]}h window`}
@@ -229,12 +229,12 @@ function PhaseSection({
               className="size-2 rounded-full"
               style={{ backgroundColor: PHASE_COLOR[phase] }}
             />
-            <h3 className="text-sm font-semibold text-foreground">{label}</h3>
+            <h3 className="text-h5 text-foreground">{label}</h3>
           </div>
-          <p className="mt-1 text-xs text-muted-foreground">{description}</p>
+          <p className="mt-1 text-p3 text-muted-foreground">{description}</p>
         </div>
         {submitted && (
-          <span className="shrink-0 rounded-full bg-[#16A34A]/15 px-2.5 py-1 text-l6-plus text-[#16A34A]">
+          <span className="shrink-0 rounded-sm bg-success/15 px-2.5 py-1 text-l6-plus text-success">
             {submittedLabel} · {formatDate(submittedAt)}
           </span>
         )}
@@ -402,7 +402,7 @@ export function IncidentDetailContent({
         <div data-reveal>
           <Link
             href="/app/incidents"
-            className="text-xs font-medium text-muted-foreground hover:text-foreground"
+            className="text-l6 text-muted-foreground hover:text-foreground"
           >
             ← {t("breadcrumb")}
           </Link>
@@ -410,21 +410,21 @@ export function IncidentDetailContent({
             <div className="min-w-0 flex-1">
               <div className="flex flex-wrap items-center gap-2">
                 <span
-                  className="rounded-md px-1.5 py-0.5 text-l6-plus uppercase tracking-wide text-white"
+                  className="rounded-sm px-1.5 py-0.5 text-l6-plus uppercase tracking-wide text-white"
                   style={{
                     backgroundColor: SEVERITY_COLOR[incident.severity],
                   }}
                 >
                   {tSev(incident.severity)}
                 </span>
-                <span className="rounded-full bg-muted px-2 py-0.5 text-l6-plus text-muted-foreground">
+                <span className="rounded-sm bg-muted px-2 py-0.5 text-l6-plus text-muted-foreground">
                   {tType(incident.type)}
                 </span>
-                <span className="rounded-full bg-muted px-2 py-0.5 text-l6-plus text-muted-foreground">
+                <span className="rounded-sm bg-muted px-2 py-0.5 text-l6-plus text-muted-foreground">
                   {tStatus(incident.status)}
                 </span>
               </div>
-              <h1 className="mt-2 font-heading text-[28px] font-bold leading-tight tracking-tight">
+              <h1 className="mt-2 text-h1 text-foreground">
                 {incident.title}
               </h1>
               <p className="mt-2 text-p3 text-muted-foreground">
@@ -582,15 +582,15 @@ export function IncidentDetailContent({
         >
           <div className="flex items-start justify-between gap-3">
             <div>
-              <h3 className="text-sm font-semibold text-foreground">
+              <h3 className="text-h5 text-foreground">
                 {t("detail.userNotify.title")}
               </h3>
-              <p className="mt-1 text-xs text-muted-foreground">
+              <p className="mt-1 text-p3 text-muted-foreground">
                 {t("detail.userNotify.description")}
               </p>
             </div>
             {incident.user_notification_sent_at && (
-              <span className="shrink-0 rounded-full bg-[#16A34A]/15 px-2.5 py-1 text-l6-plus text-[#16A34A]">
+              <span className="shrink-0 rounded-sm bg-success/15 px-2.5 py-1 text-l6-plus text-success">
                 {t("detail.userNotify.sent", {
                   date: formatDate(incident.user_notification_sent_at),
                 })}

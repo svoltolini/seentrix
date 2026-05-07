@@ -64,7 +64,7 @@ export function AssessmentResult({
               {t(`result.categories.${category}`)}
             </Badge>
           </div>
-          <p className="max-w-md text-sm leading-relaxed text-muted-foreground">
+          <p className="max-w-md text-p3 leading-relaxed text-muted-foreground">
             {t(`result.categories.${category}Description`)}
           </p>
         </CardContent>
@@ -82,7 +82,7 @@ export function AssessmentResult({
                 <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
                   {t("result.conformityRoute")}
                 </p>
-                <p className="mt-0.5 text-sm font-semibold text-foreground">
+                <p className="mt-0.5 text-l6 text-foreground">
                   {t(`result.routes.${conformityRoute}`)}
                 </p>
               </div>
@@ -99,7 +99,7 @@ export function AssessmentResult({
                 <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
                   {t("result.notifiedBody")}
                 </p>
-                <p className="mt-0.5 text-sm font-semibold text-foreground">
+                <p className="mt-0.5 text-l6 text-foreground">
                   {requiresNotifiedBody ? t("result.yes") : t("result.no")}
                 </p>
               </div>
@@ -115,7 +115,7 @@ export function AssessmentResult({
             {t("result.deadlines")}
           </p>
           <div className="flex items-center justify-between">
-            <span className="text-sm text-muted-foreground">
+            <span className="text-p3 text-muted-foreground">
               {t("result.reportingDeadline")}
             </span>
             <ProgressPill value={reportingProgress}>
@@ -123,7 +123,7 @@ export function AssessmentResult({
             </ProgressPill>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-sm text-muted-foreground">
+            <span className="text-p3 text-muted-foreground">
               {t("result.fullCompliance")}
             </span>
             <ProgressPill value={fullComplianceProgress}>
@@ -142,14 +142,14 @@ export function AssessmentResult({
           <ol className="relative ml-3 flex flex-col gap-0 border-l border-border pl-6">
             {ROADMAP_STEPS.map((step, i) => (
               <li key={step} className="relative pb-5 last:pb-0">
-                <div className="absolute -left-[calc(1.5rem+0.5px)] top-0.5 flex size-5 items-center justify-center rounded-full border border-border bg-background text-[10px] font-semibold text-muted-foreground">
+                <div className="absolute -left-[calc(1.5rem+0.5px)] top-0.5 flex size-5 items-center justify-center rounded-full border border-border-outline bg-card text-l6-plus text-muted-foreground">
                   {i + 1}
                 </div>
                 <div className="flex flex-col gap-0.5">
-                  <span className="text-sm font-medium text-foreground">
+                  <span className="text-l6 text-foreground">
                     {t(`result.roadmapSteps.${step}`)}
                   </span>
-                  <span className="text-[13px] leading-snug text-muted-foreground">
+                  <span className="text-p3 leading-snug text-muted-foreground">
                     {t(`result.roadmapSteps.${step}Description`)}
                   </span>
                 </div>

@@ -31,18 +31,18 @@ import {
 } from "./actions";
 
 const SEVERITY_COLOR: Record<IncidentSeverity, string> = {
-  critical: "#DC2626",
-  high: "#D97706",
-  medium: "#066DE6",
-  low: "#6B7280",
+  critical: "var(--destructive)",
+  high: "var(--warning)",
+  medium: "var(--primary)",
+  low: "var(--muted-foreground)",
 };
 
 const STATUS_COLOR: Record<string, string> = {
-  detected: "#DC2626",
-  early_warning_submitted: "#D97706",
-  incident_report_submitted: "#D97706",
-  final_report_submitted: "#066DE6",
-  closed: "#16A34A",
+  detected: "var(--destructive)",
+  early_warning_submitted: "var(--warning)",
+  incident_report_submitted: "var(--warning)",
+  final_report_submitted: "var(--primary)",
+  closed: "var(--success)",
 };
 
 const ROLES_CAN_WRITE = new Set([
@@ -225,33 +225,33 @@ export function IncidentsContent({
         >
           <StatCard
             label={t("kpi.active")}
-            from="#D97706"
-            to="#EA580C"
+            from="#FF9E55"
+            to="#FF6D00"
             accentDot
             pulse={kpis.active > 0}
           >
-            <p className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white">
+            <p className="mt-2 text-h2 tabular-nums tracking-tight text-white">
               {kpis.active}
             </p>
           </StatCard>
           <StatCard
             label={t("kpi.overdue")}
-            from="#DC2626"
-            to="#7F1D1D"
+            from="#E60019"
+            to="#2C3659"
             accentDot
             pulse={kpis.overdue > 0}
           >
-            <p className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white">
+            <p className="mt-2 text-h2 tabular-nums tracking-tight text-white">
               {kpis.overdue}
             </p>
           </StatCard>
-          <StatCard label={t("kpi.critical")} from="#DC2626" to="#E11D48">
-            <p className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white">
+          <StatCard label={t("kpi.critical")} from="#E60019" to="#6F4FE0">
+            <p className="mt-2 text-h2 tabular-nums tracking-tight text-white">
               {kpis.critical}
             </p>
           </StatCard>
-          <StatCard label={t("kpi.closed")} from="#16A34A" to="#15803D">
-            <p className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white">
+          <StatCard label={t("kpi.closed")} from="#4CD964" to="#16A34A">
+            <p className="mt-2 text-h2 tabular-nums tracking-tight text-white">
               {kpis.closed}
             </p>
           </StatCard>
@@ -293,18 +293,17 @@ export function IncidentsContent({
         {filtered.length === 0 ? (
           <div
             data-reveal
-            className="overflow-hidden rounded-md bg-cover bg-center px-6 py-20 text-center"
-            style={{ backgroundImage: "url('/images/empty-state-bg.png')" }}
+            className="overflow-hidden rounded-md bg-card shadow-card-md px-6 py-20 text-center"
           >
-            <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-black/25">
-              <Icon name="alert-02" size={28} className="text-white" />
+            <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-warning/10">
+              <Icon name="alert-02" size={28} className="text-warning" />
             </div>
-            <h2 className="mt-5 text-lg font-semibold text-white">
+            <h2 className="mt-5 text-h4 text-foreground">
               {incidents.length === 0
                 ? t("empty.title")
                 : t("empty.filtered")}
             </h2>
-            <p className="mt-2 text-sm text-white">
+            <p className="mt-2 text-p3 text-muted-foreground">
               {incidents.length === 0
                 ? t("empty.description")
                 : t("empty.filteredDescription")}
@@ -323,7 +322,7 @@ export function IncidentsContent({
             data-reveal
             className="overflow-hidden rounded-md bg-muted"
           >
-            <div className="flex items-center border-b border-border px-5 py-2.5 text-[11px] text-muted-foreground">
+            <div className="flex items-center border-b border-border px-5 py-2.5 text-h6 text-muted-foreground">
               <span className="flex-1">{t("table.incident")}</span>
               <span className="hidden w-24 sm:block">{t("table.type")}</span>
               <span className="hidden w-28 sm:block">
@@ -332,7 +331,7 @@ export function IncidentsContent({
               <span className="hidden w-32 md:block">{t("table.status")}</span>
               <span className="w-32 text-right">{t("table.deadline")}</span>
             </div>
-            <div className="divide-y divide-white/[0.04]">
+            <div className="divide-y divide-border">
               {filtered.map((inc) => {
                 const next = nextDeadline(inc);
                 const tLeft = next ? formatTimeLeft(next.at, now) : null;
@@ -340,7 +339,7 @@ export function IncidentsContent({
                   <Link
                     key={inc.id}
                     href={`/app/incidents/${inc.id}`}
-                    className="group relative flex items-center px-5 py-3.5 transition-colors hover:bg-muted"
+                    className="group relative flex items-center px-5 py-3.5 transition-colors hover:bg-muted/60"
                   >
                     <span
                       className="absolute inset-y-0 left-0 w-[3px]"
@@ -351,32 +350,32 @@ export function IncidentsContent({
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-wrap items-center gap-2">
                         <span
-                          className="rounded-md px-1.5 py-0.5 text-l6-plus uppercase tracking-wide text-white"
+                          className="rounded-sm px-1.5 py-0.5 text-l6-plus uppercase tracking-wide text-white"
                           style={{
                             backgroundColor: SEVERITY_COLOR[inc.severity],
                           }}
                         >
                           {tSev(inc.severity)}
                         </span>
-                        <span className="truncate text-sm font-semibold text-foreground transition-colors group-hover:text-primary">
+                        <span className="truncate text-l6 text-foreground transition-colors group-hover:text-primary">
                           {inc.title}
                         </span>
                         {inc.linked_cve_id && (
-                          <span className="font-mono text-[11px] text-muted-foreground">
+                          <span className="font-mono text-p4 text-muted-foreground">
                             · {inc.linked_cve_id}
                           </span>
                         )}
                       </div>
                       {inc.affected_product_names.length > 0 && (
-                        <p className="mt-0.5 truncate text-[11px] text-muted-foreground">
+                        <p className="mt-0.5 truncate text-p4 text-muted-foreground">
                           {inc.affected_product_names.join(" · ")}
                         </p>
                       )}
                     </div>
-                    <span className="hidden w-24 text-xs text-muted-foreground sm:block">
+                    <span className="hidden w-24 text-p4 text-muted-foreground sm:block">
                       {tType(inc.type)}
                     </span>
-                    <span className="hidden w-28 text-xs text-muted-foreground sm:block">
+                    <span className="hidden w-28 text-p4 text-muted-foreground sm:block">
                       {formatDate(inc.aware_at)}
                     </span>
                     <div className="hidden w-32 md:block">
@@ -389,12 +388,12 @@ export function IncidentsContent({
                       {tLeft ? (
                         <div
                           className={cn(
-                            "inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold",
+                            "inline-flex items-center gap-1.5 rounded-sm px-2.5 py-1 text-l6",
                             tLeft.overdue
-                              ? "bg-[#DC2626]/15 text-[#DC2626]"
+                              ? "bg-destructive/15 text-destructive"
                               : tLeft.hoursLeft < 24
-                                ? "bg-[#D97706]/15 text-[#D97706]"
-                                : "bg-muted text-muted-foreground",
+                                ? "bg-warning/15 text-warning"
+                                : "bg-card text-muted-foreground",
                           )}
                         >
                           <span
@@ -405,21 +404,21 @@ export function IncidentsContent({
                             )}
                             style={{
                               backgroundColor: tLeft.overdue
-                                ? "#DC2626"
+                                ? "var(--destructive)"
                                 : tLeft.hoursLeft < 24
-                                  ? "#D97706"
-                                  : "#6B7280",
+                                  ? "var(--warning)"
+                                  : "var(--muted-foreground)",
                             }}
                           />
                           {tLeft.overdue
                             ? t("deadline.overdueBy", { time: tLeft.text })
                             : t("deadline.in", { time: tLeft.text })}
-                          <span className="text-[10px] opacity-60">
+                          <span className="text-p4 opacity-60">
                             · {tPhase(next!.phase)}
                           </span>
                         </div>
                       ) : (
-                        <span className="text-[11px] text-muted-foreground">
+                        <span className="text-p4 text-muted-foreground">
                           {t("deadline.none")}
                         </span>
                       )}
@@ -463,16 +462,16 @@ function SegmentedControl({
   onChange: (v: string) => void;
 }) {
   return (
-    <div className="inline-flex gap-1 rounded-lg bg-muted p-1">
+    <div className="inline-flex gap-1 rounded-md bg-muted p-1">
       {options.map((o) => (
         <button
           key={o.value}
           type="button"
           onClick={() => onChange(o.value)}
           className={cn(
-            "rounded-md px-3 py-1.5 text-xs font-medium transition-colors",
+            "rounded-sm px-3 py-1.5 text-l6 transition-colors",
             value === o.value
-              ? "bg-muted text-foreground"
+              ? "bg-card shadow-card-sm text-foreground"
               : "text-muted-foreground hover:text-foreground",
           )}
         >
@@ -502,7 +501,7 @@ function MultiSeverity({
       <DropdownMenuTrigger render={<Button variant="outline" size="sm" />}>
         {label}
         {selected.size > 0 && (
-          <span className="ml-1 rounded-full bg-primary/15 px-1.5 text-[10px] font-semibold tabular-nums text-primary">
+          <span className="ml-1 rounded-sm bg-primary/15 px-1.5 text-l6-plus tabular-nums text-primary">
             {selected.size}
           </span>
         )}
@@ -547,10 +546,10 @@ function MultiSeverity({
 }
 
 function StatusChip({ status, label }: { status: string; label: string }) {
-  const color = STATUS_COLOR[status] ?? "#6B7280";
+  const color = STATUS_COLOR[status] ?? "var(--muted-foreground)";
   return (
     <span
-      className="inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 text-l6-plus"
+      className="inline-flex items-center gap-1.5 rounded-sm border px-2 py-0.5 text-l6-plus"
       style={{
         borderColor: `${color}4D`,
         backgroundColor: `${color}1A`,
@@ -622,7 +621,7 @@ function NewIncidentDialog({
     >
       <div className="space-y-3">
         <div>
-          <label className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+          <label className="flex items-center gap-2 text-l6 text-muted-foreground">
             {t("new.titleLabel")}
             <FieldHelp {...tip("title")} />
           </label>
@@ -634,7 +633,7 @@ function NewIncidentDialog({
           />
         </div>
         <div>
-          <label className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+          <label className="flex items-center gap-2 text-l6 text-muted-foreground">
             {t("new.typeLabel")}
             <FieldHelp {...tip("type")} />
           </label>
@@ -646,10 +645,10 @@ function NewIncidentDialog({
                   type="button"
                   onClick={() => setType(o)}
                   className={cn(
-                    "rounded-lg border px-3 py-2 text-left text-sm transition-colors",
+                    "rounded-sm border-[1.5px] px-3 py-2 text-left text-p3 transition-colors",
                     type === o
                       ? "border-primary bg-primary/10 text-foreground"
-                      : "border-border text-muted-foreground hover:text-foreground",
+                      : "border-border-outline bg-card text-muted-foreground hover:text-foreground",
                   )}
                 >
                   {tType(o)}
@@ -659,7 +658,7 @@ function NewIncidentDialog({
           </div>
         </div>
         <div>
-          <label className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+          <label className="flex items-center gap-2 text-l6 text-muted-foreground">
             {t("new.severityLabel")}
             <FieldHelp {...tip("severity")} />
           </label>
@@ -671,10 +670,10 @@ function NewIncidentDialog({
                   type="button"
                   onClick={() => setSeverity(s)}
                   className={cn(
-                    "rounded-lg border px-2 py-1.5 text-xs font-semibold transition-colors",
+                    "rounded-sm border-[1.5px] px-2 py-1.5 text-l6 transition-colors",
                     severity === s
                       ? "border-[color:var(--c)] bg-[color:var(--c)]/10 text-[color:var(--c)]"
-                      : "border-border text-muted-foreground hover:text-foreground",
+                      : "border-border-outline bg-card text-muted-foreground hover:text-foreground",
                   )}
                   style={{ ["--c" as string]: SEVERITY_COLOR[s] }}
                 >
@@ -686,11 +685,11 @@ function NewIncidentDialog({
         </div>
         {products.length > 0 && (
           <div>
-            <label className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+            <label className="flex items-center gap-2 text-l6 text-muted-foreground">
               {t("new.affectedProductsLabel")}
               <FieldHelp {...tip("affectedProducts")} />
             </label>
-            <div className="mt-1.5 flex max-h-40 flex-col gap-1 overflow-y-auto rounded-lg border border-border p-1">
+            <div className="mt-1.5 flex max-h-40 flex-col gap-1 overflow-y-auto rounded-md border border-border-outline bg-card p-1">
               {products.map((p) => {
                 const on = productIds.has(p.id);
                 return (
@@ -706,10 +705,10 @@ function NewIncidentDialog({
                       });
                     }}
                     className={cn(
-                      "flex items-center gap-2 rounded-md px-2 py-1.5 text-left text-sm transition-colors",
+                      "flex items-center gap-2 rounded-sm px-2 py-1.5 text-left text-p3 transition-colors",
                       on
                         ? "bg-primary/10 text-foreground"
-                        : "text-muted-foreground hover:bg-muted",
+                        : "text-muted-foreground hover:bg-muted/60",
                     )}
                   >
                     <span className="flex size-4 items-center justify-center rounded border border-border">
@@ -729,7 +728,7 @@ function NewIncidentDialog({
           </div>
         )}
         <div>
-          <label className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+          <label className="flex items-center gap-2 text-l6 text-muted-foreground">
             {t("new.descriptionLabel")}
             <FieldHelp {...tip("description")} />
           </label>

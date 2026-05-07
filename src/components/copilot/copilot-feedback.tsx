@@ -88,14 +88,14 @@ export function CopilotFeedback({
   }
 
   return (
-    <div className="mt-2 flex flex-col gap-2 text-[11px] text-muted-foreground">
+    <div className="mt-2 flex flex-col gap-2 text-p4 text-muted-foreground">
       <div className="flex items-center gap-1">
         <ThumbButton
           active={rating === 1}
           onClick={() => onThumb(1)}
           disabled={pending}
           icon="thumbs-up-stroke-rounded"
-          activeClass="bg-emerald-500/15 text-emerald-400 ring-emerald-500/30"
+          activeClass="bg-success/15 text-success ring-success/30"
           label={t("feedback.helpful")}
         />
         <ThumbButton
@@ -103,7 +103,7 @@ export function CopilotFeedback({
           onClick={() => onThumb(-1)}
           disabled={pending}
           icon="thumbs-down-stroke-rounded"
-          activeClass="bg-rose-500/15 text-rose-400 ring-rose-500/30"
+          activeClass="bg-destructive/15 text-destructive ring-destructive/30"
           label={t("feedback.notHelpful")}
         />
       </div>
@@ -111,14 +111,14 @@ export function CopilotFeedback({
       {commentOpen && (
         <form
           onSubmit={onSubmitComment}
-          className="flex items-end gap-2 rounded-lg bg-muted p-2 ring-1 ring-white/[0.06]"
+          className="flex items-end gap-2 rounded-md bg-muted p-2 border border-border-outline"
         >
           <textarea
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             placeholder={t("feedback.whatWentWrong")}
             rows={2}
-            className="flex-1 resize-none bg-transparent text-xs leading-relaxed text-foreground outline-none placeholder:text-muted-foreground"
+            className="flex-1 resize-none bg-transparent text-p4 leading-relaxed text-foreground outline-none placeholder:text-muted-foreground"
             autoFocus
           />
           <button
@@ -127,7 +127,7 @@ export function CopilotFeedback({
             className={cn(
               "shrink-0 rounded-md px-2.5 py-1 text-l6-plus transition",
               comment.trim()
-                ? "bg-[#066DE6] text-white hover:bg-[#066DE6]"
+                ? "bg-primary text-white hover:bg-primary/90"
                 : "bg-muted text-muted-foreground",
             )}
           >
@@ -166,7 +166,7 @@ function ThumbButton({
         "flex size-7 items-center justify-center rounded-md text-muted-foreground ring-1 ring-transparent transition",
         active
           ? activeClass
-          : "hover:bg-muted hover:text-foreground hover:ring-white/[0.08]",
+          : "hover:bg-card hover:text-foreground hover:ring-border-outline",
       )}
     >
       <Icon name={icon} size={13} />

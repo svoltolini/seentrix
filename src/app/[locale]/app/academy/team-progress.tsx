@@ -54,7 +54,7 @@ export async function TeamProgress({ locale }: { locale: LocaleId }) {
 
   if (memberList.length === 0) {
     return (
-      <p className="rounded-md bg-muted p-6 text-sm text-muted-foreground">
+      <p className="rounded-md bg-muted p-6 text-p3 text-muted-foreground">
         {t("noTeam")}
       </p>
     );
@@ -71,8 +71,8 @@ export async function TeamProgress({ locale }: { locale: LocaleId }) {
     <div>
       <div className="mb-5 flex flex-wrap items-start justify-between gap-4 rounded-md bg-muted p-6">
         <div className="min-w-0 flex-1">
-          <h2 className="font-heading text-lg font-semibold">{t("heading")}</h2>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <h2 className="text-h3 text-foreground">{t("heading")}</h2>
+          <p className="mt-1 text-p3 text-muted-foreground">
             {t("description")}
           </p>
         </div>
@@ -80,7 +80,7 @@ export async function TeamProgress({ locale }: { locale: LocaleId }) {
           <div className="text-h2 tabular-nums text-foreground">
             {orgPct}%
           </div>
-          <div className="text-[11px] text-muted-foreground">
+          <div className="text-p4 text-muted-foreground">
             {orgDone}/{memberList.length} {t("complete").toLowerCase()}
           </div>
         </div>
@@ -153,20 +153,20 @@ function MemberCard({
 }) {
   const color =
     status === "complete"
-      ? "#16A34A"
+      ? "var(--success)"
       : status === "not_started"
-        ? "#6B7280"
-        : "#D97706";
+        ? "var(--muted-foreground)"
+        : "var(--warning)";
 
   return (
-    <div className="rounded-md bg-muted p-5 transition-colors duration-300 hover:bg-muted">
+    <div className="rounded-md bg-card shadow-card-sm p-5 transition-colors duration-300 hover:bg-muted/30">
       <div className="flex items-start gap-4">
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
-            <p className="truncate font-heading text-[15px] font-semibold text-foreground">
+            <p className="truncate text-h5 text-foreground">
               {member.full_name ?? member.email}
             </p>
-            <span className="shrink-0 rounded-full bg-muted px-2 py-0.5 text-l6-plus uppercase tracking-wide text-muted-foreground">
+            <span className="shrink-0 rounded-sm bg-muted px-2 py-0.5 text-l6-plus uppercase tracking-wide text-muted-foreground">
               {member.role}
             </span>
           </div>
@@ -178,7 +178,7 @@ function MemberCard({
           </p>
           {pendingLabels.length > 0 && (
             <p className="mt-2 line-clamp-2 text-p4 text-muted-foreground">
-              <span className="font-medium text-foreground/70">Pending:</span>{" "}
+              <span className="text-l6 text-foreground">Pending:</span>{" "}
               {pendingLabels.join(" · ")}
               {extraPending > 0 && ` · +${extraPending} more`}
             </p>
@@ -206,7 +206,7 @@ function ProgressRing({ value, color }: { value: number; color: string }) {
         cx="36"
         cy="36"
         r={r}
-        stroke="rgba(255,255,255,0.08)"
+        stroke="var(--border)"
         strokeWidth="4"
         fill="none"
       />
@@ -228,7 +228,7 @@ function ProgressRing({ value, color }: { value: number; color: string }) {
         textAnchor="middle"
         dominantBaseline="central"
         fill={color}
-        className="text-[15px] font-semibold tabular-nums"
+        className="text-l6 tabular-nums"
       >
         {value}%
       </text>

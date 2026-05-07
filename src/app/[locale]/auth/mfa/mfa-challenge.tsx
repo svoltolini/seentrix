@@ -175,7 +175,7 @@ export function MfaChallenge() {
       <h1 className="mt-2 text-h2 text-foreground">
         Two-factor code
       </h1>
-      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+      <p className="mt-2 text-p3 leading-relaxed text-muted-foreground">
         Open your authenticator app and enter the current 6-digit code for
         Seentrix.
       </p>
@@ -203,9 +203,9 @@ export function MfaChallenge() {
             disabled={inputsDisabled}
             aria-label={`Digit ${index + 1}`}
             className={cn(
-              "aspect-square w-full max-w-[52px] rounded-xl bg-muted text-center font-mono text-xl font-semibold text-foreground transition-all",
-              "border border-border",
-              "focus:border-primary focus:bg-muted focus:outline-none focus:ring-2 focus:ring-primary/30",
+              "aspect-square w-full max-w-[52px] rounded-md bg-input text-center font-mono text-h3 text-foreground transition-all",
+              "border-[1.5px] border-transparent",
+              "focus:border-primary/30 focus:bg-card focus:outline-none focus:ring-2 focus:ring-primary/30",
               "disabled:opacity-50",
               error && "border-destructive/60",
             )}
@@ -214,7 +214,7 @@ export function MfaChallenge() {
       </div>
 
       {error && (
-        <p className="mt-4 rounded-lg bg-destructive/10 px-3 py-2 text-xs text-destructive">
+        <p className="mt-4 rounded-md bg-destructive/10 px-3 py-2 text-p4 text-destructive">
           {error}
         </p>
       )}
@@ -234,7 +234,7 @@ export function MfaChallenge() {
         type="button"
         onClick={() => startCancel(() => logout(locale))}
         disabled={isCancelling || isPending}
-        className="mt-5 block w-full text-center text-xs text-muted-foreground transition-colors hover:text-muted-foreground disabled:opacity-50"
+        className="mt-5 block w-full text-center text-p4 text-muted-foreground transition-colors hover:text-foreground disabled:opacity-50"
       >
         {isCancelling
           ? "Signing out…"

@@ -52,9 +52,9 @@ export function CopilotSection() {
   }, []);
 
   // Each cell gets its own gradient so the row reads as a spectrum
-  // rather than four copies of the same number. All four pairs are
-  // saturated enough to work on the dark band, and they stay inside
-  // Seentrix's accent palette (blue → violet → pink → amber → emerald).
+  // rather than four copies of the same number. All pairs stay inside
+  // the Nask brand stack — blue (#066DE6 → #6F4FE0) and orange
+  // (#FF6D00 → #FF9E55).
   const bullets = [
     {
       key: "sovereign",
@@ -62,29 +62,29 @@ export function CopilotSection() {
     },
     {
       key: "grounded",
-      gradient: "from-[#6F4FE0] to-[#EC4899]", // violet → pink
+      gradient: "from-[#6F4FE0] to-[#FF6D00]", // violet → orange
     },
     {
       key: "context",
-      gradient: "from-[#F59E0B] to-[#FF6D00]", // amber → orange
+      gradient: "from-[#FF6D00] to-[#FF9E55]", // orange → light orange
     },
     {
       key: "actionable",
-      gradient: "from-[#10B981] to-[#06B6D4]", // emerald → cyan
+      gradient: "from-[#066DE6] to-[#FF6D00]", // blue → orange
     },
   ] as const;
 
   return (
     <section
       ref={sectionRef}
-      className="border-t border-border/50 bg-card/50 py-24 lg:py-32"
+      className="bg-gradient-to-br from-primary/5 via-transparent to-accent/5 py-24 lg:py-32"
     >
       <div className="mx-auto max-w-6xl px-6">
         {/* Heading block ----------------------------------------------- */}
         <div className="mx-auto mb-16 max-w-3xl text-center">
           <span
             data-copilot-heading
-            className="text-l6-plus uppercase tracking-[0.18em] text-[#066DE6]"
+            className="text-l6-plus uppercase tracking-[0.18em] text-primary"
           >
             {t("eyebrow")}
           </span>
@@ -96,15 +96,15 @@ export function CopilotSection() {
           </h2>
           <p
             data-copilot-heading
-            className="mt-6 text-lg leading-relaxed text-muted-foreground"
+            className="mt-6 text-p1 text-muted-foreground"
           >
             {t("lede")}
           </p>
         </div>
 
         {/* Four borderless cells, each anchored by an 01/02/03/04 in the
-            brand blue→violet gradient — same treatment the Problem
-            section uses for its stat counters. */}
+            brand blue/violet/orange gradient stack — same treatment the
+            Problem section uses for its stat counters. */}
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           {bullets.map(({ key, gradient }, i) => (
             <div
@@ -117,10 +117,10 @@ export function CopilotSection() {
               >
                 {String(i + 1).padStart(2, "0")}
               </span>
-              <h3 className="mt-6 font-heading text-lg font-semibold text-foreground">
+              <h3 className="mt-6 text-h4 text-foreground">
                 {t(`bullets.${key}.title`)}
               </h3>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+              <p className="mt-3 text-p3 text-muted-foreground">
                 {t(`bullets.${key}.body`)}
               </p>
             </div>
@@ -133,7 +133,7 @@ export function CopilotSection() {
           className="mt-16 flex flex-wrap items-center justify-center gap-3"
         >
           <Link href="/ai">
-            <Button size="lg" variant="ghost">
+            <Button size="lg" variant="outline">
               {t("learnMore")}
             </Button>
           </Link>

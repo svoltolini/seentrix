@@ -20,10 +20,10 @@ export function UpgradePrompt({
           <Icon name="lock-password-stroke-rounded" size={20} className="text-primary" />
         </div>
         <div>
-          <h3 className="text-base font-semibold text-foreground">
+          <h3 className="text-h4 text-foreground">
             {t(`${feature}.title`)}
           </h3>
-          <p className="mt-1 max-w-sm text-sm text-muted-foreground">
+          <p className="mt-1 max-w-sm text-p3 text-muted-foreground">
             {t(`${feature}.description`)}
           </p>
         </div>

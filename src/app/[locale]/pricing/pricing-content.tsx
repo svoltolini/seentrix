@@ -59,20 +59,20 @@ export function PricingContent() {
         <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
           {t("title")}
         </h1>
-        <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
+        <p className="mt-6 text-p1 text-muted-foreground">
           {t("subtitle")}
         </p>
       </div>
 
       {/* Billing toggle */}
-      <div className="mb-12 flex items-center justify-center gap-3">
+      <div className="mb-12 flex items-center justify-center gap-1 rounded-md border border-border bg-card p-1">
         <button
           type="button"
           onClick={() => setInterval("monthly")}
           className={cn(
-            "rounded-lg px-4 py-2 text-sm font-medium transition-colors",
+            "rounded-sm px-4 py-2 text-l6 transition-colors",
             interval === "monthly"
-              ? "bg-foreground text-background"
+              ? "bg-primary text-primary-foreground"
               : "text-muted-foreground hover:text-foreground",
           )}
         >
@@ -82,14 +82,16 @@ export function PricingContent() {
           type="button"
           onClick={() => setInterval("annual")}
           className={cn(
-            "flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors",
+            "flex items-center gap-2 rounded-sm px-4 py-2 text-l6 transition-colors",
             interval === "annual"
-              ? "bg-foreground text-background"
+              ? "bg-primary text-primary-foreground"
               : "text-muted-foreground hover:text-foreground",
           )}
         >
           {t("annual")}
-          <Badge>{t("savePercent")}</Badge>
+          <Badge variant={interval === "annual" ? "solid-translucent" : "accent"}>
+            {t("savePercent")}
+          </Badge>
         </button>
       </div>
 
@@ -114,123 +116,10 @@ export function PricingContent() {
             if (t.has(key)) features.push(t(key));
           }
 
-          const cardContent = (
-            <div
-              className={cn(
-                "relative flex h-full flex-col p-6 transition-all duration-300 hover:-translate-y-1",
-                isPro
-                  ? "bg-muted"
-                  : "rounded-md bg-muted hover:bg-muted",
-              )}
-            >
-              <div className="mb-1">
-                <h3 className="text-lg font-bold text-foreground">
-                  {t(`plans.${tier.plan}.name`)}
-                </h3>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  {t(`plans.${tier.plan}.description`)}
-                </p>
-              </div>
-
-              <div className="mt-4 flex items-baseline gap-1">
-                <span
-                  className={cn(
-                    "text-5xl font-extrabold",
-                    isPro
-                      ? "bg-gradient-to-r from-[#066DE6] to-[#6F4FE0] bg-clip-text text-transparent"
-                      : "text-foreground",
-                  )}
-                >
-                  €{displayPrice}
-                </span>
-                <span className="text-sm text-muted-foreground">
-                  /{t("perMonth")}
-                </span>
-              </div>
-
-              {interval === "annual" && !isFree && (
-                <p className="mt-1 text-xs text-muted-foreground">
-                  {t("billedAnnually", { total: price })}
-                </p>
-              )}
-
-              <div className="my-6 h-px bg-border/50" />
-
-              <ul className="flex flex-1 flex-col gap-3 text-sm text-muted-foreground">
-                {features.map((feature) => (
-                  <li key={feature} className="flex items-start gap-2.5">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 16 16"
-                      fill="none"
-                      className="mt-0.5 shrink-0 text-primary"
-                    >
-                      <path
-                        d="M13.3 4.3 6.5 11.1 2.7 7.3"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-
-              <div className="mt-6">
-                {isFree ? (
-                  <Link href="/app/dashboard" className="block w-full">
-                    <Button
-                      variant="default"
-                      size="sm"
-                      className="w-full bg-muted text-foreground hover:bg-muted"
-                    >
-                      {t("getStarted")}
-                    </Button>
-                  </Link>
-                ) : isEnterprise ? (
-                  <a
-                    href="mailto:sales@seentrix.com"
-                    className="block w-full"
-                  >
-                    <Button
-                      variant="default"
-                      size="sm"
-                      className="w-full bg-muted text-foreground hover:bg-muted"
-                    >
-                      {t("contactSales")}
-                    </Button>
-                  </a>
-                ) : (
-                  <Button
-                    size="sm"
-                    className={cn(
-                      "w-full",
-                      !isPro &&
-                        "bg-muted text-foreground hover:bg-muted",
-                    )}
-                    onClick={() => handleSelectPlan(tier.plan)}
-                    disabled={loading === tier.plan}
-                  >
-                    {loading === tier.plan
-                      ? t("redirecting")
-                      : t("subscribe")}
-                  </Button>
-                )}
-              </div>
-            </div>
-          );
-
           return (
             <div
               key={tier.plan}
-              className={cn(
-                "relative",
-                isPro &&
-                  "rounded-[16px] bg-gradient-to-b from-[#066DE6] via-[#6F4FE0] to-[#FF6D00] p-px",
-              )}
+              className="relative"
             >
               {isPro && (
                 <div className="absolute -top-3 left-1/2 z-10 -translate-x-1/2">
@@ -242,13 +131,109 @@ export function PricingContent() {
                   </Badge>
                 </div>
               )}
-              {isPro ? (
-                <div className="h-full overflow-hidden rounded-[15px] bg-background">
-                  {cardContent}
+              <div
+                className={cn(
+                  "relative flex h-full flex-col rounded-md bg-card p-6 shadow-card-md transition-all duration-300 hover:-translate-y-1 hover:shadow-card-lg",
+                  isPro
+                    ? "border-2 border-primary"
+                    : "border border-border",
+                )}
+              >
+                <div className="mb-1">
+                  <h3 className="text-h4 text-foreground">
+                    {t(`plans.${tier.plan}.name`)}
+                  </h3>
+                  <p className="mt-1 text-p3 text-muted-foreground">
+                    {t(`plans.${tier.plan}.description`)}
+                  </p>
                 </div>
-              ) : (
-                cardContent
-              )}
+
+                <div className="mt-4 flex items-baseline gap-1">
+                  <span
+                    className={cn(
+                      "text-5xl font-extrabold",
+                      isPro
+                        ? "bg-gradient-to-r from-[#066DE6] to-[#6F4FE0] bg-clip-text text-transparent"
+                        : "text-foreground",
+                    )}
+                  >
+                    €{displayPrice}
+                  </span>
+                  <span className="text-p3 text-muted-foreground">
+                    /{t("perMonth")}
+                  </span>
+                </div>
+
+                {interval === "annual" && !isFree && (
+                  <p className="mt-1 text-p4-r text-muted-foreground">
+                    {t("billedAnnually", { total: price })}
+                  </p>
+                )}
+
+                <div className="my-6 h-px bg-border" />
+
+                <ul className="flex flex-1 flex-col gap-3 text-p3 text-muted-foreground">
+                  {features.map((feature) => (
+                    <li key={feature} className="flex items-start gap-2.5">
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 16 16"
+                        fill="none"
+                        className="mt-0.5 shrink-0 text-primary"
+                      >
+                        <path
+                          d="M13.3 4.3 6.5 11.1 2.7 7.3"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-6">
+                  {isFree ? (
+                    <Link href="/app/dashboard" className="block w-full">
+                      <Button
+                        variant="outline"
+                        size="default"
+                        className="w-full"
+                      >
+                        {t("getStarted")}
+                      </Button>
+                    </Link>
+                  ) : isEnterprise ? (
+                    <a
+                      href="mailto:sales@seentrix.com"
+                      className="block w-full"
+                    >
+                      <Button
+                        variant="outline"
+                        size="default"
+                        className="w-full"
+                      >
+                        {t("contactSales")}
+                      </Button>
+                    </a>
+                  ) : (
+                    <Button
+                      variant={isPro ? "default" : "outline"}
+                      size="default"
+                      className="w-full"
+                      onClick={() => handleSelectPlan(tier.plan)}
+                      disabled={loading === tier.plan}
+                    >
+                      {loading === tier.plan
+                        ? t("redirecting")
+                        : t("subscribe")}
+                    </Button>
+                  )}
+                </div>
+              </div>
             </div>
           );
         })}
@@ -275,22 +260,22 @@ function ComparisonTable() {
   return (
     <section id="compare" className="mt-24 scroll-mt-20">
       <div className="mx-auto mb-10 max-w-2xl text-center">
-        <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+        <h2 className="text-h2 text-foreground sm:text-3xl sm:font-bold">
           {tc("title")}
         </h2>
-        <p className="mt-3 text-sm text-muted-foreground">
+        <p className="mt-3 text-p3 text-muted-foreground">
           {tc("subtitle")}
         </p>
       </div>
 
-      <div className="overflow-hidden rounded-md bg-muted">
+      <div className="overflow-hidden rounded-md border border-border bg-card shadow-card-md">
         {/* Sticky header with plan names */}
-        <div className="sticky top-0 z-10 grid grid-cols-[minmax(0,2fr)_repeat(4,minmax(0,1fr))] border-b border-border bg-background/90 px-4 py-3 backdrop-blur-md sm:px-6">
+        <div className="sticky top-0 z-10 grid grid-cols-[minmax(0,2fr)_repeat(4,minmax(0,1fr))] border-b border-border bg-card/95 px-4 py-3 backdrop-blur-md sm:px-6">
           <div />
           {plans.map((p) => (
             <div
               key={p}
-              className="text-center text-xs font-semibold uppercase tracking-wider text-muted-foreground"
+              className="text-center text-l6-plus uppercase tracking-wider text-muted-foreground"
             >
               {t(`plans.${p}.name`)}
             </div>
@@ -301,7 +286,7 @@ function ComparisonTable() {
         {FEATURE_CATEGORIES.map((category) => (
           <div key={category.key}>
             <div className="grid grid-cols-[minmax(0,2fr)_repeat(4,minmax(0,1fr))] border-b border-border bg-muted px-4 py-3 sm:px-6">
-              <div className="col-span-5 text-l6-plus uppercase tracking-wider text-foreground/80">
+              <div className="col-span-5 text-l6-plus uppercase tracking-wider text-foreground">
                 {tc(`categories.${category.key}.title`)}
               </div>
             </div>
@@ -336,11 +321,11 @@ function ComparisonRow({
   return (
     <div
       className={cn(
-        "grid grid-cols-[minmax(0,2fr)_repeat(4,minmax(0,1fr))] items-center border-b border-border px-4 py-3 text-sm sm:px-6",
+        "grid grid-cols-[minmax(0,2fr)_repeat(4,minmax(0,1fr))] items-center border-b border-border px-4 py-3 text-p3 sm:px-6",
         striped && "bg-muted",
       )}
     >
-      <div className="pr-4 text-foreground/90">
+      <div className="pr-4 text-foreground">
         {tc(`categories.${category}.rows.${row.key}`)}
       </div>
       {plans.map((p) => (
@@ -359,9 +344,9 @@ function Cell({ value }: { value: CellValue }) {
       ) : value === false ? (
         <IconDash />
       ) : value === "unlimited" ? (
-        <span className="text-xl leading-none text-foreground/80">∞</span>
+        <span className="text-xl leading-none text-foreground">∞</span>
       ) : value === "coming-soon" ? (
-        <span className="inline-flex items-center rounded-full bg-[#D97706]/10 px-2 py-0.5 text-l6-plus text-[#D97706]">
+        <span className="inline-flex items-center rounded-sm bg-accent/10 px-2 py-0.5 text-l6-plus text-accent">
           {tc("comingSoon")}
         </span>
       ) : (
