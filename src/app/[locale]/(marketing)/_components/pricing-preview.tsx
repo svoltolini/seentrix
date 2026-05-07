@@ -76,8 +76,8 @@ export function PricingPreview() {
                 className={cn(
                   "relative flex h-full flex-col p-6 transition-all duration-300 hover:-translate-y-1",
                   isPro
-                    ? "bg-white/[0.06]"
-                    : "rounded-2xl bg-white/[0.03] hover:bg-white/[0.05]"
+                    ? "bg-muted"
+                    : "rounded-md bg-muted hover:bg-muted"
                 )}
               >
                 <div className="mb-1">
@@ -94,7 +94,7 @@ export function PricingPreview() {
                     className={cn(
                       "text-5xl font-extrabold",
                       isPro
-                        ? "bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] bg-clip-text text-transparent"
+                        ? "bg-gradient-to-r from-[#066DE6] to-[#6F4FE0] bg-clip-text text-transparent"
                         : "text-foreground"
                     )}
                   >
@@ -140,7 +140,7 @@ export function PricingPreview() {
                     className: cn(
                       "mt-6 w-full",
                       !isPro &&
-                        "bg-white/[0.08] text-foreground hover:bg-white/[0.12]"
+                        "bg-muted text-foreground hover:bg-muted"
                     ),
                   })}
                 >
@@ -156,7 +156,7 @@ export function PricingPreview() {
                 className={cn(
                   "relative",
                   isPro &&
-                    "rounded-[16px] bg-gradient-to-b from-[#3B82F6] via-[#8B5CF6] to-[#F97316] p-px"
+                    "rounded-[16px] bg-gradient-to-b from-[#066DE6] via-[#6F4FE0] to-[#FF6D00] p-px"
                 )}
               >
                 {isPro && (
@@ -189,7 +189,7 @@ export function PricingPreview() {
         <div className="mt-12 flex flex-col items-center gap-2">
           <Link
             href="/pricing#compare"
-            className="group inline-flex items-center gap-2 rounded-full bg-white/[0.05] px-5 py-3 text-sm font-semibold text-foreground ring-1 ring-white/[0.08] transition-colors hover:bg-white/[0.08] hover:ring-white/[0.16]"
+            className="group inline-flex items-center gap-2 rounded-full bg-muted px-5 py-3 text-sm font-semibold text-foreground ring-1 ring-white/[0.08] transition-colors hover:bg-muted hover:ring-white/[0.16]"
           >
             <span>{t("compareAllFeatures")}</span>
             <svg
@@ -209,7 +209,7 @@ export function PricingPreview() {
               />
             </svg>
           </Link>
-          <p className="text-xs text-muted-foreground/60">
+          <p className="text-xs text-muted-foreground">
             {t("compareAllFeaturesHint")}
           </p>
         </div>

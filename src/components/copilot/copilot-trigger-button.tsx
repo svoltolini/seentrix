@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { HugeIcon } from "@/components/huge-icon";
+import { Icon } from "@/components/icon";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useCopilot } from "./copilot-context";
@@ -31,7 +31,7 @@ export function CopilotTriggerButton({ className }: { className?: string }) {
       aria-label={t("triggerAria")}
       className={cn("group/copilot hidden lg:inline-flex", className)}
     >
-      <HugeIcon
+      <Icon
         name="ai-magic-stroke-rounded"
         size={14}
         className="transition-transform duration-300 ease-out group-hover/copilot:rotate-12 group-hover/copilot:scale-110"

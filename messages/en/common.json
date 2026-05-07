@@ -19,8 +19,17 @@
     "tryAgain": "Try again"
   },
   "sidebar": {
-    "overview": "Overview",
+    "overview": "Workspace",
     "compliance": "Compliance",
-    "management": "Management"
+    "management": "Management",
+    "helpTitle": "Help Centre",
+    "helpBody": "Stuck on CRA compliance? Ask the Seentrix AI Copilot.",
+    "helpCta": "Consult Now"
+  },
+  "topbar": {
+    "searchPlaceholder": "Search products, incidents, reports…",
+    "newProduct": "New Product",
+    "notifications": "Notifications",
+    "language": "Language"
   }
 }

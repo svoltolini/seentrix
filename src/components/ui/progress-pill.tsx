@@ -5,6 +5,10 @@ const STROKE = 2;
 const SIZE = (RADIUS + STROKE) * 2;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 
+/**
+ * ProgressPill — small inline ring + percentage label. Ring stroke uses the
+ * accent (orange) so it visually rhymes with bar-style progress elsewhere.
+ */
 function ProgressPill({
   value,
   children,
@@ -20,7 +24,7 @@ function ProgressPill({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full border border-border px-2.5 py-1 text-sm font-medium text-muted-foreground",
+        "inline-flex items-center gap-1.5 rounded-full border border-border-outline bg-card px-2.5 py-1 text-l6 text-muted-foreground",
         className
       )}
     >
@@ -49,7 +53,7 @@ function ProgressPill({
           strokeLinecap="round"
           strokeDasharray={CIRCUMFERENCE}
           strokeDashoffset={offset}
-          className="text-primary"
+          className="text-accent"
         />
       </svg>
       {children}

@@ -4,7 +4,7 @@ import { useMemo, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
-import { HugeIcon } from "@/components/huge-icon";
+import { Icon } from "@/components/icon";
 import { StaggerReveal } from "@/components/stagger-reveal";
 import { useToast } from "@/components/ui/toast";
 import {
@@ -111,10 +111,10 @@ export function EntityContent({
         ease="power3.out"
       >
         <div data-reveal>
-          <h1 className="font-heading text-[22px] font-bold tracking-tight">
+          <h1 className="text-h2">
             {t("title")}
           </h1>
-          <p className="mt-1 text-[13px] text-muted-foreground">
+          <p className="mt-1 text-p3 text-muted-foreground">
             {t("subtitle")}
           </p>
         </div>
@@ -125,7 +125,7 @@ export function EntityContent({
             rendered as a pill chip with a state-colored dot. */}
         <div
           data-reveal
-          className="overflow-hidden rounded-2xl bg-cover bg-center p-6 md:p-8"
+          className="overflow-hidden rounded-md bg-cover bg-center p-6 md:p-8"
           style={{ backgroundImage: "url('/images/entity-role-bg.svg')" }}
         >
           <div className="flex items-start justify-between gap-3">
@@ -141,10 +141,10 @@ export function EntityContent({
                 />
                 {t("progressLabel")}
               </div>
-              <h2 className="font-heading text-xl font-bold leading-snug text-white md:text-2xl">
+              <h2 className="text-h3 leading-snug text-white md:text-2xl">
                 {t("type.title")}
               </h2>
-              <p className="mt-2 max-w-md text-sm text-white/75">
+              <p className="mt-2 max-w-md text-sm text-white">
                 {t("type.description")}
               </p>
             </div>
@@ -164,7 +164,7 @@ export function EntityContent({
                     "group flex items-start gap-3 rounded-xl border p-4 text-left backdrop-blur-md transition-all",
                     active
                       ? "border-white/60 bg-white/15 shadow-lg shadow-black/20"
-                      : "border-white/15 bg-white/[0.06] hover:-translate-y-0.5 hover:border-white/40 hover:bg-white/10",
+                      : "border-white/15 bg-muted hover:-translate-y-0.5 hover:border-white/40 hover:bg-white/10",
                     !canEdit && "cursor-not-allowed opacity-70",
                   )}
                 >
@@ -173,10 +173,10 @@ export function EntityContent({
                       "flex size-10 shrink-0 items-center justify-center rounded-full border transition-colors",
                       active
                         ? "border-white/50 bg-white/25 text-white"
-                        : "border-white/20 bg-white/10 text-white/80 group-hover:text-white",
+                        : "border-white/20 bg-white/10 text-white group-hover:text-white",
                     )}
                   >
-                    <HugeIcon name={ENTITY_ICON[ty]} size={18} />
+                    <Icon name={ENTITY_ICON[ty]} size={18} />
                   </span>
                   <div className="min-w-0">
                     <div className="flex items-center gap-2">
@@ -184,12 +184,12 @@ export function EntityContent({
                         {tType(`${ty}.title`)}
                       </p>
                       {active && (
-                        <span className="rounded-full bg-white/20 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
+                        <span className="rounded-full bg-white/20 px-2 py-0.5 text-l6-plus uppercase tracking-wide text-white">
                           {t("type.current")}
                         </span>
                       )}
                     </div>
-                    <p className="mt-1 text-[11px] leading-relaxed text-white/80">
+                    <p className="mt-1 text-[11px] leading-relaxed text-white">
                       {tType(`${ty}.description`)}
                     </p>
                   </div>
@@ -202,9 +202,9 @@ export function EntityContent({
         {/* Obligations list */}
         <div
           data-reveal
-          className="overflow-hidden rounded-2xl bg-white/[0.03]"
+          className="overflow-hidden rounded-md bg-muted"
         >
-          <div className="border-b border-white/[0.06] px-5 py-3">
+          <div className="border-b border-border px-5 py-3">
             <span className="text-sm font-semibold">
               {t("obligations.title", { entity: tType(`${state.entityType}.title`) })}
             </span>
@@ -220,7 +220,7 @@ export function EntityContent({
                     onClick={() =>
                       setExpandedKey((prev) => (prev === ob.key ? null : ob.key))
                     }
-                    className="flex w-full items-center gap-3 px-5 py-4 text-left transition-colors hover:bg-white/[0.02]"
+                    className="flex w-full items-center gap-3 px-5 py-4 text-left transition-colors hover:bg-muted"
                   >
                     <span
                       className="flex size-5 shrink-0 items-center justify-center rounded-full border"
@@ -231,7 +231,7 @@ export function EntityContent({
                       }}
                     >
                       {ob.status === "complete" && (
-                        <HugeIcon
+                        <Icon
                           name="checkmark-circle-01-stroke-rounded"
                           size={12}
                           className="text-white"
@@ -248,12 +248,12 @@ export function EntityContent({
                       <p className="text-sm font-medium text-foreground">
                         {t(`obligation.${state.entityType}.${ob.key}.title`)}
                       </p>
-                      <p className="mt-0.5 text-[11px] text-muted-foreground/60">
+                      <p className="mt-0.5 text-[11px] text-muted-foreground">
                         {t(`obligation.${state.entityType}.${ob.key}.description`)}
                       </p>
                     </div>
                     <span
-                      className="shrink-0 rounded-full px-2.5 py-0.5 text-[11px] font-semibold"
+                      className="shrink-0 rounded-full px-2.5 py-0.5 text-l6-plus"
                       style={{
                         backgroundColor: `${color}1A`,
                         color,
@@ -261,17 +261,17 @@ export function EntityContent({
                     >
                       {tStatus(ob.status)}
                     </span>
-                    <HugeIcon
+                    <Icon
                       name="arrow-right-01-stroke-rounded"
                       size={14}
                       className={cn(
-                        "text-muted-foreground/40 transition-transform",
+                        "text-muted-foreground transition-transform",
                         expanded && "rotate-90",
                       )}
                     />
                   </button>
                   {expanded && canEdit && (
-                    <div className="border-t border-white/[0.04] bg-white/[0.015] px-5 py-5">
+                    <div className="border-t border-border bg-muted px-5 py-5">
                       <div className="flex flex-wrap gap-2">
                         {(
                           [
@@ -335,7 +335,7 @@ function ProgressRing({
       ? "#16A34A"
       : value >= 50
         ? "#D97706"
-        : "#2563EB";
+        : "#066DE6";
   return (
     <div className="flex flex-col items-center">
       <div className="relative" style={{ width: SIZE, height: SIZE }}>
@@ -372,7 +372,7 @@ function ProgressRing({
         <span
           className={cn(
             "mt-1 text-[9px] uppercase tracking-wide",
-            onDark ? "text-white/70" : "text-muted-foreground/70",
+            onDark ? "text-white" : "text-muted-foreground",
           )}
         >
           {label}
@@ -396,7 +396,7 @@ function NotesField({
   const [local, setLocal] = useState(initial);
   return (
     <div className="mt-3">
-      <label className="text-xs font-medium text-muted-foreground/70">
+      <label className="text-xs font-medium text-muted-foreground">
         {label}
       </label>
       <Textarea

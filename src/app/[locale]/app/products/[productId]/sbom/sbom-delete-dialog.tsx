@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
-import { HugeIcon } from "@/components/huge-icon";
+import { Icon } from "@/components/icon";
 import type { SbomRecord } from "./actions";
 
 export function SbomDeleteDialog({
@@ -31,7 +31,7 @@ export function SbomDeleteDialog({
     >
       {target && (
         <div className="flex items-center gap-2 rounded-lg bg-muted/50 px-3 py-2">
-          <HugeIcon name="package" size={16} className="shrink-0 text-muted-foreground" />
+          <Icon name="package" size={16} className="shrink-0 text-muted-foreground" />
           <span className="truncate text-sm font-medium">
             {target.file_name}
           </span>

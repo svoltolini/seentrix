@@ -7,7 +7,7 @@ import { useRouter } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { HugeIcon } from "@/components/huge-icon";
+import { Icon } from "@/components/icon";
 import { FieldHelp } from "@/components/field-help";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import {
@@ -21,14 +21,13 @@ import { PLAN_USER_LIMITS } from "@/lib/constants/plans";
 import { useToast } from "@/components/ui/toast";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
-import { Eye, EyeOff, CopyIcon, CheckIcon } from "lucide-react";
 
 const ROLE_STYLE: Record<string, string> = {
-  admin: "bg-[#2563EB]/15 text-[#2563EB]",
-  compliance_officer: "bg-[#7C3AED]/15 text-[#7C3AED]",
+  admin: "bg-[#066DE6]/15 text-[#066DE6]",
+  compliance_officer: "bg-[#6F4FE0]/15 text-[#6F4FE0]",
   cto: "bg-[#EA580C]/15 text-[#EA580C]",
   editor: "bg-[#0891B2]/15 text-[#0891B2]",
-  viewer: "bg-white/[0.06] text-muted-foreground",
+  viewer: "bg-muted text-muted-foreground",
 };
 
 const ASSIGNABLE_ROLES = [
@@ -142,7 +141,7 @@ export function TeamContent({
                 className="text-primary"
               />
             </svg>
-            <span className="absolute text-[10px] font-bold tabular-nums text-foreground">
+            <span className="absolute text-l6-plus tabular-nums text-foreground">
               {count}/{limit}
             </span>
           </div>
@@ -179,9 +178,9 @@ export function TeamContent({
 
       {/* Members list */}
       <div className="rounded-xl bg-card">
-        <div className="flex items-center justify-between border-b border-white/[0.06] px-6 py-4">
+        <div className="flex items-center justify-between border-b border-border px-6 py-4">
           <h2 className="text-sm font-semibold">{t("members")}</h2>
-          <span className="text-xs text-muted-foreground/50">
+          <span className="text-xs text-muted-foreground">
             {count === 1
               ? t("memberCount", { count })
               : t("memberCountPlural", { count })}
@@ -223,7 +222,7 @@ export function TeamContent({
                       </span>
                     )}
                   </p>
-                  <p className="truncate text-xs text-muted-foreground/50">
+                  <p className="truncate text-xs text-muted-foreground">
                     {member.email}
                   </p>
                 </div>
@@ -243,7 +242,7 @@ export function TeamContent({
                           "rounded-full px-2 py-0.5 text-[10px] font-semibold transition-all",
                           role === member.role
                             ? ROLE_STYLE[role]
-                            : "text-muted-foreground/30 hover:text-muted-foreground/60"
+                            : "text-muted-foreground hover:text-muted-foreground"
                         )}
                       >
                         {t(`roles.${role}` as Parameters<typeof t>[0])}
@@ -253,7 +252,7 @@ export function TeamContent({
                 ) : (
                   <span
                     className={cn(
-                      "shrink-0 rounded-full px-2.5 py-0.5 text-[11px] font-semibold",
+                      "shrink-0 rounded-full px-2.5 py-0.5 text-l6-plus",
                       ROLE_STYLE[member.role] ?? ROLE_STYLE.viewer
                     )}
                   >
@@ -267,7 +266,7 @@ export function TeamContent({
                     variant="ghost"
                     size="xs"
                     onClick={() => setRemoveTarget(member)}
-                    className="shrink-0 text-muted-foreground/40 hover:text-destructive"
+                    className="shrink-0 text-muted-foreground hover:text-destructive"
                   >
                     {t("removeMember")}
                   </Button>
@@ -401,9 +400,9 @@ function CreateMemberSection({
 
   return (
     <div className="rounded-xl bg-card">
-      <div className="border-b border-white/[0.06] px-6 py-4">
+      <div className="border-b border-border px-6 py-4">
         <h2 className="text-sm font-semibold">{t("createTitle")}</h2>
-        <p className="mt-1 text-xs text-muted-foreground/50">
+        <p className="mt-1 text-xs text-muted-foreground">
           {t("createDescription")}
         </p>
       </div>
@@ -450,7 +449,7 @@ function CreateMemberSection({
                 id="memberRole"
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
-                className="h-9 rounded-lg border border-white/[0.06] bg-white/[0.03] px-3 text-sm text-foreground outline-none focus:border-primary"
+                className="h-9 rounded-lg border border-border bg-muted px-3 text-sm text-foreground outline-none focus:border-primary"
               >
                 {ASSIGNABLE_ROLES.map((r) => (
                   <option key={r} value={r}>
@@ -478,13 +477,13 @@ function CreateMemberSection({
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground/60 transition-colors hover:text-muted-foreground"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-muted-foreground"
                   tabIndex={-1}
                 >
                   {showPassword ? (
-                    <EyeOff className="size-4" />
+                    <Icon name="EyeOff" className="size-4" />
                   ) : (
-                    <Eye className="size-4" />
+                    <Icon name="Eye" className="size-4" />
                   )}
                 </button>
               </div>
@@ -527,9 +526,9 @@ function CreateMemberSection({
                 className="shrink-0"
               >
                 {copied ? (
-                  <CheckIcon className="size-3.5 text-emerald-400" />
+                  <Icon name="CheckIcon" className="size-3.5 text-emerald-400" />
                 ) : (
-                  <CopyIcon className="size-3.5" />
+                  <Icon name="CopyIcon" className="size-3.5" />
                 )}
               </Button>
             </div>
@@ -548,9 +547,9 @@ function TeamUpgradePrompt() {
   const t = useTranslations("settings.team");
 
   return (
-    <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-white/[0.06] py-20 text-center">
+    <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-border py-20 text-center">
       <div className="mb-5 flex size-14 items-center justify-center rounded-full bg-primary/10">
-        <HugeIcon
+        <Icon
           name="lock-password-stroke-rounded"
           size={28}
           className="text-primary"
@@ -564,7 +563,7 @@ function TeamUpgradePrompt() {
       </p>
       <Link href="/pricing">
         <Button size="sm" className="mt-8 gap-1.5">
-          <HugeIcon name="sparkles-stroke-rounded" size={14} />
+          <Icon name="sparkles-stroke-rounded" size={14} />
           Upgrade Plan
         </Button>
       </Link>

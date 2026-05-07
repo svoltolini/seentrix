@@ -3,7 +3,7 @@
 import { useState, useCallback, useTransition, useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
-import { HugeIcon } from "@/components/huge-icon";
+import { Icon } from "@/components/icon";
 import {
   uploadSbom,
   deleteSbom,
@@ -189,7 +189,7 @@ export function SbomContent({
       {/* Header */}
       <div>
         <h2 className="text-lg font-semibold text-foreground">{t("title")}</h2>
-        <p className="mt-0.5 text-[13px] text-muted-foreground">
+        <p className="mt-0.5 text-p3 text-muted-foreground">
           {t("subtitle")}
         </p>
       </div>
@@ -224,7 +224,7 @@ export function SbomContent({
                   animation: `fade-in-up 0.5s ease-out ${i * 100}ms forwards`,
                 }}
               >
-                <p className="text-[10px] font-semibold uppercase tracking-wider text-white/70">
+                <p className="text-[10px] font-semibold uppercase tracking-wider text-white">
                   {t(`scan.severity.${s.key}`)}
                 </p>
                 <p className="mt-1 text-2xl font-bold tabular-nums text-white">
@@ -235,10 +235,10 @@ export function SbomContent({
           </div>
           {aggregateStats.kev > 0 && (
             <div className="flex items-center gap-2">
-              <span className="rounded-full bg-destructive px-2.5 py-0.5 text-[11px] font-semibold text-white">
+              <span className="rounded-full bg-destructive px-2.5 py-0.5 text-l6-plus text-white">
                 KEV {aggregateStats.kev}
               </span>
-              <span className="text-xs text-muted-foreground/40">
+              <span className="text-xs text-muted-foreground">
                 {t("scan.kevLabel")}
               </span>
             </div>
@@ -253,7 +253,7 @@ export function SbomContent({
           style={{ backgroundImage: "url('/images/empty-state-bg.png')" }}
         >
           <div className="mb-5 flex size-14 items-center justify-center rounded-full bg-black/20">
-            <HugeIcon
+            <Icon
               name="chip-stroke-rounded"
               size={28}
               className="text-white"
@@ -262,7 +262,7 @@ export function SbomContent({
           <p className="text-base font-semibold text-white">
             {t("list.empty")}
           </p>
-          <p className="mt-2 max-w-sm text-sm text-white/65">
+          <p className="mt-2 max-w-sm text-sm text-white">
             {t("list.emptyDescription")}
           </p>
         </div>

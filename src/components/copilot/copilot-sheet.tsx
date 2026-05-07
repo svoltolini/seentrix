@@ -10,7 +10,7 @@ import {
   SheetContent,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { HugeIcon } from "@/components/huge-icon";
+import { Icon } from "@/components/icon";
 import { cn } from "@/lib/utils";
 import { useCopilot } from "./copilot-context";
 import { CopilotMessage } from "./copilot-message";
@@ -161,19 +161,19 @@ export function CopilotSheet() {
           // citation pills, link buttons, and multi-paragraph drafts
           // than a side-panel drawer. `2xl` = 672 px — ~75 % wider
           // than the default, still leaves the page visible behind it.
-          "flex-col gap-0 border-l border-white/[0.06] bg-[#09090B] p-0",
+          "flex-col gap-0 border-l border-border bg-[#09090B] p-0",
           "data-[side=right]:sm:max-w-2xl",
         )}
       >
         <SheetTitle className="sr-only">{t("title")}</SheetTitle>
 
         {/* Header ---------------------------------------------------------- */}
-        <div className="flex items-center justify-between border-b border-white/[0.06] px-5 py-4">
+        <div className="flex items-center justify-between border-b border-border px-5 py-4">
           <div className="flex flex-col gap-0.5">
-            <span className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#60A5FA]">
-              <HugeIcon name="ai-magic-stroke-rounded" size={12} />
+            <span className="flex items-center gap-2 text-l6-plus uppercase tracking-[0.18em] text-[#066DE6]">
+              <Icon name="ai-magic-stroke-rounded" size={12} />
               {t("eyebrow")}
-              <span className="rounded-full bg-white/[0.08] px-1.5 py-0.5 text-[9px] font-medium tracking-normal text-muted-foreground">
+              <span className="rounded-full bg-muted px-1.5 py-0.5 text-[9px] font-medium tracking-normal text-muted-foreground">
                 beta
               </span>
             </span>
@@ -187,9 +187,9 @@ export function CopilotSheet() {
               onClick={() => setHistoryOpen(true)}
               aria-label={t("history.open")}
               title={t("history.open")}
-              className="flex size-8 items-center justify-center rounded-md text-muted-foreground transition hover:bg-white/[0.04] hover:text-foreground"
+              className="flex size-8 items-center justify-center rounded-md text-muted-foreground transition hover:bg-muted hover:text-foreground"
             >
-              <HugeIcon name="time-quarter-02-stroke-rounded" size={16} />
+              <Icon name="time-quarter-02-stroke-rounded" size={16} />
             </button>
             {messages.length > 0 && (
               <button
@@ -198,18 +198,18 @@ export function CopilotSheet() {
                 disabled={clearing}
                 aria-label={t("clearHistory")}
                 title={t("clearHistory")}
-                className="flex size-8 items-center justify-center rounded-md text-muted-foreground transition hover:bg-white/[0.04] hover:text-foreground disabled:opacity-50"
+                className="flex size-8 items-center justify-center rounded-md text-muted-foreground transition hover:bg-muted hover:text-foreground disabled:opacity-50"
               >
-                <HugeIcon name="comment-remove-02-stroke-rounded" size={16} />
+                <Icon name="comment-remove-02-stroke-rounded" size={16} />
               </button>
             )}
             <button
               type="button"
               onClick={close}
               aria-label={t("close")}
-              className="flex size-8 items-center justify-center rounded-md text-muted-foreground transition hover:bg-white/[0.04] hover:text-foreground"
+              className="flex size-8 items-center justify-center rounded-md text-muted-foreground transition hover:bg-muted hover:text-foreground"
             >
-              <HugeIcon
+              <Icon
                 name="cancel-circle-half-dot-stroke-rounded"
                 size={18}
               />
@@ -271,7 +271,7 @@ export function CopilotSheet() {
         {/* Composer -------------------------------------------------------- */}
         <form
           onSubmit={onSubmit}
-          className="flex flex-col gap-2 border-t border-white/[0.06] bg-[#0B0B12] px-4 pt-3 pb-4"
+          className="flex flex-col gap-2 border-t border-border bg-[#0B0B12] px-4 pt-3 pb-4"
         >
           {/*
             Flex row with `items-end` — when the textarea is one line
@@ -281,7 +281,7 @@ export function CopilotSheet() {
             past one line the button stays in the bottom-right corner,
             matching the ChatGPT composer convention.
           */}
-          <div className="flex items-end gap-2 rounded-2xl bg-white/[0.04] px-3.5 py-2 ring-1 ring-white/[0.08] transition focus-within:bg-white/[0.06] focus-within:ring-[#60A5FA]/40">
+          <div className="flex items-end gap-2 rounded-md bg-muted px-3.5 py-2 ring-1 ring-white/[0.08] transition focus-within:bg-muted focus-within:ring-[#066DE6]/40">
             <textarea
               value={input}
               onChange={(e) => setInput(e.target.value)}
@@ -290,7 +290,7 @@ export function CopilotSheet() {
               rows={1}
               // Single-line height = 32 px so it matches the button.
               // leading-6 + py-1 gives 24 + 4 + 4 = 32.
-              className="max-h-[180px] min-h-[32px] flex-1 resize-none bg-transparent py-1 text-sm leading-6 text-foreground outline-none placeholder:text-muted-foreground/55"
+              className="max-h-[180px] min-h-[32px] flex-1 resize-none bg-transparent py-1 text-sm leading-6 text-foreground outline-none placeholder:text-muted-foreground"
               disabled={isStreaming}
             />
             {isStreaming ? (
@@ -298,9 +298,9 @@ export function CopilotSheet() {
                 type="button"
                 onClick={stop}
                 aria-label={t("stop")}
-                className="flex size-8 shrink-0 items-center justify-center rounded-full text-muted-foreground transition hover:bg-white/[0.06] hover:text-foreground"
+                className="flex size-8 shrink-0 items-center justify-center rounded-full text-muted-foreground transition hover:bg-muted hover:text-foreground"
               >
-                <HugeIcon name="stop-circle-stroke-rounded" size={18} />
+                <Icon name="stop-circle-stroke-rounded" size={18} />
               </button>
             ) : (
               <button
@@ -310,15 +310,15 @@ export function CopilotSheet() {
                 className={cn(
                   "flex size-8 shrink-0 items-center justify-center rounded-full transition",
                   input.trim()
-                    ? "bg-[#3B82F6] text-white hover:bg-[#2563EB]"
-                    : "bg-white/[0.06] text-muted-foreground/40",
+                    ? "bg-[#066DE6] text-white hover:bg-[#066DE6]"
+                    : "bg-muted text-muted-foreground",
                 )}
               >
-                <HugeIcon name="sent-stroke-rounded" size={15} />
+                <Icon name="sent-stroke-rounded" size={15} />
               </button>
             )}
           </div>
-          <p className="px-1 text-[10px] leading-relaxed text-muted-foreground/70">
+          <p className="px-1 text-[10px] leading-relaxed text-muted-foreground">
             {t("footer")}
           </p>
         </form>
@@ -338,7 +338,7 @@ function EmptyState() {
   return (
     <div className="flex h-full flex-col items-start gap-6 py-2">
       <div className="flex flex-col gap-2">
-        <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#60A5FA]">
+        <span className="text-l6-plus uppercase tracking-[0.18em] text-[#066DE6]">
           {t("emptyEyebrow")}
         </span>
         <h2 className="font-heading text-xl font-semibold text-foreground">
@@ -349,19 +349,19 @@ function EmptyState() {
         </p>
       </div>
       <div className="flex w-full flex-col gap-2">
-        <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground/70">
+        <span className="text-l6-plus uppercase tracking-[0.16em] text-muted-foreground">
           {t("tryAsking")}
         </span>
         {examples.map((ex) => (
           <button
             key={ex}
             onClick={() => open(ex)}
-            className="flex w-full items-start gap-2 rounded-xl bg-white/[0.03] px-3 py-3 text-left text-sm text-foreground/90 transition hover:bg-white/[0.06]"
+            className="flex w-full items-start gap-2 rounded-xl bg-muted px-3 py-3 text-left text-sm text-foreground/90 transition hover:bg-muted"
           >
-            <HugeIcon
+            <Icon
               name="arrow-right-01-stroke-rounded"
               size={14}
-              className="mt-1 shrink-0 text-[#60A5FA]"
+              className="mt-1 shrink-0 text-[#066DE6]"
             />
             <span>{ex}</span>
           </button>
@@ -424,8 +424,8 @@ function ThinkingBubble() {
   return (
     <div className="flex items-center gap-2 text-xs text-muted-foreground">
       <span className="relative flex h-2 w-2">
-        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#60A5FA] opacity-75" />
-        <span className="relative inline-flex h-2 w-2 rounded-full bg-[#60A5FA]" />
+        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#066DE6] opacity-75" />
+        <span className="relative inline-flex h-2 w-2 rounded-full bg-[#066DE6]" />
       </span>
       <span>Thinking…</span>
     </div>

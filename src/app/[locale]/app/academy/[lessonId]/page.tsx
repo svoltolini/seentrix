@@ -5,7 +5,7 @@ import { getLesson, getLessonContent } from "@/lib/academy/lessons";
 import type { LocaleId } from "@/lib/academy/types";
 import { CurrentLessonProvider } from "@/lib/academy/current-lesson-context";
 import { createClient } from "@/lib/supabase/server";
-import { HugeIcon } from "@/components/huge-icon";
+import { Icon } from "@/components/icon";
 import { Quiz } from "./quiz";
 
 /**
@@ -55,7 +55,7 @@ export default async function LessonPage({
         href="/app/academy"
         className="mb-6 inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
       >
-        <HugeIcon
+        <Icon
           name="arrow-right-01-stroke-rounded"
           size={14}
           className="rotate-180"
@@ -63,17 +63,17 @@ export default async function LessonPage({
         {t("backToAcademy")}
       </Link>
 
-      {/* Hero — borderless bg-white/[0.03] to match the Academy card
+      {/* Hero — borderless bg-muted to match the Academy card
           language (see academy-tabs.tsx → LessonCard). */}
-      <div className="mb-8 rounded-2xl bg-white/[0.03] p-6 md:p-8">
+      <div className="mb-8 rounded-md bg-muted p-6 md:p-8">
         <div className="flex items-center gap-2 text-[11px] text-muted-foreground">
           <span>{lesson.duration}</span>
-          <span className="text-muted-foreground/40">·</span>
+          <span className="text-muted-foreground">·</span>
           <span>
             {t("questionCount", { count: content.quiz.length })}
           </span>
         </div>
-        <h1 className="mt-2 font-heading text-2xl font-bold leading-tight md:text-3xl">
+        <h1 className="mt-2 text-h2 leading-tight md:text-3xl">
           {content.title}
         </h1>
         <p className="mt-2 text-sm text-muted-foreground md:text-base">
@@ -99,8 +99,8 @@ export default async function LessonPage({
       </article>
 
       {/* Quiz */}
-      <div className="mt-12 border-t border-white/[0.06] pt-10">
-        <h2 className="font-heading text-xl font-bold md:text-2xl">
+      <div className="mt-12 border-t border-border pt-10">
+        <h2 className="text-h3 md:text-2xl">
           {t("quizHeading")}
         </h2>
         <p className="mt-1.5 text-xs text-muted-foreground md:text-sm">
@@ -110,7 +110,7 @@ export default async function LessonPage({
         {existingCompletion && (
           <div className="mt-5 flex flex-wrap items-start gap-3 rounded-xl border border-[#16A34A]/30 bg-[#16A34A]/[0.06] p-4">
             <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-[#16A34A]/20 text-[#16A34A]">
-              <HugeIcon
+              <Icon
                 name="checkmark-circle-01-stroke-rounded"
                 size={16}
               />
@@ -132,7 +132,7 @@ export default async function LessonPage({
               href={`/api/academy/certificates/${lesson.id}`}
               className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-[#16A34A]/40 bg-[#16A34A]/10 px-3 py-2 text-xs font-semibold text-[#16A34A] transition-colors hover:bg-[#16A34A]/20"
             >
-              <HugeIcon name="pdf-01-stroke-rounded" size={14} />
+              <Icon name="pdf-01-stroke-rounded" size={14} />
               {t("downloadCertificate")}
             </a>
           </div>

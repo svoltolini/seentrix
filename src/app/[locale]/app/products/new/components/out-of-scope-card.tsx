@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { HugeIcon } from "@/components/huge-icon";
+import { Icon } from "@/components/icon";
 
 export type OutOfScopeReason =
   | "noDigitalElements"
@@ -23,7 +23,7 @@ export function OutOfScopeCard({
     <Card>
       <CardContent className="flex flex-col items-center gap-5 py-10 text-center">
         <div className="flex size-14 items-center justify-center rounded-full bg-success/10">
-          <HugeIcon name="shield-check" size={28} className="text-success" />
+          <Icon name="shield-check" size={28} className="text-success" />
         </div>
         <div className="flex flex-col gap-1.5">
           <h3 className="text-lg font-semibold text-foreground">

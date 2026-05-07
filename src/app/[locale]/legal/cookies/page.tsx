@@ -2,7 +2,7 @@ export default function CookiesPage() {
   return (
     <>
       <h1>Cookie Policy</h1>
-      <p className="text-xs text-muted-foreground/70">
+      <p className="text-xs text-muted-foreground">
         Last updated: {new Date().toISOString().slice(0, 10)}
       </p>
 
@@ -79,7 +79,7 @@ export default function CookiesPage() {
         Questions about cookies:{" "}
         <a href="mailto:support@seentrix.com">support@seentrix.com</a>.
       </p>
-      <p className="mt-6 text-xs text-muted-foreground/70">
+      <p className="mt-6 text-xs text-muted-foreground">
         Seentrix Ltd · Company number 17169165 · Registered in England and Wales ·
         167-169 Great Portland Street, London W1W 5PF, United Kingdom
       </p>

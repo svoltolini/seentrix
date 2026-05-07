@@ -6,7 +6,7 @@ import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { HugeIcon } from "@/components/huge-icon";
+import { Icon } from "@/components/icon";
 import { useToast } from "@/components/ui/toast";
 
 type EnrolState =
@@ -115,9 +115,9 @@ export function SecurityContent({
     <div className="space-y-6">
       {/* Current state */}
       <div className="rounded-xl bg-card">
-        <div className="border-b border-white/[0.06] px-6 py-4">
+        <div className="border-b border-border px-6 py-4">
           <h2 className="text-sm font-semibold">Two-factor authentication</h2>
-          <p className="mt-0.5 text-xs text-muted-foreground/60">
+          <p className="mt-0.5 text-xs text-muted-foreground">
             Adds a second step on sign-in — a 6-digit code from an
             authenticator app on your phone. Strongly recommended, required
             for admins of organisations on a paid plan.
@@ -129,7 +129,7 @@ export function SecurityContent({
             <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-[#16A34A]/30 bg-[#16A34A]/[0.06] p-4">
               <div className="flex items-start gap-3">
                 <div className="flex size-8 items-center justify-center rounded-full bg-[#16A34A]/20 text-[#16A34A]">
-                  <HugeIcon
+                  <Icon
                     name="checkmark-circle-01-stroke-rounded"
                     size={16}
                   />
@@ -211,7 +211,7 @@ function EnrolStep({
         />
         <p className="mt-3 text-[11px] text-muted-foreground">
           Manual secret:{" "}
-          <code className="rounded-md bg-white/[0.06] px-1.5 py-0.5 font-mono">
+          <code className="rounded-md bg-muted px-1.5 py-0.5 font-mono">
             {state.secret}
           </code>
         </p>

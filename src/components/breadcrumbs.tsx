@@ -1,7 +1,7 @@
 "use client";
 
 import { Link } from "@/i18n/navigation";
-import { ChevronRightIcon } from "lucide-react";
+import { Icon } from "@/components/icon";
 
 export interface BreadcrumbItem {
   label: string;
@@ -16,7 +16,7 @@ export function Breadcrumbs({ items }: { items: BreadcrumbItem[] }) {
         return (
           <span key={i} className="flex items-center gap-1.5">
             {i > 0 && (
-              <ChevronRightIcon className="size-3.5 text-muted-foreground" />
+              <Icon name="ChevronRightIcon" className="size-3.5 text-muted-foreground" />
             )}
             {isLast || !item.href ? (
               <span className={isLast ? "font-medium text-foreground" : "text-muted-foreground"}>

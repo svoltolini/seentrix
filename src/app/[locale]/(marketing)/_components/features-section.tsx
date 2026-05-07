@@ -6,9 +6,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useTranslations } from "next-intl";
 
 const modules = [
-  { key: "assessment", accent: "#3B82F6" },
+  { key: "assessment", accent: "#066DE6" },
   { key: "checklist", accent: "#6366F1" },
-  { key: "sbom", accent: "#8B5CF6" },
+  { key: "sbom", accent: "#6F4FE0" },
   { key: "documents", accent: "#A855F7" },
 ] as const;
 
@@ -64,7 +64,7 @@ export function FeaturesSection() {
             <div
               key={mod.key}
               data-feature-card
-              className="group relative rounded-2xl bg-white/[0.03] p-8 transition-colors duration-300 hover:bg-white/[0.05]"
+              className="group relative rounded-md bg-muted p-8 transition-colors duration-300 hover:bg-muted"
             >
               <div className="flex items-start gap-5">
                 <span

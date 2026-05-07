@@ -8,8 +8,8 @@ import { Link } from "@/i18n/navigation";
 import { buttonVariants } from "@/components/ui/button";
 
 const segments = [
-  { key: "industrial", accent: "#3B82F6" },
-  { key: "iot", accent: "#8B5CF6" },
+  { key: "industrial", accent: "#066DE6" },
+  { key: "iot", accent: "#6F4FE0" },
   { key: "software", accent: "#6366F1" },
 ] as const;
 
@@ -62,7 +62,7 @@ export function AudienceSection() {
             <div
               key={seg.key}
               data-audience-row
-              className="flex items-start gap-6 rounded-2xl bg-white/[0.03] p-8 lg:gap-8"
+              className="flex items-start gap-6 rounded-md bg-muted p-8 lg:gap-8"
             >
               <span
                 className="shrink-0 text-4xl font-extrabold leading-none lg:text-5xl"

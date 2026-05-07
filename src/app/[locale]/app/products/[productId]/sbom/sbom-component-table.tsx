@@ -1,8 +1,8 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { Icon } from "@/components/icon";
 import { cn } from "@/lib/utils";
-import { ChevronDownIcon, ExternalLinkIcon } from "lucide-react";
 import type { SbomComponentRecord, VulnerabilityRecord } from "./actions";
 
 const PREVIEW_LIMIT = 20;
@@ -66,29 +66,29 @@ export function SbomComponentTable({
   const displayComps = showAll ? sorted : sorted.slice(0, PREVIEW_LIMIT);
 
   return (
-    <div className="border-t border-white/[0.04]">
+    <div className="border-t border-border">
       {/* Column headers */}
-      <div className="flex items-center gap-3 border-b border-white/[0.04] px-5 py-2.5">
+      <div className="flex items-center gap-3 border-b border-border px-5 py-2.5">
         <div className="w-5 shrink-0" />
 
         <button
           type="button"
           onClick={() => onSortChange("name")}
           className={cn(
-            "min-w-0 flex-1 text-left text-[11px] font-semibold uppercase tracking-wider transition-colors",
+            "min-w-0 flex-1 text-left text-l6-plus uppercase tracking-wider transition-colors",
             sortBy === "name"
               ? "text-foreground"
-              : "text-muted-foreground/40 hover:text-muted-foreground"
+              : "text-muted-foreground hover:text-muted-foreground"
           )}
         >
           {t("components.name")}
         </button>
 
-        <span className="hidden w-32 shrink-0 text-center text-[11px] font-semibold uppercase tracking-wider text-muted-foreground/40 sm:block">
+        <span className="hidden w-32 shrink-0 text-center text-l6-plus uppercase tracking-wider text-muted-foreground sm:block">
           {t("components.version")}
         </span>
 
-        <span className="hidden w-36 shrink-0 text-center text-[11px] font-semibold uppercase tracking-wider text-muted-foreground/40 md:block">
+        <span className="hidden w-36 shrink-0 text-center text-l6-plus uppercase tracking-wider text-muted-foreground md:block">
           {t("components.license")}
         </span>
 
@@ -97,10 +97,10 @@ export function SbomComponentTable({
             type="button"
             onClick={() => onSortChange("vulns")}
             className={cn(
-              "w-24 shrink-0 text-center text-[11px] font-semibold uppercase tracking-wider transition-colors",
+              "w-24 shrink-0 text-center text-l6-plus uppercase tracking-wider transition-colors",
               sortBy === "vulns"
                 ? "text-foreground"
-                : "text-muted-foreground/40 hover:text-muted-foreground"
+                : "text-muted-foreground hover:text-muted-foreground"
             )}
           >
             {t("components.vulns")}
@@ -124,7 +124,7 @@ export function SbomComponentTable({
             <div
               key={comp.id}
               className={cn(
-                idx % 2 === 0 ? "bg-white/[0.01]" : "bg-transparent"
+                idx % 2 === 0 ? "bg-muted" : "bg-transparent"
               )}
             >
               {/* Component row */}
@@ -134,15 +134,15 @@ export function SbomComponentTable({
                 className={cn(
                   "flex w-full items-center gap-3 px-5 py-2.5 text-left transition-colors",
                   hasCompVulns
-                    ? "cursor-pointer hover:bg-white/[0.03]"
+                    ? "cursor-pointer hover:bg-muted"
                     : "cursor-default"
                 )}
               >
                 <div className="flex w-5 shrink-0 items-center justify-center">
                   {hasCompVulns ? (
-                    <ChevronDownIcon
+                    <Icon name="ChevronDownIcon"
                       className={cn(
-                        "size-3.5 text-muted-foreground/40 transition-transform",
+                        "size-3.5 text-muted-foreground transition-transform",
                         isCompExpanded && "rotate-180"
                       )}
                     />
@@ -159,21 +159,21 @@ export function SbomComponentTable({
 
                 <div className="hidden w-32 shrink-0 items-center justify-center sm:flex">
                   {comp.component_version ? (
-                    <span className="max-w-full truncate rounded-md bg-white/[0.06] px-2 py-0.5 text-[11px] tabular-nums text-muted-foreground">
+                    <span className="max-w-full truncate rounded-md bg-muted px-2 py-0.5 text-l6-plus tabular-nums text-muted-foreground">
                       {comp.component_version}
                     </span>
                   ) : (
-                    <span className="text-xs text-muted-foreground/15">—</span>
+                    <span className="text-xs text-muted-foreground">—</span>
                   )}
                 </div>
 
                 <div className="hidden w-36 shrink-0 items-center justify-center md:flex">
                   {comp.license ? (
-                    <span className="max-w-full truncate rounded-md bg-white/[0.04] px-2 py-0.5 text-[11px] text-muted-foreground/50">
+                    <span className="max-w-full truncate rounded-md bg-muted px-2 py-0.5 text-[11px] text-muted-foreground">
                       {comp.license}
                     </span>
                   ) : (
-                    <span className="text-xs text-muted-foreground/15">—</span>
+                    <span className="text-xs text-muted-foreground">—</span>
                   )}
                 </div>
 
@@ -182,23 +182,23 @@ export function SbomComponentTable({
                     {hasCompVulns ? (
                       <>
                         {comp.critical_vulnerability_count > 0 && (
-                          <span className="inline-flex size-5 items-center justify-center rounded-full bg-[#DC2626] text-[10px] font-bold text-white">
+                          <span className="inline-flex size-5 items-center justify-center rounded-full bg-[#DC2626] text-l6-plus text-white">
                             {comp.critical_vulnerability_count}
                           </span>
                         )}
                         {comp.high_vulnerability_count > 0 && (
-                          <span className="inline-flex size-5 items-center justify-center rounded-full bg-[#D97706] text-[10px] font-bold text-white">
+                          <span className="inline-flex size-5 items-center justify-center rounded-full bg-[#D97706] text-l6-plus text-white">
                             {comp.high_vulnerability_count}
                           </span>
                         )}
                         {otherCount > 0 && (
-                          <span className="inline-flex size-5 items-center justify-center rounded-full bg-white/[0.08] text-[10px] font-bold text-muted-foreground">
+                          <span className="inline-flex size-5 items-center justify-center rounded-full bg-muted text-l6-plus text-muted-foreground">
                             {otherCount}
                           </span>
                         )}
                       </>
                     ) : (
-                      <span className="text-[11px] text-muted-foreground/20">
+                      <span className="text-[11px] text-muted-foreground">
                         —
                       </span>
                     )}
@@ -246,7 +246,7 @@ export function SbomComponentTable({
                                   className="inline-flex items-center gap-1 text-xs font-semibold text-foreground transition-colors hover:text-primary"
                                 >
                                   {v.cve_id}
-                                  <ExternalLinkIcon className="size-2.5 text-muted-foreground/30" />
+                                  <Icon name="ExternalLinkIcon" className="size-2.5 text-muted-foreground" />
                                 </a>
                                 <span
                                   className={cn(
@@ -257,7 +257,7 @@ export function SbomComponentTable({
                                   {t(`scan.severity.${v.severity}`)}
                                 </span>
                                 {v.cvss_score !== null && (
-                                  <span className="text-[10px] tabular-nums text-muted-foreground/40">
+                                  <span className="text-[10px] tabular-nums text-muted-foreground">
                                     CVSS {v.cvss_score.toFixed(1)}
                                   </span>
                                 )}
@@ -268,11 +268,11 @@ export function SbomComponentTable({
                                 )}
                               </div>
                               {v.description ? (
-                                <p className="mt-0.5 line-clamp-2 text-[11px] leading-relaxed text-muted-foreground/40">
+                                <p className="mt-0.5 line-clamp-2 text-[11px] leading-relaxed text-muted-foreground">
                                   {v.description}
                                 </p>
                               ) : (
-                                <p className="mt-0.5 text-[11px] text-muted-foreground/25">
+                                <p className="mt-0.5 text-[11px] text-muted-foreground">
                                   {t("scan.noDescription")}{" "}
                                   <a
                                     href={vulnUrl}
@@ -304,7 +304,7 @@ export function SbomComponentTable({
 
       {/* Show more / less */}
       {sorted.length > PREVIEW_LIMIT && (
-        <div className="border-t border-white/[0.04] px-5 py-2.5">
+        <div className="border-t border-border px-5 py-2.5">
           <button
             type="button"
             onClick={onToggleShowAll}

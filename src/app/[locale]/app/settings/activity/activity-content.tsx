@@ -1,14 +1,11 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { Icon } from "@/components/icon";
 import { useEffect, useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { exportActivities, type Activity } from "../actions";
 import { useLocaleDate } from "@/lib/locale-date";
-import {
-  Download,
-  ChevronDown,
-} from "lucide-react";
 
 const EXPORT_PERIODS = [1, 6, 12] as const;
 
@@ -71,7 +68,7 @@ export function ActivityContent({ activities }: { activities: Activity[] }) {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-sm font-semibold">{t("title")}</h2>
-          <p className="mt-1 text-xs text-muted-foreground/50">
+          <p className="mt-1 text-xs text-muted-foreground">
             {t("subtitle")}
           </p>
         </div>
@@ -83,9 +80,9 @@ export function ActivityContent({ activities }: { activities: Activity[] }) {
             disabled={isPending}
             className="gap-1.5"
           >
-            <Download className="size-3.5" />
+            <Icon name="Download" className="size-3.5" />
             {t("download")}
-            <ChevronDown className="size-3" />
+            <Icon name="ChevronDown" className="size-3" />
           </Button>
           {showExportMenu && (
             <>
@@ -93,14 +90,14 @@ export function ActivityContent({ activities }: { activities: Activity[] }) {
                 className="fixed inset-0 z-40"
                 onClick={() => setShowExportMenu(false)}
               />
-              <div className="absolute right-0 top-full z-50 mt-1.5 w-48 overflow-hidden rounded-lg bg-white/[0.03] py-1 shadow-xl">
+              <div className="absolute right-0 top-full z-50 mt-1.5 w-48 overflow-hidden rounded-lg bg-muted py-1 shadow-xl">
                 {EXPORT_PERIODS.map((months) => (
                   <button
                     key={months}
                     onClick={() => handleExport(months)}
-                    className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-foreground transition-colors hover:bg-white/[0.06]"
+                    className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-foreground transition-colors hover:bg-muted"
                   >
-                    <Download className="size-3.5 text-muted-foreground/50" />
+                    <Icon name="Download" className="size-3.5 text-muted-foreground" />
                     {t(`exportPeriod.${months}` as Parameters<typeof t>[0])}
                   </button>
                 ))}
@@ -112,8 +109,8 @@ export function ActivityContent({ activities }: { activities: Activity[] }) {
 
       {/* Activity list */}
       {activities.length === 0 ? (
-        <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-white/[0.06] py-16 text-center">
-          <p className="text-sm text-muted-foreground/50">{t("empty")}</p>
+        <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-border py-16 text-center">
+          <p className="text-sm text-muted-foreground">{t("empty")}</p>
         </div>
       ) : (
         <div className="rounded-xl bg-card">
@@ -136,7 +133,7 @@ export function ActivityContent({ activities }: { activities: Activity[] }) {
                       className="mt-0.5 size-8 shrink-0 rounded-full object-cover"
                     />
                   ) : (
-                    <div className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-full bg-white/[0.08] text-[11px] font-semibold text-muted-foreground">
+                    <div className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-full bg-muted text-l6-plus text-muted-foreground">
                       {initials}
                     </div>
                   )}
@@ -154,7 +151,7 @@ export function ActivityContent({ activities }: { activities: Activity[] }) {
                       </span>
                       {activity.target_name && (
                         <>
-                          <span className="mx-1 text-muted-foreground/40">
+                          <span className="mx-1 text-muted-foreground">
                             ·
                           </span>
                           <span className="font-medium">
@@ -163,7 +160,7 @@ export function ActivityContent({ activities }: { activities: Activity[] }) {
                         </>
                       )}
                     </p>
-                    <p className="mt-0.5 text-[11px] text-muted-foreground/40">
+                    <p className="mt-0.5 text-[11px] text-muted-foreground">
                       {relativeTime(activity.created_at)}
                     </p>
                   </div>

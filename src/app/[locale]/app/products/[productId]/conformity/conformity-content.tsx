@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { HugeIcon } from "@/components/huge-icon";
+import { Icon } from "@/components/icon";
 import { FieldHelp } from "@/components/field-help";
 import { StaggerReveal } from "@/components/stagger-reveal";
 import { useToast } from "@/components/ui/toast";
@@ -171,17 +171,17 @@ export function ConformityContent({
         {/* Hero: route + progress ring */}
         <div
           data-reveal
-          className="overflow-hidden rounded-2xl bg-white/[0.03] p-6"
+          className="overflow-hidden rounded-md bg-muted p-6"
         >
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div className="min-w-0">
-              <p className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground/60">
+              <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
                 {t("header.routeLabel")}
               </p>
-              <h2 className="mt-1 font-heading text-xl font-bold">
+              <h2 className="mt-1 text-h3">
                 {tRoute(`${state.route}.title`)}
               </h2>
-              <p className="mt-2 max-w-xl text-xs text-muted-foreground/80">
+              <p className="mt-2 max-w-xl text-xs text-muted-foreground">
                 {tRoute(`${state.route}.description`)}
               </p>
             </div>
@@ -212,11 +212,11 @@ export function ConformityContent({
         {notifiedBodyRequired && (
           <div
             data-reveal
-            className="rounded-2xl bg-white/[0.03] p-6"
+            className="rounded-md bg-muted p-6"
           >
             <div className="mb-4">
               <h2 className="text-sm font-semibold">{t("notifiedBody.title")}</h2>
-              <p className="mt-1 text-xs text-muted-foreground/70">
+              <p className="mt-1 text-xs text-muted-foreground">
                 {t("notifiedBody.description")}
               </p>
             </div>
@@ -268,9 +268,9 @@ export function ConformityContent({
         {/* Steps */}
         <div
           data-reveal
-          className="overflow-hidden rounded-2xl bg-white/[0.03]"
+          className="overflow-hidden rounded-md bg-muted"
         >
-          <div className="border-b border-white/[0.06] px-5 py-3">
+          <div className="border-b border-border px-5 py-3">
             <span className="text-sm font-semibold">{t("steps.title")}</span>
           </div>
           <div className="divide-y divide-white/[0.04]">
@@ -286,7 +286,7 @@ export function ConformityContent({
                         prev === step.key ? null : step.key,
                       )
                     }
-                    className="group flex w-full items-center gap-3 px-5 py-3.5 text-left transition-colors hover:bg-white/[0.02]"
+                    className="group flex w-full items-center gap-3 px-5 py-3.5 text-left transition-colors hover:bg-muted"
                   >
                     <span
                       className="flex size-5 shrink-0 items-center justify-center rounded-full border"
@@ -297,7 +297,7 @@ export function ConformityContent({
                       }}
                     >
                       {step.status === "complete" && (
-                        <HugeIcon
+                        <Icon
                           name="checkmark-circle-01-stroke-rounded"
                           size={12}
                           className="text-white"
@@ -314,12 +314,12 @@ export function ConformityContent({
                       <span className="block text-sm font-medium text-foreground">
                         {tStep(`${step.key}.title`)}
                       </span>
-                      <span className="block text-[11px] text-muted-foreground/60">
+                      <span className="block text-[11px] text-muted-foreground">
                         {tStep(`${step.key}.description`)}
                       </span>
                     </span>
                     <span
-                      className="shrink-0 rounded-full px-2.5 py-0.5 text-[11px] font-semibold"
+                      className="shrink-0 rounded-full px-2.5 py-0.5 text-l6-plus"
                       style={{
                         backgroundColor: `${color}1A`,
                         color,
@@ -327,17 +327,17 @@ export function ConformityContent({
                     >
                       {tStatus(step.status)}
                     </span>
-                    <HugeIcon
+                    <Icon
                       name="arrow-right-01-stroke-rounded"
                       size={14}
                       className={cn(
-                        "text-muted-foreground/40 transition-transform",
+                        "text-muted-foreground transition-transform",
                         expanded && "rotate-90",
                       )}
                     />
                   </button>
                   {expanded && canWrite && (
-                    <div className="border-t border-white/[0.04] bg-white/[0.015] px-5 py-5">
+                    <div className="border-t border-border bg-muted px-5 py-5">
                       <div className="flex flex-wrap gap-2">
                         {(
                           [
@@ -392,7 +392,7 @@ export function ConformityContent({
             and the primary CTA uses a white pill for maximum contrast. */}
         <div
           data-reveal
-          className="overflow-hidden rounded-2xl bg-cover bg-center"
+          className="overflow-hidden rounded-md bg-cover bg-center"
           style={{ backgroundImage: "url('/images/entity-role-bg.svg')" }}
         >
           <div className="flex flex-wrap items-start justify-between gap-4 p-6 md:p-8">
@@ -408,14 +408,14 @@ export function ConformityContent({
                 />
                 {t("doc.eyebrow")}
               </div>
-              <h2 className="font-heading text-xl font-bold leading-snug text-white md:text-2xl">
+              <h2 className="text-h3 leading-snug text-white md:text-2xl">
                 {t("doc.title")}
               </h2>
-              <p className="mt-2 max-w-xl text-sm text-white/75">
+              <p className="mt-2 max-w-xl text-sm text-white">
                 {t("doc.description")}
               </p>
               {state.declarationIssuedAt && state.declarationVersion && (
-                <p className="mt-3 font-mono text-[11px] text-white/60">
+                <p className="mt-3 font-mono text-[11px] text-white">
                   {state.declarationVersion} ·{" "}
                   {t("doc.issuedOn", {
                     date: formatDate(state.declarationIssuedAt),
@@ -430,7 +430,7 @@ export function ConformityContent({
                   onClick={handleDownload}
                   className="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-white/10 px-4 py-2.5 text-sm font-semibold text-white backdrop-blur-sm transition-colors hover:bg-white/15"
                 >
-                  <HugeIcon name="pdf-01-stroke-rounded" size={14} />
+                  <Icon name="pdf-01-stroke-rounded" size={14} />
                   {t("doc.download")}
                 </button>
               )}
@@ -441,7 +441,7 @@ export function ConformityContent({
                   disabled={!allStepsComplete || issuing}
                   className="inline-flex items-center gap-2 rounded-lg bg-white px-4 py-2.5 text-sm font-semibold text-black shadow-sm transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0"
                 >
-                  <HugeIcon
+                  <Icon
                     name="checkmark-circle-01-stroke-rounded"
                     size={14}
                   />
@@ -468,7 +468,7 @@ function ProgressRing({ value, label }: { value: number; label: string }) {
   const R = (SIZE - STROKE) / 2;
   const CIRC = 2 * Math.PI * R;
   const offset = CIRC * (1 - value / 100);
-  const color = value >= 100 ? "#16A34A" : value >= 50 ? "#D97706" : "#2563EB";
+  const color = value >= 100 ? "#16A34A" : value >= 50 ? "#D97706" : "#066DE6";
   return (
     <div className="flex flex-col items-center">
       <div className="relative" style={{ width: SIZE, height: SIZE }}>
@@ -504,7 +504,7 @@ function ProgressRing({ value, label }: { value: number; label: string }) {
           </span>
         </div>
       </div>
-      <span className="mt-2 text-[10px] uppercase tracking-wide text-muted-foreground/70">
+      <span className="mt-2 text-[10px] uppercase tracking-wide text-muted-foreground">
         {label}
       </span>
     </div>
@@ -528,7 +528,7 @@ function GateTile({
       className="rounded-lg border px-4 py-3"
       style={{ borderColor: `${color}33` }}
     >
-      <p className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground/70">
+      <p className="text-l6-plus uppercase tracking-wide text-muted-foreground">
         {label}
       </p>
       <p
@@ -563,7 +563,7 @@ function BodyField({
   const [local, setLocal] = useState(value);
   return (
     <div>
-      <label className="flex items-center gap-2 text-xs font-medium text-muted-foreground/70">
+      <label className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
         {label}
         {help}
       </label>
@@ -597,7 +597,7 @@ function StepNotes({
   const [local, setLocal] = useState(initialValue);
   return (
     <div className="mt-3">
-      <label className="text-xs font-medium text-muted-foreground/70">
+      <label className="text-xs font-medium text-muted-foreground">
         {label}
       </label>
       <Textarea

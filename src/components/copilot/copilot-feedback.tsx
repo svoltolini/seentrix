@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import type { UIMessage } from "ai";
 import { useTranslations } from "next-intl";
-import { HugeIcon } from "@/components/huge-icon";
+import { Icon } from "@/components/icon";
 import { cn } from "@/lib/utils";
 
 /**
@@ -111,24 +111,24 @@ export function CopilotFeedback({
       {commentOpen && (
         <form
           onSubmit={onSubmitComment}
-          className="flex items-end gap-2 rounded-lg bg-white/[0.03] p-2 ring-1 ring-white/[0.06]"
+          className="flex items-end gap-2 rounded-lg bg-muted p-2 ring-1 ring-white/[0.06]"
         >
           <textarea
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             placeholder={t("feedback.whatWentWrong")}
             rows={2}
-            className="flex-1 resize-none bg-transparent text-xs leading-relaxed text-foreground outline-none placeholder:text-muted-foreground/60"
+            className="flex-1 resize-none bg-transparent text-xs leading-relaxed text-foreground outline-none placeholder:text-muted-foreground"
             autoFocus
           />
           <button
             type="submit"
             disabled={!comment.trim()}
             className={cn(
-              "shrink-0 rounded-md px-2.5 py-1 text-[11px] font-semibold transition",
+              "shrink-0 rounded-md px-2.5 py-1 text-l6-plus transition",
               comment.trim()
-                ? "bg-[#3B82F6] text-white hover:bg-[#2563EB]"
-                : "bg-white/[0.06] text-muted-foreground/40",
+                ? "bg-[#066DE6] text-white hover:bg-[#066DE6]"
+                : "bg-muted text-muted-foreground",
             )}
           >
             {t("feedback.submit")}
@@ -163,13 +163,13 @@ function ThumbButton({
       title={label}
       aria-pressed={active}
       className={cn(
-        "flex size-7 items-center justify-center rounded-md text-muted-foreground/70 ring-1 ring-transparent transition",
+        "flex size-7 items-center justify-center rounded-md text-muted-foreground ring-1 ring-transparent transition",
         active
           ? activeClass
-          : "hover:bg-white/[0.04] hover:text-foreground hover:ring-white/[0.08]",
+          : "hover:bg-muted hover:text-foreground hover:ring-white/[0.08]",
       )}
     >
-      <HugeIcon name={icon} size={13} />
+      <Icon name={icon} size={13} />
     </button>
   );
 }

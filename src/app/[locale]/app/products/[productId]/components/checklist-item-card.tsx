@@ -13,13 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { HugeIcon } from "@/components/huge-icon";
-import {
-  ChevronDownIcon,
-  UploadIcon,
-  FileIcon,
-  XIcon,
-} from "lucide-react";
+import { Icon } from "@/components/icon";
 import {
   CHECKLIST_STATUSES,
   type ChecklistStatus,
@@ -47,11 +41,11 @@ const STATUS_DOT: Record<ChecklistStatus, string> = {
 };
 
 const STATUS_SELECTED: Record<ChecklistStatus, string> = {
-  pending: "border-foreground/30 bg-white/[0.04] text-foreground",
+  pending: "border-foreground/30 bg-muted text-foreground",
   in_progress: "border-[#D97706]/40 bg-[#D97706]/10 text-[#D97706]",
   completed: "border-[#16A34A]/40 bg-[#16A34A]/10 text-[#16A34A]",
   not_applicable:
-    "border-muted-foreground/20 bg-white/[0.02] text-muted-foreground",
+    "border-muted-foreground/20 bg-muted text-muted-foreground",
 };
 
 interface ChecklistItemCardProps {
@@ -141,7 +135,7 @@ export function ChecklistItemCard({
       <button
         type="button"
         onClick={() => setExpanded(!expanded)}
-        className="flex w-full items-center gap-3 px-5 py-3.5 text-left transition-colors hover:bg-white/[0.02]"
+        className="flex w-full items-center gap-3 px-5 py-3.5 text-left transition-colors hover:bg-muted"
       >
         <div className="min-w-0 flex-1">
           <span className="text-sm font-medium text-foreground">
@@ -160,10 +154,10 @@ export function ChecklistItemCard({
             </Avatar>
           ) : (
             <span
-              className="flex size-6 items-center justify-center rounded-full border border-dashed border-muted-foreground/30 text-muted-foreground/40"
+              className="flex size-6 items-center justify-center rounded-full border border-dashed border-muted-foreground/30 text-muted-foreground"
               title={t("unassigned")}
             >
-              <HugeIcon name="add-01" size={10} />
+              <Icon name="add-01" size={10} />
             </span>
           )}
           <div className="flex items-center gap-1.5">
@@ -174,9 +168,9 @@ export function ChecklistItemCard({
               {t(`statuses.${status}`)}
             </span>
           </div>
-          <ChevronDownIcon
+          <Icon name="ChevronDownIcon"
             className={cn(
-              "size-4 text-muted-foreground/50 transition-transform",
+              "size-4 text-muted-foreground transition-transform",
               expanded && "rotate-180"
             )}
           />
@@ -185,9 +179,9 @@ export function ChecklistItemCard({
 
       {/* Expanded content */}
       {expanded && (
-        <div className="flex flex-col gap-5 border-t border-white/[0.04] bg-white/[0.015] px-5 py-5">
+        <div className="flex flex-col gap-5 border-t border-border bg-muted px-5 py-5">
           {/* Article reference */}
-          <span className="w-fit rounded-full bg-white/[0.06] px-2.5 py-0.5 text-[11px] font-semibold text-muted-foreground">
+          <span className="w-fit rounded-full bg-muted px-2.5 py-0.5 text-l6-plus text-muted-foreground">
             {article}
           </span>
 
@@ -197,8 +191,8 @@ export function ChecklistItemCard({
           </p>
 
           {/* Guidance */}
-          <div className="rounded-xl bg-white/[0.03] px-4 py-3">
-            <p className="mb-1 text-xs font-medium text-muted-foreground/50">
+          <div className="rounded-xl bg-muted px-4 py-3">
+            <p className="mb-1 text-xs font-medium text-muted-foreground">
               {t("guidanceLabel")}
             </p>
             <p className="text-sm leading-relaxed text-muted-foreground">
@@ -208,7 +202,7 @@ export function ChecklistItemCard({
 
           {/* Assignee picker */}
           <div className="flex flex-col gap-2">
-            <span className="text-xs font-medium text-muted-foreground/50">
+            <span className="text-xs font-medium text-muted-foreground">
               {t("assigneeLabel")}
             </span>
             <DropdownMenu>
@@ -237,10 +231,10 @@ export function ChecklistItemCard({
                   </>
                 ) : (
                   <>
-                    <span className="flex size-6 items-center justify-center rounded-full border border-dashed border-muted-foreground/40 text-muted-foreground/50">
-                      <HugeIcon name="add-01" size={12} />
+                    <span className="flex size-6 items-center justify-center rounded-full border border-dashed border-muted-foreground/40 text-muted-foreground">
+                      <Icon name="add-01" size={12} />
                     </span>
-                    <span className="text-muted-foreground/70">
+                    <span className="text-muted-foreground">
                       {t("assignTo")}
                     </span>
                   </>
@@ -248,7 +242,7 @@ export function ChecklistItemCard({
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start" className="max-h-72 overflow-y-auto">
                 <DropdownMenuItem onClick={() => onAssigneeChange(id, null)}>
-                  <HugeIcon
+                  <Icon
                     name="circle-stroke-rounded"
                     size={14}
                     className="text-muted-foreground"
@@ -278,7 +272,7 @@ export function ChecklistItemCard({
 
           {/* Status selector */}
           <div className="flex flex-col gap-2">
-            <span className="text-xs font-medium text-muted-foreground/50">
+            <span className="text-xs font-medium text-muted-foreground">
               {t("statusLabel")}
             </span>
             <div className="flex flex-wrap gap-2">
@@ -291,7 +285,7 @@ export function ChecklistItemCard({
                     "flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-all",
                     s === status
                       ? STATUS_SELECTED[s]
-                      : "border-white/[0.06] bg-transparent text-muted-foreground hover:bg-white/[0.02] hover:text-foreground"
+                      : "border-border bg-transparent text-muted-foreground hover:bg-muted hover:text-foreground"
                   )}
                 >
                   <span
@@ -305,7 +299,7 @@ export function ChecklistItemCard({
 
           {/* Notes */}
           <div className="flex flex-col gap-2">
-            <span className="text-xs font-medium text-muted-foreground/50">
+            <span className="text-xs font-medium text-muted-foreground">
               {t("notesLabel")}
             </span>
             <Textarea
@@ -318,7 +312,7 @@ export function ChecklistItemCard({
 
           {/* Evidence */}
           <div className="flex flex-col gap-2">
-            <span className="text-xs font-medium text-muted-foreground/50">
+            <span className="text-xs font-medium text-muted-foreground">
               {t("evidenceLabel")}
             </span>
             {parsed.evidence.length > 0 && (
@@ -328,9 +322,9 @@ export function ChecklistItemCard({
                   return (
                     <div
                       key={filePath}
-                      className="flex items-center gap-2 rounded-lg bg-white/[0.03] px-3 py-1.5 text-sm"
+                      className="flex items-center gap-2 rounded-lg bg-muted px-3 py-1.5 text-sm"
                     >
-                      <FileIcon className="size-3.5 shrink-0 text-muted-foreground" />
+                      <Icon name="FileIcon" className="size-3.5 shrink-0 text-muted-foreground" />
                       <span className="min-w-0 flex-1 truncate text-muted-foreground">
                         {fileName}
                       </span>
@@ -339,7 +333,7 @@ export function ChecklistItemCard({
                         onClick={() => handleRemoveEvidence(filePath)}
                         className="shrink-0 text-muted-foreground hover:text-foreground"
                       >
-                        <XIcon className="size-3.5" />
+                        <Icon name="XIcon" className="size-3.5" />
                       </button>
                     </div>
                   );
@@ -360,7 +354,7 @@ export function ChecklistItemCard({
               onClick={() => fileInputRef.current?.click()}
               disabled={uploading}
             >
-              <UploadIcon data-icon="inline-start" className="size-3.5" />
+              <Icon name="UploadIcon" data-icon="inline-start" className="size-3.5" />
               {uploading ? t("saving") : t("uploadEvidence")}
             </Button>
           </div>

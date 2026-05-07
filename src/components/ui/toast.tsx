@@ -77,7 +77,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
 }
 
 // ---------------------------------------------------------------------------
-// Toast item
+// Toast item — Nask-styled card with status accent
 // ---------------------------------------------------------------------------
 
 function ToastItem({
@@ -90,7 +90,6 @@ function ToastItem({
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    // Trigger enter animation
     requestAnimationFrame(() => setVisible(true));
     const timer = setTimeout(() => {
       setVisible(false);
@@ -102,25 +101,23 @@ function ToastItem({
   return (
     <div
       className={cn(
-        "pointer-events-auto flex min-w-[280px] max-w-sm items-center gap-2 rounded-lg border px-4 py-3 text-sm font-medium shadow-lg transition-all duration-200",
-        visible
-          ? "translate-y-0 opacity-100"
-          : "translate-y-2 opacity-0",
+        "pointer-events-auto flex min-w-[280px] max-w-sm items-center gap-2 rounded-md border bg-card px-4 py-3 text-p3 shadow-card-md transition-all duration-200",
+        visible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0",
         toast.type === "success"
-          ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-400"
-          : "border-destructive/20 bg-destructive/10 text-destructive"
+          ? "border-success/20 text-success"
+          : "border-destructive/20 text-destructive"
       )}
     >
       <span className="text-base leading-none">
         {toast.type === "success" ? "✓" : "✕"}
       </span>
-      <span className="flex-1">{toast.message}</span>
+      <span className="flex-1 text-foreground">{toast.message}</span>
       <button
         onClick={() => {
           setVisible(false);
           setTimeout(() => onDismiss(toast.id), 200);
         }}
-        className="shrink-0 opacity-50 hover:opacity-100"
+        className="shrink-0 text-muted-foreground hover:text-foreground"
       >
         ×
       </button>

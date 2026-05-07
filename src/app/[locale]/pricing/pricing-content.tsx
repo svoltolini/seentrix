@@ -119,8 +119,8 @@ export function PricingContent() {
               className={cn(
                 "relative flex h-full flex-col p-6 transition-all duration-300 hover:-translate-y-1",
                 isPro
-                  ? "bg-white/[0.06]"
-                  : "rounded-2xl bg-white/[0.03] hover:bg-white/[0.05]",
+                  ? "bg-muted"
+                  : "rounded-md bg-muted hover:bg-muted",
               )}
             >
               <div className="mb-1">
@@ -137,7 +137,7 @@ export function PricingContent() {
                   className={cn(
                     "text-5xl font-extrabold",
                     isPro
-                      ? "bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] bg-clip-text text-transparent"
+                      ? "bg-gradient-to-r from-[#066DE6] to-[#6F4FE0] bg-clip-text text-transparent"
                       : "text-foreground",
                   )}
                 >
@@ -185,7 +185,7 @@ export function PricingContent() {
                     <Button
                       variant="default"
                       size="sm"
-                      className="w-full bg-white/[0.08] text-foreground hover:bg-white/[0.12]"
+                      className="w-full bg-muted text-foreground hover:bg-muted"
                     >
                       {t("getStarted")}
                     </Button>
@@ -198,7 +198,7 @@ export function PricingContent() {
                     <Button
                       variant="default"
                       size="sm"
-                      className="w-full bg-white/[0.08] text-foreground hover:bg-white/[0.12]"
+                      className="w-full bg-muted text-foreground hover:bg-muted"
                     >
                       {t("contactSales")}
                     </Button>
@@ -209,7 +209,7 @@ export function PricingContent() {
                     className={cn(
                       "w-full",
                       !isPro &&
-                        "bg-white/[0.08] text-foreground hover:bg-white/[0.12]",
+                        "bg-muted text-foreground hover:bg-muted",
                     )}
                     onClick={() => handleSelectPlan(tier.plan)}
                     disabled={loading === tier.plan}
@@ -229,7 +229,7 @@ export function PricingContent() {
               className={cn(
                 "relative",
                 isPro &&
-                  "rounded-[16px] bg-gradient-to-b from-[#3B82F6] via-[#8B5CF6] to-[#F97316] p-px",
+                  "rounded-[16px] bg-gradient-to-b from-[#066DE6] via-[#6F4FE0] to-[#FF6D00] p-px",
               )}
             >
               {isPro && (
@@ -283,9 +283,9 @@ function ComparisonTable() {
         </p>
       </div>
 
-      <div className="overflow-hidden rounded-2xl bg-white/[0.02]">
+      <div className="overflow-hidden rounded-md bg-muted">
         {/* Sticky header with plan names */}
-        <div className="sticky top-0 z-10 grid grid-cols-[minmax(0,2fr)_repeat(4,minmax(0,1fr))] border-b border-white/[0.06] bg-background/90 px-4 py-3 backdrop-blur-md sm:px-6">
+        <div className="sticky top-0 z-10 grid grid-cols-[minmax(0,2fr)_repeat(4,minmax(0,1fr))] border-b border-border bg-background/90 px-4 py-3 backdrop-blur-md sm:px-6">
           <div />
           {plans.map((p) => (
             <div
@@ -300,8 +300,8 @@ function ComparisonTable() {
         {/* Category blocks */}
         {FEATURE_CATEGORIES.map((category) => (
           <div key={category.key}>
-            <div className="grid grid-cols-[minmax(0,2fr)_repeat(4,minmax(0,1fr))] border-b border-white/[0.06] bg-white/[0.03] px-4 py-3 sm:px-6">
-              <div className="col-span-5 text-[11px] font-semibold uppercase tracking-wider text-foreground/80">
+            <div className="grid grid-cols-[minmax(0,2fr)_repeat(4,minmax(0,1fr))] border-b border-border bg-muted px-4 py-3 sm:px-6">
+              <div className="col-span-5 text-l6-plus uppercase tracking-wider text-foreground/80">
                 {tc(`categories.${category.key}.title`)}
               </div>
             </div>
@@ -336,8 +336,8 @@ function ComparisonRow({
   return (
     <div
       className={cn(
-        "grid grid-cols-[minmax(0,2fr)_repeat(4,minmax(0,1fr))] items-center border-b border-white/[0.04] px-4 py-3 text-sm sm:px-6",
-        striped && "bg-white/[0.01]",
+        "grid grid-cols-[minmax(0,2fr)_repeat(4,minmax(0,1fr))] items-center border-b border-border px-4 py-3 text-sm sm:px-6",
+        striped && "bg-muted",
       )}
     >
       <div className="pr-4 text-foreground/90">
@@ -361,11 +361,11 @@ function Cell({ value }: { value: CellValue }) {
       ) : value === "unlimited" ? (
         <span className="text-xl leading-none text-foreground/80">∞</span>
       ) : value === "coming-soon" ? (
-        <span className="inline-flex items-center rounded-full bg-[#D97706]/10 px-2 py-0.5 text-[10px] font-medium text-[#D97706]">
+        <span className="inline-flex items-center rounded-full bg-[#D97706]/10 px-2 py-0.5 text-l6-plus text-[#D97706]">
           {tc("comingSoon")}
         </span>
       ) : (
-        <span className="text-[13px] text-muted-foreground">{value}</span>
+        <span className="text-p3 text-muted-foreground">{value}</span>
       )}
     </div>
   );
@@ -395,7 +395,7 @@ function IconCheck() {
 function IconDash() {
   return (
     <span
-      className="text-muted-foreground/40"
+      className="text-muted-foreground"
       aria-label="Not included"
     >
       —

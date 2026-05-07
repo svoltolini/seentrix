@@ -141,7 +141,7 @@ export function NavigationProgress() {
       <div
         className="h-full"
         style={{
-          background: "#3B82F6",
+          background: "#066DE6",
           boxShadow: "0 0 10px rgba(59, 130, 246, 0.6)",
           width: `${state.progress}%`,
           opacity: state.phase === "complete" ? 0 : 1,

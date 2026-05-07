@@ -91,7 +91,7 @@ export function ProblemSection() {
             >
               <span
                 data-counter={t(`stats.${key}.value`)}
-                className="bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] bg-clip-text text-6xl font-extrabold text-transparent sm:text-7xl"
+                className="bg-gradient-to-r from-[#066DE6] to-[#6F4FE0] bg-clip-text text-6xl font-extrabold text-transparent sm:text-7xl"
               >
                 {t(`stats.${key}.value`)}
               </span>

@@ -3,7 +3,7 @@
 import { useCallback, useMemo, useRef, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
-import { HugeIcon } from "@/components/huge-icon";
+import { Icon } from "@/components/icon";
 import { StaggerReveal } from "@/components/stagger-reveal";
 import { StatCard } from "@/components/stat-card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -40,7 +40,7 @@ import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 const SEVERITY_COLOR: Record<VulnSeverity, string> = {
   critical: "#DC2626",
   high: "#D97706",
-  medium: "#2563EB",
+  medium: "#066DE6",
   low: "#6B7280",
 };
 
@@ -48,7 +48,7 @@ const STATUS_COLOR: Record<VulnStatus, string> = {
   open: "#6B7280",
   in_progress: "#D97706",
   resolved: "#16A34A",
-  accepted: "#2563EB",
+  accepted: "#066DE6",
 };
 
 const STATUS_ORDER: VulnStatus[] = [
@@ -339,20 +339,20 @@ export function VulnerabilitiesContent({
   if (isEmpty) {
     return (
       <div
-        className="overflow-hidden rounded-2xl bg-cover bg-center px-6 py-20 text-center"
+        className="overflow-hidden rounded-md bg-cover bg-center px-6 py-20 text-center"
         style={{ backgroundImage: "url('/images/empty-state-bg.png')" }}
       >
         <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-black/25">
-          <HugeIcon
+          <Icon
             name="shield-check"
             size={28}
-            className="text-white/90"
+            className="text-white"
           />
         </div>
         <h2 className="mt-5 text-lg font-semibold text-white">
           {t("empty.title")}
         </h2>
-        <p className="mt-2 text-sm text-white/70">{t("empty.description")}</p>
+        <p className="mt-2 text-sm text-white">{t("empty.description")}</p>
       </div>
     );
   }
@@ -373,7 +373,7 @@ export function VulnerabilitiesContent({
           data-reveal
           className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5"
         >
-          <StatCard label={t("kpi.total")} from="#2563EB" to="#0891B2">
+          <StatCard label={t("kpi.total")} from="#066DE6" to="#0891B2">
             <p className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white">
               {kpis.total}
             </p>
@@ -409,30 +409,30 @@ export function VulnerabilitiesContent({
         {/* ── Filter bar ── */}
         <div
           data-reveal
-          className="overflow-hidden rounded-xl bg-white/[0.03]"
+          className="overflow-hidden rounded-xl bg-muted"
         >
           {/* Search row — takes full width for scannability */}
-          <div className="border-b border-white/[0.04] p-3">
+          <div className="border-b border-border p-3">
             <div className="relative">
               <Input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder={t("filter.searchPlaceholder")}
-                className="h-10 border-white/[0.06] bg-background/40 pl-10 pr-10 text-sm"
+                className="h-10 border-border bg-background/40 pl-10 pr-10 text-sm"
               />
-              <HugeIcon
+              <Icon
                 name="search-02-stroke-rounded"
                 size={16}
-                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground/60"
+                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
               />
               {search && (
                 <button
                   type="button"
                   onClick={() => setSearch("")}
-                  className="absolute right-2.5 top-1/2 flex size-6 -translate-y-1/2 items-center justify-center rounded-md text-muted-foreground/60 transition-colors hover:bg-white/[0.06] hover:text-foreground"
+                  className="absolute right-2.5 top-1/2 flex size-6 -translate-y-1/2 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                   aria-label={t("filter.clearAll")}
                 >
-                  <HugeIcon name="add-01" size={14} className="rotate-45" />
+                  <Icon name="add-01" size={14} className="rotate-45" />
                 </button>
               )}
             </div>
@@ -496,7 +496,7 @@ export function VulnerabilitiesContent({
               <DropdownMenuTrigger
                 render={<Button variant="outline" size="sm" />}
               >
-                <HugeIcon name="one-circle-stroke-rounded" size={14} />
+                <Icon name="one-circle-stroke-rounded" size={14} />
                 {assigneeFilter === "all"
                   ? t("filter.anyAssignee")
                   : assigneeFilter === "unassigned"
@@ -538,13 +538,13 @@ export function VulnerabilitiesContent({
 
             {activeFilterCount > 0 && (
               <div className="ml-auto flex items-center gap-2 pl-2">
-                <span className="text-[11px] tabular-nums text-muted-foreground/70">
+                <span className="text-l6-plus tabular-nums text-muted-foreground">
                   {t("filter.activeFilters", { count: activeFilterCount })}
                 </span>
                 <button
                   type="button"
                   onClick={clearAllFilters}
-                  className="rounded-md px-2 py-1 text-xs font-medium text-muted-foreground transition-colors hover:bg-white/[0.06] hover:text-foreground"
+                  className="rounded-md px-2 py-1 text-xs font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                 >
                   {t("filter.clearAll")}
                 </button>
@@ -594,9 +594,9 @@ export function VulnerabilitiesContent({
         {/* ── Table ── */}
         <div
           data-reveal
-          className="overflow-hidden rounded-2xl bg-white/[0.03]"
+          className="overflow-hidden rounded-md bg-muted"
         >
-          <div className="flex items-center border-b border-white/[0.06] px-4 py-2.5 text-[11px] text-muted-foreground/60">
+          <div className="flex items-center border-b border-border px-4 py-2.5 text-[11px] text-muted-foreground">
             {canWrite && (
               <label className="flex w-8 cursor-pointer items-center">
                 <input
@@ -618,7 +618,7 @@ export function VulnerabilitiesContent({
 
           {filteredEmpty ? (
             <div className="flex flex-col items-center justify-center py-16 text-center">
-              <p className="text-sm text-muted-foreground/60">
+              <p className="text-sm text-muted-foreground">
                 {t("empty.filtered")}
               </p>
               <Button
@@ -727,7 +727,7 @@ function MultiSelect({
           >
             <span className="flex size-4 items-center justify-center rounded border border-border">
               {selected.has(o.value) && (
-                <HugeIcon
+                <Icon
                   name="checkmark-circle-01-stroke-rounded"
                   size={12}
                   className="text-primary"
@@ -747,7 +747,7 @@ function MultiSelect({
           <>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={onClear}>
-              <HugeIcon
+              <Icon
                 name="circle-stroke-rounded"
                 size={12}
                 className="text-muted-foreground"
@@ -842,7 +842,7 @@ function BulkAssignPicker({
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="max-h-72 overflow-y-auto">
         <DropdownMenuItem onClick={() => onPick(null)}>
-          <HugeIcon
+          <Icon
             name="circle-stroke-rounded"
             size={14}
             className="text-muted-foreground"
@@ -904,7 +904,7 @@ function VulnRow({
   return (
     <div
       className={cn(
-        "group relative flex items-center px-4 py-3 transition-colors hover:bg-white/[0.02]",
+        "group relative flex items-center px-4 py-3 transition-colors hover:bg-muted",
         selected && "bg-primary/5",
       )}
     >
@@ -930,7 +930,7 @@ function VulnRow({
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-center gap-2">
           <span
-            className="rounded-md px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white"
+            className="rounded-md px-1.5 py-0.5 text-l6-plus uppercase tracking-wide text-white"
             style={{ backgroundColor: SEVERITY_COLOR[vuln.severity] }}
           >
             {tSev(vuln.severity)}
@@ -939,29 +939,29 @@ function VulnRow({
             {vuln.cve_id}
           </span>
           {vuln.cvss_score !== null && (
-            <span className="text-[11px] tabular-nums text-muted-foreground/70">
+            <span className="text-l6-plus tabular-nums text-muted-foreground">
               CVSS {vuln.cvss_score}
             </span>
           )}
           {vuln.cisa_kev && (
-            <span className="inline-flex items-center gap-1 rounded-full bg-[#DC2626]/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-[#DC2626]">
+            <span className="inline-flex items-center gap-1 rounded-full bg-[#DC2626]/15 px-2 py-0.5 text-l6-plus uppercase tracking-wide text-[#DC2626]">
               KEV
             </span>
           )}
           {vuln.actively_exploited && (
-            <span className="inline-flex items-center gap-1 rounded-full bg-[#DC2626]/20 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-[#DC2626]">
+            <span className="inline-flex items-center gap-1 rounded-full bg-[#DC2626]/20 px-2 py-0.5 text-l6-plus uppercase tracking-wide text-[#DC2626]">
               <span className="size-1.5 animate-pulse rounded-full bg-[#DC2626]" />
               {t("row.actively_exploited")}
             </span>
           )}
           {vuln.resolution_type && (
-            <span className="inline-flex items-center gap-1 rounded-full bg-white/[0.06] px-2 py-0.5 text-[10px] uppercase tracking-wide text-muted-foreground">
+            <span className="inline-flex items-center gap-1 rounded-full bg-muted px-2 py-0.5 text-[10px] uppercase tracking-wide text-muted-foreground">
               {tRes(vuln.resolution_type)}
             </span>
           )}
         </div>
         {vuln.description && (
-          <p className="mt-1 line-clamp-1 text-[11px] text-muted-foreground/70">
+          <p className="mt-1 line-clamp-1 text-[11px] text-muted-foreground">
             {vuln.description}
           </p>
         )}
@@ -973,14 +973,14 @@ function VulnRow({
           {vuln.component_name || "—"}
         </p>
         {vuln.component_version && (
-          <p className="truncate text-[11px] text-muted-foreground/50">
+          <p className="truncate text-[11px] text-muted-foreground">
             {vuln.component_version}
           </p>
         )}
       </div>
 
       {/* Age */}
-      <div className="hidden w-14 text-xs text-muted-foreground/70 sm:block">
+      <div className="hidden w-14 text-xs text-muted-foreground sm:block">
         {age !== null ? t("row.daysOld", { days: age }) : "—"}
       </div>
 
@@ -1009,7 +1009,7 @@ function VulnRow({
             </span>
           </div>
         ) : (
-          <span className="text-xs text-muted-foreground/40">
+          <span className="text-xs text-muted-foreground">
             {t("row.unassigned")}
           </span>
         )}
@@ -1039,7 +1039,7 @@ function VulnRow({
                 />
               }
             >
-              <HugeIcon name="menu-02" size={16} />
+              <Icon name="menu-02" size={16} />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               {canFlagExploit && (
@@ -1047,7 +1047,7 @@ function VulnRow({
                   onClick={() => onToggleExploit(!vuln.actively_exploited)}
                   variant={vuln.actively_exploited ? "default" : "destructive"}
                 >
-                  <HugeIcon name="alert-02" size={14} />
+                  <Icon name="alert-02" size={14} />
                   {vuln.actively_exploited
                     ? t("row.unmarkExploited")
                     : t("row.markExploited")}
@@ -1173,10 +1173,10 @@ function AssigneePicker({
           </>
         ) : (
           <>
-            <span className="flex size-6 items-center justify-center rounded-full border border-dashed border-muted-foreground/40 text-muted-foreground/50">
-              <HugeIcon name="add-01" size={12} />
+            <span className="flex size-6 items-center justify-center rounded-full border border-dashed border-muted-foreground/40 text-muted-foreground">
+              <Icon name="add-01" size={12} />
             </span>
-            <span className="text-xs text-muted-foreground/60">
+            <span className="text-xs text-muted-foreground">
               {assignLabel}
             </span>
           </>
@@ -1184,7 +1184,7 @@ function AssigneePicker({
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start" className="max-h-72 overflow-y-auto">
         <DropdownMenuItem onClick={() => onAssign(null)}>
-          <HugeIcon
+          <Icon
             name="circle-stroke-rounded"
             size={14}
             className="text-muted-foreground"

@@ -22,7 +22,7 @@ function Impressum_en() {
   return (
     <>
       <h1>Legal notice (Impressum)</h1>
-      <p className="text-xs text-muted-foreground/70">
+      <p className="text-xs text-muted-foreground">
         Last updated: {new Date().toISOString().slice(0, 10)}
       </p>
 
@@ -118,7 +118,7 @@ function Impressum_en() {
         written consent.
       </p>
 
-      <p className="mt-6 text-xs text-muted-foreground/70">
+      <p className="mt-6 text-xs text-muted-foreground">
         Seentrix Ltd · Companies House 17169165 · 167-169 Great Portland
         Street, London W1W 5PF, United Kingdom
       </p>
@@ -130,7 +130,7 @@ function Impressum_de() {
   return (
     <>
       <h1>Impressum</h1>
-      <p className="text-xs text-muted-foreground/70">
+      <p className="text-xs text-muted-foreground">
         Stand: {new Date().toISOString().slice(0, 10)}
       </p>
 
@@ -232,7 +232,7 @@ function Impressum_de() {
         Verwendung bedarf der vorherigen schriftlichen Zustimmung.
       </p>
 
-      <p className="mt-6 text-xs text-muted-foreground/70">
+      <p className="mt-6 text-xs text-muted-foreground">
         Seentrix Ltd · Companies House 17169165 · 167-169 Great Portland
         Street, London W1W 5PF, Vereinigtes Königreich
       </p>

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import type { UIMessage } from "ai";
 import { Link } from "@/i18n/navigation";
-import { HugeIcon } from "@/components/huge-icon";
+import { Icon } from "@/components/icon";
 import { cn } from "@/lib/utils";
 
 /**
@@ -28,9 +28,11 @@ export function CopilotMessage({ message }: { message: UIMessage }) {
   if (isUser) {
     const text = extractText(message);
     if (!text) return null;
+    // Outgoing user bubble per Figma `58:28682` (`data-node-id="85:10323"`):
+    //   bg-[rgba(167,174,193,0.25)] rounded-[10px] px-4 py-3
     return (
       <div className="flex justify-end">
-        <div className="max-w-[88%] rounded-2xl rounded-br-md bg-white/[0.06] px-3.5 py-2 text-sm leading-relaxed text-foreground">
+        <div className="max-w-[88%] rounded-md bg-muted-foreground/25 px-4 py-3 text-p2 text-foreground">
           {text}
         </div>
       </div>
@@ -284,26 +286,26 @@ function DraftBlock({ title, draft }: { title: string; draft: string }) {
     }
   }
   return (
-    <div className="flex flex-col gap-2 rounded-2xl bg-white/[0.04] p-3 ring-1 ring-white/[0.08]">
+    <div className="flex flex-col gap-2 rounded-md bg-card p-3 border border-border">
       <header className="flex items-center justify-between gap-2">
-        <span className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#60A5FA]">
-          <HugeIcon name="ai-magic-stroke-rounded" size={11} />
+        <span className="flex items-center gap-1.5 text-l6-plus uppercase tracking-[0.16em] text-primary">
+          <Icon name="ai-magic-stroke-rounded" size={12} />
           Draft · {title}
         </span>
         <button
           type="button"
           onClick={onCopy}
           className={cn(
-            "rounded-md px-2 py-1 text-[11px] font-medium transition",
+            "rounded-sm px-2 py-1 text-l6-plus transition",
             copied
-              ? "bg-emerald-500/15 text-emerald-300"
-              : "bg-white/[0.06] text-muted-foreground hover:bg-white/[0.1] hover:text-foreground",
+              ? "bg-success/15 text-success"
+              : "bg-muted text-muted-foreground hover:text-foreground",
           )}
         >
           {copied ? "Copied" : "Copy"}
         </button>
       </header>
-      <pre className="max-h-[420px] overflow-auto whitespace-pre-wrap rounded-lg bg-[#0B0B12] px-3 py-2 text-xs leading-relaxed text-foreground/90 ring-1 ring-white/[0.04]">
+      <pre className="max-h-[420px] overflow-auto whitespace-pre-wrap rounded-sm bg-muted px-3 py-2 text-p4 leading-relaxed text-foreground border border-border">
         {draft}
       </pre>
     </div>
@@ -314,12 +316,12 @@ function LinkButton({ path, label }: { path: string; label: string }) {
   return (
     <Link
       href={path}
-      className="inline-flex w-fit items-center gap-2 rounded-lg bg-[#3B82F6]/10 px-3.5 py-2 text-[13px] font-medium text-[#93C5FD] ring-1 ring-[#3B82F6]/25 transition hover:bg-[#3B82F6]/15 hover:text-white hover:ring-[#3B82F6]/50"
+      className="inline-flex w-fit items-center gap-2 rounded-lg bg-[#066DE6]/10 px-3.5 py-2 text-[13px] font-medium text-[#93C5FD] ring-1 ring-[#066DE6]/25 transition hover:bg-[#066DE6]/15 hover:text-white hover:ring-[#066DE6]/50"
     >
-      <HugeIcon
+      <Icon
         name="arrow-right-01-stroke-rounded"
         size={13}
-        className="text-[#60A5FA]"
+        className="text-[#066DE6]"
       />
       {label}
     </Link>
@@ -364,7 +366,7 @@ function AssistantBody({ text }: { text: string }) {
                 className="mt-3 flex items-baseline gap-2 font-heading text-[13px] font-semibold uppercase tracking-[0.16em] text-[#93C5FD]"
               >
                 {b.numeral && (
-                  <span className="rounded-md bg-[#3B82F6]/15 px-1.5 py-0.5 font-mono text-[11px] font-bold tracking-normal text-[#60A5FA]">
+                  <span className="rounded-md bg-[#066DE6]/15 px-1.5 py-0.5 font-mono text-[11px] font-bold tracking-normal text-[#066DE6]">
                     {b.numeral}
                   </span>
                 )}
@@ -384,14 +386,14 @@ function AssistantBody({ text }: { text: string }) {
             return (
               <hr
                 key={i}
-                className="my-1 border-0 border-t border-white/[0.06]"
+                className="my-1 border-0 border-t border-border"
               />
             );
           case "ol":
             return (
               <ol
                 key={i}
-                className="ml-5 space-y-1.5 list-decimal marker:text-[#60A5FA] marker:font-semibold"
+                className="ml-5 space-y-1.5 list-decimal marker:text-[#066DE6] marker:font-semibold"
               >
                 {b.items.map((item, j) => (
                   <li key={j} className="pl-1">
@@ -405,7 +407,7 @@ function AssistantBody({ text }: { text: string }) {
               <ul key={i} className="ml-1 space-y-1.5">
                 {b.items.map((item, j) => (
                   <li key={j} className="flex items-start gap-2.5">
-                    <span className="mt-[9px] h-1 w-1 shrink-0 rounded-full bg-[#60A5FA]" />
+                    <span className="mt-[9px] h-1 w-1 shrink-0 rounded-full bg-[#066DE6]" />
                     <span className="flex-1">{renderInline(item)}</span>
                   </li>
                 ))}
@@ -415,7 +417,7 @@ function AssistantBody({ text }: { text: string }) {
             return (
               <blockquote
                 key={i}
-                className="border-l-2 border-[#3B82F6]/40 bg-white/[0.02] pl-3 pr-2 py-1.5 italic text-muted-foreground"
+                className="border-l-2 border-[#066DE6]/40 bg-muted pl-3 pr-2 py-1.5 italic text-muted-foreground"
               >
                 {renderInline(b.text)}
               </blockquote>
@@ -715,7 +717,7 @@ function renderInline(text: string): React.ReactNode {
       out.push(
         <code
           key={key++}
-          className="rounded bg-white/[0.08] px-1.5 py-0.5 text-[12px] font-mono text-foreground"
+          className="rounded bg-muted px-1.5 py-0.5 text-[12px] font-mono text-foreground"
         >
           {m[7]}
         </code>,
@@ -741,7 +743,7 @@ function CitationPill({ label }: { label: string }) {
     .replace(/\s*[·•–—-]\s*/g, " · ")
     .toUpperCase();
   return (
-    <span className="mx-0.5 inline-flex items-center rounded-md bg-[#3B82F6] px-1.5 py-[2px] align-[1px] text-[9px] font-bold uppercase tracking-wider text-white shadow-[0_0_0_1px_rgba(59,130,246,0.35)]">
+    <span className="mx-0.5 inline-flex items-center rounded-md bg-[#066DE6] px-1.5 py-[2px] align-[1px] text-[9px] font-bold uppercase tracking-wider text-white shadow-[0_0_0_1px_rgba(59,130,246,0.35)]">
       {display}
     </span>
   );
@@ -758,9 +760,9 @@ function PathPill({ path }: { path: string }) {
   return (
     <Link
       href={path}
-      className="mx-1 inline-flex -translate-y-[1px] items-center gap-1 rounded-full bg-white px-2 py-[2px] align-baseline text-[11px] font-semibold text-[#09090B] shadow-[0_0_0_1px_rgba(255,255,255,0.4)] transition hover:bg-white/90"
+      className="mx-1 inline-flex -translate-y-[1px] items-center gap-1 rounded-full bg-white px-2 py-[2px] align-baseline text-l6-plus text-[#09090B] shadow-[0_0_0_1px_rgba(255,255,255,0.4)] transition hover:bg-white/90"
     >
-      <HugeIcon
+      <Icon
         name="arrow-right-01-stroke-rounded"
         size={10}
         className="text-[#09090B]"
@@ -778,7 +780,7 @@ function PathPill({ path }: { path: string }) {
  */
 function InlineLink({ label, href }: { label: string; href: string }) {
   const className =
-    "font-medium text-[#93C5FD] underline decoration-[#60A5FA]/40 decoration-1 underline-offset-2 transition hover:text-[#60A5FA] hover:decoration-[#60A5FA]";
+    "font-medium text-[#93C5FD] underline decoration-[#066DE6]/40 decoration-1 underline-offset-2 transition hover:text-[#066DE6] hover:decoration-[#066DE6]";
 
   // An internal path with an unresolved `{placeholder}` segment would
   // render as a clickable link that 404s on click — worse UX than plain

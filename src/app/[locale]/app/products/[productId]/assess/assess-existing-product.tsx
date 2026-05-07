@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { Icon } from "@/components/icon";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { Card, CardContent } from "@/components/ui/card";
@@ -24,7 +25,6 @@ import {
 import { runAssessmentForProduct } from "./actions";
 import type { ProductDetail } from "../../actions";
 import { CATEGORY_COLORS } from "../constants";
-import { RotateCcwIcon } from "lucide-react";
 
 export function AssessExistingProduct({
   product,
@@ -138,7 +138,7 @@ export function AssessExistingProduct({
               setShowWizard(true);
             }}
           >
-            <RotateCcwIcon className="size-3.5" />
+            <Icon name="RotateCcwIcon" className="size-3.5" />
             {t("detail.assessment.rerun")}
           </Button>
         </div>

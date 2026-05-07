@@ -5,7 +5,7 @@ import { Dialog as SheetPrimitive } from "@base-ui/react/dialog";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
-import { HugeIcon } from "@/components/huge-icon";
+import { Icon } from "@/components/icon";
 import { useCurrentLessonId } from "@/lib/academy/current-lesson-context";
 import {
   ACADEMY_LESSONS,
@@ -64,21 +64,21 @@ export function HelpSheet({
           )}
         >
           {/* Header */}
-          <div className="flex items-start justify-between gap-3 border-b border-white/[0.06] px-6 pt-6 pb-5">
+          <div className="flex items-start justify-between gap-3 border-b border-border px-6 pt-6 pb-5">
             <div className="min-w-0">
-              <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/60">
+              <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
                 {eyebrow}
               </p>
               <SheetPrimitive.Title
                 data-slot="help-sheet-title"
-                className="mt-1 font-heading text-xl font-bold text-foreground"
+                className="mt-1 text-h3 text-foreground"
               >
                 {title}
               </SheetPrimitive.Title>
             </div>
             <SheetPrimitive.Close
               type="button"
-              className="flex size-8 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-white/[0.06] hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+              className="flex size-8 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
               aria-label={t("close")}
             >
               <span aria-hidden className="text-lg leading-none">×</span>
@@ -99,7 +99,7 @@ export function HelpSheet({
                 <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-white/10 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur-sm">
                   {t("craReference")}
                 </div>
-                <p className="text-[13px] leading-relaxed text-white/95">
+                <p className="text-[13px] leading-relaxed text-white">
                   {reference}
                 </p>
               </div>
@@ -107,7 +107,7 @@ export function HelpSheet({
 
             {relatedTerms && relatedTerms.length > 0 && (
               <div>
-                <p className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/60">
+                <p className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
                   {t("relatedTerms")}
                 </p>
                 <div className="flex flex-wrap gap-1.5">
@@ -123,24 +123,24 @@ export function HelpSheet({
             {lesson && effectiveLessonId && (
               <Link
                 href={`/app/academy/${effectiveLessonId}`}
-                className="group block rounded-xl bg-white/[0.03] p-4 transition-colors hover:bg-white/[0.06]"
+                className="group block rounded-xl bg-muted p-4 transition-colors hover:bg-muted"
               >
-                <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/60">
+                <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
                   {t("academy")}
                 </p>
                 <div className="mt-1 flex items-start justify-between gap-3">
                   <p className="font-heading text-sm font-semibold text-foreground group-hover:text-primary">
                     {lesson.title}
                   </p>
-                  <HugeIcon
+                  <Icon
                     name="arrow-right-01-stroke-rounded"
                     size={14}
-                    className="mt-1 shrink-0 text-muted-foreground/40 transition-colors group-hover:text-primary"
+                    className="mt-1 shrink-0 text-muted-foreground transition-colors group-hover:text-primary"
                   />
                 </div>
                 <div className="mt-2 flex items-center gap-2 text-[11px] text-muted-foreground">
                   <span>{lesson.duration}</span>
-                  <span className="text-muted-foreground/40">·</span>
+                  <span className="text-muted-foreground">·</span>
                   <span className="font-medium text-primary">
                     {t("openLesson")}
                   </span>
@@ -189,7 +189,7 @@ function RelatedTermChip({
     >
       <SheetPrimitive.Trigger
         type="button"
-        className="inline-flex items-center gap-1 rounded-full bg-white/[0.05] px-2.5 py-1 text-[11px] font-medium text-muted-foreground transition-colors hover:bg-primary/10 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+        className="inline-flex items-center gap-1 rounded-full bg-muted px-2.5 py-1 text-l6-plus text-muted-foreground transition-colors hover:bg-primary/10 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
       >
         {children}
       </SheetPrimitive.Trigger>

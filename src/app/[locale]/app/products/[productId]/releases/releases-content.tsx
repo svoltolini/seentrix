@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
-import { HugeIcon } from "@/components/huge-icon";
+import { Icon } from "@/components/icon";
 import { FieldHelp } from "@/components/field-help";
 import { StaggerReveal } from "@/components/stagger-reveal";
 import { StatCard } from "@/components/stat-card";
@@ -26,7 +26,7 @@ import {
 const RELEASE_TYPE_COLOR: Record<ReleaseType, string> = {
   security: "#DC2626",
   bugfix: "#D97706",
-  feature: "#2563EB",
+  feature: "#066DE6",
   maintenance: "#6B7280",
 };
 
@@ -106,12 +106,12 @@ export function ReleasesContent({
         {/* Support period block */}
         <div
           data-reveal
-          className="overflow-hidden rounded-2xl bg-white/[0.03] p-6"
+          className="overflow-hidden rounded-md bg-muted p-6"
         >
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
               <h2 className="text-sm font-semibold">{t("support.title")}</h2>
-              <p className="mt-1 text-xs text-muted-foreground/70">
+              <p className="mt-1 text-xs text-muted-foreground">
                 {t("support.description")}
               </p>
             </div>
@@ -186,7 +186,7 @@ export function ReleasesContent({
           data-reveal
           className="grid grid-cols-2 gap-3 sm:grid-cols-4"
         >
-          <StatCard label={t("kpi.total")} from="#2563EB" to="#0891B2">
+          <StatCard label={t("kpi.total")} from="#066DE6" to="#0891B2">
             <p className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white">
               {summary.total}
             </p>
@@ -201,7 +201,7 @@ export function ReleasesContent({
               {summary.cves}
             </p>
           </StatCard>
-          <StatCard label={t("kpi.latest")} from="#7C3AED" to="#4F46E5">
+          <StatCard label={t("kpi.latest")} from="#6F4FE0" to="#066DE6">
             <p className="mt-2 truncate text-lg font-bold tracking-tight text-white">
               {summary.latest ? summary.latest.version : "—"}
             </p>
@@ -214,28 +214,28 @@ export function ReleasesContent({
             <h2 className="text-sm font-semibold">{t("list.title")}</h2>
             {canWrite && (
               <Button size="sm" onClick={() => setNewOpen(true)}>
-                <HugeIcon name="plus-sign-square-stroke-rounded" size={14} />
+                <Icon name="plus-sign-square-stroke-rounded" size={14} />
                 {t("new.cta")}
               </Button>
             )}
           </div>
           {releases.length === 0 ? (
             <div
-              className="overflow-hidden rounded-2xl bg-cover bg-center px-6 py-20 text-center"
+              className="overflow-hidden rounded-md bg-cover bg-center px-6 py-20 text-center"
               style={{ backgroundImage: "url('/images/empty-state-bg.png')" }}
             >
               <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-black/25">
-                <HugeIcon name="package" size={28} className="text-white/90" />
+                <Icon name="package" size={28} className="text-white" />
               </div>
               <h2 className="mt-5 text-lg font-semibold text-white">
                 {t("empty.title")}
               </h2>
-              <p className="mt-2 text-sm text-white/70">
+              <p className="mt-2 text-sm text-white">
                 {t("empty.description")}
               </p>
             </div>
           ) : (
-            <div className="overflow-hidden rounded-2xl bg-white/[0.03]">
+            <div className="overflow-hidden rounded-md bg-muted">
               <div className="divide-y divide-white/[0.04]">
                 {releases.map((r) => (
                   <ReleaseRow
@@ -332,7 +332,7 @@ function SupportField({
   const isDate = type === "date";
   return (
     <div>
-      <label className="flex items-center gap-2 text-xs font-medium text-muted-foreground/70">
+      <label className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
         {label}
         {help}
       </label>
@@ -349,10 +349,10 @@ function SupportField({
           className={cn(isDate && "pl-9")}
         />
         {isDate && (
-          <HugeIcon
+          <Icon
             name="calendar-03-stroke-rounded"
             size={14}
-            className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground/60"
+            className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
           />
         )}
       </div>
@@ -388,7 +388,7 @@ function ReleaseRow({
       <div className="flex min-w-0 flex-1 flex-col gap-1">
         <div className="flex flex-wrap items-center gap-2">
           <span
-            className="rounded-md px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white"
+            className="rounded-md px-1.5 py-0.5 text-l6-plus uppercase tracking-wide text-white"
             style={{ backgroundColor: color }}
           >
             {tType(release.release_type)}
@@ -396,17 +396,17 @@ function ReleaseRow({
           <span className="font-mono text-sm font-semibold text-foreground">
             v{release.version}
           </span>
-          <span className="text-xs text-muted-foreground/70">
+          <span className="text-xs text-muted-foreground">
             {formatDate(release.released_at)}
           </span>
           {release.is_security_update && release.cves_fixed.length > 0 && (
-            <span className="inline-flex items-center gap-1 rounded-full bg-[#16A34A]/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-[#16A34A]">
+            <span className="inline-flex items-center gap-1 rounded-full bg-[#16A34A]/15 px-2 py-0.5 text-l6-plus uppercase tracking-wide text-[#16A34A]">
               {tCvesFixed}: {release.cves_fixed.length}
             </span>
           )}
         </div>
         {release.release_notes && (
-          <p className="line-clamp-2 text-xs text-muted-foreground/80">
+          <p className="line-clamp-2 text-xs text-muted-foreground">
             {release.release_notes}
           </p>
         )}
@@ -415,7 +415,7 @@ function ReleaseRow({
             {release.cves_fixed.map((cve) => (
               <span
                 key={cve}
-                className="rounded-full bg-white/[0.06] px-2 py-0.5 font-mono text-[10px] text-muted-foreground"
+                className="rounded-full bg-muted px-2 py-0.5 font-mono text-[10px] text-muted-foreground"
               >
                 {cve}
               </span>
@@ -423,7 +423,7 @@ function ReleaseRow({
           </div>
         )}
         {release.signed_digest && (
-          <p className="mt-1 font-mono text-[10px] text-muted-foreground/50">
+          <p className="mt-1 font-mono text-[10px] text-muted-foreground">
             {tSignedDigest}: {release.signed_digest.slice(0, 32)}
             {release.signed_digest.length > 32 ? "…" : ""}
           </p>
@@ -436,7 +436,7 @@ function ReleaseRow({
           onClick={onDelete}
           aria-label={tDelete}
         >
-          <HugeIcon
+          <Icon
             name="circle-stroke-rounded"
             size={14}
             className="text-muted-foreground"
@@ -547,10 +547,10 @@ function NewReleaseDialog({
                 onChange={(e) => setReleasedAt(e.target.value)}
                 className="pl-9"
               />
-              <HugeIcon
+              <Icon
                 name="calendar-03-stroke-rounded"
                 size={14}
-                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground/60"
+                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
               />
             </div>
           </div>

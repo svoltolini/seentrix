@@ -34,9 +34,9 @@ export const CATEGORY_COLORS: Record<
 };
 
 export const TYPE_COLORS: Record<string, string> = {
-  hardware: "bg-info/10 text-info",
-  software: "bg-lavender/10 text-lavender",
-  firmware: "bg-primary/10 text-primary",
+  hardware: "bg-primary/10 text-primary",
+  software: "bg-accent/10 text-accent",
+  firmware: "bg-success/10 text-success",
   iot: "bg-destructive/10 text-destructive",
 };
 
@@ -80,7 +80,7 @@ export const STATUS_CHART_COLORS: Record<string, string> = {
 
 /** Per-product line colors for trend charts */
 export const PRODUCT_LINE_COLORS = [
-  "#3B82F6", "#8B5CF6", "#06B6D4", "#F9C248", "#22C55E",
+  "#066DE6", "#6F4FE0", "#06B6D4", "#FF6D00", "#22C55E",
 ];
 
 /** Org-wide average line color */

@@ -47,7 +47,7 @@ export function BillingContent({
   return (
     <div className="space-y-4">
       {!isAdmin && (
-        <div className="rounded-lg bg-white/[0.03] px-4 py-3 text-center text-xs text-muted-foreground">
+        <div className="rounded-lg bg-muted px-4 py-3 text-center text-xs text-muted-foreground">
           {t("readOnly")}
         </div>
       )}
@@ -60,14 +60,14 @@ export function BillingContent({
         <div className="flex items-center justify-between px-6 py-6">
           {/* Left — plan info */}
           <div>
-            <p className="text-[11px] font-semibold text-white/75">
+            <p className="text-l6-plus text-white">
               {t("currentPlan")}
             </p>
             <p className="mt-1 text-xl font-bold tracking-tight text-white">
               {t(`plans.${plan}`)}
             </p>
             {billingPeriodEnd && (
-              <p className="mt-1.5 text-xs text-white/65">
+              <p className="mt-1.5 text-xs text-white">
                 {t("nextBillingDate", {
                   date: new Date(billingPeriodEnd).toLocaleDateString(
                     locale === "de" ? "de-DE" : "en-US",
@@ -77,7 +77,7 @@ export function BillingContent({
               </p>
             )}
             {plan === "free" && (
-              <p className="mt-1.5 max-w-xs text-xs text-white/65">
+              <p className="mt-1.5 max-w-xs text-xs text-white">
                 {t("upgradeDescription")}
               </p>
             )}
@@ -89,7 +89,7 @@ export function BillingContent({
               {price > 0 ? `€${price}` : t(`plans.free`)}
             </p>
             {price > 0 && (
-              <p className="mt-0.5 text-xs text-white/65">
+              <p className="mt-0.5 text-xs text-white">
                 {t("perMonth")}
               </p>
             )}

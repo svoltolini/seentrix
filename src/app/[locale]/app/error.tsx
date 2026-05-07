@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { HugeIcon } from "@/components/huge-icon";
+import { Icon } from "@/components/icon";
 
 export default function AppError({
   reset,
@@ -19,7 +19,7 @@ export default function AppError({
       <Card className="max-w-md">
         <CardContent className="flex flex-col items-center gap-4 py-10 text-center">
           <div className="flex size-14 items-center justify-center rounded-full bg-destructive/10">
-            <HugeIcon
+            <Icon
               name="alert-02"
               size={24}
               className="text-destructive"

@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { useToast } from "@/components/ui/toast";
-import { HugeIcon } from "@/components/huge-icon";
+import { Icon } from "@/components/icon";
 import {
   exportOrgData,
   requestOrgDeletion,
@@ -93,9 +93,9 @@ export function DangerZone({
       {/* Match the other Settings cards — neutral header, no destructive
           tint on the container. The destructive affordance lives on the
           "Delete" button itself, not on the whole card. */}
-      <div className="border-b border-white/[0.06] px-6 py-4">
+      <div className="border-b border-border px-6 py-4">
         <h2 className="text-sm font-semibold">{t("title")}</h2>
-        <p className="mt-0.5 text-xs text-muted-foreground/60">
+        <p className="mt-0.5 text-xs text-muted-foreground">
           {t("subtitle")}
         </p>
       </div>
@@ -107,7 +107,7 @@ export function DangerZone({
             <p className="text-sm font-medium text-foreground">
               {t("exportTitle")}
             </p>
-            <p className="mt-0.5 text-xs text-muted-foreground/60">
+            <p className="mt-0.5 text-xs text-muted-foreground">
               {t("exportDescription")}
             </p>
           </div>
@@ -130,11 +130,11 @@ export function DangerZone({
                 aria-hidden
                 className="flex size-5 shrink-0 items-center justify-center rounded-md bg-destructive/15 text-destructive"
               >
-                <HugeIcon name="alert-02" size={11} />
+                <Icon name="alert-02" size={11} />
               </span>
               {t("deleteTitle")}
             </p>
-            <p className="mt-1 text-xs text-muted-foreground/60">
+            <p className="mt-1 text-xs text-muted-foreground">
               {t("deleteDescription")}
             </p>
           </div>
@@ -170,7 +170,7 @@ export function DangerZone({
               aria-hidden
               className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-md bg-destructive/20 text-destructive"
             >
-              <HugeIcon name="alert-02" size={11} />
+              <Icon name="alert-02" size={11} />
             </span>
             <div className="min-w-0">
               <p className="text-xs font-medium text-destructive">
@@ -178,7 +178,7 @@ export function DangerZone({
                   days: deletion?.daysRemaining ?? 0,
                 })}
               </p>
-              <p className="mt-1 text-[11px] text-muted-foreground/60">
+              <p className="mt-1 text-[11px] text-muted-foreground">
                 {t("pendingSubtitle", {
                   date: new Date(deletion!.purgeAt!).toLocaleDateString(),
                 })}

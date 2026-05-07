@@ -1,16 +1,9 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { Icon } from "@/components/icon";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import {
-  Trash2Icon,
-  ChevronDownIcon,
-  RefreshCwIcon,
-  SearchIcon,
-  ArchiveIcon,
-  ArchiveRestoreIcon,
-} from "lucide-react";
 import { SbomComponentTable } from "./sbom-component-table";
 import type {
   SbomRecord,
@@ -79,23 +72,23 @@ export function SbomListItem({
             onToggleExpand();
           }
         }}
-        className="flex w-full cursor-pointer items-center gap-3 px-5 py-4 text-left transition-colors hover:bg-white/[0.02]"
+        className="flex w-full cursor-pointer items-center gap-3 px-5 py-4 text-left transition-colors hover:bg-muted"
       >
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
             <span className="truncate text-sm font-medium text-foreground">
               {sbom.file_name ?? "SBOM"}
             </span>
-            <span className="shrink-0 rounded-full bg-white/[0.06] px-2.5 py-0.5 text-[11px] font-semibold text-muted-foreground">
+            <span className="shrink-0 rounded-full bg-muted px-2.5 py-0.5 text-l6-plus text-muted-foreground">
               {t(`formats.${sbom.sbom_format}`)}
             </span>
             {isArchived && (
-              <span className="shrink-0 rounded-full bg-white/[0.04] px-2 py-0.5 text-[10px] font-medium text-muted-foreground/40">
+              <span className="shrink-0 rounded-full bg-muted px-2 py-0.5 text-l6-plus text-muted-foreground">
                 {t("list.archived")}
               </span>
             )}
           </div>
-          <div className="mt-1 flex items-center gap-3 text-xs text-muted-foreground/50">
+          <div className="mt-1 flex items-center gap-3 text-xs text-muted-foreground">
             <span>
               {sbom.total_components}{" "}
               {sbom.total_components === 1 ? "component" : "components"}
@@ -122,13 +115,13 @@ export function SbomListItem({
               e.stopPropagation();
               onToggleActive(!sbom.is_active);
             }}
-            className="text-muted-foreground/30 hover:text-foreground"
+            className="text-muted-foreground hover:text-foreground"
             title={isArchived ? t("list.restore") : t("list.archive")}
           >
             {isArchived ? (
-              <ArchiveRestoreIcon className="size-3.5" />
+              <Icon name="ArchiveRestoreIcon" className="size-3.5" />
             ) : (
-              <ArchiveIcon className="size-3.5" />
+              <Icon name="ArchiveIcon" className="size-3.5" />
             )}
           </Button>
           <Button
@@ -138,13 +131,13 @@ export function SbomListItem({
               e.stopPropagation();
               onDelete();
             }}
-            className="text-muted-foreground/30 hover:text-destructive"
+            className="text-muted-foreground hover:text-destructive"
           >
-            <Trash2Icon className="size-3.5" />
+            <Icon name="Trash2Icon" className="size-3.5" />
           </Button>
-          <ChevronDownIcon
+          <Icon name="ChevronDownIcon"
             className={cn(
-              "size-4 text-muted-foreground/30 transition-transform",
+              "size-4 text-muted-foreground transition-transform",
               isExpanded && "rotate-180"
             )}
           />
@@ -153,7 +146,7 @@ export function SbomListItem({
 
       {/* Expanded view */}
       {isExpanded && (
-        <div className="border-t border-white/[0.04]">
+        <div className="border-t border-border">
           {isLoading ? (
             <div className="flex items-center justify-center py-8">
               <p className="text-sm text-muted-foreground">
@@ -165,7 +158,7 @@ export function SbomListItem({
               {/* Scan actions */}
               <div className="px-5 py-4">
                 {!hasScanned ? (
-                  <div className="flex flex-col items-center gap-3 rounded-lg bg-white/[0.02] py-6">
+                  <div className="flex flex-col items-center gap-3 rounded-lg bg-muted py-6">
                     <Button
                       size="sm"
                       disabled={isScanning}
@@ -175,7 +168,7 @@ export function SbomListItem({
                       }}
                       className="gap-1.5"
                     >
-                      <SearchIcon
+                      <Icon name="SearchIcon"
                         className={cn(
                           "size-3.5",
                           isScanning && "animate-spin"
@@ -203,7 +196,7 @@ export function SbomListItem({
                       }}
                       className="gap-1.5"
                     >
-                      <RefreshCwIcon
+                      <Icon name="RefreshCwIcon"
                         className={cn(
                           "size-3.5",
                           isScanning && "animate-spin"
@@ -212,7 +205,7 @@ export function SbomListItem({
                       {isScanning ? t("scan.scanning") : t("scan.rescan")}
                     </Button>
                     {sbom.kev_count > 0 && (
-                      <span className="rounded-full bg-destructive px-2.5 py-0.5 text-[11px] font-semibold text-white">
+                      <span className="rounded-full bg-destructive px-2.5 py-0.5 text-l6-plus text-white">
                         KEV {sbom.kev_count}
                       </span>
                     )}

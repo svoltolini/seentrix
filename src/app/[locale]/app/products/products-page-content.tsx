@@ -4,27 +4,30 @@ import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { buttonVariants } from "@/components/ui/button";
-import { HugeIcon } from "@/components/huge-icon";
-import { PlusIcon, SearchIcon, ArrowUpDownIcon, ChevronRight } from "lucide-react";
+import { Icon } from "@/components/icon";
 import { cn } from "@/lib/utils";
 import { AskSeentrixAI } from "@/components/copilot/ask-seentrix-ai";
+import { ProductGridCard } from "./components/product-grid-card";
+import { ProductTimeline } from "./components/product-timeline";
 import type { ProductListItem } from "./actions";
 import type { OrgPlan } from "@/lib/constants/plans";
 import { PLAN_PRODUCT_LIMITS } from "@/lib/constants/plans";
+
+type ViewMode = "list" | "grid" | "timeline";
 
 // ---------------------------------------------------------------------------
 // Colors
 // ---------------------------------------------------------------------------
 
 const TYPE_ICON_BG: Record<string, string> = {
-  hardware: "bg-[#2563EB]",
-  software: "bg-[#7C3AED]",
+  hardware: "bg-[#066DE6]",
+  software: "bg-[#6F4FE0]",
   firmware: "bg-[#EA580C]",
   iot: "bg-[#0891B2]",
 };
 
 const CATEGORY_PILL: Record<string, string> = {
-  default: "bg-[#2563EB]",
+  default: "bg-[#066DE6]",
   important_class_i: "bg-[#D97706]",
   important_class_ii: "bg-[#EA580C]",
   critical: "bg-[#DC2626]",
@@ -59,6 +62,7 @@ export function ProductsPageContent({
   const [search, setSearch] = useState("");
   const [sortField, setSortField] = useState<SortField>("created");
   const [sortDir, setSortDir] = useState<SortDir>("desc");
+  const [view, setView] = useState<ViewMode>("grid");
 
   function toggleSort(field: SortField) {
     if (sortField === field) {
@@ -93,23 +97,23 @@ export function ProductsPageContent({
       {/* Page header */}
       <div className="flex items-end justify-between gap-4">
         <div>
-          <h1 className="font-heading text-[28px] font-bold tracking-tight">
+          <h1 className="text-h1">
             {t("title")}
           </h1>
-          <p className="mt-1.5 text-[13px] text-muted-foreground">
+          <p className="mt-1.5 text-p3 text-muted-foreground">
             {t("subtitle")}
           </p>
         </div>
         <div className="flex items-center gap-3">
           {products.length > 0 && (
             <div className="relative">
-              <SearchIcon className="pointer-events-none absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground/40" />
+              <Icon name="SearchIcon" className="pointer-events-none absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground" />
               <input
                 type="text"
                 placeholder={t("searchPlaceholder")}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="h-9 w-52 rounded-lg border border-white/[0.06] bg-white/[0.03] pl-9 pr-3 text-xs text-foreground outline-none placeholder:text-muted-foreground/30 focus:border-primary"
+                className="h-9 w-52 rounded-lg border border-border bg-muted pl-9 pr-3 text-xs text-foreground outline-none placeholder:text-muted-foreground focus:border-primary"
               />
             </div>
           )}
@@ -118,12 +122,42 @@ export function ProductsPageContent({
               href="/app/products/new"
               className={buttonVariants({ size: "sm" })}
             >
-              <PlusIcon className="size-3.5" />
+              <Icon name="PlusIcon" className="size-3.5" />
               {t("addProduct")}
             </Link>
           )}
         </div>
       </div>
+
+      {/* View-mode toggle — Grid is default (Figma 67:9949), List preserves the
+          current dense table, Timeline gives a Gantt-style horizon. */}
+      {products.length > 0 && (
+        <div className="flex items-center gap-2">
+          {(
+            [
+              { key: "grid",     iconName: "Grid2" },
+              { key: "list",     iconName: "RowVertical" },
+              { key: "timeline", iconName: "Calendar" },
+            ] as const
+          ).map((mode) => (
+            <button
+              key={mode.key}
+              type="button"
+              onClick={() => setView(mode.key)}
+              className={cn(
+                "inline-flex h-9 items-center gap-2 rounded-sm border-[1.5px] px-3 text-l6 transition-colors",
+                view === mode.key
+                  ? "border-primary bg-primary/10 text-primary"
+                  : "border-border-outline bg-card text-muted-foreground hover:text-foreground",
+              )}
+              aria-pressed={view === mode.key}
+            >
+              <Icon name={mode.iconName} size={16} />
+              {t.has(`view.${mode.key}`) ? t(`view.${mode.key}`) : mode.key}
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* Plan limit banner */}
       {products.length > 0 && !canCreate && (
@@ -151,7 +185,7 @@ export function ProductsPageContent({
                 className="text-primary"
               />
             </svg>
-            <span className="absolute text-[10px] font-bold tabular-nums text-foreground">
+            <span className="absolute text-l6-plus tabular-nums text-foreground">
               {productCount}/{limit}
             </span>
           </div>
@@ -182,7 +216,7 @@ export function ProductsPageContent({
       {products.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-24 text-center">
           <div className="mb-6 flex size-14 items-center justify-center rounded-full bg-primary/10">
-            <HugeIcon
+            <Icon
               name="package-open-stroke-rounded"
               size={28}
               className="text-primary"
@@ -197,7 +231,7 @@ export function ProductsPageContent({
               href="/app/products/new"
               className={buttonVariants({ className: "mt-8" })}
             >
-              <PlusIcon data-icon="inline-start" className="size-4" />
+              <Icon name="PlusIcon" data-icon="inline-start" className="size-4" />
               {t("addProduct")}
             </Link>
           )}
@@ -207,29 +241,41 @@ export function ProductsPageContent({
             label="New to CRA? Ask Seentrix AI how to set up a product."
           />
         </div>
+      ) : view === "grid" ? (
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {sorted.map((p) => (
+            <ProductGridCard
+              key={p.id}
+              product={p}
+              href={`/${locale}/app/products/${p.id}`}
+            />
+          ))}
+        </div>
+      ) : view === "timeline" ? (
+        <ProductTimeline products={sorted} basePath={`/${locale}/app/products`} />
       ) : (
-        <div className="overflow-hidden rounded-2xl bg-white/[0.03]">
+        <div className="overflow-hidden rounded-md bg-muted">
           {/* Column headers */}
-          <div className="flex items-center border-b border-white/[0.06] px-5 py-2.5">
+          <div className="flex items-center border-b border-border px-5 py-2.5">
             {/* Product column (takes flex-1 space) */}
             <button
               type="button"
               onClick={() => toggleSort("name")}
               className="flex flex-1 items-center gap-1.5 text-left"
             >
-              <span className="text-[11px] text-muted-foreground/60">
+              <span className="text-[11px] text-muted-foreground">
                 {t("columns.name")}
               </span>
-              <ArrowUpDownIcon
+              <Icon name="ArrowUpDownIcon"
                 className={cn(
-                  "size-3 text-muted-foreground/30",
+                  "size-3 text-muted-foreground",
                   sortField === "name" && "text-muted-foreground"
                 )}
               />
             </button>
 
             {/* Category */}
-            <span className="hidden w-36 text-[11px] text-muted-foreground/60 sm:block">
+            <span className="hidden w-36 text-[11px] text-muted-foreground sm:block">
               {t("columns.category")}
             </span>
 
@@ -239,12 +285,12 @@ export function ProductsPageContent({
               onClick={() => toggleSort("compliance")}
               className="hidden w-44 items-center gap-1.5 md:flex"
             >
-              <span className="text-[11px] text-muted-foreground/60">
+              <span className="text-[11px] text-muted-foreground">
                 {t("columns.compliance")}
               </span>
-              <ArrowUpDownIcon
+              <Icon name="ArrowUpDownIcon"
                 className={cn(
-                  "size-3 text-muted-foreground/30",
+                  "size-3 text-muted-foreground",
                   sortField === "compliance" && "text-muted-foreground"
                 )}
               />
@@ -256,12 +302,12 @@ export function ProductsPageContent({
               onClick={() => toggleSort("created")}
               className="hidden w-24 items-center gap-1.5 lg:flex"
             >
-              <span className="text-[11px] text-muted-foreground/60">
+              <span className="text-[11px] text-muted-foreground">
                 {t("columns.created")}
               </span>
-              <ArrowUpDownIcon
+              <Icon name="ArrowUpDownIcon"
                 className={cn(
-                  "size-3 text-muted-foreground/30",
+                  "size-3 text-muted-foreground",
                   sortField === "created" && "text-muted-foreground"
                 )}
               />
@@ -275,12 +321,12 @@ export function ProductsPageContent({
           <div className="divide-y divide-white/[0.04]">
             {sorted.map((product) => {
               const iconBg =
-                TYPE_ICON_BG[product.type ?? ""] ?? "bg-white/[0.12]";
+                TYPE_ICON_BG[product.type ?? ""] ?? "bg-muted";
               return (
                 <Link
                   key={product.id}
                   href={`/app/products/${product.id}`}
-                  className="group flex items-center px-5 py-3.5 transition-colors hover:bg-white/[0.02]"
+                  className="group flex items-center px-5 py-3.5 transition-colors hover:bg-muted"
                 >
                   {/* Product: image/icon + name + type */}
                   <div className="flex min-w-0 flex-1 items-center gap-3">
@@ -293,7 +339,7 @@ export function ProductsPageContent({
                     ) : (
                       <span
                         className={cn(
-                          "flex size-8 shrink-0 items-center justify-center rounded-full text-[10px] font-bold text-white",
+                          "flex size-8 shrink-0 items-center justify-center rounded-full text-l6-plus text-white",
                           iconBg
                         )}
                       >
@@ -305,7 +351,7 @@ export function ProductsPageContent({
                       <p className="truncate text-sm font-semibold text-foreground transition-colors group-hover:text-primary">
                         {product.name}
                       </p>
-                      <p className="mt-0.5 text-[11px] capitalize text-muted-foreground/50">
+                      <p className="mt-0.5 text-[11px] capitalize text-muted-foreground">
                         {product.type
                           ? t(`types.${product.type}`)
                           : "\u2014"}
@@ -318,7 +364,7 @@ export function ProductsPageContent({
                     {product.cra_category ? (
                       <span
                         className={cn(
-                          "inline-flex w-28 justify-center rounded-full px-2.5 py-0.5 text-[11px] font-semibold text-white",
+                          "inline-flex w-28 justify-center rounded-full px-2.5 py-0.5 text-l6-plus text-white",
                           CATEGORY_PILL[product.cra_category] ??
                             CATEGORY_PILL.default
                         )}
@@ -326,7 +372,7 @@ export function ProductsPageContent({
                         {t(`categories.${product.cra_category}`)}
                       </span>
                     ) : (
-                      <span className="text-[11px] text-muted-foreground/30">
+                      <span className="text-[11px] text-muted-foreground">
                         {t("notAssessed")}
                       </span>
                     )}
@@ -367,7 +413,7 @@ export function ProductsPageContent({
 
                   {/* Chevron */}
                   <div className="flex w-6 justify-end">
-                    <ChevronRight className="size-4 text-muted-foreground/20 transition-colors group-hover:text-muted-foreground" />
+                    <Icon name="ChevronRight" className="size-4 text-muted-foreground transition-colors group-hover:text-muted-foreground" />
                   </div>
                 </Link>
               );

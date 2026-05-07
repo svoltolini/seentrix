@@ -1,16 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useMemo } from "react";
 import { useTranslations } from "next-intl";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Link } from "@/i18n/navigation";
-import { cn } from "@/lib/utils";
-import { HugeIcon } from "@/components/huge-icon";
-import { StaggerReveal } from "@/components/stagger-reveal";
-import { StatCard } from "@/components/stat-card";
-import { AlertBanner } from "@/components/alert-banner";
-import { SEVERITY_CHART_COLORS } from "../products/[productId]/constants";
+import { ProfileIncompleteBanner } from "@/components/profile-incomplete-banner";
 import type {
   DashboardStats,
   DashboardProduct,
@@ -19,11 +12,17 @@ import type {
 import type { IncidentWidgetData } from "../incidents/actions";
 import type { SupportWidgetData } from "../products/[productId]/releases/actions";
 import type { CompanyProfileStatus } from "../settings/actions";
-import { ProfileIncompleteBanner } from "@/components/profile-incomplete-banner";
-import { ComplianceTrendChart } from "./charts/compliance-trend-chart";
-import { ChecklistProgressChart } from "./charts/checklist-progress-chart";
-import { OverdueTasksWidget } from "./charts/overdue-tasks-widget";
-import { ActivityVelocityChart } from "./charts/activity-velocity-chart";
+
+import { ProjectStatisticsCard } from "./widgets/project-statistics-card";
+import { ProjectHeroCard } from "./widgets/project-hero-card";
+import { DashboardTaskCard, type DashboardTask } from "./widgets/dashboard-task-card";
+import { CalendarWidget } from "./widgets/calendar-widget";
+import { MeetingsList } from "./widgets/meetings-list";
+import {
+  ActivityFeedWidget,
+  type ActivityFeedItem,
+} from "./widgets/activity-feed-widget";
+import { TeamChatStrip, type TeamChatItem } from "./widgets/team-chat-strip";
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -32,57 +31,39 @@ import { ActivityVelocityChart } from "./charts/activity-velocity-chart";
 function getDaysUntil(dateStr: string): number {
   const target = new Date(dateStr);
   const now = new Date();
-  return Math.ceil((target.getTime() - now.getTime()) / 86400000);
-}
-
-function relativeTime(
-  dateStr: string,
-  t: ReturnType<typeof useTranslations>,
-): string {
-  const diff = Date.now() - new Date(dateStr).getTime();
-  const minutes = Math.floor(diff / 60000);
-  if (minutes < 1) return t("timeAgo.justNow");
-  if (minutes < 60) return t("timeAgo.minutesAgo", { count: minutes });
-  const hours = Math.floor(minutes / 60);
-  if (hours < 24) return t("timeAgo.hoursAgo", { count: hours });
-  const days = Math.floor(hours / 24);
-  return t("timeAgo.daysAgo", { count: days });
-}
-
-function scoreColor(score: number): string {
-  if (score >= 75) return "#16A34A";
-  if (score >= 40) return "#D97706";
-  return "#DC2626";
+  return Math.ceil((target.getTime() - now.getTime()) / 86_400_000);
 }
 
 /**
- * Pick the product most likely to block the next CRA deadline:
- * lowest compliance_score below the 75% "on track" threshold, with not-yet
- * -assessed products preferred (they haven't even started).
- * Returns null when every product is at or above the threshold.
+ * Pick the two products most likely to block the next CRA deadline so they
+ * sit at the top of the "My Products" hero strip. Lowest compliance below
+ * 75% wins; not-yet-assessed products lead.
  */
-function findAtRiskProduct(
+function pickFeaturedProducts(
   products: DashboardProduct[],
-): DashboardProduct | null {
-  if (products.length === 0) return null;
-  const candidates = products.filter((p) => p.compliance_score < 75);
-  if (candidates.length === 0) return null;
-  candidates.sort((a, b) => {
-    // not-assessed first (no cra_category), then by lowest score
+): DashboardProduct[] {
+  if (products.length === 0) return [];
+  const sorted = [...products].sort((a, b) => {
     const aUn = a.cra_category ? 1 : 0;
     const bUn = b.cra_category ? 1 : 0;
     if (aUn !== bUn) return aUn - bUn;
     return a.compliance_score - b.compliance_score;
   });
-  return candidates[0];
+  return sorted.slice(0, 2);
 }
 
-const CATEGORY_PILL: Record<string, string> = {
-  default: "bg-[#2563EB]",
-  important_class_i: "bg-[#D97706]",
-  important_class_ii: "bg-[#EA580C]",
-  critical: "bg-[#DC2626]",
-};
+function categoryGradient(category: string | null): string {
+  switch (category) {
+    case "critical":
+      return "linear-gradient(135deg, #E60019 0%, #6F4FE0 60%, #066DE6 100%)";
+    case "important_class_ii":
+      return "linear-gradient(135deg, #FF6D00 0%, #6F4FE0 60%, #066DE6 100%)";
+    case "important_class_i":
+      return "linear-gradient(135deg, #FF9E55 0%, #066DE6 110%)";
+    default:
+      return "linear-gradient(135deg, #066DE6 0%, #6F4FE0 60%, #22D3EE 100%)";
+  }
+}
 
 const CATEGORY_KEY_MAP: Record<string, string> = {
   default: "categoryDefault",
@@ -91,6 +72,55 @@ const CATEGORY_KEY_MAP: Record<string, string> = {
   critical: "categoryCritical",
 };
 
+// ---------------------------------------------------------------------------
+// Adapters
+// ---------------------------------------------------------------------------
+
+const ACTION_ICON: Record<
+  string,
+  { icon: ActivityFeedItem["icon"]; tone: NonNullable<ActivityFeedItem["iconTone"]> }
+> = {
+  product_created:        { icon: "Box",            tone: "primary" },
+  product_assessed:       { icon: "Verify",         tone: "success" },
+  checklist_completed:    { icon: "TickCircle",     tone: "success" },
+  vulnerability_triaged:  { icon: "ShieldTick",     tone: "primary" },
+  incident_created:       { icon: "Warning2",       tone: "destructive" },
+  doc_issued:             { icon: "DocumentText",   tone: "primary" },
+  evidence_uploaded:      { icon: "DocumentUpload", tone: "muted" },
+  member_invited:         { icon: "UserAdd",        tone: "primary" },
+  lesson_completed:       { icon: "Teacher",        tone: "success" },
+};
+
+function adaptActivity(a: ActivityItem): ActivityFeedItem {
+  const meta = ACTION_ICON[a.action] ?? { icon: "Notification", tone: "muted" as const };
+  const hasAvatar = !!(a.user_avatar_url || a.user_name);
+  return {
+    id: a.id,
+    title: a.user_name ?? a.user_role ?? "System",
+    body: `${a.action.replace(/_/g, " ")} · ${a.target_name ?? a.target_type ?? ""}`.trim(),
+    occurredAt: a.created_at,
+    actor: hasAvatar
+      ? { name: a.user_name, avatarUrl: a.user_avatar_url ?? null }
+      : undefined,
+    icon: hasAvatar ? undefined : meta.icon,
+    iconTone: hasAvatar ? undefined : meta.tone,
+  };
+}
+
+function adaptOverdueToTask(item: DashboardStats["overdueItems"][number]): DashboardTask {
+  return {
+    id: item.id,
+    subtitle: item.productName,
+    title: item.title,
+    href: `/app/products/${item.productId}/checklist`,
+    meta: {
+      timeLeft:
+        item.daysOverdue > 0
+          ? `${item.daysOverdue}d overdue`
+          : `Due in ${Math.abs(item.daysOverdue)}d`,
+    },
+  };
+}
 
 // ---------------------------------------------------------------------------
 // Main
@@ -104,1027 +134,205 @@ export function DashboardContent(
   },
 ) {
   const t = useTranslations("dashboard");
-  const tInc = useTranslations("incidents");
-  const tRel = useTranslations("releases");
-  const tOrg = useTranslations("settings.organization");
-  const tActivity = useTranslations("settings.activity");
-  const rootRef = useRef<HTMLDivElement>(null);
 
   const {
     totalProducts,
-    assessedCount,
-    avgCompliance,
-    totalVulnerabilities,
-    criticalCount,
-    highCount,
-    mediumCount,
-    lowCount,
     products,
     recentActivity,
     currentUser,
+    overdueItems,
+    activityVelocity,
+    profileStatus,
   } = stats;
 
   const firstName = currentUser?.full_name?.split(" ")[0] ?? null;
 
+  // Bar-chart data for "Project Statistics": Mon→Sun activity counts
+  // bucketed from the existing `activityVelocity` series. Two stacks per day:
+  // primary = compliance progress events, accent = comparison baseline.
+  const chartData = useMemo(() => {
+    const days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"] as const;
+    const last7 = activityVelocity.slice(-7);
+    const max = Math.max(1, ...last7.map((p) => p.count));
+    return days.map((day, i) => {
+      const point = last7[i];
+      const pct = point ? Math.round((point.count / max) * 100) : 0;
+      return {
+        day,
+        a: pct,
+        b: Math.round(pct * 0.55),
+      };
+    });
+  }, [activityVelocity]);
+
+  const featured = useMemo(() => pickFeaturedProducts(products), [products]);
+
+  // CRA regulatory deadlines surface as "today's reviews" in the right rail.
   const deadlines = [
     {
-      name: t("deadline.notifiedBodies"),
+      id: "notified-bodies",
+      title: t.has("deadline.notifiedBodies") ? t("deadline.notifiedBodies") : "Notified bodies",
       date: "2026-06-11",
-      dateLabel: t("deadline.notifiedBodiesDate"),
     },
     {
-      name: t("deadline.reporting"),
+      id: "reporting",
+      title: t.has("deadline.reporting") ? t("deadline.reporting") : "Reporting obligations",
       date: "2026-09-11",
-      dateLabel: t("deadline.reportingDate"),
     },
     {
-      name: t("deadline.fullCompliance"),
+      id: "full-compliance",
+      title: t.has("deadline.fullCompliance") ? t("deadline.fullCompliance") : "Full compliance",
       date: "2027-12-11",
-      dateLabel: t("deadline.fullComplianceDate"),
     },
   ];
 
-  const nextDeadline = deadlines.find((dl) => getDaysUntil(dl.date) > 0);
-  const atRiskProduct =
-    totalProducts > 0 ? findAtRiskProduct(products) : null;
+  const meetings = deadlines
+    .filter((d) => getDaysUntil(d.date) > 0)
+    .map((d) => ({
+      id: d.id,
+      icon: "Calendar" as const,
+      title: d.title,
+      subtitle: `${getDaysUntil(d.date)} ${t.has("deadline.daysAway") ? t("deadline.daysAway") : "days away"}`,
+      cta: {
+        label: t.has("deadline.view") ? t("deadline.view") : "View",
+      },
+    }));
 
-  // --- Dashboard-wide animations ---
-  useEffect(() => {
-    const el = rootRef.current;
-    if (!el) return;
-    gsap.registerPlugin(ScrollTrigger);
+  const activityItems = recentActivity.slice(0, 6).map(adaptActivity);
+  const todayTasks = overdueItems.slice(0, 4).map(adaptOverdueToTask);
 
-    const ctx = gsap.context(() => {
-      // Counter numbers (stat cards)
-      el.querySelectorAll<HTMLElement>("[data-counter]").forEach((counter) => {
-        const target = counter.getAttribute("data-counter") ?? "";
-        const match = target.match(/[\d.]+/);
-        if (!match) return;
-        const endVal = parseFloat(match[0]);
-        const prefix = target.slice(0, target.indexOf(match[0]));
-        const suffix = target.slice(
-          target.indexOf(match[0]) + match[0].length,
-        );
-        const obj = { val: 0 };
-        gsap.to(obj, {
-          val: endVal,
-          duration: 1.4,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: counter,
-            start: "top 90%",
-            once: true,
-          },
-          onUpdate() {
-            counter.textContent = `${prefix}${Math.round(obj.val)}${suffix}`;
-          },
-        });
-      });
-
-      // Progress bars grow from 0% to target%.
-      // immediateRender: false keeps the "from" state from being applied on
-      // mount — so if the scroll trigger never fires (e.g. the element is
-      // inside a parent with transformed/opacity-0 state mid-reveal), the
-      // bar still displays at its target width from its inline style.
-      el.querySelectorAll<HTMLElement>("[data-progress-bar]").forEach(
-        (bar) => {
-          const target = parseFloat(
-            bar.getAttribute("data-progress-bar") ?? "0",
-          );
-          gsap.fromTo(
-            bar,
-            { width: "0%" },
-            {
-              width: `${target}%`,
-              duration: 1.3,
-              ease: "power3.out",
-              immediateRender: false,
-              scrollTrigger: {
-                trigger: bar,
-                start: "top 95%",
-                once: true,
-              },
-            },
-          );
-        },
-      );
-
-      // Shimmer sweep — a subtle highlight passes across marked elements
-      // every few seconds. Adds life to gradient bars without distracting.
-      el.querySelectorAll<HTMLElement>("[data-shimmer]").forEach((shimmer) => {
-        gsap.fromTo(
-          shimmer,
-          { xPercent: -100 },
-          {
-            xPercent: 400,
-            duration: 2.8,
-            ease: "power2.inOut",
-            repeat: -1,
-            repeatDelay: 3,
-            delay: 1.5,
-          },
-        );
-      });
-
-      // Pulse — the Action Needed dot breathes to draw the eye
-      el.querySelectorAll<HTMLElement>("[data-pulse]").forEach((dot) => {
-        gsap.to(dot, {
-          scale: 1.4,
-          opacity: 0.6,
-          duration: 1.1,
-          ease: "sine.inOut",
-          yoyo: true,
-          repeat: -1,
-        });
-      });
-
-    }, el);
-
-    return () => ctx.revert();
-  }, []);
+  // Team strip — surface up to 5 active org members from recent activity.
+  const seenUsers = new Map<string, TeamChatItem>();
+  for (const a of recentActivity) {
+    if (!a.user_name) continue;
+    if (seenUsers.has(a.user_name)) continue;
+    seenUsers.set(a.user_name, {
+      id: a.user_name,
+      name: a.user_name,
+      avatarUrl: a.user_avatar_url ?? null,
+    });
+    if (seenUsers.size >= 5) break;
+  }
+  const teamMembers = [...seenUsers.values()];
 
   return (
-    <div ref={rootRef} className="mx-auto max-w-[1120px] pb-12">
-      <StaggerReveal
-        className="space-y-8"
-        selector="[data-reveal]"
-        stagger={0.09}
-        y={28}
-        duration={0.8}
-        scale={0.98}
-        ease="power3.out"
-      >
-        {/* ── Header ── */}
-        <div data-reveal>
-          <h1 className="font-heading text-[28px] font-bold tracking-tight">
+    <div className="mx-auto grid w-full max-w-[1440px] gap-6 lg:grid-cols-[1fr_370px]">
+      {/* MAIN COLUMN */}
+      <div className="flex min-w-0 flex-col gap-6">
+        {/* Header */}
+        <div>
+          <h1 className="text-h1 text-foreground">
             {firstName ? t("greeting", { name: firstName }) : t("title")}
           </h1>
-          <p className="mt-1.5 text-[13px] text-muted-foreground">
+          <p className="mt-2 text-p2 text-muted-foreground">
             {firstName ? t("greetingSubtitle") : t("subtitle")}
           </p>
         </div>
 
-        {/* ── Stat Cards ── */}
-        <div
-          data-reveal
-          className="grid grid-cols-2 gap-3 lg:grid-cols-5"
-        >
-          <StatCard label={t("totalProducts")} from="#2563EB" to="#0891B2">
-            <p
-              className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white"
-              data-counter={String(totalProducts)}
-            >
-              {totalProducts}
-            </p>
-          </StatCard>
-
-          <StatCard label={t("assessed")} from="#7C3AED" to="#4F46E5">
-            <p className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white">
-              <span data-counter={String(assessedCount)}>{assessedCount}</span>
-              <span className="text-base text-white/65">
-                {" "}
-                / {totalProducts}
-              </span>
-            </p>
-          </StatCard>
-
-          <StatCard label={t("avgCompliance")} from="#16A34A" to="#15803D">
-            <p
-              className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white"
-              data-counter={totalProducts > 0 ? `${avgCompliance}%` : "\u2014"}
-            >
-              {totalProducts > 0 ? `${avgCompliance}%` : "\u2014"}
-            </p>
-            {totalProducts > 0 && (
-              <div className="mt-2.5 h-3 overflow-hidden rounded-[3px] bg-black/25">
-                <div
-                  className="h-full rounded-[3px] bg-white"
-                  style={{ width: `${avgCompliance}%` }}
-                  data-progress-bar={String(avgCompliance)}
-                />
-              </div>
-            )}
-          </StatCard>
-
-          <StatCard label={t("totalVulnerabilities")} from="#DC2626" to="#E11D48">
-            <p
-              className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white"
-              data-counter={String(totalVulnerabilities)}
-            >
-              {totalVulnerabilities}
-            </p>
-            {(criticalCount > 0 || highCount > 0) && (
-              <div className="mt-2 flex gap-1.5">
-                {criticalCount > 0 && (
-                  <span className="rounded-full bg-black/20 px-2.5 py-0.5 text-[11px] font-semibold text-white">
-                    {criticalCount} {t("critical")}
-                  </span>
-                )}
-                {highCount > 0 && (
-                  <span className="rounded-full bg-black/20 px-2.5 py-0.5 text-[11px] font-semibold text-white">
-                    {highCount} {t("high")}
-                  </span>
-                )}
-              </div>
-            )}
-          </StatCard>
-
-          <StatCard
-            label={nextDeadline?.name ?? t("upcomingDeadline")}
-            from="#D97706"
-            to="#EA580C"
-            className="col-span-2 lg:col-span-1"
-          >
-            {nextDeadline ? (
-              <>
-                <p
-                  className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white"
-                  data-counter={t("daysLeft", {
-                    days: getDaysUntil(nextDeadline.date),
-                  })}
-                >
-                  {t("daysLeft", { days: getDaysUntil(nextDeadline.date) })}
-                </p>
-                <p className="mt-1 text-[10px] text-white/65">
-                  {nextDeadline.dateLabel}
-                </p>
-              </>
-            ) : (
-              <p className="mt-2 text-2xl font-bold tracking-tight text-white">
-                {"\u2014"}
-              </p>
-            )}
-          </StatCard>
-        </div>
-
-        {/* ── Company profile completeness — blocks DoC issuance ── */}
-        {stats.profileStatus && !stats.profileStatus.complete && (
-          <div data-reveal>
-            <ProfileIncompleteBanner
-              eyebrow={tOrg("docReady.eyebrow")}
-              title={tOrg("docReady.title")}
-              description={tOrg("docReady.description", {
-                count: stats.profileStatus.missing.length,
-              })}
-              cta={tOrg("docReady.cta")}
-            />
-          </div>
+        {/* Profile-incomplete callout (only shown when settings flag missing) */}
+        {profileStatus && !profileStatus.complete && (
+          <ProfileIncompleteBanner
+            eyebrow={t("profileIncomplete.eyebrow")}
+            title={t("profileIncomplete.title")}
+            description={t("profileIncomplete.description")}
+            cta={t("profileIncomplete.cta")}
+            variant="full"
+          />
         )}
 
-        {/* ── Active Incidents Banner — Article 14 countdown ── */}
-        {stats.incidentWidget && stats.incidentWidget.activeCount > 0 && (
-          <div data-reveal>
-            <ActiveIncidentsBanner
-              data={stats.incidentWidget}
-              tInc={tInc}
-            />
-          </div>
-        )}
+        {/* Project Statistics bar chart card */}
+        <ProjectStatisticsCard data={chartData} />
 
-        {/* ── Support period watch — Annex I Part II "N years of updates" ── */}
-        {stats.supportWidget &&
-          (stats.supportWidget.expiringWithin90 > 0 ||
-            stats.supportWidget.outOfSupport > 0) && (
-            <div data-reveal>
-              <SupportWatchStrip
-                data={stats.supportWidget}
-                tRel={tRel}
-              />
-            </div>
-          )}
-
-        {/* ── Action Needed Banner ── */}
-        {atRiskProduct && nextDeadline && (
-          <div data-reveal>
-            <ActionNeededBanner
-              product={atRiskProduct}
-              deadlineName={nextDeadline.name}
-              daysLeft={getDaysUntil(nextDeadline.date)}
-              t={t}
-            />
-          </div>
-        )}
-
-        {/* ── Product Compliance Table (full width) ── */}
-        {totalProducts > 0 && (
-          <div data-reveal>
-            <div className="overflow-hidden rounded-2xl bg-white/[0.03]">
-              <div className="flex items-start justify-between border-b border-white/[0.06] px-5 py-4">
-                <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-[2.5px] text-primary">
-                    {t("productTable.eyebrow")}
-                  </p>
-                  <h2 className="mt-1 font-heading text-base font-bold text-foreground">
-                    {t("productTable.title")}
-                  </h2>
-                  <p className="mt-0.5 text-xs text-muted-foreground/60">
-                    {t("productTable.subtitle")}
-                  </p>
-                </div>
-                <Link
-                  href="/app/products"
-                  className="shrink-0 text-xs font-medium text-primary hover:underline"
-                >
-                  {t("viewAll")}
-                </Link>
-              </div>
-
-              <div className="flex items-center border-b border-white/[0.06] px-5 py-2.5">
-                <span className="flex-1 text-[11px] text-muted-foreground/60">
-                  {t("productTable.name")}
-                </span>
-                <span className="hidden w-32 text-[11px] text-muted-foreground/60 sm:block">
-                  {t("productTable.category")}
-                </span>
-                <span className="hidden w-44 text-[11px] text-muted-foreground/60 md:block">
-                  {t("productTable.compliance")}
-                </span>
-                <span className="hidden w-20 text-[11px] text-muted-foreground/60 lg:block">
-                  {t("productTable.sbom")}
-                </span>
-                <div className="w-6" />
-              </div>
-
-              <div className="divide-y divide-white/[0.04]">
-                {products.slice(0, 5).map((p) => {
-                  const catKey = p.cra_category ?? "default";
-                  return (
-                    <Link
-                      key={p.id}
-                      href={`/app/products/${p.id}`}
-                      className="group flex items-center px-5 py-3.5 transition-colors hover:bg-white/[0.02]"
-                    >
-                      <div className="min-w-0 flex-1">
-                        <p className="truncate text-sm font-semibold text-foreground transition-colors group-hover:text-primary">
-                          {p.name}
-                        </p>
-                        {p.type && (
-                          <p className="mt-0.5 text-[11px] capitalize text-muted-foreground/50">
-                            {t(`productType.${p.type}`)}
-                          </p>
-                        )}
-                      </div>
-
-                      <div className="hidden w-32 sm:block">
-                        {p.cra_category ? (
-                          <span
-                            className={cn(
-                              "inline-flex w-24 justify-center rounded-full px-2.5 py-0.5 text-[11px] font-semibold text-white",
-                              CATEGORY_PILL[catKey] ?? CATEGORY_PILL.default,
-                            )}
-                          >
-                            {t(CATEGORY_KEY_MAP[catKey] ?? "categoryDefault")}
-                          </span>
-                        ) : (
-                          <span className="text-[11px] text-muted-foreground/30">
-                            {t("notAssessed")}
-                          </span>
-                        )}
-                      </div>
-
-                      <div className="hidden w-44 items-center gap-2.5 md:flex">
-                        <div className="h-3 w-24 overflow-hidden rounded-[3px] bg-[#191919]">
-                          <div
-                            className="h-full rounded-[3px]"
-                            style={{
-                              width: `${p.compliance_score}%`,
-                              backgroundColor: scoreColor(p.compliance_score),
-                            }}
-                            data-progress-bar={String(p.compliance_score)}
-                          />
-                        </div>
-                        <span
-                          className="text-xs font-semibold tabular-nums"
-                          style={{ color: scoreColor(p.compliance_score) }}
-                        >
-                          {p.compliance_score}%
-                        </span>
-                      </div>
-
-                      <div className="hidden w-20 lg:block">
-                        {p.has_sbom ? (
-                          <span className="inline-flex items-center gap-1.5 text-[11px] font-medium text-[#16A34A]">
-                            <span className="size-1.5 rounded-full bg-[#16A34A]" />
-                            {t("sbomUploaded")}
-                          </span>
-                        ) : (
-                          <span className="text-[11px] text-muted-foreground/30">
-                            {t("sbomMissing")}
-                          </span>
-                        )}
-                      </div>
-
-                      <div className="flex w-6 justify-end">
-                        <HugeIcon
-                          name="arrow-right-01-stroke-rounded"
-                          size={16}
-                          className="text-muted-foreground/20 transition-colors group-hover:text-muted-foreground"
-                        />
-                      </div>
-                    </Link>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* ── Vulnerability Breakdown (full width) ── */}
-        {totalProducts > 0 && (
-          <div data-reveal>
-            <VulnBreakdownCard
-              critical={criticalCount}
-              high={highCount}
-              medium={mediumCount}
-              low={lowCount}
-              t={t}
-            />
-          </div>
-        )}
-
-        {/* ── Team Activity (full width — line chart wants the space) ── */}
-        {totalProducts > 0 && (
-          <div data-reveal>
-            <ActivityVelocityChart data={stats.activityVelocity} />
-          </div>
-        )}
-
-        {/* ── Checklist Progress (full width) ── */}
-        {totalProducts > 0 && (
-          <div data-reveal>
-            <ChecklistProgressChart data={stats.checklistProgress} />
-          </div>
-        )}
-
-        {/* ── Compliance Trend (full width) ── */}
-        {totalProducts > 0 && (
-          <div data-reveal>
-            <ComplianceTrendChart data={stats.complianceTrend} />
-          </div>
-        )}
-
-        {/* ── Overdue Tasks (½) + Upcoming Deadlines (½) ── */}
-        {totalProducts > 0 && (
-          <div
-            data-reveal
-            className="grid items-stretch gap-6 lg:grid-cols-2"
-          >
-            <OverdueTasksWidget
-              count={stats.overdueCount}
-              items={stats.overdueItems}
-            />
-            <UpcomingDeadlinesCard deadlines={deadlines} t={t} />
-          </div>
-        )}
-
-        {/* ── Recent Activity ── */}
-        {totalProducts > 0 && (
-          <div
-            data-reveal
-            className="overflow-hidden rounded-2xl bg-white/[0.03]"
-          >
-            {/* Eyebrow + heading pattern (demo from the MFA screen). If you
-                like this rhythm on the dashboard, the same three-line shape
-                applies to every other card header — eyebrow signals the
-                category, heading is the label, subtext is the one-liner. */}
-            <div className="border-b border-white/[0.06] px-5 py-4">
-              <p className="text-[10px] font-semibold uppercase tracking-[2.5px] text-primary">
-                {t("activityEyebrow")}
-              </p>
-              <h2 className="mt-1 font-heading text-base font-bold text-foreground">
-                {t("recentActivity")}
-              </h2>
-              <p className="mt-0.5 text-xs text-muted-foreground/60">
-                {t("activitySubtitle")}
-              </p>
-            </div>
-            {recentActivity.length === 0 ? (
-              <div className="flex flex-col items-center justify-center py-16 text-center">
-                <p className="text-sm text-muted-foreground/50">
-                  {t("noActivity")}
-                </p>
-                <p className="mt-1 text-xs text-muted-foreground/30">
-                  {t("activityLogEmpty")}
-                </p>
-              </div>
-            ) : (
-              <div className="divide-y divide-white/[0.04]">
-                {recentActivity.map((item) => (
-                  <ActivityRow
-                    key={item.id}
-                    item={item}
-                    tSettings={tActivity}
-                    tDashboard={t}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
-        )}
-      </StaggerReveal>
-    </div>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// UpcomingDeadlinesCard — CRA regulatory milestone list. Extracted from an
-// inline sidebar so the same card can sit side-by-side with Overdue Tasks
-// in the 2-column row near the bottom of the dashboard.
-// ---------------------------------------------------------------------------
-
-function UpcomingDeadlinesCard({
-  deadlines,
-  t,
-}: {
-  deadlines: { name: string; date: string; dateLabel: string }[];
-  t: ReturnType<typeof useTranslations>;
-}) {
-  return (
-    <div className="flex h-full flex-col rounded-2xl bg-white/[0.03] p-5">
-      <p className="text-[10px] font-semibold uppercase tracking-[2.5px] text-primary">
-        {t("deadlinesEyebrow")}
-      </p>
-      <h2 className="mt-1 font-heading text-base font-bold text-foreground">
-        {t("deadlines")}
-      </h2>
-      <p className="mb-4 mt-0.5 text-xs text-muted-foreground/60">
-        {t("deadlinesSubtitle")}
-      </p>
-      <div className="flex-1 space-y-4">
-        {deadlines.map((dl) => {
-          const days = getDaysUntil(dl.date);
-          const isPast = days <= 0;
-          const isUrgent = !isPast && days < 90;
-          return (
-            <div key={dl.date} className="flex items-start gap-3">
-              <div className="mt-0.5">
-                {isPast ? (
-                  <HugeIcon
-                    name="checkmark-circle-01-stroke-rounded"
-                    size={16}
-                    className="text-[#16A34A]"
-                  />
-                ) : isUrgent ? (
-                  <HugeIcon
-                    name="circle-arrow-right-double-stroke-rounded"
-                    size={16}
-                    className="text-[#D97706]"
-                  />
-                ) : (
-                  <HugeIcon
-                    name="circle-stroke-rounded"
-                    size={16}
-                    className="text-muted-foreground/40"
-                  />
-                )}
-              </div>
-              <div className="flex-1">
-                <p className="text-xs font-medium">{dl.name}</p>
-                <p className="text-[11px] text-muted-foreground/50">
-                  {dl.dateLabel}
-                </p>
-              </div>
-              <span
-                className={cn(
-                  "shrink-0 text-xs font-semibold tabular-nums",
-                  isPast
-                    ? "text-[#16A34A]"
-                    : isUrgent
-                      ? "text-[#D97706]"
-                      : "text-muted-foreground/50",
-                )}
+        {/* My Products — 2 hero cards */}
+        {totalProducts > 0 && featured.length > 0 && (
+          <section className="flex flex-col gap-4">
+            <header className="flex items-center justify-between">
+              <h2 className="text-h2 text-foreground">{t.has("myProducts") ? t("myProducts") : "My Products"}</h2>
+              <Link
+                href="/app/products"
+                className="text-p3 text-primary hover:text-primary/80"
               >
-                {isPast ? t("passed") : t("daysRemaining", { days })}
-              </span>
+                {t.has("seeAll") ? t("seeAll") : "See all"}
+              </Link>
+            </header>
+            <div className="grid gap-5 sm:grid-cols-2">
+              {featured.map((p) => {
+                const categoryKey = p.cra_category ?? "default";
+                const priorityKey = CATEGORY_KEY_MAP[categoryKey] ?? "categoryDefault";
+                return (
+                  <ProjectHeroCard
+                    key={p.id}
+                    title={p.name}
+                    subtitle={p.type ?? "Product"}
+                    href={`/app/products/${p.id}`}
+                    score={p.compliance_score}
+                    priority={t.has(priorityKey) ? t(priorityKey) : categoryKey.replace(/_/g, " ")}
+                    gradient={categoryGradient(categoryKey)}
+                  />
+                );
+              })}
             </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
+          </section>
+        )}
 
-function SupportWatchStrip({
-  data,
-  tRel,
-}: {
-  data: SupportWidgetData;
-  tRel: ReturnType<typeof useTranslations>;
-}) {
-  const tiles = [
-    {
-      key: "expiringSoon",
-      label: tRel("dashboard.expiringSoon"),
-      value: data.expiringWithin90,
-      accent: "#D97706",
-      show: data.expiringWithin90 > 0,
-    },
-    {
-      key: "outOfSupport",
-      label: tRel("dashboard.outOfSupport"),
-      value: data.outOfSupport,
-      accent: "#DC2626",
-      show: data.outOfSupport > 0,
-    },
-    {
-      key: "missing",
-      label: tRel("dashboard.missing"),
-      value: data.missingSupportDates,
-      accent: "#6B7280",
-      show: data.missingSupportDates > 0,
-    },
-  ].filter((t) => t.show);
-
-  return (
-    <div className="flex flex-wrap items-center gap-3 rounded-2xl bg-white/[0.03] p-4">
-      <div className="flex items-center gap-2">
-        <HugeIcon
-          name="time-quarter-02-stroke-rounded"
-          size={16}
-          className="text-muted-foreground"
-        />
-        <p className="text-xs font-semibold text-foreground">
-          {tRel("dashboard.title")}
-        </p>
-      </div>
-      <div className="flex flex-wrap gap-2">
-        {tiles.map((tile) => (
-          <span
-            key={tile.key}
-            className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold"
-            style={{
-              borderColor: `${tile.accent}4D`,
-              backgroundColor: `${tile.accent}1A`,
-              color: tile.accent,
-            }}
-          >
-            <span
-              className="size-1.5 rounded-full"
-              style={{ backgroundColor: tile.accent }}
-            />
-            {tile.value} · {tile.label}
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function ActiveIncidentsBanner({
-  data,
-  tInc,
-}: {
-  data: IncidentWidgetData;
-  tInc: ReturnType<typeof useTranslations>;
-}) {
-  // Keep the countdown fresh without calling Date.now() inline during
-  // render (React purity rules forbid that). Seed lazily, tick once per
-  // minute from an effect.
-  const [now, setNow] = useState<number>(() => Date.now());
-  useEffect(() => {
-    const id = setInterval(() => setNow(Date.now()), 60_000);
-    return () => clearInterval(id);
-  }, []);
-
-  const deadline = data.nextDeadlineAt
-    ? new Date(data.nextDeadlineAt)
-    : null;
-  const overdue = deadline ? deadline.getTime() < now : false;
-  const remainingMs = deadline ? deadline.getTime() - now : 0;
-  const absH = Math.floor(Math.abs(remainingMs) / 3600_000);
-  const absD = Math.floor(absH / 24);
-  const timeText = absD >= 1 ? `${absD}d ${absH % 24}h` : `${absH}h`;
-
-  const countdownText =
-    deadline && data.nextDeadlinePhase
-      ? `${
-          overdue
-            ? tInc("deadline.overdueBy", { time: timeText })
-            : tInc("deadline.in", { time: timeText })
-        } · ${tInc(`phase.${data.nextDeadlinePhase}`)}`
-      : undefined;
-
-  return (
-    <AlertBanner
-      tone="critical"
-      eyebrow={tInc("kpi.active")}
-      title={tInc("banner.headline", { count: data.activeCount })}
-      description={countdownText}
-      cta={{
-        label: tInc("breadcrumb"),
-        href: data.nextIncidentId
-          ? `/app/incidents/${data.nextIncidentId}`
-          : "/app/incidents",
-      }}
-    />
-  );
-}
-
-function ActionNeededBanner({
-  product,
-  deadlineName,
-  daysLeft,
-  t,
-}: {
-  product: DashboardProduct;
-  deadlineName: string;
-  daysLeft: number;
-  t: ReturnType<typeof useTranslations>;
-}) {
-  return (
-    <AlertBanner
-      tone="attention"
-      eyebrow={t("actionNeeded.eyebrow")}
-      title={t("actionNeeded.headline", {
-        product: product.name,
-        deadline: deadlineName,
-      })}
-      cta={{
-        label: t("actionNeeded.cta"),
-        href: `/app/products/${product.id}/checklist`,
-      }}
-    >
-      {/* Custom description — two metric pills (days left + compliance %)
-          instead of a single-line description. The scoreColor accent on
-          the compliance metric carries the urgency signal. */}
-      <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px]">
-        <span className="flex items-center gap-1.5 text-white/70">
-          <span className="font-semibold text-white tabular-nums">
-            {daysLeft}
-          </span>
-          {t("actionNeeded.daysLeft")}
-        </span>
-        <span className="flex items-center gap-1.5 text-white/70">
-          <span
-            className="size-1.5 rounded-full"
-            style={{ backgroundColor: scoreColor(product.compliance_score) }}
-          />
-          <span
-            className="font-semibold tabular-nums"
-            style={{ color: scoreColor(product.compliance_score) }}
-          >
-            {product.compliance_score}%
-          </span>
-          {t("actionNeeded.compliance")}
-        </span>
-      </div>
-    </AlertBanner>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Vulnerability Breakdown Card — full-width, donut + ranked severity list
-// ---------------------------------------------------------------------------
-
-function VulnBreakdownCard({
-  critical,
-  high,
-  medium,
-  low,
-  t,
-}: {
-  critical: number;
-  high: number;
-  medium: number;
-  low: number;
-  t: ReturnType<typeof useTranslations>;
-}) {
-  const total = critical + high + medium + low;
-
-  const data = [
-    { name: t("critical"), value: critical, key: "critical" },
-    { name: t("high"), value: high, key: "high" },
-    { name: t("medium"), value: medium, key: "medium" },
-    { name: t("low"), value: low, key: "low" },
-  ].filter((d) => d.value > 0);
-
-  if (total === 0) {
-    return (
-      <div className="flex h-full flex-col rounded-2xl bg-white/[0.03] p-6">
-        <p className="text-[10px] font-semibold uppercase tracking-[2.5px] text-primary">
-          {t("vulnChartEyebrow")}
-        </p>
-        <h2 className="mt-1 font-heading text-base font-bold text-foreground">
-          {t("vulnChart")}
-        </h2>
-        <p className="mt-0.5 text-xs text-muted-foreground/60">
-          {t("vulnChartSubtitle")}
-        </p>
-        <p className="mt-10 flex-1 text-center text-xs text-muted-foreground/50">
-          {t("noVulnerabilities")}
-        </p>
-      </div>
-    );
-  }
-
-  // Build a smooth CSS gradient that reflects each severity's share by
-  // placing color stops at the segment midpoints. The browser interpolates
-  // between stops, so neighbouring colors blend smoothly instead of the
-  // hard edges a segmented bar would show.
-  const gradientStops: { color: string; midpoint: number }[] = [];
-  let cumulative = 0;
-  for (const entry of data) {
-    const segWidth = (entry.value / total) * 100;
-    const midpoint = cumulative + segWidth / 2;
-    gradientStops.push({
-      color: SEVERITY_CHART_COLORS[entry.key],
-      midpoint,
-    });
-    cumulative += segWidth;
-  }
-  const gradient =
-    gradientStops.length === 1
-      ? gradientStops[0].color
-      : `linear-gradient(to right, ${gradientStops
-          .map((s) => `${s.color} ${s.midpoint.toFixed(2)}%`)
-          .join(", ")})`;
-
-  return (
-    <div className="flex h-full flex-col rounded-2xl bg-white/[0.03] p-6">
-      {/* Header */}
-      <div className="mb-6">
-        <p className="text-[10px] font-semibold uppercase tracking-[2.5px] text-primary">
-          {t("vulnChartEyebrow")}
-        </p>
-        <h2 className="mt-1 font-heading text-base font-bold text-foreground">
-          {t("vulnChart")}
-        </h2>
-        <p className="mt-0.5 text-[11px] text-muted-foreground/60">
-          {t("vulnChartSubtitle")}
-        </p>
-      </div>
-
-      {/* Hero — big total on top, full-width gradient distribution bar below */}
-      <div className="mb-6">
-        <div className="mb-3 flex items-baseline gap-2">
-          <span
-            className="text-4xl font-bold tabular-nums leading-none text-foreground"
-            data-counter={String(total)}
-          >
-            {total}
-          </span>
-          <span className="text-[11px] uppercase tracking-wide text-muted-foreground/70">
-            {t("vulnerabilities")}
-          </span>
-        </div>
-        <div className="relative h-6 w-full overflow-hidden rounded-[4px] bg-[#191919]">
-          {/* The gradient fill is always at 100% width — the "hero" bar
-              doesn't need the grow-in animation; the shimmer sweep plus
-              the cascade reveal on the parent card is enough movement. */}
-          <div
-            className="h-full rounded-[4px]"
-            style={{ width: "100%", backgroundImage: gradient }}
-            title={data
-              .map(
-                (e) =>
-                  `${e.name}: ${e.value} (${Math.round(
-                    (e.value / total) * 100,
-                  )}%)`,
-              )
-              .join(" · ")}
-          />
-          {/* Shimmer sweep — a soft highlight animated via GSAP */}
-          <div
-            data-shimmer
-            aria-hidden
-            className="pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-          />
-        </div>
-      </div>
-
-      {/* Severity ranking — each row is a labelled bar */}
-      <div className="space-y-3">
-        {data.map((entry) => {
-          const pct = total > 0 ? (entry.value / total) * 100 : 0;
-          const color = SEVERITY_CHART_COLORS[entry.key];
-          return (
-            <div key={entry.key}>
-              <div className="mb-1.5 flex items-center gap-2">
-                <span
-                  className="size-2.5 shrink-0 rounded-full"
-                  style={{ backgroundColor: color }}
-                />
-                <span className="text-sm font-medium text-foreground">
-                  {entry.name}
-                </span>
-                <span className="ml-auto text-sm font-bold tabular-nums text-foreground">
-                  {entry.value}
-                </span>
-                <span className="text-xs tabular-nums text-muted-foreground/60">
-                  ({Math.round(pct)}%)
-                </span>
-              </div>
-              <div className="h-3 overflow-hidden rounded-[3px] bg-[#191919]">
-                <div
-                  className="h-full rounded-[3px]"
-                  style={{ width: `${pct}%`, backgroundColor: color }}
-                  data-progress-bar={String(pct)}
-                />
-              </div>
+        {/* Today's tasks — overdue compliance items */}
+        <section className="flex flex-col gap-4">
+          <header className="flex items-center justify-between">
+            <h2 className="text-h2 text-foreground">{t.has("todayTasks") ? t("todayTasks") : "Today Tasks"}</h2>
+            <Link
+              href="/app/incidents"
+              className="text-p3 text-primary hover:text-primary/80"
+            >
+              {t.has("seeAll") ? t("seeAll") : "See all"}
+            </Link>
+          </header>
+          {todayTasks.length === 0 ? (
+            <div className="flex h-[121px] items-center justify-center rounded-md border border-dashed border-border-outline bg-card text-p3 text-muted-foreground">
+              {t.has("noOverdue") ? t("noOverdue") : "No overdue tasks. Nice work!"}
             </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Activity Row
-// ---------------------------------------------------------------------------
-
-// Top-level action namespace → activity-pill colour. Same palette that
-// lights up Settings → Activity so colours read consistently across both
-// views.
-const ACTIVITY_ACTION_PILL: Record<string, string> = {
-  organization: "bg-[#2563EB]",
-  member: "bg-[#2563EB]",
-  profile: "bg-[#2563EB]",
-  password: "bg-[#2563EB]",
-  product: "bg-[#7C3AED]",
-  document: "bg-[#16A34A]",
-  sbom: "bg-[#D97706]",
-  checklist: "bg-[#2563EB]",
-  vulnerability: "bg-[#DC2626]",
-  vulnerability_report: "bg-[#DC2626]",
-  incident: "bg-[#DC2626]",
-  release: "bg-[#0891B2]",
-  conformity: "bg-[#16A34A]",
-  entity_obligation: "bg-[#0891B2]",
-  billing: "bg-[#7C3AED]",
-  academy: "bg-[#F59E0B]",
-};
-
-function ActivityRow({
-  item,
-  tSettings,
-  tDashboard,
-}: {
-  item: ActivityItem;
-  tSettings: ReturnType<typeof useTranslations>;
-  tDashboard: ReturnType<typeof useTranslations>;
-}) {
-  const initials = item.user_name
-    ? item.user_name
-        .split(" ")
-        .map((n) => n[0])
-        .join("")
-        .slice(0, 2)
-        .toUpperCase()
-    : "·";
-
-  // Translate the action key against the Settings → Activity namespace, so
-  // both views use the same human-readable strings.
-  const actionKey = `actions.${item.action}` as Parameters<typeof tSettings>[0];
-  const actionLabel = tSettings.has(actionKey)
-    ? tSettings(actionKey)
-    : item.action.replace(/[._]/g, " ");
-
-  const topLevel = item.action.split(".")[0];
-  const pillClass = ACTIVITY_ACTION_PILL[topLevel] ?? "bg-white/[0.12]";
-
-  return (
-    <div className="flex items-start gap-3.5 px-5 py-3.5">
-      {item.user_avatar_url ? (
-        <img
-          src={item.user_avatar_url}
-          alt={item.user_name ?? ""}
-          className="mt-0.5 size-8 shrink-0 rounded-full object-cover"
-        />
-      ) : (
-        <div className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-full bg-white/[0.08] text-[11px] font-semibold text-muted-foreground">
-          {initials}
-        </div>
-      )}
-
-      <div className="min-w-0 flex-1">
-        <p className="text-sm">
-          <span className="font-medium">{item.user_name ?? "System"}</span>{" "}
-          <span className="text-muted-foreground">{actionLabel}</span>
-          {item.target_name && (
-            <>
-              {" "}
-              <span className="font-medium">{item.target_name}</span>
-            </>
+          ) : (
+            <div className="flex flex-col gap-5">
+              {todayTasks.map((task) => (
+                <DashboardTaskCard key={task.id} task={task} />
+              ))}
+            </div>
           )}
-        </p>
-        <div className="mt-1 flex items-center gap-2">
-          <span
-            className={cn(
-              "inline-flex rounded-full px-2 py-0.5 text-[10px] font-semibold text-white",
-              pillClass,
-            )}
-          >
-            {(() => {
-              const spaced = topLevel.replace(/_/g, " ");
-              return spaced.charAt(0).toUpperCase() + spaced.slice(1);
-            })()}
-          </span>
-          <span className="text-[11px] text-muted-foreground/40">
-            {relativeTime(item.created_at, tDashboard)}
-          </span>
-        </div>
+        </section>
       </div>
+
+      {/* RIGHT RAIL — 370px */}
+      <aside className="flex min-w-0 flex-col gap-8 rounded-md bg-card p-6 shadow-card-md lg:max-w-[370px]">
+        {/* Calendar */}
+        <CalendarWidget />
+
+        {/* Meetings / today's deadlines */}
+        <section className="flex flex-col gap-4">
+          <h3 className="text-h3 text-foreground">
+            {t.has("upcomingDeadlines.title")
+              ? t("upcomingDeadlines.title")
+              : "Upcoming"}
+          </h3>
+          <MeetingsList meetings={meetings} />
+        </section>
+
+        {/* Team */}
+        {teamMembers.length > 0 && (
+          <section className="flex flex-col gap-4">
+            <h3 className="text-h3 text-foreground">
+              {t.has("chat") ? t("chat") : "Team"}
+            </h3>
+            <TeamChatStrip members={teamMembers} />
+          </section>
+        )}
+
+        {/* Activity feed */}
+        <section className="flex flex-col gap-4">
+          <h3 className="text-h3 text-foreground">
+            {t.has("activity") ? t("activity") : "Activities"}
+          </h3>
+          <ActivityFeedWidget items={activityItems} />
+        </section>
+      </aside>
     </div>
   );
 }

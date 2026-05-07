@@ -1,11 +1,11 @@
 "use client";
 
 import { useActionState, useTransition } from "react";
+import { Icon } from "@/components/icon";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { Loader2, ArrowLeft } from "lucide-react";
 
 import { forgotPassword, type AuthState } from "../actions";
 import {
@@ -46,10 +46,10 @@ export function ForgotPasswordForm({ locale }: { locale: string }) {
 
   return (
     <>
-      <h1 className="text-center font-heading text-xl font-semibold text-foreground">
+      <h1 className="text-center text-h3 text-foreground">
         {t("forgotPassword.title")}
       </h1>
-      <p className="mt-1.5 text-center text-sm text-muted-foreground">
+      <p className="mt-1.5 text-center text-p3 text-muted-foreground">
         {t("forgotPassword.description")}
       </p>
 
@@ -92,7 +92,7 @@ export function ForgotPasswordForm({ locale }: { locale: string }) {
               disabled={isPending}
             >
               {isPending ? (
-                <Loader2 className="size-4 animate-spin" />
+                <Icon name="Loader2" className="size-4 animate-spin" />
               ) : (
                 t("forgotPassword.submit")
               )}
@@ -104,9 +104,9 @@ export function ForgotPasswordForm({ locale }: { locale: string }) {
       <div className="mt-6 text-center">
         <Link
           href="/auth/login"
-          className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+          className="inline-flex items-center gap-1.5 text-p3 text-muted-foreground transition-colors hover:text-foreground"
         >
-          <ArrowLeft className="size-3.5" />
+          <Icon name="ArrowLeft" className="size-3.5" />
           {t("forgotPassword.backToLogin")}
         </Link>
       </div>

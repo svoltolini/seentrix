@@ -49,7 +49,7 @@ export function SbomUploadZone({
         onClick={() => !uploading && inputRef.current?.click()}
         className={cn(
           "relative flex cursor-pointer flex-col items-center gap-1.5 rounded-xl px-6 py-8 text-center transition-colors",
-          dragOver ? "bg-primary/5" : "hover:bg-white/[0.02]",
+          dragOver ? "bg-primary/5" : "hover:bg-muted",
           uploading && "pointer-events-none opacity-60"
         )}
       >
@@ -66,9 +66,9 @@ export function SbomUploadZone({
               x2="1"
               y2="1"
             >
-              <stop offset="0%" stopColor="#3B82F6" stopOpacity={dragOver ? 1 : 0.4} />
-              <stop offset="50%" stopColor="#8B5CF6" stopOpacity={dragOver ? 1 : 0.4} />
-              <stop offset="100%" stopColor="#F97316" stopOpacity={dragOver ? 1 : 0.4} />
+              <stop offset="0%" stopColor="#066DE6" stopOpacity={dragOver ? 1 : 0.4} />
+              <stop offset="50%" stopColor="#6F4FE0" stopOpacity={dragOver ? 1 : 0.4} />
+              <stop offset="100%" stopColor="#FF6D00" stopOpacity={dragOver ? 1 : 0.4} />
             </linearGradient>
           </defs>
           <rect
@@ -93,7 +93,7 @@ export function SbomUploadZone({
             <p className="text-sm font-medium text-foreground">
               {dragOver ? t("upload.dropzoneActive") : t("upload.dropzone")}
             </p>
-            <p className="text-xs text-muted-foreground/50">
+            <p className="text-xs text-muted-foreground">
               {t("upload.formats")}
             </p>
           </>

@@ -79,7 +79,7 @@ export function CreateProductForm({
     return (
       <div className="flex flex-col gap-10">
         <header className="flex flex-col gap-2">
-          <h1 className="font-heading text-3xl font-bold tracking-tight">
+          <h1 className="text-h1 tracking-tight">
             {t("create.title")}
           </h1>
           <p className="text-sm text-muted-foreground">
@@ -87,7 +87,7 @@ export function CreateProductForm({
           </p>
         </header>
 
-        <div className="flex flex-col items-start gap-6 rounded-2xl bg-white/[0.03] p-8">
+        <div className="flex flex-col items-start gap-6 rounded-md bg-muted p-8">
           {/* Usage ring */}
           <div className="flex items-center gap-4">
             <div className="relative flex size-16 items-center justify-center">
@@ -136,8 +136,8 @@ export function CreateProductForm({
           </div>
 
           <div className="grid w-full gap-3 sm:grid-cols-2">
-            <div className="rounded-xl bg-white/[0.03] p-4">
-              <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground/60">
+            <div className="rounded-xl bg-muted p-4">
+              <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
                 {t("limits.currentPlan")}
               </p>
               <p className="mt-1 text-sm font-semibold capitalize">{plan}</p>
@@ -146,7 +146,7 @@ export function CreateProductForm({
               </p>
             </div>
             <div className="rounded-xl bg-primary/8 p-4 ring-1 ring-primary/25">
-              <p className="text-[11px] font-semibold uppercase tracking-wider text-primary">
+              <p className="text-l6-plus uppercase tracking-wider text-primary">
                 Recommended
               </p>
               <p className="mt-1 text-sm font-semibold capitalize">
@@ -198,7 +198,7 @@ export function CreateProductForm({
     >
       {/* Header */}
       <header className="flex flex-col gap-2">
-        <h1 className="font-heading text-3xl font-bold tracking-tight">
+        <h1 className="text-h1 tracking-tight">
           {t("create.title")}
         </h1>
         <p className="text-sm text-muted-foreground">
@@ -243,7 +243,7 @@ export function CreateProductForm({
                   "relative flex cursor-pointer items-center justify-center rounded-xl px-3 py-3 text-sm font-medium transition",
                   active
                     ? "bg-primary/15 text-primary ring-1 ring-primary/40"
-                    : "bg-white/[0.04] text-foreground/80 hover:bg-white/[0.07] hover:text-foreground",
+                    : "bg-muted text-foreground/80 hover:bg-muted hover:text-foreground",
                 )}
               >
                 <input
@@ -315,12 +315,12 @@ export function CreateProductForm({
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="flex size-20 items-center justify-center rounded-xl bg-white/[0.03] text-xs font-medium text-muted-foreground/70 transition hover:bg-white/[0.06] hover:text-foreground"
+              className="flex size-20 items-center justify-center rounded-xl bg-muted text-xs font-medium text-muted-foreground transition hover:bg-muted hover:text-foreground"
             >
               {t("create.imageUpload")}
             </button>
           )}
-          <p className="text-xs text-muted-foreground/60">
+          <p className="text-xs text-muted-foreground">
             {t("create.imageHint")}
           </p>
         </div>

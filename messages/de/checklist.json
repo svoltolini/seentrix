@@ -10,6 +10,17 @@
     "getStarted": "Bereit zum Start",
     "getStartedDescription": "Arbeiten Sie die CRA-Anforderungen durch — wir begleiten Sie Schritt für Schritt. Wählen Sie ein Element unten aus, um zu beginnen.",
     "itemCount": "{completed} von {total} abgeschlossen",
+    "view": {
+      "kanban": "Kanban",
+      "list": "Liste"
+    },
+    "kanban": {
+      "backlog": "Backlog",
+      "onProgress": "In Bearbeitung",
+      "completed": "Abgeschlossen",
+      "notApplicable": "Nicht zutreffend",
+      "empty": "Keine Aufgaben hier"
+    },
     "notesLabel": "Notizen",
     "notesPlaceholder": "Fügen Sie Notizen, Beobachtungen oder Implementierungsdetails hinzu…",
     "evidenceLabel": "Nachweise",

@@ -63,7 +63,7 @@ export function FaqSection() {
                 <div
                   key={key}
                   data-faq-item
-                  className="rounded-xl bg-white/[0.03]"
+                  className="rounded-xl bg-muted"
                 >
                   <button
                     type="button"

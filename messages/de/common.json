@@ -19,8 +19,17 @@
     "tryAgain": "Erneut versuchen"
   },
   "sidebar": {
-    "overview": "Übersicht",
+    "overview": "Workspace",
     "compliance": "Compliance",
-    "management": "Verwaltung"
+    "management": "Verwaltung",
+    "helpTitle": "Hilfe-Center",
+    "helpBody": "Fragen zur CRA-Compliance? Fragen Sie den Seentrix AI Copilot.",
+    "helpCta": "Jetzt fragen"
+  },
+  "topbar": {
+    "searchPlaceholder": "Produkte, Vorfälle, Meldungen suchen…",
+    "newProduct": "Neues Produkt",
+    "notifications": "Benachrichtigungen",
+    "language": "Sprache"
   }
 }

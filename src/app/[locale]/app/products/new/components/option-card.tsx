@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { CheckIcon } from "lucide-react";
+import { Icon } from "@/components/icon";
 
 export function OptionCard({
   title,
@@ -37,7 +37,7 @@ export function OptionCard({
         )}
       >
         {selected && (
-          <CheckIcon className="size-3 text-primary-foreground" strokeWidth={3} />
+          <Icon name="CheckIcon" className="size-3 text-primary-foreground" strokeWidth={3} />
         )}
       </div>
       <div className="flex flex-col gap-0.5">

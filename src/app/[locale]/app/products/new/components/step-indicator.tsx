@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { CheckIcon } from "lucide-react";
+import { Icon } from "@/components/icon";
 
 export function StepIndicator({
   steps,
@@ -38,7 +38,7 @@ export function StepIndicator({
                   )}
                 >
                   {isCompleted ? (
-                    <CheckIcon className="size-3.5" strokeWidth={2.5} />
+                    <Icon name="CheckIcon" className="size-3.5" strokeWidth={2.5} />
                   ) : (
                     stepNum
                   )}

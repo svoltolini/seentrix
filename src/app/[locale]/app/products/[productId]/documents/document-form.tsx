@@ -163,7 +163,7 @@ export function DocumentForm({
               value={formData[field.key]}
               onChange={(e) => updateField(field.key, e.target.value)}
               className={cn(
-                "h-11 w-full rounded-xl border border-white/[0.06] bg-white/[0.03] px-3 text-sm transition-colors outline-none",
+                "h-11 w-full rounded-xl border border-border bg-muted px-3 text-sm transition-colors outline-none",
                 "focus-visible:border-primary"
               )}
             >
@@ -177,7 +177,7 @@ export function DocumentForm({
           )}
 
           {field.hintKey && (
-            <p className="text-[11px] text-muted-foreground/50">
+            <p className="text-[11px] text-muted-foreground">
               {t(`fields.${field.hintKey}`)}
             </p>
           )}
@@ -185,7 +185,7 @@ export function DocumentForm({
       ))}
 
       {/* Save footer */}
-      <div className="sticky bottom-0 -mx-6 border-t border-white/[0.04] bg-card/80 px-6 py-3 backdrop-blur-sm">
+      <div className="sticky bottom-0 -mx-6 border-t border-border bg-card/80 px-6 py-3 backdrop-blur-sm">
         <Button type="submit" size="sm" disabled={saving}>
           {saving ? t("editor.saving") : t("editor.save")}
         </Button>

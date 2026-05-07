@@ -74,7 +74,7 @@ export function TableOfContents({
                 h.level === 3 ? "pl-6" : "pl-4",
                 activeId === h.id
                   ? "font-medium text-foreground"
-                  : "text-muted-foreground/70"
+                  : "text-muted-foreground"
               )}
             >
               {h.text}

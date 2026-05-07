@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { HugeIcon } from "@/components/huge-icon";
+import { Icon } from "@/components/icon";
 import { Link } from "@/i18n/navigation";
 
 export function UpgradePrompt({
@@ -17,7 +17,7 @@ export function UpgradePrompt({
     <Card>
       <CardContent className="flex flex-col items-center gap-4 py-10 text-center">
         <div className="flex size-12 items-center justify-center rounded-full bg-primary/10">
-          <HugeIcon name="lock-password-stroke-rounded" size={20} className="text-primary" />
+          <Icon name="lock-password-stroke-rounded" size={20} className="text-primary" />
         </div>
         <div>
           <h3 className="text-base font-semibold text-foreground">
@@ -29,7 +29,7 @@ export function UpgradePrompt({
         </div>
         <Link href="/pricing">
           <Button size="sm" className="gap-1.5">
-            <HugeIcon name="sparkles-stroke-rounded" size={14} />
+            <Icon name="sparkles-stroke-rounded" size={14} />
             {t("upgradeCta")}
           </Button>
         </Link>

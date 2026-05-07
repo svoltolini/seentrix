@@ -1,13 +1,13 @@
 import { cn } from "@/lib/utils";
 
 /**
- * Gradient KPI tile used at the top of every data-heavy screen. The dashboard,
- * vulnerabilities tab, releases tab, incidents tab, and public reports tab all
- * share the same visual language so a scan across them feels like one product.
+ * KPI tile shared across dashboard / vulnerabilities / releases / incidents
+ * / public reports. Nask-styled: white card with a soft shadow and a
+ * gradient-tinted top accent strip so the original colour-coding still
+ * conveys "active" vs "exploited" vs "incident" tones.
  *
- * `from` / `to` define the gradient. Optional `accentDot` adds a small white
- * pulsing dot next to the label — useful for "active" or "exploited" tiles
- * that need to draw the eye.
+ * The legacy `from` / `to` props are kept for API compatibility — they now
+ * paint the 4px top accent bar instead of the whole card background.
  */
 export function StatCard({
   label,
@@ -28,23 +28,33 @@ export function StatCard({
 }) {
   return (
     <div
-      className={cn("relative overflow-hidden rounded-xl", className)}
-      style={{ background: `linear-gradient(135deg, ${from}, ${to})` }}
+      className={cn(
+        "relative flex flex-col gap-2 overflow-hidden rounded-md bg-card p-[18px] shadow-card-sm",
+        className,
+      )}
     >
-      <div className="p-5">
-        <div className="flex items-center gap-2">
-          {accentDot && (
-            <span
-              className={cn(
-                "size-1.5 rounded-full bg-white",
-                pulse && "animate-pulse",
-              )}
-            />
-          )}
-          <p className="text-[11px] font-semibold text-white/75">{label}</p>
-        </div>
-        {children}
+      {/* Coloured accent stripe along the top edge — replaces the legacy
+          full-bleed gradient so we keep the colour cue without losing
+          contrast on light surfaces. */}
+      <div
+        className="absolute inset-x-0 top-0 h-1"
+        style={{ background: `linear-gradient(135deg, ${from}, ${to})` }}
+      />
+      <div className="flex items-center gap-2 pt-1">
+        {accentDot && (
+          <span
+            className={cn(
+              "size-1.5 rounded-full",
+              pulse && "animate-pulse",
+            )}
+            style={{ background: from }}
+          />
+        )}
+        <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
+          {label}
+        </p>
       </div>
+      <div className="text-foreground">{children}</div>
     </div>
   );
 }

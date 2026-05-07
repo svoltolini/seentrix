@@ -3,35 +3,58 @@ import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
+/**
+ * Button — Nask design system.
+ * Geometry per Figma frames `49:1675` (in-card primary, h:44 r:8) and
+ * `57:26810` ("+ New Project" top-bar, h:48 r:10 dark navy).
+ *
+ * Variant guide:
+ *   default     — in-card primary CTA. Blue, h:44 r:8.
+ *   dark        — top-bar "+ New Project". Dark navy, h:48 r:10.
+ *   secondary   — passive secondary like "Add a Card". Gray, hug, r:10.
+ *   outline     — white card with thin border. r:8.
+ *   ghost       — transparent, hover muted.
+ *   destructive — red.
+ *   link        — text-only.
+ */
 const buttonVariants = cva(
-  "group/button inline-flex shrink-0 items-center justify-center rounded-md border border-transparent text-[15px] font-semibold whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  // Reset / shared bits — flat (no scale-on-press), focus-visible ring is the
+  // primary token at low alpha. SVG sizing rule is centralised here.
+  "group/button inline-flex shrink-0 items-center justify-center whitespace-nowrap font-semibold transition-colors outline-none select-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground hover:bg-primary/90 active:scale-[0.98]",
-        outline:
-          "border-input bg-input/30 hover:bg-input/50 aria-expanded:bg-input/50 aria-expanded:text-foreground",
+          "bg-primary text-primary-foreground hover:bg-primary/90",
+        dark:
+          "bg-dark-cta text-dark-cta-foreground hover:bg-dark-cta/90",
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80 aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
+          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        outline:
+          "bg-card text-foreground border-[1.5px] border-border-outline hover:bg-muted",
         ghost:
-          "hover:bg-muted/50 hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground",
+          "bg-transparent text-foreground hover:bg-muted",
         destructive:
-          "bg-destructive/20 text-destructive hover:bg-destructive/30 active:scale-[0.98] focus-visible:border-destructive/40 focus-visible:ring-destructive/20",
-        link: "text-primary underline-offset-4 hover:underline",
+          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+        link:
+          "bg-transparent text-primary underline-offset-4 hover:underline",
       },
       size: {
+        // Nask buttons are flat horizontal pills. Sizes by height + radius.
+        xs:
+          "h-7 gap-1 rounded-sm px-2 text-xs has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3",
+        sm:
+          "h-9 gap-1.5 rounded-sm px-3 text-l6 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 [&_svg:not([class*='size-'])]:size-3.5",
         default:
-          "h-11 gap-1.5 px-5 has-data-[icon=inline-end]:pr-4 has-data-[icon=inline-start]:pl-4",
-        xs: "h-7 gap-1 rounded-lg px-2.5 text-xs in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3",
-        sm: "h-8 gap-1 rounded-lg px-3 text-sm in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 [&_svg:not([class*='size-'])]:size-3.5",
-        lg: "h-12 gap-2 px-6 has-data-[icon=inline-end]:pr-4 has-data-[icon=inline-start]:pl-4",
-        icon: "size-11",
-        "icon-xs":
-          "size-7 rounded-lg in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-3",
+          "h-11 gap-3.5 rounded-sm px-[22px] text-l5 has-data-[icon=inline-end]:pr-4 has-data-[icon=inline-start]:pl-4",
+        lg:
+          "h-12 gap-3.5 rounded-md px-[75px] text-l5 has-data-[icon=inline-end]:pr-6 has-data-[icon=inline-start]:pl-6",
+        icon:
+          "size-11 rounded-sm",
         "icon-sm":
-          "size-8 rounded-lg in-data-[slot=button-group]:rounded-lg",
-        "icon-lg": "size-12",
+          "size-9 rounded-sm [&_svg:not([class*='size-'])]:size-4",
+        "icon-xs":
+          "size-7 rounded-sm [&_svg:not([class*='size-'])]:size-3.5",
       },
     },
     defaultVariants: {

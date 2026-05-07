@@ -10,6 +10,17 @@
     "getStarted": "Ready to begin",
     "getStartedDescription": "Start working through the CRA requirements — we'll guide you step by step. Select any item below to begin.",
     "itemCount": "{completed} of {total} completed",
+    "view": {
+      "kanban": "Kanban",
+      "list": "List"
+    },
+    "kanban": {
+      "backlog": "Backlog",
+      "onProgress": "On Progress",
+      "completed": "Completed",
+      "notApplicable": "Not Applicable",
+      "empty": "No tasks here"
+    },
     "notesLabel": "Notes",
     "notesPlaceholder": "Add notes, observations, or implementation details…",
     "evidenceLabel": "Evidence",

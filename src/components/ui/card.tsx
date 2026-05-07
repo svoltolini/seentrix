@@ -2,21 +2,33 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
+/**
+ * Card — Nask surface primitive.
+ * White surface with a 10px radius and one of three soft shadow scales
+ * (verbatim from Figma: card-lg = 0 4 120, card-md = 0 4 90, card-sm = 0 4 60,
+ * all `rgba(169,173,180,0.15)`). The default `lg` matches Settings, Project
+ * Statistics, and other section-level surfaces.
+ */
 function Card({
   className,
   size = "default",
+  shadow = "lg",
   ...props
-}: React.ComponentProps<"div"> & { size?: "default" | "sm" }) {
+}: React.ComponentProps<"div"> & {
+  size?: "default" | "sm"
+  shadow?: "lg" | "md" | "sm" | "none"
+}) {
   return (
     <div
       data-slot="card"
       data-size={size}
+      data-shadow={shadow}
       className={cn(
-        // Borderless card — the Seentrix dark palette uses a subtle
-        // translucent fill (`bg-white/[0.03]`) rather than a hard
-        // border to separate surfaces. Callers can still pass their
-        // own className to override.
-        "group/card flex flex-col gap-6 overflow-hidden rounded-xl bg-white/[0.03] py-6 text-sm text-card-foreground has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0 data-[size=sm]:gap-4 data-[size=sm]:py-4 data-[size=sm]:has-data-[slot=card-footer]:pb-0 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl",
+        "group/card flex flex-col gap-6 overflow-hidden rounded-md bg-card text-card-foreground py-[18px]",
+        "data-[shadow=lg]:shadow-card-lg data-[shadow=md]:shadow-card-md data-[shadow=sm]:shadow-card-sm",
+        "has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0",
+        "data-[size=sm]:gap-4 data-[size=sm]:py-4 data-[size=sm]:has-data-[slot=card-footer]:pb-0",
+        "*:[img:first-child]:rounded-t-md *:[img:last-child]:rounded-b-md",
         className
       )}
       {...props}
@@ -29,7 +41,9 @@ function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="card-header"
       className={cn(
-        "group/card-header @container/card-header grid auto-rows-min items-start gap-1 rounded-t-xl px-6 group-data-[size=sm]/card:px-4 has-data-[slot=card-action]:grid-cols-[1fr_auto] has-data-[slot=card-description]:grid-rows-[auto_auto] [.border-b]:pb-6 group-data-[size=sm]/card:[.border-b]:pb-4",
+        "group/card-header @container/card-header grid auto-rows-min items-start gap-1 rounded-t-md px-[18px] group-data-[size=sm]/card:px-4",
+        "has-data-[slot=card-action]:grid-cols-[1fr_auto] has-data-[slot=card-description]:grid-rows-[auto_auto]",
+        "[.border-b]:pb-[18px] group-data-[size=sm]/card:[.border-b]:pb-4",
         className
       )}
       {...props}
@@ -42,7 +56,8 @@ function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="card-title"
       className={cn(
-        "font-heading text-base leading-snug font-medium group-data-[size=sm]/card:text-sm",
+        // 18/700 — matches Nask section header inside cards (Settings "Personal Information").
+        "text-h4 text-foreground group-data-[size=sm]/card:text-h5",
         className
       )}
       {...props}
@@ -54,7 +69,7 @@ function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="card-description"
-      className={cn("text-sm text-muted-foreground", className)}
+      className={cn("text-p3 text-muted-foreground", className)}
       {...props}
     />
   )
@@ -77,7 +92,7 @@ function CardContent({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="card-content"
-      className={cn("px-6 group-data-[size=sm]/card:px-4", className)}
+      className={cn("px-[18px] group-data-[size=sm]/card:px-4", className)}
       {...props}
     />
   )
@@ -88,7 +103,7 @@ function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="card-footer"
       className={cn(
-        "flex items-center rounded-b-xl px-6 pb-6 pt-0 group-data-[size=sm]/card:px-4 group-data-[size=sm]/card:pb-4",
+        "flex items-center rounded-b-md px-[18px] pb-[18px] pt-0 group-data-[size=sm]/card:px-4 group-data-[size=sm]/card:pb-4",
         className
       )}
       {...props}

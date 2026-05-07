@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { Icon } from "@/components/icon";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { OptionCard } from "../components/option-card";
@@ -10,7 +11,6 @@ import {
   SUBCATEGORY_GROUPS,
 } from "@/lib/constants/cra-classification";
 import type { WizardData } from "@/lib/validations/assessment";
-import { ArrowLeftIcon, CheckIcon } from "lucide-react";
 
 export function StepClassification({
   data,
@@ -78,7 +78,7 @@ export function StepClassification({
 
       <div className="flex justify-between pt-2">
         <Button variant="outline" size="sm" onClick={onBack}>
-          <ArrowLeftIcon data-icon="inline-start" className="size-3.5" />
+          <Icon name="ArrowLeftIcon" data-icon="inline-start" className="size-3.5" />
           {t("navigation.back")}
         </Button>
         <Button size="sm" onClick={onSubmit} disabled={isPending}>
@@ -86,7 +86,7 @@ export function StepClassification({
             t("navigation.submitting")
           ) : (
             <>
-              <CheckIcon data-icon="inline-start" className="size-3.5" />
+              <Icon name="CheckIcon" data-icon="inline-start" className="size-3.5" />
               {t("navigation.submit")}
             </>
           )}

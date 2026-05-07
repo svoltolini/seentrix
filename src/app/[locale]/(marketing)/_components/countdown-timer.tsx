@@ -47,12 +47,12 @@ export function CountdownTimer() {
             <span className="bg-gradient-to-b from-foreground to-foreground/60 bg-clip-text text-3xl font-extrabold tabular-nums text-transparent sm:text-4xl">
               {mounted ? pad(box.value) : "00"}
             </span>
-            <span className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground sm:text-xs">
+            <span className="text-l6-plus uppercase tracking-widest text-muted-foreground sm:text-xs">
               {box.label}
             </span>
           </div>
           {i < boxes.length - 1 && (
-            <span className="mb-5 text-xl font-light text-muted-foreground/40 sm:text-2xl">
+            <span className="mb-5 text-xl font-light text-muted-foreground sm:text-2xl">
               :
             </span>
           )}

@@ -44,28 +44,30 @@ export function HeroSection() {
       ref={sectionRef}
       className="relative flex items-center justify-center overflow-hidden px-6 pt-20 pb-28 lg:pt-28 lg:pb-36"
     >
-      {/* Dot grid pattern */}
+      {/* Soft dot grid pattern (light mode — navy dots at 4% alpha) */}
       <div
         className="pointer-events-none absolute inset-0"
         style={{
           backgroundImage:
-            "radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px)",
+            "radial-gradient(circle, rgba(44,54,89,0.06) 1px, transparent 1px)",
           backgroundSize: "32px 32px",
         }}
       />
 
-      {/* Softened gradient blob */}
+      {/* Brand gradient blobs — Nask blue + orange */}
       <div
         className="pointer-events-none absolute -left-20 -top-10 h-[405px] w-[405px] animate-[hero-blob_8s_ease-in-out_infinite] rounded-full opacity-25 blur-[200px]"
-        style={{
-          background: "linear-gradient(to bottom, #3B82F6, #8B5CF6)",
-        }}
+        style={{ background: "linear-gradient(to bottom, #066DE6, #6F4FE0)" }}
+      />
+      <div
+        className="pointer-events-none absolute -right-24 top-32 h-[340px] w-[340px] animate-[hero-blob_10s_ease-in-out_infinite] rounded-full opacity-20 blur-[180px]"
+        style={{ background: "linear-gradient(to bottom, #FF6D00, #FF9E55)" }}
       />
 
       <div className="relative mx-auto flex max-w-5xl flex-col items-center gap-8 text-center">
         <span
           data-hero-reveal
-          className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#60A5FA]"
+          className="text-l6-plus uppercase tracking-[0.18em] text-primary"
         >
           {t("badge")}
         </span>
@@ -73,14 +75,14 @@ export function HeroSection() {
         <h1 data-hero-reveal className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl [&>span:last-child]:font-black">
           <span className="text-foreground">{t("titleLine1")}</span>
           <br />
-          <span className="bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#F97316] bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-[#066DE6] via-[#6F4FE0] to-[#FF6D00] bg-clip-text text-transparent">
             {t("titleLine2")}
           </span>
         </h1>
 
         <p
           data-hero-reveal
-          className="max-w-2xl text-lg text-muted-foreground sm:text-xl"
+          className="max-w-2xl text-p2 text-muted-foreground sm:text-lg"
         >
           {t("subtitle")}
         </p>

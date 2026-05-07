@@ -108,7 +108,7 @@ export default async function CopilotAdminPage() {
   return (
     <div className="mx-auto flex max-w-5xl flex-col gap-10 py-4">
       <header className="flex flex-col gap-2">
-        <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#60A5FA]">
+        <span className="text-l6-plus uppercase tracking-[0.18em] text-[#066DE6]">
           Copilot · staff review
         </span>
         <h1 className="font-heading text-2xl font-semibold text-foreground">
@@ -225,8 +225,8 @@ function StatCard({
   sub?: string;
 }) {
   return (
-    <div className="rounded-2xl bg-white/[0.03] p-4 ring-1 ring-white/[0.06]">
-      <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground/70">
+    <div className="rounded-md bg-muted p-4 ring-1 ring-white/[0.06]">
+      <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
         {label}
       </p>
       <p
@@ -237,7 +237,7 @@ function StatCard({
         {value.toLocaleString()}
       </p>
       {sub && (
-        <p className="mt-0.5 text-xs text-muted-foreground/80">{sub}</p>
+        <p className="mt-0.5 text-xs text-muted-foreground">{sub}</p>
       )}
     </div>
   );
@@ -245,15 +245,15 @@ function StatCard({
 
 function FeedbackRow({ row }: { row: ThumbsDownRow }) {
   return (
-    <article className="flex flex-col gap-3 rounded-2xl bg-white/[0.03] p-4 ring-1 ring-white/[0.06]">
+    <article className="flex flex-col gap-3 rounded-md bg-muted p-4 ring-1 ring-white/[0.06]">
       <header className="flex items-center justify-between text-xs text-muted-foreground">
         <span>{new Date(row.created_at).toLocaleString()}</span>
-        <code className="rounded bg-white/[0.05] px-1.5 py-0.5 font-mono text-[10px]">
+        <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-[10px]">
           session {row.session_id.slice(0, 8)}
         </code>
       </header>
       <div>
-        <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/70">
+        <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
           Question
         </p>
         <p className="mt-1 whitespace-pre-wrap text-sm text-foreground">
@@ -261,23 +261,23 @@ function FeedbackRow({ row }: { row: ThumbsDownRow }) {
         </p>
       </div>
       <div>
-        <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/70">
+        <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
           Answer
         </p>
-        <p className="mt-1 max-h-64 overflow-y-auto whitespace-pre-wrap rounded-lg bg-white/[0.02] px-3 py-2 text-sm text-foreground/90">
+        <p className="mt-1 max-h-64 overflow-y-auto whitespace-pre-wrap rounded-lg bg-muted px-3 py-2 text-sm text-foreground/90">
           {row.answer || "—"}
         </p>
       </div>
       {row.retrieved_sections.length > 0 && (
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/70">
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
             Retrieved
           </p>
           <div className="mt-1 flex flex-wrap gap-1.5">
             {row.retrieved_sections.map((s) => (
               <span
                 key={s}
-                className="rounded bg-[#3B82F6]/15 px-2 py-0.5 text-[10px] font-medium text-[#93C5FD]"
+                className="rounded bg-[#066DE6]/15 px-2 py-0.5 text-l6-plus text-[#93C5FD]"
               >
                 {s}
               </span>
@@ -287,7 +287,7 @@ function FeedbackRow({ row }: { row: ThumbsDownRow }) {
       )}
       {row.comment && (
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/70">
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
             User comment
           </p>
           <p className="mt-1 whitespace-pre-wrap rounded-lg bg-rose-500/8 px-3 py-2 text-sm text-rose-200 ring-1 ring-rose-500/20">
@@ -301,10 +301,10 @@ function FeedbackRow({ row }: { row: ThumbsDownRow }) {
 
 function GapRowView({ row }: { row: GapRow }) {
   return (
-    <article className="flex flex-col gap-2 rounded-2xl bg-white/[0.03] p-4 ring-1 ring-white/[0.06]">
+    <article className="flex flex-col gap-2 rounded-md bg-muted p-4 ring-1 ring-white/[0.06]">
       <header className="flex items-center justify-between text-xs text-muted-foreground">
         <span>{new Date(row.created_at).toLocaleString()}</span>
-        <code className="rounded bg-white/[0.05] px-1.5 py-0.5 font-mono text-[10px]">
+        <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-[10px]">
           session {row.session_id.slice(0, 8)}
         </code>
       </header>
@@ -317,7 +317,7 @@ function GapRowView({ row }: { row: GapRow }) {
 
 function EmptyPanel({ text }: { text: string }) {
   return (
-    <div className="rounded-2xl bg-white/[0.02] p-6 text-center text-sm text-muted-foreground ring-1 ring-white/[0.04]">
+    <div className="rounded-md bg-muted p-6 text-center text-sm text-muted-foreground ring-1 ring-white/[0.04]">
       {text}
     </div>
   );

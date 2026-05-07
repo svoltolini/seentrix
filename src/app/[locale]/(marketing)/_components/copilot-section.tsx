@@ -58,15 +58,15 @@ export function CopilotSection() {
   const bullets = [
     {
       key: "sovereign",
-      gradient: "from-[#3B82F6] to-[#8B5CF6]", // blue → violet
+      gradient: "from-[#066DE6] to-[#6F4FE0]", // blue → violet
     },
     {
       key: "grounded",
-      gradient: "from-[#8B5CF6] to-[#EC4899]", // violet → pink
+      gradient: "from-[#6F4FE0] to-[#EC4899]", // violet → pink
     },
     {
       key: "context",
-      gradient: "from-[#F59E0B] to-[#F97316]", // amber → orange
+      gradient: "from-[#F59E0B] to-[#FF6D00]", // amber → orange
     },
     {
       key: "actionable",
@@ -84,7 +84,7 @@ export function CopilotSection() {
         <div className="mx-auto mb-16 max-w-3xl text-center">
           <span
             data-copilot-heading
-            className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#60A5FA]"
+            className="text-l6-plus uppercase tracking-[0.18em] text-[#066DE6]"
           >
             {t("eyebrow")}
           </span>

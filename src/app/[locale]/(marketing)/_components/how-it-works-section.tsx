@@ -6,9 +6,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useTranslations } from "next-intl";
 
 const steps = [
-  { key: "s1", accent: "#3B82F6" },
-  { key: "s2", accent: "#8B5CF6" },
-  { key: "s3", accent: "#F97316" },
+  { key: "s1", accent: "#066DE6" },
+  { key: "s2", accent: "#6F4FE0" },
+  { key: "s3", accent: "#FF6D00" },
 ] as const;
 
 export function HowItWorksSection() {
@@ -62,7 +62,7 @@ export function HowItWorksSection() {
             <div
               key={step.key}
               data-step-card
-              className="relative rounded-2xl bg-white/[0.03] p-8"
+              className="relative rounded-md bg-muted p-8"
             >
               <span
                 className="text-5xl font-extrabold leading-none"

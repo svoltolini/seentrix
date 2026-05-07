@@ -4,7 +4,7 @@ import { AcademyTabs, type TabKey } from "./academy-tabs";
 import { TeamProgress } from "./team-progress";
 import type { LocaleId, RoleId } from "@/lib/academy/types";
 import { requiredLessonsForRole } from "@/lib/academy/lessons";
-import { HugeIcon } from "@/components/huge-icon";
+import { Icon } from "@/components/icon";
 
 /**
  * Academy hub — Layer 2 landing.
@@ -72,7 +72,7 @@ export default async function AcademyPage({
     <div className="mx-auto max-w-6xl px-4 py-8 md:py-12">
       {mustCompleteTraining ? (
         <div
-          className="mb-8 overflow-hidden rounded-2xl bg-cover bg-center p-6 md:mb-10 md:p-10"
+          className="mb-8 overflow-hidden rounded-md bg-cover bg-center p-6 md:mb-10 md:p-10"
           style={{ backgroundImage: "url('/images/entity-role-bg.svg')" }}
         >
           <div className="flex flex-wrap items-start justify-between gap-5">
@@ -81,13 +81,13 @@ export default async function AcademyPage({
                 <span className="size-1.5 animate-pulse rounded-full bg-[#F59E0B]" />
                 {t("hero.title")}
               </div>
-              <h1 className="font-heading text-2xl font-bold leading-tight text-white md:text-3xl">
+              <h1 className="text-h2 leading-tight text-white md:text-3xl">
                 {tGate("title")}
               </h1>
-              <p className="mt-2 max-w-xl text-sm text-white/80 md:text-base">
+              <p className="mt-2 max-w-xl text-sm text-white md:text-base">
                 {tGate("subtitle")}
               </p>
-              <p className="mt-3 text-[13px] text-white/75">
+              <p className="mt-3 text-[13px] text-white">
                 {tGate("progress", {
                   done: requiredDone,
                   total: requiredIds.length,
@@ -95,7 +95,7 @@ export default async function AcademyPage({
               </p>
             </div>
             <div className="flex size-16 shrink-0 items-center justify-center rounded-full bg-white/10 backdrop-blur-sm">
-              <HugeIcon
+              <Icon
                 name="lock-password-stroke-rounded"
                 size={24}
                 className="text-white"
@@ -105,7 +105,7 @@ export default async function AcademyPage({
         </div>
       ) : (
         <div
-          className="mb-8 overflow-hidden rounded-2xl bg-cover bg-center p-6 md:mb-10 md:p-10"
+          className="mb-8 overflow-hidden rounded-md bg-cover bg-center p-6 md:mb-10 md:p-10"
           style={{ backgroundImage: "url('/images/entity-role-bg.svg')" }}
         >
           {/* Static eyebrow — no amber pulse here. The pulsing dot is
@@ -115,10 +115,10 @@ export default async function AcademyPage({
           <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur-sm">
             {t("hero.eyebrow")}
           </div>
-          <h1 className="font-heading text-2xl font-bold leading-tight text-white md:text-3xl">
+          <h1 className="text-h2 leading-tight text-white md:text-3xl">
             {t("hero.title")}
           </h1>
-          <p className="mt-2 max-w-xl text-sm text-white/80 md:text-base">
+          <p className="mt-2 max-w-xl text-sm text-white md:text-base">
             {t("hero.description")}
           </p>
         </div>

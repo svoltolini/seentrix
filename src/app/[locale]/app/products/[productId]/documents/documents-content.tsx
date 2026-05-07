@@ -6,8 +6,7 @@ import { useParams } from "next/navigation";
 import { useRouter } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { HugeIcon } from "@/components/huge-icon";
-import { ChevronLeftIcon } from "lucide-react";
+import { Icon } from "@/components/icon";
 import {
   saveDocument,
   listDocuments,
@@ -31,12 +30,12 @@ const DOCUMENT_TYPES: {
   {
     type: "declaration_of_conformity",
     iconName: "checkmark-badge-01-stroke-rounded",
-    gradient: "linear-gradient(135deg, #2563EB, #0891B2)",
+    gradient: "linear-gradient(135deg, #066DE6, #0891B2)",
   },
   {
     type: "vulnerability_disclosure_policy",
     iconName: "shield-check",
-    gradient: "linear-gradient(135deg, #7C3AED, #4F46E5)",
+    gradient: "linear-gradient(135deg, #6F4FE0, #066DE6)",
   },
   {
     type: "incident_report",
@@ -226,9 +225,9 @@ export function DocumentsContent({
               setSaveError(null);
               setSaveSuccess(false);
             }}
-            className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-white/[0.04] hover:text-foreground"
+            className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           >
-            <ChevronLeftIcon className="size-4" />
+            <Icon name="ChevronLeftIcon" className="size-4" />
           </button>
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2">
@@ -247,7 +246,7 @@ export function DocumentsContent({
                 </span>
               </div>
             </div>
-            <p className="mt-0.5 text-[13px] text-muted-foreground">
+            <p className="mt-0.5 text-p3 text-muted-foreground">
               {t(`types.${editingType}.description`)}
             </p>
           </div>
@@ -275,7 +274,7 @@ export function DocumentsContent({
               disabled={generatingPdf}
               className="gap-1.5"
             >
-              <HugeIcon name="pdf-01-stroke-rounded" size={14} />
+              <Icon name="pdf-01-stroke-rounded" size={14} />
               {generatingPdf
                 ? t("editor.generatingPdf")
                 : t("editor.generatePdf")}
@@ -288,7 +287,7 @@ export function DocumentsContent({
                 onClick={() => handleDownloadPdf(doc.id)}
                 className="gap-1.5"
               >
-                <HugeIcon name="pdf-01-stroke-rounded" size={14} />
+                <Icon name="pdf-01-stroke-rounded" size={14} />
                 {t("editor.downloadPdf")}
               </Button>
             )}
@@ -305,7 +304,7 @@ export function DocumentsContent({
                 }}
                 className="gap-1.5"
               >
-                <HugeIcon
+                <Icon
                   name="checkmark-badge-01-stroke-rounded"
                   size={14}
                 />
@@ -366,7 +365,7 @@ export function DocumentsContent({
       {/* Header */}
       <div>
         <h2 className="text-lg font-semibold text-foreground">{t("title")}</h2>
-        <p className="mt-0.5 text-[13px] text-muted-foreground">
+        <p className="mt-0.5 text-p3 text-muted-foreground">
           {t("subtitle")}
         </p>
       </div>
@@ -395,7 +394,7 @@ export function DocumentsContent({
                 {/* Header: icon + title + status */}
                 <div className="flex items-start gap-3 px-5 pt-5 pb-4">
                   <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-black/15">
-                    <HugeIcon
+                    <Icon
                       name={config.iconName}
                       size={18}
                       className="text-white"
@@ -412,7 +411,7 @@ export function DocumentsContent({
                           STATUS_DOT[status]
                         )}
                       />
-                      <span className="text-[11px] text-white/65">
+                      <span className="text-[11px] text-white">
                         {getStatusLabel(status)}
                       </span>
                     </div>
@@ -421,7 +420,7 @@ export function DocumentsContent({
 
                 {/* Description */}
                 <div className="flex-1 px-5 pb-4">
-                  <p className="text-xs leading-relaxed text-white/60">
+                  <p className="text-xs leading-relaxed text-white">
                     {t(`types.${config.type}.description`)}
                   </p>
                 </div>
@@ -434,7 +433,7 @@ export function DocumentsContent({
                       style={{ width: `${completion}%` }}
                     />
                   </div>
-                  <span className="mt-1.5 block text-[10px] text-white/40">
+                  <span className="mt-1.5 block text-[10px] text-white">
                     {doc
                       ? t("grid.lastUpdated", {
                           date: new Date(

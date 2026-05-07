@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useActionState, useTransition, useEffect, useRef } from "react";
+import { Icon } from "@/components/icon";
 import { useTranslations } from "next-intl";
 import { useRouter, Link } from "@/i18n/navigation";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -22,18 +23,17 @@ import {
   type ProductActionState,
 } from "../actions";
 import { PRODUCT_TYPES } from "./constants";
-import { PencilIcon, Trash2Icon, ImageIcon, XIcon } from "lucide-react";
 import { FieldHelp } from "@/components/field-help";
 
 const TYPE_STYLE: Record<string, { bg: string; text: string }> = {
-  hardware: { bg: "bg-[#2563EB]/15", text: "text-[#2563EB]" },
-  software: { bg: "bg-[#7C3AED]/15", text: "text-[#7C3AED]" },
+  hardware: { bg: "bg-[#066DE6]/15", text: "text-[#066DE6]" },
+  software: { bg: "bg-[#6F4FE0]/15", text: "text-[#6F4FE0]" },
   firmware: { bg: "bg-[#EA580C]/15", text: "text-[#EA580C]" },
   iot: { bg: "bg-[#0891B2]/15", text: "text-[#0891B2]" },
 };
 
 const CATEGORY_PILL: Record<string, string> = {
-  default: "bg-[#2563EB]",
+  default: "bg-[#066DE6]",
   important_class_i: "bg-[#D97706]",
   important_class_ii: "bg-[#EA580C]",
   critical: "bg-[#DC2626]",
@@ -117,7 +117,7 @@ export function ProductOverview({
   }
 
   const ts = TYPE_STYLE[product.type ?? ""] ?? {
-    bg: "bg-white/[0.06]",
+    bg: "bg-muted",
     text: "text-muted-foreground",
   };
 
@@ -128,10 +128,10 @@ export function ProductOverview({
         {/* Type — purple */}
         <div
           className="overflow-hidden rounded-xl"
-          style={{ background: "linear-gradient(135deg, #7C3AED, #4F46E5)" }}
+          style={{ background: "linear-gradient(135deg, #6F4FE0, #066DE6)" }}
         >
           <div className="p-5">
-            <p className="text-[11px] font-semibold text-white/75">
+            <p className="text-l6-plus text-white">
               {t("detail.overview.type")}
             </p>
             <div className="mt-2">
@@ -153,12 +153,12 @@ export function ProductOverview({
                   ? "linear-gradient(135deg, #EA580C, #DC2626)"
                   : product.cra_category === "important_class_i"
                     ? "linear-gradient(135deg, #D97706, #EA580C)"
-                    : "linear-gradient(135deg, #2563EB, #0891B2)"
+                    : "linear-gradient(135deg, #066DE6, #0891B2)"
               : "linear-gradient(135deg, #52525B, #3F3F46)",
           }}
         >
           <div className="p-5">
-            <p className="text-[11px] font-semibold text-white/75">
+            <p className="text-l6-plus text-white">
               {t("detail.overview.craStatus")}
             </p>
             {product.cra_category ? (
@@ -190,7 +190,7 @@ export function ProductOverview({
           }}
         >
           <div className="p-5">
-            <p className="text-[11px] font-semibold text-white/75">
+            <p className="text-l6-plus text-white">
               {t("detail.overview.complianceScore")}
             </p>
             <p className="mt-2 text-2xl font-bold tabular-nums tracking-tight text-white">
@@ -210,10 +210,10 @@ export function ProductOverview({
         {/* Conformity Route — blue */}
         <div
           className="overflow-hidden rounded-xl"
-          style={{ background: "linear-gradient(135deg, #2563EB, #0891B2)" }}
+          style={{ background: "linear-gradient(135deg, #066DE6, #0891B2)" }}
         >
           <div className="p-5">
-            <p className="text-[11px] font-semibold text-white/75">
+            <p className="text-l6-plus text-white">
               {t("detail.overview.conformityRoute")}
             </p>
             <p className="mt-2 text-sm font-semibold text-white">
@@ -222,7 +222,7 @@ export function ProductOverview({
                 : "\u2014"}
             </p>
             {product.requires_notified_body && (
-              <p className="mt-1 text-[11px] text-white/65">
+              <p className="mt-1 text-[11px] text-white">
                 {t("detail.overview.notifiedBody")}: {t("detail.overview.yes")}
               </p>
             )}
@@ -246,7 +246,7 @@ export function ProductOverview({
           onClick={() => setEditing(true)}
           className="gap-1.5"
         >
-          <PencilIcon className="size-3.5" />
+          <Icon name="PencilIcon" className="size-3.5" />
           {t("detail.overview.edit")}
         </Button>
         <Button
@@ -255,7 +255,7 @@ export function ProductOverview({
           onClick={() => setShowDelete(true)}
           className="gap-1.5 text-destructive hover:bg-destructive/10 hover:text-destructive"
         >
-          <Trash2Icon className="size-3.5" />
+          <Icon name="Trash2Icon" className="size-3.5" />
           {t("detail.overview.delete")}
         </Button>
       </div>
@@ -296,13 +296,13 @@ export function ProductOverview({
                 <div className="grid grid-cols-2 gap-2">
                   {PRODUCT_TYPES.map((type) => {
                     const typeStyle = TYPE_STYLE[type] ?? {
-                      bg: "bg-white/[0.06]",
+                      bg: "bg-muted",
                       text: "text-muted-foreground",
                     };
                     return (
                       <label
                         key={type}
-                        className="flex cursor-pointer items-center gap-2.5 rounded-xl border border-white/[0.06] px-3 py-2.5 text-sm transition-all has-[:checked]:border-primary/40 has-[:checked]:bg-primary/5"
+                        className="flex cursor-pointer items-center gap-2.5 rounded-xl border border-border px-3 py-2.5 text-sm transition-all has-[:checked]:border-primary/40 has-[:checked]:bg-primary/5"
                       >
                         <input
                           type="radio"
@@ -312,7 +312,7 @@ export function ProductOverview({
                           className="sr-only"
                         />
                         <div
-                          className={`flex size-6 shrink-0 items-center justify-center rounded text-[10px] font-bold ${typeStyle.bg} ${typeStyle.text}`}
+                          className={`flex size-6 shrink-0 items-center justify-center rounded text-l6-plus ${typeStyle.bg} ${typeStyle.text}`}
                         >
                           {type[0].toUpperCase()}
                         </div>
@@ -347,24 +347,24 @@ export function ProductOverview({
                     <img
                       src={imagePreview}
                       alt="Product"
-                      className="size-24 rounded-xl border border-white/[0.06] object-cover"
+                      className="size-24 rounded-xl border border-border object-cover"
                     />
                     <button
                       type="button"
                       onClick={handleRemoveImage}
                       className="absolute -right-2 -top-2 flex size-6 items-center justify-center rounded-full bg-card text-muted-foreground transition-colors hover:bg-destructive hover:text-white"
                     >
-                      <XIcon className="size-3.5" />
+                      <Icon name="XIcon" className="size-3.5" />
                     </button>
                   </div>
                 ) : (
                   <button
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
-                    className="flex size-24 flex-col items-center justify-center gap-1.5 rounded-xl border border-dashed border-white/[0.08] text-muted-foreground/40 transition-colors hover:border-white/[0.15] hover:text-muted-foreground/60"
+                    className="flex size-24 flex-col items-center justify-center gap-1.5 rounded-xl border border-dashed border-border text-muted-foreground transition-colors hover:border-border hover:text-muted-foreground"
                   >
-                    <ImageIcon className="size-5" />
-                    <span className="text-[10px] font-medium">
+                    <Icon name="ImageIcon" className="size-5" />
+                    <span className="text-l6-plus">
                       {t("create.imageUpload")}
                     </span>
                   </button>
@@ -377,7 +377,7 @@ export function ProductOverview({
                   onChange={handleImageChange}
                   className="hidden"
                 />
-                <p className="text-[11px] text-muted-foreground/40">
+                <p className="text-[11px] text-muted-foreground">
                   {t("create.imageHint")}
                 </p>
               </div>

@@ -1,10 +1,10 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { Icon } from "@/components/icon";
 import { Button } from "@/components/ui/button";
 import { OptionCard } from "../components/option-card";
 import type { WizardData } from "@/lib/validations/assessment";
-import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 
 export function StepEuDistribution({
   data,
@@ -47,7 +47,7 @@ export function StepEuDistribution({
 
       <div className="flex justify-between pt-2">
         <Button variant="outline" size="sm" onClick={onBack}>
-          <ArrowLeftIcon data-icon="inline-start" className="size-3.5" />
+          <Icon name="ArrowLeftIcon" data-icon="inline-start" className="size-3.5" />
           {t("navigation.back")}
         </Button>
         <Button
@@ -56,7 +56,7 @@ export function StepEuDistribution({
           disabled={data.isEuDistribution === null}
         >
           {t("navigation.continue")}
-          <ArrowRightIcon data-icon="inline-end" className="size-3.5" />
+          <Icon name="ArrowRightIcon" data-icon="inline-end" className="size-3.5" />
         </Button>
       </div>
     </div>

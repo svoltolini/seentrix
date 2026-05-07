@@ -1,10 +1,10 @@
 "use client";
 
 import { useActionState, useTransition, useState, useMemo } from "react";
+import { Icon } from "@/components/icon";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
-import { Eye, EyeOff, Loader2 } from "lucide-react";
 
 import { forceChangePassword, type AuthState } from "../actions";
 import {
@@ -74,10 +74,10 @@ export function ChangePasswordForm({ locale }: { locale: string }) {
 
   return (
     <>
-      <h1 className="text-center font-heading text-xl font-semibold text-foreground">
+      <h1 className="text-center text-h3 text-foreground">
         {t("changePassword.title")}
       </h1>
-      <p className="mt-1.5 text-center text-sm text-muted-foreground">
+      <p className="mt-1.5 text-center text-p3 text-muted-foreground">
         {t("changePassword.description")}
       </p>
 
@@ -105,14 +105,14 @@ export function ChangePasswordForm({ locale }: { locale: string }) {
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground/60 transition-colors hover:text-muted-foreground"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-muted-foreground"
               tabIndex={-1}
               aria-label={showPassword ? "Hide password" : "Show password"}
             >
               {showPassword ? (
-                <EyeOff className="size-4" />
+                <Icon name="EyeOff" className="size-4" />
               ) : (
-                <Eye className="size-4" />
+                <Icon name="Eye" className="size-4" />
               )}
             </button>
           </div>
@@ -128,7 +128,7 @@ export function ChangePasswordForm({ locale }: { locale: string }) {
               ))}
             </div>
           )}
-          <p className="text-xs text-muted-foreground/70">
+          <p className="text-xs text-muted-foreground">
             {t("fields.passwordRequirements")}
           </p>
           {errors.password && (
@@ -154,14 +154,14 @@ export function ChangePasswordForm({ locale }: { locale: string }) {
             <button
               type="button"
               onClick={() => setShowConfirm(!showConfirm)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground/60 transition-colors hover:text-muted-foreground"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-muted-foreground"
               tabIndex={-1}
               aria-label={showConfirm ? "Hide password" : "Show password"}
             >
               {showConfirm ? (
-                <EyeOff className="size-4" />
+                <Icon name="EyeOff" className="size-4" />
               ) : (
-                <Eye className="size-4" />
+                <Icon name="Eye" className="size-4" />
               )}
             </button>
           </div>
@@ -174,7 +174,7 @@ export function ChangePasswordForm({ locale }: { locale: string }) {
 
         <Button type="submit" className="mt-1 w-full" disabled={isPending}>
           {isPending ? (
-            <Loader2 className="size-4 animate-spin" />
+            <Icon name="Loader2" className="size-4 animate-spin" />
           ) : (
             t("changePassword.submit")
           )}

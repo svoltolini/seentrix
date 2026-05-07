@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { HugeIcon } from "@/components/huge-icon";
+import { Icon } from "@/components/icon";
 import { useToast } from "@/components/ui/toast";
 import { cn } from "@/lib/utils";
 import {
@@ -22,7 +22,7 @@ const SEVERITIES: SeveritySuggestion[] = [
 const SEVERITY_COLOR: Record<SeveritySuggestion, string> = {
   critical: "#DC2626",
   high: "#D97706",
-  medium: "#2563EB",
+  medium: "#066DE6",
   low: "#6B7280",
 };
 
@@ -74,16 +74,16 @@ export function PublicSecurityPage({
       <div className="mx-auto max-w-2xl px-6">
         {/* Hero */}
         <div
-          className="overflow-hidden rounded-2xl bg-cover bg-center px-8 py-10"
+          className="overflow-hidden rounded-md bg-cover bg-center px-8 py-10"
           style={{ backgroundImage: "url('/images/empty-state-bg.png')" }}
         >
-          <p className="text-[11px] font-semibold uppercase tracking-wider text-white/80">
+          <p className="text-l6-plus uppercase tracking-wider text-white">
             {t("eyebrow")}
           </p>
-          <h1 className="mt-2 font-heading text-3xl font-bold leading-tight text-white">
+          <h1 className="mt-2 text-h1 leading-tight text-white">
             {t("title", { org: orgName })}
           </h1>
-          <p className="mt-3 max-w-xl text-sm text-white/80">
+          <p className="mt-3 max-w-xl text-sm text-white">
             {t("subtitle")}
           </p>
           {contactEmail && (
@@ -91,7 +91,7 @@ export function PublicSecurityPage({
               href={`mailto:${contactEmail}?subject=[Security] `}
               className="mt-5 inline-flex items-center gap-2 rounded-lg bg-white px-4 py-2.5 text-sm font-semibold text-black transition-transform hover:-translate-y-0.5"
             >
-              <HugeIcon name="lock-password-stroke-rounded" size={14} />
+              <Icon name="lock-password-stroke-rounded" size={14} />
               {t("emailCta", { email: contactEmail })}
             </a>
           )}
@@ -99,7 +99,7 @@ export function PublicSecurityPage({
 
         {/* Disclosure policy */}
         {policy && (
-          <section className="mt-6 rounded-2xl border border-white/[0.06] bg-card p-6">
+          <section className="mt-6 rounded-md border border-border bg-card p-6">
             <h2 className="text-sm font-semibold text-foreground">
               {t("policyTitle")}
             </h2>
@@ -110,18 +110,18 @@ export function PublicSecurityPage({
         )}
 
         {/* Intake form */}
-        <section className="mt-6 rounded-2xl border border-white/[0.06] bg-card p-6">
+        <section className="mt-6 rounded-md border border-border bg-card p-6">
           <h2 className="text-sm font-semibold text-foreground">
             {t("form.title")}
           </h2>
-          <p className="mt-1 text-xs text-muted-foreground/70">
+          <p className="mt-1 text-xs text-muted-foreground">
             {t("form.description")}
           </p>
 
           {submitted ? (
             <div className="mt-6 rounded-lg border border-[#16A34A]/30 bg-[#16A34A]/10 p-5 text-center">
               <div className="mx-auto flex size-10 items-center justify-center rounded-full bg-[#16A34A]/25">
-                <HugeIcon
+                <Icon
                   name="checkmark-circle-01-stroke-rounded"
                   size={20}
                   className="text-[#16A34A]"
@@ -137,7 +137,7 @@ export function PublicSecurityPage({
           ) : (
             <div className="mt-5 space-y-4">
               <div>
-                <label className="text-xs font-medium text-muted-foreground/70">
+                <label className="text-xs font-medium text-muted-foreground">
                   {t("form.titleLabel")} *
                 </label>
                 <Input
@@ -148,7 +148,7 @@ export function PublicSecurityPage({
                 />
               </div>
               <div>
-                <label className="text-xs font-medium text-muted-foreground/70">
+                <label className="text-xs font-medium text-muted-foreground">
                   {t("form.descriptionLabel")} *
                 </label>
                 <Textarea
@@ -159,7 +159,7 @@ export function PublicSecurityPage({
                 />
               </div>
               <div>
-                <label className="text-xs font-medium text-muted-foreground/70">
+                <label className="text-xs font-medium text-muted-foreground">
                   {t("form.affectedProductLabel")}
                 </label>
                 <Input
@@ -170,7 +170,7 @@ export function PublicSecurityPage({
                 />
               </div>
               <div>
-                <label className="text-xs font-medium text-muted-foreground/70">
+                <label className="text-xs font-medium text-muted-foreground">
                   {t("form.severityLabel")}
                 </label>
                 <div className="mt-1.5 grid grid-cols-4 gap-2">
@@ -194,7 +194,7 @@ export function PublicSecurityPage({
               </div>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
-                  <label className="text-xs font-medium text-muted-foreground/70">
+                  <label className="text-xs font-medium text-muted-foreground">
                     {t("form.reporterNameLabel")}
                   </label>
                   <Input
@@ -204,7 +204,7 @@ export function PublicSecurityPage({
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-medium text-muted-foreground/70">
+                  <label className="text-xs font-medium text-muted-foreground">
                     {t("form.reporterEmailLabel")}
                   </label>
                   <Input
@@ -216,7 +216,7 @@ export function PublicSecurityPage({
                 </div>
               </div>
               <div>
-                <label className="text-xs font-medium text-muted-foreground/70">
+                <label className="text-xs font-medium text-muted-foreground">
                   {t("form.reporterHandleLabel")}
                 </label>
                 <Input
@@ -226,7 +226,7 @@ export function PublicSecurityPage({
                   className="mt-1.5"
                 />
               </div>
-              <p className="text-[11px] text-muted-foreground/60">
+              <p className="text-[11px] text-muted-foreground">
                 {t("form.anonymousNote")}
               </p>
               <Button

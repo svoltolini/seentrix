@@ -12,7 +12,7 @@ export default function LegalLayout({
 }) {
   return (
     <div className="min-h-screen bg-background">
-      <header className="border-b border-white/[0.06]">
+      <header className="border-b border-border">
         <div className="mx-auto flex max-w-4xl items-center justify-between px-4 py-4">
           <Link
             href="/"

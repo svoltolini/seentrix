@@ -3,6 +3,19 @@
     "title": "Products",
     "subtitle": "Manage your products and track CRA compliance.",
     "addProduct": "Add Product",
+    "view": {
+      "grid": "Grid",
+      "list": "List",
+      "timeline": "Timeline"
+    },
+    "timeline": {
+      "empty": "No products in this lane yet.",
+      "lanes": {
+        "ahead": "Ahead",
+        "onTrack": "On Track",
+        "atRisk": "At Risk"
+      }
+    },
     "noProducts": "No products yet",
     "noProductsDescription": "Add your first product to start your CRA compliance journey. We'll guide you through every step.",
     "searchPlaceholder": "Search products…",

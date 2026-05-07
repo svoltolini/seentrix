@@ -5,7 +5,7 @@ export default function PrivacyPage() {
   return (
     <>
       <h1>Privacy Policy</h1>
-      <p className="text-xs text-muted-foreground/70">
+      <p className="text-xs text-muted-foreground">
         Last updated: {new Date().toISOString().slice(0, 10)}
       </p>
 
@@ -194,7 +194,7 @@ export default function PrivacyPage() {
         page always reflects the most recent revision; minor edits
         (typos, clarifications) are made silently.
       </p>
-      <p className="mt-6 text-xs text-muted-foreground/70">
+      <p className="mt-6 text-xs text-muted-foreground">
         Seentrix Ltd · Company number 17169165 · Registered in England and Wales ·
         167-169 Great Portland Street, London W1W 5PF, United Kingdom
       </p>

@@ -21,10 +21,7 @@ export function LandingFooter() {
               (near-black) which is invisible on the dark footer. */}
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-2">
-              <Logo
-                size={15}
-                className="shrink-0 brightness-0 invert"
-              />
+              <Logo size={18} className="shrink-0" />
               <span className="text-base font-bold tracking-tight">
                 Seentrix
               </span>
@@ -102,7 +99,7 @@ export function LandingFooter() {
 
         {/* Bottom bar */}
         <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-border pt-6 sm:flex-row">
-          <span className="text-sm text-muted-foreground/60">
+          <span className="text-sm text-muted-foreground">
             {t("copyright", { year: String(year) })}
           </span>
         </div>

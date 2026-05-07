@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
-import { HugeIcon } from "@/components/huge-icon";
+import { Icon } from "@/components/icon";
 import { FieldHelp } from "@/components/field-help";
 import { StaggerReveal } from "@/components/stagger-reveal";
 import { StatCard } from "@/components/stat-card";
@@ -33,7 +33,7 @@ import {
 const SEVERITY_COLOR: Record<IncidentSeverity, string> = {
   critical: "#DC2626",
   high: "#D97706",
-  medium: "#2563EB",
+  medium: "#066DE6",
   low: "#6B7280",
 };
 
@@ -41,7 +41,7 @@ const STATUS_COLOR: Record<string, string> = {
   detected: "#DC2626",
   early_warning_submitted: "#D97706",
   incident_report_submitted: "#D97706",
-  final_report_submitted: "#2563EB",
+  final_report_submitted: "#066DE6",
   closed: "#16A34A",
 };
 
@@ -196,13 +196,13 @@ export function IncidentsContent({
           className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-end"
         >
           <div>
-            <p className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground/50">
+            <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
               {t("breadcrumb")}
             </p>
-            <h1 className="mt-1 font-heading text-[28px] font-bold tracking-tight">
+            <h1 className="mt-1 text-h1">
               {t("title")}
             </h1>
-            <p className="mt-1.5 max-w-xl text-[13px] text-muted-foreground">
+            <p className="mt-1.5 max-w-xl text-p3 text-muted-foreground">
               {t("subtitle")}
             </p>
           </div>
@@ -212,7 +212,7 @@ export function IncidentsContent({
               onClick={() => setNewIncidentOpen(true)}
               className="shrink-0"
             >
-              <HugeIcon name="plus-sign-square-stroke-rounded" size={14} />
+              <Icon name="plus-sign-square-stroke-rounded" size={14} />
               {t("new.cta")}
             </Button>
           )}
@@ -293,18 +293,18 @@ export function IncidentsContent({
         {filtered.length === 0 ? (
           <div
             data-reveal
-            className="overflow-hidden rounded-2xl bg-cover bg-center px-6 py-20 text-center"
+            className="overflow-hidden rounded-md bg-cover bg-center px-6 py-20 text-center"
             style={{ backgroundImage: "url('/images/empty-state-bg.png')" }}
           >
             <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-black/25">
-              <HugeIcon name="alert-02" size={28} className="text-white/90" />
+              <Icon name="alert-02" size={28} className="text-white" />
             </div>
             <h2 className="mt-5 text-lg font-semibold text-white">
               {incidents.length === 0
                 ? t("empty.title")
                 : t("empty.filtered")}
             </h2>
-            <p className="mt-2 text-sm text-white/70">
+            <p className="mt-2 text-sm text-white">
               {incidents.length === 0
                 ? t("empty.description")
                 : t("empty.filteredDescription")}
@@ -321,9 +321,9 @@ export function IncidentsContent({
         ) : (
           <div
             data-reveal
-            className="overflow-hidden rounded-2xl bg-white/[0.03]"
+            className="overflow-hidden rounded-md bg-muted"
           >
-            <div className="flex items-center border-b border-white/[0.06] px-5 py-2.5 text-[11px] text-muted-foreground/60">
+            <div className="flex items-center border-b border-border px-5 py-2.5 text-[11px] text-muted-foreground">
               <span className="flex-1">{t("table.incident")}</span>
               <span className="hidden w-24 sm:block">{t("table.type")}</span>
               <span className="hidden w-28 sm:block">
@@ -340,7 +340,7 @@ export function IncidentsContent({
                   <Link
                     key={inc.id}
                     href={`/app/incidents/${inc.id}`}
-                    className="group relative flex items-center px-5 py-3.5 transition-colors hover:bg-white/[0.02]"
+                    className="group relative flex items-center px-5 py-3.5 transition-colors hover:bg-muted"
                   >
                     <span
                       className="absolute inset-y-0 left-0 w-[3px]"
@@ -351,7 +351,7 @@ export function IncidentsContent({
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-wrap items-center gap-2">
                         <span
-                          className="rounded-md px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white"
+                          className="rounded-md px-1.5 py-0.5 text-l6-plus uppercase tracking-wide text-white"
                           style={{
                             backgroundColor: SEVERITY_COLOR[inc.severity],
                           }}
@@ -368,7 +368,7 @@ export function IncidentsContent({
                         )}
                       </div>
                       {inc.affected_product_names.length > 0 && (
-                        <p className="mt-0.5 truncate text-[11px] text-muted-foreground/60">
+                        <p className="mt-0.5 truncate text-[11px] text-muted-foreground">
                           {inc.affected_product_names.join(" · ")}
                         </p>
                       )}
@@ -394,7 +394,7 @@ export function IncidentsContent({
                               ? "bg-[#DC2626]/15 text-[#DC2626]"
                               : tLeft.hoursLeft < 24
                                 ? "bg-[#D97706]/15 text-[#D97706]"
-                                : "bg-white/[0.04] text-muted-foreground",
+                                : "bg-muted text-muted-foreground",
                           )}
                         >
                           <span
@@ -419,7 +419,7 @@ export function IncidentsContent({
                           </span>
                         </div>
                       ) : (
-                        <span className="text-[11px] text-muted-foreground/50">
+                        <span className="text-[11px] text-muted-foreground">
                           {t("deadline.none")}
                         </span>
                       )}
@@ -463,7 +463,7 @@ function SegmentedControl({
   onChange: (v: string) => void;
 }) {
   return (
-    <div className="inline-flex gap-1 rounded-lg bg-white/[0.03] p-1">
+    <div className="inline-flex gap-1 rounded-lg bg-muted p-1">
       {options.map((o) => (
         <button
           key={o.value}
@@ -472,7 +472,7 @@ function SegmentedControl({
           className={cn(
             "rounded-md px-3 py-1.5 text-xs font-medium transition-colors",
             value === o.value
-              ? "bg-white/[0.08] text-foreground"
+              ? "bg-muted text-foreground"
               : "text-muted-foreground hover:text-foreground",
           )}
         >
@@ -519,7 +519,7 @@ function MultiSeverity({
           >
             <span className="flex size-4 items-center justify-center rounded border border-border">
               {selected.has(o) && (
-                <HugeIcon
+                <Icon
                   name="checkmark-circle-01-stroke-rounded"
                   size={12}
                   className="text-primary"
@@ -550,7 +550,7 @@ function StatusChip({ status, label }: { status: string; label: string }) {
   const color = STATUS_COLOR[status] ?? "#6B7280";
   return (
     <span
-      className="inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 text-[11px] font-semibold"
+      className="inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 text-l6-plus"
       style={{
         borderColor: `${color}4D`,
         backgroundColor: `${color}1A`,
@@ -709,12 +709,12 @@ function NewIncidentDialog({
                       "flex items-center gap-2 rounded-md px-2 py-1.5 text-left text-sm transition-colors",
                       on
                         ? "bg-primary/10 text-foreground"
-                        : "text-muted-foreground hover:bg-white/[0.03]",
+                        : "text-muted-foreground hover:bg-muted",
                     )}
                   >
                     <span className="flex size-4 items-center justify-center rounded border border-border">
                       {on && (
-                        <HugeIcon
+                        <Icon
                           name="checkmark-circle-01-stroke-rounded"
                           size={12}
                           className="text-primary"

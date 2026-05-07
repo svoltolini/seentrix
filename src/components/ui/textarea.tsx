@@ -2,12 +2,18 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
+/**
+ * Textarea — same filled-input look as <Input />.
+ */
 function Textarea({ className, ...props }: React.ComponentProps<"textarea">) {
   return (
     <textarea
       data-slot="textarea"
       className={cn(
-        "w-full min-w-0 rounded-lg border border-input bg-input/30 px-3 py-2 text-sm text-foreground transition-colors outline-none placeholder:text-muted-foreground focus-visible:border-primary disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-input/80 disabled:opacity-50 aria-invalid:border-destructive/50",
+        "min-h-[88px] w-full min-w-0 rounded-md bg-input p-4 text-p2 text-foreground placeholder:text-muted-foreground border-[1.5px] border-transparent transition-colors outline-none",
+        "focus-visible:bg-card focus-visible:border-primary/30 focus-visible:ring-2 focus-visible:ring-ring/15",
+        "disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
+        "aria-invalid:border-destructive/40 aria-invalid:ring-2 aria-invalid:ring-destructive/15",
         className
       )}
       {...props}

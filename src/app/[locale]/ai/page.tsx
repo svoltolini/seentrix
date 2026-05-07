@@ -16,16 +16,16 @@ export default async function AiPage({
 // Four gradients — one per numeral. Same spectrum the landing-page
 // CopilotSection uses so the two pages read as one continuous story.
 const BULLETS = [
-  { key: "sovereign", gradient: "from-[#3B82F6] to-[#8B5CF6]" },
-  { key: "grounded", gradient: "from-[#8B5CF6] to-[#EC4899]" },
-  { key: "context", gradient: "from-[#F59E0B] to-[#F97316]" },
+  { key: "sovereign", gradient: "from-[#066DE6] to-[#6F4FE0]" },
+  { key: "grounded", gradient: "from-[#6F4FE0] to-[#EC4899]" },
+  { key: "context", gradient: "from-[#F59E0B] to-[#FF6D00]" },
   { key: "actionable", gradient: "from-[#10B981] to-[#06B6D4]" },
 ] as const;
 
 // Five long-form sections also get their own numeral gradient.
 const SECTION_GRADIENTS = [
-  "from-[#3B82F6] to-[#8B5CF6]",
-  "from-[#8B5CF6] to-[#EC4899]",
+  "from-[#066DE6] to-[#6F4FE0]",
+  "from-[#6F4FE0] to-[#EC4899]",
   "from-[#EC4899] to-[#F59E0B]",
   "from-[#F59E0B] to-[#10B981]",
   "from-[#10B981] to-[#06B6D4]",
@@ -61,7 +61,7 @@ function AiContent() {
       {/* Hero — borderless, eyebrow as bare tracked uppercase string.
           Matches the CopilotSection header treatment on the landing. */}
       <section className="mx-auto max-w-5xl px-6 pt-16 pb-20 lg:pt-24 lg:pb-28">
-        <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#60A5FA]">
+        <span className="text-l6-plus uppercase tracking-[0.18em] text-[#066DE6]">
           {t("eyebrow")}
         </span>
         <h1 className="mt-6 font-heading text-4xl font-bold leading-[1.08] tracking-tight text-foreground sm:text-5xl lg:text-[56px]">
@@ -145,7 +145,7 @@ function AiContent() {
           inner card). Each plan gets its own numeral gradient. */}
       <section className="border-t border-border/50 bg-card/50 py-16 lg:py-20">
         <div className="mx-auto max-w-5xl px-6">
-          <h3 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#60A5FA]">
+          <h3 className="text-l6-plus uppercase tracking-[0.18em] text-[#066DE6]">
             {tLearn("quota.title")}
           </h3>
           <div className="mt-8 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">

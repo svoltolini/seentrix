@@ -54,7 +54,7 @@ export async function TeamProgress({ locale }: { locale: LocaleId }) {
 
   if (memberList.length === 0) {
     return (
-      <p className="rounded-2xl bg-white/[0.03] p-6 text-sm text-muted-foreground">
+      <p className="rounded-md bg-muted p-6 text-sm text-muted-foreground">
         {t("noTeam")}
       </p>
     );
@@ -69,7 +69,7 @@ export async function TeamProgress({ locale }: { locale: LocaleId }) {
 
   return (
     <div>
-      <div className="mb-5 flex flex-wrap items-start justify-between gap-4 rounded-2xl bg-white/[0.03] p-6">
+      <div className="mb-5 flex flex-wrap items-start justify-between gap-4 rounded-md bg-muted p-6">
         <div className="min-w-0 flex-1">
           <h2 className="font-heading text-lg font-semibold">{t("heading")}</h2>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -77,7 +77,7 @@ export async function TeamProgress({ locale }: { locale: LocaleId }) {
           </p>
         </div>
         <div className="text-right">
-          <div className="font-heading text-2xl font-bold tabular-nums text-foreground">
+          <div className="text-h2 tabular-nums text-foreground">
             {orgPct}%
           </div>
           <div className="text-[11px] text-muted-foreground">
@@ -90,7 +90,7 @@ export async function TeamProgress({ locale }: { locale: LocaleId }) {
         <a
           href="/api/academy/team-progress"
           download
-          className="inline-flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-[11px] font-medium text-muted-foreground transition-colors hover:bg-white/[0.05] hover:text-foreground"
+          className="inline-flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-l6-plus text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
         >
           {t("exportCsv")} ↓
         </a>
@@ -159,25 +159,25 @@ function MemberCard({
         : "#D97706";
 
   return (
-    <div className="rounded-2xl bg-white/[0.03] p-5 transition-colors duration-300 hover:bg-white/[0.05]">
+    <div className="rounded-md bg-muted p-5 transition-colors duration-300 hover:bg-muted">
       <div className="flex items-start gap-4">
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
             <p className="truncate font-heading text-[15px] font-semibold text-foreground">
               {member.full_name ?? member.email}
             </p>
-            <span className="shrink-0 rounded-full bg-white/[0.06] px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+            <span className="shrink-0 rounded-full bg-muted px-2 py-0.5 text-l6-plus uppercase tracking-wide text-muted-foreground">
               {member.role}
             </span>
           </div>
-          <p className="mt-0.5 truncate text-[12px] text-muted-foreground">
+          <p className="mt-0.5 truncate text-p4 text-muted-foreground">
             {member.email}
           </p>
-          <p className="mt-2 text-[11px] tabular-nums text-muted-foreground">
+          <p className="mt-2 text-l6-plus tabular-nums text-muted-foreground">
             {doneCount} / {requiredCount} required lessons passed
           </p>
           {pendingLabels.length > 0 && (
-            <p className="mt-2 line-clamp-2 text-[12px] text-muted-foreground/80">
+            <p className="mt-2 line-clamp-2 text-p4 text-muted-foreground">
               <span className="font-medium text-foreground/70">Pending:</span>{" "}
               {pendingLabels.join(" · ")}
               {extraPending > 0 && ` · +${extraPending} more`}

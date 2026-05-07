@@ -2,25 +2,14 @@
 
 import type { ReactNode } from "react";
 import { Link } from "@/i18n/navigation";
-import { HugeIcon } from "@/components/huge-icon";
+import { Icon } from "@/components/icon";
 import { cn } from "@/lib/utils";
 
 /**
- * Unified alert/attention banner used wherever the dashboard needs to say
- * "here's something that needs your attention." Shared layout, shared
- * decorative backdrop, shared CTA treatment — the only thing that varies
- * is the pulsing dot colour (attention vs critical) so urgency is still
- * readable at a glance.
- *
- * Used by:
- *   - ProfileIncompleteBanner (Declaration of Conformity not ready)
- *   - Dashboard ActionNeededBanner (product at risk before deadline)
- *   - Dashboard ActiveIncidentsBanner (Article 14 countdown)
- *
- * If you need to add another alert: render <AlertBanner> with the right
- * tone + content. Do not roll a new bespoke card — the whole point of
- * this component is that the three existing ones used to look like three
- * different products.
+ * Unified alert / attention banner. Restyled for Nask: gradient hero motif
+ * (matches Detail-Dashboard `41:1171`) with a status-tinted eyebrow chip
+ * and a flat white CTA. Used for "needs your attention" callouts on the
+ * dashboard and settings pages.
  */
 export type AlertTone = "attention" | "critical";
 
@@ -36,51 +25,58 @@ export function AlertBanner({
   tone?: AlertTone;
   eyebrow: string;
   title: string;
-  /** Short one-liner under the title. Supply `children` instead for rich
-   *  content (e.g. a stats row). If both are supplied, `children` wins. */
   description?: string;
   children?: ReactNode;
   cta?: { label: string; href: string };
   variant?: "full" | "inline";
 }) {
-  const dotColor = tone === "critical" ? "#DC2626" : "#F59E0B";
+  const isCritical = tone === "critical";
 
   return (
     <div
-      className="overflow-hidden rounded-2xl bg-cover bg-center"
-      style={{ backgroundImage: "url('/images/entity-role-bg.svg')" }}
+      className="relative overflow-hidden rounded-md text-white"
+      style={{
+        backgroundImage: isCritical
+          ? "linear-gradient(135deg, #2C3659 0%, #6F4FE0 55%, #E60019 110%)"
+          : "linear-gradient(135deg, #066DE6 0%, #6F4FE0 55%, #FF6D00 110%)",
+      }}
     >
+      {/* Decorative blob */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -right-20 -top-20 size-72 rounded-full bg-white/15 blur-3xl"
+      />
       <div
         className={cn(
-          "flex flex-col gap-5 md:flex-row md:items-center md:justify-between",
+          "relative flex flex-col gap-5 md:flex-row md:items-center md:justify-between",
           variant === "full" ? "p-6 md:p-8" : "p-5",
         )}
       >
         <div className="min-w-0 flex-1">
-          <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur-sm">
+          <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-l6-plus uppercase tracking-wider text-white backdrop-blur-sm">
             <span
-              className="size-1.5 animate-pulse rounded-full"
-              style={{ backgroundColor: dotColor }}
+              className={cn(
+                "size-1.5 animate-pulse rounded-full",
+                isCritical ? "bg-destructive" : "bg-accent",
+              )}
             />
             {eyebrow}
           </div>
-          <h2 className="font-heading text-xl font-bold leading-snug text-white md:text-2xl">
-            {title}
-          </h2>
+          <h2 className="text-h2 text-white md:text-h1">{title}</h2>
           {children ? (
-            <div className="mt-3 text-sm text-white/75">{children}</div>
+            <div className="mt-3 text-p2 text-white">{children}</div>
           ) : description ? (
-            <p className="mt-2 max-w-xl text-sm text-white/75">{description}</p>
+            <p className="mt-2 max-w-xl text-p2 text-white">{description}</p>
           ) : null}
         </div>
 
         {cta && (
           <Link
             href={cta.href}
-            className="inline-flex shrink-0 items-center gap-2 rounded-lg bg-white px-4 py-2.5 text-sm font-semibold text-black shadow-sm transition-transform hover:-translate-y-0.5"
+            className="inline-flex shrink-0 items-center gap-2 rounded-sm bg-white px-5 py-2.5 text-l5 text-foreground transition-colors hover:bg-white/90"
           >
             {cta.label}
-            <HugeIcon name="arrow-right-01-stroke-rounded" size={16} />
+            <Icon name="arrow-right-01-stroke-rounded" size={16} />
           </Link>
         )}
       </div>

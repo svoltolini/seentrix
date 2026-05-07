@@ -1,10 +1,10 @@
 import { setRequestLocale } from "next-intl/server";
+import { Icon } from "@/components/icon";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { Link } from "@/i18n/navigation";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Calendar, Clock } from "lucide-react";
 import {
   getPostBySlug,
   getRelatedPosts,
@@ -80,7 +80,7 @@ export default async function BlogPostPage({
         href="/blog"
         className="mb-8 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
       >
-        <ArrowLeft className="size-4" />
+        <Icon name="ArrowLeft" className="size-4" />
         {t("backToBlog")}
       </Link>
 
@@ -89,19 +89,19 @@ export default async function BlogPostPage({
         <Badge variant="secondary" className="mb-4">
           {post.category}
         </Badge>
-        <h1 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
+        <h1 className="text-h1 tracking-tight sm:text-4xl lg:text-5xl">
           {post.title}
         </h1>
         <div className="mt-4 flex items-center gap-4 text-sm text-muted-foreground">
           <span className="flex items-center gap-1.5">
-            <Calendar className="size-4" />
+            <Icon name="Calendar" className="size-4" />
             {new Date(post.date).toLocaleDateString(
               locale === "de" ? "de-DE" : "en-US",
               { year: "numeric", month: "long", day: "numeric" }
             )}
           </span>
           <span className="flex items-center gap-1.5">
-            <Clock className="size-4" />
+            <Icon name="Clock" className="size-4" />
             {post.readingTime} {t("minRead")}
           </span>
         </div>
@@ -127,7 +127,7 @@ export default async function BlogPostPage({
       {/* Related posts */}
       {related.length > 0 && (
         <section className="mt-16 border-t pt-12">
-          <h2 className="mb-6 font-heading text-2xl font-bold">
+          <h2 className="mb-6 text-h2">
             {t("relatedPosts")}
           </h2>
           <div className="grid gap-6 sm:grid-cols-2">

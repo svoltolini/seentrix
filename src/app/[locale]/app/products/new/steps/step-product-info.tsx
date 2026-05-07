@@ -1,13 +1,13 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { Icon } from "@/components/icon";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { OptionCard } from "../components/option-card";
 import type { WizardData } from "@/lib/validations/assessment";
-import { ArrowRightIcon } from "lucide-react";
 
 const PRODUCT_TYPES = ["hardware", "software", "firmware", "iot"] as const;
 
@@ -77,7 +77,7 @@ export function StepProductInfo({
       <div className="flex justify-end pt-2">
         <Button onClick={onNext} disabled={!canContinue} size="sm">
           {t("navigation.continue")}
-          <ArrowRightIcon data-icon="inline-end" className="size-3.5" />
+          <Icon name="ArrowRightIcon" data-icon="inline-end" className="size-3.5" />
         </Button>
       </div>
     </div>

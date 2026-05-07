@@ -5,6 +5,11 @@ import { gsap } from "gsap";
 import { Logo } from "@/components/logo";
 import { Link } from "@/i18n/navigation";
 
+/**
+ * Nask auth shell — light gray page background, brand mark above a white
+ * card that holds the form. The card uses the smaller `card-md` shadow so it
+ * sits comfortably on the gray bg without feeling lifted.
+ */
 export default function AuthLayout({
   children,
 }: {
@@ -30,25 +35,17 @@ export default function AuthLayout({
 
   return (
     <div className="flex min-h-dvh flex-col items-center justify-center bg-background px-6 py-12">
-      {/* 400px is the sweet spot for single-column auth forms: email
-          fields breathe properly, and the 6-digit MFA code boxes get
-          enough horizontal room without looking stretched. */}
-      <div ref={containerRef} className="w-full max-w-[400px]">
-        {/* Logo + wordmark link to landing. brightness-0 invert flips
-            the SVG's near-black fill (#020A0F) to white so it's visible
-            on the dark background — same pattern as the landing footer.
-            Previously only the (invisible) logo was the back-to-landing
-            affordance, so users landing on auth felt stuck. */}
+      <div ref={containerRef} className="w-full max-w-[420px]">
         <Link
           href="/"
-          className="mb-10 flex items-center justify-center gap-2 transition-opacity hover:opacity-80"
+          className="mb-8 flex items-center justify-center gap-2 transition-opacity hover:opacity-80"
         >
-          <Logo size={28} className="shrink-0 brightness-0 invert" />
-          <span className="text-xl font-bold tracking-tight text-foreground">
-            Seentrix
-          </span>
+          <Logo size={28} className="shrink-0 text-primary" />
+          <span className="text-h2 text-foreground">Seentrix</span>
         </Link>
-        {children}
+        <div className="rounded-md bg-card p-8 shadow-card-md">
+          {children}
+        </div>
       </div>
     </div>
   );

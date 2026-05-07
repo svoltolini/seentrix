@@ -7,7 +7,7 @@ import type { QuizQuestion } from "@/lib/academy/types";
 import { QUIZ_PASS_THRESHOLD } from "@/lib/academy/types";
 import { submitQuiz } from "../actions";
 import { Button } from "@/components/ui/button";
-import { HugeIcon } from "@/components/huge-icon";
+import { Icon } from "@/components/icon";
 import { cn } from "@/lib/utils";
 
 type Outcome =
@@ -76,19 +76,19 @@ export function Quiz({
   if (outcome.kind === "passed") {
     return (
       <div
-        className="overflow-hidden rounded-2xl bg-cover bg-center p-8"
+        className="overflow-hidden rounded-md bg-cover bg-center p-8"
         style={{ backgroundImage: "url('/images/entity-role-bg.svg')" }}
       >
         <div className="flex size-12 items-center justify-center rounded-full bg-white/15 backdrop-blur-sm">
-          <HugeIcon name="checkmark-circle-01-stroke-rounded" size={24} className="text-white" />
+          <Icon name="checkmark-circle-01-stroke-rounded" size={24} className="text-white" />
         </div>
-        <h3 className="mt-4 font-heading text-xl font-bold text-white">
+        <h3 className="mt-4 text-h3 text-white">
           {t("passedTitle")}
         </h3>
-        <p className="mt-2 text-sm text-white/80">
+        <p className="mt-2 text-sm text-white">
           {t("passedBody", { score: Math.round(outcome.score * 100) })}
         </p>
-        <p className="mt-3 font-mono text-[11px] text-white/60">
+        <p className="mt-3 font-mono text-[11px] text-white">
           {t("certificateLabel")}: {outcome.certificateHash.slice(0, 16)}…
         </p>
       </div>
@@ -115,7 +115,7 @@ export function Quiz({
       ))}
 
       {outcome.kind === "idle" && (
-        <div className="flex items-center justify-between gap-3 rounded-xl bg-white/[0.03] px-5 py-4">
+        <div className="flex items-center justify-between gap-3 rounded-xl bg-muted px-5 py-4">
           <p className="text-xs text-muted-foreground">
             {t("threshold", { percent: Math.round(QUIZ_PASS_THRESHOLD * 100) })}
           </p>
@@ -200,9 +200,9 @@ function QuestionCard({
     <fieldset
       disabled={locked}
       aria-labelledby={legendId}
-      className="rounded-xl bg-white/[0.03] p-5"
+      className="rounded-xl bg-muted p-5"
     >
-      <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/60">
+      <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
         {tCard("questionPrefix")}
         {index + 1}
       </p>
@@ -226,7 +226,7 @@ function QuestionCard({
               className={cn(
                 "flex w-full items-start gap-3 rounded-lg border px-4 py-3 text-left text-[13px] transition-colors",
                 !revealCorrect && isSelected && "border-primary bg-primary/10",
-                !revealCorrect && !isSelected && "border-white/[0.06] hover:border-white/[0.12]",
+                !revealCorrect && !isSelected && "border-border hover:border-border",
                 showCorrect && "border-[#16A34A]/50 bg-[#16A34A]/10",
                 showWrong && "border-[#DC2626]/50 bg-[#DC2626]/10",
                 locked && !showCorrect && !showWrong && "opacity-40",
@@ -253,7 +253,7 @@ function QuestionCard({
         })}
       </div>
       {revealCorrect && (
-        <p className="mt-3 rounded-md bg-white/[0.04] px-3 py-2 text-[11px] leading-relaxed text-muted-foreground">
+        <p className="mt-3 rounded-md bg-muted px-3 py-2 text-[11px] leading-relaxed text-muted-foreground">
           {question.explanation}
         </p>
       )}

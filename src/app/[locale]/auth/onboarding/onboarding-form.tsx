@@ -1,10 +1,10 @@
 "use client";
 
 import { useActionState, useTransition, useState, useRef } from "react";
+import { Icon } from "@/components/icon";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
-import { Loader2, Camera, ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 
 import { completeOnboarding, type AuthState } from "../actions";
@@ -111,10 +111,10 @@ export function OnboardingForm({ locale }: { locale: string }) {
 
   return (
     <>
-      <h1 className="text-center font-heading text-xl font-semibold text-foreground">
+      <h1 className="text-center text-h3 text-foreground">
         {t("onboarding.title")}
       </h1>
-      <p className="mt-1.5 text-center text-sm text-muted-foreground">
+      <p className="mt-1.5 text-center text-p3 text-muted-foreground">
         {t(`onboarding.step${step}.description` as Parameters<typeof t>[0])}
       </p>
 
@@ -160,10 +160,10 @@ export function OnboardingForm({ locale }: { locale: string }) {
                     className="object-cover"
                   />
                 ) : (
-                  <Camera className="size-6 text-muted-foreground" />
+                  <Icon name="Camera" className="size-6 text-muted-foreground" />
                 )}
                 <div className="absolute inset-0 flex items-center justify-center rounded-full bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
-                  <Camera className="size-5 text-white" />
+                  <Icon name="Camera" className="size-5 text-white" />
                 </div>
               </button>
               <input
@@ -173,7 +173,7 @@ export function OnboardingForm({ locale }: { locale: string }) {
                 onChange={handleAvatarChange}
                 className="hidden"
               />
-              <p className="text-[11px] text-muted-foreground/60">
+              <p className="text-[11px] text-muted-foreground">
                 {t("onboarding.avatarHint")}
               </p>
             </div>
@@ -347,7 +347,7 @@ export function OnboardingForm({ locale }: { locale: string }) {
         <div className="mt-2 flex items-center justify-between gap-2">
           {step > 1 ? (
             <Button type="button" variant="ghost" size="sm" onClick={handleBack}>
-              <ChevronLeft className="size-4" />
+              <Icon name="ChevronLeft" className="size-4" />
               {t("onboarding.back")}
             </Button>
           ) : (
@@ -356,12 +356,12 @@ export function OnboardingForm({ locale }: { locale: string }) {
           {step < 3 ? (
             <Button type="button" size="sm" onClick={handleNext}>
               {t("onboarding.next")}
-              <ChevronRight className="size-4" />
+              <Icon name="ChevronRight" className="size-4" />
             </Button>
           ) : (
             <Button type="submit" size="sm" disabled={isPending}>
               {isPending ? (
-                <Loader2 className="size-4 animate-spin" />
+                <Icon name="Loader2" className="size-4 animate-spin" />
               ) : (
                 t("onboarding.submit")
               )}
@@ -391,14 +391,14 @@ function Field({
       <div className="flex items-baseline gap-2">
         <Label>{label}</Label>
         {optional && (
-          <span className="text-[10px] uppercase tracking-wider text-muted-foreground/50">
+          <span className="text-[10px] uppercase tracking-wider text-muted-foreground">
             optional
           </span>
         )}
       </div>
       {children}
       {hint && !error && (
-        <p className="text-[11px] text-muted-foreground/60">{hint}</p>
+        <p className="text-[11px] text-muted-foreground">{hint}</p>
       )}
       {error && <p className="text-xs text-destructive">{error}</p>}
     </div>

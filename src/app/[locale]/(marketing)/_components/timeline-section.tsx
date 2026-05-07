@@ -6,9 +6,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useTranslations } from "next-intl";
 
 const milestones = [
-  { key: "m1", color: "#3B82F6" },
-  { key: "m2", color: "#8B5CF6" },
-  { key: "m3", color: "#F97316" },
+  { key: "m1", color: "#066DE6" },
+  { key: "m2", color: "#6F4FE0" },
+  { key: "m3", color: "#FF6D00" },
 ] as const;
 
 export function TimelineSection() {
@@ -93,7 +93,7 @@ export function TimelineSection() {
               left: "calc(100% / 6)",
               width: "0%",
               maxWidth: "calc(100% * 4 / 6)",
-              background: "linear-gradient(to right, #3B82F6, #8B5CF6, #F97316)",
+              background: "linear-gradient(to right, #066DE6, #6F4FE0, #FF6D00)",
             }}
           />
 

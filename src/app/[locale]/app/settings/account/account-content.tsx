@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition, useRef } from "react";
+import { Icon } from "@/components/icon";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
@@ -8,7 +9,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { updateProfile, changePassword, type AccountInfo } from "../actions";
 import { useToast } from "@/components/ui/toast";
-import { Camera } from "lucide-react";
 import Image from "next/image";
 
 export function AccountContent({ account }: { account: AccountInfo | null }) {
@@ -77,7 +77,7 @@ export function AccountContent({ account }: { account: AccountInfo | null }) {
     <div className="space-y-6">
       {/* Profile */}
       <div className="rounded-xl bg-card">
-        <div className="border-b border-white/[0.06] px-6 py-4">
+        <div className="border-b border-border px-6 py-4">
           <h2 className="text-sm font-semibold">{t("profileTitle")}</h2>
         </div>
         <form onSubmit={handleProfileSubmit}>
@@ -97,13 +97,13 @@ export function AccountContent({ account }: { account: AccountInfo | null }) {
                     className="object-cover"
                   />
                 ) : (
-                  <Camera className="size-6 text-muted-foreground" />
+                  <Icon name="Camera" className="size-6 text-muted-foreground" />
                 )}
                 <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
-                  <Camera className="size-5 text-white" />
+                  <Icon name="Camera" className="size-5 text-white" />
                 </div>
               </button>
-              <p className="text-[11px] text-muted-foreground/40 sm:hidden">
+              <p className="text-[11px] text-muted-foreground sm:hidden">
                 {t("avatarHint")}
               </p>
               <input
@@ -134,14 +134,14 @@ export function AccountContent({ account }: { account: AccountInfo | null }) {
                   disabled
                   className="opacity-50"
                 />
-                <p className="text-[11px] text-muted-foreground/40">
+                <p className="text-[11px] text-muted-foreground">
                   {t("emailDescription")}
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="flex justify-end border-t border-white/[0.06] px-6 py-4">
+          <div className="flex justify-end border-t border-border px-6 py-4">
             <Button type="submit" size="sm" disabled={profilePending}>
               {profilePending ? t("savingProfile") : t("saveProfile")}
             </Button>
@@ -151,7 +151,7 @@ export function AccountContent({ account }: { account: AccountInfo | null }) {
 
       {/* Password */}
       <div className="rounded-xl bg-card">
-        <div className="border-b border-white/[0.06] px-6 py-4">
+        <div className="border-b border-border px-6 py-4">
           <h2 className="text-sm font-semibold">{t("passwordTitle")}</h2>
         </div>
         <div className="px-6 py-5">

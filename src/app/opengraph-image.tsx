@@ -41,7 +41,7 @@ export default async function Image() {
             // ellipse — the supported syntax across @vercel/og versions.
             "radial-gradient(at 12% 18%, #5EEAD4 0%, rgba(94,234,212,0) 55%)",
             "radial-gradient(at 55% 12%, #EC4899 0%, rgba(236,72,153,0) 55%)",
-            "radial-gradient(at 90% 20%, #F97316 0%, rgba(249,115,22,0) 55%)",
+            "radial-gradient(at 90% 20%, #FF6D00 0%, rgba(249,115,22,0) 55%)",
             "radial-gradient(at 98% 45%, #EF4444 0%, rgba(239,68,68,0) 55%)",
             "radial-gradient(at 18% 65%, #1E40AF 0%, rgba(30,64,175,0) 55%)",
             // Bottom scrim for text legibility.

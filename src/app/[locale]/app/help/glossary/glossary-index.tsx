@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { GLOSSARY_TERMS, type GlossaryTermId } from "@/lib/glossary";
 import { Term } from "@/components/glossary/term";
 import { Input } from "@/components/ui/input";
-import { HugeIcon } from "@/components/huge-icon";
+import { Icon } from "@/components/icon";
 
 /**
  * Flat A-Z browsable glossary. Search bar filters by title + body text.
@@ -57,24 +57,24 @@ export function GlossaryIndex() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder={tMeta("searchPlaceholder")}
-          className="h-11 border-white/[0.06] bg-background/40 pl-10 text-sm"
+          className="h-11 border-border bg-background/40 pl-10 text-sm"
         />
-        <HugeIcon
+        <Icon
           name="search-02-stroke-rounded"
           size={16}
-          className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground/60"
+          className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
         />
       </div>
 
       {grouped.length === 0 ? (
-        <p className="mt-8 rounded-xl bg-white/[0.03] p-6 text-center text-sm text-muted-foreground">
+        <p className="mt-8 rounded-xl bg-muted p-6 text-center text-sm text-muted-foreground">
           —
         </p>
       ) : (
         <div className="mt-6 space-y-8">
           {grouped.map(([letter, items]) => (
             <section key={letter}>
-              <h2 className="mb-3 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground/60">
+              <h2 className="mb-3 text-l6-plus uppercase tracking-wider text-muted-foreground">
                 {letter}
               </h2>
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -100,7 +100,7 @@ function GlossaryCard({
   body: string;
 }) {
   return (
-    <div className="rounded-xl bg-white/[0.03] p-4 transition-colors hover:border-white/[0.1]">
+    <div className="rounded-xl bg-muted p-4 transition-colors hover:border-border">
       <Term id={id} className="font-heading text-sm font-semibold text-foreground no-underline hover:text-primary">
         {title}
       </Term>

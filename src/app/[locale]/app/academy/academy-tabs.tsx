@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { ACADEMY_LESSONS } from "@/lib/glossary";
-import { HugeIcon } from "@/components/huge-icon";
+import { Icon } from "@/components/icon";
 import { GlossaryIndex } from "@/app/[locale]/app/help/glossary/glossary-index";
 import { SCREEN_LESSONS, type ScreenKey } from "@/lib/academy/screens";
 
@@ -59,7 +59,7 @@ export function AcademyTabs({
       {isAdminOrCO && (
         <TabsContent value="team-progress" className="mt-6">
           {teamProgress ?? (
-            <p className="rounded-xl bg-white/[0.03] p-6 text-sm text-muted-foreground">
+            <p className="rounded-xl bg-muted p-6 text-sm text-muted-foreground">
               —
             </p>
           )}
@@ -107,7 +107,7 @@ function LessonCard({
   return (
     <Link
       href={`/app/academy/${id}`}
-      className="group flex items-start gap-4 rounded-2xl bg-white/[0.03] p-6 transition-colors duration-300 hover:bg-white/[0.05]"
+      className="group flex items-start gap-4 rounded-md bg-muted p-6 transition-colors duration-300 hover:bg-muted"
     >
       <div className="min-w-0 flex-1">
         <p className="font-heading text-[15px] font-semibold text-foreground group-hover:text-primary">
@@ -115,7 +115,7 @@ function LessonCard({
         </p>
         <div className="mt-1.5 flex items-center gap-2 text-[11px]">
           <span className="text-muted-foreground">{duration}</span>
-          <span className="text-muted-foreground/40">·</span>
+          <span className="text-muted-foreground">·</span>
           {done ? (
             <span className="inline-flex items-center gap-1 rounded-full bg-[#16A34A]/10 px-2 py-0.5 font-medium text-[#16A34A]">
               {completedLabel}
@@ -127,10 +127,10 @@ function LessonCard({
           )}
         </div>
       </div>
-      <HugeIcon
+      <Icon
         name="arrow-right-01-stroke-rounded"
         size={16}
-        className="shrink-0 text-muted-foreground/30 transition-colors group-hover:text-primary"
+        className="shrink-0 text-muted-foreground transition-colors group-hover:text-primary"
       />
     </Link>
   );
@@ -174,7 +174,7 @@ function ScreenCard({
   const doneCount = screen.lessons.filter((id) => completed.has(id)).length;
 
   return (
-    <div className="rounded-2xl bg-white/[0.03] p-6 transition-colors duration-300 hover:bg-white/[0.05]">
+    <div className="rounded-md bg-muted p-6 transition-colors duration-300 hover:bg-muted">
       <div className="flex items-center gap-3">
         <div className="min-w-0 flex-1">
           <p className="font-heading text-[15px] font-semibold text-foreground">
@@ -191,12 +191,12 @@ function ScreenCard({
         </div>
         <Link
           href={screen.href}
-          className="shrink-0 rounded-md px-2.5 py-1 text-[11px] font-medium text-muted-foreground transition-colors hover:bg-white/[0.05] hover:text-foreground"
+          className="shrink-0 rounded-md px-2.5 py-1 text-l6-plus text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
         >
           {openLabel} →
         </Link>
       </div>
-      <ul className="mt-4 space-y-1 border-t border-white/[0.04] pt-3">
+      <ul className="mt-4 space-y-1 border-t border-border pt-3">
         {screen.lessons.map((id) => {
           const lesson = ACADEMY_LESSONS[id as keyof typeof ACADEMY_LESSONS];
           if (!lesson) return null;
@@ -205,21 +205,21 @@ function ScreenCard({
             <li key={id}>
               <Link
                 href={`/app/academy/${id}`}
-                className="group flex items-center gap-2 rounded-md px-2 py-1.5 text-[12px] transition-colors hover:bg-white/[0.04]"
+                className="group flex items-center gap-2 rounded-md px-2 py-1.5 text-[12px] transition-colors hover:bg-muted"
               >
-                <HugeIcon
+                <Icon
                   name={
                     done
                       ? "checkmark-circle-01-stroke-rounded"
                       : "circle-stroke-rounded"
                   }
                   size={14}
-                  className={done ? "text-[#16A34A]" : "text-muted-foreground/40"}
+                  className={done ? "text-[#16A34A]" : "text-muted-foreground"}
                 />
                 <span className="flex-1 truncate text-foreground group-hover:text-primary">
                   {lesson.title}
                 </span>
-                <span className="shrink-0 text-muted-foreground/60">
+                <span className="shrink-0 text-muted-foreground">
                   {lesson.duration}
                 </span>
               </Link>

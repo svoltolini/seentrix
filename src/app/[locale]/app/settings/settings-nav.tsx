@@ -16,6 +16,10 @@ const TABS = [
 
 const basePath = "/app/settings";
 
+/**
+ * SettingsNav — Nask underlined tab strip. Active tab gets a primary-blue
+ * underline + primary text; inactive tabs are muted-foreground.
+ */
 export function SettingsNav() {
   const t = useTranslations("settings");
   const pathname = usePathname();
@@ -25,21 +29,25 @@ export function SettingsNav() {
   }
 
   return (
-    <div className="inline-flex rounded-xl bg-card p-1">
-      {TABS.map((tab) => (
-        <Link
-          key={tab.key}
-          href={`${basePath}${tab.segment}`}
-          className={cn(
-            "rounded-lg px-4 py-2 text-sm font-medium transition-all",
-            isActive(tab.segment)
-              ? "bg-white/[0.08] text-foreground"
-              : "text-muted-foreground/60 hover:text-foreground"
-          )}
-        >
-          {t(tab.key)}
-        </Link>
-      ))}
+    <div className="-mx-1 flex w-full items-center gap-6 overflow-x-auto border-b border-border px-1">
+      {TABS.map((tab) => {
+        const active = isActive(tab.segment);
+        return (
+          <Link
+            key={tab.key}
+            href={`${basePath}${tab.segment}`}
+            className={cn(
+              "relative flex h-11 shrink-0 items-center text-l6 transition-colors",
+              active ? "text-primary" : "text-muted-foreground hover:text-foreground",
+            )}
+          >
+            {t(tab.key)}
+            {active && (
+              <span className="absolute inset-x-0 -bottom-px h-[2px] bg-primary" />
+            )}
+          </Link>
+        );
+      })}
     </div>
   );
 }

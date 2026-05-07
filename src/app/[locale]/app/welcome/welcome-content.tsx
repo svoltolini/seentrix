@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { buttonVariants } from "@/components/ui/button";
-import { HugeIcon } from "@/components/huge-icon";
+import { Icon } from "@/components/icon";
 import { Logo } from "@/components/logo";
 
 const BULLETS = [
@@ -32,12 +32,12 @@ export function WelcomeContent() {
       {/* Brand mark — uses the real Seentrix logo from /public/logo.svg.
           The SVG ships with a near-black fill, so brightness-0 + invert
           flips it to white against the dark background. */}
-      <div className="mb-6 flex size-16 items-center justify-center rounded-full bg-white/[0.04]">
-        <Logo size={26} className="brightness-0 invert" />
+      <div className="mb-6 flex size-16 items-center justify-center rounded-full bg-primary/10">
+        <Logo size={26} className="text-primary" />
       </div>
 
-      <h1 className="text-3xl font-bold tracking-tight">{t("title")}</h1>
-      <p className="mt-3 text-muted-foreground">{t("subtitle")}</p>
+      <h1 className="text-h1 text-foreground">{t("title")}</h1>
+      <p className="mt-3 text-p2 text-muted-foreground">{t("subtitle")}</p>
 
       {/* Feature bullets — borderless cards matching the rest of the
           product (subtle translucent fill, no hard rule). */}
@@ -45,19 +45,19 @@ export function WelcomeContent() {
         {BULLETS.map((bullet) => (
           <div
             key={bullet.titleKey}
-            className="rounded-xl bg-white/[0.03] px-4 py-4"
+            className="rounded-md bg-card px-4 py-4 shadow-card-sm"
           >
             <div className="flex items-start gap-4 text-left">
-              <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-white/[0.06]">
-                <HugeIcon
+              <div className="flex size-10 shrink-0 items-center justify-center rounded-md bg-primary/10">
+                <Icon
                   name={bullet.icon}
                   size={20}
-                  className="text-foreground"
+                  className="text-primary"
                 />
               </div>
               <div className="min-w-0 flex-1">
-                <p className="text-sm font-semibold">{t(bullet.titleKey)}</p>
-                <p className="mt-0.5 text-sm text-muted-foreground">
+                <p className="text-h6 text-foreground">{t(bullet.titleKey)}</p>
+                <p className="mt-0.5 text-p3 text-muted-foreground">
                   {t(bullet.descKey)}
                 </p>
               </div>

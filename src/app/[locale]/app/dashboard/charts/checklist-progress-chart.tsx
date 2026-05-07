@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { HugeIcon } from "@/components/huge-icon";
+import { Icon } from "@/components/icon";
 import { cn } from "@/lib/utils";
 import { STATUS_CHART_COLORS } from "../../products/[productId]/constants";
 import type { ChecklistProgress } from "../../products/actions";
@@ -19,14 +19,14 @@ export function ChecklistProgressChart({ data }: Props) {
 
   if (data.length === 0) {
     return (
-      <div className="rounded-2xl bg-white/[0.03] p-6">
+      <div className="rounded-md bg-muted p-6">
         <p className="text-[10px] font-semibold uppercase tracking-[2.5px] text-primary">
           {t("checklistProgress.eyebrow")}
         </p>
-        <h2 className="mt-1 font-heading text-base font-bold text-foreground">
+        <h2 className="mt-1 text-h5 text-foreground">
           {t("checklistProgress.title")}
         </h2>
-        <p className="py-8 text-center text-xs text-muted-foreground/50">
+        <p className="py-8 text-center text-xs text-muted-foreground">
           {t("checklistProgress.noData")}
         </p>
       </div>
@@ -56,17 +56,17 @@ export function ChecklistProgressChart({ data }: Props) {
   };
 
   return (
-    <div className="overflow-hidden rounded-2xl bg-white/[0.03]">
+    <div className="overflow-hidden rounded-md bg-muted">
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/[0.06] px-6 py-4">
+      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border px-6 py-4">
         <div>
           <p className="text-[10px] font-semibold uppercase tracking-[2.5px] text-primary">
             {t("checklistProgress.eyebrow")}
           </p>
-          <h2 className="mt-1 font-heading text-base font-bold text-foreground">
+          <h2 className="mt-1 text-h5 text-foreground">
             {t("checklistProgress.title")}
           </h2>
-          <p className="mt-0.5 text-[11px] text-muted-foreground/60">
+          <p className="mt-0.5 text-[11px] text-muted-foreground">
             {t("checklistProgress.summary", {
               pct: avgPct,
               count: rows.length,
@@ -94,7 +94,7 @@ export function ChecklistProgressChart({ data }: Props) {
           <Link
             key={row.productId}
             href={`/app/products/${row.productId}/checklist`}
-            className="group flex items-center gap-4 px-6 py-3.5 transition-colors hover:bg-white/[0.02]"
+            className="group flex items-center gap-4 px-6 py-3.5 transition-colors hover:bg-muted"
           >
             <div className="w-48 min-w-0 shrink-0">
               <p className="truncate text-sm font-medium text-foreground transition-colors group-hover:text-primary">
@@ -126,7 +126,7 @@ export function ChecklistProgressChart({ data }: Props) {
                 <span className="text-sm font-semibold text-foreground">
                   {row.completed}
                 </span>
-                <span className="text-xs text-muted-foreground/60">
+                <span className="text-xs text-muted-foreground">
                   / {row.assessable}
                 </span>
               </div>
@@ -138,10 +138,10 @@ export function ChecklistProgressChart({ data }: Props) {
               </div>
             </div>
 
-            <HugeIcon
+            <Icon
               name="arrow-right-01-stroke-rounded"
               size={16}
-              className="shrink-0 text-muted-foreground/20 transition-colors group-hover:text-muted-foreground"
+              className="shrink-0 text-muted-foreground transition-colors group-hover:text-muted-foreground"
             />
           </Link>
         ))}

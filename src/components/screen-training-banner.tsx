@@ -3,7 +3,7 @@ import { Link } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { SCREEN_LESSONS, type ScreenKey } from "@/lib/academy/screens";
 import { ACADEMY_LESSONS } from "@/lib/glossary";
-import { HugeIcon } from "@/components/huge-icon";
+import { Icon } from "@/components/icon";
 import { BannerDismiss } from "./screen-training-banner.client";
 
 /**
@@ -65,11 +65,11 @@ export async function ScreenTrainingBanner({
       className="mb-5 flex flex-wrap items-center gap-3 rounded-xl border border-[#D97706]/25 bg-[#D97706]/[0.06] p-4"
     >
       <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-[#D97706]/15 text-[#D97706]">
-        <HugeIcon name="elearning-exchange-stroke-rounded" size={16} />
+        <Icon name="elearning-exchange-stroke-rounded" size={16} />
       </div>
       <div className="min-w-0 flex-1">
         <p className="text-sm font-semibold text-foreground">{t("title")}</p>
-        <p className="mt-0.5 text-[13px] text-muted-foreground">
+        <p className="mt-0.5 text-p3 text-muted-foreground">
           {t("body", { count: pending.length, minutes: totalMinutes })}
         </p>
       </div>

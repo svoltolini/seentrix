@@ -6,7 +6,7 @@ import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { HugeIcon } from "@/components/huge-icon";
+import { Icon } from "@/components/icon";
 import { StaggerReveal } from "@/components/stagger-reveal";
 import { useToast } from "@/components/ui/toast";
 import { useLocaleDate } from "@/lib/locale-date";
@@ -22,7 +22,7 @@ import {
 const SEVERITY_COLOR: Record<string, string> = {
   critical: "#DC2626",
   high: "#D97706",
-  medium: "#2563EB",
+  medium: "#066DE6",
   low: "#6B7280",
 };
 
@@ -35,7 +35,7 @@ const PHASE_HOURS: Record<IncidentPhase, number> = {
 const PHASE_COLOR: Record<IncidentPhase, string> = {
   early_warning: "#DC2626",
   incident_report: "#D97706",
-  final_report: "#2563EB",
+  final_report: "#066DE6",
 };
 
 const ROLES_CAN_WRITE = new Set([
@@ -126,7 +126,7 @@ function PhaseRing({
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           {submitted ? (
             <>
-              <HugeIcon
+              <Icon
                 name="checkmark-circle-01-stroke-rounded"
                 size={28}
                 className="text-[#16A34A]"
@@ -143,7 +143,7 @@ function PhaseRing({
               >
                 {formatRemaining(remaining)}
               </span>
-              <span className="mt-1 text-[9px] uppercase tracking-wide text-muted-foreground/70">
+              <span className="mt-1 text-[9px] uppercase tracking-wide text-muted-foreground">
                 {overdue ? subLabel : subLabel}
               </span>
             </>
@@ -153,7 +153,7 @@ function PhaseRing({
       <p className="mt-3 text-center text-xs font-semibold text-foreground">
         {label}
       </p>
-      <p className="text-[10px] text-muted-foreground/60">
+      <p className="text-[10px] text-muted-foreground">
         {PHASE_HOURS[phase] >= 24
           ? `${PHASE_HOURS[phase] / 24}d window`
           : `${PHASE_HOURS[phase]}h window`}
@@ -218,7 +218,7 @@ function PhaseSection({
   return (
     <div
       className={cn(
-        "rounded-2xl bg-white/[0.03] p-5",
+        "rounded-md bg-muted p-5",
         submitted && "opacity-90",
       )}
     >
@@ -231,10 +231,10 @@ function PhaseSection({
             />
             <h3 className="text-sm font-semibold text-foreground">{label}</h3>
           </div>
-          <p className="mt-1 text-xs text-muted-foreground/70">{description}</p>
+          <p className="mt-1 text-xs text-muted-foreground">{description}</p>
         </div>
         {submitted && (
-          <span className="shrink-0 rounded-full bg-[#16A34A]/15 px-2.5 py-1 text-[11px] font-semibold text-[#16A34A]">
+          <span className="shrink-0 rounded-full bg-[#16A34A]/15 px-2.5 py-1 text-l6-plus text-[#16A34A]">
             {submittedLabel} · {formatDate(submittedAt)}
           </span>
         )}
@@ -273,7 +273,7 @@ function PhaseSection({
               }}
             >
               {submitLabel}
-              <HugeIcon name="arrow-right-01-stroke-rounded" size={14} />
+              <Icon name="arrow-right-01-stroke-rounded" size={14} />
             </Button>
           )}
         </div>
@@ -402,7 +402,7 @@ export function IncidentDetailContent({
         <div data-reveal>
           <Link
             href="/app/incidents"
-            className="text-xs font-medium text-muted-foreground/70 hover:text-foreground"
+            className="text-xs font-medium text-muted-foreground hover:text-foreground"
           >
             ← {t("breadcrumb")}
           </Link>
@@ -410,30 +410,30 @@ export function IncidentDetailContent({
             <div className="min-w-0 flex-1">
               <div className="flex flex-wrap items-center gap-2">
                 <span
-                  className="rounded-md px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white"
+                  className="rounded-md px-1.5 py-0.5 text-l6-plus uppercase tracking-wide text-white"
                   style={{
                     backgroundColor: SEVERITY_COLOR[incident.severity],
                   }}
                 >
                   {tSev(incident.severity)}
                 </span>
-                <span className="rounded-full bg-white/[0.06] px-2 py-0.5 text-[11px] font-semibold text-muted-foreground">
+                <span className="rounded-full bg-muted px-2 py-0.5 text-l6-plus text-muted-foreground">
                   {tType(incident.type)}
                 </span>
-                <span className="rounded-full bg-white/[0.06] px-2 py-0.5 text-[11px] font-semibold text-muted-foreground">
+                <span className="rounded-full bg-muted px-2 py-0.5 text-l6-plus text-muted-foreground">
                   {tStatus(incident.status)}
                 </span>
               </div>
               <h1 className="mt-2 font-heading text-[28px] font-bold leading-tight tracking-tight">
                 {incident.title}
               </h1>
-              <p className="mt-2 text-[13px] text-muted-foreground">
+              <p className="mt-2 text-p3 text-muted-foreground">
                 {t("detail.awareAt", {
                   date: formatDateTime(incident.aware_at),
                 })}
               </p>
               {incident.affected_product_names.length > 0 && (
-                <p className="mt-1 text-[13px] text-muted-foreground">
+                <p className="mt-1 text-p3 text-muted-foreground">
                   {t("detail.affecting")} ·{" "}
                   <span className="text-foreground">
                     {incident.affected_product_names.join(" · ")}
@@ -441,7 +441,7 @@ export function IncidentDetailContent({
                 </p>
               )}
               {incident.linked_cve_id && (
-                <p className="mt-1 font-mono text-[13px] text-muted-foreground">
+                <p className="mt-1 font-mono text-p3 text-muted-foreground">
                   {incident.linked_cve_id}
                 </p>
               )}
@@ -453,7 +453,7 @@ export function IncidentDetailContent({
                 onClick={handleDownloadPdf}
                 disabled={downloading}
               >
-                <HugeIcon name="pdf-01-stroke-rounded" size={14} />
+                <Icon name="pdf-01-stroke-rounded" size={14} />
                 {t("detail.downloadPdf")}
               </Button>
               {canSubmit && !isClosed && (
@@ -473,7 +473,7 @@ export function IncidentDetailContent({
         {!isClosed && (
           <div
             data-reveal
-            className="grid grid-cols-1 gap-4 rounded-2xl bg-white/[0.03] p-6 sm:grid-cols-3"
+            className="grid grid-cols-1 gap-4 rounded-md bg-muted p-6 sm:grid-cols-3"
           >
             <PhaseRing
               phase="early_warning"
@@ -578,19 +578,19 @@ export function IncidentDetailContent({
         {/* User notification composer (Article 14 user notify obligation) */}
         <div
           data-reveal
-          className="rounded-2xl bg-white/[0.03] p-5"
+          className="rounded-md bg-muted p-5"
         >
           <div className="flex items-start justify-between gap-3">
             <div>
               <h3 className="text-sm font-semibold text-foreground">
                 {t("detail.userNotify.title")}
               </h3>
-              <p className="mt-1 text-xs text-muted-foreground/70">
+              <p className="mt-1 text-xs text-muted-foreground">
                 {t("detail.userNotify.description")}
               </p>
             </div>
             {incident.user_notification_sent_at && (
-              <span className="shrink-0 rounded-full bg-[#16A34A]/15 px-2.5 py-1 text-[11px] font-semibold text-[#16A34A]">
+              <span className="shrink-0 rounded-full bg-[#16A34A]/15 px-2.5 py-1 text-l6-plus text-[#16A34A]">
                 {t("detail.userNotify.sent", {
                   date: formatDate(incident.user_notification_sent_at),
                 })}

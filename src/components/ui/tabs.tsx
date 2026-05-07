@@ -5,6 +5,13 @@ import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
+/**
+ * Tabs — Nask underlined style is the default (matches Detail Dashboard
+ * "Kanban / Comment / Attachment" tab strip in `41:1171`). The legacy
+ * pill-style `default` variant is preserved as `pills` for code that hasn't
+ * been migrated yet.
+ */
+
 function Tabs({
   className,
   orientation = "horizontal",
@@ -15,7 +22,7 @@ function Tabs({
       data-slot="tabs"
       data-orientation={orientation}
       className={cn(
-        "group/tabs flex gap-2 data-horizontal:flex-col",
+        "group/tabs flex gap-4 data-horizontal:flex-col",
         className
       )}
       {...props}
@@ -24,23 +31,28 @@ function Tabs({
 }
 
 const tabsListVariants = cva(
-  "group/tabs-list inline-flex w-fit items-center justify-center rounded-lg p-[3px] text-muted-foreground group-data-horizontal/tabs:h-8 group-data-vertical/tabs:h-fit group-data-vertical/tabs:flex-col data-[variant=line]:rounded-none",
+  "group/tabs-list inline-flex w-fit items-center text-muted-foreground group-data-vertical/tabs:flex-col",
   {
     variants: {
       variant: {
-        default: "bg-muted",
-        line: "gap-1 bg-transparent",
+        // Underlined: a hairline along the bottom edge with the active tab
+        // marked by a thicker primary underline.
+        line:
+          "gap-6 border-b border-border bg-transparent group-data-horizontal/tabs:h-[42px] group-data-vertical/tabs:h-fit",
+        // Filled-pill style (legacy): white card surface, active = primary fill.
+        pills:
+          "rounded-md bg-muted p-1 group-data-horizontal/tabs:h-9 group-data-vertical/tabs:h-fit gap-1",
       },
     },
     defaultVariants: {
-      variant: "default",
+      variant: "line",
     },
   }
 )
 
 function TabsList({
   className,
-  variant = "default",
+  variant = "line",
   ...props
 }: TabsPrimitive.List.Props & VariantProps<typeof tabsListVariants>) {
   return (
@@ -58,10 +70,15 @@ function TabsTrigger({ className, ...props }: TabsPrimitive.Tab.Props) {
     <TabsPrimitive.Tab
       data-slot="tabs-trigger"
       className={cn(
-        "relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-1.5 py-0.5 text-sm font-medium whitespace-nowrap text-muted-foreground transition-all group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start hover:text-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-1 focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-50 has-data-[icon=inline-end]:pr-1 has-data-[icon=inline-start]:pl-1 aria-disabled:pointer-events-none aria-disabled:opacity-50 group-data-[variant=default]/tabs-list:data-active:shadow-sm group-data-[variant=line]/tabs-list:data-active:shadow-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
-        "group-data-[variant=line]/tabs-list:bg-transparent group-data-[variant=line]/tabs-list:data-active:bg-transparent group-data-[variant=line]/tabs-list:data-active:border-transparent",
-        "data-active:border-input data-active:bg-input/30 data-active:text-foreground",
-        "after:absolute after:bg-foreground after:opacity-0 after:transition-opacity group-data-horizontal/tabs:after:inset-x-0 group-data-horizontal/tabs:after:bottom-[-5px] group-data-horizontal/tabs:after:h-0.5 group-data-vertical/tabs:after:inset-y-0 group-data-vertical/tabs:after:-right-1 group-data-vertical/tabs:after:w-0.5 group-data-[variant=line]/tabs-list:data-active:after:opacity-100",
+        "relative inline-flex items-center justify-center gap-1.5 whitespace-nowrap text-l6 text-muted-foreground transition-colors outline-none",
+        "hover:text-foreground focus-visible:text-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50",
+        "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        // Underlined variant — primary text + animated underline on active.
+        "group-data-[variant=line]/tabs-list:h-full group-data-[variant=line]/tabs-list:px-1 group-data-[variant=line]/tabs-list:data-active:text-primary",
+        "after:absolute after:left-0 after:right-0 after:bottom-[-1px] after:h-[2px] after:bg-primary after:opacity-0 after:transition-opacity",
+        "group-data-[variant=line]/tabs-list:data-active:after:opacity-100",
+        // Pill variant
+        "group-data-[variant=pills]/tabs-list:h-7 group-data-[variant=pills]/tabs-list:rounded group-data-[variant=pills]/tabs-list:px-3 group-data-[variant=pills]/tabs-list:data-active:bg-card group-data-[variant=pills]/tabs-list:data-active:text-foreground group-data-[variant=pills]/tabs-list:data-active:shadow-card-sm",
         className
       )}
       {...props}
@@ -73,7 +90,7 @@ function TabsContent({ className, ...props }: TabsPrimitive.Panel.Props) {
   return (
     <TabsPrimitive.Panel
       data-slot="tabs-content"
-      className={cn("flex-1 text-sm outline-none", className)}
+      className={cn("flex-1 text-p2 outline-none", className)}
       {...props}
     />
   )

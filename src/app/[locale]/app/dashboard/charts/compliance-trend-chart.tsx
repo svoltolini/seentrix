@@ -32,17 +32,17 @@ export function ComplianceTrendChart({ data, className }: Props) {
     return (
       <div
         className={cn(
-          "rounded-2xl bg-white/[0.03] p-5",
+          "rounded-md bg-muted p-5",
           className,
         )}
       >
         <p className="text-[10px] font-semibold uppercase tracking-[2.5px] text-primary">
           {t("complianceTrend.eyebrow")}
         </p>
-        <h2 className="mt-1 font-heading text-base font-bold text-foreground">
+        <h2 className="mt-1 text-h5 text-foreground">
           {t("complianceTrend.title")}
         </h2>
-        <p className="py-12 text-center text-xs text-muted-foreground/50">
+        <p className="py-12 text-center text-xs text-muted-foreground">
           {t("complianceTrend.noData")}
         </p>
       </div>
@@ -82,7 +82,7 @@ export function ComplianceTrendChart({ data, className }: Props) {
   return (
     <div
       className={cn(
-        "flex flex-col rounded-2xl bg-white/[0.03] p-5",
+        "flex flex-col rounded-md bg-muted p-5",
         className,
       )}
     >
@@ -90,10 +90,10 @@ export function ComplianceTrendChart({ data, className }: Props) {
         <p className="text-[10px] font-semibold uppercase tracking-[2.5px] text-primary">
           {t("complianceTrend.eyebrow")}
         </p>
-        <h2 className="mt-1 font-heading text-base font-bold text-foreground">
+        <h2 className="mt-1 text-h5 text-foreground">
           {t("complianceTrend.title")}
         </h2>
-        <p className="mt-0.5 text-[11px] text-muted-foreground/60">
+        <p className="mt-0.5 text-[11px] text-muted-foreground">
           {t("complianceTrend.subtitle")}
         </p>
       </div>
@@ -128,7 +128,7 @@ export function ComplianceTrendChart({ data, className }: Props) {
             content={({ payload, label }) => {
               if (!payload?.length || !label) return null;
               return (
-                <div className="rounded-lg bg-white/[0.03] px-3 py-1.5 text-xs shadow-md">
+                <div className="rounded-lg bg-muted px-3 py-1.5 text-xs shadow-md">
                   <p className="mb-1 font-medium">{formatDate(String(label))}</p>
                   {payload.map((entry) => (
                     <div

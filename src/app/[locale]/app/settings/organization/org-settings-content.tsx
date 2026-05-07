@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { updateOrganization, type OrgSettings, type TeamMember } from "../actions";
 import { useToast } from "@/components/ui/toast";
 import { cn } from "@/lib/utils";
-import { HugeIcon } from "@/components/huge-icon";
+import { Icon } from "@/components/icon";
 import { ProfileIncompleteBanner } from "@/components/profile-incomplete-banner";
 import { FieldHelp } from "@/components/field-help";
 import { useGlossaryTags } from "@/components/glossary/use-glossary-tags";
@@ -19,9 +19,9 @@ import type { DeletionStatus } from "../gdpr-types";
 
 // Role hierarchy from highest to lowest
 const ROLE_HIERARCHY: { key: string; color: string; bg: string; icon: string }[] = [
-  { key: "admin", color: "text-[#2563EB]", bg: "bg-[#2563EB]", icon: "crown-stroke-rounded" },
+  { key: "admin", color: "text-[#066DE6]", bg: "bg-[#066DE6]", icon: "crown-stroke-rounded" },
   { key: "cto", color: "text-[#EA580C]", bg: "bg-[#EA580C]", icon: "terminal-stroke-rounded" },
-  { key: "compliance_officer", color: "text-[#7C3AED]", bg: "bg-[#7C3AED]", icon: "task-done-02-stroke-rounded" },
+  { key: "compliance_officer", color: "text-[#6F4FE0]", bg: "bg-[#6F4FE0]", icon: "task-done-02-stroke-rounded" },
   { key: "editor", color: "text-[#0891B2]", bg: "bg-[#0891B2]", icon: "pencil-edit-02-stroke-rounded" },
   { key: "viewer", color: "text-[#94A3B8]", bg: "bg-[#94A3B8]", icon: "glasses-stroke-rounded" },
 ];
@@ -123,7 +123,7 @@ export function OrgSettingsContent({
     <div className="space-y-6">
       {/* Read-only banner for non-admins */}
       {!isAdmin && (
-        <div className="rounded-lg bg-white/[0.03] px-4 py-3 text-center text-xs text-muted-foreground">
+        <div className="rounded-lg bg-muted px-4 py-3 text-center text-xs text-muted-foreground">
           {t("readOnly")}
         </div>
       )}
@@ -131,7 +131,7 @@ export function OrgSettingsContent({
       {/* General */}
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="rounded-xl bg-card">
-          <div className="border-b border-white/[0.06] px-6 py-4">
+          <div className="border-b border-border px-6 py-4">
             <h2 className="text-sm font-semibold">{t("title")}</h2>
           </div>
           <div className="space-y-5 px-6 py-5">
@@ -155,7 +155,7 @@ export function OrgSettingsContent({
                 {t("languageLabel")}
                 <FieldHelp {...tip("language")} />
               </Label>
-              <p className="text-xs text-muted-foreground/60">
+              <p className="text-xs text-muted-foreground">
                 {t("languageDescription")}
               </p>
               <div className="flex gap-2">
@@ -163,7 +163,7 @@ export function OrgSettingsContent({
                   <label
                     key={lang}
                     className={cn(
-                      "flex items-center gap-2 rounded-xl border border-white/[0.06] px-4 py-2.5 text-sm font-medium transition-all has-[:checked]:border-primary/40 has-[:checked]:bg-primary/5",
+                      "flex items-center gap-2 rounded-xl border border-border px-4 py-2.5 text-sm font-medium transition-all has-[:checked]:border-primary/40 has-[:checked]:bg-primary/5",
                       isAdmin ? "cursor-pointer" : "cursor-default opacity-60"
                     )}
                   >
@@ -199,9 +199,9 @@ export function OrgSettingsContent({
 
         {/* Legal entity (CRA-mandatory) */}
         <div className="rounded-xl bg-card">
-          <div className="border-b border-white/[0.06] px-6 py-4">
+          <div className="border-b border-border px-6 py-4">
             <h2 className="text-sm font-semibold">{t("legalTitle")}</h2>
-            <p className="mt-0.5 text-xs text-muted-foreground/60">
+            <p className="mt-0.5 text-xs text-muted-foreground">
               {t("legalDescription")}
             </p>
           </div>
@@ -218,7 +218,7 @@ export function OrgSettingsContent({
                 placeholder={t("legalNamePlaceholder")}
                 disabled={!isAdmin}
               />
-              <p className="text-[11px] text-muted-foreground/60">
+              <p className="text-[11px] text-muted-foreground">
                 {t("legalNameHint")}
               </p>
             </div>
@@ -234,7 +234,7 @@ export function OrgSettingsContent({
                 placeholder={t("registrationNumberPlaceholder")}
                 disabled={!isAdmin}
               />
-              <p className="text-[11px] text-muted-foreground/60">
+              <p className="text-[11px] text-muted-foreground">
                 {t("registrationNumberHint")}
               </p>
             </div>
@@ -243,9 +243,9 @@ export function OrgSettingsContent({
 
         {/* Signatory + public contact */}
         <div className="rounded-xl bg-card">
-          <div className="border-b border-white/[0.06] px-6 py-4">
+          <div className="border-b border-border px-6 py-4">
             <h2 className="text-sm font-semibold">{t("signatoryTitle")}</h2>
-            <p className="mt-0.5 text-xs text-muted-foreground/60">
+            <p className="mt-0.5 text-xs text-muted-foreground">
               {t("signatoryDescription")}
             </p>
           </div>
@@ -313,9 +313,9 @@ export function OrgSettingsContent({
 
         {/* Address */}
         <div className="rounded-xl bg-card">
-          <div className="border-b border-white/[0.06] px-6 py-4">
+          <div className="border-b border-border px-6 py-4">
             <h2 className="text-sm font-semibold">{t("addressTitle")}</h2>
-            <p className="mt-0.5 text-xs text-muted-foreground/60">
+            <p className="mt-0.5 text-xs text-muted-foreground">
               {t("addressDescription")}
             </p>
           </div>
@@ -457,11 +457,11 @@ function OrganizationChart({
 
   return (
     <div className="overflow-hidden rounded-xl bg-card">
-      <div className="border-b border-white/[0.06] px-6 py-4">
+      <div className="border-b border-border px-6 py-4">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <h2 className="text-sm font-semibold">{t("orgChart")}</h2>
-            <p className="mt-0.5 text-xs text-muted-foreground/60">
+            <p className="mt-0.5 text-xs text-muted-foreground">
               {t("orgChartDescription")}
             </p>
           </div>
@@ -605,17 +605,17 @@ function RoleBranch({
       <div className="flex items-center gap-2.5">
         <div
           className={cn(
-            "flex size-11 shrink-0 items-center justify-center rounded-lg text-white/95 shadow-sm",
+            "flex size-11 shrink-0 items-center justify-center rounded-lg text-white shadow-sm",
             tier.bg,
           )}
         >
-          <HugeIcon name={tier.icon} size={18} />
+          <Icon name={tier.icon} size={18} />
         </div>
         <div>
           <p className="text-sm font-semibold" style={{ color: hex }}>
             {tTeam(`roles.${tier.key}` as Parameters<typeof tTeam>[0])}
           </p>
-          <p className="mt-0.5 text-[10px] tabular-nums text-muted-foreground/50">
+          <p className="mt-0.5 text-[10px] tabular-nums text-muted-foreground">
             {tier.members.length === 1
               ? tTeam("memberCount", { count: tier.members.length })
               : tTeam("memberCountPlural", { count: tier.members.length })}
@@ -630,9 +630,9 @@ function RoleBranch({
           <Link
             key={member.id}
             href="/app/settings/team"
-            className="group flex items-center gap-3 rounded-lg border border-transparent px-3 py-2 transition-all hover:-translate-y-0.5 hover:border-white/[0.08] hover:bg-white/[0.03]"
+            className="group flex items-center gap-3 rounded-lg border border-transparent px-3 py-2 transition-all hover:-translate-y-0.5 hover:border-border hover:bg-muted"
           >
-            <div className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white/[0.06] text-[12px] font-bold text-muted-foreground">
+            <div className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-muted text-[12px] font-bold text-muted-foreground">
               {member.avatar_url ? (
                 <img
                   src={member.avatar_url}
@@ -647,14 +647,14 @@ function RoleBranch({
               <p className="truncate text-sm font-medium text-foreground group-hover:text-primary">
                 {member.full_name ?? member.email}
               </p>
-              <p className="truncate text-[11px] text-muted-foreground/50">
+              <p className="truncate text-[11px] text-muted-foreground">
                 {member.email}
               </p>
             </div>
-            <HugeIcon
+            <Icon
               name="arrow-right-01-stroke-rounded"
               size={14}
-              className="shrink-0 text-muted-foreground/30 transition-colors group-hover:text-muted-foreground"
+              className="shrink-0 text-muted-foreground transition-colors group-hover:text-muted-foreground"
             />
           </Link>
         ))}
@@ -663,22 +663,22 @@ function RoleBranch({
           (isAdmin ? (
             <Link
               href="/app/settings/team"
-              className="flex items-center gap-3 rounded-lg border border-dashed px-3 py-2.5 transition-colors hover:bg-white/[0.02]"
+              className="flex items-center gap-3 rounded-lg border border-dashed px-3 py-2.5 transition-colors hover:bg-muted"
               style={{ borderColor: `${hex}50` }}
             >
               <span
                 className="flex size-9 shrink-0 items-center justify-center rounded-full"
                 style={{ backgroundColor: `${hex}25`, color: hex }}
               >
-                <HugeIcon name="add-01" size={13} />
+                <Icon name="add-01" size={13} />
               </span>
               <span className="text-sm font-medium" style={{ color: hex }}>
                 {inviteLabel}
               </span>
             </Link>
           ) : (
-            <div className="flex items-center gap-3 rounded-lg border border-dashed border-white/[0.06] px-3 py-2.5">
-              <span className="text-sm text-muted-foreground/40">
+            <div className="flex items-center gap-3 rounded-lg border border-dashed border-border px-3 py-2.5">
+              <span className="text-sm text-muted-foreground">
                 {emptyLabel}
               </span>
             </div>

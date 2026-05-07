@@ -3,7 +3,7 @@
 import { useEffect, useState, useTransition } from "react";
 import type { UIMessage } from "ai";
 import { useTranslations } from "next-intl";
-import { HugeIcon } from "@/components/huge-icon";
+import { Icon } from "@/components/icon";
 import { cn } from "@/lib/utils";
 
 /**
@@ -118,10 +118,10 @@ export function CopilotHistory({
 
   return (
     <div className="absolute inset-0 z-10 flex flex-col bg-[#09090B]">
-      <header className="flex items-center justify-between border-b border-white/[0.06] px-5 py-4">
+      <header className="flex items-center justify-between border-b border-border px-5 py-4">
         <div className="flex flex-col gap-0.5">
-          <span className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#60A5FA]">
-            <HugeIcon name="ai-magic-stroke-rounded" size={12} />
+          <span className="flex items-center gap-2 text-l6-plus uppercase tracking-[0.18em] text-[#066DE6]">
+            <Icon name="ai-magic-stroke-rounded" size={12} />
             {t("history.eyebrow")}
           </span>
           <span className="font-heading text-base font-semibold text-foreground">
@@ -132,9 +132,9 @@ export function CopilotHistory({
           type="button"
           onClick={onClose}
           aria-label={t("close")}
-          className="flex size-8 items-center justify-center rounded-md text-muted-foreground transition hover:bg-white/[0.04] hover:text-foreground"
+          className="flex size-8 items-center justify-center rounded-md text-muted-foreground transition hover:bg-muted hover:text-foreground"
         >
-          <HugeIcon name="cancel-circle-half-dot-stroke-rounded" size={18} />
+          <Icon name="cancel-circle-half-dot-stroke-rounded" size={18} />
         </button>
       </header>
 
@@ -144,7 +144,7 @@ export function CopilotHistory({
             {Array.from({ length: 4 }).map((_, i) => (
               <div
                 key={i}
-                className="h-14 animate-pulse rounded-xl bg-white/[0.04]"
+                className="h-14 animate-pulse rounded-xl bg-muted"
               />
             ))}
           </div>
@@ -155,11 +155,11 @@ export function CopilotHistory({
           </div>
         )}
         {sessions?.length === 0 && (
-          <div className="flex flex-col items-center gap-2 rounded-xl bg-white/[0.03] px-6 py-10 text-center text-sm text-muted-foreground">
-            <HugeIcon
+          <div className="flex flex-col items-center gap-2 rounded-xl bg-muted px-6 py-10 text-center text-sm text-muted-foreground">
+            <Icon
               name="bubble-chat-question-stroke-rounded"
               size={24}
-              className="text-muted-foreground/50"
+              className="text-muted-foreground"
             />
             <span>{t("history.empty")}</span>
           </div>
@@ -170,7 +170,7 @@ export function CopilotHistory({
               <div
                 key={s.id}
                 className={cn(
-                  "group flex items-center gap-2 rounded-xl bg-white/[0.03] p-3 ring-1 ring-white/[0.06] transition hover:bg-white/[0.06] hover:ring-[#60A5FA]/25",
+                  "group flex items-center gap-2 rounded-xl bg-muted p-3 ring-1 ring-white/[0.06] transition hover:bg-muted hover:ring-[#066DE6]/25",
                   resumingId === s.id && "opacity-50",
                 )}
               >
@@ -193,9 +193,9 @@ export function CopilotHistory({
                   disabled={deletingId}
                   aria-label={t("history.delete")}
                   title={t("history.delete")}
-                  className="flex size-8 items-center justify-center rounded-md text-muted-foreground/60 opacity-0 transition hover:bg-white/[0.04] hover:text-rose-400 group-hover:opacity-100 disabled:opacity-30"
+                  className="flex size-8 items-center justify-center rounded-md text-muted-foreground opacity-0 transition hover:bg-muted hover:text-rose-400 group-hover:opacity-100 disabled:opacity-30"
                 >
-                  <HugeIcon
+                  <Icon
                     name="comment-remove-02-stroke-rounded"
                     size={14}
                   />

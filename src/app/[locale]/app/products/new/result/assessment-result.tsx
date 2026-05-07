@@ -6,9 +6,8 @@ import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ProgressPill } from "@/components/ui/progress-pill";
-import { HugeIcon } from "@/components/huge-icon";
+import { Icon } from "@/components/icon";
 import { cn } from "@/lib/utils";
-import { ArrowRightIcon } from "lucide-react";
 import type { CraCategory, ConformityRoute } from "@/lib/constants/cra-classification";
 import { CATEGORY_COLORS } from "../../[productId]/constants";
 
@@ -55,10 +54,10 @@ export function AssessmentResult({
       <Card>
         <CardContent className="flex flex-col items-center gap-4 py-8 text-center">
           <div className={cn("flex size-14 items-center justify-center rounded-full", colors?.bg)}>
-            <HugeIcon name="shield-check" size={28} className={colors?.icon} />
+            <Icon name="shield-check" size={28} className={colors?.icon} />
           </div>
           <div className="flex flex-col gap-1">
-            <p className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
+            <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
               {t("result.classification")}
             </p>
             <Badge>
@@ -77,10 +76,10 @@ export function AssessmentResult({
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-0">
             <div className="flex flex-1 items-center gap-3">
               <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary/10">
-                <HugeIcon name="route-01" size={18} className="text-primary" />
+                <Icon name="route-01" size={18} className="text-primary" />
               </div>
               <div>
-                <p className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
+                <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
                   {t("result.conformityRoute")}
                 </p>
                 <p className="mt-0.5 text-sm font-semibold text-foreground">
@@ -94,10 +93,10 @@ export function AssessmentResult({
 
             <div className="flex flex-1 items-center gap-3">
               <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-muted">
-                <HugeIcon name="building-06" size={18} className="text-muted-foreground" />
+                <Icon name="building-06" size={18} className="text-muted-foreground" />
               </div>
               <div>
-                <p className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
+                <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
                   {t("result.notifiedBody")}
                 </p>
                 <p className="mt-0.5 text-sm font-semibold text-foreground">
@@ -112,7 +111,7 @@ export function AssessmentResult({
       {/* Deadlines */}
       <Card>
         <CardContent className="flex flex-col gap-3">
-          <p className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
+          <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
             {t("result.deadlines")}
           </p>
           <div className="flex items-center justify-between">
@@ -137,7 +136,7 @@ export function AssessmentResult({
       {/* Roadmap */}
       <Card>
         <CardContent className="flex flex-col gap-4">
-          <p className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
+          <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
             {t("result.roadmap")}
           </p>
           <ol className="relative ml-3 flex flex-col gap-0 border-l border-border pl-6">
@@ -167,7 +166,7 @@ export function AssessmentResult({
           className={buttonVariants({ size: "sm", className: "flex-1" })}
         >
           {t("result.viewProduct")}
-          <ArrowRightIcon data-icon="inline-end" className="size-3.5" />
+          <Icon name="ArrowRightIcon" data-icon="inline-end" className="size-3.5" />
         </Link>
         <Link
           href="/app/products/new"

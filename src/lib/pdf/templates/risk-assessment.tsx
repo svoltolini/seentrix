@@ -23,7 +23,7 @@ const RISK_COLORS: Record<string, string> = {
   low: "#22C55E",
   medium: "#F59E0B",
   high: "#EF4444",
-  critical: "#7C3AED",
+  critical: "#6F4FE0",
 };
 
 interface Props {

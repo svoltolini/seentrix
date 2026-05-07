@@ -2,8 +2,10 @@
 
 import { useState, useCallback } from "react";
 import { useTranslations } from "next-intl";
-import { HugeIcon } from "@/components/huge-icon";
+import { cn } from "@/lib/utils";
+import { Icon } from "@/components/icon";
 import { ChecklistItemCard } from "./components/checklist-item-card";
+import { ChecklistKanban } from "./components/checklist-kanban";
 import {
   calculateComplianceScore,
   PART_I_REQUIREMENTS,
@@ -20,6 +22,8 @@ import {
   type ChecklistItem,
   type Product,
 } from "./checklist-actions";
+
+type ViewMode = "list" | "kanban";
 
 function scoreColor(score: number): string {
   if (score >= 75) return "#16A34A";
@@ -38,6 +42,7 @@ export function ComplianceChecklist({
 }) {
   const t = useTranslations("checklist");
   const [items, setItems] = useState<ChecklistItem[]>(initialItems);
+  const [view, setView] = useState<ViewMode>("kanban");
 
   const score = calculateComplianceScore(items);
 
@@ -123,7 +128,7 @@ export function ComplianceChecklist({
       {allPending && (
         <div className="flex items-start gap-4 rounded-xl border border-primary/20 bg-primary/5 px-5 py-4">
           <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary/10">
-            <HugeIcon
+            <Icon
               name="sparkles-stroke-rounded"
               size={20}
               className="text-primary"
@@ -154,14 +159,14 @@ export function ComplianceChecklist({
       >
         <div className="flex items-center gap-5 p-5">
           <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-black/15">
-            <HugeIcon
+            <Icon
               name="shield-check"
               size={24}
               className="text-white"
             />
           </div>
           <div className="min-w-0 flex-1">
-            <p className="text-[11px] font-semibold text-white/75">
+            <p className="text-l6-plus text-white">
               {t("title")}
             </p>
             <p className="text-3xl font-bold tabular-nums leading-none tracking-tight text-white">
@@ -179,10 +184,43 @@ export function ComplianceChecklist({
         </div>
       </div>
 
+      {/* View-mode toggle — Kanban (Figma 41:1171) is the default; List is preserved
+          as the legacy density-friendly view for users who prefer scanning. */}
+      <div className="flex items-center justify-between gap-3">
+        <div className="flex gap-2">
+          {(["kanban", "list"] as const).map((mode) => (
+            <button
+              key={mode}
+              type="button"
+              onClick={() => setView(mode)}
+              className={cn(
+                "inline-flex h-9 items-center gap-2 rounded-sm border-[1.5px] px-3 text-l6 transition-colors",
+                view === mode
+                  ? "border-primary bg-primary/10 text-primary"
+                  : "border-border-outline bg-card text-muted-foreground hover:text-foreground",
+              )}
+              aria-pressed={view === mode}
+            >
+              <Icon name={mode === "kanban" ? "Kanban" : "RowVertical"} size={16} />
+              {t.has(`view.${mode}`) ? t(`view.${mode}`) : mode}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {view === "kanban" ? (
+        <ChecklistKanban
+          items={items}
+          members={members}
+          onStatusChange={handleStatusChange}
+        />
+      ) : (
+        <>
+
       {/* Part I */}
-      <div className="overflow-hidden rounded-xl bg-card">
+      <div className="overflow-hidden rounded-md bg-card">
         <div className="flex items-center gap-3 px-5 py-4">
-          <HugeIcon
+          <Icon
             name="one-circle-stroke-rounded"
             size={22}
             className="shrink-0 text-foreground"
@@ -202,7 +240,7 @@ export function ComplianceChecklist({
             })}
           </span>
         </div>
-        <div className="divide-y divide-white/[0.04] border-t border-white/[0.04]">
+        <div className="divide-y divide-white/[0.04] border-t border-border">
           {PART_I_REQUIREMENTS.map((req) => {
             const item = findItem(req.id);
             if (!item) return null;
@@ -231,7 +269,7 @@ export function ComplianceChecklist({
       {/* Part II */}
       <div className="overflow-hidden rounded-xl bg-card">
         <div className="flex items-center gap-3 px-5 py-4">
-          <HugeIcon
+          <Icon
             name="two-circle-stroke-rounded"
             size={22}
             className="shrink-0 text-foreground"
@@ -251,7 +289,7 @@ export function ComplianceChecklist({
             })}
           </span>
         </div>
-        <div className="divide-y divide-white/[0.04] border-t border-white/[0.04]">
+        <div className="divide-y divide-white/[0.04] border-t border-border">
           {PART_II_REQUIREMENTS.map((req) => {
             const item = findItem(req.id);
             if (!item) return null;
@@ -276,6 +314,8 @@ export function ComplianceChecklist({
           })}
         </div>
       </div>
+        </>
+      )}
     </div>
   );
 }

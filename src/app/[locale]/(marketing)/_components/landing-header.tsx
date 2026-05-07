@@ -11,7 +11,7 @@ import {
   SheetTrigger,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { HugeIcon } from "@/components/huge-icon";
+import { Icon } from "@/components/icon";
 import { Logo } from "@/components/logo";
 import Image from "next/image";
 
@@ -63,10 +63,8 @@ export function LandingHeader({ isAuthed = false }: { isAuthed?: boolean }) {
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         {/* Left: Logo */}
         <Link href="/" className="flex items-center gap-2">
-          <Logo size={18} className="shrink-0 brightness-0 invert" />
-          <span className="text-lg font-bold tracking-tight text-foreground">
-            Seentrix
-          </span>
+          <Logo size={20} className="shrink-0" />
+          <span className="text-h4 text-foreground">Seentrix</span>
         </Link>
 
         {/* Center: Nav (desktop) */}
@@ -176,7 +174,7 @@ export function LandingHeader({ isAuthed = false }: { isAuthed?: boolean }) {
             <SheetTrigger
               render={
                 <Button variant="ghost" size="icon" className="lg:hidden">
-                  <HugeIcon name="menu-02" size={20} />
+                  <Icon name="menu-02" size={20} />
                   <span className="sr-only">{t("menu")}</span>
                 </Button>
               }

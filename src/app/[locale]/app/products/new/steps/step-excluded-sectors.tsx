@@ -1,11 +1,11 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { Icon } from "@/components/icon";
 import { Button } from "@/components/ui/button";
 import { OptionCard } from "../components/option-card";
 import { EXCLUDED_SECTORS } from "@/lib/constants/cra-classification";
 import type { WizardData } from "@/lib/validations/assessment";
-import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 
 export function StepExcludedSectors({
   data,
@@ -54,7 +54,7 @@ export function StepExcludedSectors({
         />
         <div className="my-1 flex items-center gap-3">
           <div className="h-px flex-1 bg-border" />
-          <span className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
+          <span className="text-l6-plus uppercase tracking-wider text-muted-foreground">
             {t("step4.or") || "or"}
           </span>
           <div className="h-px flex-1 bg-border" />
@@ -72,12 +72,12 @@ export function StepExcludedSectors({
 
       <div className="flex justify-between pt-2">
         <Button variant="outline" size="sm" onClick={onBack}>
-          <ArrowLeftIcon data-icon="inline-start" className="size-3.5" />
+          <Icon name="ArrowLeftIcon" data-icon="inline-start" className="size-3.5" />
           {t("navigation.back")}
         </Button>
         <Button size="sm" onClick={onNext}>
           {t("navigation.continue")}
-          <ArrowRightIcon data-icon="inline-end" className="size-3.5" />
+          <Icon name="ArrowRightIcon" data-icon="inline-end" className="size-3.5" />
         </Button>
       </div>
     </div>

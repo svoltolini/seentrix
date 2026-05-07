@@ -45,17 +45,17 @@ export function TrustSection() {
     >
       <div className="mx-auto max-w-6xl px-6">
         <div
-          className="overflow-hidden rounded-2xl bg-cover bg-center px-8 py-16 sm:px-12 sm:py-20 lg:px-16 lg:py-24"
+          className="overflow-hidden rounded-md bg-cover bg-center px-8 py-16 sm:px-12 sm:py-20 lg:px-16 lg:py-24"
           style={{ backgroundImage: "url('/images/empty-state-bg.png')" }}
         >
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
               {t("title")}
             </h2>
-            <p className="mt-6 text-lg leading-relaxed text-white/70">
+            <p className="mt-6 text-lg leading-relaxed text-white">
               {t("subtitle")}
             </p>
-            <p className="mt-4 text-sm leading-relaxed text-white/55">
+            <p className="mt-4 text-sm leading-relaxed text-white">
               {t("hosting")}
             </p>
           </div>
@@ -65,7 +65,7 @@ export function TrustSection() {
               <div
                 key={key}
                 data-trust-badge
-                className="rounded-full bg-white/10 px-6 py-3 text-sm font-medium text-white/80 backdrop-blur-sm"
+                className="rounded-full bg-white/10 px-6 py-3 text-sm font-medium text-white backdrop-blur-sm"
               >
                 {t(`badges.${key}`)}
               </div>

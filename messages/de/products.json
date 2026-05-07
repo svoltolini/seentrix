@@ -3,6 +3,19 @@
     "title": "Produkte",
     "subtitle": "Verwalten Sie Ihre Produkte und verfolgen Sie die CRA-Compliance.",
     "addProduct": "Produkt hinzufügen",
+    "view": {
+      "grid": "Raster",
+      "list": "Liste",
+      "timeline": "Zeitachse"
+    },
+    "timeline": {
+      "empty": "Noch keine Produkte in dieser Spur.",
+      "lanes": {
+        "ahead": "Voraus",
+        "onTrack": "Im Plan",
+        "atRisk": "Gefährdet"
+      }
+    },
     "noProducts": "Noch keine Produkte",
     "noProductsDescription": "Fügen Sie Ihr erstes Produkt hinzu, um Ihre CRA-Compliance-Reise zu starten. Wir begleiten Sie bei jedem Schritt.",
     "searchPlaceholder": "Produkte suchen…",
