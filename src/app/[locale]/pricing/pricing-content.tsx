@@ -269,23 +269,36 @@ function ComparisonTable() {
       </div>
 
       <div className="overflow-hidden rounded-md border border-border bg-card shadow-card-md">
-        {/* Sticky header with plan names */}
-        <div className="sticky top-0 z-10 grid grid-cols-[minmax(0,2fr)_repeat(4,minmax(0,1fr))] border-b border-border bg-card/95 px-4 py-3 backdrop-blur-md sm:px-6">
-          <div />
-          {plans.map((p) => (
-            <div
-              key={p}
-              className="text-center text-l6-plus uppercase tracking-wider text-muted-foreground"
-            >
-              {t(`plans.${p}.name`)}
-            </div>
-          ))}
+        {/* Sticky header with plan-name TIER CHIPS — visually mirrors the
+            pricing cards above. Highlighted tier (Professional) gets a solid
+            primary chip; the rest get an outlined chip on the white card. */}
+        <div className="sticky top-0 z-10 grid grid-cols-[minmax(0,2fr)_repeat(4,minmax(0,1fr))] border-b border-border bg-card/95 px-4 py-4 backdrop-blur-md sm:px-6">
+          <div className="flex items-center text-p4-r text-muted-foreground">
+            {tc("featuresLabel") ?? "Feature"}
+          </div>
+          {plans.map((p) => {
+            const highlighted = p === "professional";
+            return (
+              <div key={p} className="flex justify-center">
+                <span
+                  className={cn(
+                    "inline-flex h-7 items-center rounded-sm px-3 text-l6",
+                    highlighted
+                      ? "bg-primary text-primary-foreground"
+                      : "border border-border-outline bg-card text-foreground",
+                  )}
+                >
+                  {t(`plans.${p}.name`)}
+                </span>
+              </div>
+            );
+          })}
         </div>
 
         {/* Category blocks */}
         {FEATURE_CATEGORIES.map((category) => (
           <div key={category.key}>
-            <div className="grid grid-cols-[minmax(0,2fr)_repeat(4,minmax(0,1fr))] border-b border-border bg-muted px-4 py-3 sm:px-6">
+            <div className="grid grid-cols-[minmax(0,2fr)_repeat(4,minmax(0,1fr))] border-y border-border bg-muted px-4 py-3 sm:px-6">
               <div className="col-span-5 text-l6-plus uppercase tracking-wider text-foreground">
                 {tc(`categories.${category.key}.title`)}
               </div>
@@ -346,11 +359,12 @@ function Cell({ value }: { value: CellValue }) {
       ) : value === "unlimited" ? (
         <span className="text-xl leading-none text-foreground">∞</span>
       ) : value === "coming-soon" ? (
-        <span className="inline-flex items-center rounded-sm bg-accent/10 px-2 py-0.5 text-l6-plus text-accent">
+        <span className="inline-flex items-center gap-1.5 rounded-sm border border-accent/30 bg-accent/5 px-2 py-0.5 text-l6-plus text-accent">
+          <span aria-hidden className="size-1.5 rounded-full bg-accent" />
           {tc("comingSoon")}
         </span>
       ) : (
-        <span className="text-p3 text-muted-foreground">{value}</span>
+        <span className="text-p3 text-foreground">{value}</span>
       )}
     </div>
   );

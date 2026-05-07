@@ -41,14 +41,17 @@ const buttonVariants = cva(
       },
       size: {
         // Nask buttons are flat horizontal pills. Sizes by height + radius.
+        // Use Tailwind's standard `text-{size}` classes here (not the custom
+        // `text-l5`/`text-l6` utilities) so tailwind-merge can correctly
+        // dedupe text classes and not strip the variant's text colour.
         xs:
-          "h-7 gap-1 rounded-sm px-2 text-xs has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3",
+          "h-7 gap-1 rounded-sm px-2 text-xs leading-[1.3] has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3",
         sm:
-          "h-9 gap-1.5 rounded-sm px-3 text-l6 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 [&_svg:not([class*='size-'])]:size-3.5",
+          "h-9 gap-1.5 rounded-sm px-3 text-sm leading-[1.3] has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 [&_svg:not([class*='size-'])]:size-3.5",
         default:
-          "h-11 gap-3.5 rounded-sm px-[22px] text-l5 has-data-[icon=inline-end]:pr-4 has-data-[icon=inline-start]:pl-4",
+          "h-11 gap-3.5 rounded-sm px-[22px] text-base leading-[1.3] has-data-[icon=inline-end]:pr-4 has-data-[icon=inline-start]:pl-4",
         lg:
-          "h-12 gap-3.5 rounded-md px-[75px] text-l5 has-data-[icon=inline-end]:pr-6 has-data-[icon=inline-start]:pl-6",
+          "h-12 gap-3.5 rounded-md px-[75px] text-base leading-[1.3] has-data-[icon=inline-end]:pr-6 has-data-[icon=inline-start]:pl-6",
         icon:
           "size-11 rounded-sm",
         "icon-sm":

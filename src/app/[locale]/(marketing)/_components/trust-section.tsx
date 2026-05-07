@@ -44,14 +44,8 @@ export function TrustSection() {
       className="py-24 lg:py-32"
     >
       <div className="mx-auto max-w-6xl px-6">
-        <div
-          className="relative overflow-hidden rounded-md px-8 py-16 sm:px-12 sm:py-20 lg:px-16 lg:py-24"
-          style={{
-            background:
-              "linear-gradient(135deg, #066DE6 0%, #6F4FE0 60%, #FF6D00 100%)",
-          }}
-        >
-          {/* Soft dot grid overlay so the panel doesn't read as flat fill */}
+        <div className="relative overflow-hidden rounded-md bg-primary px-8 py-16 sm:px-12 sm:py-20 lg:px-16 lg:py-24">
+          {/* Soft dot grid overlay so the solid panel doesn't read as flat fill */}
           <div
             aria-hidden
             className="pointer-events-none absolute inset-0"
@@ -63,13 +57,13 @@ export function TrustSection() {
           />
 
           <div className="relative mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            <h2 className="text-3xl font-bold tracking-tight text-primary-foreground sm:text-4xl">
               {t("title")}
             </h2>
-            <p className="mt-6 text-p1 text-white/90">
+            <p className="mt-6 text-p1 text-primary-foreground/90">
               {t("subtitle")}
             </p>
-            <p className="mt-4 text-p3 text-white/80">
+            <p className="mt-4 text-p3 text-primary-foreground/80">
               {t("hosting")}
             </p>
           </div>
@@ -79,7 +73,7 @@ export function TrustSection() {
               <div
                 key={key}
                 data-trust-badge
-                className="rounded-sm border-[1.5px] border-white/30 bg-white/15 px-5 py-2.5 text-l6 text-white backdrop-blur-sm"
+                className="rounded-sm border-[1.5px] border-primary-foreground/30 bg-primary-foreground/15 px-5 py-2.5 text-l6 text-primary-foreground backdrop-blur-sm"
               >
                 {t(`badges.${key}`)}
               </div>
