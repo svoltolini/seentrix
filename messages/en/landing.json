@@ -145,8 +145,24 @@
       "compareAllFeaturesHint": "Full feature matrix across every tier, including upcoming additions."
     },
     "timeline": {
-      "title": "CRA Timeline: Key Deadlines",
-      "subtitle": "The Cyber Resilience Act rolls out in phases. Here are the milestones that matter.",
+      "eyebrow": "CRA Timeline",
+      "title": "Three deadlines stand between you and the EU market",
+      "subtitle": "The Cyber Resilience Act rolls out in phases. Miss one and your product can't ship to the EU.",
+      "footnote": "Dates pulled from Regulation (EU) 2024/2847. Verify against the official text on EUR-Lex before relying on them in legal filings.",
+      "status": {
+        "past": "Past",
+        "active": "Today",
+        "approaching": "Approaching",
+        "upcoming": "Upcoming"
+      },
+      "countdown": {
+        "today": "Active today",
+        "past": "{value} days ago",
+        "days": "{value} days away",
+        "weeks": "{value} weeks away",
+        "months": "{value} months away",
+        "years": "{value} years away"
+      },
       "milestones": {
         "m1": {
           "date": "June 2026",
