@@ -149,6 +149,9 @@
       "title": "Three deadlines stand between you and the EU market",
       "subtitle": "The Cyber Resilience Act rolls out in phases. Miss one and your product can't ship to the EU.",
       "footnote": "Dates pulled from Regulation (EU) 2024/2847. Verify against the official text on EUR-Lex before relying on them in legal filings.",
+      "axis": {
+        "today": "Today"
+      },
       "status": {
         "past": "Past",
         "active": "Today",
@@ -166,16 +169,19 @@
       "milestones": {
         "m1": {
           "date": "June 2026",
+          "shortDate": "Jun '26",
           "title": "Vulnerability Reporting",
           "description": "Manufacturers must report actively exploited vulnerabilities to ENISA within 24 hours."
         },
         "m2": {
           "date": "September 11, 2026",
+          "shortDate": "Sep '26",
           "title": "Full CRA Enforcement",
           "description": "All essential cybersecurity requirements apply. Products must comply before being placed on the EU market."
         },
         "m3": {
           "date": "December 2027",
+          "shortDate": "Dec '27",
           "title": "Conformity Assessment",
           "description": "Notified body assessments required for \"important\" and \"critical\" product categories."
         }
