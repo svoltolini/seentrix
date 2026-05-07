@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { buttonVariants } from "@/components/ui/button";
@@ -73,22 +73,28 @@ export function ProductsPageContent({
     }
   }
 
-  const filtered = search
-    ? products.filter((p) =>
-        p.name.toLowerCase().includes(search.toLowerCase())
-      )
-    : products;
+  // Memoised so the filter + sort doesn't re-run on every keystroke or
+  // unrelated state change. Recomputes only when products / search /
+  // sortField / sortDir actually change.
+  const sorted = useMemo(() => {
+    const filtered = search
+      ? products.filter((p) =>
+          p.name.toLowerCase().includes(search.toLowerCase()),
+        )
+      : products;
 
-  const sorted = [...filtered].sort((a, b) => {
-    const dir = sortDir === "asc" ? 1 : -1;
-    if (sortField === "name") return a.name.localeCompare(b.name) * dir;
-    if (sortField === "compliance")
-      return (a.compliance_score - b.compliance_score) * dir;
-    return (
-      (new Date(a.created_at).getTime() - new Date(b.created_at).getTime()) *
-      dir
-    );
-  });
+    return [...filtered].sort((a, b) => {
+      const dir = sortDir === "asc" ? 1 : -1;
+      if (sortField === "name") return a.name.localeCompare(b.name) * dir;
+      if (sortField === "compliance")
+        return (a.compliance_score - b.compliance_score) * dir;
+      return (
+        (new Date(a.created_at).getTime() -
+          new Date(b.created_at).getTime()) *
+        dir
+      );
+    });
+  }, [products, search, sortField, sortDir]);
 
   const limit = PLAN_PRODUCT_LIMITS[plan];
 

@@ -1,9 +1,26 @@
 "use client";
 
+/**
+ * Dashboard surface.
+ *
+ * Two-column Nask layout:
+ *   - main column: greeting, Project-Statistics bar chart, featured product
+ *     hero cards, today's overdue tasks
+ *   - right rail (370px): calendar widget, upcoming CRA deadlines, team
+ *     strip, recent-activity feed
+ *
+ * Widgets live in `./widgets/`. This file's job is to:
+ *   - adapt the existing `DashboardStats` data shape into widget props
+ *     (bar-chart bucketing, featured-product picker, activity adapter)
+ *   - wire the right rail's static CRA deadline list (notified bodies →
+ *     reporting → full compliance) into the meeting-list widget
+ */
+
 import { useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { ProfileIncompleteBanner } from "@/components/profile-incomplete-banner";
+import { MS_PER_DAY } from "@/lib/time";
 import type {
   DashboardStats,
   DashboardProduct,
@@ -31,7 +48,7 @@ import { TeamChatStrip, type TeamChatItem } from "./widgets/team-chat-strip";
 function getDaysUntil(dateStr: string): number {
   const target = new Date(dateStr);
   const now = new Date();
-  return Math.ceil((target.getTime() - now.getTime()) / 86_400_000);
+  return Math.ceil((target.getTime() - now.getTime()) / MS_PER_DAY);
 }
 
 /**

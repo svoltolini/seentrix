@@ -1,5 +1,20 @@
 "use client";
 
+/**
+ * Vulnerabilities content surface.
+ *
+ * Largest client surface in the app (~1300 lines). Owns:
+ *   - The data table with bulk actions, filters, sorting, inline editing
+ *   - The "actively exploited" flag flow + the resolve / mark-as-exploited
+ *     confirm dialogs
+ *   - The KPI strip + severity chart at the top of the page
+ *
+ * Data layer is server-side (`./actions.ts`); this file is purely
+ * presentation + form state. Splitting the table out into its own component
+ * is on the cleanup wishlist but isn't trivial because of how filters,
+ * bulk-selection, and per-row inline edit all share state.
+ */
+
 import { useCallback, useMemo, useRef, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
@@ -32,6 +47,7 @@ import {
   type VulnStatus,
 } from "./actions";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
+import { MS_PER_DAY } from "@/lib/time";
 
 // ---------------------------------------------------------------------------
 // Colors + labels (single source of truth for severity/status visuals)
@@ -82,7 +98,7 @@ const ROLES_CAN_FLAG_EXPLOIT = new Set(["admin", "compliance_officer"]);
 function ageDays(iso: string | null): number | null {
   if (!iso) return null;
   const ms = Date.now() - new Date(iso).getTime();
-  return Math.max(0, Math.floor(ms / 86400000));
+  return Math.max(0, Math.floor(ms / MS_PER_DAY));
 }
 
 function initialsOf(name: string | null, email: string | null): string {

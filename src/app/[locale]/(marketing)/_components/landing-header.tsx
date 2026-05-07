@@ -112,38 +112,18 @@ export function LandingHeader({ isAuthed = false }: { isAuthed?: boolean }) {
             <button
               onClick={() => switchLocale("de")}
               className={cn(
-                "relative flex h-[22px] w-[38px] items-center rounded-sm p-1.5 transition-opacity",
+                "flex items-center rounded-sm p-1.5 transition-opacity",
                 locale === "de" ? "opacity-100" : "opacity-40 hover:opacity-70"
               )}
               aria-label="Deutsch"
             >
-              <div className="absolute left-[18px] top-1/2 -translate-y-1/2">
-                <Image
-                  src="/flags/germany.png"
-                  alt=""
-                  width={20}
-                  height={20}
-                  className="shrink-0 rounded-full ring-2 ring-card"
-                />
-              </div>
-              <div className="absolute left-[11px] top-1/2 -translate-y-1/2">
-                <Image
-                  src="/flags/austria.png"
-                  alt=""
-                  width={20}
-                  height={20}
-                  className="shrink-0 rounded-full ring-2 ring-card"
-                />
-              </div>
-              <div className="absolute left-[4px] top-1/2 z-10 -translate-y-1/2">
-                <Image
-                  src="/flags/switzerland.png"
-                  alt=""
-                  width={20}
-                  height={20}
-                  className="shrink-0 rounded-full ring-2 ring-card"
-                />
-              </div>
+              <Image
+                src="/flags/germany.png"
+                alt="Deutsch"
+                width={22}
+                height={22}
+                className="shrink-0 rounded-full"
+              />
             </button>
           </div>
 

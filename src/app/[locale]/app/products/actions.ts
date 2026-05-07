@@ -1,9 +1,27 @@
 "use server";
 
+/**
+ * Server actions for the Products domain.
+ *
+ * This module is the only path between client components and the
+ * `products`, `checklist_items`, `vulnerabilities`, and related Supabase
+ * tables. Anything user-initiated (create, update, delete, bulk operations)
+ * goes through one of the actions here so we can:
+ *   - centralise auth + org-scoping checks (every action calls
+ *     `getAuthContext()` first)
+ *   - emit activity-log entries via `logActivity()` for the audit trail
+ *   - keep the client bundle free of Supabase write logic
+ *
+ * Read functions (e.g. `listProducts`, `getDashboardStats`) live here too;
+ * they're co-located so a UI engineer can find every Products query in one
+ * file. Keep additions grouped by purpose with a banner comment.
+ */
+
 import { createClient } from "@/lib/supabase/server";
 import { createProductSchema, updateProductSchema } from "@/lib/validations/product";
 import { canCreateProduct, type OrgPlan } from "@/lib/constants/plans";
 import { logActivity } from "@/lib/activity";
+import { MS_PER_DAY } from "@/lib/time";
 
 export type ProductActionState =
   | { productId: string; error?: never }
@@ -827,7 +845,7 @@ export async function getDashboardStats(): Promise<DashboardStats> {
     const now = Date.now();
     for (const v of vulnRawResult.data) {
       const r = v as Record<string, unknown>;
-      const ageDays = Math.floor((now - new Date(r.created_at as string).getTime()) / 86400000);
+      const ageDays = Math.floor((now - new Date(r.created_at as string).getTime()) / MS_PER_DAY);
       const severity = (r.severity as string) ?? "low";
       let bucketIdx = 0;
       if (ageDays <= 7) bucketIdx = 0;
@@ -855,7 +873,7 @@ export async function getDashboardStats(): Promise<DashboardStats> {
       const r = v as Record<string, unknown>;
       const created = new Date(r.created_at as string).getTime();
       const resolved = new Date(r.resolved_at as string).getTime();
-      totalDays += (resolved - created) / 86400000;
+      totalDays += (resolved - created) / MS_PER_DAY;
     }
     mttr = Math.round(totalDays / mttrResult.data.length);
   }
@@ -880,7 +898,7 @@ export async function getDashboardStats(): Promise<DashboardStats> {
     for (const item of overdueResult.data) {
       const r = item as Record<string, unknown>;
       const dueDate = new Date(r.due_date as string);
-      const daysOverdue = Math.ceil((nowMs - dueDate.getTime()) / 86400000);
+      const daysOverdue = Math.ceil((nowMs - dueDate.getTime()) / MS_PER_DAY);
       overdueItems.push({
         id: r.id as string,
         title: r.title as string,

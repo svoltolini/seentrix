@@ -6,6 +6,7 @@ import { useEffect, useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { exportActivities, type Activity } from "../actions";
 import { useLocaleDate } from "@/lib/locale-date";
+import { MS_PER_MINUTE, MS_PER_HOUR, MS_PER_DAY } from "@/lib/time";
 
 const EXPORT_PERIODS = [1, 6, 12] as const;
 
@@ -22,9 +23,9 @@ function useRelativeTime() {
   return (dateStr: string) => {
     const then = new Date(dateStr).getTime();
     const diffMs = now - then;
-    const diffMin = Math.floor(diffMs / 60000);
-    const diffHr = Math.floor(diffMs / 3600000);
-    const diffDay = Math.floor(diffMs / 86400000);
+    const diffMin = Math.floor(diffMs / MS_PER_MINUTE);
+    const diffHr = Math.floor(diffMs / MS_PER_HOUR);
+    const diffDay = Math.floor(diffMs / MS_PER_DAY);
     if (diffMin < 1) return t("justNow");
     if (diffMin < 60) return t("minutesAgo", { count: diffMin });
     if (diffHr < 24) return t("hoursAgo", { count: diffHr });
