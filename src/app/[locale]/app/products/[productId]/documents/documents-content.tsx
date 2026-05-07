@@ -30,17 +30,17 @@ const DOCUMENT_TYPES: {
   {
     type: "declaration_of_conformity",
     iconName: "checkmark-badge-01-stroke-rounded",
-    gradient: "linear-gradient(135deg, #066DE6, #22D3EE)",
+    gradient: "linear-gradient(135deg, #066DE6, #FF9E55)",
   },
   {
     type: "vulnerability_disclosure_policy",
     iconName: "shield-check",
-    gradient: "linear-gradient(135deg, #6F4FE0, #066DE6)",
+    gradient: "linear-gradient(135deg, #FF6D00, #066DE6)",
   },
   {
     type: "incident_report",
     iconName: "alert-02",
-    gradient: "linear-gradient(135deg, #E60019, #6F4FE0 60%, #066DE6)",
+    gradient: "linear-gradient(135deg, #E60019, #FF6D00 60%, #066DE6)",
   },
   {
     type: "risk_assessment",

@@ -54,15 +54,9 @@ export function HeroSection() {
         }}
       />
 
-      {/* Brand gradient blobs — Nask blue + orange */}
-      <div
-        className="pointer-events-none absolute -left-20 -top-10 h-[405px] w-[405px] animate-[hero-blob_8s_ease-in-out_infinite] rounded-full opacity-25 blur-[200px]"
-        style={{ background: "linear-gradient(to bottom, #066DE6, #6F4FE0)" }}
-      />
-      <div
-        className="pointer-events-none absolute -right-24 top-32 h-[340px] w-[340px] animate-[hero-blob_10s_ease-in-out_infinite] rounded-full opacity-20 blur-[180px]"
-        style={{ background: "linear-gradient(to bottom, #FF6D00, #FF9E55)" }}
-      />
+      {/* No atmospheric gradient blobs — Nask is a flat design system. The
+          dot grid above is enough background texture; gradients here brought
+          off-palette purple in and clutter the hero. */}
 
       <div className="relative mx-auto flex max-w-5xl flex-col items-center gap-8 text-center">
         <span
@@ -75,9 +69,7 @@ export function HeroSection() {
         <h1 data-hero-reveal className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl [&>span:last-child]:font-black">
           <span className="text-foreground">{t("titleLine1")}</span>
           <br />
-          <span className="bg-gradient-to-r from-[#066DE6] via-[#6F4FE0] to-[#FF6D00] bg-clip-text text-transparent">
-            {t("titleLine2")}
-          </span>
+          <span className="text-primary">{t("titleLine2")}</span>
         </h1>
 
         <p

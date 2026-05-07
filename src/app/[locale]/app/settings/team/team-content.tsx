@@ -24,9 +24,9 @@ import { cn } from "@/lib/utils";
 
 const ROLE_STYLE: Record<string, string> = {
   admin: "bg-primary/15 text-primary",
-  compliance_officer: "bg-[#6F4FE0]/15 text-[#6F4FE0]",
+  compliance_officer: "bg-accent/15 text-accent",
   cto: "bg-accent/15 text-accent",
-  editor: "bg-[#22D3EE]/15 text-[#22D3EE]",
+  editor: "bg-[#FF9E55]/15 text-[#FF9E55]",
   viewer: "bg-muted text-muted-foreground",
 };
 

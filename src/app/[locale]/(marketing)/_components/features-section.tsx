@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
 
 const modules = [
   { key: "assessment", accent: "#066DE6" },
-  { key: "checklist", accent: "#6F4FE0" },
+  { key: "checklist", accent: "#FF6D00" },
   { key: "sbom", accent: "#FF6D00" },
   { key: "documents", accent: "#FF9E55" },
 ] as const;

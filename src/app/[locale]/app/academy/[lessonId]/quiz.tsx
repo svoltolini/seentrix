@@ -77,7 +77,7 @@ export function Quiz({
     return (
       <div
         className="overflow-hidden rounded-md p-8"
-        style={{ background: "linear-gradient(135deg, #066DE6 0%, #6F4FE0 60%, #FF6D00 100%)" }}
+        style={{ background: "linear-gradient(135deg, #066DE6 0%, #FF6D00 60%, #FF6D00 100%)" }}
       >
         <div className="flex size-12 items-center justify-center rounded-full bg-white/15 backdrop-blur-sm">
           <Icon name="checkmark-circle-01-stroke-rounded" size={24} className="text-white" />

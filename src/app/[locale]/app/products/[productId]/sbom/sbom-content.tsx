@@ -178,9 +178,9 @@ export function SbomContent({
   }
 
   const SEVERITY_CARDS = [
-    { key: "critical" as const, gradient: "linear-gradient(135deg, #E60019, #6F4FE0 60%, #066DE6)" },
+    { key: "critical" as const, gradient: "linear-gradient(135deg, #E60019, #FF6D00 60%, #066DE6)" },
     { key: "high" as const, gradient: "linear-gradient(135deg, #FF9E55, #FF6D00)" },
-    { key: "medium" as const, gradient: "linear-gradient(135deg, #066DE6, #22D3EE)" },
+    { key: "medium" as const, gradient: "linear-gradient(135deg, #066DE6, #FF9E55)" },
     { key: "low" as const, gradient: "linear-gradient(135deg, #2C3659, #4B5670)" },
   ];
 

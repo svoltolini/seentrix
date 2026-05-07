@@ -21,8 +21,8 @@ import type { DeletionStatus } from "../gdpr-types";
 const ROLE_HIERARCHY: { key: string; color: string; bg: string; icon: string }[] = [
   { key: "admin", color: "text-primary", bg: "bg-primary", icon: "crown-stroke-rounded" },
   { key: "cto", color: "text-accent", bg: "bg-accent", icon: "terminal-stroke-rounded" },
-  { key: "compliance_officer", color: "text-[#6F4FE0]", bg: "bg-[#6F4FE0]", icon: "task-done-02-stroke-rounded" },
-  { key: "editor", color: "text-[#22D3EE]", bg: "bg-[#22D3EE]", icon: "pencil-edit-02-stroke-rounded" },
+  { key: "compliance_officer", color: "text-accent", bg: "bg-accent", icon: "task-done-02-stroke-rounded" },
+  { key: "editor", color: "text-[#FF9E55]", bg: "bg-[#FF9E55]", icon: "pencil-edit-02-stroke-rounded" },
   { key: "viewer", color: "text-muted-foreground", bg: "bg-muted-foreground", icon: "glasses-stroke-rounded" },
 ];
 

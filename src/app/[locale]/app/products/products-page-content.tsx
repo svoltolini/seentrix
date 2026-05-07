@@ -21,9 +21,9 @@ type ViewMode = "list" | "grid" | "timeline";
 
 const TYPE_ICON_BG: Record<string, string> = {
   hardware: "bg-primary",
-  software: "bg-[#6F4FE0]",
+  software: "bg-accent",
   firmware: "bg-accent",
-  iot: "bg-[#22D3EE]",
+  iot: "bg-[#FF9E55]",
 };
 
 const CATEGORY_PILL: Record<string, string> = {

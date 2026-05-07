@@ -37,8 +37,8 @@ export function AlertBanner({
       className="relative overflow-hidden rounded-md text-white"
       style={{
         backgroundImage: isCritical
-          ? "linear-gradient(135deg, #2C3659 0%, #6F4FE0 55%, #E60019 110%)"
-          : "linear-gradient(135deg, #066DE6 0%, #6F4FE0 55%, #FF6D00 110%)",
+          ? "linear-gradient(135deg, #2C3659 0%, #FF6D00 55%, #E60019 110%)"
+          : "linear-gradient(135deg, #066DE6 0%, #FF6D00 55%, #FF6D00 110%)",
       }}
     >
       {/* Decorative blob */}

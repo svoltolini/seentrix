@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
 
 const steps = [
   { key: "s1", accent: "#066DE6" },
-  { key: "s2", accent: "#6F4FE0" },
+  { key: "s2", accent: "#FF6D00" },
   { key: "s3", accent: "#FF6D00" },
 ] as const;
 

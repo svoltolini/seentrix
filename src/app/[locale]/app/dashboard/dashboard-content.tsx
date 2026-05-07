@@ -55,13 +55,13 @@ function pickFeaturedProducts(
 function categoryGradient(category: string | null): string {
   switch (category) {
     case "critical":
-      return "linear-gradient(135deg, #E60019 0%, #6F4FE0 60%, #066DE6 100%)";
+      return "linear-gradient(135deg, #E60019 0%, #FF6D00 60%, #066DE6 100%)";
     case "important_class_ii":
-      return "linear-gradient(135deg, #FF6D00 0%, #6F4FE0 60%, #066DE6 100%)";
+      return "linear-gradient(135deg, #FF6D00 0%, #FF6D00 60%, #066DE6 100%)";
     case "important_class_i":
       return "linear-gradient(135deg, #FF9E55 0%, #066DE6 110%)";
     default:
-      return "linear-gradient(135deg, #066DE6 0%, #6F4FE0 60%, #22D3EE 100%)";
+      return "linear-gradient(135deg, #066DE6 0%, #FF6D00 60%, #FF9E55 100%)";
   }
 }
 

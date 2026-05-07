@@ -148,7 +148,7 @@ export function ComplianceChecklist({
               ? "linear-gradient(135deg, #4CD964, #16A34A)"
               : score >= 40
                 ? "linear-gradient(135deg, #FF9E55, #FF6D00)"
-                : "linear-gradient(135deg, #E60019, #6F4FE0 60%, #066DE6)",
+                : "linear-gradient(135deg, #E60019, #FF6D00 60%, #066DE6)",
         }}
       >
         <div className="flex items-center gap-5 p-5">

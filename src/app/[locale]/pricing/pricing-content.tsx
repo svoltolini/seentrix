@@ -153,7 +153,7 @@ export function PricingContent() {
                     className={cn(
                       "text-5xl font-extrabold",
                       isPro
-                        ? "bg-gradient-to-r from-[#066DE6] to-[#6F4FE0] bg-clip-text text-transparent"
+                        ? "text-primary"
                         : "text-foreground",
                     )}
                   >

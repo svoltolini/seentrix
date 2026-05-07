@@ -27,9 +27,9 @@ import { FieldHelp } from "@/components/field-help";
 
 const TYPE_STYLE: Record<string, { bg: string; text: string }> = {
   hardware: { bg: "bg-primary/15", text: "text-primary" },
-  software: { bg: "bg-[#6F4FE0]/15", text: "text-[#6F4FE0]" },
+  software: { bg: "bg-accent/15", text: "text-accent" },
   firmware: { bg: "bg-accent/15", text: "text-accent" },
-  iot: { bg: "bg-[#22D3EE]/15", text: "text-[#22D3EE]" },
+  iot: { bg: "bg-[#FF9E55]/15", text: "text-[#FF9E55]" },
 };
 
 export function ProductOverview({
@@ -115,7 +115,7 @@ export function ProductOverview({
         {/* Type — purple */}
         <div
           className="overflow-hidden rounded-md"
-          style={{ background: "linear-gradient(135deg, #6F4FE0, #066DE6)" }}
+          style={{ background: "linear-gradient(135deg, #FF6D00, #066DE6)" }}
         >
           <div className="p-5">
             <p className="text-l6-plus text-white">
@@ -135,12 +135,12 @@ export function ProductOverview({
           style={{
             background: product.cra_category
               ? product.cra_category === "critical"
-                ? "linear-gradient(135deg, #E60019, #6F4FE0 60%, #066DE6)"
+                ? "linear-gradient(135deg, #E60019, #FF6D00 60%, #066DE6)"
                 : product.cra_category === "important_class_ii"
-                  ? "linear-gradient(135deg, #FF6D00, #6F4FE0 60%, #066DE6)"
+                  ? "linear-gradient(135deg, #FF6D00, #FF6D00 60%, #066DE6)"
                   : product.cra_category === "important_class_i"
                     ? "linear-gradient(135deg, #FF9E55, #066DE6)"
-                    : "linear-gradient(135deg, #066DE6, #22D3EE)"
+                    : "linear-gradient(135deg, #066DE6, #FF9E55)"
               : "linear-gradient(135deg, #2C3659, #4B5670)",
           }}
         >
@@ -197,7 +197,7 @@ export function ProductOverview({
         {/* Conformity Route — blue */}
         <div
           className="overflow-hidden rounded-md"
-          style={{ background: "linear-gradient(135deg, #066DE6, #22D3EE)" }}
+          style={{ background: "linear-gradient(135deg, #066DE6, #FF9E55)" }}
         >
           <div className="p-5">
             <p className="text-l6-plus text-white">

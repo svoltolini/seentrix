@@ -51,7 +51,7 @@ export function ProductDetailShell({
         className="relative flex flex-col gap-5 overflow-hidden rounded-md p-8 text-white"
         style={{
           backgroundImage:
-            "linear-gradient(135deg, #066DE6 0%, #6F4FE0 55%, #22D3EE 100%)",
+            "linear-gradient(135deg, #066DE6 0%, #FF6D00 55%, #FF9E55 100%)",
         }}
       >
         {/* Decorative blob */}

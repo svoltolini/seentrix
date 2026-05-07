@@ -29,7 +29,7 @@ interface Props {
 }
 
 const DEFAULT_GRADIENT =
-  "linear-gradient(135deg, #066DE6 0%, #6F4FE0 60%, #22D3EE 100%)";
+  "linear-gradient(135deg, #066DE6 0%, #FF6D00 60%, #FF9E55 100%)";
 
 function initialsOf(name: string): string {
   return name.split(/\s+/).map((p) => p[0] ?? "").join("").slice(0, 2).toUpperCase();

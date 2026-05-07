@@ -9,7 +9,7 @@ import { buttonVariants } from "@/components/ui/button";
 
 const segments = [
   { key: "industrial", accent: "#066DE6" },
-  { key: "iot", accent: "#6F4FE0" },
+  { key: "iot", accent: "#FF6D00" },
   { key: "software", accent: "#FF6D00" },
 ] as const;
 

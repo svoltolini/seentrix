@@ -94,7 +94,7 @@ export function HelpSheet({
             {reference && (
               <div
                 className="relative overflow-hidden rounded-md p-5"
-                style={{ background: "linear-gradient(135deg, #066DE6 0%, #6F4FE0 60%, #FF6D00 100%)" }}
+                style={{ background: "linear-gradient(135deg, #066DE6 0%, #FF6D00 60%, #FF6D00 100%)" }}
               >
                 <div className="mb-2 inline-flex items-center gap-2 rounded-sm bg-white/20 px-2.5 py-0.5 text-l6-plus uppercase tracking-wider text-white backdrop-blur-sm">
                   {t("craReference")}

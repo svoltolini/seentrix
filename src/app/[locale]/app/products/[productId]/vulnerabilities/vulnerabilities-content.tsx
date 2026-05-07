@@ -372,7 +372,7 @@ export function VulnerabilitiesContent({
           data-reveal
           className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5"
         >
-          <StatCard label={t("kpi.total")} from="#066DE6" to="#22D3EE">
+          <StatCard label={t("kpi.total")} from="#066DE6" to="#FF9E55">
             <p className="mt-2 text-h2 tabular-nums tracking-tight text-white">
               {kpis.total}
             </p>
@@ -382,7 +382,7 @@ export function VulnerabilitiesContent({
               {kpis.open}
             </p>
           </StatCard>
-          <StatCard label={t("kpi.critical")} from="#E60019" to="#6F4FE0">
+          <StatCard label={t("kpi.critical")} from="#E60019" to="#FF6D00">
             <p className="mt-2 text-h2 tabular-nums tracking-tight text-white">
               {kpis.critical}
             </p>

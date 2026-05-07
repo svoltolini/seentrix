@@ -245,7 +245,7 @@ export function IncidentsContent({
               {kpis.overdue}
             </p>
           </StatCard>
-          <StatCard label={t("kpi.critical")} from="#E60019" to="#6F4FE0">
+          <StatCard label={t("kpi.critical")} from="#E60019" to="#FF6D00">
             <p className="mt-2 text-h2 tabular-nums tracking-tight text-white">
               {kpis.critical}
             </p>

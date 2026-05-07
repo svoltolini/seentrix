@@ -186,12 +186,12 @@ export function ReleasesContent({
           data-reveal
           className="grid grid-cols-2 gap-3 sm:grid-cols-4"
         >
-          <StatCard label={t("kpi.total")} from="#066DE6" to="#22D3EE">
+          <StatCard label={t("kpi.total")} from="#066DE6" to="#FF9E55">
             <p className="mt-2 text-h2 tabular-nums tracking-tight text-white">
               {summary.total}
             </p>
           </StatCard>
-          <StatCard label={t("kpi.security")} from="#E60019" to="#6F4FE0">
+          <StatCard label={t("kpi.security")} from="#E60019" to="#FF6D00">
             <p className="mt-2 text-h2 tabular-nums tracking-tight text-white">
               {summary.security}
             </p>
@@ -201,7 +201,7 @@ export function ReleasesContent({
               {summary.cves}
             </p>
           </StatCard>
-          <StatCard label={t("kpi.latest")} from="#6F4FE0" to="#066DE6">
+          <StatCard label={t("kpi.latest")} from="#FF6D00" to="#066DE6">
             <p className="mt-2 truncate text-h4 tracking-tight text-white">
               {summary.latest ? summary.latest.version : "—"}
             </p>

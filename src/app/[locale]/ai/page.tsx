@@ -16,16 +16,16 @@ export default async function AiPage({
 // Four gradients — one per numeral. Same spectrum the landing-page
 // CopilotSection uses so the two pages read as one continuous story.
 const BULLETS = [
-  { key: "sovereign", gradient: "from-[#066DE6] to-[#6F4FE0]" },
-  { key: "grounded", gradient: "from-[#6F4FE0] to-[#EC4899]" },
+  { key: "sovereign", gradient: "from-[#066DE6] to-[#FF6D00]" },
+  { key: "grounded", gradient: "from-[#FF6D00] to-[#EC4899]" },
   { key: "context", gradient: "from-[#F59E0B] to-[#FF6D00]" },
   { key: "actionable", gradient: "from-[#10B981] to-[#06B6D4]" },
 ] as const;
 
 // Five long-form sections also get their own numeral gradient.
 const SECTION_GRADIENTS = [
-  "from-[#066DE6] to-[#6F4FE0]",
-  "from-[#6F4FE0] to-[#EC4899]",
+  "from-[#066DE6] to-[#FF6D00]",
+  "from-[#FF6D00] to-[#EC4899]",
   "from-[#EC4899] to-[#F59E0B]",
   "from-[#F59E0B] to-[#10B981]",
   "from-[#10B981] to-[#06B6D4]",

@@ -51,33 +51,20 @@ export function CopilotSection() {
     return () => ctx.revert();
   }, []);
 
-  // Each cell gets its own gradient so the row reads as a spectrum
-  // rather than four copies of the same number. All pairs stay inside
-  // the Nask brand stack — blue (#066DE6 → #6F4FE0) and orange
-  // (#FF6D00 → #FF9E55).
+  // Numerals alternate between solid primary blue and solid accent orange
+  // so the row still reads as a sequence without leaning on off-palette
+  // purple bridge tones. Flat, Nask-consistent.
   const bullets = [
-    {
-      key: "sovereign",
-      gradient: "from-[#066DE6] to-[#6F4FE0]", // blue → violet
-    },
-    {
-      key: "grounded",
-      gradient: "from-[#6F4FE0] to-[#FF6D00]", // violet → orange
-    },
-    {
-      key: "context",
-      gradient: "from-[#FF6D00] to-[#FF9E55]", // orange → light orange
-    },
-    {
-      key: "actionable",
-      gradient: "from-[#066DE6] to-[#FF6D00]", // blue → orange
-    },
+    { key: "sovereign",  tone: "text-primary" },
+    { key: "grounded",   tone: "text-accent"  },
+    { key: "context",    tone: "text-primary" },
+    { key: "actionable", tone: "text-accent"  },
   ] as const;
 
   return (
     <section
       ref={sectionRef}
-      className="bg-gradient-to-br from-primary/5 via-transparent to-accent/5 py-24 lg:py-32"
+      className="bg-background py-24 lg:py-32"
     >
       <div className="mx-auto max-w-6xl px-6">
         {/* Heading block ----------------------------------------------- */}
@@ -102,18 +89,17 @@ export function CopilotSection() {
           </p>
         </div>
 
-        {/* Four borderless cells, each anchored by an 01/02/03/04 in the
-            brand blue/violet/orange gradient stack — same treatment the
-            Problem section uses for its stat counters. */}
+        {/* Four borderless cells, each anchored by an 01/02/03/04 in solid
+            primary/accent — flat Nask, no gradient text. */}
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
-          {bullets.map(({ key, gradient }, i) => (
+          {bullets.map(({ key, tone }, i) => (
             <div
               key={key}
               data-copilot-cell
               className="flex flex-col items-start text-left"
             >
               <span
-                className={`bg-gradient-to-r ${gradient} bg-clip-text font-heading text-6xl font-extrabold leading-none tracking-tight text-transparent sm:text-7xl`}
+                className={`${tone} text-6xl font-extrabold leading-none tracking-tight sm:text-7xl`}
               >
                 {String(i + 1).padStart(2, "0")}
               </span>

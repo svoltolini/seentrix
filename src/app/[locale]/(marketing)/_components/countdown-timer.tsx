@@ -44,7 +44,7 @@ export function CountdownTimer() {
       {boxes.map((box, i) => (
         <div key={box.label} className="flex items-center gap-2 sm:gap-3">
           <div className="flex flex-col items-center gap-1.5">
-            <span className="bg-gradient-to-b from-foreground to-foreground/60 bg-clip-text text-3xl font-extrabold tabular-nums text-transparent sm:text-4xl">
+            <span className="text-3xl font-extrabold tabular-nums text-foreground sm:text-4xl">
               {mounted ? pad(box.value) : "00"}
             </span>
             <span className="text-l6-plus uppercase tracking-widest text-muted-foreground">

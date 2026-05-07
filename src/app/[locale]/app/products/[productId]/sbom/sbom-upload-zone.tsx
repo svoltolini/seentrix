@@ -67,7 +67,7 @@ export function SbomUploadZone({
               y2="1"
             >
               <stop offset="0%" stopColor="#066DE6" stopOpacity={dragOver ? 1 : 0.4} />
-              <stop offset="50%" stopColor="#6F4FE0" stopOpacity={dragOver ? 1 : 0.4} />
+              <stop offset="50%" stopColor="#FF6D00" stopOpacity={dragOver ? 1 : 0.4} />
               <stop offset="100%" stopColor="#FF6D00" stopOpacity={dragOver ? 1 : 0.4} />
             </linearGradient>
           </defs>
