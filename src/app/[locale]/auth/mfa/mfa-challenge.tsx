@@ -166,7 +166,7 @@ export function MfaChallenge() {
   const inputsDisabled = isPending || !challengeId;
 
   return (
-    <div className="rounded-md bg-muted p-8">
+    <div>
       <p className="text-l6-plus uppercase tracking-[2.5px] text-primary">
         Verify
       </p>
