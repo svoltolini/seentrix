@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { Icon } from "@/components/icon";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { CountdownTimer } from "./countdown-timer";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
@@ -103,22 +104,14 @@ export function HeroSection() {
           <CountdownTimer />
         </div>
 
-        {/* Scroll indicator — purely decorative, hidden from SRs. */}
+        {/* Scroll indicator — decorative, hidden from SRs. */}
         <div data-hero-reveal className="mt-6 animate-bounce">
-          <svg
+          <Icon
+            name="ArrowDown2"
+            size={24}
             aria-hidden="true"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
             className="text-muted-foreground"
-          >
-            <path d="M12 5v14M19 12l-7 7-7-7" />
-          </svg>
+          />
         </div>
       </div>
     </section>

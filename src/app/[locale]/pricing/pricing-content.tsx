@@ -180,22 +180,13 @@ export function PricingContent() {
                 <ul className="flex flex-1 flex-col gap-3 text-p3 text-muted-foreground">
                   {features.map((feature) => (
                     <li key={feature} className="flex items-start gap-2.5">
-                      <svg
+                      <Icon
+                        name="TickCircle"
+                        size={16}
+                        variant="Bold"
                         aria-hidden="true"
-                        width="16"
-                        height="16"
-                        viewBox="0 0 16 16"
-                        fill="none"
                         className="mt-0.5 shrink-0 text-primary"
-                      >
-                        <path
-                          d="M13.3 4.3 6.5 11.1 2.7 7.3"
-                          stroke="currentColor"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
+                      />
                       {feature}
                     </li>
                   ))}
@@ -383,22 +374,13 @@ function Cell({ value }: { value: CellValue }) {
 
 function IconCheck() {
   return (
-    <svg
-      width="18"
-      height="18"
-      viewBox="0 0 16 16"
-      fill="none"
+    <Icon
+      name="TickCircle"
+      size={18}
+      variant="Bold"
       className="text-primary"
       aria-label="Included"
-    >
-      <path
-        d="M13.3 4.3 6.5 11.1 2.7 7.3"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
+    />
   );
 }
 

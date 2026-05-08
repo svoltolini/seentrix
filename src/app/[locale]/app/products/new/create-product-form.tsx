@@ -7,6 +7,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Icon } from "@/components/icon";
 import { createProduct, type ProductActionState } from "../actions";
 import type { OrgPlan } from "@/lib/constants/plans";
 import { PLAN_PRODUCT_LIMITS } from "@/lib/constants/plans";
@@ -297,18 +298,11 @@ export function CreateProductForm({
                 aria-label={t("create.imageRemove")}
                 className="absolute -right-2 -top-2 flex size-6 items-center justify-center rounded-full bg-card shadow-card-sm text-muted-foreground border border-border-outline transition hover:bg-destructive hover:text-white hover:border-destructive"
               >
-                <svg
-                  viewBox="0 0 24 24"
-                  className="h-3.5 w-3.5"
+                <Icon
+                  name="CloseCircle"
+                  size={14}
                   aria-hidden="true"
-                >
-                  <path
-                    d="M6 6l12 12M18 6L6 18"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                </svg>
+                />
               </button>
             </div>
           ) : (

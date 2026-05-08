@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
+import { Icon } from "@/components/icon";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 const faqKeys = ["q1", "q2", "q3", "q4", "q5", "q6"] as const;
@@ -81,24 +82,15 @@ export function FaqSection() {
                     <span className="text-l5 text-foreground">
                       {t(`items.${key}.question`)}
                     </span>
-                    <svg
+                    <Icon
+                      name="Add"
+                      size={20}
                       aria-hidden="true"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 20 20"
-                      fill="none"
                       className={cn(
                         "shrink-0 text-muted-foreground transition-transform duration-200",
-                        isOpen && "rotate-45"
+                        isOpen && "rotate-45",
                       )}
-                    >
-                      <path
-                        d="M10 4v12M4 10h12"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                      />
-                    </svg>
+                    />
                   </button>
                   <div
                     id={panelId}

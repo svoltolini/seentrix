@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Icon } from "@/components/icon";
 import { cn } from "@/lib/utils";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
@@ -128,21 +129,13 @@ export function PricingPreview() {
                   <ul className="flex flex-1 flex-col gap-3 text-p3 text-muted-foreground">
                     {features.map((fk) => (
                       <li key={fk} className="flex items-start gap-2.5">
-                        <svg
-                          width="16"
-                          height="16"
-                          viewBox="0 0 16 16"
-                          fill="none"
+                        <Icon
+                          name="TickCircle"
+                          size={16}
+                          variant="Bold"
+                          aria-hidden="true"
                           className="mt-0.5 shrink-0 text-primary"
-                        >
-                          <path
-                            d="M13.3 4.3 6.5 11.1 2.7 7.3"
-                            stroke="currentColor"
-                            strokeWidth="1.5"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
+                        />
                         {t(`${tier}.features.${fk}`)}
                       </li>
                     ))}
@@ -173,22 +166,12 @@ export function PricingPreview() {
             className="group inline-flex items-center gap-2 rounded-sm border-[1.5px] border-border-outline bg-card px-5 py-3 text-l6 text-foreground transition-colors hover:bg-muted"
           >
             <span>{t("compareAllFeatures")}</span>
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 14 14"
-              fill="none"
+            <Icon
+              name="ArrowRight2"
+              size={14}
+              aria-hidden="true"
               className="transition-transform group-hover:translate-x-0.5"
-              aria-hidden
-            >
-              <path
-                d="M3 7h8M7 3l4 4-4 4"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            />
           </Link>
           <p className="text-p4-r text-muted-foreground">
             {t("compareAllFeaturesHint")}
