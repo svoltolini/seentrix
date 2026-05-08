@@ -196,24 +196,36 @@ export function ProductCardList({ products }: Props) {
                 onClick={() => router.push(href)}
                 className="cursor-pointer"
               >
-                {/* Product cell — icon + name. Wrapped in an anchor
-                    so Cmd-click opens in a new tab and screen
-                    readers see a real link target. */}
+                {/* Product cell — uploaded image when available, or
+                    a type-tinted initial fallback. The whole cluster
+                    is wrapped in an anchor so Cmd-click opens in a
+                    new tab and screen readers see a real link
+                    target. */}
                 <TableCell>
                   <a
                     href={href}
                     onClick={(e) => e.stopPropagation()}
                     className="flex min-w-0 items-center gap-3"
                   >
-                    <span
-                      className={cn(
-                        "flex size-9 shrink-0 items-center justify-center rounded-md text-l5",
-                        tone.bg,
-                        tone.fg,
-                      )}
-                    >
-                      {p.name[0]?.toUpperCase() ?? "?"}
-                    </span>
+                    {p.image_url ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={p.image_url}
+                        alt=""
+                        aria-hidden
+                        className="size-9 shrink-0 rounded-md object-cover"
+                      />
+                    ) : (
+                      <span
+                        className={cn(
+                          "flex size-9 shrink-0 items-center justify-center rounded-md text-l5",
+                          tone.bg,
+                          tone.fg,
+                        )}
+                      >
+                        {p.name[0]?.toUpperCase() ?? "?"}
+                      </span>
+                    )}
                     <span className="truncate text-h6 text-foreground hover:text-primary">
                       {p.name}
                     </span>

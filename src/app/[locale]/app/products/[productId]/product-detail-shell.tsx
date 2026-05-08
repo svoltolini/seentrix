@@ -18,9 +18,16 @@ const TABS = [
 ] as const;
 
 /**
- * ProductDetailShell — Nask Detail-Dashboard hero (frame `41:1171`).
- * Gradient header (blue → purple → teal) + breadcrumb + title + edit CTA,
- * followed by underlined sub-tabs and the routed content.
+ * ProductDetailShell — solid-blue hero + soft dot-grid overlay (the
+ * "Built by Compliance Engineers" recipe from the landing page
+ * TrustSection). Earlier passes used a per-product gradient hero
+ * (blue → orange → peach) which contradicted the design memory rule
+ * "palette only, no per-card gradients". The new recipe lifts the
+ * exact JSX pattern used by `<TrustSection />` and the FieldHelp
+ * reference callout so every "primary blue panel" surface in the app
+ * reads as one family.
+ *
+ * Below the hero: underlined sub-tabs and the routed tab content.
  */
 export function ProductDetailShell({
   product,
@@ -45,41 +52,52 @@ export function ProductDetailShell({
   }
 
   return (
-    <div className="mx-auto max-w-[1120px] space-y-6 pb-12">
-      {/* Gradient hero */}
-      <div
-        className="relative flex flex-col gap-5 overflow-hidden rounded-md p-8 text-white"
-        style={{
-          backgroundImage:
-            "linear-gradient(135deg, #066DE6 0%, #FF6D00 55%, #FF9E55 100%)",
-        }}
-      >
-        {/* Decorative blob */}
+    // Container width matched to /app/dashboard + /app/products
+    // (max-w-[1600px]) so every signed-in surface sits on the same
+    // horizontal rhythm.
+    <div className="mx-auto max-w-[1600px] space-y-6 pb-12">
+      {/* Hero — solid bg-primary + radial dot-grid overlay. Verbatim
+          recipe from the landing TrustSection / FieldHelp reference
+          callout / dashboard hero card so all four surfaces read
+          identically. The chip on uploaded product images uses the
+          same translucent-white-on-blur recipe as the priority chip
+          on the project hero card. */}
+      <div className="relative overflow-hidden rounded-md bg-primary p-8 text-primary-foreground">
         <div
           aria-hidden
-          className="pointer-events-none absolute -right-16 -top-16 size-72 rounded-full bg-white/10 blur-3xl"
+          className="pointer-events-none absolute inset-0"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle, rgba(255,255,255,0.12) 1px, transparent 1px)",
+            backgroundSize: "24px 24px",
+          }}
         />
         <div className="relative flex items-start gap-4">
           {product.image_url && (
+            // eslint-disable-next-line @next/next/no-img-element
             <img
               src={product.image_url}
               alt={product.name}
-              className="size-16 shrink-0 rounded-md ring-2 ring-white/20 object-cover"
+              className="size-16 shrink-0 rounded-md object-cover ring-2 ring-primary-foreground/20"
             />
           )}
-          <div className="flex flex-1 flex-col gap-1">
-            <p className="text-l6-plus uppercase tracking-wider text-white">
+          <div className="flex min-w-0 flex-1 flex-col gap-1">
+            <p className="text-l6-plus uppercase tracking-wider text-primary-foreground/80">
               {t("breadcrumbs.products")} · {productId.slice(0, 8)}
             </p>
-            <h1 className="text-h1 text-white">{product.name}</h1>
+            <h1 className="truncate text-h1 text-primary-foreground">
+              {product.name}
+            </h1>
             {product.description && (
-              <p className="mt-1 max-w-2xl text-p2 text-white">{product.description}</p>
+              <p className="mt-1 max-w-2xl text-p2 text-primary-foreground/90">
+                {product.description}
+              </p>
             )}
           </div>
           <Button
             variant="default"
             size="default"
-            className="shrink-0 bg-white/15 backdrop-blur-sm hover:bg-white/25"
+            className="shrink-0 border-[1.5px] border-primary-foreground/30 bg-primary-foreground/15 text-primary-foreground backdrop-blur-sm hover:bg-primary-foreground/25"
             render={<Link href={`${basePath}/checklist`} />}
           >
             <Icon name="Edit" size={16} />

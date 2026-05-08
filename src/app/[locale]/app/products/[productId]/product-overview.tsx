@@ -26,11 +26,51 @@ import { PRODUCT_TYPES } from "./constants";
 import { FieldHelp } from "@/components/field-help";
 
 const TYPE_STYLE: Record<string, { bg: string; text: string }> = {
-  hardware: { bg: "bg-primary/15", text: "text-primary" },
-  software: { bg: "bg-accent/15", text: "text-accent" },
-  firmware: { bg: "bg-accent/15", text: "text-accent" },
-  iot: { bg: "bg-[#FF9E55]/15", text: "text-[#FF9E55]" },
+  hardware: { bg: "bg-primary/10", text: "text-primary" },
+  software: { bg: "bg-accent/10", text: "text-accent" },
+  firmware: { bg: "bg-success/10", text: "text-success" },
+  iot: { bg: "bg-warning/10", text: "text-warning" },
 };
+
+// CRA categories form an escalating risk hierarchy. Tier-tinted chip
+// recipe matches the criticality meter on the products list table so
+// the badge looks identical across surfaces.
+const CRA_TIER_TONE: Record<string, { bg: string; text: string }> = {
+  default: { bg: "bg-primary/10", text: "text-primary" },
+  important_class_i: { bg: "bg-warning/10", text: "text-warning" },
+  important_class_ii: { bg: "bg-accent/10", text: "text-accent" },
+  critical: { bg: "bg-destructive/10", text: "text-destructive" },
+};
+
+const EM_DASH = "—";
+
+// === Stat card =========================================================
+// Minimal Nask card used by the four metrics on the product overview.
+// White surface, soft shadow, eyebrow above value. No gradients, no
+// per-tier background tints — those were retired with the design
+// memory rule "palette only".
+
+function StatCard({
+  eyebrow,
+  children,
+  footer,
+}: {
+  eyebrow: string;
+  children: React.ReactNode;
+  footer?: React.ReactNode;
+}) {
+  return (
+    <div className="flex flex-col justify-between gap-3 rounded-md bg-card p-5 shadow-card-md">
+      <div className="flex flex-col gap-2">
+        <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
+          {eyebrow}
+        </p>
+        <div>{children}</div>
+      </div>
+      {footer && <div>{footer}</div>}
+    </div>
+  );
+}
 
 export function ProductOverview({
   product,
@@ -107,114 +147,91 @@ export function ProductOverview({
     bg: "bg-muted",
     text: "text-muted-foreground",
   };
+  const craTone = product.cra_category
+    ? (CRA_TIER_TONE[product.cra_category] ?? CRA_TIER_TONE.default)
+    : { bg: "bg-muted", text: "text-muted-foreground" };
 
   return (
     <div className="space-y-6">
-      {/* Stat cards */}
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-        {/* Type — purple */}
-        <div
-          className="overflow-hidden rounded-md"
-          style={{ background: "linear-gradient(135deg, #FF6D00, #066DE6)" }}
-        >
-          <div className="p-5">
-            <p className="text-l6-plus text-white">
-              {t("detail.overview.type")}
-            </p>
-            <div className="mt-2">
-              <span className="inline-block rounded-sm bg-white/20 px-2.5 py-0.5 text-l6-plus text-white">
-                {product.type ? t(`types.${product.type}`) : "\u2014"}
-              </span>
-            </div>
-          </div>
-        </div>
+      {/* Stat cards — four white panels with `shadow-card-md` and a
+          tier-tinted chip per stat. Replaces an earlier per-card
+          gradient layout (purple/orange/green/blue tints assembled
+          per CRA category) which contradicted the design memory rule
+          "palette only, no per-card gradients" and felt like a
+          different system from the dashboard. */}
+      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+        {/* Type */}
+        <StatCard eyebrow={t("detail.overview.type")}>
+          {product.type ? (
+            <span
+              className={`inline-flex rounded-sm px-2.5 py-0.5 text-l6-plus uppercase tracking-wider ${ts.bg} ${ts.text}`}
+            >
+              {t(`types.${product.type}`)}
+            </span>
+          ) : (
+            <span className="text-p3 text-muted-foreground">{EM_DASH}</span>
+          )}
+        </StatCard>
 
         {/* CRA Category */}
-        <div
-          className="overflow-hidden rounded-md"
-          style={{
-            background: product.cra_category
-              ? product.cra_category === "critical"
-                ? "linear-gradient(135deg, #E60019, #FF6D00 60%, #066DE6)"
-                : product.cra_category === "important_class_ii"
-                  ? "linear-gradient(135deg, #FF6D00, #FF6D00 60%, #066DE6)"
-                  : product.cra_category === "important_class_i"
-                    ? "linear-gradient(135deg, #FF9E55, #066DE6)"
-                    : "linear-gradient(135deg, #066DE6, #FF9E55)"
-              : "linear-gradient(135deg, #2C3659, #4B5670)",
-          }}
-        >
-          <div className="p-5">
-            <p className="text-l6-plus text-white">
-              {t("detail.overview.craStatus")}
-            </p>
-            {product.cra_category ? (
-              <div className="mt-2">
-                <span className="inline-block rounded-sm bg-white/20 px-2.5 py-0.5 text-l6-plus text-white">
-                  {t(`categories.${product.cra_category}`)}
-                </span>
-              </div>
-            ) : (
-              <div className="mt-2">
-                <Link
-                  href={`/app/products/${product.id}/assess`}
-                  className="text-l6 text-white hover:underline"
-                >
-                  {t("detail.overview.runAssessment")} &rarr;
-                </Link>
-              </div>
-            )}
-          </div>
-        </div>
+        <StatCard eyebrow={t("detail.overview.craStatus")}>
+          {product.cra_category ? (
+            <span
+              className={`inline-flex rounded-sm px-2.5 py-0.5 text-l6-plus uppercase tracking-wider ${craTone.bg} ${craTone.text}`}
+            >
+              {t(`categories.${product.cra_category}`)}
+            </span>
+          ) : (
+            <Link
+              href={`/app/products/${product.id}/assess`}
+              className="inline-flex items-center gap-1 text-l6 text-primary hover:underline"
+            >
+              {t("detail.overview.runAssessment")} &rarr;
+            </Link>
+          )}
+        </StatCard>
 
-        {/* Compliance — green */}
-        <div
-          className="overflow-hidden rounded-md"
-          style={{
-            background: hasChecklist
-              ? "linear-gradient(135deg, #4CD964, #16A34A)"
-              : "linear-gradient(135deg, #2C3659, #4B5670)",
-          }}
-        >
-          <div className="p-5">
-            <p className="text-l6-plus text-white">
-              {t("detail.overview.complianceScore")}
-            </p>
-            <p className="mt-2 text-h2 tabular-nums tracking-tight text-white">
-              {hasChecklist ? `${complianceScore}%` : "\u2014"}
-            </p>
-            {hasChecklist && (
-              <div className="mt-2.5 h-3 overflow-hidden rounded-sm bg-white/25">
+        {/* Compliance */}
+        <StatCard
+          eyebrow={t("detail.overview.complianceScore")}
+          footer={
+            hasChecklist ? (
+              <div className="h-1.5 overflow-hidden rounded-xl bg-border">
                 <div
-                  className="h-full rounded-sm bg-white transition-all duration-500"
+                  className="h-full rounded-xl bg-accent transition-[width] duration-500"
                   style={{ width: `${complianceScore}%` }}
                 />
               </div>
-            )}
-          </div>
-        </div>
-
-        {/* Conformity Route — blue */}
-        <div
-          className="overflow-hidden rounded-md"
-          style={{ background: "linear-gradient(135deg, #066DE6, #FF9E55)" }}
+            ) : undefined
+          }
         >
-          <div className="p-5">
-            <p className="text-l6-plus text-white">
-              {t("detail.overview.conformityRoute")}
-            </p>
-            <p className="mt-2 text-l6 text-white">
-              {product.conformity_route
-                ? tAssessment(`result.routes.${product.conformity_route}`)
-                : "\u2014"}
-            </p>
-            {product.requires_notified_body && (
-              <p className="mt-1 text-p4 text-white">
-                {t("detail.overview.notifiedBody")}: {t("detail.overview.yes")}
+          <p className="text-h2 tabular-nums tracking-tight text-foreground">
+            {hasChecklist ? `${complianceScore}%` : EM_DASH}
+          </p>
+        </StatCard>
+
+        {/* Conformity Route */}
+        <StatCard
+          eyebrow={t("detail.overview.conformityRoute")}
+          footer={
+            product.requires_notified_body ? (
+              <p className="text-p4 text-muted-foreground">
+                {t("detail.overview.notifiedBody")}:{" "}
+                <span className="text-foreground">
+                  {t("detail.overview.yes")}
+                </span>
               </p>
-            )}
-          </div>
-        </div>
+            ) : undefined
+          }
+        >
+          {product.conformity_route ? (
+            <p className="text-h5 text-foreground">
+              {tAssessment(`result.routes.${product.conformity_route}`)}
+            </p>
+          ) : (
+            <span className="text-p3 text-muted-foreground">{EM_DASH}</span>
+          )}
+        </StatCard>
       </div>
 
       {/* Actions row */}
@@ -331,6 +348,7 @@ export function ProductOverview({
                 <input type="hidden" name="remove_image" value={removeImage ? "1" : "0"} />
                 {imagePreview ? (
                   <div className="relative w-fit">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={imagePreview}
                       alt="Product"
