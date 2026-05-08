@@ -72,16 +72,46 @@
       "title": "Upcoming"
     },
     "actionLabels": {
-      "product_created": "Created the product {target}",
-      "product_assessed": "Assessed {target}",
-      "checklist_completed": "Completed the checklist for {target}",
-      "vulnerability_triaged": "Triaged a vulnerability in {target}",
-      "incident_created": "Reported an incident on {target}",
-      "doc_issued": "Issued {target}",
-      "evidence_uploaded": "Uploaded evidence to {target}",
-      "member_invited": "Invited {target} to the team",
-      "lesson_completed": "Completed the lesson {target}",
-      "fallback": "{action} on {target}"
+      "billing": {
+        "checkout_created": "Started a billing checkout"
+      },
+      "checklist": {
+        "evidence_removed": "Removed a piece of evidence",
+        "evidence_uploaded": "Uploaded evidence — {target}",
+        "item_description_changed": "Edited a checklist description",
+        "item_status_changed": "Updated a checklist item"
+      },
+      "document": {
+        "pdf_generated": "Generated a document PDF",
+        "saved": "Saved {target}",
+        "status_changed": "Changed a document status"
+      },
+      "member": {
+        "created": "Added {target} to the team",
+        "removed": "Removed a team member",
+        "role_changed": "Updated a team member's role"
+      },
+      "organization": {
+        "updated": "Updated organisation settings"
+      },
+      "password": {
+        "changed": "Changed their password"
+      },
+      "product": {
+        "assessed": "Assessed a product",
+        "created": "Created the product {target}",
+        "deleted": "Deleted a product",
+        "updated": "Updated {target}"
+      },
+      "profile": {
+        "updated": "Updated their profile"
+      },
+      "sbom": {
+        "deleted": "Removed an SBOM",
+        "scanned": "Scanned an SBOM",
+        "uploaded": "Uploaded an SBOM — {target}"
+      },
+      "fallback": "{action}"
     },
     "activityType": {
       "assessment": "Assessment",

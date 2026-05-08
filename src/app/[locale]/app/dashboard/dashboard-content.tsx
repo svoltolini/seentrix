@@ -93,44 +93,82 @@ const CATEGORY_KEY_MAP: Record<string, string> = {
 // Adapters
 // ---------------------------------------------------------------------------
 
+/**
+ * Maps every action emitted by `logActivity()` (see `src/lib/activity.ts`
+ * call sites) to a Vuesax icon + tone for the avatar/icon column.
+ *
+ * Action keys use dot-notation `category.verb` (e.g. `member.removed`,
+ * `checklist.item_status_changed`) — they're the literal strings the
+ * server actions write to the activity log. Underscore-style keys from
+ * earlier passes were dead because no logActivity caller actually used
+ * them.
+ *
+ * If a new action lands in the log without a matching entry here it
+ * falls through to the muted "Notification" icon, but the body label
+ * has its own fallback in dashboard.json (`actionLabels.fallback`) that
+ * humanises the raw action name — so a missed icon mapping looks plain
+ * but never broken.
+ */
 const ACTION_ICON: Record<
   string,
   { icon: ActivityFeedItem["icon"]; tone: NonNullable<ActivityFeedItem["iconTone"]> }
 > = {
-  product_created:        { icon: "Box",            tone: "primary" },
-  product_assessed:       { icon: "Verify",         tone: "success" },
-  checklist_completed:    { icon: "TickCircle",     tone: "success" },
-  vulnerability_triaged:  { icon: "ShieldTick",     tone: "primary" },
-  incident_created:       { icon: "Warning2",       tone: "destructive" },
-  doc_issued:             { icon: "DocumentText",   tone: "primary" },
-  evidence_uploaded:      { icon: "DocumentUpload", tone: "muted" },
-  member_invited:         { icon: "UserAdd",        tone: "primary" },
-  lesson_completed:       { icon: "Teacher",        tone: "success" },
+  "billing.checkout_created":              { icon: "Crown",            tone: "primary" },
+  "checklist.evidence_removed":            { icon: "Trash",            tone: "muted" },
+  "checklist.evidence_uploaded":           { icon: "DocumentUpload",   tone: "success" },
+  "checklist.item_description_changed":    { icon: "Edit",             tone: "muted" },
+  "checklist.item_status_changed":         { icon: "TickCircle",       tone: "success" },
+  "document.pdf_generated":                { icon: "DocumentDownload", tone: "primary" },
+  "document.saved":                        { icon: "DocumentText",     tone: "primary" },
+  "document.status_changed":               { icon: "DocumentText",     tone: "muted" },
+  "member.created":                        { icon: "UserAdd",          tone: "primary" },
+  "member.removed":                        { icon: "Trash",            tone: "destructive" },
+  "member.role_changed":                   { icon: "Crown",            tone: "primary" },
+  "organization.updated":                  { icon: "Building",         tone: "muted" },
+  "password.changed":                      { icon: "ShieldTick",       tone: "success" },
+  "product.assessed":                      { icon: "Verify",           tone: "success" },
+  "product.created":                       { icon: "Box",              tone: "primary" },
+  "product.deleted":                       { icon: "Trash",            tone: "destructive" },
+  "product.updated":                       { icon: "Edit",             tone: "muted" },
+  "profile.updated":                       { icon: "Profile",          tone: "muted" },
+  "sbom.deleted":                          { icon: "Trash",            tone: "destructive" },
+  "sbom.scanned":                          { icon: "ShieldTick",       tone: "primary" },
+  "sbom.uploaded":                         { icon: "DocumentUpload",   tone: "success" },
 };
 
 /**
- * Build a human-readable description of an activity event. The old
- * format `${action.replace("_", " ")} · ${target}` produced things like
- * "checklist completed · " (with a trailing dot when target was empty)
- * and "product created · MyProduct" — past-tense subjectless phrases
- * that read as machine output. This humanizer maps each known action
- * to a proper sentence keyed in dashboard.json (`actionLabels.*`) and
- * falls back to a generic "{action} on {target}" template for unknown
- * action strings.
+ * Build a human-readable description of an activity event.
+ *
+ * Source data: every `logActivity()` call writes a row with `action`
+ * (dot-notation `category.verb`), `target_type` (e.g. "member",
+ * "checklist"), and an optional `target_name`. Some callers don't pass
+ * a `target_name` because the target is generic (e.g. removing a member
+ * doesn't pass the removed user's name) — in those cases the template
+ * in `dashboard.actionLabels.*` is written without the `{target}`
+ * placeholder so the output reads as a clean sentence.
+ *
+ * Templates that DO use `{target}` are only assigned to actions whose
+ * emitter reliably passes a `target_name` (e.g. `product.created`,
+ * `member.created`, `sbom.uploaded`). When one of those happens to
+ * arrive with no name, we substitute a dash so the sentence doesn't
+ * end with a trailing space.
  */
 function humanizeActivity(
   a: ActivityItem,
   tAction: (key: string, vars?: Record<string, string>) => string,
   tHas: (key: string) => boolean,
 ): string {
-  const target = a.target_name ?? a.target_type ?? "";
+  const target = a.target_name?.trim() || "—";
   const labelKey = `actionLabels.${a.action}`;
   if (tHas(labelKey)) {
-    return tAction(labelKey, { target: target || "—" });
+    // next-intl ignores extra vars, so passing `target` here is safe
+    // even when the template doesn't reference it.
+    return tAction(labelKey, { target });
   }
+  // Unknown action — drop the underscores and dots for a passable phrase
+  // ("checklist item status changed" rather than "checklist.item_status_changed").
   return tAction("actionLabels.fallback", {
-    action: a.action.replace(/_/g, " "),
-    target: target || "—",
+    action: a.action.replace(/[._]/g, " "),
   });
 }
 
