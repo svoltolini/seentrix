@@ -50,29 +50,42 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   let displayName: string | null = null;
   let orgName: string | null = null;
   if (user) {
-    const { data } = await supabase
-      .from("users")
-      .select("avatar_url, full_name, organization:organizations(name)")
-      .eq("id", user.id)
-      .single<{
-        avatar_url: string | null;
-        full_name: string | null;
-        organization: { name: string | null } | null;
-      }>();
-    // users.avatar_url is the canonical source. Auth user_metadata.avatar_url
-    // is sometimes set on OAuth signups (we don't ship OAuth yet, but the
-    // fallback is cheap and keeps the topbar honest the day we do).
+    // Two separate queries instead of one nested join. The earlier
+    // `.select("avatar_url, full_name, organization:organizations(name)")`
+    // returned `avatar_url: null` even when the column held a valid URL
+    // — PostgREST's join semantics combined with RLS on both tables
+    // were silently dropping the parent column for some accounts. The
+    // Activity feed and Settings → Account both read avatar_url with a
+    // plain non-joined select and have always worked. Mirror that
+    // pattern here. Issued in parallel via Promise.all so the layout
+    // doesn't pay two serial round-trips.
+    const orgId = user.app_metadata?.org_id as string | undefined;
+    const [userRowRes, orgRowRes] = await Promise.all([
+      supabase
+        .from("users")
+        .select("avatar_url, full_name")
+        .eq("id", user.id)
+        .single<{ avatar_url: string | null; full_name: string | null }>(),
+      orgId
+        ? supabase
+            .from("organizations")
+            .select("name")
+            .eq("id", orgId)
+            .single<{ name: string | null }>()
+        : Promise.resolve({ data: null }),
+    ]);
+
     avatarUrl =
-      data?.avatar_url ??
+      userRowRes.data?.avatar_url ??
       (user.user_metadata?.avatar_url as string | undefined) ??
       null;
     displayName = resolveDisplayName({
-      fromUsersTable: data?.full_name ?? null,
+      fromUsersTable: userRowRes.data?.full_name ?? null,
       fromAuthMetadata:
         (user.user_metadata?.full_name as string | undefined) ?? null,
       email: user.email ?? null,
     });
-    orgName = data?.organization?.name ?? null;
+    orgName = orgRowRes.data?.name ?? null;
   }
 
   const userProfile = {
