@@ -140,8 +140,22 @@ export default async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  // Match every page request except Next.js internals + static files.
+  // Match every page request except Next.js internals, static files,
+  // and API routes. Excluding all of `/api` is critical: the next-intl
+  // middleware run at the bottom of this file doesn't know about API
+  // routes and treats them as unmatched localised pages → returns 404.
+  // That broke `/api/copilot/sessions` (and would have broken every
+  // other authenticated API route the moment a client called it from
+  // the browser).
+  //
+  // Auth gates only apply to pages (`/app/*`, `/auth/*`), and route
+  // handlers run their own auth check via `supabase.auth.getUser()`,
+  // so excluding `/api` doesn't loosen any access control. Session
+  // cookies the browser holds are still sent on API requests; the
+  // middleware's role on /api was just session refresh which the
+  // route handlers don't depend on (they validate the session
+  // independently each call).
   matcher: [
-    "/((?!_next/static|_next/image|favicon|api/security-txt|api/webhooks|monitoring|.*\\..*).*)",
+    "/((?!_next/static|_next/image|favicon|api|monitoring|.*\\..*).*)",
   ],
 };
