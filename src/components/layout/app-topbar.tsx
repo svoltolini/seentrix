@@ -122,49 +122,51 @@ export function AppTopbar({ user, orgName }: AppTopbarProps) {
             clears when the user opens the menu. */}
         <NotificationsMenu />
 
-        {/* Profile dropdown — JUST the avatar as trigger. The user's
-            name + email moved INTO the dropdown header below so the
-            top bar stays compact (the inline cluster previously ate
-            ~250 px of horizontal space at lg+).
+        {/* Profile dropdown — just the avatar as the trigger. Name
+            (no email per user request) shows inside the dropdown.
 
-            `inline-flex` on the trigger is critical — the default
-            `display: inline` for `<button>` collapses the Avatar's
-            42 px box on some browser/font combos and the picture
-            vanishes from view. Items + justify-center keeps it
-            visually centred inside the click target. */}
+            Geometry: the trigger button is explicitly `size-[42px]` so
+            it can't collapse to zero height regardless of inherited
+            line-height or `<button>`'s default inline display. The
+            Avatar inside has `size-full` so the picture (when
+            available) fills the entire 42 px circle. If
+            `user.avatarUrl` is null, the AvatarFallback shows the
+            user's initials instead — fix the data, not the markup
+            (verify your `users.avatar_url` column is populated, or
+            upload a photo via Settings → Account). */}
         <DropdownMenu>
           <DropdownMenuTrigger
             render={
               <button
                 type="button"
-                className="inline-flex shrink-0 items-center justify-center rounded-full transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+                className="inline-flex size-[42px] shrink-0 items-center justify-center rounded-full transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
                 aria-label={accountLabel}
               />
             }
           >
-            <Avatar size="lg">
-              <AvatarImage src={user?.avatarUrl ?? undefined} alt={user?.name ?? "User"} />
+            <Avatar size="lg" className="size-full">
+              <AvatarImage
+                src={user?.avatarUrl ?? undefined}
+                alt={user?.name ?? "User"}
+              />
               <AvatarFallback>{initials || "U"}</AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="min-w-[240px]">
-            {/* Identity header — name + email at the top of the
-                dropdown so we don't lose the info, just relocate it. */}
+            {/* Identity header — avatar + name only. Email dropped
+                per user request; if we need to surface it later it
+                lives one click away on the Account screen. */}
             <div className="flex items-center gap-3 px-2 py-2">
               <Avatar size="default">
-                <AvatarImage src={user?.avatarUrl ?? undefined} alt={user?.name ?? "User"} />
+                <AvatarImage
+                  src={user?.avatarUrl ?? undefined}
+                  alt={user?.name ?? "User"}
+                />
                 <AvatarFallback>{initials || "U"}</AvatarFallback>
               </Avatar>
-              <div className="flex min-w-0 flex-1 flex-col">
-                <p className="truncate text-h5 text-foreground">
-                  {user?.name ?? user?.email ?? "User"}
-                </p>
-                {user?.email && user.email !== user.name && (
-                  <p className="truncate text-p4-r text-muted-foreground">
-                    {user.email}
-                  </p>
-                )}
-              </div>
+              <p className="truncate text-h5 text-foreground">
+                {user?.name ?? "User"}
+              </p>
             </div>
 
             <DropdownMenuSeparator />
