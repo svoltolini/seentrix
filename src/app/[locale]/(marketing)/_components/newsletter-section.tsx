@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useActionState } from "react";
@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { subscribeNewsletter, type NewsletterState } from "./actions";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
+import { Turnstile } from "@/components/turnstile";
 
 export function NewsletterSection() {
   const t = useTranslations("landing.newsletter");
@@ -16,6 +17,7 @@ export function NewsletterSection() {
     subscribeNewsletter,
     undefined
   );
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
 
@@ -76,6 +78,14 @@ export function NewsletterSection() {
               className="w-full sm:max-w-sm"
               disabled={isPending || state?.status === "success"}
             />
+            {/* Turnstile token is forwarded as a hidden field — the
+                widget renders below the row only if the user actually
+                needs to interact (appearance="interaction-only"). */}
+            <input
+              type="hidden"
+              name="cf-turnstile-response"
+              value={captchaToken ?? ""}
+            />
             <Button
               type="submit"
               size="lg"
@@ -85,6 +95,10 @@ export function NewsletterSection() {
               {t("cta")}
             </Button>
           </form>
+
+          <div className="mt-3 flex justify-center">
+            <Turnstile onToken={setCaptchaToken} />
+          </div>
 
           {state?.status === "success" && (
             <p className="mt-4 text-p3 text-success" role="status">
@@ -104,6 +118,11 @@ export function NewsletterSection() {
           {state?.status === "rate_limited" && (
             <p className="mt-4 text-p3 text-warning" role="alert">
               {t("rateLimited")}
+            </p>
+          )}
+          {state?.status === "captcha_failed" && (
+            <p className="mt-4 text-p3 text-destructive" role="alert">
+              {t("captchaFailed")}
             </p>
           )}
 

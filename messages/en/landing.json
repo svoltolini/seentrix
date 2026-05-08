@@ -243,7 +243,8 @@
       "success": "You're subscribed! Check your inbox for the CRA Readiness Checklist.",
       "error": "Something went wrong. Please try again.",
       "duplicate": "You're already subscribed. Check your inbox for the latest updates.",
-      "rateLimited": "Too many sign-ups from this network. Try again in a few minutes."
+      "rateLimited": "Too many sign-ups from this network. Try again in a few minutes.",
+      "captchaFailed": "Couldn't confirm you're human. Please reload the page and try again."
     },
     "footer": {
       "impressum": "Impressum",

@@ -4,6 +4,7 @@ import { headers } from "next/headers";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { rateLimit, clientIpFromHeaders } from "@/lib/rate-limit";
+import { verifyTurnstile } from "@/lib/turnstile";
 
 const emailSchema = z.object({
   email: z.string().email(),
@@ -14,6 +15,7 @@ export type NewsletterState =
   | { status: "error"; message: string }
   | { status: "duplicate" }
   | { status: "rate_limited" }
+  | { status: "captcha_failed" }
   | undefined;
 
 export async function subscribeNewsletter(
@@ -31,6 +33,17 @@ export async function subscribeNewsletter(
   });
   if (!gate.ok) {
     return { status: "rate_limited" };
+  }
+
+  // Cloudflare Turnstile gate. Residential proxies bypass IP rate
+  // limits; the human-presence challenge raises the cost for botnets.
+  // No-ops in dev when TURNSTILE_SECRET_KEY isn't set.
+  const captcha = await verifyTurnstile(
+    formData.get("cf-turnstile-response")?.toString(),
+    ip,
+  );
+  if (!captcha.ok) {
+    return { status: "captcha_failed" };
   }
 
   const parsed = emailSchema.safeParse({

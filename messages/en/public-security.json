@@ -29,6 +29,7 @@
       "submit": "Submit report",
       "submitting": "Submitting…",
       "submitFailed": "Couldn't submit the report. Please email us instead.",
+      "captchaFailed": "Couldn't confirm you're human. Reload the page and try again.",
       "successTitle": "Report received",
       "successDescription": "Thank you for the responsible disclosure. If you left an email, we'll reach out within 72 hours."
     }

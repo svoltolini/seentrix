@@ -55,7 +55,7 @@ const CSP_REPORT_ONLY = [
   `style-src 'self' 'unsafe-inline'`,
   `img-src 'self' data: blob: ${SUPABASE}`,
   `font-src 'self' data:`,
-  `connect-src 'self' ${SUPABASE} ${SENTRY} ${STRIPE_API}`,
+  `connect-src 'self' ${SUPABASE} ${SENTRY} ${STRIPE_API} ${TURNSTILE}`,
   `frame-src 'self' ${STRIPE_JS} ${STRIPE_CHECKOUT} ${TURNSTILE}`,
   `object-src 'none'`,
   `base-uri 'self'`,

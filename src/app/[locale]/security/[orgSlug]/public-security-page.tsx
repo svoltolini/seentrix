@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Icon } from "@/components/icon";
 import { useToast } from "@/components/ui/toast";
+import { Turnstile } from "@/components/turnstile";
 import { cn } from "@/lib/utils";
 import {
   submitPublicReport,
@@ -47,6 +48,7 @@ export function PublicSecurityPage({
   const [reporterHandle, setReporterHandle] = useState("");
   const [affectedProduct, setAffectedProduct] = useState("");
   const [severity, setSeverity] = useState<SeveritySuggestion | null>(null);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
 
   function handleSubmit() {
@@ -60,9 +62,16 @@ export function PublicSecurityPage({
         reporterHandle,
         affectedProduct,
         severity: severity ?? undefined,
+        captchaToken: captchaToken ?? undefined,
       });
       if (res.error) {
-        toast({ type: "error", message: t("form.submitFailed") });
+        // Surface a more specific message for the captcha failure so a
+        // researcher who just hit it knows to reload, not to refile.
+        const message =
+          res.error === "captchaFailed"
+            ? t("form.captchaFailed")
+            : t("form.submitFailed");
+        toast({ type: "error", message });
         return;
       }
       setSubmitted(true);
@@ -229,6 +238,7 @@ export function PublicSecurityPage({
               <p className="text-[11px] text-muted-foreground">
                 {t("form.anonymousNote")}
               </p>
+              <Turnstile onToken={setCaptchaToken} className="self-start" />
               <Button
                 onClick={handleSubmit}
                 disabled={!title.trim() || !description.trim() || pending}
