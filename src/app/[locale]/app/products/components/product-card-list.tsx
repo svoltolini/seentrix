@@ -47,11 +47,36 @@ const TYPE_TONE: Record<string, { bg: string; fg: string }> = {
   iot: { bg: "bg-warning/10", fg: "text-warning" },
 };
 
-const CATEGORY_TONE: Record<string, string> = {
-  default: "bg-primary/10 text-primary",
-  important_class_i: "bg-warning/10 text-warning",
-  important_class_ii: "bg-accent/10 text-accent",
-  critical: "bg-destructive/10 text-destructive",
+// CRA categories form an escalating risk hierarchy:
+//   default        → tier 1 (informational, low residual risk)
+//   important_I    → tier 2
+//   important_II   → tier 3
+//   critical       → tier 4 (maximum residual risk)
+//
+// Render as a 4-segment ascending signal-strength meter — segments
+// grow taller and shift colour as tier rises. Reads as a hierarchy
+// at a glance even before the label is parsed, so triage scanning
+// the table for the worst offenders is one visual sweep instead of
+// chip-colour-matching every row.
+const CRA_TIER: Record<string, 1 | 2 | 3 | 4> = {
+  default: 1,
+  important_class_i: 2,
+  important_class_ii: 3,
+  critical: 4,
+};
+
+const TIER_TONE_FILL: Record<1 | 2 | 3 | 4, string> = {
+  1: "bg-primary",
+  2: "bg-warning",
+  3: "bg-accent",
+  4: "bg-destructive",
+};
+
+const TIER_TONE_TEXT: Record<1 | 2 | 3 | 4, string> = {
+  1: "text-primary",
+  2: "text-warning",
+  3: "text-accent",
+  4: "text-destructive",
 };
 
 function laneFillFor(score: number): string {
@@ -152,9 +177,6 @@ export function ProductCardList({ products }: Props) {
                 fg: "text-foreground",
               };
             const categoryKey = p.cra_category ?? null;
-            const categoryTone = categoryKey
-              ? (CATEGORY_TONE[categoryKey] ?? CATEGORY_TONE.default)
-              : "bg-muted text-muted-foreground";
             const subtitle = p.type
               ? t.has(`types.${p.type}`)
                 ? t(`types.${p.type}`)
@@ -202,16 +224,14 @@ export function ProductCardList({ products }: Props) {
                 </TableCell>
                 <TableCell className="hidden md:table-cell">
                   {categoryKey ? (
-                    <span
-                      className={cn(
-                        "inline-flex rounded-sm px-2 py-0.5 text-l6-plus uppercase tracking-wider",
-                        categoryTone,
-                      )}
-                    >
-                      {t.has(`categories.${categoryKey}`)
-                        ? t(`categories.${categoryKey}`)
-                        : categoryKey.replace(/_/g, " ")}
-                    </span>
+                    <CategoryMeter
+                      categoryKey={categoryKey}
+                      label={
+                        t.has(`categories.${categoryKey}`)
+                          ? t(`categories.${categoryKey}`)
+                          : categoryKey.replace(/_/g, " ")
+                      }
+                    />
                   ) : (
                     <span className="text-p4 text-muted-foreground">
                       {t.has("notAssessed")
@@ -297,5 +317,47 @@ function SortableHead({
         />
       </button>
     </TableHead>
+  );
+}
+
+// === CRA criticality meter ============================================
+// 4-segment ascending bar that visually communicates the CRA risk
+// hierarchy. Segments grow taller and shift palette colour as the
+// product's tier rises (default → important I → important II →
+// critical). Pairs with the localised label so the indicator is
+// readable for users who haven't memorised the chip-colour mapping.
+
+const SEGMENT_HEIGHTS = ["h-1.5", "h-2", "h-2.5", "h-3"] as const;
+
+function CategoryMeter({
+  categoryKey,
+  label,
+}: {
+  categoryKey: string;
+  label: string;
+}) {
+  const tier = CRA_TIER[categoryKey] ?? 1;
+  return (
+    <div
+      className="inline-flex items-center gap-2.5"
+      role="img"
+      aria-label={`${label} (criticality ${tier} of 4)`}
+    >
+      <span className="flex items-end gap-0.5" aria-hidden>
+        {([1, 2, 3, 4] as const).map((segment) => (
+          <span
+            key={segment}
+            className={cn(
+              "w-1 rounded-sm transition-colors",
+              SEGMENT_HEIGHTS[segment - 1],
+              segment <= tier ? TIER_TONE_FILL[tier] : "bg-border",
+            )}
+          />
+        ))}
+      </span>
+      <span className={cn("text-p3 font-medium", TIER_TONE_TEXT[tier])}>
+        {label}
+      </span>
+    </div>
   );
 }

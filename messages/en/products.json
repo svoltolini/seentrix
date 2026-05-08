@@ -9,10 +9,14 @@
       "timeline": "Timeline"
     },
     "timeline": {
-      "previous": "Previous month",
-      "next": "Next month",
-      "goToToday": "Jump to current month",
-      "jumpToCurrent": "Today"
+      "previous": "Previous",
+      "next": "Next",
+      "goToToday": "Jump to current period",
+      "jumpToCurrent": "Today",
+      "cadence": {
+        "week": "Week",
+        "month": "Month"
+      }
     },
     "kanban": {
       "ongoing": "On Going",
