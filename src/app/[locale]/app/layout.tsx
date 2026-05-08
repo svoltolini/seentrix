@@ -7,6 +7,39 @@ import { NavigationProgress } from "@/components/navigation-progress";
 import { CopilotProvider } from "@/components/copilot/copilot-provider";
 import { createClient } from "@/lib/supabase/server";
 
+/**
+ * Pull a usable display name out of whatever sources we have. The
+ * `public.users.full_name` column is the canonical source — populated
+ * during onboarding via the `create_org_and_user` RPC. But:
+ *   - Some users predate the onboarding flow, so the column can be null.
+ *   - Members invited by an admin also start with a null full_name
+ *     until they update their profile.
+ * Without a fallback the topbar dropdown header read literally "User"
+ * for those accounts. The chain below reaches into the auth
+ * user_metadata (set during signup) and ultimately the email local-part
+ * so we always render something meaningful.
+ */
+function resolveDisplayName(opts: {
+  fromUsersTable: string | null;
+  fromAuthMetadata: string | null;
+  email: string | null;
+}): string | null {
+  if (opts.fromUsersTable?.trim()) return opts.fromUsersTable.trim();
+  if (opts.fromAuthMetadata?.trim()) return opts.fromAuthMetadata.trim();
+  if (opts.email) {
+    // "samuel.voltolini@example.com" → "Samuel Voltolini"
+    const local = opts.email.split("@")[0];
+    if (!local) return null;
+    return local
+      .replace(/[._-]+/g, " ")
+      .split(" ")
+      .filter(Boolean)
+      .map((w) => w[0]?.toUpperCase() + w.slice(1).toLowerCase())
+      .join(" ");
+  }
+  return null;
+}
+
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient();
   const {
@@ -26,8 +59,19 @@ export default async function AppLayout({ children }: { children: React.ReactNod
         full_name: string | null;
         organization: { name: string | null } | null;
       }>();
-    avatarUrl = data?.avatar_url ?? null;
-    displayName = data?.full_name ?? null;
+    // users.avatar_url is the canonical source. Auth user_metadata.avatar_url
+    // is sometimes set on OAuth signups (we don't ship OAuth yet, but the
+    // fallback is cheap and keeps the topbar honest the day we do).
+    avatarUrl =
+      data?.avatar_url ??
+      (user.user_metadata?.avatar_url as string | undefined) ??
+      null;
+    displayName = resolveDisplayName({
+      fromUsersTable: data?.full_name ?? null,
+      fromAuthMetadata:
+        (user.user_metadata?.full_name as string | undefined) ?? null,
+      email: user.email ?? null,
+    });
     orgName = data?.organization?.name ?? null;
   }
 
