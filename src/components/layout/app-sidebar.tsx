@@ -10,6 +10,7 @@ import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import { Icon } from "@/components/icon";
 import { Logo } from "@/components/logo";
 import { useCopilot } from "@/components/copilot/copilot-context";
+import { HelpCentreIntroSheet } from "./help-centre-intro-sheet";
 
 /**
  * AppSidebar — vertical sidebar.
@@ -169,27 +170,33 @@ function SidebarBody({
  */
 function HelpCentreBanner({ onConsult }: { onConsult: () => void }) {
   const t = useTranslations();
+  // Two distinct affordances:
+  //   - Question-mark marker → opens an intro Sheet that explains
+  //     what Seentrix AI is + what to expect. Marketing-flavoured but
+  //     lightweight — closer to onboarding than a sales pitch.
+  //   - Consult Now button → opens the actual Copilot chat directly
+  //     (existing flow). No extra layer of friction for users who
+  //     already know what they want.
+  const [introOpen, setIntroOpen] = useState(false);
+
   return (
+    <>
     <div className="relative w-full">
-      {/* Floating help marker. Replaces the previous MessageQuestion
-          chat-bubble icon with a clean typographic "?" — easier to
-          read at small sizes and stronger as a "help" cue. Two layers
-          of motion, both subtle:
-            - Outer halo: very soft 3 s pulse (custom keyframe in
-              globals.css) — gentle attention pull without flashing.
-            - Inner chip: hover scale-110 — interactive feedback when
-              the user moves toward the banner. */}
+      {/* Floating help marker — typographic "?" with a soft pulsing
+          halo behind it. Click opens the intro sheet (NOT the chat). */}
       <div className="absolute left-1/2 top-0 z-10 -translate-x-1/2 -translate-y-1/2">
-        {/* Pulsing halo — sits behind the chip and swells slowly. */}
         <span
           aria-hidden="true"
           className="absolute inset-0 animate-help-pulse rounded-full bg-accent/40"
         />
-        {/* Static chip with the question mark glyph. */}
         <button
           type="button"
-          onClick={onConsult}
-          aria-label={t("sidebar.helpCta") ?? "Consult Now"}
+          onClick={() => setIntroOpen(true)}
+          aria-label={
+            t.has("sidebar.helpIntroOpen")
+              ? t("sidebar.helpIntroOpen")
+              : "About Seentrix AI"
+          }
           className="relative flex size-14 cursor-pointer items-center justify-center rounded-full bg-accent text-accent-foreground shadow-card-md transition-transform duration-200 hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
         >
           <span className="font-heading text-h1 leading-none">?</span>
@@ -211,5 +218,12 @@ function HelpCentreBanner({ onConsult }: { onConsult: () => void }) {
         </Button>
       </div>
     </div>
+
+    <HelpCentreIntroSheet
+      open={introOpen}
+      onOpenChange={setIntroOpen}
+      onStartChat={onConsult}
+    />
+    </>
   );
 }
