@@ -12,12 +12,10 @@ export function LandingFooter() {
       <div className="mx-auto max-w-6xl px-6 py-12">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand — logo + wordmark on the first row, then the company
-              info stacked underneath and indented to sit flush with the
-              start of the 'Seentrix' wordmark (logo size-15 + gap-2 = 23px,
-              rounded to the pl-6 scale). Splitting the legal string over
-              two lines avoids orphaning '17169165' on its own line when
-              the column wraps on narrower viewports. Light footer surface,
-              so the SVG renders its native dark fill — no invert filter. */}
+              info stacked underneath flush with the column's left edge
+              (so the address sits under the logo, not under the
+              wordmark). Light footer surface — the SVG renders its
+              native dark fill, no invert filter. */}
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-2">
               <Logo size={18} className="shrink-0" />
@@ -25,7 +23,7 @@ export function LandingFooter() {
                 Seentrix
               </span>
             </div>
-            <div className="flex flex-col gap-0.5 pl-6 text-p3-r text-muted-foreground">
+            <div className="flex flex-col gap-0.5 text-p3-r text-muted-foreground">
               <span>Seentrix Ltd</span>
               <span>Companies House 17169165</span>
               <span className="mt-2 leading-relaxed">
