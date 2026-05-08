@@ -15,4 +15,7 @@ export default async function OnboardingPage() {
   return <OnboardingForm />;
 }
 
-export const metadata = { title: "Onboarding" };
+export const metadata = {
+  title: "Onboarding",
+  robots: { index: false, follow: false },
+};

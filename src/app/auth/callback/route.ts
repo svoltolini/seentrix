@@ -1,5 +1,18 @@
 import { createClient } from "@/lib/supabase/server";
+import { SITE_URL } from "@/lib/site";
 import { type NextRequest, NextResponse } from "next/server";
+
+/**
+ * Redirects are built off `SITE_URL` (the env-fixed canonical origin)
+ * rather than `request.url`, which reflects the inbound `Host` header.
+ * Vercel normalises Host on Vercel-managed projects, but elsewhere a
+ * spoofed `Host: evil.com` could mint a redirect to a phishing origin
+ * with a freshly-exchanged session cookie scoped to the legit domain.
+ * SITE_URL is defence-in-depth.
+ */
+function redirectTo(path: string) {
+  return NextResponse.redirect(new URL(path, SITE_URL));
+}
 
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
@@ -12,9 +25,7 @@ export async function GET(request: NextRequest) {
 
     if (!error) {
       if (type === "recovery") {
-        return NextResponse.redirect(
-          new URL("/auth/reset-password", request.url)
-        );
+        return redirectTo("/auth/reset-password");
       }
 
       const {
@@ -22,16 +33,12 @@ export async function GET(request: NextRequest) {
       } = await supabase.auth.getUser();
 
       if (user?.app_metadata?.org_id) {
-        return NextResponse.redirect(
-          new URL("/app/dashboard", request.url)
-        );
+        return redirectTo("/app/dashboard");
       }
 
-      return NextResponse.redirect(
-        new URL("/auth/onboarding", request.url)
-      );
+      return redirectTo("/auth/onboarding");
     }
   }
 
-  return NextResponse.redirect(new URL("/auth/login", request.url));
+  return redirectTo("/auth/login");
 }

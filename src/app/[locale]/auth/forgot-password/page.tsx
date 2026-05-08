@@ -9,4 +9,7 @@ export default async function ForgotPasswordPage({
   return <ForgotPasswordForm locale={locale} />;
 }
 
-export const metadata = { title: "Forgot password" };
+export const metadata = {
+  title: "Forgot password",
+  robots: { index: false, follow: false },
+};

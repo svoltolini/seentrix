@@ -10,4 +10,7 @@ export default async function SignupPage({
   return <SignupForm locale={locale} />;
 }
 
-export const metadata = { title: "Sign up" };
+export const metadata = {
+  title: "Sign up",
+  robots: { index: false, follow: false },
+};

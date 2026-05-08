@@ -10,4 +10,7 @@ export default function MfaPage() {
   return <MfaChallenge />;
 }
 
-export const metadata = { title: "Two-factor verification" };
+export const metadata = {
+  title: "Two-factor verification",
+  robots: { index: false, follow: false },
+};

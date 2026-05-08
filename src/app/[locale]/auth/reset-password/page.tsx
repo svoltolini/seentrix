@@ -9,4 +9,7 @@ export default async function ResetPasswordPage({
   return <ResetPasswordForm locale={locale} />;
 }
 
-export const metadata = { title: "Reset password" };
+export const metadata = {
+  title: "Reset password",
+  robots: { index: false, follow: false },
+};

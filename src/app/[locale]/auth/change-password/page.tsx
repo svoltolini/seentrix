@@ -19,4 +19,7 @@ export default async function ChangePasswordPage() {
   return <ChangePasswordForm />;
 }
 
-export const metadata = { title: "Change password" };
+export const metadata = {
+  title: "Change password",
+  robots: { index: false, follow: false },
+};

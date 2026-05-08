@@ -20,12 +20,15 @@ export interface BlogPost extends BlogPostMeta {
 }
 
 function calculateReadingTime(content: string): number {
+  // Always return at least 1 minute — a "0 min read" badge on a
+  // very short post reads as a bug.
   const wordsPerMinute = 200;
-  const words = content.replace(/<[^>]*>/g, "").split(/\s+/).length;
+  const words = content.replace(/<[^>]*>/g, "").split(/\s+/).filter(Boolean).length;
   return Math.max(1, Math.ceil(words / wordsPerMinute));
 }
 
 export function getAllPosts(locale: string): BlogPostMeta[] {
+  if (!isSafeSegment(locale)) return [];
   const dir = path.join(CONTENT_DIR, locale);
   if (!fs.existsSync(dir)) return [];
 
@@ -53,11 +56,32 @@ export function getAllPosts(locale: string): BlogPostMeta[] {
   );
 }
 
+/**
+ * Allow only `[a-z0-9-_]` slugs and locales — they must round-trip through
+ * the filesystem safely. Without this, a request like
+ * `/blog/..%2F..%2Fetc%2Fpasswd` could `path.join` its way out of
+ * `content/blog/<locale>/`. `existsSync` + the `.mdx` suffix would still
+ * limit the blast radius to MDX files anywhere under `cwd`, but the right
+ * thing is to refuse the slug outright.
+ */
+const SAFE_SEGMENT = /^[a-z0-9_-]+$/i;
+
+function isSafeSegment(segment: string): boolean {
+  return SAFE_SEGMENT.test(segment);
+}
+
 export function getPostBySlug(
   locale: string,
   slug: string
 ): BlogPost | null {
+  if (!isSafeSegment(locale) || !isSafeSegment(slug)) return null;
+
   const filePath = path.join(CONTENT_DIR, locale, `${slug}.mdx`);
+  // Defence-in-depth: confirm the resolved path is still inside the
+  // intended content directory after `path.join` normalises any `..`
+  // sneakily injected via decoded URL segments.
+  const localeDir = path.join(CONTENT_DIR, locale);
+  if (!filePath.startsWith(localeDir + path.sep)) return null;
   if (!fs.existsSync(filePath)) return null;
 
   const raw = fs.readFileSync(filePath, "utf-8");

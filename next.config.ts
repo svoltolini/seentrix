@@ -12,6 +12,39 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 // exists on main but not on the worktree's older branch.
 const projectRoot = fileURLToPath(new URL(".", import.meta.url));
 
+/**
+ * Security headers applied to every response.
+ *
+ * - Strict-Transport-Security: force HTTPS for 2 years, including subdomains.
+ *   includeSubDomains is safe because we only have one apex.
+ * - X-Frame-Options DENY: blocks the entire app from being framed —
+ *   prevents clickjacking the auth + MFA challenge surfaces.
+ * - X-Content-Type-Options nosniff: belt-and-braces against MIME sniffing.
+ * - Referrer-Policy strict-origin-when-cross-origin: leaks origin, not path,
+ *   to third-party links. Same default Vercel uses.
+ * - Permissions-Policy: explicitly disable hardware APIs we never use.
+ * - Cross-Origin-Opener-Policy same-origin: hardens against
+ *   tabnabbing / Spectre-style cross-origin attacks.
+ *
+ * No CSP yet — Next inline-injects scripts with nonces and Sentry's
+ * tunnelRoute requires careful allow-listing. Added separately once
+ * we have a CSP report-only collector wired up.
+ */
+const securityHeaders = [
+  {
+    key: "Strict-Transport-Security",
+    value: "max-age=63072000; includeSubDomains; preload",
+  },
+  { key: "X-Frame-Options", value: "DENY" },
+  { key: "X-Content-Type-Options", value: "nosniff" },
+  { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+  {
+    key: "Permissions-Policy",
+    value: "camera=(), microphone=(), geolocation=(), payment=()",
+  },
+  { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
+];
+
 const nextConfig: NextConfig = {
   serverExternalPackages: ["@react-pdf/renderer"],
   turbopack: {
@@ -30,6 +63,14 @@ const nextConfig: NextConfig = {
         pathname: "/storage/v1/object/public/**",
       },
     ],
+  },
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: securityHeaders,
+      },
+    ];
   },
 };
 

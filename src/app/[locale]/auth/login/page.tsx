@@ -9,4 +9,7 @@ export default async function LoginPage({
   return <LoginForm locale={locale} />;
 }
 
-export const metadata = { title: "Log in" };
+export const metadata = {
+  title: "Log in",
+  robots: { index: false, follow: false },
+};
