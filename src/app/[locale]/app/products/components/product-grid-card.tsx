@@ -18,13 +18,12 @@ import type { ProductListItem } from "../actions";
  *   - When the product has a real `image_url` → full-bleed image + soft
  *     foreground scrim so the chip stays legible on busy imagery, plus a
  *     translucent white chip (Figma's literal Project Card recipe).
- *   - When there's no image → solid `bg-primary` + soft white dot-grid
- *     overlay + `bg-dark-cta` chip. Same recipe as the dashboard
- *     ProjectHeroCard, the FieldHelp reference callout and the landing
- *     TrustSection so all three surfaces read as one family. Replaces the
- *     earlier per-category gradient covers (red/orange/peach/blue) which
- *     drifted off-palette — the design memory rule is "palette only, no
- *     per-card gradients".
+ *   - When there's no image → the Nask Project Card cover SVG
+ *     (`/public/images/project-card-cover.svg`, exported verbatim from
+ *     Figma's Rectangle 9548 asset). Same asset as the dashboard
+ *     ProjectHeroCard so every "Project Card" surface in the app reads
+ *     as one family. Replaces an earlier per-category gradient cover
+ *     and a flat bg-primary + dot-grid panel — both drifted off-Figma.
  *
  * Seentrix maps:
  *   priority chip → CRA category label (default / important / critical)
@@ -58,9 +57,20 @@ export function ProductGridCard({ product, href }: Props) {
       className="group/grid-card flex w-full max-w-[340px] flex-col overflow-clip rounded-md transition-shadow hover:shadow-card-md"
       data-slot="product-grid-card"
     >
-      {/* Banner — image + scrim if uploaded, else bg-primary + dot grid. */}
-      <div className="relative flex h-[120px] w-full items-start overflow-hidden">
-        {hasImage ? (
+      {/* Banner — uploaded image (with scrim) or the Figma Nask cover. */}
+      <div
+        className="relative flex h-[120px] w-full items-start overflow-hidden"
+        style={
+          hasImage
+            ? undefined
+            : {
+                backgroundImage: "url(/images/project-card-cover.svg)",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }
+        }
+      >
+        {hasImage && (
           <>
             <div
               className="absolute inset-0"
@@ -76,27 +86,8 @@ export function ProductGridCard({ product, href }: Props) {
               className="absolute inset-0 bg-gradient-to-b from-foreground/25 from-[46%] to-transparent to-[102%]"
             />
           </>
-        ) : (
-          <>
-            <div className="absolute inset-0 bg-primary" />
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0"
-              style={{
-                backgroundImage:
-                  "radial-gradient(circle, rgba(255,255,255,0.12) 1px, transparent 1px)",
-                backgroundSize: "20px 20px",
-              }}
-            />
-          </>
         )}
-        <span
-          className={
-            hasImage
-              ? "relative ml-4 mt-4 inline-flex items-center rounded-sm bg-white/20 px-3 py-1 text-l6-plus uppercase tracking-wider text-white backdrop-blur-sm"
-              : "relative ml-4 mt-4 inline-flex items-center rounded-sm bg-dark-cta px-3 py-1 text-l6-plus uppercase tracking-wider text-dark-cta-foreground"
-          }
-        >
+        <span className="relative ml-4 mt-4 inline-flex items-center rounded-sm bg-white/20 px-3 py-1 text-l6-plus uppercase tracking-wider text-white backdrop-blur-sm">
           {categoryLabel}
         </span>
       </div>

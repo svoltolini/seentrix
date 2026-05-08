@@ -4,31 +4,35 @@ import { Link } from "@/i18n/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 /**
- * ProjectHeroCard — Nask "Project Card" (Figma `142:15578`).
+ * ProjectHeroCard — Nask "Project Card" (Figma `142:15578` /
+ * `159:16095`).
  *
  * Two-section layout, matching the Figma frame exactly:
  *
  *   ┌──────────────────────────────────────┐
- *   │  Solid `bg-primary` surface (~140px) │
+ *   │  Banner (~140px) — full-bleed SVG    │
+ *   │  cover (the wavy blue Nask cover     │
+ *   │  exported from Figma's Rectangle     │
+ *   │  9548 asset → /public/images/        │
+ *   │  project-card-cover.svg).            │
  *   │  ┌─────────┐                         │
- *   │  │ Priority │ (dark-navy chip,        │
- *   │  └─────────┘  top-left)              │
- *   │  + soft white dot-grid overlay       │
+ *   │  │PRIORITY │ (translucent-white chip,│
+ *   │  └─────────┘  top-left, blurred)     │
  *   ├──────────────────────────────────────┤
  *   │  White surface (auto-height)         │
- *   │  Title (text-h5)              avatars │
- *   │  Subtitle (text-p3 muted)             │
- *   │                                       │
+ *   │  Title (text-h5)              avatars│
+ *   │  Subtitle (text-p3 muted)            │
+ *   │                                      │
  *   │  ▰▰▰▱▱▱▱▱▱▱▱  49 %                  │
  *   └──────────────────────────────────────┘
  *
- * The earlier build used a single full-bleed gradient card that
- * cycled through off-palette colours per CRA category (red/orange/
- * peach/blue gradients). Rule from the design memory: no per-card
- * gradients, palette only. The blue surface here reuses the same
- * recipe as the Help Centre intro sheet's CRA-reference callout —
- * solid `bg-primary` + soft white radial dot-grid overlay — so the
- * visual language is unified across surfaces.
+ * Earlier passes tried (a) per-category gradient covers (red/orange/
+ * peach/blue tints) and (b) a flat `bg-primary` + dot-grid panel.
+ * Both drifted off-Figma — the actual reference is the wavy SVG art
+ * baked into Figma's Nask file. We export the asset once into
+ * `public/images/project-card-cover.svg` and reuse it across the
+ * dashboard hero strip and the products-list grid card so every
+ * "Project Card" surface in the app reads as one family.
  */
 
 interface Props {
@@ -65,33 +69,30 @@ export function ProjectHeroCard({
     <Link
       href={href}
       // Width fluid (parent grid is `sm:grid-cols-2`); fixed 249 px
-      // height matches the Figma reference. Outer card has the soft
-      // shadow + rounded-md + overflow-clip so the blue top never
-      // bleeds past the corners.
+      // height matches Figma. Outer card has the soft shadow +
+      // rounded-md + overflow-clip so the banner can't bleed past
+      // the corners.
       className="group/hero-card relative flex h-[249px] w-full flex-col overflow-clip rounded-md bg-card shadow-card-md transition-shadow hover:shadow-card-lg"
     >
-      {/* TOP — blue art surface with priority chip + dot-grid overlay.
-          Uses the same dot-grid recipe as the FieldHelp reference
-          callout + the landing TrustSection so all three surfaces
-          read as one family. */}
-      <div className="relative flex flex-1 items-start p-4">
-        <div className="absolute inset-0 bg-primary" />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle, rgba(255,255,255,0.12) 1px, transparent 1px)",
-            backgroundSize: "20px 20px",
-          }}
-        />
-        <span className="relative inline-flex items-center rounded-sm bg-dark-cta px-3 py-1 text-l6-plus uppercase tracking-wider text-dark-cta-foreground">
+      {/* TOP — 140 px banner with the Figma SVG cover. CSS
+          background-image rather than <Image> so we don't fight Next's
+          intrinsic-sizing for a purely decorative cover; the SVG ships
+          as a single static asset cached forever by Vercel. */}
+      <div
+        className="relative flex h-[140px] shrink-0 items-start p-4"
+        style={{
+          backgroundImage: "url(/images/project-card-cover.svg)",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <span className="relative inline-flex items-center rounded-sm bg-white/20 px-3 py-1 text-l6-plus uppercase tracking-wider text-white backdrop-blur-sm">
           {priority}
         </span>
       </div>
 
       {/* BOTTOM — white surface with title + meta + progress. */}
-      <div className="flex shrink-0 flex-col gap-3 bg-card p-4">
+      <div className="flex flex-1 flex-col justify-between gap-3 bg-card p-4">
         <div className="flex items-start justify-between gap-3">
           <div className="flex min-w-0 flex-1 flex-col gap-0.5">
             <p className="truncate text-h5 text-foreground">{title}</p>
