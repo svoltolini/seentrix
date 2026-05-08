@@ -206,28 +206,33 @@ export function CopilotHistory({
 /**
  * Empty-state for the Past Conversations panel.
  *
- * Renders the user-supplied "thinking person" illustration centred in
- * the panel with a gentle 4 s float-bob animation (custom keyframe in
- * globals.css, honours prefers-reduced-motion). Gives an otherwise
- * dead-feeling surface a moment of personality.
+ * Renders the user-supplied "thinking person" GIF centred in the
+ * panel. The GIF carries its own frame animation (motion baked into
+ * the asset), so we don't wrap it in the CSS `animate-float-bob`
+ * keyframe used elsewhere — that would compound two motions and
+ * over-animate.
  *
- * Asset path: drop the file at `public/illustrations/empty-history.svg`
- * (preferred) or `.png`. Until the asset is in place the `<Image />`
- * component falls back to its alt text — the empty state still reads.
+ * `unoptimized` is critical: Next.js Image's default pipeline runs
+ * every source through Sharp, which collapses GIFs into a single
+ * static frame. Opting out keeps the animation intact at the cost of
+ * skipping width/format optimisation — fine for an empty-state asset
+ * that loads at most once per session.
+ *
+ * Asset path: `public/illustrations/empty-history.gif`. Swap the file
+ * at the same path to change the artwork.
  */
 function HistoryEmptyState({ message }: { message: string }) {
   return (
     <div className="flex h-full flex-col items-center justify-center gap-4 px-6 py-12 text-center">
-      <div className="animate-float-bob">
-        <Image
-          src="/illustrations/empty-history.svg"
-          alt=""
-          width={240}
-          height={240}
-          className="select-none"
-          priority={false}
-        />
-      </div>
+      <Image
+        src="/illustrations/empty-history.gif"
+        alt=""
+        width={240}
+        height={240}
+        unoptimized
+        className="select-none"
+        priority={false}
+      />
       <p className="text-p3 text-muted-foreground">{message}</p>
     </div>
   );
