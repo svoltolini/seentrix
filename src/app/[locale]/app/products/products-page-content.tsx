@@ -8,7 +8,7 @@ import { Icon } from "@/components/icon";
 import { cn } from "@/lib/utils";
 import { AskSeentrixAI } from "@/components/copilot/ask-seentrix-ai";
 import { ProjectHeroCard } from "../dashboard/widgets/project-hero-card";
-import { ProductKanbanList } from "./components/product-kanban-list";
+import { ProductCardList } from "./components/product-card-list";
 import { ProductTimeline } from "./components/product-timeline";
 import type { ProductListItem } from "./actions";
 import type { OrgPlan } from "@/lib/constants/plans";
@@ -224,7 +224,7 @@ export function ProductsPageContent({
           })}
         </div>
       ) : view === "list" ? (
-        <ProductKanbanList products={sorted} />
+        <ProductCardList products={sorted} />
       ) : (
         <ProductTimeline products={sorted} basePath="/app/products" />
       )}

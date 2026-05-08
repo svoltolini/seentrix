@@ -3,305 +3,341 @@
 import { useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { Icon } from "@/components/icon";
 import { cn } from "@/lib/utils";
 import type { ProductListItem } from "../actions";
 
 /**
- * ProductTimeline — Nask "Project Timeline" view (Figma `67:10518`).
+ * ProductTimeline — CRA Compliance Roadmap.
  *
- *   ┌────────────────────────────────────────────────────────────┐
- *   │ Jan │ Feb │ Mar │ Apr │ May │ Jun │ ... │ Dec │            │
- *   ├──────┼──────┼──────┼──────┼──────┼──────┼─────┼──────┼──────┤
- *   │ Ahead │ ────[Card]──────────                              │
- *   │       │           ────[Card]─                             │
- *   ├───────┼───────────────────────╢──────────────────────────┤
- *   │ On    │       [Card]──────────╢                           │
- *   │ Track │                      Today                         │
- *   ├───────┼───────────────────────╢───────────────────────────┤
- *   │ At Risk │                    ╢ ────[Card]─────             │
- *   └────────────────────────────────────────────────────────────┘
+ *   ┌──────────────────────────────────────────────────────────────────┐
+ *   │  ◉ Today          ◉ Notified Bodies      ◉ Reporting     ◉ Full   │
+ *   │  May 8 2026         Jun 11 2026          Sep 11 2026     Dec '27  │
+ *   │  ─                  ── 1 mo away ──       ── 4 mo away ──         │
+ *   ├──────────────────────────────────────────────────────────────────┤
+ *   │  ┌──┐  Product A                       │            │             │
+ *   │  │A │  Software · 73 % compliant       │            │             │
+ *   │  └──┘  ▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▱▱▱▱▱▱▱▱│▱▱▱▱▱▱▱▱▱▱▱│▱▱▱▱▱▱▱▱▱▱▱▱  │
+ *   ├──────────────────────────────────────────────────────────────────┤
+ *   │  ┌──┐  Product B                       │            │             │
+ *   │  │B │  Hardware · 45 % compliant       │            │             │
+ *   │  └──┘  ▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▱▱▱▱▱▱▱▱▱▱▱▱▱▱│▱▱▱▱▱▱▱▱▱▱▱│▱▱▱▱▱▱▱▱▱▱▱▱  │
+ *   └──────────────────────────────────────────────────────────────────┘
  *
- * Three swimlanes split by compliance posture, an orange "Today"
- * indicator pinned at the current date, and product cards floated
- * onto the calendar at their `created_at` timestamp. Each card
- * stretches from the product's creation date to the regulatory
- * horizon (the CRA full-compliance deadline, `2027-12-11`) so the
- * width itself communicates "how much runway is left".
+ * Replaces an earlier Gantt-style swimlane view (it never quite worked
+ * for Seentrix because products have no per-product deadline — only
+ * the universal CRA milestones do). The redesign is built around the
+ * actual mental model the user lives with day-to-day:
  *
- * Earlier passes painted bare coloured bars with the project name
- * embedded; the user pushed back ("I don't like the UI of it") so we
- * land the Figma layout — proper white cards inside each lane with a
- * stronger date strip on top and the today marker.
+ *   "How is each product tracking against the three CRA dates?"
+ *
+ *   - Top header: a horizontal rail with four points — Today, Notified
+ *     Bodies (Jun 11 2026), Reporting Obligations (Sep 11 2026), Full
+ *     Compliance (Dec 11 2027). Each point is a labelled marker; the
+ *     copy under each one shows "in N months/days" so the regulatory
+ *     pressure is visible at a glance.
+ *
+ *   - Body: each product gets a row card with its compliance progress
+ *     bar. The three CRA milestones cast vertical accent lines that
+ *     cut through every product's bar, so a single visual scan tells
+ *     you "is this product past the Notified Bodies threshold yet?"
+ *     The thresholds are calibrated to "where you should be by that
+ *     milestone": 33 % by Notified Bodies, 66 % by Reporting, 100 %
+ *     by Full Compliance.
+ *
+ * Why not pin to absolute time? The progress bar is conceptually a
+ * percentage of work done, not a percentage of the calendar. The
+ * milestone markers translate calendar dates into "expected progress
+ * by that date" — so the visual remains a progress bar (familiar)
+ * with regulatory checkpoints overlaid (informative).
  */
 
-const MONTHS = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
+// CRA regulatory milestones — the universal Seentrix timeline. Update
+// the dates here if the regulation shifts; the component re-derives
+// "days until" automatically.
+const CRA_MILESTONES = [
+  {
+    key: "notifiedBodies",
+    date: "2026-06-11",
+    /** Expected compliance % by this date — drives the marker x-position. */
+    expectedPct: 33,
+  },
+  {
+    key: "reporting",
+    date: "2026-09-11",
+    expectedPct: 66,
+  },
+  {
+    key: "fullCompliance",
+    date: "2027-12-11",
+    expectedPct: 100,
+  },
 ] as const;
 
-const LANES = [
-  { key: "ahead", titleKey: "timeline.lanes.ahead", min: 75 },
-  { key: "onTrack", titleKey: "timeline.lanes.onTrack", min: 40 },
-  { key: "atRisk", titleKey: "timeline.lanes.atRisk", min: 0 },
-] as const;
-type LaneKey = (typeof LANES)[number]["key"];
+const TYPE_TONE: Record<string, { bg: string; fg: string }> = {
+  hardware: { bg: "bg-primary/10", fg: "text-primary" },
+  software: { bg: "bg-accent/10", fg: "text-accent" },
+  firmware: { bg: "bg-success/10", fg: "text-success" },
+  iot: { bg: "bg-warning/10", fg: "text-warning" },
+};
 
-function laneFor(score: number): LaneKey {
-  if (score >= 75) return "ahead";
-  if (score >= 40) return "onTrack";
-  return "atRisk";
+function laneFillFor(score: number): string {
+  if (score >= 75) return "bg-success";
+  if (score >= 40) return "bg-accent";
+  return "bg-destructive";
 }
 
-const LANE_FILL: Record<LaneKey, string> = {
-  ahead: "bg-success",
-  onTrack: "bg-accent",
-  atRisk: "bg-destructive",
-};
+function daysBetween(a: Date, b: Date): number {
+  const ms = b.getTime() - a.getTime();
+  return Math.round(ms / (1000 * 60 * 60 * 24));
+}
+
+function humanDistance(daysFromNow: number, t: ReturnType<typeof useTranslations>): string {
+  if (daysFromNow < 0) return t.has("timeline.passed") ? t("timeline.passed") : "Passed";
+  if (daysFromNow === 0) return t.has("timeline.today") ? t("timeline.today") : "Today";
+  if (daysFromNow < 30)
+    return t.has("timeline.daysAway")
+      ? t("timeline.daysAway", { days: daysFromNow })
+      : `${daysFromNow} days away`;
+  const months = Math.round(daysFromNow / 30);
+  return t.has("timeline.monthsAway")
+    ? t("timeline.monthsAway", { months })
+    : `${months} months away`;
+}
 
 interface Props {
   products: ProductListItem[];
-  yearStart?: Date;
   basePath?: string;
 }
 
 export function ProductTimeline({
   products,
-  yearStart = new Date(new Date().getFullYear(), 0, 1),
   basePath = "/app/products",
 }: Props) {
   const t = useTranslations("products");
 
-  // Right edge: the CRA "full compliance" deadline — the natural
-  // horizon for every product bar. Anything older than `yearStart`
-  // is clipped to 0% so a product created last year still shows.
-  const horizonEnd = new Date("2027-12-11").getTime();
-  const horizonStart = yearStart.getTime();
-  const totalMs = horizonEnd - horizonStart;
-
-  const todayPct = useMemo(() => {
-    const now = Date.now();
-    if (now <= horizonStart) return 0;
-    if (now >= horizonEnd) return 100;
-    return ((now - horizonStart) / totalMs) * 100;
-  }, [horizonStart, horizonEnd, totalMs]);
-
-  function pctFromDate(date: string | Date): number {
-    const ts = new Date(date).getTime();
-    if (ts <= horizonStart) return 0;
-    if (ts >= horizonEnd) return 100;
-    return ((ts - horizonStart) / totalMs) * 100;
-  }
-
-  const grouped: Record<LaneKey, ProductListItem[]> = {
-    ahead: [],
-    onTrack: [],
-    atRisk: [],
-  };
-  for (const p of products) grouped[laneFor(p.compliance_score)].push(p);
+  const milestones = useMemo(() => {
+    const today = new Date();
+    return CRA_MILESTONES.map((m) => {
+      const date = new Date(m.date);
+      return {
+        ...m,
+        date,
+        daysAway: daysBetween(today, date),
+        label: t.has(`timeline.milestones.${m.key}`)
+          ? t(`timeline.milestones.${m.key}`)
+          : m.key,
+      };
+    });
+  }, [t]);
 
   return (
-    <div className="overflow-hidden rounded-md bg-card shadow-card-md">
-      <div className="overflow-x-auto">
-        <div className="grid min-w-[1024px] grid-cols-[120px_1fr]">
-          {/* === Header row: lane corner + month strip ============== */}
-          <div className="flex items-center justify-between border-b border-border bg-muted/40 px-4 py-3">
-            <span className="text-l6-plus uppercase tracking-wider text-muted-foreground">
-              {t.has("timeline.horizon")
-                ? t("timeline.horizon")
-                : `${yearStart.getFullYear()} – 2027`}
-            </span>
-          </div>
+    <div className="flex flex-col gap-6">
+      {/* === HEADER ROADMAP =================================== */}
+      <div className="rounded-md bg-card p-6 shadow-card-md">
+        <div className="mb-5 flex items-center justify-between">
+          <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
+            {t.has("timeline.eyebrow") ? t("timeline.eyebrow") : "CRA Roadmap"}
+          </p>
+          <p className="text-p4 text-muted-foreground">
+            {t.has("timeline.legend")
+              ? t("timeline.legend")
+              : "Vertical lines mark the compliance threshold expected by each milestone."}
+          </p>
+        </div>
+
+        {/* Roadmap rail — one Today marker on the far left, then the
+            three CRA milestones at their proportional positions. */}
+        <div className="relative">
+          {/* The connecting line itself, sitting behind the markers */}
           <div
-            className="grid border-b border-border bg-muted/40"
-            style={{
-              gridTemplateColumns: `repeat(${MONTHS.length}, minmax(0, 1fr))`,
-            }}
-          >
-            {MONTHS.map((m) => (
-              <div
-                key={m}
-                className="border-l border-border px-3 py-3 text-l6-plus uppercase tracking-wider text-muted-foreground first:border-l-0"
-              >
-                {m}
-              </div>
+            aria-hidden
+            className="absolute left-0 right-0 top-[14px] h-px bg-border"
+          />
+
+          <ol className="relative grid grid-cols-4 gap-4">
+            <li>
+              <RoadmapMarker
+                tone="today"
+                label={
+                  t.has("timeline.now") ? t("timeline.now") : "Today"
+                }
+                dateLabel={new Date().toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
+                })}
+                meta={t.has("timeline.start") ? t("timeline.start") : "Start"}
+              />
+            </li>
+            {milestones.map((m) => (
+              <li key={m.key}>
+                <RoadmapMarker
+                  tone={m.daysAway < 0 ? "passed" : "future"}
+                  label={m.label}
+                  dateLabel={m.date.toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
+                  meta={humanDistance(m.daysAway, t)}
+                />
+              </li>
             ))}
-          </div>
-
-          {/* === Lanes ============================================ */}
-          {LANES.map((lane) => {
-            const items = grouped[lane.key];
-            return (
-              <div key={lane.key} className="contents">
-                {/* Left rail — lane title (no rotation; modern Nask
-                    drops the rotated text in favour of a clean
-                    left-aligned label). */}
-                <div className="flex items-center border-b border-border bg-muted/30 px-4 py-4">
-                  <span className="text-h6 text-foreground">
-                    {t.has(lane.titleKey) ? t(lane.titleKey) : lane.key}
-                  </span>
-                </div>
-
-                {/* Track — month gridlines + today indicator + cards */}
-                <div className="relative min-h-[110px] border-b border-border">
-                  {/* Vertical month gridlines (decorative). */}
-                  <div
-                    aria-hidden
-                    className="pointer-events-none absolute inset-0 grid"
-                    style={{
-                      gridTemplateColumns: `repeat(${MONTHS.length}, minmax(0, 1fr))`,
-                    }}
-                  >
-                    {MONTHS.map((m) => (
-                      <div
-                        key={m}
-                        className="border-l border-border first:border-l-0"
-                      />
-                    ))}
-                  </div>
-
-                  {/* Today indicator — a thin orange line pinned at
-                      `now`. Per Figma, it's a single accent stroke
-                      that persists across every lane. The tag is only
-                      shown on the first (Ahead) lane to avoid the
-                      visual noise of three stacked tags. */}
-                  {todayPct > 0 && todayPct < 100 && (
-                    <div
-                      aria-hidden
-                      className="pointer-events-none absolute inset-y-0 z-10 w-px bg-accent"
-                      style={{ left: `${todayPct}%` }}
-                    >
-                      {lane.key === "ahead" && (
-                        <span className="absolute left-1/2 top-2 -translate-x-1/2 whitespace-nowrap rounded-sm bg-accent px-2 py-0.5 text-l6-plus uppercase tracking-wider text-accent-foreground shadow-card-sm">
-                          {t.has("timeline.today")
-                            ? t("timeline.today")
-                            : "Today"}
-                        </span>
-                      )}
-                    </div>
-                  )}
-
-                  {/* Cards floated on the track. */}
-                  {items.length === 0 ? (
-                    <p className="px-4 py-6 text-p4 text-muted-foreground">
-                      {t.has("timeline.empty")
-                        ? t("timeline.empty")
-                        : "No products in this lane."}
-                    </p>
-                  ) : (
-                    <ul className="relative flex flex-col gap-2 px-2 py-3">
-                      {items.map((p) => {
-                        const start = pctFromDate(p.created_at);
-                        // Pin the card's left edge at `created_at` and
-                        // let it stretch to the regulatory horizon. A
-                        // 5% minimum so newly-created products on the
-                        // far right still render with a readable card.
-                        const width = Math.max(100 - start, 18);
-                        return (
-                          <li key={p.id}>
-                            <TimelineCard
-                              product={p}
-                              laneKey={lane.key}
-                              leftPct={start}
-                              widthPct={width}
-                              basePath={basePath}
-                            />
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  )}
-                </div>
-              </div>
-            );
-          })}
+          </ol>
         </div>
       </div>
+
+      {/* === PRODUCT ROWS ===================================== */}
+      <ul className="flex flex-col gap-3">
+        {products.map((p) => {
+          const tone = TYPE_TONE[p.type ?? ""] ?? {
+            bg: "bg-muted",
+            fg: "text-foreground",
+          };
+          const subtitle = p.type
+            ? t.has(`types.${p.type}`)
+              ? t(`types.${p.type}`)
+              : p.type
+            : "Product";
+          const score = p.compliance_score;
+          const fillWidth = Math.max(0, Math.min(100, score));
+
+          return (
+            <li key={p.id}>
+              <Link
+                href={`${basePath}/${p.id}`}
+                className="group/timeline-row flex flex-col gap-4 rounded-md bg-card p-5 shadow-card-sm transition-shadow hover:shadow-card-md sm:flex-row sm:items-center"
+              >
+                {/* Left: type-tinted icon + title block */}
+                <div className="flex min-w-0 flex-1 items-center gap-4">
+                  <span
+                    className={cn(
+                      "flex size-12 shrink-0 items-center justify-center rounded-md text-h5",
+                      tone.bg,
+                      tone.fg,
+                    )}
+                  >
+                    {p.name[0]?.toUpperCase() ?? "?"}
+                  </span>
+                  <div className="flex min-w-0 flex-col gap-0.5">
+                    <p className="truncate text-h5 text-foreground transition-colors group-hover/timeline-row:text-primary">
+                      {p.name}
+                    </p>
+                    <p className="truncate text-p4 text-muted-foreground">
+                      {subtitle} ·{" "}
+                      <span className="text-foreground">
+                        {score}%{" "}
+                        {t.has("timeline.compliant")
+                          ? t("timeline.compliant")
+                          : "compliant"}
+                      </span>
+                    </p>
+                  </div>
+                </div>
+
+                {/* Right: progress bar with milestone markers cutting
+                    through it. The bar takes the full remaining width
+                    so the markers align consistently down the page. */}
+                <div className="relative w-full sm:max-w-[640px]">
+                  <ProgressBarWithMilestones
+                    fillPct={fillWidth}
+                    fillClass={laneFillFor(score)}
+                    milestones={milestones}
+                  />
+                </div>
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 }
 
-// --- card on the track ------------------------------------------------
+// === Roadmap marker (header) ============================================
 
-function TimelineCard({
-  product,
-  laneKey,
-  leftPct,
-  widthPct,
-  basePath,
+function RoadmapMarker({
+  tone,
+  label,
+  dateLabel,
+  meta,
 }: {
-  product: ProductListItem;
-  laneKey: LaneKey;
-  leftPct: number;
-  widthPct: number;
-  basePath: string;
+  tone: "today" | "future" | "passed";
+  label: string;
+  dateLabel: string;
+  meta: string;
 }) {
-  const t = useTranslations("products");
-  const score = product.compliance_score;
-  const fillWidth = Math.max(0, Math.min(100, score));
-  const subtitle = product.type
-    ? t.has(`types.${product.type}`)
-      ? t(`types.${product.type}`)
-      : product.type
-    : "Product";
-  const dateLabel = new Date(product.created_at).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
-
   return (
-    <Link
-      href={`${basePath}/${product.id}`}
-      // The card is positioned absolutely inside the track; the
-      // `<li>` parent is the layout flow, the card itself floats at
-      // the project's start date.
-      className="relative block h-[88px]"
-      style={{ marginLeft: `${leftPct}%`, width: `${widthPct}%` }}
-      aria-label={product.name}
-    >
-      <div className="group/timeline-card relative flex h-full min-w-[180px] flex-col gap-2 rounded-md bg-card p-3 shadow-card-sm transition-shadow hover:shadow-card-md">
-        <div className="flex min-w-0 items-start justify-between gap-2">
-          <div className="flex min-w-0 flex-col">
-            <p className="truncate text-h6 text-foreground transition-colors group-hover/timeline-card:text-primary">
-              {product.name}
-            </p>
-            <p className="line-clamp-1 text-p4 text-muted-foreground">
-              {subtitle} · {dateLabel}
-            </p>
-          </div>
-          <Icon
-            name="arrow-right-01-stroke-rounded"
-            size={14}
-            className="mt-1 shrink-0 text-muted-foreground transition-colors group-hover/timeline-card:text-primary"
-          />
-        </div>
+    <div className="flex flex-col items-center gap-2 text-center">
+      {/* Dot — primary for today, accent for future, muted for passed.
+          The drop shadow lifts it off the connecting line behind. */}
+      <span
+        className={cn(
+          "relative z-10 size-[22px] rounded-full border-[3px] bg-card",
+          tone === "today"
+            ? "border-primary"
+            : tone === "future"
+              ? "border-accent"
+              : "border-muted-foreground/40",
+        )}
+      />
+      <p className="text-h6 text-foreground">{label}</p>
+      <p className="text-p4 text-muted-foreground">{dateLabel}</p>
+      <span
+        className={cn(
+          "rounded-sm px-2 py-0.5 text-l6-plus uppercase tracking-wider",
+          tone === "today"
+            ? "bg-primary/10 text-primary"
+            : tone === "future"
+              ? "bg-accent/10 text-accent"
+              : "bg-muted text-muted-foreground",
+        )}
+      >
+        {meta}
+      </span>
+    </div>
+  );
+}
 
-        <div className="mt-auto flex items-center gap-2">
-          <div className="relative h-1.5 flex-1 overflow-hidden rounded-xl bg-border">
-            <div
-              className={cn(
-                "h-full rounded-xl transition-[width] duration-300",
-                LANE_FILL[laneKey],
-              )}
-              style={{ width: `${fillWidth}%` }}
-            />
-          </div>
-          <span className="shrink-0 tabular-nums text-l6-plus text-foreground">
-            {score}%
-          </span>
-        </div>
+// === Progress bar with milestone markers (row) ==========================
+
+function ProgressBarWithMilestones({
+  fillPct,
+  fillClass,
+  milestones,
+}: {
+  fillPct: number;
+  fillClass: string;
+  milestones: { key: string; expectedPct: number }[];
+}) {
+  return (
+    <div className="relative">
+      {/* Track + fill. Track is intentionally taller than the standard
+          1.5 px progress recipe so the milestone markers have visual
+          surface to sit on. */}
+      <div className="relative h-2 overflow-hidden rounded-xl bg-border">
+        <div
+          className={cn("h-full rounded-xl transition-[width] duration-300", fillClass)}
+          style={{ width: `${fillPct}%` }}
+        />
       </div>
-    </Link>
+
+      {/* Milestone vertical markers, painted on top of the track. */}
+      {milestones.map((m) => (
+        <div
+          key={m.key}
+          aria-hidden
+          className={cn(
+            "absolute -top-1 h-4 w-px",
+            // Markers turn primary once the user has hit them, muted
+            // until then. Quick green-flag affordance per row.
+            fillPct >= m.expectedPct
+              ? "bg-success"
+              : "bg-muted-foreground/40",
+          )}
+          style={{ left: `${m.expectedPct}%` }}
+        />
+      ))}
+    </div>
   );
 }
