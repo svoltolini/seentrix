@@ -132,6 +132,11 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
       // EU data residency is a flat product guarantee, not a tier upsell —
       // every plan stores customer data in eu-west-2 (London) Supabase.
       { key: "dataResidency", free: "EU", professional: "EU", business: "EU", enterprise: "EU" },
+      // Billing currency lives next to data residency — both are
+      // organisation-wide facts procurement teams scan for, not per-tier
+      // upsells. Used to live in its own Localisation category but that
+      // became single-row after the languages line was removed.
+      { key: "currencyBilling", free: "EUR", professional: "EUR", business: "EUR", enterprise: "EUR" },
     ],
   },
   {
@@ -165,15 +170,6 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
       { key: "supportChannel", free: "Community", professional: "Email", business: "Priority email + live chat", enterprise: "Dedicated CSM + live chat" },
       { key: "onboarding", free: "Self-serve", professional: "Self-serve", business: "1h guided call", enterprise: "2-week guided" },
       { key: "customMsa", free: false, professional: false, business: false, enterprise: true },
-    ],
-  },
-  {
-    key: "localization",
-    rows: [
-      // Languages row dropped — Seentrix is English-only after the i18n
-      // teardown. Currency stays as a flat "EUR" guarantee across every
-      // tier (no per-tier custom currency).
-      { key: "currencyBilling", free: "EUR", professional: "EUR", business: "EUR", enterprise: "EUR" },
     ],
   },
 ];

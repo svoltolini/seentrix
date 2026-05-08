@@ -166,7 +166,8 @@
             "gdprDelete": "GDPR deletion rights (Art. 17)",
             "activityCsv": "Activity log CSV export",
             "siemLogExport": "SIEM log export",
-            "dataResidency": "Data residency"
+            "dataResidency": "Data residency",
+            "currencyBilling": "Billing currency"
           }
         },
         "integrations": {
@@ -196,12 +197,6 @@
             "supportChannel": "Support channel",
             "onboarding": "Onboarding",
             "customMsa": "Custom MSA / legal terms"
-          }
-        },
-        "localization": {
-          "title": "Localisation",
-          "rows": {
-            "currencyBilling": "Billing currency"
           }
         }
       }
