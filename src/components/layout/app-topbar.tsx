@@ -169,6 +169,23 @@ export function AppTopbar({ user, orgName }: AppTopbarProps) {
               </p>
             </div>
 
+            {/* Surface a one-click path to upload a photo when the
+                user hasn't set one. Once `avatarUrl` is populated this
+                row hides itself. */}
+            {!user?.avatarUrl && (
+              <>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem render={<a href="/app/settings/account" />}>
+                  <Icon name="Camera" size={16} className="text-primary" />
+                  <span className="text-primary">
+                    {t.has("topbar.addProfilePicture")
+                      ? t("topbar.addProfilePicture")
+                      : "Add a profile picture"}
+                  </span>
+                </DropdownMenuItem>
+              </>
+            )}
+
             <DropdownMenuSeparator />
 
             <DropdownMenuItem render={<a href="/app/settings/account" />}>
