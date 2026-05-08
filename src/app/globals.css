@@ -273,6 +273,31 @@
   }
 }
 
+/* Help-Centre marker pulse — soft swelling halo behind the question
+   mark chip. Slower + lower contrast than `animate-ping` so it reads
+   as "I'm here if you need me" rather than "ALERT". Honours
+   prefers-reduced-motion via a no-op override below. */
+@keyframes help-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0;
+  }
+}
+
+.animate-help-pulse {
+  animation: help-pulse 3s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-help-pulse {
+    animation: none;
+  }
+}
+
 /* Blog prose styles — recolored for light theme. All references go through CSS vars. */
 .prose {
   @apply text-foreground leading-relaxed;

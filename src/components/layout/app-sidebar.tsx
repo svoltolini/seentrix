@@ -6,9 +6,9 @@ import { useState } from "react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import { Icon } from "@/components/icon";
+import { Logo } from "@/components/logo";
 import { useCopilot } from "@/components/copilot/copilot-context";
 
 /**
@@ -93,7 +93,7 @@ export function MobileSidebarTrigger({
 }
 
 function SidebarBody({
-  user,
+  user: _user,
   orgName,
   onNavigate,
 }: AppSidebarProps & { onNavigate?: () => void }) {
@@ -105,30 +105,28 @@ function SidebarBody({
     return pathname === href || pathname.startsWith(href + "/");
   }
 
-  const initials = (orgName ?? user?.name ?? "S")
-    .split(/\s+/)
-    .slice(0, 2)
-    .map((s) => s[0]?.toUpperCase())
-    .join("");
-
   return (
-    <div className="flex h-full flex-col px-6 pt-5 pb-[30px]">
-      {/* Workspace switcher card */}
-      <div className="flex h-[71px] w-full items-center gap-3.5 rounded-md border-[1.5px] border-border p-3">
-        <Avatar size="lg">
-          <AvatarImage src={user?.avatarUrl ?? undefined} alt={orgName ?? "Workspace"} />
-          <AvatarFallback>{initials}</AvatarFallback>
-        </Avatar>
-        <div className="flex flex-1 flex-col gap-1 truncate">
+    <div className="flex h-full flex-col">
+      {/* Brand block — borderless, height-matched (h-20 / 80 px) and
+          bottom-bordered so the line aligns 1-for-1 with the topbar's
+          bottom edge across the column boundary. The product logo
+          replaces the per-user avatar that used to sit here; the
+          workspace identity belongs on the brand mark, not the
+          signed-in user. */}
+      <div className="flex h-20 shrink-0 items-center gap-3 border-b-[1.5px] border-border px-6">
+        <Logo size={28} className="shrink-0 text-primary" />
+        <div className="flex min-w-0 flex-1 flex-col">
           <p className="truncate text-h5 text-foreground">
             {orgName ?? t("app.name")}
           </p>
-          <p className="text-p3 text-muted-foreground">{t("sidebar.overview")}</p>
+          <p className="text-p4-r text-muted-foreground">
+            {t("sidebar.overview")}
+          </p>
         </div>
       </div>
 
       {/* Primary nav */}
-      <nav className="mt-12 flex flex-col gap-2.5">
+      <nav className="flex flex-col gap-1.5 px-6 pt-6">
         {NAV_PRIMARY.map((item) => {
           const active = isActive(item.href);
           return (
@@ -156,7 +154,7 @@ function SidebarBody({
       </nav>
 
       {/* Help Centre banner — pushed to bottom */}
-      <div className="mt-auto pt-6">
+      <div className="mt-auto px-6 pb-[30px] pt-6">
         <HelpCentreBanner onConsult={() => { copilot.open(); onNavigate?.(); }} />
       </div>
     </div>
@@ -173,9 +171,29 @@ function HelpCentreBanner({ onConsult }: { onConsult: () => void }) {
   const t = useTranslations();
   return (
     <div className="relative w-full">
-      {/* Floating icon — circular orange chip with question mark, overlaps top */}
-      <div className="absolute left-1/2 top-0 z-10 flex size-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-accent text-accent-foreground shadow-card-md">
-        <Icon name="MessageQuestion" size={28} variant="Bold" />
+      {/* Floating help marker. Replaces the previous MessageQuestion
+          chat-bubble icon with a clean typographic "?" — easier to
+          read at small sizes and stronger as a "help" cue. Two layers
+          of motion, both subtle:
+            - Outer halo: very soft 3 s pulse (custom keyframe in
+              globals.css) — gentle attention pull without flashing.
+            - Inner chip: hover scale-110 — interactive feedback when
+              the user moves toward the banner. */}
+      <div className="absolute left-1/2 top-0 z-10 -translate-x-1/2 -translate-y-1/2">
+        {/* Pulsing halo — sits behind the chip and swells slowly. */}
+        <span
+          aria-hidden="true"
+          className="absolute inset-0 animate-help-pulse rounded-full bg-accent/40"
+        />
+        {/* Static chip with the question mark glyph. */}
+        <button
+          type="button"
+          onClick={onConsult}
+          aria-label={t("sidebar.helpCta") ?? "Consult Now"}
+          className="relative flex size-14 cursor-pointer items-center justify-center rounded-full bg-accent text-accent-foreground shadow-card-md transition-transform duration-200 hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+        >
+          <span className="font-heading text-h1 leading-none">?</span>
+        </button>
       </div>
 
       <div className="rounded-md bg-dark-cta px-4 pb-3.5 pt-9 text-center">
