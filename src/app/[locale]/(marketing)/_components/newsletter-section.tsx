@@ -56,7 +56,12 @@ export function NewsletterSection() {
             {t("subtitle")}
           </p>
 
+          {/* `key` is bumped on success so React remounts the form,
+              which clears the uncontrolled email input. Without this the
+              just-submitted address sits in the box after the success
+              banner — confusing UX (looks like the submit didn't take). */}
           <form
+            key={state?.status === "success" ? "submitted" : "open"}
             action={action}
             className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center"
           >
@@ -66,31 +71,36 @@ export function NewsletterSection() {
               placeholder={t("placeholder")}
               required
               className="w-full sm:max-w-sm"
-              disabled={isPending}
+              disabled={isPending || state?.status === "success"}
             />
             <Button
               type="submit"
               size="lg"
               className="w-full shrink-0 sm:w-auto"
-              disabled={isPending}
+              disabled={isPending || state?.status === "success"}
             >
               {t("cta")}
             </Button>
           </form>
 
           {state?.status === "success" && (
-            <p className="mt-4 text-p3 text-success">
+            <p className="mt-4 text-p3 text-success" role="status">
               {t("success")}
             </p>
           )}
           {state?.status === "error" && (
-            <p className="mt-4 text-p3 text-destructive">
+            <p className="mt-4 text-p3 text-destructive" role="alert">
               {t("error")}
             </p>
           )}
           {state?.status === "duplicate" && (
-            <p className="mt-4 text-p3 text-warning">
+            <p className="mt-4 text-p3 text-warning" role="status">
               {t("duplicate")}
+            </p>
+          )}
+          {state?.status === "rate_limited" && (
+            <p className="mt-4 text-p3 text-warning" role="alert">
+              {t("rateLimited")}
             </p>
           )}
 

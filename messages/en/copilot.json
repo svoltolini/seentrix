@@ -41,7 +41,7 @@
     "marketing": {
       "eyebrow": "Seentrix AI",
       "title": "A CRA assistant built entirely on European technologies.",
-      "lede": "A CRA-specialist assistant built into Seentrix. Ask questions in plain English or German and get answers grounded in the regulation itself — on infrastructure operated end-to-end by European companies.",
+      "lede": "A CRA-specialist assistant built into Seentrix. Ask questions in plain English and get answers grounded in the regulation itself — on infrastructure operated end-to-end by European companies.",
       "bullets": {
         "sovereign": {
           "title": "European by design",

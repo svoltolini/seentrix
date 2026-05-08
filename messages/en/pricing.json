@@ -2,6 +2,7 @@
   "pricing": {
     "title": "Simple, transparent pricing",
     "subtitle": "Choose the plan that fits your CRA compliance needs. Every plan includes EU data residency and the full Academy.",
+    "billingInterval": "Billing interval",
     "monthly": "Monthly",
     "annual": "Annual",
     "savePercent": "2 months free",

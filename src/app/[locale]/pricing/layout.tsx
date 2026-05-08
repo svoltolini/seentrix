@@ -1,38 +1,32 @@
-import { Logo } from "@/components/logo";
-import { Link } from "@/i18n/navigation";
-import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
+import { createClient } from "@/lib/supabase/server";
+import { LandingHeader } from "../(marketing)/_components/landing-header";
+import { LandingFooter } from "../(marketing)/_components/landing-footer";
+import { GsapProvider } from "@/components/gsap-provider";
 
-export default function PricingLayout({
+/**
+ * /pricing reuses the same marketing chrome as / so anonymous visitors
+ * always see the same Log in / Get started CTAs and have the same
+ * footer (legal, address, sitemap). Previously the page had its own
+ * stripped-down header that linked only to /app/dashboard — a dead-end
+ * for unauthed visitors, and no footer at all.
+ */
+export default async function PricingLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const t = useTranslations();
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
   return (
-    <div className="min-h-dvh bg-muted/30">
-      <header className="flex h-16 items-center justify-between border-b border-border bg-background px-6">
-        {/* Brand goes to landing. Previously linked to /app/dashboard
-            which middleware bounces unauthed visitors back to /auth/login —
-            a dead-end loop from the pricing page for anyone not yet
-            signed up. brightness-0 invert makes the near-black logo
-            visible against the dark background. */}
-        <Link href="/" className="flex items-center gap-2.5">
-          <Logo size={13} className="shrink-0 brightness-0 invert" />
-          <span className="text-lg font-semibold tracking-tight">
-            {t("app.name")}
-          </span>
-        </Link>
-        <div className="flex items-center gap-3">
-          <Link href="/app/dashboard">
-            <Button variant="ghost" size="sm">
-              {t("nav.dashboard")}
-            </Button>
-          </Link>
-        </div>
-      </header>
-      {children}
+    <div className="flex min-h-screen flex-col">
+      <LandingHeader isAuthed={!!user} />
+      <main id="main" className="flex-1">
+        <GsapProvider>{children}</GsapProvider>
+      </main>
+      <LandingFooter />
     </div>
   );
 }

@@ -41,14 +41,6 @@ export default function CookiesPage() {
           </tr>
           <tr>
             <td>
-              <code>NEXT_LOCALE</code>
-            </td>
-            <td>Remember language preference (en / de)</td>
-            <td>1 year</td>
-            <td>Strictly necessary</td>
-          </tr>
-          <tr>
-            <td>
               <code>stb:*</code>
             </td>
             <td>Dismissable training banner state (per screen)</td>
@@ -61,7 +53,7 @@ export default function CookiesPage() {
       <h2>Consent</h2>
       <p>
         All the cookies above are strictly necessary for the platform to
-        work (authentication, language, user preferences). Under the ePrivacy
+        work (authentication, user preferences). Under the ePrivacy
         Directive these may be set without explicit consent — the banner
         that appears on your first visit is informational. If we later add
         analytics or marketing cookies they will require explicit opt-in.

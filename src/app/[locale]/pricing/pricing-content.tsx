@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Icon } from "@/components/icon";
 import { cn } from "@/lib/utils";
 import { createCheckoutSession } from "@/lib/stripe/actions";
 import { Link } from "@/i18n/navigation";
@@ -60,11 +61,18 @@ export function PricingContent() {
         </p>
       </div>
 
-      {/* Billing toggle */}
-      <div className="mb-12 flex items-center justify-center gap-1 rounded-md border border-border bg-card p-1">
+      {/* Billing toggle — segmented control. `aria-pressed` lets a screen
+          reader announce which interval is active; without it the two
+          buttons read as unrelated toggles. */}
+      <div
+        role="group"
+        aria-label={t("billingInterval")}
+        className="mb-12 flex items-center justify-center gap-1 rounded-md border border-border bg-card p-1"
+      >
         <button
           type="button"
           onClick={() => setInterval("monthly")}
+          aria-pressed={interval === "monthly"}
           className={cn(
             "rounded-sm px-4 py-2 text-l6 transition-colors",
             interval === "monthly"
@@ -77,6 +85,7 @@ export function PricingContent() {
         <button
           type="button"
           onClick={() => setInterval("annual")}
+          aria-pressed={interval === "annual"}
           className={cn(
             "flex items-center gap-2 rounded-sm px-4 py-2 text-l6 transition-colors",
             interval === "annual"
@@ -223,9 +232,14 @@ export function PricingContent() {
                       onClick={() => handleSelectPlan(tier.plan)}
                       disabled={loading === tier.plan}
                     >
-                      {loading === tier.plan
-                        ? t("redirecting")
-                        : t("subscribe")}
+                      {loading === tier.plan ? (
+                        <>
+                          <Icon name="Loader2" className="size-4 animate-spin" />
+                          {t("redirecting")}
+                        </>
+                      ) : (
+                        t("subscribe")
+                      )}
                     </Button>
                   )}
                 </div>

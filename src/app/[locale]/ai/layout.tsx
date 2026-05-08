@@ -1,38 +1,31 @@
-import { Logo } from "@/components/logo";
-import { Link } from "@/i18n/navigation";
-import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
+import { createClient } from "@/lib/supabase/server";
+import { LandingHeader } from "../(marketing)/_components/landing-header";
+import { LandingFooter } from "../(marketing)/_components/landing-footer";
+import { GsapProvider } from "@/components/gsap-provider";
 
 /**
- * Dedicated marketing layout for the Copilot landing page (/ai).
- * Same chrome as /pricing — thin branded header, subtle muted body.
- * Keeps the page scannable for procurement teams linked directly
- * from sales conversations.
+ * /ai (the Copilot landing page) shares the marketing chrome — same
+ * header CTAs, same footer. Earlier this page rendered its own
+ * minimal header which left the visitor with no Log in or Back-to-
+ * landing affordance.
  */
-export default function AiLayout({ children }: { children: React.ReactNode }) {
-  const t = useTranslations();
+export default async function AiLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
   return (
-    <div className="min-h-dvh bg-muted/30">
-      <header className="flex h-16 items-center justify-between border-b border-border bg-background px-6">
-        <Link href="/" className="flex items-center gap-2.5">
-          <Logo size={13} className="shrink-0 brightness-0 invert" />
-          <span className="text-lg font-semibold tracking-tight">
-            {t("app.name")}
-          </span>
-        </Link>
-        <div className="flex items-center gap-3">
-          <Link href="/pricing">
-            <Button variant="ghost" size="sm">
-              Pricing
-            </Button>
-          </Link>
-          <Link href="/auth/signup">
-            <Button size="sm">{t("copilot.marketing.ctaPrimary")}</Button>
-          </Link>
-        </div>
-      </header>
-      {children}
+    <div className="flex min-h-screen flex-col">
+      <LandingHeader isAuthed={!!user} />
+      <main id="main" className="flex-1">
+        <GsapProvider>{children}</GsapProvider>
+      </main>
+      <LandingFooter />
     </div>
   );
 }

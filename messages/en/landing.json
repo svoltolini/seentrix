@@ -242,10 +242,10 @@
       "privacy": "We respect your privacy. Unsubscribe at any time.",
       "success": "You're subscribed! Check your inbox for the CRA Readiness Checklist.",
       "error": "Something went wrong. Please try again.",
-      "duplicate": "You're already subscribed. Check your inbox for the latest updates."
+      "duplicate": "You're already subscribed. Check your inbox for the latest updates.",
+      "rateLimited": "Too many sign-ups from this network. Try again in a few minutes."
     },
     "footer": {
-      "location": "London, United Kingdom",
       "impressum": "Impressum",
       "privacy": "Privacy Policy",
       "terms": "Terms of Service",

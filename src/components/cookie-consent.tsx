@@ -6,13 +6,13 @@ import { Link } from "@/i18n/navigation";
 /**
  * Lightweight cookie-consent banner.
  *
- * Only strictly-necessary cookies are set today (session, locale,
+ * Only strictly-necessary cookies are set today (session + UI
  * preferences), so the banner is informational rather than consent-gated.
  * The "Got it" click records acknowledgement in localStorage so the
  * banner doesn't reappear.
  *
  * When analytics or marketing cookies are added later, promote this to a
- * proper opt-in UI with per-category toggles.
+ * proper opt-in UI with per-category toggles + a co-equal "Reject all".
  */
 const STORAGE_KEY = "seentrix:cookies:acknowledged";
 
@@ -59,7 +59,7 @@ export function CookieConsent() {
       className="fixed inset-x-4 bottom-4 z-50 mx-auto flex max-w-2xl flex-col gap-3 rounded-md bg-card p-4 shadow-card-lg sm:flex-row sm:items-center md:inset-x-auto md:left-1/2 md:-translate-x-1/2"
     >
       <p className="text-p3 leading-relaxed text-muted-foreground">
-        Seentrix only uses strictly-necessary cookies (session, language,
+        Seentrix only uses strictly-necessary cookies (session and UI
         preferences). No tracking, no ads. Read our{" "}
         <Link
           href="/legal/cookies"
