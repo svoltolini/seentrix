@@ -392,14 +392,22 @@ export function DashboardContent(
         </section>
         </div>
 
-        {/* RIGHT RAIL — 370px. gap-6 between sections matches the p-6
-            card padding so inner spacing balances the outer frame. */}
-        <aside className="flex min-w-0 flex-col gap-6 rounded-md bg-card p-6 shadow-card-md lg:max-w-[370px]">
-          {/* Calendar */}
-          <CalendarWidget />
+        {/* RIGHT RAIL — 370 px column of independent cards. Each
+            widget gets its own white surface + soft shadow so the rail
+            reads as a stack of self-contained tools (Linear / Vercel /
+            Notion convention) rather than one giant context panel.
+            Gap 4 between cards is tighter than the gap-6 between sections
+            inside a single panel — the card chrome already provides
+            visual separation. */}
+        <aside className="flex min-w-0 flex-col gap-4 lg:max-w-[370px]">
+          {/* Calendar — month label inside the widget acts as the
+              card header, no extra h3 needed. */}
+          <div className="rounded-md bg-card p-5 shadow-card-md">
+            <CalendarWidget />
+          </div>
 
           {/* Meetings / today's deadlines */}
-          <section className="flex flex-col gap-4">
+          <section className="flex flex-col gap-4 rounded-md bg-card p-5 shadow-card-md">
             <h3 className="text-h3 text-foreground">
               {t("upcomingDeadlines.title")}
             </h3>
@@ -408,14 +416,14 @@ export function DashboardContent(
 
           {/* Team */}
           {teamMembers.length > 0 && (
-            <section className="flex flex-col gap-4">
+            <section className="flex flex-col gap-4 rounded-md bg-card p-5 shadow-card-md">
               <h3 className="text-h3 text-foreground">{t("chat")}</h3>
               <TeamChatStrip members={teamMembers} />
             </section>
           )}
 
           {/* Activity feed */}
-          <section className="flex flex-col gap-4">
+          <section className="flex flex-col gap-4 rounded-md bg-card p-5 shadow-card-md">
             <h3 className="text-h3 text-foreground">{t("activity")}</h3>
             <ActivityFeedWidget items={activityItems} />
           </section>
