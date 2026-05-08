@@ -7,7 +7,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { Icon } from "@/components/icon";
 import { cn } from "@/lib/utils";
 import { AskSeentrixAI } from "@/components/copilot/ask-seentrix-ai";
-import { ProductGridCard } from "./components/product-grid-card";
+import { ProjectHeroCard } from "../dashboard/widgets/project-hero-card";
 import { ProductTimeline } from "./components/product-timeline";
 import type { ProductListItem } from "./actions";
 import type { OrgPlan } from "@/lib/constants/plans";
@@ -98,14 +98,18 @@ export function ProductsPageContent({
   const limit = PLAN_PRODUCT_LIMITS[plan];
 
   return (
-    <div className="mx-auto max-w-[1120px] space-y-8 pb-12">
-      {/* Page header */}
+    // Container width matched to the dashboard (`max-w-[1600px]`) so the
+    // products list sits at the same horizontal rhythm as every other
+    // signed-in surface — was 1120 which felt narrow against the Nask
+    // shell and made the hero cards too cramped to render.
+    <div className="mx-auto max-w-[1600px] space-y-8 pb-12">
+      {/* Page header — h1 + p2 muted matches dashboard greeting */}
       <div className="flex items-end justify-between gap-4">
         <div>
-          <h1 className="text-h1">
+          <h1 className="text-h1 text-foreground">
             {t("title")}
           </h1>
-          <p className="mt-1.5 text-p3 text-muted-foreground">
+          <p className="mt-2 text-p2 text-muted-foreground">
             {t("subtitle")}
           </p>
         </div>
@@ -247,14 +251,38 @@ export function ProductsPageContent({
           />
         </div>
       ) : view === "grid" ? (
+        // Grid view uses the same `<ProjectHeroCard />` as the dashboard
+        // "My Products" hero strip — single visual language across both
+        // surfaces. When a product has its own `image_url` the banner
+        // renders the photo + scrim; otherwise it falls back to the wavy
+        // blue Nask cover SVG. The previous build used a smaller
+        // `<ProductGridCard />` (300×244) which made the products
+        // surface feel like a different system from the dashboard.
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {sorted.map((p) => (
-            <ProductGridCard
-              key={p.id}
-              product={p}
-              href={`/app/products/${p.id}`}
-            />
-          ))}
+          {sorted.map((p) => {
+            const categoryKey = p.cra_category ?? "default";
+            const categoryLabelKey = `categories.${categoryKey}`;
+            const subtitleKey = p.type ? `types.${p.type}` : null;
+            return (
+              <ProjectHeroCard
+                key={p.id}
+                title={p.name}
+                subtitle={
+                  subtitleKey && t.has(subtitleKey)
+                    ? t(subtitleKey)
+                    : (p.type ?? "Product")
+                }
+                href={`/app/products/${p.id}`}
+                score={p.compliance_score}
+                priority={
+                  t.has(categoryLabelKey)
+                    ? t(categoryLabelKey)
+                    : categoryKey.replace(/_/g, " ")
+                }
+                imageUrl={p.image_url}
+              />
+            );
+          })}
         </div>
       ) : view === "timeline" ? (
         <ProductTimeline products={sorted} basePath="/app/products" />

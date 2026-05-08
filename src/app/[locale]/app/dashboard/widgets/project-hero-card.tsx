@@ -44,6 +44,14 @@ interface Props {
   /** Priority / category chip on the top-left. */
   priority: string;
   members?: { id: string; name: string; avatarUrl: string | null }[];
+  /**
+   * Optional uploaded photo for the banner (e.g. a product image). When
+   * set, the banner renders the photo full-bleed + a soft foreground
+   * scrim so the priority chip stays legible on busy imagery — Figma's
+   * imageful Project Card path. Falls back to the wavy blue Nask cover
+   * (`/public/images/project-card-cover.svg`) when no photo is provided.
+   */
+  imageUrl?: string | null;
 }
 
 function initialsOf(name: string): string {
@@ -62,8 +70,10 @@ export function ProjectHeroCard({
   score,
   priority,
   members,
+  imageUrl,
 }: Props) {
   const fillWidth = Math.max(0, Math.min(100, score));
+  const hasImage = !!imageUrl;
 
   return (
     <Link
@@ -74,18 +84,37 @@ export function ProjectHeroCard({
       // the corners.
       className="group/hero-card relative flex h-[249px] w-full flex-col overflow-clip rounded-md bg-card shadow-card-md transition-shadow hover:shadow-card-lg"
     >
-      {/* TOP — 140 px banner with the Figma SVG cover. CSS
-          background-image rather than <Image> so we don't fight Next's
-          intrinsic-sizing for a purely decorative cover; the SVG ships
-          as a single static asset cached forever by Vercel. */}
+      {/* TOP — 140 px banner. Uploaded product photo if one exists,
+          otherwise the wavy blue Nask cover SVG. CSS background-image
+          rather than <Image> so we don't fight Next's intrinsic-sizing
+          for a purely decorative slab; the SVG ships as a single static
+          asset cached forever by Vercel. */}
       <div
-        className="relative flex h-[140px] shrink-0 items-start p-4"
-        style={{
-          backgroundImage: "url(/images/project-card-cover.svg)",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
+        className="relative flex h-[140px] shrink-0 items-start overflow-hidden p-4"
+        style={
+          hasImage
+            ? {
+                backgroundImage: `url(${imageUrl})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }
+            : {
+                backgroundImage: "url(/images/project-card-cover.svg)",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }
+        }
       >
+        {/* Soft top-down scrim so the priority chip stays legible on
+            busy product photos (Figma's imageful path). The Nask cover
+            doesn't need it — the wavy gradient is dark enough on its
+            own — so we only paint the scrim when an image is set. */}
+        {hasImage && (
+          <div
+            aria-hidden
+            className="absolute inset-0 bg-gradient-to-b from-foreground/25 from-[46%] to-transparent to-[102%]"
+          />
+        )}
         <span className="relative inline-flex items-center rounded-sm bg-white/20 px-3 py-1 text-l6-plus uppercase tracking-wider text-white backdrop-blur-sm">
           {priority}
         </span>
