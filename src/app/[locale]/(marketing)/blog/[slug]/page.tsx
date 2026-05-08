@@ -126,7 +126,7 @@ export default async function BlogPostPage({
         <Badge variant="secondary" className="mb-4">
           {post.category}
         </Badge>
-        <h1 className="text-h1 tracking-tight sm:text-4xl lg:text-5xl">
+        <h1 className="text-h1 tracking-tight">
           {post.title}
         </h1>
         <div className="mt-4 flex items-center gap-4 text-sm text-muted-foreground">

@@ -64,7 +64,7 @@ function AiContent() {
         <span className="text-l6-plus uppercase tracking-[0.18em] text-[#066DE6]">
           {t("eyebrow")}
         </span>
-        <h1 className="mt-6 font-heading text-4xl font-bold leading-[1.08] tracking-tight text-foreground sm:text-5xl lg:text-[56px]">
+        <h1 className="mt-6 font-heading text-h1 leading-[1.08] tracking-tight text-foreground">
           {t("title")}
         </h1>
         <p className="mt-6 max-w-3xl text-lg leading-relaxed text-muted-foreground">
@@ -94,7 +94,7 @@ function AiContent() {
                 >
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <h3 className="mt-5 font-heading text-lg font-semibold text-foreground">
+                <h3 className="mt-5 font-heading text-h4 text-foreground">
                   {t(`bullets.${key}.title`)}
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
@@ -110,7 +110,7 @@ function AiContent() {
           each row, heading + body on the right. Replaces the tiny
           6-px pill that felt like a half-measure. */}
       <section id="how" className="mx-auto max-w-3xl px-6 pt-24 pb-20">
-        <h2 className="font-heading text-2xl font-semibold text-foreground sm:text-3xl">
+        <h2 className="font-heading text-h2 text-foreground">
           {tLearn("title")}
         </h2>
         <p className="mt-2 text-base text-muted-foreground">
@@ -128,7 +128,7 @@ function AiContent() {
                 {String(i + 1).padStart(2, "0")}
               </span>
               <div className="flex-1">
-                <h3 className="font-heading text-lg font-semibold text-foreground">
+                <h3 className="font-heading text-h4 text-foreground">
                   {tLearn(`${s}.heading`)}
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
@@ -170,7 +170,7 @@ function AiContent() {
 
       {/* Final CTA */}
       <section className="mx-auto max-w-3xl px-6 pt-24 text-center">
-        <h2 className="font-heading text-2xl font-semibold text-foreground sm:text-3xl">
+        <h2 className="font-heading text-h2 text-foreground">
           {t("title")}
         </h2>
         <div className="mt-6 flex items-center justify-center gap-3">

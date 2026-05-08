@@ -92,7 +92,7 @@ export function TimelineSection() {
           <span className="text-l6-plus uppercase tracking-[2.5px] text-primary">
             {t("eyebrow")}
           </span>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+          <h2 className="mt-3 text-h1 tracking-tight text-foreground">
             {t("title")}
           </h2>
           <p className="mt-4 text-p1 text-muted-foreground">

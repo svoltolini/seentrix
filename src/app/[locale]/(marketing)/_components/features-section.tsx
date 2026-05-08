@@ -54,7 +54,7 @@ export function FeaturesSection() {
     >
       <div className="mx-auto max-w-6xl px-6">
         <div className="mx-auto mb-16 max-w-3xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+          <h2 className="text-h1 tracking-tight text-foreground">
             {t("title")}
           </h2>
           <p className="mt-6 text-p1 text-muted-foreground">

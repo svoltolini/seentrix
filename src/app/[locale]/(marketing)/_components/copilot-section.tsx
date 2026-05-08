@@ -80,7 +80,7 @@ export function CopilotSection() {
           </span>
           <h2
             data-copilot-heading
-            className="mt-6 text-3xl font-bold tracking-tight text-foreground sm:text-4xl"
+            className="mt-6 text-h1 tracking-tight text-foreground"
           >
             {t("title")}
           </h2>

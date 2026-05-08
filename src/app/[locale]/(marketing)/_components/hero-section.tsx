@@ -71,7 +71,7 @@ export function HeroSection() {
           {t("badge")}
         </span>
 
-        <h1 data-hero-reveal className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl [&>span:last-child]:font-black">
+        <h1 data-hero-reveal className="text-h1 tracking-tight [&>span:last-child]:font-black">
           <span className="text-foreground">{t("titleLine1")}</span>
           <br />
           <span className="text-primary">{t("titleLine2")}</span>

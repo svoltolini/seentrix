@@ -30,7 +30,7 @@ export default async function BlogPage() {
   return (
     <section className="mx-auto max-w-6xl px-6 py-24">
       <div className="mb-12 text-center">
-        <h1 className="font-heading text-4xl font-bold tracking-tight sm:text-5xl">
+        <h1 className="font-heading text-h1 tracking-tight">
           {t("heading")}
         </h1>
         <p className="mt-4 text-lg text-muted-foreground">
