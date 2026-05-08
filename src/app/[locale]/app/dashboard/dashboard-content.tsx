@@ -233,7 +233,7 @@ export function DashboardContent(
   const teamMembers = [...seenUsers.values()];
 
   return (
-    <div className="mx-auto grid w-full max-w-[1440px] gap-6 lg:grid-cols-[1fr_370px]">
+    <div className="mx-auto grid w-full max-w-[1600px] gap-6 lg:grid-cols-[1fr_370px]">
       {/* MAIN COLUMN */}
       <div className="flex min-w-0 flex-col gap-6">
         {/* Header */}
@@ -317,8 +317,9 @@ export function DashboardContent(
         </section>
       </div>
 
-      {/* RIGHT RAIL — 370px */}
-      <aside className="flex min-w-0 flex-col gap-8 rounded-md bg-card p-6 shadow-card-md lg:max-w-[370px]">
+      {/* RIGHT RAIL — 370px. gap-6 between sections matches the p-6
+          card padding so inner spacing balances the outer frame. */}
+      <aside className="flex min-w-0 flex-col gap-6 rounded-md bg-card p-6 shadow-card-md lg:max-w-[370px]">
         {/* Calendar */}
         <CalendarWidget />
 

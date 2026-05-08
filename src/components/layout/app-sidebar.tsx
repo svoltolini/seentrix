@@ -12,10 +12,15 @@ import { Icon } from "@/components/icon";
 import { useCopilot } from "@/components/copilot/copilot-context";
 
 /**
- * AppSidebar — Nask vertical sidebar.
- * Geometry per Figma frames `57:28136` and `85:10566`:
+ * AppSidebar — vertical sidebar.
+ * Geometry per Figma frames `57:28136` and `85:10566`, with one density
+ * deviation: nav items are 44px tall (Figma spec was 52px). With 6 items
+ * + the workspace card + the Help Centre banner, the original 52px height
+ * pushed the banner off-screen on 768px-tall viewports. 44px gives back
+ * ~50px of vertical headroom without losing comfortable touch-target
+ * compliance (44px is the WCAG 2.5.5 minimum).
  *   width 310, white surface, right border 1.5px on `--border`
- *   Inside: workspace card (top, 71h), nav menu (52h items @ gap-2.5),
+ *   Inside: workspace card (top, 71h), nav menu (44h items @ gap-2.5),
  *   utility group (separated by gap-12), Help Centre banner (bottom)
  *
  * Active state: `bg-primary text-primary-foreground rounded-md`. Icons in
@@ -132,7 +137,7 @@ function SidebarBody({
               href={item.href}
               onClick={onNavigate}
               className={cn(
-                "flex h-[52px] w-full items-center gap-3.5 rounded-md px-3.5 text-l5 transition-colors",
+                "flex h-11 w-full items-center gap-3.5 rounded-md px-3.5 text-l5 transition-colors",
                 active
                   ? "bg-sidebar-primary text-sidebar-primary-foreground"
                   : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",

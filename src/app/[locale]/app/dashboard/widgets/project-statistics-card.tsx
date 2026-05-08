@@ -69,8 +69,11 @@ export function ProjectStatisticsCard({
   const timeWindow = filterOptions?.find((o) => o.key === filter)?.label ??
     (t.has("statistics.weekFilter") ? t("statistics.weekFilter") : "Week");
 
+  // min-h pinned at the Figma reference height (346) so the chart never
+  // collapses, but allowed to grow on tall viewports rather than capping
+  // at a fixed value that leaves whitespace below the bars on wide screens.
   return (
-    <div className="flex h-[346px] w-full flex-col rounded-md bg-card p-[18px] shadow-card-lg">
+    <div className="flex min-h-[346px] w-full flex-col rounded-md bg-card p-[18px] shadow-card-lg">
       {/* Header */}
       <div className="flex items-center justify-between">
         <p className="text-h4 text-foreground">{resolvedTitle}</p>

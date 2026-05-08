@@ -49,7 +49,11 @@ export function ProjectHeroCard({
   return (
     <Link
       href={href}
-      className="group/hero-card relative flex h-[249px] w-full max-w-[340px] flex-col justify-between overflow-clip rounded-md p-4 text-white shadow-card-md transition-shadow hover:shadow-card-lg"
+      // Width is intentionally fluid — the parent uses `sm:grid-cols-2`
+      // so each card gets exactly half its column. Capping at 340px
+      // (the Figma reference width) left dead whitespace at lg+ where
+      // the column is wider than 680px.
+      className="group/hero-card relative flex h-[249px] w-full flex-col justify-between overflow-clip rounded-md p-4 text-white shadow-card-md transition-shadow hover:shadow-card-lg"
       style={{ backgroundImage: gradient }}
     >
       {/* Bottom scrim — matches Figma's gradient overlay */}

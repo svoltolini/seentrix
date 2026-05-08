@@ -50,7 +50,12 @@ export function MeetingsList({ meetings, emptyMessage }: Props) {
       {meetings.map((m, idx) => (
         <div key={m.id}>
           {idx > 0 && <Separator />}
-          <div className="flex h-[42px] items-center gap-3 py-5">
+          {/* Row height is content-driven (icon + 2 lines = 42px). The
+              old `h-[42px]` forced the box to 42px, which then collided
+              with `py-5` (20px each side) and produced ~82px rows with
+              the icon overflowing — way more vertical real estate than
+              the rail can spare. py-2.5 lands the row at ~62px. */}
+          <div className="flex items-center gap-3 py-2.5">
             <span className="flex size-[42px] shrink-0 items-center justify-center rounded-md bg-muted text-primary">
               <Icon name={m.icon ?? "VideoCircle"} size={20} />
             </span>

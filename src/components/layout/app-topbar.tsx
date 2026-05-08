@@ -18,7 +18,11 @@ import { logout } from "@/app/[locale]/auth/actions";
 import { MobileSidebarTrigger } from "./app-sidebar";
 
 /**
- * AppTopbar — Nask slim 110px top bar (frame `57:26339`).
+ * AppTopbar — slim 80px top bar (Linear/Notion density). The Nask Figma
+ * spec was 110px; we shrunk to 80 because Seentrix users live in this
+ * dashboard for compliance work and need every vertical pixel. The
+ * 44-48px inner controls (avatar, bell, CTA) sit comfortably inside 80
+ * with ~16px of breathing room top/bottom.
  *   left:    page title (driven by pathname) + mobile hamburger
  *   center:  search box (333×48 filled) — placeholder action for now
  *   right:   "+ New Product" dark CTA, notification bell, profile cluster
@@ -70,7 +74,7 @@ export function AppTopbar({ user, orgName, hasUnread }: AppTopbarProps) {
     .join("");
 
   return (
-    <header className="flex h-[110px] shrink-0 items-center gap-4 border-b-[1.5px] border-border bg-card px-4 lg:px-8">
+    <header className="flex h-20 shrink-0 items-center gap-4 border-b-[1.5px] border-border bg-card px-4 lg:px-8">
       {/* Mobile sidebar trigger + title */}
       <div className="flex shrink-0 items-center gap-3">
         <MobileSidebarTrigger user={user} orgName={orgName} />

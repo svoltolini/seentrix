@@ -74,7 +74,10 @@ export function CalendarWidget({
     <div className={cn("flex flex-col gap-6", className)}>
       {/* Header */}
       <div className="flex items-center justify-between">
-        <p className="text-h2 text-foreground">{monthLabel}</p>
+        {/* `text-h4` (18px) instead of `text-h2` (22px) — the calendar
+            sits inside a 322px-wide rail and must not out-shout the
+            section titles around it (which use text-h3 at 20px). */}
+        <p className="text-h4 text-foreground">{monthLabel}</p>
         <div className="flex items-center gap-2">
           <NavBtn onClick={() => shiftWeek(-1)} aria-label={t.has("calendar.prev") ? t("calendar.prev") : "Previous week"}>
             <Icon name="ArrowLeft2" size={18} className="text-muted-foreground" />
