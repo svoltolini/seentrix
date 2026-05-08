@@ -39,6 +39,8 @@ export function CopilotHistory({
   open,
   onClose,
   onResume,
+  activeSessionId,
+  onActiveDeleted,
 }: {
   open: boolean;
   onClose: () => void;
@@ -47,6 +49,15 @@ export function CopilotHistory({
     messages: UIMessage[],
     title: string | null,
   ) => void;
+  /** Currently-open chat session — needed so we can detect when the
+   *  user deletes the conversation they're actively viewing and signal
+   *  the parent to clear the transcript. */
+  activeSessionId: string | null;
+  /** Fires after the active session is successfully deleted. The
+   *  parent should reset its `useChat` state (messages + sessionId)
+   *  so the chat surface doesn't keep rendering a transcript whose
+   *  session row no longer exists. */
+  onActiveDeleted: () => void;
 }) {
   const t = useTranslations("copilot");
   const [sessions, setSessions] = useState<SessionRow[] | null>(null);
@@ -130,6 +141,15 @@ export function CopilotHistory({
         });
         if (!res.ok) throw new Error(String(res.status));
         setSessions((s) => (s ?? []).filter((x) => x.id !== sessionId));
+        // If the user just deleted the conversation they're actively
+        // viewing, also reset the parent's `useChat` state. Without
+        // this the history list updates correctly (row vanishes) but
+        // closing the panel reveals the chat transcript still rendering
+        // the now-orphaned messages — confusing because the session
+        // row backing them no longer exists.
+        if (sessionId === activeSessionId) {
+          onActiveDeleted();
+        }
       } catch (err) {
         setError((err as Error).message);
       }

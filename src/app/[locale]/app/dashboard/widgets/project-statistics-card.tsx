@@ -193,11 +193,20 @@ function Bar({
   );
 }
 
+/**
+ * Filter chip — verbatim Figma spec from the design-system memory:
+ *   `bg-card border-[1.5px] border-border-outline rounded-sm
+ *    px-2.5 py-1.5 gap-3.5 text-p3` with an optional 14-16 px arrow.
+ *
+ * Earlier values (gap-2, px-3, h-9) were close but read tighter than
+ * the Figma reference; the spec values give the chip more breathing
+ * room around the label + chevron.
+ */
 function FilterChip({ children }: { children: React.ReactNode }) {
   return (
     <button
       type="button"
-      className="inline-flex h-9 items-center gap-2 rounded-sm border-[1.5px] border-border-outline bg-card px-3 text-p3 text-foreground transition-colors hover:bg-muted"
+      className="inline-flex items-center gap-3.5 rounded-sm border-[1.5px] border-border-outline bg-card px-2.5 py-1.5 text-p3 text-foreground transition-colors hover:bg-muted"
     >
       {children}
     </button>

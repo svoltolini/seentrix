@@ -64,11 +64,16 @@ export function MeetingsList({ meetings, emptyMessage }: Props) {
               <p className="truncate text-p3 text-muted-foreground">{m.subtitle}</p>
             </div>
             {m.cta && (
+              // Per Figma: 74 × 32 px outline chip, not the default 36 px
+              // `size="sm"`. Explicit `h-8 rounded-sm border-[1.5px]
+              // border-border-outline` mirrors the same chip recipe used
+              // by the Project Statistics filter buttons so every "small
+              // pill action" in the dashboard reads as one family.
               <Button
                 variant="outline"
                 size="sm"
-                className="shrink-0"
                 onClick={m.cta.onClick}
+                className="h-8 shrink-0 rounded-sm border-[1.5px] border-border-outline px-3 text-p3 font-medium"
               >
                 {m.cta.label}
               </Button>

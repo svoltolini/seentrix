@@ -224,12 +224,21 @@ export function CopilotSheet() {
         <CopilotHistory
           open={historyOpen}
           onClose={() => setHistoryOpen(false)}
+          activeSessionId={sessionId}
           onResume={(id, resumedMessages) => {
             sessionIdRef.current = id;
             setSessionId(id);
             setMessages(resumedMessages);
             stuckToBottomRef.current = true;
             setHistoryOpen(false);
+          }}
+          onActiveDeleted={() => {
+            // Mirror the cleanup `onClearHistory` does — drop the
+            // session id + clear the transcript so the chat surface
+            // resets to an empty state matching the now-empty history.
+            sessionIdRef.current = null;
+            setSessionId(null);
+            setMessages([]);
           }}
         />
 

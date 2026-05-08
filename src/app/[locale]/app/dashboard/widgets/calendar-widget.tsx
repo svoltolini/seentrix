@@ -146,7 +146,11 @@ export function CalendarWidget({
               type="button"
               onClick={() => onSelectDate?.(d)}
               className={cn(
-                "flex aspect-square items-center justify-center rounded-md text-p3 transition-colors",
+                // Day cells are circular per Figma — `rounded-full`,
+                // not `rounded-md`. The accent disc for today and the
+                // primary ring for the selected day both look more
+                // polished as circles than as 10 px-radius squares.
+                "flex aspect-square items-center justify-center rounded-full text-p3 transition-colors",
                 isToday
                   ? "bg-accent font-semibold text-accent-foreground"
                   : isSelected
