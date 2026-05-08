@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 import { Icon } from "@/components/icon";
 import { cn } from "@/lib/utils";
 import { MS_PER_DAY } from "@/lib/time";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 /**
  * CRA Timeline section — three equal Nask cards.
@@ -49,6 +50,7 @@ export function TimelineSection() {
   const t = useTranslations("landing.timeline");
   const sectionRef = useRef<HTMLElement>(null);
   const [now, setNow] = useState<Date | null>(null);
+  const reduced = useReducedMotion();
 
   useEffect(() => {
     setNow(new Date());
@@ -60,6 +62,7 @@ export function TimelineSection() {
   }, []);
 
   useEffect(() => {
+    if (reduced) return;
     const el = sectionRef.current;
     if (!el) return;
     gsap.registerPlugin(ScrollTrigger);
@@ -76,7 +79,7 @@ export function TimelineSection() {
       });
     }, el);
     return () => ctx.revert();
-  }, []);
+  }, [reduced]);
 
   return (
     <section

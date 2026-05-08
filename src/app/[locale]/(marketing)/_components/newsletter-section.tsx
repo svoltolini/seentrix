@@ -8,6 +8,7 @@ import { useTranslations } from "next-intl";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { subscribeNewsletter, type NewsletterState } from "./actions";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 export function NewsletterSection() {
   const t = useTranslations("landing.newsletter");
@@ -16,8 +17,10 @@ export function NewsletterSection() {
     undefined
   );
   const containerRef = useRef<HTMLDivElement>(null);
+  const reduced = useReducedMotion();
 
   useEffect(() => {
+    if (reduced) return;
     const el = containerRef.current;
     if (!el) return;
 
@@ -40,7 +43,7 @@ export function NewsletterSection() {
     }, el);
 
     return () => ctx.revert();
-  }, []);
+  }, [reduced]);
 
   return (
     <section className="py-24 lg:py-32">

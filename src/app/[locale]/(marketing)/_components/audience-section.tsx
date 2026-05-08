@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { buttonVariants } from "@/components/ui/button";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 const segments = [
   { key: "industrial", accent: "#066DE6" },
@@ -16,8 +17,10 @@ const segments = [
 export function AudienceSection() {
   const t = useTranslations("landing.audience");
   const sectionRef = useRef<HTMLElement>(null);
+  const reduced = useReducedMotion();
 
   useEffect(() => {
+    if (reduced) return;
     const el = sectionRef.current;
     if (!el) return;
 
@@ -40,7 +43,7 @@ export function AudienceSection() {
     }, el);
 
     return () => ctx.revert();
-  }, []);
+  }, [reduced]);
 
   return (
     <section

@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { cn } from "@/lib/utils";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 interface StaggerRevealProps {
   children: React.ReactNode;
@@ -27,8 +28,10 @@ export function StaggerReveal({
   ease = "power2.out",
 }: StaggerRevealProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const reduced = useReducedMotion();
 
   useEffect(() => {
+    if (reduced) return;
     const el = ref.current;
     if (!el) return;
 
@@ -63,7 +66,7 @@ export function StaggerReveal({
     }, el);
 
     return () => ctx.revert();
-  }, [stagger, y, duration, selector, scale, ease]);
+  }, [reduced, stagger, y, duration, selector, scale, ease]);
 
   return (
     <div ref={ref} className={cn(className)}>

@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 /**
  * Landing-page teaser for Seentrix AI.
@@ -18,8 +19,10 @@ import { Button } from "@/components/ui/button";
 export function CopilotSection() {
   const t = useTranslations("copilot.marketing");
   const sectionRef = useRef<HTMLElement>(null);
+  const reduced = useReducedMotion();
 
   useEffect(() => {
+    if (reduced) return;
     const el = sectionRef.current;
     if (!el) return;
     gsap.registerPlugin(ScrollTrigger);
@@ -49,7 +52,7 @@ export function CopilotSection() {
     }, el);
 
     return () => ctx.revert();
-  }, []);
+  }, [reduced]);
 
   // Numerals alternate between solid primary blue and solid accent orange
   // so the row still reads as a sequence without leaning on off-palette

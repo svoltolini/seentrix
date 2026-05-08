@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 const faqKeys = ["q1", "q2", "q3", "q4", "q5", "q6"] as const;
 
@@ -12,8 +13,10 @@ export function FaqSection() {
   const t = useTranslations("landing.faq");
   const sectionRef = useRef<HTMLElement>(null);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const reduced = useReducedMotion();
 
   useEffect(() => {
+    if (reduced) return;
     const el = sectionRef.current;
     if (!el) return;
 
@@ -38,7 +41,7 @@ export function FaqSection() {
     }, el);
 
     return () => ctx.revert();
-  }, []);
+  }, [reduced]);
 
   return (
     <section

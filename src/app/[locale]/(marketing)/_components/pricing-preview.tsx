@@ -8,6 +8,7 @@ import { Link } from "@/i18n/navigation";
 import { buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 const tiers = ["free", "professional", "business", "enterprise"] as const;
 
@@ -21,8 +22,10 @@ const tierFeatures: Record<string, string[]> = {
 export function PricingPreview() {
   const t = useTranslations("landing.pricingPreview");
   const sectionRef = useRef<HTMLElement>(null);
+  const reduced = useReducedMotion();
 
   useEffect(() => {
+    if (reduced) return;
     const el = sectionRef.current;
     if (!el) return;
 
@@ -47,7 +50,7 @@ export function PricingPreview() {
     }, el);
 
     return () => ctx.revert();
-  }, []);
+  }, [reduced]);
 
   return (
     <section

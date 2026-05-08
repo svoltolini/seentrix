@@ -4,14 +4,17 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useTranslations } from "next-intl";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 const badges = ["iec", "etsi", "gdpr", "eu_data"] as const;
 
 export function TrustSection() {
   const t = useTranslations("landing.trust");
   const sectionRef = useRef<HTMLElement>(null);
+  const reduced = useReducedMotion();
 
   useEffect(() => {
+    if (reduced) return;
     const el = sectionRef.current;
     if (!el) return;
 
@@ -36,7 +39,7 @@ export function TrustSection() {
     }, el);
 
     return () => ctx.revert();
-  }, []);
+  }, [reduced]);
 
   return (
     <section

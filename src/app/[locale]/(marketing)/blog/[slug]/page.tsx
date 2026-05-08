@@ -69,8 +69,49 @@ export default async function BlogPostPage({
   const headings = extractHeadings(post.content);
   const related = getRelatedPosts(locale, slug, 2);
 
+  // schema.org Article — gives Google a crawlable structured-data hint
+  // for rich results (publish date, author, image). Inline JSON-LD is
+  // the recommended pattern for static MDX-backed posts; nothing in the
+  // payload changes after build, so embedding it in the document beats
+  // shipping a separate endpoint.
+  const baseUrl = "https://seentrix.com";
+  const articleLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    description: post.description,
+    datePublished: post.date,
+    dateModified: post.date,
+    author: {
+      "@type": "Person",
+      name: post.author,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Seentrix",
+      logo: {
+        "@type": "ImageObject",
+        url: `${baseUrl}/logo.svg`,
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${baseUrl}/blog/${slug}`,
+    },
+    ...(post.ogImage && { image: post.ogImage }),
+  };
+
   return (
     <article className="mx-auto max-w-5xl px-6 py-20">
+      <script
+        type="application/ld+json"
+        // The payload is built from our own data — no user input — so
+        // serialising it directly is safe. JSON.stringify escapes any `<`
+        // that could close the script tag prematurely.
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(articleLd).replace(/</g, "\\u003c"),
+        }}
+      />
       {/* Back link */}
       <Link
         href="/blog"

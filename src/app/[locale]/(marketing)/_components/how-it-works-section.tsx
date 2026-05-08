@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useTranslations } from "next-intl";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 const steps = [
   { key: "s1", accent: "#066DE6" },
@@ -14,8 +15,10 @@ const steps = [
 export function HowItWorksSection() {
   const t = useTranslations("landing.howItWorks");
   const sectionRef = useRef<HTMLElement>(null);
+  const reduced = useReducedMotion();
 
   useEffect(() => {
+    if (reduced) return;
     const el = sectionRef.current;
     if (!el) return;
 
@@ -40,7 +43,7 @@ export function HowItWorksSection() {
     }, el);
 
     return () => ctx.revert();
-  }, []);
+  }, [reduced]);
 
   return (
     <section

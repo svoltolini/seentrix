@@ -7,12 +7,15 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { CountdownTimer } from "./countdown-timer";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 export function HeroSection() {
   const t = useTranslations("landing.hero");
   const sectionRef = useRef<HTMLElement>(null);
+  const reduced = useReducedMotion();
 
   useEffect(() => {
+    if (reduced) return;
     const el = sectionRef.current;
     if (!el) return;
 
@@ -33,10 +36,12 @@ export function HeroSection() {
     }, el);
 
     return () => ctx.revert();
-  }, []);
+  }, [reduced]);
 
   function scrollToPricing() {
-    document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" });
+    document
+      .getElementById("pricing")
+      ?.scrollIntoView({ behavior: reduced ? "auto" : "smooth" });
   }
 
   return (
