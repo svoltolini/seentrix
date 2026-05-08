@@ -1,59 +1,67 @@
 "use client";
 
+import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { Icon } from "@/components/icon";
+import { cn } from "@/lib/utils";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import type { ProductListItem } from "../actions";
 
 /**
- * ProductCardList — the Nask "Project List" view, faithful to Figma
- * frame `163:16140`.
+ * ProductCardList — table view for /app/products.
  *
- *   ┌─ On Going (3) … ─┐ ┌─ Pending (2) … ─┐ ┌─ Done (1) … ─┐
- *   │ ┌─────────────┐  │ │ ┌─────────────┐ │ │ ┌──────────┐ │
- *   │ │ Title       │  │ │ │ Title       │ │ │ │ Title    │ │
- *   │ │ subtitle    │  │ │ │ subtitle    │ │ │ │ subtitle │ │
- *   │ │ ▰▰▱ 49% [👤]│  │ │ │ ▰▱▱ 12% [👤]│ │ │ │ ▰▰▰ 100%│ │
- *   │ └─────────────┘  │ │ └─────────────┘ │ │ └──────────┘ │
- *   │ ┌─────────────┐  │ │ ┌─────────────┐ │ │              │
- *   │ │ ...         │  │ │ │ ...         │ │ │              │
- *   │ └─────────────┘  │ │ └─────────────┘ │ │              │
- *   │ ┌─ + Add a Card ┐│ │ ┌─ + Add a Card┐│ │              │
- *   └──────────────────┘ └─────────────────┘ └──────────────┘
+ * Earlier passes tried a vertical row-card list and a three-column
+ * kanban (Figma 163:16140). Both worked aesthetically but the user
+ * landed on "I want a table" as the canonical scannable format.
  *
- * Three status columns split by compliance posture (Seentrix products
- * don't carry an explicit task state; compliance score is the closest
- * proxy that maps cleanly to On Going / Pending / Done):
+ * Columns (always visible above sm; the trailing chevron column is
+ * decorative):
  *
- *   - Done       (≥75%)  → product is broadly compliance-ready
- *   - On Going   (40-74) → mid-flight, active work
- *   - Pending    (<40)   → unassessed or behind, needs attention
+ *   Product                Type        Category    Compliance   Created   →
+ *   ─────────────────────  ──────────  ──────────  ───────────  ────────  ─
+ *   [icon] Name              Software   Important   ▰▰▰▱  73%   May 8     →
  *
- * Each card inside a column is a slim white row with title (text-h6),
- * "creator · created date" subtitle (text-p4-r muted), a slim orange
- * progress bar, percentage, and any assigned member avatars stacked
- * with -8 px overlap.
+ * Wraps the Nask Table primitive (`@/components/ui/table`) so the
+ * header row sits on `bg-muted` with `text-h6 (14/700)` and body rows
+ * use `text-p3` on white with the soft `bg-muted/60` hover. The whole
+ * row is clickable — a `useRouter` push fires on click and Cmd-click
+ * still opens in a new tab via the inline `<a>` wrapping the title.
  *
- * The "+ Add a Card" footer mirrors Figma's column-bottom CTA — it
- * routes to the new-product wizard so the kanban becomes a viable
- * starting point for adding products without bouncing back to the
- * topbar CTA.
+ * Sortable columns: name (alphabetical), compliance, created. Click
+ * a header to toggle sort field and direction; the arrow icon flips
+ * between ascending and descending.
  */
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+const TYPE_TONE: Record<string, { bg: string; fg: string }> = {
+  hardware: { bg: "bg-primary/10", fg: "text-primary" },
+  software: { bg: "bg-accent/10", fg: "text-accent" },
+  firmware: { bg: "bg-success/10", fg: "text-success" },
+  iot: { bg: "bg-warning/10", fg: "text-warning" },
+};
 
-const COLUMNS = [
-  { key: "ongoing", titleKey: "kanban.ongoing", min: 40, max: 75 },
-  { key: "pending", titleKey: "kanban.pending", min: 0, max: 40 },
-  { key: "done", titleKey: "kanban.done", min: 75, max: 101 },
-] as const;
-type ColumnKey = (typeof COLUMNS)[number]["key"];
+const CATEGORY_TONE: Record<string, string> = {
+  default: "bg-primary/10 text-primary",
+  important_class_i: "bg-warning/10 text-warning",
+  important_class_ii: "bg-accent/10 text-accent",
+  critical: "bg-destructive/10 text-destructive",
+};
 
-function columnFor(score: number): ColumnKey {
-  if (score >= 75) return "done";
-  if (score >= 40) return "ongoing";
-  return "pending";
+function laneFillFor(score: number): string {
+  if (score >= 75) return "bg-success";
+  if (score >= 40) return "bg-accent";
+  return "bg-destructive";
 }
+
+type SortField = "name" | "compliance" | "created";
+type SortDir = "asc" | "desc";
 
 interface Props {
   products: ProductListItem[];
@@ -61,155 +69,233 @@ interface Props {
 
 export function ProductCardList({ products }: Props) {
   const t = useTranslations("products");
+  const router = useRouter();
+  const [sortField, setSortField] = useState<SortField>("created");
+  const [sortDir, setSortDir] = useState<SortDir>("desc");
 
-  const grouped: Record<ColumnKey, ProductListItem[]> = {
-    ongoing: [],
-    pending: [],
-    done: [],
-  };
-  for (const p of products) grouped[columnFor(p.compliance_score)].push(p);
+  function toggleSort(field: SortField) {
+    if (sortField === field) {
+      setSortDir((d) => (d === "asc" ? "desc" : "asc"));
+    } else {
+      setSortField(field);
+      setSortDir(field === "name" ? "asc" : "desc");
+    }
+  }
+
+  const sorted = useMemo(() => {
+    const dir = sortDir === "asc" ? 1 : -1;
+    return [...products].sort((a, b) => {
+      if (sortField === "name") return a.name.localeCompare(b.name) * dir;
+      if (sortField === "compliance")
+        return (a.compliance_score - b.compliance_score) * dir;
+      return (
+        (new Date(a.created_at).getTime() -
+          new Date(b.created_at).getTime()) *
+        dir
+      );
+    });
+  }, [products, sortField, sortDir]);
 
   return (
-    <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
-      {COLUMNS.map((col) => {
-        const items = grouped[col.key];
-        const title = t.has(col.titleKey) ? t(col.titleKey) : col.key;
-        return (
-          <KanbanColumn
-            key={col.key}
-            title={title}
-            count={items.length}
-            items={items}
-            t={t}
-          />
-        );
-      })}
+    <div className="overflow-hidden rounded-md bg-card shadow-card-sm">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <SortableHead
+              field="name"
+              label={
+                t.has("columns.name") ? t("columns.name") : "Product"
+              }
+              currentField={sortField}
+              currentDir={sortDir}
+              onClick={toggleSort}
+            />
+            <TableHead className="hidden sm:table-cell">
+              {t.has("columns.type") ? t("columns.type") : "Type"}
+            </TableHead>
+            <TableHead className="hidden md:table-cell">
+              {t.has("columns.category")
+                ? t("columns.category")
+                : "Category"}
+            </TableHead>
+            <SortableHead
+              field="compliance"
+              label={
+                t.has("columns.compliance")
+                  ? t("columns.compliance")
+                  : "Compliance"
+              }
+              currentField={sortField}
+              currentDir={sortDir}
+              onClick={toggleSort}
+              className="hidden md:table-cell"
+            />
+            <SortableHead
+              field="created"
+              label={
+                t.has("columns.created") ? t("columns.created") : "Created"
+              }
+              currentField={sortField}
+              currentDir={sortDir}
+              onClick={toggleSort}
+              className="hidden lg:table-cell"
+            />
+            {/* Chevron column — pure affordance, no header label */}
+            <TableHead className="w-10" />
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {sorted.map((p) => {
+            const tone =
+              TYPE_TONE[p.type ?? ""] ?? {
+                bg: "bg-muted",
+                fg: "text-foreground",
+              };
+            const categoryKey = p.cra_category ?? null;
+            const categoryTone = categoryKey
+              ? (CATEGORY_TONE[categoryKey] ?? CATEGORY_TONE.default)
+              : "bg-muted text-muted-foreground";
+            const subtitle = p.type
+              ? t.has(`types.${p.type}`)
+                ? t(`types.${p.type}`)
+                : p.type
+              : "—";
+            const dateLabel = new Date(p.created_at).toLocaleDateString(
+              "en-US",
+              { month: "short", day: "numeric", year: "numeric" },
+            );
+            const score = p.compliance_score;
+            const fillWidth = Math.max(0, Math.min(100, score));
+            const href = `/app/products/${p.id}`;
+
+            return (
+              <TableRow
+                key={p.id}
+                onClick={() => router.push(href)}
+                className="cursor-pointer"
+              >
+                {/* Product cell — icon + name. Wrapped in an anchor
+                    so Cmd-click opens in a new tab and screen
+                    readers see a real link target. */}
+                <TableCell>
+                  <a
+                    href={href}
+                    onClick={(e) => e.stopPropagation()}
+                    className="flex min-w-0 items-center gap-3"
+                  >
+                    <span
+                      className={cn(
+                        "flex size-9 shrink-0 items-center justify-center rounded-md text-l5",
+                        tone.bg,
+                        tone.fg,
+                      )}
+                    >
+                      {p.name[0]?.toUpperCase() ?? "?"}
+                    </span>
+                    <span className="truncate text-h6 text-foreground hover:text-primary">
+                      {p.name}
+                    </span>
+                  </a>
+                </TableCell>
+                <TableCell className="hidden text-muted-foreground sm:table-cell">
+                  {subtitle}
+                </TableCell>
+                <TableCell className="hidden md:table-cell">
+                  {categoryKey ? (
+                    <span
+                      className={cn(
+                        "inline-flex rounded-sm px-2 py-0.5 text-l6-plus uppercase tracking-wider",
+                        categoryTone,
+                      )}
+                    >
+                      {t.has(`categories.${categoryKey}`)
+                        ? t(`categories.${categoryKey}`)
+                        : categoryKey.replace(/_/g, " ")}
+                    </span>
+                  ) : (
+                    <span className="text-p4 text-muted-foreground">
+                      {t.has("notAssessed")
+                        ? t("notAssessed")
+                        : "Not assessed"}
+                    </span>
+                  )}
+                </TableCell>
+                <TableCell className="hidden md:table-cell">
+                  <div className="flex items-center gap-3">
+                    <div className="relative h-1.5 w-32 overflow-hidden rounded-xl bg-border">
+                      <div
+                        className={cn(
+                          "h-full rounded-xl transition-[width] duration-300",
+                          laneFillFor(score),
+                        )}
+                        style={{ width: `${fillWidth}%` }}
+                      />
+                    </div>
+                    <span className="w-10 shrink-0 text-right tabular-nums text-l6-plus text-foreground">
+                      {score}%
+                    </span>
+                  </div>
+                </TableCell>
+                <TableCell className="hidden text-muted-foreground lg:table-cell">
+                  {dateLabel}
+                </TableCell>
+                <TableCell className="text-right">
+                  <Icon
+                    name="arrow-right-01-stroke-rounded"
+                    size={16}
+                    className="text-muted-foreground"
+                  />
+                </TableCell>
+              </TableRow>
+            );
+          })}
+        </TableBody>
+      </Table>
     </div>
   );
 }
 
-// === Column ===========================================================
+// === Sortable header cell =============================================
 
-function KanbanColumn({
-  title,
-  count,
-  items,
-  t,
+function SortableHead({
+  field,
+  label,
+  currentField,
+  currentDir,
+  onClick,
+  className,
 }: {
-  title: string;
-  count: number;
-  items: ProductListItem[];
-  t: ReturnType<typeof useTranslations>;
+  field: SortField;
+  label: string;
+  currentField: SortField;
+  currentDir: SortDir;
+  onClick: (field: SortField) => void;
+  className?: string;
 }) {
+  const isActive = currentField === field;
   return (
-    <section
-      className="flex min-w-0 flex-col gap-3"
-      aria-label={`${title} (${count})`}
-    >
-      {/* Column header — matches Figma's "On Going (3) … ─────" recipe.
-          The dashed hairline runs from the more-icon to the right
-          edge of the column, signalling the column boundary without
-          adding chrome. */}
-      <header className="flex items-center gap-2 px-1">
-        <p className="text-p3 text-muted-foreground">
-          {title} ({count})
-        </p>
-        <button
-          type="button"
-          aria-label={
-            t.has("kanban.columnActions") ? t("kanban.columnActions") : "Column actions"
-          }
-          className="ml-auto inline-flex size-6 items-center justify-center rounded-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-        >
-          <Icon name="MoreCircle" size={16} />
-        </button>
-      </header>
-
-      {/* Card stack */}
-      <ul className="flex flex-col gap-3">
-        {items.map((p) => (
-          <li key={p.id}>
-            <KanbanCard product={p} />
-          </li>
-        ))}
-      </ul>
-
-      {/* Add-a-Card footer — secondary fill, matches the "Add a Card"
-          control from the Figma columns. Routes to the new-product
-          wizard so the kanban is also an entry point. */}
-      <Link
-        href="/app/products/new"
-        className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-secondary px-4 py-3.5 text-l5 text-foreground transition-colors hover:bg-muted"
+    <TableHead className={className}>
+      <button
+        type="button"
+        onClick={() => onClick(field)}
+        className="inline-flex items-center gap-1.5 text-left transition-colors hover:text-primary"
       >
-        <Icon name="PlusIcon" size={16} />
-        {t.has("kanban.addCard") ? t("kanban.addCard") : "Add a Card"}
-      </Link>
-    </section>
-  );
-}
-
-// === Card =============================================================
-
-function initialsOf(name: string): string {
-  return name
-    .split(/\s+/)
-    .map((p) => p[0] ?? "")
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
-}
-
-function KanbanCard({ product }: { product: ProductListItem }) {
-  const t = useTranslations("products");
-  const score = product.compliance_score;
-  const fillWidth = Math.max(0, Math.min(100, score));
-  const subtitle = product.type
-    ? t.has(`types.${product.type}`)
-      ? t(`types.${product.type}`)
-      : product.type
-    : "Product";
-  const dateLabel = new Date(product.created_at).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
-
-  return (
-    <Link
-      href={`/app/products/${product.id}`}
-      className="group/kanban-card flex flex-col gap-3 rounded-md bg-card p-4 shadow-card-sm transition-shadow hover:shadow-card-md"
-    >
-      <div className="flex min-w-0 flex-col gap-1">
-        <p className="truncate text-h6 text-foreground transition-colors group-hover/kanban-card:text-primary">
-          {product.name}
-        </p>
-        <p className="line-clamp-1 text-p4-r text-muted-foreground">
-          {subtitle} · {dateLabel}
-        </p>
-      </div>
-
-      {/* Progress + percentage + avatars on a single bottom row, per
-          Figma. The bar is `flex-1` so it absorbs any spare width. */}
-      <div className="flex items-center gap-3">
-        <div className="relative h-1.5 flex-1 overflow-hidden rounded-xl bg-border">
-          <div
-            className="h-full rounded-xl bg-accent transition-[width] duration-300"
-            style={{ width: `${fillWidth}%` }}
-          />
-        </div>
-        <span className="shrink-0 tabular-nums text-p4 text-muted-foreground">
-          {score}%
-        </span>
-        {/* Placeholder member avatars — Seentrix doesn't yet attach
-            members to products, so we show a single neutral avatar
-            until that ships, matching the Figma slot. */}
-        <div className="flex shrink-0 items-end -space-x-2">
-          <Avatar size="sm" className="ring-2 ring-card">
-            <AvatarImage src={undefined} alt={product.name} />
-            <AvatarFallback>{initialsOf(product.name)}</AvatarFallback>
-          </Avatar>
-        </div>
-      </div>
-    </Link>
+        {label}
+        <Icon
+          name={
+            isActive
+              ? currentDir === "asc"
+                ? "ArrowUp2"
+                : "ArrowDown2"
+              : "ArrowSwapVertical"
+          }
+          size={12}
+          className={cn(
+            "transition-colors",
+            isActive ? "text-primary" : "text-muted-foreground",
+          )}
+        />
+      </button>
+    </TableHead>
   );
 }

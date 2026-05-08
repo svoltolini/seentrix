@@ -107,6 +107,7 @@ const NAME_MAP = {
   "ArrowRight": "ArrowRight",
   "ArrowRight2": "ArrowRight2",
   "ArrowSwapVertical": "ArrowSwapVertical",
+  "ArrowUp2": "ArrowUp2",
   "Box": "Box",
   "Box1": "Box1",
   "Building": "Building",

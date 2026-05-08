@@ -10,58 +10,31 @@ import type { ProductListItem } from "../actions";
 
 /**
  * ProductTimeline — Nask "Project Timeline" view, faithful to Figma
- * frame `163:16266`.
+ * frame `163:16266` with a monthly cadence.
  *
- *   ┌────────────────────────────────────────────────────────────────┐
- *   │ June 2022 ▾                  Show: Monthly ▾   ◀ 17 June, 2022 ▶│
- *   ├────────────────────────────────────────────────────────────────┤
- *   │ S 10  M 11  T 12  W 13  T 14  F 15  S 16 ●M 17● W 18  T 19 ... │
- *   ├────────────────────────────────────────────────────────────────┤
- *   │       │     │     │     │     │     │     │     │     │     │  │
- *   │   ┌───────────────┐         ┊                                  │
- *   │ O │ Job Seeker    │         ┊                                  │
- *   │ n │ Michael · Jun │         ┊                                  │
- *   │ G │ ▰▰▱ 49% [👥]  │         ┊ Today line                       │
- *   │ o └───────────────┘         ┊                                  │
- *   │ i                  ┌──────────────┐                            │
- *   │ n                  │ Stopify Music│                            │
- *   │ g                  │ Marina · Aug │                            │
- *   │                    │ ▰▱▱ 38% [👥] │                            │
- *   │                    └──────────────┘                            │
- *   ├──────────────────────────────────────┊─────────────────────────┤
- *   │ P  ┌──────────────┐                  ┊         ┌──────────┐    │
- *   │ e  │ NFT Website  │                  ┊         │ Saas Dash│    │
- *   │ ...│              │                  ┊         │          │    │
- *   └────────────────────────────────────────────────────────────────┘
+ * Header anchors the visible window:
+ *   - Month label (h4) on the left = the month being viewed; click
+ *     to snap back to the current real-world month.
+ *   - Prev / Next chevrons on the right = step the window by one
+ *     calendar month.
  *
- * Key bits of the Figma reference:
- *   1. Header has a current month label (h4 + chevron), a "Show:
- *      Monthly ▾" granularity selector, and a date range with prev /
- *      next chevrons on the right.
- *   2. Day strip below: 14 days at a time, weekday letter on top,
- *      day number below. Today's day is highlighted in `bg-accent
- *      text-accent-foreground` rounded.
- *   3. Three swimlanes labelled vertically (rotated -90deg): "On
- *      Going", "Pending", "Done". Each lane has cards floated at
- *      their `created_at` position within the visible window.
- *   4. Cards are slim white rows: title (h6) + meta + progress + %
- *      + avatar stack. Cards that started before the window peek
- *      from the left edge (clipped); cards starting after the window
- *      are rendered off-screen and reachable via the prev/next nav.
- *   5. A vertical dashed "Today" line cuts through every lane at
- *      today's day column.
+ * Below the header sits a day-strip with one column per day in the
+ * viewed month (28 / 30 / 31 columns). Today's day is highlighted in
+ * `bg-accent`; if today doesn't fall inside the viewed month, no day
+ * is highlighted.
  *
- * Seentrix data model: products have `created_at` (start) but no
- * explicit end date. We render each card with an intrinsic ~280 px
- * width starting at its `created_at` column; cards within the window
- * are clickable, ones outside it sit off-canvas until the user pages
- * the window. Lanes split by compliance posture (Done ≥75 %, On
- * Going 40-74, Pending <40), mirroring the kanban list view.
+ * Three swimlanes (`On Going` / `Pending` / `Done`, same compliance-
+ * score split as the kanban list view) carry product cards floated at
+ * their `created_at` day-column. Cards are greedy-packed into rows so
+ * adjacent-day creations never overlap. Empty lanes render no message
+ * — the user wants a quiet empty state, not "no products in this
+ * lane" copy filling every row.
+ *
+ * A dashed vertical Today line cuts through every lane at today's
+ * column, when today is inside the visible month.
  */
 
-const DAY_WIDTH = 56; // px — width of each day column in the timeline
-const VISIBLE_DAYS = 14; // days shown without scrolling
-const CARD_WIDTH_PX = 280; // intrinsic card width
+const DAY_WIDTH = 56; // px — one day column
 
 const LANES = [
   { key: "ongoing", titleKey: "kanban.ongoing", min: 40, max: 75 },
@@ -82,15 +55,29 @@ function startOfDay(d: Date): Date {
   return out;
 }
 
-function addDays(d: Date, n: number): Date {
+function startOfMonth(d: Date): Date {
+  return new Date(d.getFullYear(), d.getMonth(), 1, 0, 0, 0, 0);
+}
+
+function endOfMonth(d: Date): Date {
+  return new Date(d.getFullYear(), d.getMonth() + 1, 0, 23, 59, 59, 999);
+}
+
+function daysInMonth(d: Date): number {
+  return new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
+}
+
+function shiftMonth(d: Date, delta: number): Date {
   const out = new Date(d);
-  out.setDate(out.getDate() + n);
+  out.setDate(1); // avoid Jan 31 → Mar 3 quirks when shifting
+  out.setMonth(out.getMonth() + delta);
   return out;
 }
 
 function daysBetween(a: Date, b: Date): number {
   return Math.floor(
-    (startOfDay(b).getTime() - startOfDay(a).getTime()) / (1000 * 60 * 60 * 24),
+    (startOfDay(b).getTime() - startOfDay(a).getTime()) /
+      (1000 * 60 * 60 * 24),
   );
 }
 
@@ -105,38 +92,42 @@ export function ProductTimeline({
 }: Props) {
   const t = useTranslations("products");
 
-  // The window's left edge — defaults to seven days ago so today sits
-  // roughly mid-window. The user can page back/forward by a week at
-  // a time using the < / > buttons in the header.
-  const [windowStart, setWindowStart] = useState<Date>(() => {
-    const today = startOfDay(new Date());
-    return addDays(today, -7);
-  });
-  const today = useMemo(() => startOfDay(new Date()), []);
-  const windowEnd = useMemo(
-    () => addDays(windowStart, VISIBLE_DAYS - 1),
-    [windowStart],
+  // The first day of the viewed month. Defaults to today's month.
+  const [viewMonth, setViewMonth] = useState<Date>(() =>
+    startOfMonth(new Date()),
   );
+  const today = useMemo(() => startOfDay(new Date()), []);
 
-  // Days to render in the strip
+  const monthEnd = useMemo(() => endOfMonth(viewMonth), [viewMonth]);
+  const dayCount = useMemo(() => daysInMonth(viewMonth), [viewMonth]);
+  const trackWidth = dayCount * DAY_WIDTH;
+
   const days = useMemo(() => {
     const out: Date[] = [];
-    for (let i = 0; i < VISIBLE_DAYS; i++) out.push(addDays(windowStart, i));
+    for (let i = 0; i < dayCount; i++) {
+      const d = new Date(viewMonth);
+      d.setDate(i + 1);
+      out.push(d);
+    }
     return out;
-  }, [windowStart]);
+  }, [viewMonth, dayCount]);
 
-  const monthLabel = windowStart.toLocaleDateString("en-US", {
+  // Today's pixel offset inside the track, or null if outside the
+  // viewed month.
+  const todayOffset = useMemo(() => {
+    if (today < viewMonth || today > monthEnd) return null;
+    const dayIdx = daysBetween(viewMonth, today);
+    return dayIdx * DAY_WIDTH + DAY_WIDTH / 2;
+  }, [viewMonth, monthEnd, today]);
+
+  const monthLabel = viewMonth.toLocaleDateString("en-US", {
     month: "long",
     year: "numeric",
   });
-  const rangeLabel = `${windowStart.toLocaleDateString("en-US", {
-    day: "numeric",
-    month: "short",
-  })} – ${windowEnd.toLocaleDateString("en-US", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  })}`;
+
+  const isCurrentMonth =
+    viewMonth.getFullYear() === today.getFullYear() &&
+    viewMonth.getMonth() === today.getMonth();
 
   // Bucket products by lane
   const grouped: Record<LaneKey, ProductListItem[]> = {
@@ -146,23 +137,12 @@ export function ProductTimeline({
   };
   for (const p of products) grouped[laneFor(p.compliance_score)].push(p);
 
-  // Total horizontal pixel width of the day grid — drives both the
-  // strip and each lane track so they line up vertically.
-  const trackWidth = VISIBLE_DAYS * DAY_WIDTH;
-
-  // Today's pixel offset inside the track (or null if outside)
-  const todayOffset = useMemo(() => {
-    const dayIdx = daysBetween(windowStart, today);
-    if (dayIdx < 0 || dayIdx >= VISIBLE_DAYS) return null;
-    return dayIdx * DAY_WIDTH + DAY_WIDTH / 2;
-  }, [windowStart, today]);
-
-  function shiftWindow(delta: number) {
-    setWindowStart((d) => addDays(d, delta));
+  function jumpToCurrentMonth() {
+    setViewMonth(startOfMonth(new Date()));
   }
 
-  function jumpToToday() {
-    setWindowStart(addDays(today, -7));
+  function go(delta: number) {
+    setViewMonth((m) => startOfMonth(shiftMonth(m, delta)));
   }
 
   return (
@@ -171,70 +151,65 @@ export function ProductTimeline({
       <header className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-6 py-4">
         <button
           type="button"
-          onClick={jumpToToday}
-          className="inline-flex items-center gap-2 text-h4 text-foreground transition-colors hover:text-primary"
+          onClick={jumpToCurrentMonth}
+          className={cn(
+            "inline-flex items-center gap-2 text-h4 transition-colors",
+            isCurrentMonth
+              ? "text-foreground"
+              : "text-foreground hover:text-primary",
+          )}
           aria-label={
-            t.has("timeline.goToToday")
-              ? t("timeline.goToToday")
-              : "Go to today"
+            isCurrentMonth
+              ? monthLabel
+              : t.has("timeline.goToToday")
+                ? t("timeline.goToToday")
+                : "Jump to current month"
           }
         >
           {monthLabel}
-          <Icon name="ArrowDown2" size={16} className="text-muted-foreground" />
+          {!isCurrentMonth && (
+            <span className="rounded-sm bg-primary/10 px-2 py-0.5 text-l6-plus uppercase tracking-wider text-primary">
+              {t.has("timeline.jumpToCurrent")
+                ? t("timeline.jumpToCurrent")
+                : "Today"}
+            </span>
+          )}
         </button>
 
-        <div className="flex items-center gap-3">
-          {/* Granularity selector — wired but read-only for now;
-              monthly is the only mode Seentrix supports until a real
-              schedule entity ships. Renders as a Nask filter chip. */}
-          <span className="inline-flex h-9 items-center gap-2 rounded-sm border-[1.5px] border-border-outline bg-card px-3 text-l6 text-muted-foreground">
-            {t.has("timeline.show") ? t("timeline.show") : "Show"}:{" "}
-            <span className="text-foreground">
-              {t.has("timeline.granularity.monthly")
-                ? t("timeline.granularity.monthly")
-                : "Monthly"}
-            </span>
-            <Icon name="ArrowDown2" size={14} />
-          </span>
-
-          {/* Prev / Range / Next */}
-          <div className="inline-flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => shiftWindow(-7)}
-              className="inline-flex size-8 items-center justify-center rounded-sm border-[1.5px] border-border-outline bg-card text-foreground transition-colors hover:bg-muted"
-              aria-label={
-                t.has("timeline.previous") ? t("timeline.previous") : "Previous week"
-              }
-            >
-              <Icon name="ArrowLeft2" size={14} />
-            </button>
-            <span className="text-p3 text-foreground">{rangeLabel}</span>
-            <button
-              type="button"
-              onClick={() => shiftWindow(7)}
-              className="inline-flex size-8 items-center justify-center rounded-sm border-[1.5px] border-border-outline bg-card text-foreground transition-colors hover:bg-muted"
-              aria-label={
-                t.has("timeline.next") ? t("timeline.next") : "Next week"
-              }
-            >
-              <Icon name="ArrowRight2" size={14} />
-            </button>
-          </div>
+        <div className="inline-flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => go(-1)}
+            className="inline-flex size-8 items-center justify-center rounded-sm border-[1.5px] border-border-outline bg-card text-foreground transition-colors hover:bg-muted"
+            aria-label={
+              t.has("timeline.previous")
+                ? t("timeline.previous")
+                : "Previous month"
+            }
+          >
+            <Icon name="ArrowLeft2" size={14} />
+          </button>
+          <button
+            type="button"
+            onClick={() => go(1)}
+            className="inline-flex size-8 items-center justify-center rounded-sm border-[1.5px] border-border-outline bg-card text-foreground transition-colors hover:bg-muted"
+            aria-label={
+              t.has("timeline.next") ? t("timeline.next") : "Next month"
+            }
+          >
+            <Icon name="ArrowRight2" size={14} />
+          </button>
         </div>
       </header>
 
-      {/* === DAY STRIP ============================================ */}
+      {/* === DAY STRIP + LANES =================================== */}
       <div className="overflow-x-auto">
         <div className="grid grid-cols-[60px_1fr] border-b border-border">
-          {/* Empty cell above lane labels */}
           <div className="border-r border-border" />
-
-          {/* The day strip itself, fixed-width grid */}
           <div
             className="grid"
             style={{
-              gridTemplateColumns: `repeat(${VISIBLE_DAYS}, ${DAY_WIDTH}px)`,
+              gridTemplateColumns: `repeat(${dayCount}, ${DAY_WIDTH}px)`,
               width: trackWidth,
             }}
           >
@@ -267,17 +242,14 @@ export function ProductTimeline({
           </div>
         </div>
 
-        {/* === LANES =========================================== */}
         {LANES.map((lane) => (
           <LaneRow
             key={lane.key}
             laneKey={lane.key}
-            title={
-              t.has(lane.titleKey) ? t(lane.titleKey) : lane.key
-            }
+            title={t.has(lane.titleKey) ? t(lane.titleKey) : lane.key}
             products={grouped[lane.key]}
-            windowStart={windowStart}
-            windowEnd={windowEnd}
+            viewMonthStart={viewMonth}
+            viewMonthEnd={monthEnd}
             trackWidth={trackWidth}
             todayOffsetPx={todayOffset}
             basePath={basePath}
@@ -291,7 +263,7 @@ export function ProductTimeline({
 
 // === Lane row =========================================================
 
-// Vertical stacking constants for floating cards inside a lane track.
+const CARD_WIDTH_PX = 280;
 const CARD_HEIGHT_PX = 92;
 const CARD_GAP_PX = 8;
 const CARD_PADDING_TOP_PX = 12;
@@ -299,8 +271,8 @@ const CARD_PADDING_TOP_PX = 12;
 function LaneRow({
   title,
   products,
-  windowStart,
-  windowEnd,
+  viewMonthStart,
+  viewMonthEnd,
   trackWidth,
   todayOffsetPx,
   basePath,
@@ -309,21 +281,21 @@ function LaneRow({
   laneKey: LaneKey;
   title: string;
   products: ProductListItem[];
-  windowStart: Date;
-  windowEnd: Date;
+  viewMonthStart: Date;
+  viewMonthEnd: Date;
   trackWidth: number;
   todayOffsetPx: number | null;
   basePath: string;
   t: ReturnType<typeof useTranslations>;
 }) {
-  // Greedy-pack cards into rows so two products created on adjacent
-  // days don't overlap. Sort by `created_at` ascending, then for each
-  // card find the first row whose rightmost-occupied pixel is to the
-  // left of this card's start. If no row fits, append a new row.
+  // Greedy-pack visible cards into rows so adjacent-day creations
+  // don't overlap. Sort by created_at, then for each card find the
+  // first row whose rightmost-occupied pixel is left of this card's
+  // start; if no row fits, append a new one.
   const layout = useMemo(() => {
     const visible = products.filter((p) => {
       const created = startOfDay(new Date(p.created_at));
-      return created >= windowStart && created <= windowEnd;
+      return created >= viewMonthStart && created <= viewMonthEnd;
     });
     const sorted = [...visible].sort(
       (a, b) =>
@@ -333,24 +305,27 @@ function LaneRow({
     return sorted.map((p) => {
       const created = startOfDay(new Date(p.created_at));
       const left =
-        daysBetween(windowStart, created) * DAY_WIDTH + DAY_WIDTH / 2;
+        daysBetween(viewMonthStart, created) * DAY_WIDTH + DAY_WIDTH / 2;
       const right = left + CARD_WIDTH_PX + CARD_GAP_PX;
       let row = 0;
       while (row < rowRightEdges.length && rowRightEdges[row]! > left) row++;
       rowRightEdges[row] = right;
-      const top =
-        CARD_PADDING_TOP_PX + row * (CARD_HEIGHT_PX + CARD_GAP_PX);
+      const top = CARD_PADDING_TOP_PX + row * (CARD_HEIGHT_PX + CARD_GAP_PX);
       return { product: p, left, top };
     });
-  }, [products, windowStart, windowEnd]);
+  }, [products, viewMonthStart, viewMonthEnd]);
 
-  // Min lane height grows with the number of stacked rows so cards
-  // never spill out the bottom of the lane track.
-  const rowCount = layout.length === 0 ? 0 : Math.max(
-    ...layout.map((l) =>
-      Math.round((l.top - CARD_PADDING_TOP_PX) / (CARD_HEIGHT_PX + CARD_GAP_PX)) + 1,
-    ),
-  );
+  const rowCount =
+    layout.length === 0
+      ? 0
+      : Math.max(
+          ...layout.map(
+            (l) =>
+              Math.round(
+                (l.top - CARD_PADDING_TOP_PX) / (CARD_HEIGHT_PX + CARD_GAP_PX),
+              ) + 1,
+          ),
+        );
   const minHeight = Math.max(
     120,
     CARD_PADDING_TOP_PX * 2 + rowCount * (CARD_HEIGHT_PX + CARD_GAP_PX),
@@ -358,8 +333,6 @@ function LaneRow({
 
   return (
     <div className="grid grid-cols-[60px_1fr] border-b border-border last:border-b-0">
-      {/* Lane label — rotated -90deg per Figma. Centred vertically
-          inside its 60-px column so the type stays readable. */}
       <div
         className="relative border-r border-border"
         style={{ minHeight }}
@@ -369,11 +342,7 @@ function LaneRow({
         </span>
       </div>
 
-      {/* Track — relative-positioned so cards float at their date
-          offsets and the today-line is anchored to its day column. */}
       <div className="relative" style={{ width: trackWidth, minHeight }}>
-        {/* Today indicator — dashed vertical line cutting through the
-            lane, matching Figma's grey dashed stroke. */}
         {todayOffsetPx != null && (
           <div
             aria-hidden
@@ -381,25 +350,18 @@ function LaneRow({
             style={{ left: todayOffsetPx }}
           />
         )}
-
-        {layout.length === 0 ? (
-          <p className="px-3 pt-3 text-p4 text-muted-foreground">
-            {t.has("timeline.empty")
-              ? t("timeline.empty")
-              : "Nothing in this lane within the visible range."}
-          </p>
-        ) : (
-          layout.map(({ product, left, top }) => (
-            <FloatingCard
-              key={product.id}
-              product={product}
-              left={left}
-              top={top}
-              basePath={basePath}
-              t={t}
-            />
-          ))
-        )}
+        {/* Empty lanes render nothing — the user explicitly didn't
+            want "no products" copy filling otherwise quiet rows. */}
+        {layout.map(({ product, left, top }) => (
+          <FloatingCard
+            key={product.id}
+            product={product}
+            left={left}
+            top={top}
+            basePath={basePath}
+            t={t}
+          />
+        ))}
       </div>
     </div>
   );

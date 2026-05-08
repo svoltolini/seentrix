@@ -9,25 +9,18 @@
       "timeline": "Timeline"
     },
     "timeline": {
-      "empty": "Nothing in this lane within the visible range.",
-      "show": "Show",
-      "previous": "Previous week",
-      "next": "Next week",
-      "goToToday": "Jump to today",
-      "granularity": {
-        "monthly": "Monthly"
-      }
+      "previous": "Previous month",
+      "next": "Next month",
+      "goToToday": "Jump to current month",
+      "jumpToCurrent": "Today"
     },
     "kanban": {
       "ongoing": "On Going",
       "pending": "Pending",
-      "done": "Done",
-      "addCard": "Add a Card",
-      "columnActions": "Column actions"
+      "done": "Done"
     },
     "noProducts": "No products yet",
     "noProductsDescription": "Add your first product to start your CRA compliance journey. We'll guide you through every step.",
-    "searchPlaceholder": "Search products…",
     "columns": {
       "name": "Name",
       "type": "Type",
