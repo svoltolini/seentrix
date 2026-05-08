@@ -191,19 +191,16 @@
           }
         },
         "support": {
-          "title": "Support + SLA",
+          "title": "Support",
           "rows": {
             "supportChannel": "Support channel",
-            "responseTime": "Response time (first response)",
             "onboarding": "Onboarding",
-            "sla": "Service-level agreement",
             "customMsa": "Custom MSA / legal terms"
           }
         },
         "localization": {
           "title": "Localisation",
           "rows": {
-            "languages": "UI languages",
             "currencyBilling": "Billing currency"
           }
         }

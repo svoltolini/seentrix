@@ -129,7 +129,9 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
       { key: "gdprDelete", free: true, professional: true, business: true, enterprise: true },
       { key: "activityCsv", free: false, professional: true, business: true, enterprise: true },
       { key: "siemLogExport", free: false, professional: false, business: false, enterprise: "coming-soon" },
-      { key: "dataResidency", free: "EU", professional: "EU", business: "EU", enterprise: "EU + custom" },
+      // EU data residency is a flat product guarantee, not a tier upsell —
+      // every plan stores customer data in eu-west-2 (London) Supabase.
+      { key: "dataResidency", free: "EU", professional: "EU", business: "EU", enterprise: "EU" },
     ],
   },
   {
@@ -156,18 +158,22 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
   {
     key: "support",
     rows: [
-      { key: "supportChannel", free: "Community", professional: "Email", business: "Priority email + chat", enterprise: "Dedicated CSM + phone" },
-      { key: "responseTime", free: "Best-effort", professional: "48h", business: "8h", enterprise: "2h" },
+      // Phone tier replaced with live chat — matches the actual support
+      // channel mix we run (live chat via in-product widget for paid
+      // plans, email for everyone, dedicated CSM for enterprise). Phone
+      // support is not currently offered.
+      { key: "supportChannel", free: "Community", professional: "Email", business: "Priority email + live chat", enterprise: "Dedicated CSM + live chat" },
       { key: "onboarding", free: "Self-serve", professional: "Self-serve", business: "1h guided call", enterprise: "2-week guided" },
-      { key: "sla", free: false, professional: false, business: "99.5%", enterprise: "99.9% + contractual" },
       { key: "customMsa", free: false, professional: false, business: false, enterprise: true },
     ],
   },
   {
     key: "localization",
     rows: [
-      { key: "languages", free: "EN + DE", professional: "EN + DE", business: "EN + DE", enterprise: "EN + DE" },
-      { key: "currencyBilling", free: "EUR", professional: "EUR", business: "EUR", enterprise: "EUR / custom" },
+      // Languages row dropped — Seentrix is English-only after the i18n
+      // teardown. Currency stays as a flat "EUR" guarantee across every
+      // tier (no per-tier custom currency).
+      { key: "currencyBilling", free: "EUR", professional: "EUR", business: "EUR", enterprise: "EUR" },
     ],
   },
 ];
