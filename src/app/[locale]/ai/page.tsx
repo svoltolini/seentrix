@@ -13,23 +13,21 @@ export default async function AiPage({
   return <AiContent />;
 }
 
-// Four gradients — one per numeral. Same spectrum the landing-page
-// CopilotSection uses so the two pages read as one continuous story.
-const BULLETS = [
-  { key: "sovereign", gradient: "from-[#066DE6] to-[#FF6D00]" },
-  { key: "grounded", gradient: "from-[#FF6D00] to-[#EC4899]" },
-  { key: "context", gradient: "from-[#F59E0B] to-[#FF6D00]" },
-  { key: "actionable", gradient: "from-[#10B981] to-[#06B6D4]" },
-] as const;
-
-// Five long-form sections also get their own numeral gradient.
-const SECTION_GRADIENTS = [
-  "from-[#066DE6] to-[#FF6D00]",
-  "from-[#FF6D00] to-[#EC4899]",
-  "from-[#EC4899] to-[#F59E0B]",
-  "from-[#F59E0B] to-[#10B981]",
-  "from-[#10B981] to-[#06B6D4]",
-] as const;
+/**
+ * Solid colour rotation for the giant decorative numerals across the
+ * page. Uses only Nask palette tokens (primary blue + accent orange) —
+ * the previous build cycled through six off-palette tones (pink, amber,
+ * emerald, cyan) wrapped in CSS gradients, which contradicted the
+ * "Nask palette only, no gradient text" rule from the memory.
+ *
+ * Decorative giant type is the documented exception to the typography
+ * scale so `text-5xl/6xl` on these is intentional — they're ornaments,
+ * not headings, and don't carry semantic weight.
+ */
+const NUMERAL_TONES = ["text-primary", "text-accent"] as const;
+function numeralTone(i: number): string {
+  return NUMERAL_TONES[i % NUMERAL_TONES.length];
+}
 
 const TIER_LABELS: Record<string, string> = {
   free: "Free",
@@ -37,6 +35,8 @@ const TIER_LABELS: Record<string, string> = {
   business: "Business",
   enterprise: "Enterprise",
 };
+
+const BULLET_KEYS = ["sovereign", "grounded", "context", "actionable"] as const;
 
 function AiContent() {
   const t = useTranslations("copilot.marketing");
@@ -58,16 +58,15 @@ function AiContent() {
 
   return (
     <main className="pb-24">
-      {/* Hero — borderless, eyebrow as bare tracked uppercase string.
-          Matches the CopilotSection header treatment on the landing. */}
+      {/* Hero */}
       <section className="mx-auto max-w-5xl px-6 pt-16 pb-20 lg:pt-24 lg:pb-28">
-        <span className="text-l6-plus uppercase tracking-[0.18em] text-[#066DE6]">
+        <span className="text-l6-plus uppercase tracking-[2.5px] text-primary">
           {t("eyebrow")}
         </span>
         <h1 className="mt-6 font-heading text-h1 leading-[1.08] tracking-tight text-foreground">
           {t("title")}
         </h1>
-        <p className="mt-6 max-w-3xl text-lg leading-relaxed text-muted-foreground">
+        <p className="mt-6 max-w-3xl text-p1 text-muted-foreground">
           {t("lede")}
         </p>
         <div className="mt-10 flex flex-wrap items-center gap-3">
@@ -82,38 +81,42 @@ function AiContent() {
         </div>
       </section>
 
-      {/* Four pillars — borderless cells, gradient 01/02/03/04 numerals.
-          Same layout grammar as the landing CopilotSection. */}
-      <section className="border-t border-border/50 bg-card/50 py-20 lg:py-24">
+      {/* Four pillars — light Nask cards instead of the previous
+          borderless cells. Solid-tone numerals (no gradients), 18 px
+          card title, 13 px body. */}
+      <section className="border-t border-border/50 bg-muted/30 py-20 lg:py-24">
         <div className="mx-auto max-w-5xl px-6">
-          <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
-            {BULLETS.map(({ key, gradient }, i) => (
-              <div key={key} className="flex flex-col items-start text-left">
+          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+            {BULLET_KEYS.map((key, i) => (
+              <article
+                key={key}
+                className="flex flex-col rounded-md border border-border bg-card p-6 shadow-card-md transition-shadow hover:shadow-card-lg"
+              >
                 <span
-                  className={`bg-gradient-to-r ${gradient} bg-clip-text font-heading text-5xl font-extrabold leading-none tracking-tight text-transparent sm:text-6xl`}
+                  className={`font-heading text-5xl font-extrabold leading-none tracking-tight ${numeralTone(i)}`}
                 >
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <h3 className="mt-5 font-heading text-h4 text-foreground">
                   {t(`bullets.${key}.title`)}
                 </h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                <p className="mt-3 text-p3 text-muted-foreground">
                   {t(`bullets.${key}.body`)}
                 </p>
-              </div>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Five long-form sections — big gradient numeral on the left of
-          each row, heading + body on the right. Replaces the tiny
-          6-px pill that felt like a half-measure. */}
+      {/* Five long-form sections — numbered rows on the white surface.
+          Numeral gets the same primary/accent rotation as the pillars
+          above so the page reads as one consistent palette. */}
       <section id="how" className="mx-auto max-w-3xl px-6 pt-24 pb-20">
         <h2 className="font-heading text-h2 text-foreground">
           {tLearn("title")}
         </h2>
-        <p className="mt-2 text-base text-muted-foreground">
+        <p className="mt-2 text-p2-r text-muted-foreground">
           {tLearn("subtitle")}
         </p>
         <div className="mt-16 flex flex-col gap-14">
@@ -123,7 +126,7 @@ function AiContent() {
               className="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-8"
             >
               <span
-                className={`bg-gradient-to-r ${SECTION_GRADIENTS[i]} bg-clip-text font-heading text-5xl font-extrabold leading-none tracking-tight text-transparent sm:w-24 sm:text-6xl`}
+                className={`font-heading text-5xl font-extrabold leading-none tracking-tight sm:w-24 ${numeralTone(i)}`}
               >
                 {String(i + 1).padStart(2, "0")}
               </span>
@@ -131,7 +134,7 @@ function AiContent() {
                 <h3 className="font-heading text-h4 text-foreground">
                   {tLearn(`${s}.heading`)}
                 </h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                <p className="mt-3 text-p3 text-muted-foreground">
                   {tLearn(`${s}.body`)}
                 </p>
               </div>
@@ -140,30 +143,40 @@ function AiContent() {
         </div>
       </section>
 
-      {/* Quota strip — borderless dark band with 4 plan cells.
-          Matches the Problem-section rhythm (section-level band, no
-          inner card). Each plan gets its own numeral gradient. */}
-      <section className="border-t border-border/50 bg-card/50 py-16 lg:py-20">
+      {/* Quota strip — light card on a soft band, four plan tiles.
+          Big number per tier, label underneath, then the rest of the
+          quota copy. */}
+      <section className="border-t border-border/50 bg-muted/30 py-16 lg:py-20">
         <div className="mx-auto max-w-5xl px-6">
-          <h3 className="text-l6-plus uppercase tracking-[0.18em] text-[#066DE6]">
+          <h3 className="text-l6-plus uppercase tracking-[2.5px] text-primary">
             {tLearn("quota.title")}
           </h3>
-          <div className="mt-8 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-            {quotaTiers.map((tier, i) => (
-              <div key={tier} className="flex flex-col items-start">
-                <span
-                  className={`bg-gradient-to-r ${BULLETS[i].gradient} bg-clip-text font-heading text-4xl font-extrabold leading-none tracking-tight text-transparent sm:text-5xl`}
+          <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {quotaTiers.map((tier, i) => {
+              const value = tLearn(`quota.${tier}`).match(/[\d,]+/)?.[0] ?? "";
+              const remainder = tLearn(`quota.${tier}`).replace(
+                /[\d,]+\s*/,
+                "",
+              );
+              return (
+                <div
+                  key={tier}
+                  className="flex flex-col rounded-md border border-border bg-card p-5 shadow-card-md"
                 >
-                  {tLearn(`quota.${tier}`).match(/[\d,]+/)?.[0] ?? ""}
-                </span>
-                <span className="mt-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                  {TIER_LABELS[tier]}
-                </span>
-                <span className="mt-1 text-sm text-foreground">
-                  {tLearn(`quota.${tier}`).replace(/[\d,]+\s*/, "")}
-                </span>
-              </div>
-            ))}
+                  <span
+                    className={`font-heading text-5xl font-extrabold leading-none tracking-tight tabular-nums ${numeralTone(i)}`}
+                  >
+                    {value}
+                  </span>
+                  <span className="mt-3 text-l6-plus uppercase tracking-[1.5px] text-muted-foreground">
+                    {TIER_LABELS[tier]}
+                  </span>
+                  <span className="mt-1 text-p3 text-foreground">
+                    {remainder}
+                  </span>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>

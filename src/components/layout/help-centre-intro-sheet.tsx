@@ -122,7 +122,10 @@ export function HelpCentreIntroSheet({
           </ul>
         </div>
 
-        {/* Footer — primary CTA + learn-more link */}
+        {/* Footer — primary CTA + learn-more link + the
+            "powered by / hosted in EU / not legal advice" disclosure
+            (moved here from the chat sheet's composer footer so the
+            chat surface stays focused on the conversation). */}
         <div className="border-t border-border bg-card px-6 py-4">
           <Button onClick={handleStart} className="w-full" size="lg">
             <Icon name="MagicStar" size={16} variant="Bold" />
@@ -135,6 +138,11 @@ export function HelpCentreIntroSheet({
           >
             {t("learnMore")}
           </Link>
+          <p className="mt-3 text-center text-p4-r leading-relaxed text-muted-foreground">
+            {t.has("disclosure")
+              ? t("disclosure")
+              : "Powered by Mistral AI · hosted in the EU · not legal advice"}
+          </p>
         </div>
       </SheetContent>
     </Sheet>

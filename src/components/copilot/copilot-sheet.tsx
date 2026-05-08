@@ -164,18 +164,22 @@ export function CopilotSheet() {
       >
         <SheetTitle className="sr-only">{t("title")}</SheetTitle>
 
-        {/* Header ---------------------------------------------------------- */}
-        <div className="flex items-center justify-between border-b border-border px-5 py-4">
-          <div className="flex flex-col gap-0.5">
-            <span className="flex items-center gap-2 text-l6-plus uppercase tracking-[0.18em] text-primary">
-              <Icon name="ai-magic-stroke-rounded" size={12} />
-              {t("eyebrow")}
-              <span className="rounded-sm bg-muted px-1.5 py-0.5 text-l6-plus tracking-normal text-muted-foreground">
-                beta
-              </span>
-            </span>
-            <span className="text-h5 text-foreground">
-              {t("title")}
+        {/* Header — single "Seentrix AI" line on a soft primary wash so
+            the panel reads as a sibling of the Help Centre intro
+            sheet (same visual grammar, different content). The earlier
+            two-line "SEENTRIX AI / Seentrix AI" stack was rendering
+            the same string twice because both `copilot.eyebrow` and
+            `copilot.title` resolved to "Seentrix AI". */}
+        <div className="flex items-center justify-between border-b border-border bg-primary/5 px-5 py-4">
+          <div className="flex items-center gap-2 text-h5 text-foreground">
+            <Icon
+              name="ai-magic-stroke-rounded"
+              size={16}
+              className="text-primary"
+            />
+            {t("title")}
+            <span className="rounded-sm bg-muted px-1.5 py-0.5 text-l6-plus uppercase tracking-[1px] text-muted-foreground">
+              beta
             </span>
           </div>
           <div className="flex items-center gap-1">
@@ -315,9 +319,9 @@ export function CopilotSheet() {
               </button>
             )}
           </div>
-          <p className="px-1 text-p4 leading-relaxed text-muted-foreground">
-            {t("footer")}
-          </p>
+          {/* Disclosure footer ("Powered by Mistral · hosted in EU ·
+              not legal advice") moved to the Help Centre intro sheet
+              so the chat surface stays focused on the conversation. */}
         </form>
       </SheetContent>
     </Sheet>

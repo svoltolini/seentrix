@@ -2,7 +2,6 @@
   "copilot": {
     "triggerLabel": "Ask Seentrix AI",
     "triggerAria": "Open Seentrix AI",
-    "eyebrow": "Seentrix AI",
     "title": "Seentrix AI",
     "close": "Close",
     "send": "Send",
@@ -27,7 +26,6 @@
       "submit": "Send"
     },
     "placeholder": "Ask about CRA or Seentrix",
-    "footer": "Powered by Mistral AI · hosted in the EU · not legal advice",
     "error": "Something went wrong. Please try again.",
     "emptyEyebrow": "Your CRA assistant",
     "emptyTitle": "Ask me anything about the Cyber Resilience Act.",
@@ -63,7 +61,8 @@
       "ctaPrimary": "Start free",
       "ctaSecondary": "See how it works",
       "learnMore": "Learn more →",
-      "startChatting": "Start chatting"
+      "startChatting": "Start chatting",
+      "disclosure": "Powered by Mistral AI · hosted in the EU · not legal advice"
     },
     "learnMore": {
       "title": "Seentrix AI",
