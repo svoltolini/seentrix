@@ -45,7 +45,7 @@ export function OnboardingForm() {
   const [step, setStep] = useState<Step>(1);
   const [isPending, startTransition] = useTransition();
   const [state, formAction] = useActionState<AuthState, FormData>(
-    completeOnboarding.bind(null, "en"),
+    completeOnboarding,
     undefined,
   );
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);

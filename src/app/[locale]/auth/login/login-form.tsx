@@ -13,12 +13,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export function LoginForm({ locale }: { locale: string }) {
+export function LoginForm() {
   const t = useTranslations("auth");
   const [isPending, startTransition] = useTransition();
   const [showPassword, setShowPassword] = useState(false);
   const [state, formAction] = useActionState<AuthState, FormData>(
-    login.bind(null, locale),
+    login,
     undefined
   );
 

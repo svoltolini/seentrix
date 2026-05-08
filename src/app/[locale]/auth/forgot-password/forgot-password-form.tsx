@@ -16,11 +16,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export function ForgotPasswordForm({ locale }: { locale: string }) {
+export function ForgotPasswordForm() {
   const t = useTranslations("auth");
   const [isPending, startTransition] = useTransition();
   const [state, formAction] = useActionState<AuthState, FormData>(
-    forgotPassword.bind(null, locale),
+    forgotPassword,
     undefined
   );
 

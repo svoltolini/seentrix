@@ -32,12 +32,12 @@ const strengthColors = [
   "bg-success",
 ];
 
-export function SignupForm({ locale }: { locale: string }) {
+export function SignupForm() {
   const t = useTranslations("auth");
   const [isPending, startTransition] = useTransition();
   const [showPassword, setShowPassword] = useState(false);
   const [state, formAction] = useActionState<AuthState, FormData>(
-    signup.bind(null, locale),
+    signup,
     undefined
   );
 
@@ -69,6 +69,31 @@ export function SignupForm({ locale }: { locale: string }) {
       ? t(`errors.${state.error}`)
       : state.error
     : null;
+
+  // Generic success state — same UI whether the address was new (Supabase
+  // sent a confirm email) or already registered (the action silently
+  // triggered a password-reset email). Closes the email-enumeration oracle.
+  if (state?.success) {
+    return (
+      <div className="flex flex-col items-center text-center">
+        <div className="flex size-12 items-center justify-center rounded-full bg-primary/10">
+          <Icon name="Sms" className="size-6 text-primary" aria-hidden="true" />
+        </div>
+        <h1 className="mt-5 text-h3 text-foreground">
+          {t("signup.checkInboxTitle")}
+        </h1>
+        <p className="mt-2 text-p3 leading-relaxed text-muted-foreground">
+          {t("signup.checkInboxBody")}
+        </p>
+        <Link
+          href="/auth/login"
+          className="mt-6 text-l6 text-primary underline-offset-2 hover:underline"
+        >
+          {t("signup.backToLogin")}
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <>

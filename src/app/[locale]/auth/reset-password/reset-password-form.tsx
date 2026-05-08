@@ -34,13 +34,13 @@ const strengthColors = [
   "bg-success",
 ];
 
-export function ResetPasswordForm({ locale }: { locale: string }) {
+export function ResetPasswordForm() {
   const t = useTranslations("auth");
   const [isPending, startTransition] = useTransition();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [state, formAction] = useActionState<AuthState, FormData>(
-    resetPassword.bind(null, locale),
+    resetPassword,
     undefined
   );
 

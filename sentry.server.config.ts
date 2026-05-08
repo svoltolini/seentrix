@@ -3,6 +3,7 @@
 // when NEXT_RUNTIME === "nodejs".
 
 import * as Sentry from "@sentry/nextjs";
+import { scrubSensitive } from "@/lib/sentry-scrub";
 
 Sentry.init({
   // Public DSN — safe to hardcode as a fallback. Override via SENTRY_DSN
@@ -18,6 +19,9 @@ Sentry.init({
 
   // Attach local variable values to stack frames. Server-only; invaluable
   // for debugging "why was this value null here?" without reproducing.
+  // The beforeSend hook below scrubs known-sensitive fields out of every
+  // event before it leaves the runtime so a thrown server action can't
+  // leak a raw password / MFA code / Supabase token via locals.
   includeLocalVariables: true,
 
   enableLogs: true,
@@ -39,4 +43,15 @@ Sentry.init({
   // to the right code. Vercel injects VERCEL_GIT_COMMIT_SHA on every
   // build; locally it's undefined and Sentry auto-generates a release.
   release: process.env.VERCEL_GIT_COMMIT_SHA,
+
+  beforeSend(event) {
+    return scrubSensitive(event) as typeof event;
+  },
+
+  beforeBreadcrumb(breadcrumb) {
+    if (breadcrumb.data) {
+      breadcrumb.data = scrubSensitive(breadcrumb.data) as typeof breadcrumb.data;
+    }
+    return breadcrumb;
+  },
 });

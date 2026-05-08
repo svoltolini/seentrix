@@ -15,7 +15,6 @@ import { logActivity } from "@/lib/activity";
 export type AuthState = { error?: string; success?: boolean } | undefined;
 
 export async function signup(
-  locale: string,
   _prevState: AuthState,
   formData: FormData
 ): Promise<AuthState> {
@@ -41,24 +40,45 @@ export async function signup(
     },
   });
 
+  // Email enumeration mitigation (Q1, agreed default).
+  //
+  // Old flow returned `error: "emailInUse"` whenever Supabase reported the
+  // address was already registered. That gave anyone hitting /auth/signup a
+  // public oracle to verify the membership of arbitrary email lists.
+  //
+  // New flow always returns `{ success: true }` regardless of whether the
+  // email was new or already taken. For genuinely-new addresses Supabase
+  // has already sent a confirmation email; for existing accounts we
+  // silently kick off a password-reset email so the rightful owner gets
+  // something useful in their inbox (and is reminded the account exists)
+  // without the response leaking that fact to the caller.
+  //
+  // We still surface password-strength errors inline — those come from our
+  // own input validation, not from a Supabase response keyed on the email,
+  // so they aren't an enumeration oracle.
   if (error) {
-    if (error.message.toLowerCase().includes("already registered")) {
-      return { error: "emailInUse" };
-    }
-    if (
-      error.message.toLowerCase().includes("weak") ||
-      error.message.toLowerCase().includes("password")
-    ) {
+    const msg = error.message.toLowerCase();
+    if (msg.includes("weak") || msg.includes("password")) {
       return { error: "passwordTooWeak" };
     }
+    if (msg.includes("already registered") || msg.includes("user already")) {
+      // Send a recovery email to the existing account so the response
+      // carries the same observable side-effect (one email out) as a
+      // legitimate first-time signup.
+      await supabase.auth.resetPasswordForEmail(result.data.email, {
+        redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback?type=recovery`,
+      });
+      return { success: true };
+    }
+    // Any other unexpected error — surface generically so the form still
+    // signals something went wrong without revealing the underlying cause.
     return { error: "generic" };
   }
 
-  redirect(`/auth/onboarding`);
+  return { success: true };
 }
 
 export async function login(
-  locale: string,
   _prevState: AuthState,
   formData: FormData
 ): Promise<AuthState> {
@@ -86,7 +106,6 @@ export async function login(
 }
 
 export async function completeOnboarding(
-  locale: string,
   _prevState: AuthState,
   formData: FormData
 ): Promise<AuthState> {
@@ -204,7 +223,6 @@ export async function completeOnboarding(
 }
 
 export async function forceChangePassword(
-  locale: string,
   _prevState: AuthState,
   formData: FormData
 ): Promise<AuthState> {
@@ -266,7 +284,6 @@ export async function forceChangePassword(
 }
 
 export async function forgotPassword(
-  _locale: string,
   _prevState: AuthState,
   formData: FormData
 ): Promise<AuthState> {
@@ -289,7 +306,6 @@ export async function forgotPassword(
 }
 
 export async function resetPassword(
-  locale: string,
   _prevState: AuthState,
   formData: FormData
 ): Promise<AuthState> {

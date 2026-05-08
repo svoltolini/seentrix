@@ -40,7 +40,7 @@ export function ChangePasswordForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [state, formAction] = useActionState<AuthState, FormData>(
-    forceChangePassword.bind(null, "en"),
+    forceChangePassword,
     undefined
   );
 
