@@ -1,50 +1,53 @@
 import Link from "next/link";
 import Image from "next/image";
 
+/**
+ * 404 page — global, rendered for any path that doesn't match a route
+ * AND for explicit `notFound()` calls inside server components.
+ *
+ * Centered single-column layout: the new rafiki-style illustration as
+ * the hero, then "Page not found" headline + supporting copy + a
+ * "Go home" CTA. Replaces the previous bottom-corner plug + socket
+ * PNG pair which has been deleted.
+ *
+ * Lives outside the `[locale]` segment so it catches paths that miss
+ * even the locale match. No translations available here for the same
+ * reason — copy is hard-coded English (matches the English-only
+ * product). next-intl explicitly recommends a locale-less not-found
+ * page for this fallback.
+ */
 export default function NotFound() {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-background">
-      {/* Center content — positioned in upper area to match design */}
-      <div className="relative z-10 flex flex-col items-center px-6 pt-[22vh] text-center">
-        <h1 className="text-[80px] font-bold leading-none sm:text-[110px] sm:leading-[110px]">
-          <span className="text-foreground">4</span>
-          <span className="text-primary">0</span>
-          <span className="text-foreground">4</span>
-        </h1>
+    <main className="flex min-h-screen flex-col items-center justify-center bg-background px-6 py-12 text-center">
+      <Image
+        src="/illustrations/404.svg"
+        alt=""
+        width={420}
+        height={420}
+        className="h-auto w-full max-w-[420px] select-none"
+        priority
+      />
 
-        <p className="mt-[18px] max-w-[570px] text-base leading-[30px] text-muted-foreground sm:text-lg">
-          Sorry, the page you&apos;re looking for doesn&apos;t exist. If you
-          think something is broken, report a problem.
-        </p>
+      <h1 className="mt-8 text-h1 text-foreground">Page not found</h1>
+      <p className="mt-3 max-w-md text-p2 text-muted-foreground">
+        Sorry, the page you&apos;re looking for doesn&apos;t exist or has
+        moved. If you think something is broken, let us know.
+      </p>
 
-        <Link href="/" className="mt-[38px] inline-flex items-center justify-center rounded-lg bg-primary px-8 py-4 text-lg font-semibold text-primary-foreground transition-colors hover:bg-primary/90 active:scale-[0.98]">
-          Go To Home
+      <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+        <Link
+          href="/"
+          className="inline-flex h-11 items-center justify-center rounded-md bg-primary px-6 text-l5 text-primary-foreground transition-colors hover:bg-primary/90"
+        >
+          Go to home
+        </Link>
+        <Link
+          href="/app/dashboard"
+          className="inline-flex h-11 items-center justify-center rounded-md border-[1.5px] border-border-outline bg-card px-6 text-l5 text-foreground transition-colors hover:bg-muted"
+        >
+          Open dashboard
         </Link>
       </div>
-
-      {/* Bottom-left plug illustration */}
-      <div className="pointer-events-none absolute bottom-0 left-[-18px] w-[300px] select-none sm:w-[400px] lg:w-[533px]">
-        <Image
-          src="/images/404-plug.png"
-          alt=""
-          width={533}
-          height={424}
-          className="h-auto w-full"
-          priority
-        />
-      </div>
-
-      {/* Bottom-right socket illustration */}
-      <div className="pointer-events-none absolute bottom-0 right-[-50px] w-[350px] select-none sm:w-[500px] lg:right-[-20px] lg:w-[714px]">
-        <Image
-          src="/images/404-socket.png"
-          alt=""
-          width={714}
-          height={342}
-          className="h-auto w-full"
-          priority
-        />
-      </div>
-    </div>
+    </main>
   );
 }
