@@ -10,11 +10,19 @@
     },
     "timeline": {
       "empty": "No products in this lane yet.",
+      "today": "Today",
+      "horizon": "CRA horizon",
       "lanes": {
         "ahead": "Ahead",
         "onTrack": "On Track",
         "atRisk": "At Risk"
       }
+    },
+    "lanes": {
+      "ahead": "Ahead",
+      "onTrack": "On Track",
+      "atRisk": "At Risk",
+      "empty": "No products in this lane."
     },
     "noProducts": "No products yet",
     "noProductsDescription": "Add your first product to start your CRA compliance journey. We'll guide you through every step.",
