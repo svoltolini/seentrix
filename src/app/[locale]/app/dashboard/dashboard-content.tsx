@@ -69,18 +69,12 @@ function pickFeaturedProducts(
   return sorted.slice(0, 2);
 }
 
-function categoryGradient(category: string | null): string {
-  switch (category) {
-    case "critical":
-      return "linear-gradient(135deg, #E60019 0%, #FF6D00 60%, #066DE6 100%)";
-    case "important_class_ii":
-      return "linear-gradient(135deg, #FF6D00 0%, #FF6D00 60%, #066DE6 100%)";
-    case "important_class_i":
-      return "linear-gradient(135deg, #FF9E55 0%, #066DE6 110%)";
-    default:
-      return "linear-gradient(135deg, #066DE6 0%, #FF6D00 60%, #FF9E55 100%)";
-  }
-}
+// Dropped `categoryGradient()`: the new ProjectHeroCard (Figma 142:15578)
+// is a two-section card with a solid `bg-primary` art surface + dot-grid
+// overlay (matching the FieldHelp reference callout + landing TrustSection).
+// Per-category gradient covers cycled red/orange/peach/blue tints which
+// drifted off-palette — the design memory rule is "palette only, no
+// per-card gradients", so the prop and helper were both retired.
 
 const CATEGORY_KEY_MAP: Record<string, string> = {
   default: "categoryDefault",
@@ -359,7 +353,6 @@ export function DashboardContent(
                     href={`/app/products/${p.id}`}
                     score={p.compliance_score}
                     priority={t.has(priorityKey) ? t(priorityKey) : categoryKey.replace(/_/g, " ")}
-                    gradient={categoryGradient(categoryKey)}
                   />
                 );
               })}

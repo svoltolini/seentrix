@@ -4,15 +4,31 @@ import { Link } from "@/i18n/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 /**
- * ProjectHeroCard — verbatim 1:1 of the "Project Card" from Figma frame
- * `28:1755` (`data-node-id="50:2655"` / `50:2673`).
+ * ProjectHeroCard — Nask "Project Card" (Figma `142:15578`).
  *
- * Geometry: 340×249, `rounded-[10px] overflow-clip shadow-card-md`.
- *   - Background: gradient (or full-bleed image) with a subtle bottom scrim
- *   - Priority chip top-left: `bg-white/20 rounded-[6px] px-3 py-1`
- *   - Title block (left, near bottom): 16/700 white + 14/400 muted-on-tint
- *   - Member stack: 32×32 avatars overlap mr-[-8] at top:155
- *   - Progress bar: 308×6 at top:197, gray track + orange fill, rounded-xl
+ * Two-section layout, matching the Figma frame exactly:
+ *
+ *   ┌──────────────────────────────────────┐
+ *   │  Solid `bg-primary` surface (~140px) │
+ *   │  ┌─────────┐                         │
+ *   │  │ Priority │ (dark-navy chip,        │
+ *   │  └─────────┘  top-left)              │
+ *   │  + soft white dot-grid overlay       │
+ *   ├──────────────────────────────────────┤
+ *   │  White surface (auto-height)         │
+ *   │  Title (text-h5)              avatars │
+ *   │  Subtitle (text-p3 muted)             │
+ *   │                                       │
+ *   │  ▰▰▰▱▱▱▱▱▱▱▱  49 %                  │
+ *   └──────────────────────────────────────┘
+ *
+ * The earlier build used a single full-bleed gradient card that
+ * cycled through off-palette colours per CRA category (red/orange/
+ * peach/blue gradients). Rule from the design memory: no per-card
+ * gradients, palette only. The blue surface here reuses the same
+ * recipe as the Help Centre intro sheet's CRA-reference callout —
+ * solid `bg-primary` + soft white radial dot-grid overlay — so the
+ * visual language is unified across surfaces.
  */
 
 interface Props {
@@ -23,16 +39,16 @@ interface Props {
   score: number;
   /** Priority / category chip on the top-left. */
   priority: string;
-  /** Optional gradient (defaults to brand). */
-  gradient?: string;
   members?: { id: string; name: string; avatarUrl: string | null }[];
 }
 
-const DEFAULT_GRADIENT =
-  "linear-gradient(135deg, #066DE6 0%, #FF6D00 60%, #FF9E55 100%)";
-
 function initialsOf(name: string): string {
-  return name.split(/\s+/).map((p) => p[0] ?? "").join("").slice(0, 2).toUpperCase();
+  return name
+    .split(/\s+/)
+    .map((p) => p[0] ?? "")
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
 }
 
 export function ProjectHeroCard({
@@ -41,7 +57,6 @@ export function ProjectHeroCard({
   href,
   score,
   priority,
-  gradient = DEFAULT_GRADIENT,
   members,
 }: Props) {
   const fillWidth = Math.max(0, Math.min(100, score));
@@ -49,48 +64,65 @@ export function ProjectHeroCard({
   return (
     <Link
       href={href}
-      // Width is intentionally fluid — the parent uses `sm:grid-cols-2`
-      // so each card gets exactly half its column. Capping at 340px
-      // (the Figma reference width) left dead whitespace at lg+ where
-      // the column is wider than 680px.
-      className="group/hero-card relative flex h-[249px] w-full flex-col justify-between overflow-clip rounded-md p-4 text-white shadow-card-md transition-shadow hover:shadow-card-lg"
-      style={{ backgroundImage: gradient }}
+      // Width fluid (parent grid is `sm:grid-cols-2`); fixed 249 px
+      // height matches the Figma reference. Outer card has the soft
+      // shadow + rounded-md + overflow-clip so the blue top never
+      // bleeds past the corners.
+      className="group/hero-card relative flex h-[249px] w-full flex-col overflow-clip rounded-md bg-card shadow-card-md transition-shadow hover:shadow-card-lg"
     >
-      {/* Bottom scrim — matches Figma's gradient overlay */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-b from-transparent to-foreground/30"
-      />
-
-      <div className="relative flex items-start justify-between">
-        <span className="inline-flex items-center rounded-sm bg-white/20 px-3 py-1 text-l6-plus text-white backdrop-blur-sm">
+      {/* TOP — blue art surface with priority chip + dot-grid overlay.
+          Uses the same dot-grid recipe as the FieldHelp reference
+          callout + the landing TrustSection so all three surfaces
+          read as one family. */}
+      <div className="relative flex flex-1 items-start p-4">
+        <div className="absolute inset-0 bg-primary" />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle, rgba(255,255,255,0.12) 1px, transparent 1px)",
+            backgroundSize: "20px 20px",
+          }}
+        />
+        <span className="relative inline-flex items-center rounded-sm bg-dark-cta px-3 py-1 text-l6-plus uppercase tracking-wider text-dark-cta-foreground">
           {priority}
         </span>
-        {members && members.length > 0 && (
-          <div className="flex items-end -space-x-2.5">
-            {members.slice(0, 3).map((m) => (
-              <Avatar key={m.id} size="default" className="ring-2 ring-white/40">
-                <AvatarImage src={m.avatarUrl ?? undefined} alt={m.name} />
-                <AvatarFallback>{initialsOf(m.name)}</AvatarFallback>
-              </Avatar>
-            ))}
-          </div>
-        )}
       </div>
 
-      <div className="relative flex flex-col gap-3">
-        <div className="flex flex-col gap-1">
-          <p className="text-h5 text-white drop-shadow">{title}</p>
-          <p className="line-clamp-1 text-p3 text-white/85">{subtitle}</p>
+      {/* BOTTOM — white surface with title + meta + progress. */}
+      <div className="flex shrink-0 flex-col gap-3 bg-card p-4">
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+            <p className="truncate text-h5 text-foreground">{title}</p>
+            <p className="line-clamp-1 text-p3 text-muted-foreground">
+              {subtitle}
+            </p>
+          </div>
+          {members && members.length > 0 && (
+            <div className="flex shrink-0 items-end -space-x-2">
+              {members.slice(0, 3).map((m) => (
+                <Avatar
+                  key={m.id}
+                  size="sm"
+                  className="ring-2 ring-card"
+                >
+                  <AvatarImage src={m.avatarUrl ?? undefined} alt={m.name} />
+                  <AvatarFallback>{initialsOf(m.name)}</AvatarFallback>
+                </Avatar>
+              ))}
+            </div>
+          )}
         </div>
+
         <div className="flex items-center gap-3">
-          <div className="relative h-1.5 flex-1 overflow-hidden rounded-xl bg-white/20">
+          <div className="relative h-1.5 flex-1 overflow-hidden rounded-xl bg-border">
             <div
-              className="h-full rounded-xl bg-accent"
+              className="h-full rounded-xl bg-accent transition-[width] duration-300"
               style={{ width: `${fillWidth}%` }}
             />
           </div>
-          <span className="shrink-0 tabular-nums text-l6-plus text-white">
+          <span className="shrink-0 tabular-nums text-l6-plus text-foreground">
             {score}%
           </span>
         </div>

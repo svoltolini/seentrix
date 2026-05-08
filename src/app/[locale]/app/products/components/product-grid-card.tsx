@@ -3,27 +3,34 @@
 import { Link } from "@/i18n/navigation";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Icon } from "@/components/icon";
-import { cn } from "@/lib/utils";
 import type { ProductListItem } from "../actions";
 
 /**
- * ProductGridCard — verbatim 1:1 of the Project Card from Figma frame
- * `67:9949` (Project - Grid View). Geometry observed in
- * `data-node-id="99:13322"`:
+ * ProductGridCard — Nask "Project Card" Grid View, geometry from Figma
+ * frame `67:9949`:
  *   container 300×244 (banner 120 + footer 124), `rounded-[10px] overflow-clip`
- *   banner: 300×120 with full-bleed image and gradient scrim (rgba(0,0,0,0.25)
- *     at 46% → transparent at 102.66%)
- *   priority chip top-left: bg-[rgba(255,255,255,0.2)] rounded-[6px] px-3 py-1
+ *   banner: 300×120 art surface with priority chip top-left
  *   footer: 300×124 bg-white drop-shadow-[0px_4px_45px_rgba(169,173,180,0.15)]
- *   title: Plus Jakarta Sans Bold 14/1.3 #2c3659 at left:16, top:14
- *   progress: 6×268 at left:16, top:74 (gray track + orange fill)
+ *   progress: 6×268 (gray track + orange fill)
  *   members: 24×24 avatars, mr-[-10] overlap, right:16, bottom:16
+ *
+ * Banner art:
+ *   - When the product has a real `image_url` → full-bleed image + soft
+ *     foreground scrim so the chip stays legible on busy imagery, plus a
+ *     translucent white chip (Figma's literal Project Card recipe).
+ *   - When there's no image → solid `bg-primary` + soft white dot-grid
+ *     overlay + `bg-dark-cta` chip. Same recipe as the dashboard
+ *     ProjectHeroCard, the FieldHelp reference callout and the landing
+ *     TrustSection so all three surfaces read as one family. Replaces the
+ *     earlier per-category gradient covers (red/orange/peach/blue) which
+ *     drifted off-palette — the design memory rule is "palette only, no
+ *     per-card gradients".
  *
  * Seentrix maps:
  *   priority chip → CRA category label (default / important / critical)
- *   image → product image (or a brand gradient fallback)
  *   progress → compliance_score percentage
- *   members → org members assigned to the product (omitted if none yet)
+ *   members → org members assigned to the product (placeholder until
+ *     product↔member assignment ships)
  */
 
 const CATEGORY_LABEL: Record<string, string> = {
@@ -32,19 +39,6 @@ const CATEGORY_LABEL: Record<string, string> = {
   important_class_ii: "Important · Class II",
   critical: "Critical",
 };
-
-function categoryGradient(category: string | null): string {
-  switch (category) {
-    case "critical":
-      return "linear-gradient(135deg, #E60019 0%, #FF6D00 60%, #066DE6 100%)";
-    case "important_class_ii":
-      return "linear-gradient(135deg, #FF6D00 0%, #FF6D00 60%, #066DE6 100%)";
-    case "important_class_i":
-      return "linear-gradient(135deg, #FF9E55 0%, #066DE6 110%)";
-    default:
-      return "linear-gradient(135deg, #066DE6 0%, #FF6D00 60%, #FF9E55 100%)";
-  }
-}
 
 interface Props {
   product: ProductListItem;
@@ -56,6 +50,7 @@ export function ProductGridCard({ product, href }: Props) {
   const fillWidth = Math.max(0, Math.min(100, score));
   const category = product.cra_category ?? null;
   const categoryLabel = CATEGORY_LABEL[category ?? "default"];
+  const hasImage = !!product.image_url;
 
   return (
     <Link
@@ -63,23 +58,45 @@ export function ProductGridCard({ product, href }: Props) {
       className="group/grid-card flex w-full max-w-[340px] flex-col overflow-clip rounded-md transition-shadow hover:shadow-card-md"
       data-slot="product-grid-card"
     >
-      {/* Banner — full-bleed gradient or image with priority chip top-left */}
-      <div
-        className="relative flex h-[120px] w-full items-start"
-        style={{
-          backgroundImage: product.image_url
-            ? `url(${product.image_url})`
-            : categoryGradient(category),
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        {/* Soft scrim so the chip + title remain legible on busy imagery */}
-        <div
-          aria-hidden
-          className="absolute inset-0 bg-gradient-to-b from-foreground/25 from-[46%] to-transparent to-[102%]"
-        />
-        <span className="relative ml-4 mt-4 inline-flex items-center rounded-sm bg-white/20 px-3 py-1 text-l6-plus text-white backdrop-blur-sm">
+      {/* Banner — image + scrim if uploaded, else bg-primary + dot grid. */}
+      <div className="relative flex h-[120px] w-full items-start overflow-hidden">
+        {hasImage ? (
+          <>
+            <div
+              className="absolute inset-0"
+              style={{
+                backgroundImage: `url(${product.image_url})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            />
+            {/* Soft scrim so the chip + title remain legible on busy imagery */}
+            <div
+              aria-hidden
+              className="absolute inset-0 bg-gradient-to-b from-foreground/25 from-[46%] to-transparent to-[102%]"
+            />
+          </>
+        ) : (
+          <>
+            <div className="absolute inset-0 bg-primary" />
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0"
+              style={{
+                backgroundImage:
+                  "radial-gradient(circle, rgba(255,255,255,0.12) 1px, transparent 1px)",
+                backgroundSize: "20px 20px",
+              }}
+            />
+          </>
+        )}
+        <span
+          className={
+            hasImage
+              ? "relative ml-4 mt-4 inline-flex items-center rounded-sm bg-white/20 px-3 py-1 text-l6-plus uppercase tracking-wider text-white backdrop-blur-sm"
+              : "relative ml-4 mt-4 inline-flex items-center rounded-sm bg-dark-cta px-3 py-1 text-l6-plus uppercase tracking-wider text-dark-cta-foreground"
+          }
+        >
           {categoryLabel}
         </span>
       </div>
