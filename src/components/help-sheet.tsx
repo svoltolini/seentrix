@@ -153,19 +153,30 @@ export function HelpSheet({
             )}
 
             {reference && (
-              <div
-                className="relative overflow-hidden rounded-md p-5"
-                style={{
-                  background:
-                    "linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%)",
-                }}
-              >
-                <div className="mb-2 inline-flex items-center gap-2 rounded-sm bg-white/20 px-2.5 py-0.5 text-l6-plus uppercase tracking-wider text-white backdrop-blur-sm">
-                  {t("craReference")}
+              // Reuses the "Built by Compliance Engineers" recipe from
+              // the landing-page trust section: solid `bg-primary` +
+              // soft white dot-grid overlay so the panel reads with
+              // depth without leaning on a gradient. Keeps the visual
+              // language palette-clean (no per-card gradients across
+              // the app any more).
+              <div className="relative overflow-hidden rounded-md bg-primary p-5">
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0"
+                  style={{
+                    backgroundImage:
+                      "radial-gradient(circle, rgba(255,255,255,0.12) 1px, transparent 1px)",
+                    backgroundSize: "20px 20px",
+                  }}
+                />
+                <div className="relative">
+                  <div className="mb-2 inline-flex items-center gap-2 rounded-sm border-[1.5px] border-primary-foreground/30 bg-primary-foreground/15 px-2.5 py-0.5 text-l6-plus uppercase tracking-wider text-primary-foreground backdrop-blur-sm">
+                    {t("craReference")}
+                  </div>
+                  <p className="text-p3 leading-relaxed text-primary-foreground">
+                    {reference}
+                  </p>
                 </div>
-                <p className="text-p3 leading-relaxed text-white">
-                  {reference}
-                </p>
               </div>
             )}
 
