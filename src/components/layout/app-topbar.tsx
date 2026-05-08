@@ -16,6 +16,7 @@ import {
 import { Icon } from "@/components/icon";
 import { logout } from "@/app/[locale]/auth/actions";
 import { MobileSidebarTrigger } from "./app-sidebar";
+import { NotificationsMenu } from "./notifications-menu";
 
 /**
  * AppTopbar — slim 80 px top bar (Linear/Notion density). Three-column
@@ -41,7 +42,6 @@ type AppTopbarProps = {
     avatarUrl?: string | null;
   };
   orgName?: string | null;
-  hasUnread?: boolean;
 };
 
 const TITLE_MAP: { match: (path: string) => boolean; key: string }[] = [
@@ -68,7 +68,7 @@ function usePageTitle() {
   }
 }
 
-export function AppTopbar({ user, orgName, hasUnread }: AppTopbarProps) {
+export function AppTopbar({ user, orgName }: AppTopbarProps) {
   const t = useTranslations();
   const title = usePageTitle();
 
@@ -92,12 +92,13 @@ export function AppTopbar({ user, orgName, hasUnread }: AppTopbarProps) {
       </div>
 
       {/* CENTRE — search. Hidden on small viewports; truly centred at md+
-          because the column is `1fr` and the search has `mx-auto`. */}
+          because the column is `1fr` and the search has `max-w` capped
+          plus `justify-center` on the wrapper. */}
       <div className="hidden justify-center md:flex">
         <SearchInput
           placeholder={t("topbar.searchPlaceholder") ?? "Search products, incidents, reports…"}
           aria-label={t("topbar.searchPlaceholder") ?? "Search"}
-          className="w-full max-w-[320px]"
+          className="w-full max-w-[480px]"
         />
       </div>
 
@@ -114,28 +115,29 @@ export function AppTopbar({ user, orgName, hasUnread }: AppTopbarProps) {
           {t("topbar.newProduct") ?? "New Product"}
         </Button>
 
-        {/* Notification bell — round 44px, with red unread dot */}
-        <button
-          type="button"
-          aria-label={t("topbar.notifications") ?? "Notifications"}
-          className="relative inline-flex size-11 shrink-0 items-center justify-center rounded-full border-[1.5px] border-border bg-card text-foreground transition-colors hover:bg-muted"
-        >
-          <Icon name="Notification" size={22} />
-          {hasUnread && (
-            <span className="absolute right-2 top-2 inline-flex size-2 rounded-full bg-destructive ring-2 ring-card" />
-          )}
-        </button>
+        {/* Notification bell — `NotificationsMenu` owns the bell + the
+            popover that opens on click. Lazily fetches the last 10
+            activity rows via `getRecentNotifications` and tracks
+            "unread" against a localStorage timestamp so the badge
+            clears when the user opens the menu. */}
+        <NotificationsMenu />
 
         {/* Profile dropdown — JUST the avatar as trigger. The user's
             name + email moved INTO the dropdown header below so the
             top bar stays compact (the inline cluster previously ate
-            ~250 px of horizontal space at lg+). */}
+            ~250 px of horizontal space at lg+).
+
+            `inline-flex` on the trigger is critical — the default
+            `display: inline` for `<button>` collapses the Avatar's
+            42 px box on some browser/font combos and the picture
+            vanishes from view. Items + justify-center keeps it
+            visually centred inside the click target. */}
         <DropdownMenu>
           <DropdownMenuTrigger
             render={
               <button
                 type="button"
-                className="rounded-full transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+                className="inline-flex shrink-0 items-center justify-center rounded-full transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
                 aria-label={accountLabel}
               />
             }

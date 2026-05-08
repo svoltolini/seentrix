@@ -30,6 +30,10 @@
     "searchPlaceholder": "Search products, incidents, reports…",
     "newProduct": "New Product",
     "notifications": "Notifications",
+    "notificationsTitle": "Notifications",
+    "notificationsEmpty": "You're all caught up.",
+    "notificationsLoading": "Loading…",
+    "notificationsViewAll": "View all activity",
     "language": "Language"
   }
 }
