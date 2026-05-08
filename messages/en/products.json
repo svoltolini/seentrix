@@ -9,20 +9,21 @@
       "timeline": "Timeline"
     },
     "timeline": {
-      "eyebrow": "CRA Roadmap",
-      "legend": "Vertical lines mark the compliance threshold expected by each milestone.",
-      "now": "Today",
-      "start": "You are here",
-      "today": "Today",
-      "passed": "Passed",
-      "compliant": "compliant",
-      "daysAway": "{days} days away",
-      "monthsAway": "{months} months away",
-      "milestones": {
-        "notifiedBodies": "Notified Bodies",
-        "reporting": "Reporting Obligations",
-        "fullCompliance": "Full Compliance"
+      "empty": "Nothing in this lane within the visible range.",
+      "show": "Show",
+      "previous": "Previous week",
+      "next": "Next week",
+      "goToToday": "Jump to today",
+      "granularity": {
+        "monthly": "Monthly"
       }
+    },
+    "kanban": {
+      "ongoing": "On Going",
+      "pending": "Pending",
+      "done": "Done",
+      "addCard": "Add a Card",
+      "columnActions": "Column actions"
     },
     "noProducts": "No products yet",
     "noProductsDescription": "Add your first product to start your CRA compliance journey. We'll guide you through every step.",
