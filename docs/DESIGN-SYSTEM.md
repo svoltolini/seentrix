@@ -101,34 +101,45 @@ use `--primary` (`#066DE6`) and `--accent` (`#FF6D00`) instead.
 All Plus Jakarta Sans. Headings use 1.3 line-height; paragraphs use 1.6.
 Each scale is exposed as a Tailwind utility class.
 
+> **Sizing reference:** the **class names + ramp structure** (h1 / l5 /
+> p3-r etc.) come from the Nask Figma typography panel. The **absolute
+> px values** are tuned to match modern SaaS dashboard density (Notion /
+> Linear / Vercel) — every tier is 1–4 px below the original Nask
+> reference so a data-dense compliance surface doesn't read "loud".
+> Visual language (cards, shadows, colours, spacing, borders) stays
+> 1:1 with the Nask Figma; only typography sizing diverges.
+
 | Class | Size | Weight | LH | Use |
 |---|---|---|---|---|
-| `.text-h1` | 28 | 700 | 1.3 | Page title (Welcome, Dashboard) |
-| `.text-h2` | 22 | 700 | 1.3 | Section title (Projects, Settings) |
-| `.text-h3` | 20 | 700 | 1.3 | Sub-section (right-rail "Activities") |
-| `.text-h4` | 18 | 700 | 1.3 | Card title, Settings section |
-| `.text-h5` | 16 | 700 | 1.3 | Workspace name, task title |
-| `.text-h6` | 14 | 700 | 1.3 | Small heading, table column |
-| `.text-h6-plus` | 12 | 700 | 1.3 | Smallest emphasised label |
-| `.text-l1` | 24 | 600 | 1.3 | Large label |
-| `.text-l2` | 22 | 600 | 1.3 | Label |
-| `.text-l3` | 20 | 600 | 1.3 | Label |
-| `.text-l4` | 18 | 600 | 1.3 | **Settings form-field labels** |
-| `.text-l5` | 16 | 600 | 1.3 | **Default button + nav label** |
-| `.text-l6` | 14 | 600 | 1.3 | Small button, settings tab |
-| `.text-l6-plus` | 12 | 600 | 1.3 | **Badge / chip label, eyebrow uppercase** |
-| `.text-p1` | 18 | 400 | 1.6 | Hero subtitle |
-| `.text-p1-m` | 18 | 500 | 1.6 | Hero subtitle (medium) |
-| `.text-p2` | 16 | 500 | 1.6 | **Body, input value** |
-| `.text-p2-r` | 16 | 400 | 1.6 | Body alternative |
-| `.text-p3` | 14 | 500 | 1.6 | Subtitle, meta |
-| `.text-p3-r` | 14 | 400 | 1.6 | Body alternative |
+| `.text-h1` | 24 | 700 | 1.3 | Page title (Welcome, Dashboard) |
+| `.text-h2` | 20 | 700 | 1.3 | Section title (Projects, Settings) |
+| `.text-h3` | 18 | 700 | 1.3 | Sub-section (right-rail "Activities") |
+| `.text-h4` | 16 | 700 | 1.3 | Card title, Settings section |
+| `.text-h5` | 14 | 700 | 1.3 | Workspace name, task title |
+| `.text-h6` | 13 | 700 | 1.3 | Small heading, table column |
+| `.text-h6-plus` | 11 | 700 | 1.3 | Smallest emphasised label |
+| `.text-l1` | 20 | 600 | 1.3 | Large label |
+| `.text-l2` | 18 | 600 | 1.3 | Label |
+| `.text-l3` | 16 | 600 | 1.3 | Label |
+| `.text-l4` | 14 | 600 | 1.3 | **Settings form-field labels** |
+| `.text-l5` | 14 | 600 | 1.3 | **Default button + nav label** |
+| `.text-l6` | 13 | 600 | 1.3 | Small button, settings tab |
+| `.text-l6-plus` | 11 | 600 | 1.3 | **Badge / chip label, eyebrow uppercase** |
+| `.text-p1` | 16 | 400 | 1.6 | Hero subtitle |
+| `.text-p1-m` | 16 | 500 | 1.6 | Hero subtitle (medium) |
+| `.text-p2` | 14 | 500 | 1.6 | **Body, input value** |
+| `.text-p2-r` | 14 | 400 | 1.6 | Body alternative |
+| `.text-p3` | 13 | 500 | 1.6 | Subtitle, meta |
+| `.text-p3-r` | 13 | 400 | 1.6 | Body alternative |
 | `.text-p4` | 12 | 500 | 1.6 | Caption, "%" on progress |
 | `.text-p4-r` | 12 | 400 | 1.6 | Smallest caption |
 
-**Rule of thumb:** never use raw `text-[Npx]` — always use one of these classes.
-Old `font-heading text-[28px] font-bold tracking-tight` → `text-h1`. Old
-`text-sm text-muted-foreground` → `text-p3 text-muted-foreground`.
+**Rule of thumb:** never use raw `text-[Npx]` — always use one of these
+classes. Old `font-heading text-[24px] font-bold tracking-tight` →
+`text-h1`. Old `text-sm text-muted-foreground` → `text-p3
+text-muted-foreground`. The class names are the contract; the px values
+are tuned in `globals.css` and may change in a future density sweep
+without touching call sites.
 
 ### 1.4 Geometry — radii, spacing, shadows
 

@@ -195,34 +195,54 @@
   }
 }
 
-/* Nask typography scale — used as utility classes throughout the app.
-   All values verbatim from Figma node 8:1512 (Plus Jakarta Sans). */
+/* Typography scale — Nask Figma visual language with Notion-style sizing.
+ *
+ * The class names + ramp structure come from the Nask design system spec
+ * (Figma node 8:1512). The actual pixel values are tuned to match modern
+ * SaaS dashboard density (Notion / Linear / Vercel) — every tier shrunk
+ * 1–4 px below the original Nask reference so a data-dense compliance
+ * surface doesn't read "loud".
+ *
+ * Weights and line heights stay on the Nask spec (700 / 600 / 400-500
+ * weights; 1.3 for headings, 1.6 for body) so the visual rhythm matches
+ * the Figma file even though the absolute sizes don't.
+ *
+ * Reference table (old → new):
+ *   text-h1   28 → 24    text-l1   24 → 20    text-p1   18 → 16
+ *   text-h2   22 → 20    text-l2   22 → 18    text-p1-m 18 → 16
+ *   text-h3   20 → 18    text-l3   20 → 16    text-p2   16 → 14
+ *   text-h4   18 → 16    text-l4   18 → 14    text-p2-r 16 → 14
+ *   text-h5   16 → 14    text-l5   16 → 14    text-p3   14 → 13
+ *   text-h6   14 → 13    text-l6   14 → 13    text-p3-r 14 → 13
+ *   text-h6+  12 → 11    text-l6+  12 → 11    text-p4   12 → 12 (unchanged)
+ *                                              text-p4-r 12 → 12 (unchanged)
+ */
 @layer utilities {
   /* Headings (700, line-height 1.3) */
-  .text-h1      { font-size: 28px; font-weight: 700; line-height: 1.3; letter-spacing: 0; }
-  .text-h2      { font-size: 22px; font-weight: 700; line-height: 1.3; letter-spacing: 0; }
-  .text-h3      { font-size: 20px; font-weight: 700; line-height: 1.3; letter-spacing: 0; }
-  .text-h4      { font-size: 18px; font-weight: 700; line-height: 1.3; letter-spacing: 0; }
-  .text-h5      { font-size: 16px; font-weight: 700; line-height: 1.3; letter-spacing: 0; }
-  .text-h6      { font-size: 14px; font-weight: 700; line-height: 1.3; letter-spacing: 0; }
-  .text-h6-plus { font-size: 12px; font-weight: 700; line-height: 1.3; letter-spacing: 0; }
+  .text-h1      { font-size: 24px; font-weight: 700; line-height: 1.3; letter-spacing: 0; }
+  .text-h2      { font-size: 20px; font-weight: 700; line-height: 1.3; letter-spacing: 0; }
+  .text-h3      { font-size: 18px; font-weight: 700; line-height: 1.3; letter-spacing: 0; }
+  .text-h4      { font-size: 16px; font-weight: 700; line-height: 1.3; letter-spacing: 0; }
+  .text-h5      { font-size: 14px; font-weight: 700; line-height: 1.3; letter-spacing: 0; }
+  .text-h6      { font-size: 13px; font-weight: 700; line-height: 1.3; letter-spacing: 0; }
+  .text-h6-plus { font-size: 11px; font-weight: 700; line-height: 1.3; letter-spacing: 0; }
 
   /* Labels (600, line-height 1.3) */
-  .text-l1      { font-size: 24px; font-weight: 600; line-height: 1.3; letter-spacing: 0; }
-  .text-l2      { font-size: 22px; font-weight: 600; line-height: 1.3; letter-spacing: 0; }
-  .text-l3      { font-size: 20px; font-weight: 600; line-height: 1.3; letter-spacing: 0; }
-  .text-l4      { font-size: 18px; font-weight: 600; line-height: 1.3; letter-spacing: 0; }
-  .text-l5      { font-size: 16px; font-weight: 600; line-height: 1.3; letter-spacing: 0; }
-  .text-l6      { font-size: 14px; font-weight: 600; line-height: 1.3; letter-spacing: 0; }
-  .text-l6-plus { font-size: 12px; font-weight: 600; line-height: 1.3; letter-spacing: 0; }
+  .text-l1      { font-size: 20px; font-weight: 600; line-height: 1.3; letter-spacing: 0; }
+  .text-l2      { font-size: 18px; font-weight: 600; line-height: 1.3; letter-spacing: 0; }
+  .text-l3      { font-size: 16px; font-weight: 600; line-height: 1.3; letter-spacing: 0; }
+  .text-l4      { font-size: 14px; font-weight: 600; line-height: 1.3; letter-spacing: 0; }
+  .text-l5      { font-size: 14px; font-weight: 600; line-height: 1.3; letter-spacing: 0; }
+  .text-l6      { font-size: 13px; font-weight: 600; line-height: 1.3; letter-spacing: 0; }
+  .text-l6-plus { font-size: 11px; font-weight: 600; line-height: 1.3; letter-spacing: 0; }
 
   /* Paragraphs (Regular = 400, Medium = 500, line-height 1.6) */
-  .text-p1      { font-size: 18px; font-weight: 400; line-height: 1.6; letter-spacing: 0; }
-  .text-p1-m    { font-size: 18px; font-weight: 500; line-height: 1.6; letter-spacing: 0; }
-  .text-p2      { font-size: 16px; font-weight: 500; line-height: 1.6; letter-spacing: 0; }
-  .text-p2-r    { font-size: 16px; font-weight: 400; line-height: 1.6; letter-spacing: 0; }
-  .text-p3      { font-size: 14px; font-weight: 500; line-height: 1.6; letter-spacing: 0; }
-  .text-p3-r    { font-size: 14px; font-weight: 400; line-height: 1.6; letter-spacing: 0; }
+  .text-p1      { font-size: 16px; font-weight: 400; line-height: 1.6; letter-spacing: 0; }
+  .text-p1-m    { font-size: 16px; font-weight: 500; line-height: 1.6; letter-spacing: 0; }
+  .text-p2      { font-size: 14px; font-weight: 500; line-height: 1.6; letter-spacing: 0; }
+  .text-p2-r    { font-size: 14px; font-weight: 400; line-height: 1.6; letter-spacing: 0; }
+  .text-p3      { font-size: 13px; font-weight: 500; line-height: 1.6; letter-spacing: 0; }
+  .text-p3-r    { font-size: 13px; font-weight: 400; line-height: 1.6; letter-spacing: 0; }
   .text-p4      { font-size: 12px; font-weight: 500; line-height: 1.6; letter-spacing: 0; }
   .text-p4-r    { font-size: 12px; font-weight: 400; line-height: 1.6; letter-spacing: 0; }
 }
