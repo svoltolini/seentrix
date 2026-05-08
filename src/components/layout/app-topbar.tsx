@@ -18,14 +18,20 @@ import { logout } from "@/app/[locale]/auth/actions";
 import { MobileSidebarTrigger } from "./app-sidebar";
 
 /**
- * AppTopbar — slim 80px top bar (Linear/Notion density). The Nask Figma
- * spec was 110px; we shrunk to 80 because Seentrix users live in this
- * dashboard for compliance work and need every vertical pixel. The
- * 44-48px inner controls (avatar, bell, CTA) sit comfortably inside 80
- * with ~16px of breathing room top/bottom.
- *   left:    page title (driven by pathname) + mobile hamburger
- *   center:  search box (333×48 filled) — placeholder action for now
- *   right:   "+ New Product" dark CTA, notification bell, profile cluster
+ * AppTopbar — slim 80 px top bar (Linear/Notion density). Three-column
+ * grid so the search bar sits dead-centre regardless of left-side title
+ * length or right-side action width.
+ *
+ *   left:    mobile sidebar trigger + page title (driven by pathname)
+ *   centre:  search box (320 px max) — placeholder action for now
+ *   right:   "+ New Product" dark CTA, notification bell, avatar
+ *            (avatar is the dropdown trigger; the user's name + email
+ *            were moved INSIDE the dropdown so the bar stays compact —
+ *            on a 1280-1440 px viewport the full name+email cluster
+ *            otherwise ate ~250 px of horizontal real estate).
+ *
+ * The 44-48 px inner controls (avatar, bell, CTA) sit comfortably
+ * inside the 80 px bar with ~16 px breathing room top/bottom.
  */
 
 type AppTopbarProps = {
@@ -73,24 +79,30 @@ export function AppTopbar({ user, orgName, hasUnread }: AppTopbarProps) {
     .filter(Boolean)
     .join("");
 
+  const accountLabel = t("nav.myAccount") ?? "Account";
+
   return (
-    <header className="flex h-20 shrink-0 items-center gap-4 border-b-[1.5px] border-border bg-card px-4 lg:px-8">
-      {/* Mobile sidebar trigger + title */}
+    <header className="grid h-20 shrink-0 grid-cols-[auto_1fr_auto] items-center gap-4 border-b-[1.5px] border-border bg-card px-4 lg:px-8">
+      {/* LEFT — mobile sidebar trigger + page title */}
       <div className="flex shrink-0 items-center gap-3">
         <MobileSidebarTrigger user={user} orgName={orgName} />
-        <h1 className="hidden truncate text-h2 text-foreground md:block">{title}</h1>
+        <h1 className="hidden truncate text-h2 text-foreground md:block">
+          {title}
+        </h1>
       </div>
 
-      {/* Search */}
-      <div className="ml-auto hidden w-full max-w-[420px] md:block">
+      {/* CENTRE — search. Hidden on small viewports; truly centred at md+
+          because the column is `1fr` and the search has `mx-auto`. */}
+      <div className="hidden justify-center md:flex">
         <SearchInput
           placeholder={t("topbar.searchPlaceholder") ?? "Search products, incidents, reports…"}
           aria-label={t("topbar.searchPlaceholder") ?? "Search"}
+          className="w-full max-w-[320px]"
         />
       </div>
 
-      {/* Right cluster */}
-      <div className="ml-auto flex shrink-0 items-center gap-3 md:ml-0">
+      {/* RIGHT — actions */}
+      <div className="flex shrink-0 items-center gap-3">
         {/* Primary CTA — dark navy "+ New Product" */}
         <Button
           variant="dark"
@@ -114,14 +126,17 @@ export function AppTopbar({ user, orgName, hasUnread }: AppTopbarProps) {
           )}
         </button>
 
-        {/* Profile cluster + dropdown */}
+        {/* Profile dropdown — JUST the avatar as trigger. The user's
+            name + email moved INTO the dropdown header below so the
+            top bar stays compact (the inline cluster previously ate
+            ~250 px of horizontal space at lg+). */}
         <DropdownMenu>
           <DropdownMenuTrigger
             render={
               <button
                 type="button"
-                className="flex items-center gap-3.5 rounded-md px-2 py-1 transition-colors hover:bg-muted"
-                aria-label={t("nav.myAccount") ?? "Account"}
+                className="rounded-full transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+                aria-label={accountLabel}
               />
             }
           >
@@ -129,18 +144,32 @@ export function AppTopbar({ user, orgName, hasUnread }: AppTopbarProps) {
               <AvatarImage src={user?.avatarUrl ?? undefined} alt={user?.name ?? "User"} />
               <AvatarFallback>{initials || "U"}</AvatarFallback>
             </Avatar>
-            <div className="hidden flex-col items-start gap-1 text-left lg:flex">
-              <p className="text-h5 text-foreground">{user?.name ?? user?.email ?? "User"}</p>
-              {user?.email && (
-                <p className="max-w-[180px] truncate text-p3 text-muted-foreground">{user.email}</p>
-              )}
-            </div>
-            <Icon name="ChevronDownIcon" size={20} className="hidden text-muted-foreground lg:inline-block" />
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="min-w-[220px]">
+          <DropdownMenuContent align="end" className="min-w-[240px]">
+            {/* Identity header — name + email at the top of the
+                dropdown so we don't lose the info, just relocate it. */}
+            <div className="flex items-center gap-3 px-2 py-2">
+              <Avatar size="default">
+                <AvatarImage src={user?.avatarUrl ?? undefined} alt={user?.name ?? "User"} />
+                <AvatarFallback>{initials || "U"}</AvatarFallback>
+              </Avatar>
+              <div className="flex min-w-0 flex-1 flex-col">
+                <p className="truncate text-h5 text-foreground">
+                  {user?.name ?? user?.email ?? "User"}
+                </p>
+                {user?.email && user.email !== user.name && (
+                  <p className="truncate text-p4-r text-muted-foreground">
+                    {user.email}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            <DropdownMenuSeparator />
+
             <DropdownMenuItem render={<a href="/app/settings/account" />}>
               <Icon name="Setting2" size={16} />
-              {t("nav.myAccount") ?? "Account"}
+              {accountLabel}
             </DropdownMenuItem>
             <DropdownMenuItem render={<a href="/app/help/glossary" />}>
               <Icon name="MessageQuestion" size={16} />
