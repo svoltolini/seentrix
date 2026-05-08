@@ -298,6 +298,28 @@
   }
 }
 
+/* Empty-state illustration float — gentle ±6 px vertical bob over 4 s.
+   Used by the Past Conversations panel and any other "nothing here yet"
+   surface that wants a friendly, calm motion to soften the empty state. */
+@keyframes float-bob {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.animate-float-bob {
+  animation: float-bob 4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float-bob {
+    animation: none;
+  }
+}
+
 /* Blog prose styles — recolored for light theme. All references go through CSS vars. */
 .prose {
   @apply text-foreground leading-relaxed;

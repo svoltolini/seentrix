@@ -1,0 +1,52 @@
+<!-- Placeholder for the user-supplied "thinking person" illustration.
+     Drop the actual file (the blue illustration with question marks
+     around a thinking character) at this exact path to replace this
+     placeholder. SVG is preferred (scales cleanly + tiny payload);
+     PNG works too but bump the asset size accordingly. -->
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 240 240"
+  fill="none"
+  role="img"
+  aria-label="Empty conversations placeholder"
+>
+  <!-- Soft Nask-blue blob behind the figure -->
+  <ellipse cx="120" cy="170" rx="90" ry="20" fill="#066DE6" fill-opacity="0.05" />
+  <ellipse cx="80" cy="120" rx="70" ry="60" fill="#066DE6" fill-opacity="0.07" />
+
+  <!-- Centre question mark -->
+  <text
+    x="120"
+    y="135"
+    text-anchor="middle"
+    dominant-baseline="middle"
+    fill="#066DE6"
+    font-family="'Plus Jakarta Sans', system-ui, sans-serif"
+    font-weight="800"
+    font-size="120"
+  >?</text>
+
+  <!-- Two smaller question marks floating around -->
+  <text
+    x="190"
+    y="80"
+    text-anchor="middle"
+    dominant-baseline="middle"
+    fill="#066DE6"
+    fill-opacity="0.45"
+    font-family="'Plus Jakarta Sans', system-ui, sans-serif"
+    font-weight="700"
+    font-size="50"
+  >?</text>
+  <text
+    x="60"
+    y="60"
+    text-anchor="middle"
+    dominant-baseline="middle"
+    fill="#066DE6"
+    fill-opacity="0.3"
+    font-family="'Plus Jakarta Sans', system-ui, sans-serif"
+    font-weight="700"
+    font-size="36"
+  >?</text>
+</svg>

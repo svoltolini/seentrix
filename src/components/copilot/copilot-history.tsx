@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState, useTransition } from "react";
 import type { UIMessage } from "ai";
 import { useTranslations } from "next-intl";
@@ -118,15 +119,17 @@ export function CopilotHistory({
 
   return (
     <div className="absolute inset-0 z-10 flex flex-col bg-card">
-      <header className="flex items-center justify-between border-b border-border px-5 py-4">
-        <div className="flex flex-col gap-0.5">
-          <span className="flex items-center gap-2 text-l6-plus uppercase tracking-[0.18em] text-primary">
-            <Icon name="ai-magic-stroke-rounded" size={12} />
-            {t("history.eyebrow")}
-          </span>
-          <span className="text-h5 text-foreground">
-            {t("history.title")}
-          </span>
+      {/* Header — single line on a soft `bg-primary/5` wash, mirrors the
+          chat sheet's new header treatment so the two surfaces feel
+          like siblings of the same panel system. */}
+      <header className="flex items-center justify-between border-b border-border bg-primary/5 px-5 py-4">
+        <div className="flex items-center gap-2 text-h5 text-foreground">
+          <Icon
+            name="time-quarter-02-stroke-rounded"
+            size={16}
+            className="text-primary"
+          />
+          {t("history.title")}
         </div>
         <button
           type="button"
@@ -154,16 +157,7 @@ export function CopilotHistory({
             {t("history.loadError")}
           </div>
         )}
-        {sessions?.length === 0 && (
-          <div className="flex flex-col items-center gap-2 rounded-md bg-muted px-6 py-10 text-center text-p3 text-muted-foreground">
-            <Icon
-              name="bubble-chat-question-stroke-rounded"
-              size={24}
-              className="text-muted-foreground"
-            />
-            <span>{t("history.empty")}</span>
-          </div>
-        )}
+        {sessions?.length === 0 && <HistoryEmptyState message={t("history.empty")} />}
         {sessions && sessions.length > 0 && (
           <div className="flex flex-col gap-1.5">
             {sessions.map((s) => (
@@ -205,6 +199,36 @@ export function CopilotHistory({
           </div>
         )}
       </div>
+    </div>
+  );
+}
+
+/**
+ * Empty-state for the Past Conversations panel.
+ *
+ * Renders the user-supplied "thinking person" illustration centred in
+ * the panel with a gentle 4 s float-bob animation (custom keyframe in
+ * globals.css, honours prefers-reduced-motion). Gives an otherwise
+ * dead-feeling surface a moment of personality.
+ *
+ * Asset path: drop the file at `public/illustrations/empty-history.svg`
+ * (preferred) or `.png`. Until the asset is in place the `<Image />`
+ * component falls back to its alt text — the empty state still reads.
+ */
+function HistoryEmptyState({ message }: { message: string }) {
+  return (
+    <div className="flex h-full flex-col items-center justify-center gap-4 px-6 py-12 text-center">
+      <div className="animate-float-bob">
+        <Image
+          src="/illustrations/empty-history.svg"
+          alt=""
+          width={240}
+          height={240}
+          className="select-none"
+          priority={false}
+        />
+      </div>
+      <p className="text-p3 text-muted-foreground">{message}</p>
     </div>
   );
 }
