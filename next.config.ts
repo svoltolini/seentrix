@@ -26,10 +26,47 @@ const projectRoot = fileURLToPath(new URL(".", import.meta.url));
  * - Cross-Origin-Opener-Policy same-origin: hardens against
  *   tabnabbing / Spectre-style cross-origin attacks.
  *
- * No CSP yet — Next inline-injects scripts with nonces and Sentry's
- * tunnelRoute requires careful allow-listing. Added separately once
- * we have a CSP report-only collector wired up.
+ * Plus a Content-Security-Policy in REPORT-ONLY mode (see CSP_REPORT_ONLY
+ * below). Browsers will surface violations to /api/csp-report without
+ * blocking anything yet — once the report stream is quiet for a few
+ * days we flip the header name to enforce.
  */
+
+// Hosts the app legitimately talks to. Kept as named constants so the
+// CSP directives below stay readable.
+const SUPABASE = "https://*.supabase.co";
+const SENTRY = "https://*.sentry.io https://*.ingest.sentry.io https://*.ingest.de.sentry.io";
+const STRIPE_JS = "https://js.stripe.com";
+const STRIPE_API = "https://api.stripe.com";
+const STRIPE_CHECKOUT = "https://checkout.stripe.com";
+const TURNSTILE = "https://challenges.cloudflare.com";
+
+/**
+ * Strict-ish CSP. `'unsafe-inline'` on script-src is intentional: Next
+ * injects inline bootstrap scripts and migrating those to per-request
+ * nonces is a separate piece of work. Report-only mode means this won't
+ * block anything until we explicitly enforce — but anything served from
+ * an unexpected origin (e.g. a typoscript that loads from evil.example)
+ * will fire a violation report we can investigate.
+ */
+const CSP_REPORT_ONLY = [
+  `default-src 'self'`,
+  `script-src 'self' 'unsafe-inline' 'unsafe-eval' ${STRIPE_JS} ${TURNSTILE}`,
+  `style-src 'self' 'unsafe-inline'`,
+  `img-src 'self' data: blob: ${SUPABASE}`,
+  `font-src 'self' data:`,
+  `connect-src 'self' ${SUPABASE} ${SENTRY} ${STRIPE_API}`,
+  `frame-src 'self' ${STRIPE_JS} ${STRIPE_CHECKOUT} ${TURNSTILE}`,
+  `object-src 'none'`,
+  `base-uri 'self'`,
+  `form-action 'self' ${STRIPE_CHECKOUT}`,
+  // `frame-ancestors 'none'` is functionally redundant with
+  // `X-Frame-Options: DENY` but recommended for browsers that prefer CSP.
+  `frame-ancestors 'none'`,
+  `upgrade-insecure-requests`,
+  `report-uri /api/csp-report`,
+].join("; ");
+
 const securityHeaders = [
   {
     key: "Strict-Transport-Security",
@@ -43,6 +80,7 @@ const securityHeaders = [
     value: "camera=(), microphone=(), geolocation=(), payment=()",
   },
   { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
+  { key: "Content-Security-Policy-Report-Only", value: CSP_REPORT_ONLY },
 ];
 
 const nextConfig: NextConfig = {
