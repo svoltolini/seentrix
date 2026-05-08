@@ -53,6 +53,9 @@ export function CopilotHistory({
   const [error, setError] = useState<string | null>(null);
   const [resumingId, setResumingId] = useState<string | null>(null);
   const [deletingId, startDelete] = useTransition();
+  // Counter that bumps on retry click; used as a useEffect dep so we
+  // re-run the fetch without remounting the panel.
+  const [retryTick, setRetryTick] = useState(0);
 
   useEffect(() => {
     if (!open) return;
@@ -64,7 +67,25 @@ export function CopilotHistory({
         const res = await fetch("/api/copilot/sessions", {
           credentials: "include",
         });
-        if (!res.ok) throw new Error(String(res.status));
+        if (!res.ok) {
+          // Surface the real response body to the console so the
+          // generic "couldn't load" toast has something diagnostic
+          // backing it. Most common causes:
+          //   - 401: session expired (cookie not propagated to the
+          //     route handler — sign in again)
+          //   - 500: missing migration in prod (chat_sessions table
+          //     not created yet) or RLS / column drift
+          //   - 503: Supabase rate limit / cold start
+          const body = await res.text().catch(() => "");
+          console.warn("[copilot-history] sessions fetch failed", {
+            status: res.status,
+            statusText: res.statusText,
+            body,
+          });
+          throw new Error(
+            res.status === 401 ? "unauthorized" : `http_${res.status}`,
+          );
+        }
         const data = (await res.json()) as { sessions: SessionRow[] };
         if (alive) setSessions(data.sessions);
       } catch (err) {
@@ -74,7 +95,7 @@ export function CopilotHistory({
     return () => {
       alive = false;
     };
-  }, [open]);
+  }, [open, retryTick]);
 
   async function onPick(sessionId: string) {
     setResumingId(sessionId);
@@ -153,8 +174,32 @@ export function CopilotHistory({
           </div>
         )}
         {error && (
-          <div className="rounded-md bg-destructive/10 px-4 py-3 text-p4 text-destructive">
-            {t("history.loadError")}
+          <div className="flex h-full flex-col items-center justify-center gap-3 px-6 py-12 text-center">
+            <span
+              aria-hidden="true"
+              className="flex size-12 items-center justify-center rounded-full bg-destructive/10 text-destructive"
+            >
+              <Icon name="Warning2" size={22} variant="Bold" />
+            </span>
+            <p className="text-p3 text-foreground">
+              {t("history.loadError")}
+            </p>
+            {/* Diagnostic code — small + muted so it doesn't read as
+                shouting, but enough to debug ("http_500" → server-side
+                problem, "unauthorized" → cookie/session). */}
+            <p className="text-p4-r text-muted-foreground">
+              <code className="rounded bg-muted px-1.5 py-0.5 font-mono">
+                {error}
+              </code>
+            </p>
+            <button
+              type="button"
+              onClick={() => setRetryTick((n) => n + 1)}
+              className="mt-2 inline-flex h-9 items-center justify-center rounded-md border-[1.5px] border-border-outline bg-card px-4 text-l6 text-foreground transition-colors hover:bg-muted"
+            >
+              <Icon name="Refresh" size={14} className="mr-1.5" />
+              {t.has("history.retry") ? t("history.retry") : "Retry"}
+            </button>
           </div>
         )}
         {sessions?.length === 0 && <HistoryEmptyState message={t("history.empty")} />}

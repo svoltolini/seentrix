@@ -16,7 +16,8 @@
       "title": "Past conversations",
       "untitled": "New conversation",
       "empty": "No past conversations yet.",
-      "loadError": "Couldn't load your conversations. Please retry.",
+      "loadError": "Couldn't load your conversations.",
+      "retry": "Retry",
       "delete": "Delete"
     },
     "feedback": {
