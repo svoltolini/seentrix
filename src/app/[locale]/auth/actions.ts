@@ -10,9 +10,52 @@ import {
   resetPasswordSchema,
 } from "@/lib/validations/auth";
 import { redirect } from "next/navigation";
+import { headers } from "next/headers";
 import { logActivity } from "@/lib/activity";
+import { rateLimit, clientIpFromHeaders } from "@/lib/rate-limit";
 
 export type AuthState = { error?: string; success?: boolean } | undefined;
+
+/**
+ * Rate-limit gate for an auth action.
+ *
+ * Most actions check both an IP bucket (caps any single attacker
+ * machine) AND an account-keyed bucket (caps any single email from
+ * being hammered, even from a botnet). Either tripping returns the
+ * generic `rateLimited` error so the form surfaces a single message.
+ *
+ * Buckets live in `public.rate_limits` (existing infra used by
+ * newsletter + PSIRT); no new dependency.
+ */
+async function authRateLimit(opts: {
+  /** Distinct logical endpoint, becomes part of the key prefix. */
+  endpoint: string;
+  /** IP-keyed bucket. Always set. */
+  ipLimit: number;
+  /** Window length for both buckets. */
+  windowMs: number;
+  /** Optional account-keyed bucket — pass the email or user ID. */
+  account?: { identifier: string; limit: number };
+}): Promise<boolean> {
+  const ip = clientIpFromHeaders(await headers());
+  const ipGate = await rateLimit({
+    endpoint: `auth.${opts.endpoint}.ip`,
+    identifier: ip,
+    limit: opts.ipLimit,
+    windowMs: opts.windowMs,
+  });
+  if (!ipGate.ok) return false;
+  if (opts.account) {
+    const acctGate = await rateLimit({
+      endpoint: `auth.${opts.endpoint}.account`,
+      identifier: opts.account.identifier,
+      limit: opts.account.limit,
+      windowMs: opts.windowMs,
+    });
+    if (!acctGate.ok) return false;
+  }
+  return true;
+}
 
 export async function signup(
   _prevState: AuthState,
@@ -28,6 +71,15 @@ export async function signup(
   if (!result.success) {
     return { error: result.error.issues[0].message };
   }
+
+  // Cap account farming per IP (5/10min) and email reuse (3/10min).
+  const allowed = await authRateLimit({
+    endpoint: "signup",
+    ipLimit: 5,
+    windowMs: 10 * 60_000,
+    account: { identifier: result.data.email.toLowerCase(), limit: 3 },
+  });
+  if (!allowed) return { error: "rateLimited" };
 
   const supabase = await createClient();
   const { error } = await supabase.auth.signUp({
@@ -91,6 +143,17 @@ export async function login(
   if (!result.success) {
     return { error: result.error.issues[0].message };
   }
+
+  // Credential-stuffing defence. IP bucket (10/5min) caps any single
+  // machine; email bucket (5/5min) caps any single account from being
+  // hammered even via a botnet.
+  const allowed = await authRateLimit({
+    endpoint: "login",
+    ipLimit: 10,
+    windowMs: 5 * 60_000,
+    account: { identifier: result.data.email.toLowerCase(), limit: 5 },
+  });
+  if (!allowed) return { error: "rateLimited" };
 
   const supabase = await createClient();
   const { error } = await supabase.auth.signInWithPassword({
@@ -246,6 +309,16 @@ export async function forceChangePassword(
     return { error: "notAuthenticated" };
   }
 
+  // The user is already authed; cap per-account submission attempts so a
+  // hijacked session can't iterate password candidates.
+  const allowed = await authRateLimit({
+    endpoint: "forceChangePassword",
+    ipLimit: 10,
+    windowMs: 5 * 60_000,
+    account: { identifier: user.id, limit: 5 },
+  });
+  if (!allowed) return { error: "rateLimited" };
+
   // Update the password using the user's own session
   const { error } = await supabase.auth.updateUser({
     password,
@@ -296,6 +369,17 @@ export async function forgotPassword(
     return { error: result.error.issues[0].message };
   }
 
+  // Email-bombing defence — Supabase fires a transactional email per
+  // accepted call. IP bucket (5/10min) + per-email bucket (3/10min) so a
+  // single attacker can't deluge any one inbox.
+  const allowed = await authRateLimit({
+    endpoint: "forgotPassword",
+    ipLimit: 5,
+    windowMs: 10 * 60_000,
+    account: { identifier: result.data.email.toLowerCase(), limit: 3 },
+  });
+  if (!allowed) return { error: "rateLimited" };
+
   const supabase = await createClient();
 
   await supabase.auth.resetPasswordForEmail(result.data.email, {
@@ -322,6 +406,15 @@ export async function resetPassword(
     }
     return { error: "passwordTooShort" };
   }
+
+  // The recovery code is the real gate, but cap submission attempts so
+  // an attacker can't grind through the schema-validation step.
+  const allowed = await authRateLimit({
+    endpoint: "resetPassword",
+    ipLimit: 10,
+    windowMs: 5 * 60_000,
+  });
+  if (!allowed) return { error: "rateLimited" };
 
   const supabase = await createClient();
 
