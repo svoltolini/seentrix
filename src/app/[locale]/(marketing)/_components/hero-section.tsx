@@ -98,9 +98,10 @@ export function HeroSection() {
           <CountdownTimer />
         </div>
 
-        {/* Scroll indicator */}
+        {/* Scroll indicator — purely decorative, hidden from SRs. */}
         <div data-hero-reveal className="mt-6 animate-bounce">
           <svg
+            aria-hidden="true"
             width="24"
             height="24"
             viewBox="0 0 24 24"

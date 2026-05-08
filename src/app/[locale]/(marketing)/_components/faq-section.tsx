@@ -59,6 +59,8 @@ export function FaqSection() {
           <div className="flex flex-col gap-3">
             {faqKeys.map((key, i) => {
               const isOpen = openIndex === i;
+              const panelId = `faq-panel-${key}`;
+              const buttonId = `faq-button-${key}`;
               return (
                 <div
                   key={key}
@@ -66,14 +68,18 @@ export function FaqSection() {
                   className="rounded-md border border-border bg-background"
                 >
                   <button
+                    id={buttonId}
                     type="button"
                     onClick={() => setOpenIndex(isOpen ? null : i)}
+                    aria-expanded={isOpen}
+                    aria-controls={panelId}
                     className="flex w-full items-center justify-between gap-4 p-6 text-left"
                   >
                     <span className="text-l5 text-foreground">
                       {t(`items.${key}.question`)}
                     </span>
                     <svg
+                      aria-hidden="true"
                       width="20"
                       height="20"
                       viewBox="0 0 20 20"
@@ -92,6 +98,9 @@ export function FaqSection() {
                     </svg>
                   </button>
                   <div
+                    id={panelId}
+                    role="region"
+                    aria-labelledby={buttonId}
                     className={cn(
                       "grid transition-all duration-200",
                       isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"

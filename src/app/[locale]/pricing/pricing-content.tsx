@@ -181,6 +181,7 @@ export function PricingContent() {
                   {features.map((feature) => (
                     <li key={feature} className="flex items-start gap-2.5">
                       <svg
+                        aria-hidden="true"
                         width="16"
                         height="16"
                         viewBox="0 0 16 16"

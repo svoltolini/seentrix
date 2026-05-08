@@ -150,19 +150,31 @@ export function OnboardingForm() {
               <button
                 type="button"
                 onClick={() => fileRef.current?.click()}
-                className="group relative flex size-20 items-center justify-center overflow-hidden rounded-full bg-muted transition-colors hover:bg-muted/80"
+                aria-label={
+                  avatarPreview
+                    ? t("onboarding.avatarReplace")
+                    : t("onboarding.avatarUpload")
+                }
+                className="group relative flex size-20 items-center justify-center overflow-hidden rounded-full bg-muted transition-colors hover:bg-muted/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
               >
                 {avatarPreview ? (
                   <Image
                     src={avatarPreview}
-                    alt="Avatar preview"
+                    alt=""
                     fill
                     className="object-cover"
                   />
                 ) : (
-                  <Icon name="Camera" className="size-6 text-muted-foreground" />
+                  <Icon
+                    name="Camera"
+                    className="size-6 text-muted-foreground"
+                    aria-hidden="true"
+                  />
                 )}
-                <div className="absolute inset-0 flex items-center justify-center rounded-full bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 flex items-center justify-center rounded-full bg-black/40 opacity-0 transition-opacity group-hover:opacity-100"
+                >
                   <Icon name="Camera" className="size-5 text-white" />
                 </div>
               </button>
