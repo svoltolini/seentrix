@@ -108,13 +108,43 @@ const ACTION_ICON: Record<
   lesson_completed:       { icon: "Teacher",        tone: "success" },
 };
 
-function adaptActivity(a: ActivityItem): ActivityFeedItem {
+/**
+ * Build a human-readable description of an activity event. The old
+ * format `${action.replace("_", " ")} · ${target}` produced things like
+ * "checklist completed · " (with a trailing dot when target was empty)
+ * and "product created · MyProduct" — past-tense subjectless phrases
+ * that read as machine output. This humanizer maps each known action
+ * to a proper sentence keyed in dashboard.json (`actionLabels.*`) and
+ * falls back to a generic "{action} on {target}" template for unknown
+ * action strings.
+ */
+function humanizeActivity(
+  a: ActivityItem,
+  tAction: (key: string, vars?: Record<string, string>) => string,
+  tHas: (key: string) => boolean,
+): string {
+  const target = a.target_name ?? a.target_type ?? "";
+  const labelKey = `actionLabels.${a.action}`;
+  if (tHas(labelKey)) {
+    return tAction(labelKey, { target: target || "—" });
+  }
+  return tAction("actionLabels.fallback", {
+    action: a.action.replace(/_/g, " "),
+    target: target || "—",
+  });
+}
+
+function adaptActivity(
+  a: ActivityItem,
+  tAction: (key: string, vars?: Record<string, string>) => string,
+  tHas: (key: string) => boolean,
+): ActivityFeedItem {
   const meta = ACTION_ICON[a.action] ?? { icon: "Notification", tone: "muted" as const };
   const hasAvatar = !!(a.user_avatar_url || a.user_name);
   return {
     id: a.id,
     title: a.user_name ?? a.user_role ?? "System",
-    body: `${a.action.replace(/_/g, " ")} · ${a.target_name ?? a.target_type ?? ""}`.trim(),
+    body: humanizeActivity(a, tAction, tHas),
     occurredAt: a.created_at,
     actor: hasAvatar
       ? { name: a.user_name, avatarUrl: a.user_avatar_url ?? null }
@@ -215,7 +245,12 @@ export function DashboardContent(
       },
     }));
 
-  const activityItems = recentActivity.slice(0, 6).map(adaptActivity);
+  // Pass `t` + `t.has` into the activity adapter so the humanizer can
+  // pick the right action template per locale without leaking the
+  // `useTranslations` hook into a pure helper.
+  const activityItems = recentActivity
+    .slice(0, 6)
+    .map((a) => adaptActivity(a, t, (k) => t.has(k)));
   const todayTasks = overdueItems.slice(0, 4).map(adaptOverdueToTask);
 
   // Team strip — surface up to 5 active org members from recent activity.
@@ -233,43 +268,45 @@ export function DashboardContent(
   const teamMembers = [...seenUsers.values()];
 
   return (
-    <div className="mx-auto grid w-full max-w-[1600px] gap-6 lg:grid-cols-[1fr_370px]">
-      {/* MAIN COLUMN */}
-      <div className="flex min-w-0 flex-col gap-6">
-        {/* Header */}
-        <div>
-          <h1 className="text-h1 text-foreground">
-            {firstName ? t("greeting", { name: firstName }) : t("title")}
-          </h1>
-          <p className="mt-2 text-p2 text-muted-foreground">
-            {firstName ? t("greetingSubtitle") : t("subtitle")}
-          </p>
-        </div>
+    <div className="mx-auto flex w-full max-w-[1600px] flex-col gap-6">
+      {/* Greeting + profile callout — span the full width above the grid
+          so the Project Statistics card and the Calendar card start at
+          the same vertical level inside the columns below. */}
+      <div>
+        <h1 className="text-h1 text-foreground">
+          {firstName ? t("greeting", { name: firstName }) : t("title")}
+        </h1>
+        <p className="mt-2 text-p2 text-muted-foreground">
+          {firstName ? t("greetingSubtitle") : t("subtitle")}
+        </p>
+      </div>
 
-        {/* Profile-incomplete callout (only shown when settings flag missing) */}
-        {profileStatus && !profileStatus.complete && (
-          <ProfileIncompleteBanner
-            eyebrow={t("profileIncomplete.eyebrow")}
-            title={t("profileIncomplete.title")}
-            description={t("profileIncomplete.description")}
-            cta={t("profileIncomplete.cta")}
-            variant="full"
-          />
-        )}
+      {profileStatus && !profileStatus.complete && (
+        <ProfileIncompleteBanner
+          eyebrow={t("profileIncomplete.eyebrow")}
+          title={t("profileIncomplete.title")}
+          description={t("profileIncomplete.description")}
+          cta={t("profileIncomplete.cta")}
+          variant="full"
+        />
+      )}
 
-        {/* Project Statistics bar chart card */}
-        <ProjectStatisticsCard data={chartData} />
+      <div className="grid gap-6 lg:grid-cols-[1fr_370px]">
+        {/* MAIN COLUMN */}
+        <div className="flex min-w-0 flex-col gap-6">
+          {/* Project Statistics bar chart card */}
+          <ProjectStatisticsCard data={chartData} />
 
         {/* My Products — 2 hero cards */}
         {totalProducts > 0 && featured.length > 0 && (
           <section className="flex flex-col gap-4">
             <header className="flex items-center justify-between">
-              <h2 className="text-h2 text-foreground">{t.has("myProducts") ? t("myProducts") : "My Products"}</h2>
+              <h2 className="text-h2 text-foreground">{t("myProducts")}</h2>
               <Link
                 href="/app/products"
                 className="text-p3 text-primary hover:text-primary/80"
               >
-                {t.has("seeAll") ? t("seeAll") : "See all"}
+                {t("seeAll")}
               </Link>
             </header>
             <div className="grid gap-5 sm:grid-cols-2">
@@ -295,17 +332,17 @@ export function DashboardContent(
         {/* Today's tasks — overdue compliance items */}
         <section className="flex flex-col gap-4">
           <header className="flex items-center justify-between">
-            <h2 className="text-h2 text-foreground">{t.has("todayTasks") ? t("todayTasks") : "Today Tasks"}</h2>
+            <h2 className="text-h2 text-foreground">{t("todayTasks")}</h2>
             <Link
               href="/app/incidents"
               className="text-p3 text-primary hover:text-primary/80"
             >
-              {t.has("seeAll") ? t("seeAll") : "See all"}
+              {t("seeAll")}
             </Link>
           </header>
           {todayTasks.length === 0 ? (
             <div className="flex h-[121px] items-center justify-center rounded-md border border-dashed border-border-outline bg-card text-p3 text-muted-foreground">
-              {t.has("noOverdue") ? t("noOverdue") : "No overdue tasks. Nice work!"}
+              {t("noOverdue")}
             </div>
           ) : (
             <div className="flex flex-col gap-5">
@@ -315,42 +352,37 @@ export function DashboardContent(
             </div>
           )}
         </section>
-      </div>
+        </div>
 
-      {/* RIGHT RAIL — 370px. gap-6 between sections matches the p-6
-          card padding so inner spacing balances the outer frame. */}
-      <aside className="flex min-w-0 flex-col gap-6 rounded-md bg-card p-6 shadow-card-md lg:max-w-[370px]">
-        {/* Calendar */}
-        <CalendarWidget />
+        {/* RIGHT RAIL — 370px. gap-6 between sections matches the p-6
+            card padding so inner spacing balances the outer frame. */}
+        <aside className="flex min-w-0 flex-col gap-6 rounded-md bg-card p-6 shadow-card-md lg:max-w-[370px]">
+          {/* Calendar */}
+          <CalendarWidget />
 
-        {/* Meetings / today's deadlines */}
-        <section className="flex flex-col gap-4">
-          <h3 className="text-h3 text-foreground">
-            {t.has("upcomingDeadlines.title")
-              ? t("upcomingDeadlines.title")
-              : "Upcoming"}
-          </h3>
-          <MeetingsList meetings={meetings} />
-        </section>
-
-        {/* Team */}
-        {teamMembers.length > 0 && (
+          {/* Meetings / today's deadlines */}
           <section className="flex flex-col gap-4">
             <h3 className="text-h3 text-foreground">
-              {t.has("chat") ? t("chat") : "Team"}
+              {t("upcomingDeadlines.title")}
             </h3>
-            <TeamChatStrip members={teamMembers} />
+            <MeetingsList meetings={meetings} />
           </section>
-        )}
 
-        {/* Activity feed */}
-        <section className="flex flex-col gap-4">
-          <h3 className="text-h3 text-foreground">
-            {t.has("activity") ? t("activity") : "Activities"}
-          </h3>
-          <ActivityFeedWidget items={activityItems} />
-        </section>
-      </aside>
+          {/* Team */}
+          {teamMembers.length > 0 && (
+            <section className="flex flex-col gap-4">
+              <h3 className="text-h3 text-foreground">{t("chat")}</h3>
+              <TeamChatStrip members={teamMembers} />
+            </section>
+          )}
+
+          {/* Activity feed */}
+          <section className="flex flex-col gap-4">
+            <h3 className="text-h3 text-foreground">{t("activity")}</h3>
+            <ActivityFeedWidget items={activityItems} />
+          </section>
+        </aside>
+      </div>
     </div>
   );
 }

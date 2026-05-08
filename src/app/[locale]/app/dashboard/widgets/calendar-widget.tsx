@@ -6,26 +6,23 @@ import { cn } from "@/lib/utils";
 import { Icon } from "@/components/icon";
 
 /**
- * CalendarWidget — 7-day strip from Figma frame `28:1755`
- * (`data-name="Group 3"`, id `142:15750`). Geometry:
- *   container 310×119
- *   header row: month/year label (22/700) + Back/Next 34×34 round icon buttons
- *   day strip: 7 columns at gap-12 with weekday label (14/500 muted) + date
- *     (16/600 dark). Selected day has a 36×36 orange ellipse behind it.
+ * CalendarWidget — full-month grid.
  *
- * The widget is purely presentational — pass `selectedDate` to highlight a
- * day (e.g. today). Click handlers fire `onSelectDate` which the parent can
- * use to filter task/meeting widgets to that day.
+ * Layout:
+ *   - Header: "Month YYYY" (text-h4) + prev/next month icon buttons
+ *   - Weekday header row (Mon..Sun, text-p4 muted)
+ *   - 6 rows × 7 days grid (always 6 rows so the widget height is
+ *     stable across months — visually pads with previous/next month
+ *     trailing days at lower opacity)
+ *   - Today: orange accent disc
+ *   - Selected day (when different from today): primary blue ring
+ *   - Out-of-month days: muted-foreground for clear hierarchy
+ *
+ * Earlier version was a 7-day strip; user asked for the full month so
+ * deadlines and meetings can be scanned in one glance.
  */
-function startOfWeek(date: Date): Date {
-  const d = new Date(date);
-  const dow = d.getDay() === 0 ? 6 : d.getDay() - 1; // ISO Mon=0..Sun=6
-  d.setDate(d.getDate() - dow);
-  d.setHours(0, 0, 0, 0);
-  return d;
-}
 
-const DAY_KEYS = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"] as const;
+const WEEKDAY_KEYS = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"] as const;
 
 interface Props {
   selectedDate?: Date;
@@ -33,86 +30,140 @@ interface Props {
   className?: string;
 }
 
+function startOfMonthGrid(viewMonth: Date): Date {
+  // First day of the month
+  const first = new Date(viewMonth.getFullYear(), viewMonth.getMonth(), 1);
+  // Roll back to Monday of that week. ISO: Mon=0..Sun=6.
+  const isoDow = first.getDay() === 0 ? 6 : first.getDay() - 1;
+  const start = new Date(first);
+  start.setDate(first.getDate() - isoDow);
+  start.setHours(0, 0, 0, 0);
+  return start;
+}
+
+function isSameDay(a: Date, b: Date): boolean {
+  return (
+    a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() &&
+    a.getDate() === b.getDate()
+  );
+}
+
 export function CalendarWidget({
-  selectedDate = new Date(),
+  selectedDate,
   onSelectDate,
   className,
 }: Props) {
   const t = useTranslations("dashboard");
-  const [anchorWeek, setAnchorWeek] = useState(() => startOfWeek(selectedDate));
+  // `viewMonth` is the month the user is looking at; defaults to today.
+  // Kept separate from `selectedDate` so paging back doesn't change the
+  // selection (Notion-style behaviour).
+  const [viewMonth, setViewMonth] = useState<Date>(() => new Date());
+  const today = useMemo(() => new Date(), []);
 
-  const days = useMemo(() => {
+  const cells = useMemo(() => {
+    const start = startOfMonthGrid(viewMonth);
     const out: Date[] = [];
-    for (let i = 0; i < 7; i++) {
-      const d = new Date(anchorWeek);
-      d.setDate(anchorWeek.getDate() + i);
+    // 6 rows × 7 days = 42 cells. Always render 6 rows so the widget
+    // height doesn't jitter month-to-month (Feb takes 4-5 rows, others
+    // can take 6 — locking at 6 keeps the rail layout stable).
+    for (let i = 0; i < 42; i++) {
+      const d = new Date(start);
+      d.setDate(start.getDate() + i);
       out.push(d);
     }
     return out;
-  }, [anchorWeek]);
+  }, [viewMonth]);
 
-  function isSameDay(a: Date, b: Date) {
-    return (
-      a.getFullYear() === b.getFullYear() &&
-      a.getMonth() === b.getMonth() &&
-      a.getDate() === b.getDate()
-    );
+  function shiftMonth(direction: -1 | 1) {
+    const next = new Date(viewMonth);
+    next.setDate(1); // avoid Jan 31 → Mar 3 quirks when shifting
+    next.setMonth(next.getMonth() + direction);
+    setViewMonth(next);
   }
 
-  function shiftWeek(direction: -1 | 1) {
-    const next = new Date(anchorWeek);
-    next.setDate(next.getDate() + direction * 7);
-    setAnchorWeek(next);
-  }
-
-  const monthLabel = anchorWeek.toLocaleDateString(undefined, {
+  const monthLabel = viewMonth.toLocaleDateString(undefined, {
     month: "long",
     year: "numeric",
   });
 
   return (
-    <div className={cn("flex flex-col gap-6", className)}>
+    <div className={cn("flex flex-col gap-4", className)}>
       {/* Header */}
       <div className="flex items-center justify-between">
-        {/* `text-h4` (18px) instead of `text-h2` (22px) — the calendar
-            sits inside a 322px-wide rail and must not out-shout the
-            section titles around it (which use text-h3 at 20px). */}
         <p className="text-h4 text-foreground">{monthLabel}</p>
         <div className="flex items-center gap-2">
-          <NavBtn onClick={() => shiftWeek(-1)} aria-label={t.has("calendar.prev") ? t("calendar.prev") : "Previous week"}>
-            <Icon name="ArrowLeft2" size={18} className="text-muted-foreground" />
+          <NavBtn
+            onClick={() => shiftMonth(-1)}
+            aria-label={
+              t.has("calendar.prev") ? t("calendar.prev") : "Previous month"
+            }
+          >
+            <Icon
+              name="ArrowLeft2"
+              size={16}
+              className="text-muted-foreground"
+            />
           </NavBtn>
-          <NavBtn onClick={() => shiftWeek(1)} aria-label={t.has("calendar.next") ? t("calendar.next") : "Next week"}>
-            <Icon name="ArrowRight2" size={18} className="text-muted-foreground" />
+          <NavBtn
+            onClick={() => shiftMonth(1)}
+            aria-label={
+              t.has("calendar.next") ? t("calendar.next") : "Next month"
+            }
+          >
+            <Icon
+              name="ArrowRight2"
+              size={16}
+              className="text-muted-foreground"
+            />
           </NavBtn>
         </div>
       </div>
 
-      {/* Day strip */}
-      <div className="flex items-end justify-between">
-        {days.map((d, i) => {
-          const isSelected = isSameDay(d, selectedDate);
-          const dayKey = DAY_KEYS[i];
+      {/* Weekday header row */}
+      <div className="grid grid-cols-7 gap-1">
+        {WEEKDAY_KEYS.map((dayKey) => (
+          <span
+            key={dayKey}
+            className="text-center text-p4-r uppercase tracking-[0.5px] text-muted-foreground"
+          >
+            {t.has(`calendar.day.${dayKey}`)
+              ? t(`calendar.day.${dayKey}`)
+              : dayKey.charAt(0).toUpperCase() + dayKey.slice(1, 3)}
+          </span>
+        ))}
+      </div>
+
+      {/* Day grid — 6 rows × 7 cols */}
+      <div className="grid grid-cols-7 gap-1">
+        {cells.map((d) => {
+          const inMonth = d.getMonth() === viewMonth.getMonth();
+          const isToday = isSameDay(d, today);
+          const isSelected = selectedDate && isSameDay(d, selectedDate);
           return (
             <button
               key={d.toISOString()}
               type="button"
               onClick={() => onSelectDate?.(d)}
-              className="group/day flex flex-col items-center gap-2"
+              className={cn(
+                "flex aspect-square items-center justify-center rounded-md text-p3 transition-colors",
+                isToday
+                  ? "bg-accent font-semibold text-accent-foreground"
+                  : isSelected
+                    ? "ring-2 ring-primary text-foreground"
+                    : inMonth
+                      ? "text-foreground hover:bg-muted"
+                      : "text-muted-foreground/60 hover:bg-muted",
+              )}
+              aria-label={d.toLocaleDateString(undefined, {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+              aria-current={isToday ? "date" : undefined}
             >
-              <span className="text-p3 text-muted-foreground">
-                {t.has(`calendar.day.${dayKey}`) ? t(`calendar.day.${dayKey}`) : dayKey.charAt(0).toUpperCase() + dayKey.slice(1)}
-              </span>
-              <span
-                className={cn(
-                  "flex size-9 items-center justify-center rounded-full text-p2 transition-colors",
-                  isSelected
-                    ? "bg-accent text-accent-foreground"
-                    : "text-foreground hover:bg-muted",
-                )}
-              >
-                {d.getDate()}
-              </span>
+              {d.getDate()}
             </button>
           );
         })}
@@ -128,7 +179,7 @@ function NavBtn({
   return (
     <button
       type="button"
-      className="inline-flex size-[34px] items-center justify-center rounded-full border-[1.5px] border-border-outline bg-card text-foreground transition-colors hover:bg-muted"
+      className="inline-flex size-7 items-center justify-center rounded-full border-[1.5px] border-border-outline bg-card text-foreground transition-colors hover:bg-muted"
       {...props}
     >
       {children}

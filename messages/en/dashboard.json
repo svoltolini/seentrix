@@ -61,15 +61,27 @@
     "recentActivity": "Recent Activity",
     "activityEyebrow": "Audit trail",
     "activitySubtitle": "The last 10 actions across your organisation, pulled from the audit log.",
-    "activity": {
-      "assessment": "Assessment answered for {product}",
-      "checklist": "Checklist updated for {product}",
-      "sbom": "SBOM uploaded for {product}",
-      "document": "Document added for {product}",
-      "userColumn": "User",
-      "actionColumn": "Activity",
-      "dateColumn": "Date",
-      "typeColumn": "Type"
+    "activity": "Activity",
+    "activityEmpty": "Activity from your team will appear here as you work on compliance.",
+    "myProducts": "My Products",
+    "todayTasks": "Today's Tasks",
+    "seeAll": "See all",
+    "noOverdue": "No overdue tasks. Nice work.",
+    "chat": "Team",
+    "upcomingDeadlines": {
+      "title": "Upcoming"
+    },
+    "actionLabels": {
+      "product_created": "Created the product {target}",
+      "product_assessed": "Assessed {target}",
+      "checklist_completed": "Completed the checklist for {target}",
+      "vulnerability_triaged": "Triaged a vulnerability in {target}",
+      "incident_created": "Reported an incident on {target}",
+      "doc_issued": "Issued {target}",
+      "evidence_uploaded": "Uploaded evidence to {target}",
+      "member_invited": "Invited {target} to the team",
+      "lesson_completed": "Completed the lesson {target}",
+      "fallback": "{action} on {target}"
     },
     "activityType": {
       "assessment": "Assessment",

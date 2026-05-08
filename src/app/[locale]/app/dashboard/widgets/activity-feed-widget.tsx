@@ -73,8 +73,7 @@ export function ActivityFeedWidget({ items, emptyMessage }: Props) {
   if (items.length === 0) {
     return (
       <p className="rounded-md border border-dashed border-border-outline bg-muted px-4 py-6 text-center text-p4 text-muted-foreground">
-        {emptyMessage ??
-          (t.has("activity.empty") ? t("activity.empty") : "No recent activity.")}
+        {emptyMessage ?? t("activityEmpty")}
       </p>
     );
   }
