@@ -132,7 +132,16 @@
     },
     "toast": {
       "saved": "Saved",
-      "saveFailed": "Couldn't save"
+      "saveFailed": "Couldn't save",
+      "commentRequired": "Add a note before changing the status — every status change is recorded in the audit log."
+    },
+    "conversation": {
+      "empty": "No comments yet. Start the thread with the first note.",
+      "placeholder": "Add a note explaining what changed and why…",
+      "changeStatus": "Set status to",
+      "noteRequired": "Add a note before changing the status",
+      "send": "Add comment",
+      "unknownUser": "Unknown user"
     }
   }
 }

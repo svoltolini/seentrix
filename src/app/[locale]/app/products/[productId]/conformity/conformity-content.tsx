@@ -3,6 +3,7 @@
 import { useMemo, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Icon } from "@/components/icon";
@@ -11,11 +12,14 @@ import { StaggerReveal } from "@/components/stagger-reveal";
 import { useToast } from "@/components/ui/toast";
 import { useLocaleDate } from "@/lib/locale-date";
 import {
+  addStepComment,
   issueDeclaration,
   setStepStatus,
   updateNotifiedBody,
   type ConformityState,
+  type ConformityStep,
   type ConformityStepStatus,
+  type StepComment,
 } from "./actions";
 
 const STATUS_COLOR: Record<ConformityStepStatus, string> = {
@@ -76,11 +80,30 @@ export function ConformityContent({
     state.route === "module_b_c" ||
     state.route === "european_certification";
 
+  /**
+   * Apply a status change. Requires a non-empty comment body — that
+   * comment is appended to the step's audit-log thread alongside the
+   * status update so the timeline always carries the "why" behind
+   * the "what". Status flips optimistically; the comment lands
+   * optimistically with a temporary id, then we swap in the real
+   * server-issued id once the action returns.
+   */
   async function applyStep(
     key: string,
     status: ConformityStepStatus,
-    notes?: string,
+    commentBody: string,
   ) {
+    const trimmed = commentBody.trim();
+    if (!trimmed) {
+      toast({ type: "error", message: t("toast.commentRequired") });
+      return;
+    }
+    const optimistic: StepComment = {
+      id: `pending-${Math.random().toString(36).slice(2)}`,
+      body: trimmed,
+      created_at: new Date().toISOString(),
+      user: null, // server resolves the author on the round-trip
+    };
     setState((prev) => ({
       ...prev,
       steps: prev.steps.map((s) =>
@@ -88,16 +111,88 @@ export function ConformityContent({
           ? {
               ...s,
               status,
-              notes: notes ?? s.notes,
               completed_at:
                 status === "complete" ? new Date().toISOString() : null,
+              comments: [...s.comments, optimistic],
             }
           : s,
       ),
     }));
-    const res = await setStepStatus(productId, key, status, notes);
-    if (res.error) toast({ type: "error", message: t("toast.saveFailed") });
-    else toast({ type: "success", message: t("toast.saved") });
+    const res = await setStepStatus(productId, key, status, trimmed);
+    if (res.error) {
+      toast({ type: "error", message: t("toast.saveFailed") });
+      return;
+    }
+    if (res.comment) {
+      setState((prev) => ({
+        ...prev,
+        steps: prev.steps.map((s) =>
+          s.key === key
+            ? {
+                ...s,
+                comments: s.comments.map((c) =>
+                  c.id === optimistic.id ? res.comment! : c,
+                ),
+              }
+            : s,
+        ),
+      }));
+    }
+    toast({ type: "success", message: t("toast.saved") });
+  }
+
+  /**
+   * Append a comment without changing the status. Same optimistic
+   * pattern as `applyStep`.
+   */
+  async function applyComment(stepKey: string, body: string) {
+    const trimmed = body.trim();
+    if (!trimmed) return;
+    const optimistic: StepComment = {
+      id: `pending-${Math.random().toString(36).slice(2)}`,
+      body: trimmed,
+      created_at: new Date().toISOString(),
+      user: null,
+    };
+    setState((prev) => ({
+      ...prev,
+      steps: prev.steps.map((s) =>
+        s.key === stepKey
+          ? { ...s, comments: [...s.comments, optimistic] }
+          : s,
+      ),
+    }));
+    const res = await addStepComment(productId, stepKey, trimmed);
+    if (res.error) {
+      toast({ type: "error", message: t("toast.saveFailed") });
+      setState((prev) => ({
+        ...prev,
+        steps: prev.steps.map((s) =>
+          s.key === stepKey
+            ? {
+                ...s,
+                comments: s.comments.filter((c) => c.id !== optimistic.id),
+              }
+            : s,
+        ),
+      }));
+      return;
+    }
+    if (res.comment) {
+      setState((prev) => ({
+        ...prev,
+        steps: prev.steps.map((s) =>
+          s.key === stepKey
+            ? {
+                ...s,
+                comments: s.comments.map((c) =>
+                  c.id === optimistic.id ? res.comment! : c,
+                ),
+              }
+            : s,
+        ),
+      }));
+    }
   }
 
   async function saveBody(patch: {
@@ -336,44 +431,18 @@ export function ConformityContent({
                       )}
                     />
                   </button>
-                  {expanded && canWrite && (
+                  {expanded && (
                     <div className="border-t border-border bg-muted/40 px-5 py-5">
-                      <div className="flex flex-wrap gap-2">
-                        {(
-                          [
-                            "pending",
-                            "in_progress",
-                            "complete",
-                            "not_applicable",
-                          ] as ConformityStepStatus[]
-                        ).map((st) => (
-                          <button
-                            key={st}
-                            type="button"
-                            onClick={() => applyStep(step.key, st)}
-                            className={cn(
-                              "rounded-sm border-[1.5px] px-3 py-1.5 text-l6-plus transition-colors",
-                              step.status === st
-                                ? "border-[color:var(--c)] bg-[color:var(--c)]/10 text-[color:var(--c)]"
-                                : "border-border-outline bg-card text-muted-foreground hover:text-foreground",
-                            )}
-                            style={{
-                              ["--c" as string]: STATUS_COLOR[st],
-                            }}
-                          >
-                            {tStatus(st)}
-                          </button>
-                        ))}
-                      </div>
-                      <StepNotes
-                        stepKey={step.key}
-                        initialValue={step.notes ?? ""}
-                        placeholder={t("steps.notesPlaceholder")}
-                        label={t("steps.notesLabel")}
-                        onSave={(value) =>
-                          startTransition(() =>
-                            applyStep(step.key, step.status, value),
-                          )
+                      <StepConversation
+                        step={step}
+                        canWrite={canWrite}
+                        tStatus={tStatus}
+                        t={t}
+                        onApplyStatus={(status, body) =>
+                          applyStep(step.key, status, body)
+                        }
+                        onApplyComment={(body) =>
+                          applyComment(step.key, body)
                         }
                       />
                     </div>
@@ -602,35 +671,190 @@ function BodyField({
   );
 }
 
-function StepNotes({
-  stepKey,
-  initialValue,
-  placeholder,
-  label,
-  onSave,
+// ---------------------------------------------------------------------------
+// StepConversation — the append-only audit-log thread per step
+// ---------------------------------------------------------------------------
+//
+// Layout (per Figma frame 176:16582):
+//   [comments]            chronological top → bottom
+//     avatar + name + time
+//     body bubble
+//   [composer]
+//     textarea (3 rows)
+//     status pill row + "Add comment" submit
+//
+// A non-empty comment body is mandatory both for posting a standalone
+// comment AND for changing status. Status pills are disabled until
+// the composer has content; the click then atomically appends the
+// comment + flips the status server-side (`setStepStatus` writes
+// both rows in sequence).
+//
+// Read-only members (analyst / viewer) see the thread but no composer.
+
+function initialsOf(name: string | null | undefined): string {
+  const src = name?.trim() ?? "";
+  if (!src) return "??";
+  return src
+    .split(/\s+/)
+    .map((p) => p[0] ?? "")
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+}
+
+function timeAgo(iso: string): string {
+  const ms = Date.now() - new Date(iso).getTime();
+  if (ms < 60_000) return "just now";
+  if (ms < 3_600_000) return `${Math.floor(ms / 60_000)}m ago`;
+  if (ms < 86_400_000) return `${Math.floor(ms / 3_600_000)}h ago`;
+  if (ms < 7 * 86_400_000) return `${Math.floor(ms / 86_400_000)}d ago`;
+  return new Date(iso).toLocaleDateString(undefined, {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
+function StepConversation({
+  step,
+  canWrite,
+  tStatus,
+  t,
+  onApplyStatus,
+  onApplyComment,
 }: {
-  stepKey: string;
-  initialValue: string;
-  placeholder: string;
-  label: string;
-  onSave: (value: string) => void;
+  step: ConformityStep;
+  canWrite: boolean;
+  tStatus: (key: string) => string;
+  /** Full next-intl translator handle — we need `.has()` to fall back gracefully. */
+  t: ReturnType<typeof useTranslations>;
+  onApplyStatus: (status: ConformityStepStatus, body: string) => void;
+  onApplyComment: (body: string) => void;
 }) {
-  const [local, setLocal] = useState(initialValue);
+  const [body, setBody] = useState("");
+  const trimmed = body.trim();
+  const hasBody = trimmed.length > 0;
+
   return (
-    <div className="mt-3">
-      <label className="text-l6-plus uppercase tracking-[1.5px] text-muted-foreground">
-        {label}
-      </label>
-      <Textarea
-        key={stepKey}
-        value={local}
-        onChange={(e) => setLocal(e.target.value)}
-        onBlur={() => {
-          if (local !== initialValue) onSave(local);
-        }}
-        placeholder={placeholder}
-        className="mt-1.5 min-h-20"
-      />
+    <div className="flex flex-col gap-4">
+      {/* Comment thread */}
+      {step.comments.length === 0 ? (
+        <p className="text-p4 text-muted-foreground">
+          {t.has("conversation.empty")
+            ? t("conversation.empty")
+            : "No comments yet. Start the thread with the first note."}
+        </p>
+      ) : (
+        <ul className="flex flex-col gap-3">
+          {step.comments.map((c) => (
+            <li key={c.id} className="flex items-start gap-3">
+              <Avatar size="sm" className="ring-2 ring-card">
+                <AvatarImage
+                  src={c.user?.avatar_url ?? undefined}
+                  alt=""
+                />
+                <AvatarFallback>{initialsOf(c.user?.name)}</AvatarFallback>
+              </Avatar>
+              <div className="flex min-w-0 flex-1 flex-col gap-1">
+                <div className="flex items-baseline gap-2">
+                  <p className="text-l6 text-foreground">
+                    {c.user?.name ??
+                      (t.has("conversation.unknownUser")
+                        ? t("conversation.unknownUser")
+                        : "Unknown user")}
+                  </p>
+                  <p className="text-p4 text-muted-foreground">
+                    {timeAgo(c.created_at)}
+                  </p>
+                </div>
+                <p className="whitespace-pre-wrap rounded-md bg-card px-3 py-2 text-p3 text-foreground shadow-card-sm">
+                  {c.body}
+                </p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {/* Composer + status pills (write-capable members only) */}
+      {canWrite && (
+        <div className="flex flex-col gap-3 rounded-md bg-card p-4 shadow-card-sm">
+          <Textarea
+            value={body}
+            onChange={(e) => setBody(e.target.value)}
+            placeholder={
+              t.has("conversation.placeholder")
+                ? t("conversation.placeholder")
+                : "Add a note for this step…"
+            }
+            rows={3}
+            className="resize-none"
+          />
+
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-l6-plus uppercase tracking-wider text-muted-foreground">
+                {t.has("conversation.changeStatus")
+                  ? t("conversation.changeStatus")
+                  : "Set status to"}
+              </span>
+              {(
+                [
+                  "pending",
+                  "in_progress",
+                  "complete",
+                  "not_applicable",
+                ] as ConformityStepStatus[]
+              ).map((st) => (
+                <button
+                  key={st}
+                  type="button"
+                  disabled={!hasBody || st === step.status}
+                  onClick={() => {
+                    onApplyStatus(st, trimmed);
+                    setBody("");
+                  }}
+                  className={cn(
+                    "rounded-sm border-[1.5px] px-3 py-1.5 text-l6-plus transition-colors",
+                    st === step.status
+                      ? "border-[color:var(--c)] bg-[color:var(--c)]/10 text-[color:var(--c)]"
+                      : "border-border-outline bg-card text-muted-foreground hover:text-foreground",
+                    "disabled:cursor-not-allowed disabled:opacity-50",
+                  )}
+                  style={{ ["--c" as string]: STATUS_COLOR[st] }}
+                  title={
+                    !hasBody
+                      ? t.has("conversation.noteRequired")
+                        ? t("conversation.noteRequired")
+                        : "Add a note first"
+                      : undefined
+                  }
+                >
+                  {tStatus(st)}
+                </button>
+              ))}
+            </div>
+
+            <button
+              type="button"
+              disabled={!hasBody}
+              onClick={() => {
+                onApplyComment(trimmed);
+                setBody("");
+              }}
+              className={cn(
+                "inline-flex h-9 items-center gap-1.5 rounded-sm bg-primary px-3 text-l6 text-primary-foreground transition-colors hover:bg-primary/90",
+                "disabled:cursor-not-allowed disabled:opacity-50",
+              )}
+            >
+              <Icon name="Send" size={14} />
+              {t.has("conversation.send")
+                ? t("conversation.send")
+                : "Add comment"}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

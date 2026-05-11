@@ -16,11 +16,32 @@ export type ConformityStepStatus =
   | "complete"
   | "not_applicable";
 
+export interface StepComment {
+  id: string;
+  body: string;
+  created_at: string;
+  /** Snapshot of the author at comment time. `null` user_id means the
+   *  account has since been deleted; we still want to render the body
+   *  for audit-log purposes, with an "unknown user" fallback. */
+  user: {
+    id: string | null;
+    name: string | null;
+    avatar_url: string | null;
+    role: string | null;
+  } | null;
+}
+
 export interface ConformityStep {
   id?: string;
   key: string;
   status: ConformityStepStatus;
+  /**
+   * @deprecated single-line notes were replaced by the comment thread
+   * (see `comments` below). Kept on the row for backwards-compat with
+   * pre-migration data but no longer rendered.
+   */
   notes: string | null;
+  comments: StepComment[];
   completed_at: string | null;
   completed_by: string | null;
 }
@@ -209,6 +230,55 @@ export async function loadConformity(
     });
   }
 
+  // Fetch the comment thread for every step in one round-trip. The
+  // RLS policy on `product_conformity_step_comments` already enforces
+  // org isolation; joining `users` gives us the author snapshot for
+  // each comment without a second query.
+  const { data: commentRows } = await supabase
+    .from("product_conformity_step_comments")
+    .select(
+      "id, step_key, body, created_at, user_id, user:users(id, full_name, avatar_url, role)",
+    )
+    .eq("product_id", productId)
+    .order("created_at", { ascending: true });
+
+  const commentsByStep = new Map<string, StepComment[]>();
+  // PostgREST returns a foreign-key join as an array even when the
+  // relation is one-to-one. Cast through `unknown` then pick the
+  // first (and only) entry per row.
+  const typedComments = (commentRows ?? []) as unknown as Array<{
+    id: string;
+    step_key: string;
+    body: string;
+    created_at: string;
+    user_id: string | null;
+    user:
+      | {
+          id: string;
+          full_name: string | null;
+          avatar_url: string | null;
+          role: string | null;
+        }
+      | null;
+  }>;
+  for (const row of typedComments) {
+    const arr = commentsByStep.get(row.step_key) ?? [];
+    arr.push({
+      id: row.id,
+      body: row.body,
+      created_at: row.created_at,
+      user: row.user
+        ? {
+            id: row.user.id,
+            name: row.user.full_name,
+            avatar_url: row.user.avatar_url,
+            role: row.user.role,
+          }
+        : { id: row.user_id, name: null, avatar_url: null, role: null },
+    });
+    commentsByStep.set(row.step_key, arr);
+  }
+
   const steps: ConformityStep[] = expected.map((k) => {
     const row = stepMap.get(k);
     return {
@@ -216,6 +286,7 @@ export async function loadConformity(
       key: k,
       status: row?.status ?? "pending",
       notes: row?.notes ?? null,
+      comments: commentsByStep.get(k) ?? [],
       completed_at: row?.completed_at ?? null,
       completed_by: row?.completed_by ?? null,
     };
@@ -275,11 +346,18 @@ export async function setStepStatus(
   productId: string,
   stepKey: string,
   status: ConformityStepStatus,
-  notes?: string,
-): Promise<{ error?: string }> {
+  /**
+   * Mandatory comment body for the status change. Persisted as a row
+   * in `product_conformity_step_comments` so the change is captured
+   * in the append-only audit log alongside any prior context.
+   */
+  comment: string,
+): Promise<{ error?: string; comment?: StepComment }> {
   const { supabase, user, role } = await getAuthContext();
   if (!user) return { error: "notAuthenticated" };
   if (!canWrite(role)) return { error: "notAuthorized" };
+  const trimmed = comment.trim();
+  if (!trimmed) return { error: "commentRequired" };
 
   const patch: Record<string, unknown> = { status };
   if (status === "complete") {
@@ -289,14 +367,48 @@ export async function setStepStatus(
     patch.completed_at = null;
     patch.completed_by = null;
   }
-  if (notes !== undefined) patch.notes = notes.trim() || null;
 
-  const { error } = await supabase
+  const { error: stepError } = await supabase
     .from("product_conformity_steps")
     .update(patch)
     .eq("product_id", productId)
     .eq("step_key", stepKey);
-  if (error) return { error: "generic" };
+  if (stepError) return { error: "generic" };
+
+  // Append the comment row. Failure here doesn't roll back the
+  // status (Supabase doesn't expose multi-table transactions to
+  // PostgREST) — the alternative would be a SECURITY DEFINER function,
+  // worth adding if we see real-world inconsistencies.
+  const { data: inserted, error: commentError } = await supabase
+    .from("product_conformity_step_comments")
+    .insert({
+      product_id: productId,
+      step_key: stepKey,
+      user_id: user.id,
+      body: trimmed,
+    })
+    .select(
+      "id, body, created_at, user:users(id, full_name, avatar_url, role)",
+    )
+    .single();
+
+  if (commentError) {
+    // Status DID land, comment didn't. Surface a soft error so the UI
+    // can show a banner without rolling back the visible state.
+    return { error: "commentSaveFailed" };
+  }
+
+  const row = inserted as unknown as {
+    id: string;
+    body: string;
+    created_at: string;
+    user: {
+      id: string;
+      full_name: string | null;
+      avatar_url: string | null;
+      role: string | null;
+    } | null;
+  };
 
   await logActivity({
     action:
@@ -308,7 +420,81 @@ export async function setStepStatus(
     metadata: { productId, stepKey, status },
   });
   revalidatePath(`/app/products/${productId}/conformity`);
-  return {};
+  return {
+    comment: {
+      id: row.id,
+      body: row.body,
+      created_at: row.created_at,
+      user: row.user
+        ? {
+            id: row.user.id,
+            name: row.user.full_name,
+            avatar_url: row.user.avatar_url,
+            role: row.user.role,
+          }
+        : null,
+    },
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Standalone comment (independent of a status change)
+// ---------------------------------------------------------------------------
+
+export async function addStepComment(
+  productId: string,
+  stepKey: string,
+  body: string,
+): Promise<{ error?: string; comment?: StepComment }> {
+  const { supabase, user, role } = await getAuthContext();
+  if (!user) return { error: "notAuthenticated" };
+  if (!canWrite(role)) return { error: "notAuthorized" };
+  const trimmed = body.trim();
+  if (!trimmed) return { error: "commentRequired" };
+
+  const { data: inserted, error } = await supabase
+    .from("product_conformity_step_comments")
+    .insert({
+      product_id: productId,
+      step_key: stepKey,
+      user_id: user.id,
+      body: trimmed,
+    })
+    .select(
+      "id, body, created_at, user:users(id, full_name, avatar_url, role)",
+    )
+    .single();
+
+  if (error) return { error: "generic" };
+
+  const row = inserted as unknown as {
+    id: string;
+    body: string;
+    created_at: string;
+    user: {
+      id: string;
+      full_name: string | null;
+      avatar_url: string | null;
+      role: string | null;
+    } | null;
+  };
+
+  revalidatePath(`/app/products/${productId}/conformity`);
+  return {
+    comment: {
+      id: row.id,
+      body: row.body,
+      created_at: row.created_at,
+      user: row.user
+        ? {
+            id: row.user.id,
+            name: row.user.full_name,
+            avatar_url: row.user.avatar_url,
+            role: row.user.role,
+          }
+        : null,
+    },
+  };
 }
 
 export async function updateNotifiedBody(
