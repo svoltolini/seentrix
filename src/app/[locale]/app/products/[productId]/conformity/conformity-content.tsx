@@ -870,10 +870,16 @@ function StepConversation({
             <p className="text-p4 text-muted-foreground">
               {hasStatusChange
                 ? t.has("conversation.pendingChange")
-                  ? t("conversation.pendingChange").replace(
-                      "{from}",
-                      tStatus(step.status),
-                    ).replace("{to}", tStatus(pendingStatus!))
+                  ? // next-intl substitutes {from} / {to} via the
+                    // second arg — passing the formatted strings
+                    // through the translator instead of doing a
+                    // post-hoc `.replace()`, which throws a
+                    // FORMATTING_ERROR at runtime when next-intl
+                    // sees unresolved ICU placeholders.
+                    t("conversation.pendingChange", {
+                      from: tStatus(step.status),
+                      to: tStatus(pendingStatus!),
+                    })
                   : `Pending: ${tStatus(step.status)} → ${tStatus(pendingStatus!)}`
                 : t.has("conversation.noteRequired")
                   ? t("conversation.noteRequired")
