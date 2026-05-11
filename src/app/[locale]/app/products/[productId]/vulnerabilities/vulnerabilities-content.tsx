@@ -388,30 +388,32 @@ export function VulnerabilitiesContent({
           data-reveal
           className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5"
         >
-          <StatCard label={t("kpi.total")} from="#066DE6" to="#FF9E55">
+          {/* KPI tiles — accent stripe tones map to palette tokens:
+              primary for "total", accent for "open", destructive for
+              the three critical-flag tiles. */}
+          <StatCard label={t("kpi.total")} from="var(--primary)">
             <p className="mt-2 text-h2 tabular-nums tracking-tight text-foreground">
               {kpis.total}
             </p>
           </StatCard>
-          <StatCard label={t("kpi.open")} from="#FF9E55" to="#FF6D00">
+          <StatCard label={t("kpi.open")} from="var(--accent)">
             <p className="mt-2 text-h2 tabular-nums tracking-tight text-foreground">
               {kpis.open}
             </p>
           </StatCard>
-          <StatCard label={t("kpi.critical")} from="#E60019" to="#FF6D00">
+          <StatCard label={t("kpi.critical")} from="var(--destructive)">
             <p className="mt-2 text-h2 tabular-nums tracking-tight text-foreground">
               {kpis.critical}
             </p>
           </StatCard>
-          <StatCard label={t("kpi.kev")} from="#E60019" to="#FF6D00">
+          <StatCard label={t("kpi.kev")} from="var(--destructive)">
             <p className="mt-2 text-h2 tabular-nums tracking-tight text-foreground">
               {kpis.kev}
             </p>
           </StatCard>
           <StatCard
             label={t("kpi.exploited")}
-            from="#E60019"
-            to="#2C3659"
+            from="var(--destructive)"
             accentDot
             pulse={kpis.exploited > 0}
           >

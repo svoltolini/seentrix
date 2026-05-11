@@ -186,23 +186,23 @@ export function ReleasesContent({
           data-reveal
           className="grid grid-cols-2 gap-3 sm:grid-cols-4"
         >
-          <StatCard label={t("kpi.total")} from="#066DE6" to="#FF9E55">
+          <StatCard label={t("kpi.total")} from="var(--primary)">
             <p className="mt-2 text-h2 tabular-nums tracking-tight text-foreground">
               {summary.total}
             </p>
           </StatCard>
-          <StatCard label={t("kpi.security")} from="#E60019" to="#FF6D00">
+          <StatCard label={t("kpi.security")} from="var(--destructive)">
             <p className="mt-2 text-h2 tabular-nums tracking-tight text-foreground">
               {summary.security}
             </p>
           </StatCard>
-          <StatCard label={t("kpi.cvesFixed")} from="#4CD964" to="#16A34A">
+          <StatCard label={t("kpi.cvesFixed")} from="var(--success)">
             <p className="mt-2 text-h2 tabular-nums tracking-tight text-foreground">
               {summary.cves}
             </p>
           </StatCard>
-          <StatCard label={t("kpi.latest")} from="#FF6D00" to="#066DE6">
-            <p className="mt-2 truncate text-h4 tracking-tight text-white">
+          <StatCard label={t("kpi.latest")} from="var(--accent)">
+            <p className="mt-2 truncate text-h4 tracking-tight text-foreground">
               {summary.latest ? summary.latest.version : "—"}
             </p>
           </StatCard>
