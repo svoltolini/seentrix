@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { FieldHelp } from "@/components/field-help";
 import { cn } from "@/lib/utils";
 import type { DocumentType } from "./actions";
 
@@ -98,6 +99,25 @@ export function DocumentForm({
 }) {
   const t = useTranslations("documents");
   const fields = DOC_FIELDS[documentType];
+
+  // Per-field `<FieldHelp />` tooltips — title/body/reference live in
+  // `documents.fields.tooltips.<labelKey>.*`. The body presence is what
+  // gates rendering: if no body is set in the translations the help
+  // icon doesn't appear. This lets us add tooltips incrementally
+  // without scattering empty `?` markers across every label.
+  const tipFor = (
+    key: string,
+  ): { title: string; body: string; reference?: string } | null => {
+    if (!t.has(`fields.tooltips.${key}.body`)) return null;
+    return {
+      title: t(`fields.tooltips.${key}.title`),
+      body: t(`fields.tooltips.${key}.body`),
+      reference: t.has(`fields.tooltips.${key}.ref`)
+        ? t(`fields.tooltips.${key}.ref`)
+        : undefined,
+    };
+  };
+
   const [formData, setFormData] = useState<Record<string, string>>(() => {
     const data: Record<string, string> = {};
     for (const field of fields) {
@@ -117,9 +137,14 @@ export function DocumentForm({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
-      {fields.map((field) => (
+      {fields.map((field) => {
+        const tip = tipFor(field.labelKey);
+        return (
         <div key={field.key} className="space-y-1.5">
-          <Label htmlFor={field.key}>{t(`fields.${field.labelKey}`)}</Label>
+          <Label htmlFor={field.key}>
+            {t(`fields.${field.labelKey}`)}
+            {tip && <FieldHelp {...tip} />}
+          </Label>
 
           {field.type === "input" && (
             <Input
@@ -183,12 +208,13 @@ export function DocumentForm({
           )}
 
           {field.hintKey && (
-            <p className="text-[11px] text-muted-foreground">
+            <p className="text-p4 text-muted-foreground">
               {t(`fields.${field.hintKey}`)}
             </p>
           )}
         </div>
-      ))}
+        );
+      })}
 
       {/* Save footer */}
       <div className="sticky bottom-0 -mx-6 border-t border-border bg-card/80 px-6 py-3 backdrop-blur-sm">

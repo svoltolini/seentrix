@@ -124,7 +124,184 @@
       "updateMechanism": "Update Mechanism",
       "updateMechanismPlaceholder": "How security updates are delivered to users…",
       "supportPeriod": "Support Period",
-      "supportPeriodPlaceholder": "e.g. 5 years from date of sale"
+      "supportPeriodPlaceholder": "e.g. 5 years from date of sale",
+      "tooltips": {
+        "manufacturerName": {
+          "title": "Manufacturer Name",
+          "body": "The legal entity that places the product on the EU market. Must match your company registration name exactly — buyers and notified bodies cross-check this against trade-register filings.",
+          "ref": "CRA Annex IV, point 1(a)"
+        },
+        "manufacturerAddress": {
+          "title": "Manufacturer Address",
+          "body": "Your registered business address, including postal code and country. Use the address on file with your tax authority — not a shipping or marketing address.",
+          "ref": "CRA Annex IV, point 1(a)"
+        },
+        "productName": {
+          "title": "Product Name",
+          "body": "The commercial name buyers see — what's printed on the packaging and in the product listing. Match it exactly to the name used in marketing collateral.",
+          "ref": "CRA Annex IV, point 2"
+        },
+        "productIdentification": {
+          "title": "Product Identification",
+          "body": "A unique identifier that distinguishes this product from other variants you ship. Could be a model number, SKU, GTIN, or hardware serial range. Buyers must be able to trace any specific unit back to this declaration.",
+          "ref": "CRA Annex IV, point 2"
+        },
+        "conformityStatement": {
+          "title": "Conformity Statement",
+          "body": "The legal sentence asserting the product meets the CRA's essential cybersecurity requirements. The default boilerplate is the wording recommended in Annex IV — leave it unless legal counsel has approved a variant.",
+          "ref": "CRA Annex IV, point 3"
+        },
+        "standardsApplied": {
+          "title": "Standards Applied",
+          "body": "Comma-separated list of the harmonised standards or technical specifications you've used to demonstrate conformity. Common examples: IEC 62443-4-2 for industrial IoT, ETSI EN 303 645 for consumer IoT, ISO/IEC 27034 for application security.",
+          "ref": "CRA Annex IV, point 4"
+        },
+        "notifiedBodyName": {
+          "title": "Notified Body Name",
+          "body": "Required only when your conformity route involves a notified body (Module B+C, H, or European cybersecurity certification). Leave blank if you've self-assessed under Module A.",
+          "ref": "CRA Annex IV, point 5"
+        },
+        "notifiedBodyNumber": {
+          "title": "Notified Body Number",
+          "body": "The four-digit number assigned to the notified body by the European Commission (e.g. 0035 for TÜV Rheinland LGA). Required whenever Notified Body Name is filled.",
+          "ref": "CRA Annex IV, point 5"
+        },
+        "place": {
+          "title": "Place of Issue",
+          "body": "The city and country where the declaration is signed. Usually your company HQ.",
+          "ref": "CRA Annex IV, point 6"
+        },
+        "date": {
+          "title": "Date of Issue",
+          "body": "The date you sign the declaration. Must be on or before the date the product is first placed on the EU market.",
+          "ref": "CRA Annex IV, point 6"
+        },
+        "signatoryName": {
+          "title": "Signatory Name",
+          "body": "Full name of the person legally authorised by the manufacturer to sign the declaration. Typically a director, CTO, or compliance officer with formal authority.",
+          "ref": "CRA Annex IV, point 7"
+        },
+        "signatoryPosition": {
+          "title": "Signatory Position",
+          "body": "The signer's job title within the manufacturer's legal entity (e.g. Chief Technology Officer, Compliance Director). Reinforces that they have authority to bind the company.",
+          "ref": "CRA Annex IV, point 7"
+        },
+        "policyScope": {
+          "title": "Policy Scope",
+          "body": "The products, versions, and services this policy covers. Be specific — buyers and researchers should be able to tell at a glance whether their finding falls under the policy.",
+          "ref": "CRA Article 13, point 2"
+        },
+        "reportingChannels": {
+          "title": "Reporting Channels",
+          "body": "Where researchers should send vulnerability reports. List at least one secure channel (email + PGP key, encrypted form, or VDP platform). RFC 9116 (security.txt) is the recommended discovery format.",
+          "ref": "CRA Article 11"
+        },
+        "responseTimeline": {
+          "title": "Response Timeline",
+          "body": "The maximum time between receiving a report and acknowledging it to the researcher. Industry baseline is 24–72 hours for initial acknowledgement, 5–10 business days for triage and severity assessment.",
+          "ref": "CRA Article 11"
+        },
+        "disclosureTimeline": {
+          "title": "Disclosure Timeline",
+          "body": "When and how you'll publish a CVE or advisory once a fix lands. The CRA pushes for coordinated disclosure aligned with the patch release; typical industry practice is 90 days from initial report.",
+          "ref": "CRA Article 11"
+        },
+        "safeHarborStatement": {
+          "title": "Safe Harbor Statement",
+          "body": "Assurance that good-faith security researchers will not face legal action or contractual penalties for finding and reporting vulnerabilities within the policy scope. Standard practice references CFAA / Computer Misuse Act safe-harbor language.",
+          "ref": "CRA Article 11"
+        },
+        "incidentTitle": {
+          "title": "Incident Title",
+          "body": "Short identifier for the incident — what you'll use in internal comms and ENISA submissions. e.g. 'INC-2026-007 — Auth bypass in firmware 2.1.4'.",
+          "ref": "CRA Article 14"
+        },
+        "incidentDate": {
+          "title": "Incident Date",
+          "body": "When the incident actually happened, not when you discovered it. If unknown, use your best estimate and note it in the description.",
+          "ref": "CRA Article 14, point 1"
+        },
+        "incidentDescription": {
+          "title": "Incident Description",
+          "body": "Plain-English summary of what happened, what asset was affected, and how it was detected. Aim for 3-5 sentences — detail goes in the impact assessment.",
+          "ref": "CRA Article 14, point 2(a)"
+        },
+        "impactAssessment": {
+          "title": "Impact Assessment",
+          "body": "The actual or expected consequences. Include the number of users / devices affected, data exposed, downtime, and any safety implications. ENISA expects severity to drive the reporting clock.",
+          "ref": "CRA Article 14, point 2(b)"
+        },
+        "mitigationActions": {
+          "title": "Mitigation Actions",
+          "body": "What you've done and what you plan to do — short-term containment, long-term remediation, and customer guidance. The CRA's 72-hour intermediate report expects a credible mitigation plan.",
+          "ref": "CRA Article 14, point 4"
+        },
+        "notificationDate": {
+          "title": "Notification Date",
+          "body": "When you notified the CSIRT / ENISA. The CRA clock requires early warning within 24 hours of becoming aware, intermediate report within 72 hours, and final report within one month.",
+          "ref": "CRA Article 14, point 3"
+        },
+        "riskTitle": {
+          "title": "Risk Title",
+          "body": "Short label for this risk — what you'd call it in a status report. e.g. 'RA-04 — Firmware integrity bypass via OTA channel'.",
+          "ref": "CRA Annex I, Part I.1"
+        },
+        "threatDescription": {
+          "title": "Threat Description",
+          "body": "What an attacker is trying to achieve and what capability they need. Cover the threat actor, attack vector, and goal. Reference STRIDE or LINDDUN categories if you've adopted a threat-model framework.",
+          "ref": "CRA Annex I, Part I.1"
+        },
+        "vulnerabilitiesIdentified": {
+          "title": "Vulnerabilities Identified",
+          "body": "The weaknesses in your product that the threat could exploit. Be concrete — link to specific code paths, design flaws, configuration defaults, or third-party components.",
+          "ref": "CRA Annex I, Part I.2"
+        },
+        "riskLevel": {
+          "title": "Risk Level",
+          "body": "Combined likelihood × impact rating after considering existing controls. Most CRA-aligned frameworks use Low / Medium / High / Critical bands; align with your company's risk-management policy if it exists.",
+          "ref": "CRA Annex I, Part I.3"
+        },
+        "mitigationPlan": {
+          "title": "Mitigation Plan",
+          "body": "The controls you're adding or strengthening to reduce the risk to an acceptable level. Include who owns each action, what 'done' looks like, and the target completion date.",
+          "ref": "CRA Annex I, Part I.4"
+        },
+        "residualRisk": {
+          "title": "Residual Risk",
+          "body": "The risk that remains after mitigations are applied. Document why this level is acceptable and which executive accepted it — auditors will ask for both.",
+          "ref": "CRA Annex I, Part I.4"
+        },
+        "techDocScope": {
+          "title": "Documentation Scope",
+          "body": "What this technical file covers — usually a single product family or hardware platform. State it explicitly so a notified body can scope their assessment.",
+          "ref": "CRA Annex VII, point 1"
+        },
+        "designDescription": {
+          "title": "Design Description",
+          "body": "High-level architecture: components, data flows, trust boundaries, and the security-relevant design choices. Diagrams beat prose — paste them in or link to an architecture deck.",
+          "ref": "CRA Annex VII, point 2"
+        },
+        "developmentProcess": {
+          "title": "Development Process",
+          "body": "How you ship secure code: SDLC stages, code review policy, static / dynamic analysis tools, dependency scanning, and security gating at each milestone. Reference your internal policy doc if you have one.",
+          "ref": "CRA Annex VII, point 3"
+        },
+        "testingResults": {
+          "title": "Testing & Verification",
+          "body": "Summary of penetration tests, fuzzing campaigns, conformance assessments, and vulnerability scans. Link to or attach the full reports; this section is the executive summary.",
+          "ref": "CRA Annex VII, point 4"
+        },
+        "updateMechanism": {
+          "title": "Update Mechanism",
+          "body": "How you deliver security updates to deployed products: OTA, app store, manual download, etc. The CRA mandates that updates be available throughout the product's support period.",
+          "ref": "CRA Annex VII, point 5"
+        },
+        "supportPeriod": {
+          "title": "Support Period",
+          "body": "The window during which you'll provide free security updates. CRA Article 13 requires a minimum of 5 years, or the expected product lifetime if longer.",
+          "ref": "CRA Article 13"
+        }
+      }
     }
   }
 }

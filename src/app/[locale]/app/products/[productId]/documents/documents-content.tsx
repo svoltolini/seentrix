@@ -68,6 +68,19 @@ const STATUS_DOT: Record<DocumentStatus, string> = {
   final: "bg-success",
 };
 
+// Tier-tinted status chip used in the editor header. Same recipe as
+// the CRA criticality chip on the products list table — palette
+// tokens for both background and text, no gradients, no per-status
+// custom hex.
+const STATUS_CHIP: Record<DocumentStatus, { bg: string; text: string }> = {
+  not_started: {
+    bg: "bg-muted",
+    text: "text-muted-foreground",
+  },
+  draft: { bg: "bg-warning/10", text: "text-warning" },
+  final: { bg: "bg-success/10", text: "text-success" },
+};
+
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
@@ -220,10 +233,17 @@ export function DocumentsContent({
     const doc = docMap.get(editingType);
     const status = getStatus(editingType);
 
+    const statusChip = STATUS_CHIP[status];
     return (
       <div className="space-y-6">
-        {/* Editor header */}
-        <div className="flex items-start gap-3">
+        {/* Editor header — breadcrumb back button on top, then a row
+            carrying the document title (text-h2) and a tier-tinted
+            status chip side-by-side. Replaces an earlier layout that
+            crammed a circular back arrow, the title, a status dot and
+            label all into one row — readable but visually noisy and
+            the status came across as a sub-line of the title rather
+            than a discrete piece of metadata. */}
+        <div className="space-y-4">
           <button
             type="button"
             onClick={() => {
@@ -231,31 +251,33 @@ export function DocumentsContent({
               setSaveError(null);
               setSaveSuccess(false);
             }}
-            className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+            className="inline-flex items-center gap-1.5 text-p3 text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:text-foreground"
           >
-            <Icon name="ChevronLeftIcon" className="size-4" />
+            <Icon name="ArrowLeft2" size={14} />
+            {t.has("editor.back") ? t("editor.back") : "Back to Documents"}
           </button>
-          <div className="min-w-0 flex-1">
-            <div className="flex items-center gap-2">
-              <h2 className="text-h3 text-foreground">
-                {t(`types.${editingType}.title`)}
-              </h2>
-              <div className="flex items-center gap-1.5">
-                <span
-                  className={cn(
-                    "size-1.5 rounded-full",
-                    STATUS_DOT[status]
-                  )}
-                />
-                <span className="text-p4 text-muted-foreground">
-                  {getStatusLabel(status)}
-                </span>
-              </div>
-            </div>
-            <p className="mt-0.5 text-p3 text-muted-foreground">
-              {t(`types.${editingType}.description`)}
-            </p>
+
+          <div className="flex flex-wrap items-center gap-3">
+            <h1 className="text-h2 text-foreground">
+              {t(`types.${editingType}.title`)}
+            </h1>
+            <span
+              className={cn(
+                "inline-flex items-center gap-1.5 rounded-sm px-2.5 py-1 text-l6-plus uppercase tracking-wider",
+                statusChip.bg,
+                statusChip.text,
+              )}
+            >
+              <span
+                className={cn("size-1.5 rounded-full", STATUS_DOT[status])}
+              />
+              {getStatusLabel(status)}
+            </span>
           </div>
+
+          <p className="max-w-3xl text-p2-r leading-relaxed text-muted-foreground">
+            {t(`types.${editingType}.description`)}
+          </p>
         </div>
 
         {/* Form */}
