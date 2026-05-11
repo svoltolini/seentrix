@@ -732,12 +732,48 @@ function StepConversation({
   onApplyComment: (body: string) => void;
 }) {
   const [body, setBody] = useState("");
+  // `pendingStatus` is a LOCAL draft — clicking a status pill no
+  // longer fires a save. The new pill selection sits in this state
+  // until the user hits the explicit Save button below. This matches
+  // the user's ask: "save only when the user taps a button to save
+  // instead of the add comment".
+  const [pendingStatus, setPendingStatus] =
+    useState<ConformityStepStatus | null>(null);
+
   const trimmed = body.trim();
   const hasBody = trimmed.length > 0;
+  const hasStatusChange =
+    pendingStatus !== null && pendingStatus !== step.status;
+  // The Save button is the single commit point. It posts the comment
+  // and (if a different status is pending) flips the status in the
+  // same round-trip via `setStepStatus`. When no status change is
+  // pending it falls through to `addStepComment` so the comment
+  // posts in isolation.
+  const canSave = hasBody;
+
+  function handleSave() {
+    if (!canSave) return;
+    if (hasStatusChange && pendingStatus) {
+      onApplyStatus(pendingStatus, trimmed);
+    } else {
+      onApplyComment(trimmed);
+    }
+    setBody("");
+    setPendingStatus(null);
+  }
+
+  // The pill row reflects either the saved status or the user's
+  // pending draft, so the highlight follows the click instantly even
+  // though no save has fired yet.
+  const displayStatus = pendingStatus ?? step.status;
 
   return (
-    <div className="flex flex-col gap-4">
-      {/* Comment thread */}
+    <div className="flex flex-col gap-5">
+      {/* Comment thread — flat bubbles per Figma 176:16582. The
+          previous render carried `shadow-card-sm` on every bubble
+          which read as visual noise stacked down the page; the
+          reference uses plain bg-muted slabs and lets the avatar +
+          metadata carry the visual hierarchy. */}
       {step.comments.length === 0 ? (
         <p className="text-p4 text-muted-foreground">
           {t.has("conversation.empty")
@@ -745,10 +781,10 @@ function StepConversation({
             : "No comments yet. Start the thread with the first note."}
         </p>
       ) : (
-        <ul className="flex flex-col gap-3">
+        <ul className="flex flex-col gap-4">
           {step.comments.map((c) => (
             <li key={c.id} className="flex items-start gap-3">
-              <Avatar size="sm" className="ring-2 ring-card">
+              <Avatar size="sm">
                 <AvatarImage
                   src={c.user?.avatar_url ?? undefined}
                   alt=""
@@ -767,7 +803,7 @@ function StepConversation({
                     {timeAgo(c.created_at)}
                   </p>
                 </div>
-                <p className="whitespace-pre-wrap rounded-md bg-card px-3 py-2 text-p3 text-foreground shadow-card-sm">
+                <p className="w-fit max-w-full whitespace-pre-wrap rounded-md bg-muted px-3 py-2 text-p3 text-foreground">
                   {c.body}
                 </p>
               </div>
@@ -776,9 +812,12 @@ function StepConversation({
         </ul>
       )}
 
-      {/* Composer + status pills (write-capable members only) */}
+      {/* Composer + status pills (write-capable members only). A
+          subtle border replaces the heavier shadow-card-sm wrapper
+          we had before; this section is visually lighter and the
+          comment thread above is the focus. */}
       {canWrite && (
-        <div className="flex flex-col gap-3 rounded-md bg-card p-4 shadow-card-sm">
+        <div className="flex flex-col gap-3 rounded-md border border-border bg-card p-4">
           <Textarea
             value={body}
             onChange={(e) => setBody(e.target.value)}
@@ -791,66 +830,72 @@ function StepConversation({
             className="resize-none"
           />
 
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="text-l6-plus uppercase tracking-wider text-muted-foreground">
-                {t.has("conversation.changeStatus")
-                  ? t("conversation.changeStatus")
-                  : "Set status to"}
-              </span>
-              {(
-                [
-                  "pending",
-                  "in_progress",
-                  "complete",
-                  "not_applicable",
-                ] as ConformityStepStatus[]
-              ).map((st) => (
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-l6-plus uppercase tracking-wider text-muted-foreground">
+              {t.has("conversation.changeStatus")
+                ? t("conversation.changeStatus")
+                : "Set status to"}
+            </span>
+            {(
+              [
+                "pending",
+                "in_progress",
+                "complete",
+                "not_applicable",
+              ] as ConformityStepStatus[]
+            ).map((st) => {
+              const active = st === displayStatus;
+              return (
                 <button
                   key={st}
                   type="button"
-                  disabled={!hasBody || st === step.status}
-                  onClick={() => {
-                    onApplyStatus(st, trimmed);
-                    setBody("");
-                  }}
+                  onClick={() =>
+                    setPendingStatus(st === step.status ? null : st)
+                  }
                   className={cn(
                     "rounded-sm border-[1.5px] px-3 py-1.5 text-l6-plus transition-colors",
-                    st === step.status
+                    active
                       ? "border-[color:var(--c)] bg-[color:var(--c)]/10 text-[color:var(--c)]"
                       : "border-border-outline bg-card text-muted-foreground hover:text-foreground",
-                    "disabled:cursor-not-allowed disabled:opacity-50",
                   )}
                   style={{ ["--c" as string]: STATUS_COLOR[st] }}
-                  title={
-                    !hasBody
-                      ? t.has("conversation.noteRequired")
-                        ? t("conversation.noteRequired")
-                        : "Add a note first"
-                      : undefined
-                  }
                 >
                   {tStatus(st)}
                 </button>
-              ))}
-            </div>
+              );
+            })}
+          </div>
 
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <p className="text-p4 text-muted-foreground">
+              {hasStatusChange
+                ? t.has("conversation.pendingChange")
+                  ? t("conversation.pendingChange").replace(
+                      "{from}",
+                      tStatus(step.status),
+                    ).replace("{to}", tStatus(pendingStatus!))
+                  : `Pending: ${tStatus(step.status)} → ${tStatus(pendingStatus!)}`
+                : t.has("conversation.noteRequired")
+                  ? t("conversation.noteRequired")
+                  : "Comments are saved to the audit log and can't be edited."}
+            </p>
             <button
               type="button"
-              disabled={!hasBody}
-              onClick={() => {
-                onApplyComment(trimmed);
-                setBody("");
-              }}
+              disabled={!canSave}
+              onClick={handleSave}
               className={cn(
-                "inline-flex h-9 items-center gap-1.5 rounded-sm bg-primary px-3 text-l6 text-primary-foreground transition-colors hover:bg-primary/90",
+                "inline-flex h-9 items-center gap-1.5 rounded-sm bg-primary px-4 text-l6 text-primary-foreground transition-colors hover:bg-primary/90",
                 "disabled:cursor-not-allowed disabled:opacity-50",
               )}
             >
               <Icon name="Send" size={14} />
-              {t.has("conversation.send")
-                ? t("conversation.send")
-                : "Add comment"}
+              {hasStatusChange
+                ? t.has("conversation.saveStatus")
+                  ? t("conversation.saveStatus")
+                  : "Save status change"
+                : t.has("conversation.save")
+                  ? t("conversation.save")
+                  : "Save comment"}
             </button>
           </div>
         </div>

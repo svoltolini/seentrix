@@ -139,7 +139,10 @@
       "empty": "No comments yet. Start the thread with the first note.",
       "placeholder": "Add a note explaining what changed and why…",
       "changeStatus": "Set status to",
-      "noteRequired": "Add a note before changing the status",
+      "noteRequired": "Comments are saved to the audit log and can't be edited or deleted.",
+      "pendingChange": "Pending change: {from} → {to}. Hit Save to commit.",
+      "save": "Save comment",
+      "saveStatus": "Save status change",
       "send": "Add comment",
       "unknownUser": "Unknown user"
     }
