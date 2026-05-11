@@ -127,12 +127,23 @@ export function ProductTimeline({
 }: Props) {
   const t = useTranslations("products");
 
-  // Cadence + window. Defaults to month-view starting on the current
-  // calendar month.
+  // Cadence + window. The default window is the month of the most
+  // recent product creation if the org has products; otherwise the
+  // current calendar month. Earlier passes always defaulted to the
+  // current month, which left the timeline visibly empty on first
+  // paint for orgs whose latest product was created in a prior
+  // month — the user reads three blank lanes as "the timeline is
+  // broken" rather than "no products in May". Snapping to the
+  // active month fixes that without removing the prev/next controls.
   const [cadence, setCadence] = useState<Cadence>("month");
-  const [windowStart, setWindowStart] = useState<Date>(() =>
-    startOfMonth(new Date()),
-  );
+  const [windowStart, setWindowStart] = useState<Date>(() => {
+    if (products.length === 0) return startOfMonth(new Date());
+    const latest = products.reduce<Date>((max, p) => {
+      const created = new Date(p.created_at);
+      return created > max ? created : max;
+    }, new Date(0));
+    return startOfMonth(latest);
+  });
 
   const today = useMemo(() => startOfDay(new Date()), []);
 
@@ -201,9 +212,38 @@ export function ProductTimeline({
   };
   for (const p of products) grouped[laneFor(p.compliance_score)].push(p);
 
+  // How many products fall inside the visible window — used to drive
+  // the timeline-level empty state below the lanes when the user
+  // pages to a barren month / week.
+  const visibleCount = useMemo(
+    () =>
+      products.filter((p) => {
+        const created = startOfDay(new Date(p.created_at));
+        return created >= windowStart && created <= windowEnd;
+      }).length,
+    [products, windowStart, windowEnd],
+  );
+
   function jumpToCurrent() {
     setWindowStart(
       cadence === "week" ? startOfWeek(new Date()) : startOfMonth(new Date()),
+    );
+  }
+
+  // Used by the empty-window hint below the lanes — snaps the
+  // window to the month/week of the most recent product so a quick
+  // click on "Jump to latest" always lands on a populated view.
+  function jumpToLatestProduct() {
+    if (products.length === 0) {
+      jumpToCurrent();
+      return;
+    }
+    const latest = products.reduce<Date>((max, p) => {
+      const created = new Date(p.created_at);
+      return created > max ? created : max;
+    }, new Date(0));
+    setWindowStart(
+      cadence === "week" ? startOfWeek(latest) : startOfMonth(latest),
     );
   }
 
@@ -366,6 +406,31 @@ export function ProductTimeline({
           t={t}
         />
       ))}
+
+      {/* Empty-window hint — only when there are products in the org
+          but none happen to fall inside the current view. Without
+          this, three blank lanes read as "the timeline is broken"
+          when the real issue is "you've paged to a month with no
+          products". The CTA jumps the window back to the month of
+          the most recent product. */}
+      {products.length > 0 && visibleCount === 0 && (
+        <div className="flex items-center justify-between gap-3 border-t border-border bg-muted/30 px-6 py-4">
+          <p className="text-p3 text-muted-foreground">
+            {t.has("timeline.emptyWindow")
+              ? t("timeline.emptyWindow")
+              : "No products created in this range."}
+          </p>
+          <button
+            type="button"
+            onClick={jumpToLatestProduct}
+            className="inline-flex h-8 items-center gap-1.5 rounded-sm border-[1.5px] border-border-outline bg-card px-3 text-l6 text-foreground transition-colors hover:border-primary hover:text-primary"
+          >
+            {t.has("timeline.jumpToLatest")
+              ? t("timeline.jumpToLatest")
+              : "Jump to latest"}
+          </button>
+        </div>
+      )}
     </div>
   );
 }

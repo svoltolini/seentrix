@@ -231,7 +231,14 @@ export function ProductCardList({ products }: Props) {
                     </span>
                   </a>
                 </TableCell>
-                <TableCell className="hidden text-muted-foreground sm:table-cell">
+                {/* All non-title cells render at `text-p2` (14/500) so
+                    the whole row reads at a single size — the title's
+                    `text-h6` (14/700) is the only weighted element,
+                    which gives a clear hierarchy without the row
+                    looking ragged. Default `<TableCell />` ships
+                    `text-p3` (13/500); we override here per cell
+                    rather than mutating the global primitive. */}
+                <TableCell className="hidden text-p2 text-muted-foreground sm:table-cell">
                   {subtitle}
                 </TableCell>
                 <TableCell className="hidden md:table-cell">
@@ -245,7 +252,7 @@ export function ProductCardList({ products }: Props) {
                       }
                     />
                   ) : (
-                    <span className="text-p4 text-muted-foreground">
+                    <span className="text-p2 text-muted-foreground">
                       {t.has("notAssessed")
                         ? t("notAssessed")
                         : "Not assessed"}
@@ -263,12 +270,12 @@ export function ProductCardList({ products }: Props) {
                         style={{ width: `${fillWidth}%` }}
                       />
                     </div>
-                    <span className="w-10 shrink-0 text-right tabular-nums text-l6-plus text-foreground">
+                    <span className="w-10 shrink-0 text-right tabular-nums text-p2 text-foreground">
                       {score}%
                     </span>
                   </div>
                 </TableCell>
-                <TableCell className="hidden text-muted-foreground lg:table-cell">
+                <TableCell className="hidden text-p2 text-muted-foreground lg:table-cell">
                   {dateLabel}
                 </TableCell>
                 <TableCell className="text-right">
@@ -367,7 +374,7 @@ function CategoryMeter({
           />
         ))}
       </span>
-      <span className={cn("text-p3 font-medium", TIER_TONE_TEXT[tier])}>
+      <span className={cn("text-p2", TIER_TONE_TEXT[tier])}>
         {label}
       </span>
     </div>

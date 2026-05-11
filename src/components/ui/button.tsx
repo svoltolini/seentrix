@@ -1,7 +1,29 @@
 import { Button as ButtonPrimitive } from "@base-ui/react/button"
 import { cva, type VariantProps } from "class-variance-authority"
+import { isValidElement } from "react"
 
 import { cn } from "@/lib/utils"
+
+/**
+ * Base UI's button primitive defaults `nativeButton` to `true`, which
+ * tells it to render a real `<button>`. When we pass `render={<a />}`
+ * (the "this button should act as a link" pattern), Base UI emits a
+ * console warning at runtime — the native-button semantics conflict
+ * with rendering an anchor.
+ *
+ * This helper sniffs the `render` prop and infers when the caller is
+ * delegating to a non-button element so we can flip `nativeButton` to
+ * `false` automatically. Anything that isn't a literal `<button>`
+ * element (including `<a>`, `<Link>`, custom components) is assumed
+ * to produce non-native markup. Callers who genuinely want native
+ * semantics with a custom render can still override by passing
+ * `nativeButton` explicitly.
+ */
+export function inferNativeButton(render: unknown): boolean {
+  if (!render) return true;
+  if (!isValidElement(render)) return true;
+  return render.type === "button";
+}
 
 /**
  * Button — Nask design system.
@@ -71,11 +93,15 @@ function Button({
   className,
   variant = "default",
   size = "default",
+  nativeButton,
+  render,
   ...props
 }: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) {
   return (
     <ButtonPrimitive
       data-slot="button"
+      render={render}
+      nativeButton={nativeButton ?? inferNativeButton(render)}
       className={cn(buttonVariants({ variant, size, className }))}
       {...props}
     />

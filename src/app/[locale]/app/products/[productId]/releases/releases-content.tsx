@@ -106,7 +106,7 @@ export function ReleasesContent({
         {/* Support period block */}
         <div
           data-reveal
-          className="overflow-hidden rounded-md bg-muted p-6"
+          className="overflow-hidden rounded-md bg-card p-6 shadow-card-md"
         >
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
@@ -187,17 +187,17 @@ export function ReleasesContent({
           className="grid grid-cols-2 gap-3 sm:grid-cols-4"
         >
           <StatCard label={t("kpi.total")} from="#066DE6" to="#FF9E55">
-            <p className="mt-2 text-h2 tabular-nums tracking-tight text-white">
+            <p className="mt-2 text-h2 tabular-nums tracking-tight text-foreground">
               {summary.total}
             </p>
           </StatCard>
           <StatCard label={t("kpi.security")} from="#E60019" to="#FF6D00">
-            <p className="mt-2 text-h2 tabular-nums tracking-tight text-white">
+            <p className="mt-2 text-h2 tabular-nums tracking-tight text-foreground">
               {summary.security}
             </p>
           </StatCard>
           <StatCard label={t("kpi.cvesFixed")} from="#4CD964" to="#16A34A">
-            <p className="mt-2 text-h2 tabular-nums tracking-tight text-white">
+            <p className="mt-2 text-h2 tabular-nums tracking-tight text-foreground">
               {summary.cves}
             </p>
           </StatCard>
@@ -232,7 +232,7 @@ export function ReleasesContent({
               </p>
             </div>
           ) : (
-            <div className="overflow-hidden rounded-md bg-muted">
+            <div className="overflow-hidden rounded-md bg-card shadow-card-md">
               <div className="divide-y divide-border">
                 {releases.map((r) => (
                   <ReleaseRow

@@ -3,6 +3,7 @@
 import * as React from "react"
 import { Icon } from "@/components/icon";
 import { Menu as MenuPrimitive } from "@base-ui/react/menu"
+import { inferNativeButton } from "./button"
 
 import { cn } from "@/lib/utils"
 
@@ -88,6 +89,8 @@ function DropdownMenuItem({
   className,
   inset,
   variant = "default",
+  nativeButton,
+  render,
   ...props
 }: MenuPrimitive.Item.Props & {
   inset?: boolean
@@ -98,6 +101,12 @@ function DropdownMenuItem({
       data-slot="dropdown-menu-item"
       data-inset={inset}
       data-variant={variant}
+      render={render}
+      // Auto-flip `nativeButton` to false when the caller uses
+      // `render={<a />}` or any other non-button element, matching
+      // the behaviour of our Button primitive. See
+      // `inferNativeButton` in ./button.tsx for the detection rule.
+      nativeButton={nativeButton ?? inferNativeButton(render)}
       className={cn(
         "group/dropdown-menu-item relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-p3 text-foreground outline-hidden select-none transition-colors",
         "focus:bg-muted focus:text-foreground",

@@ -139,39 +139,58 @@ export function ComplianceChecklist({
         </div>
       )}
 
-      {/* Score header */}
-      <div
-        className="overflow-hidden rounded-md"
-        style={{
-          background:
+      {/* Score header — white card with a tier-tinted left-edge accent
+          stripe + tinted icon block. Earlier passes used full-bleed
+          gradient cards (green/orange/red) which violated the design
+          memory rule "palette only, no per-card gradients". The tier
+          signal lives in the 4 px left stripe and the icon block tone
+          now; the rest of the card stays neutral so the score itself
+          is the readable focus. */}
+      <div className="relative overflow-hidden rounded-md bg-card shadow-card-md shadow-card-md">
+        <span
+          aria-hidden
+          className={cn(
+            "absolute inset-y-0 left-0 w-1",
             score >= 75
-              ? "linear-gradient(135deg, #4CD964, #16A34A)"
+              ? "bg-success"
               : score >= 40
-                ? "linear-gradient(135deg, #FF9E55, #FF6D00)"
-                : "linear-gradient(135deg, #E60019, #FF6D00 60%, #066DE6)",
-        }}
-      >
+                ? "bg-accent"
+                : "bg-destructive",
+          )}
+        />
         <div className="flex items-center gap-5 p-5">
-          <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-white/20">
-            <Icon
-              name="shield-check"
-              size={24}
-              className="text-white"
-            />
+          <div
+            className={cn(
+              "flex size-12 shrink-0 items-center justify-center rounded-md",
+              score >= 75
+                ? "bg-success/10 text-success"
+                : score >= 40
+                  ? "bg-accent/10 text-accent"
+                  : "bg-destructive/10 text-destructive",
+            )}
+          >
+            <Icon name="shield-check" size={24} />
           </div>
           <div className="min-w-0 flex-1">
-            <p className="text-l6-plus text-white">
+            <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
               {t("title")}
             </p>
-            <p className="text-h1 tabular-nums leading-none tracking-tight text-white">
+            <p className="text-h1 tabular-nums leading-none tracking-tight text-foreground">
               {score}%
             </p>
           </div>
         </div>
         <div className="px-5 pb-5">
-          <div className="h-3 overflow-hidden rounded-sm bg-white/25">
+          <div className="h-1.5 overflow-hidden rounded-xl bg-border">
             <div
-              className="h-full rounded-sm bg-white transition-all duration-500"
+              className={cn(
+                "h-full rounded-xl transition-all duration-500",
+                score >= 75
+                  ? "bg-success"
+                  : score >= 40
+                    ? "bg-accent"
+                    : "bg-destructive",
+              )}
               style={{ width: `${score}%` }}
             />
           </div>
@@ -212,7 +231,7 @@ export function ComplianceChecklist({
         <>
 
       {/* Part I */}
-      <div className="overflow-hidden rounded-md bg-card">
+      <div className="overflow-hidden rounded-md bg-card shadow-card-md">
         <div className="flex items-center gap-3 px-5 py-4">
           <Icon
             name="one-circle-stroke-rounded"
@@ -261,7 +280,7 @@ export function ComplianceChecklist({
       </div>
 
       {/* Part II */}
-      <div className="overflow-hidden rounded-md bg-card">
+      <div className="overflow-hidden rounded-md bg-card shadow-card-md">
         <div className="flex items-center gap-3 px-5 py-4">
           <Icon
             name="two-circle-stroke-rounded"

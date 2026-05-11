@@ -163,8 +163,14 @@ export function DocumentForm({
               value={formData[field.key]}
               onChange={(e) => updateField(field.key, e.target.value)}
               className={cn(
-                "h-11 w-full rounded-xl border border-border bg-muted px-3 text-sm transition-colors outline-none",
-                "focus-visible:border-primary"
+                // Match the Nask Input recipe: filled background with
+                // 10 px radius, no border by default, `bg-input` token.
+                // The earlier select used `rounded-xl` + `text-sm`
+                // which drifted from the design system; the new
+                // classes inherit the same look as every other form
+                // control in the app.
+                "h-11 w-full rounded-md bg-input px-3 text-p2 text-foreground transition-colors outline-none",
+                "focus-visible:ring-2 focus-visible:ring-primary/30",
               )}
             >
               <option value="">{"\u2014"}</option>

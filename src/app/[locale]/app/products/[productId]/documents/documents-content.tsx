@@ -18,45 +18,54 @@ import {
 import { DocumentForm, DOC_FIELDS } from "./document-form";
 
 // ---------------------------------------------------------------------------
-// Document type config
+// Document type config — Nask design language.
+//
+// Previously each document type was rendered as a gradient card with
+// white text (purple → orange, red → orange → blue, etc.). The design
+// memory rule is "palette only, no per-card gradients", so the type
+// signal moved into a tinted icon block on a plain white card, mirroring
+// the products list type tones. The full card stays neutral; only the
+// 40 px icon square carries the tone.
 // ---------------------------------------------------------------------------
 
 const DOCUMENT_TYPES: {
   type: DocumentType;
   iconName: string;
-  gradient: string;
+  tone: { bg: string; fg: string };
 }[] = [
   {
     type: "declaration_of_conformity",
     iconName: "checkmark-badge-01-stroke-rounded",
-    gradient: "linear-gradient(135deg, #066DE6, #FF9E55)",
+    tone: { bg: "bg-primary/10", fg: "text-primary" },
   },
   {
     type: "vulnerability_disclosure_policy",
     iconName: "shield-check",
-    gradient: "linear-gradient(135deg, #FF6D00, #066DE6)",
+    tone: { bg: "bg-accent/10", fg: "text-accent" },
   },
   {
     type: "incident_report",
     iconName: "alert-02",
-    gradient: "linear-gradient(135deg, #E60019, #FF6D00 60%, #066DE6)",
+    tone: { bg: "bg-destructive/10", fg: "text-destructive" },
   },
   {
     type: "risk_assessment",
     iconName: "alert-02",
-    gradient: "linear-gradient(135deg, #FF9E55, #FF6D00)",
+    tone: { bg: "bg-warning/10", fg: "text-warning" },
   },
   {
     type: "technical_documentation",
     iconName: "package-open-stroke-rounded",
-    gradient: "linear-gradient(135deg, #4CD964, #16A34A)",
+    tone: { bg: "bg-success/10", fg: "text-success" },
   },
 ];
 
+// Status dot tones — palette tokens, used on both the grid card and
+// the in-progress editor header.
 const STATUS_DOT: Record<DocumentStatus, string> = {
-  not_started: "bg-white/30",
-  draft: "bg-white/60",
-  final: "bg-white",
+  not_started: "bg-muted-foreground/40",
+  draft: "bg-warning",
+  final: "bg-success",
 };
 
 // ---------------------------------------------------------------------------
@@ -382,33 +391,32 @@ export function DocumentsContent({
               key={config.type}
               type="button"
               onClick={() => setEditingType(config.type)}
-              className="group text-left"
+              className="group/doc-card text-left"
             >
-              <div
-                className="flex h-full flex-col overflow-hidden rounded-md transition-all hover:-translate-y-0.5"
-                style={{ background: config.gradient }}
-              >
-                {/* Header: icon + title + status */}
+              <div className="flex h-full flex-col overflow-hidden rounded-md bg-card shadow-card-sm transition-shadow hover:shadow-card-md">
+                {/* Header: tinted icon + title + status */}
                 <div className="flex items-start gap-3 px-5 pt-5 pb-4">
-                  <div className="flex size-10 shrink-0 items-center justify-center rounded-md bg-white/15">
-                    <Icon
-                      name={config.iconName}
-                      size={18}
-                      className="text-white"
-                    />
-                  </div>
+                  <span
+                    className={cn(
+                      "flex size-10 shrink-0 items-center justify-center rounded-md",
+                      config.tone.bg,
+                      config.tone.fg,
+                    )}
+                  >
+                    <Icon name={config.iconName} size={18} />
+                  </span>
                   <div className="min-w-0 flex-1">
-                    <h3 className="text-h6 text-white">
+                    <h3 className="text-h6 text-foreground transition-colors group-hover/doc-card:text-primary">
                       {t(`types.${config.type}.title`)}
                     </h3>
                     <div className="mt-1 flex items-center gap-1.5">
                       <span
                         className={cn(
                           "size-1.5 rounded-full",
-                          STATUS_DOT[status]
+                          STATUS_DOT[status],
                         )}
                       />
-                      <span className="text-p4 text-white">
+                      <span className="text-p4 text-muted-foreground">
                         {getStatusLabel(status)}
                       </span>
                     </div>
@@ -417,20 +425,21 @@ export function DocumentsContent({
 
                 {/* Description */}
                 <div className="flex-1 px-5 pb-4">
-                  <p className="text-p3 leading-relaxed text-white">
+                  <p className="text-p3 leading-relaxed text-muted-foreground">
                     {t(`types.${config.type}.description`)}
                   </p>
                 </div>
 
-                {/* Progress bar + last updated */}
-                <div className="border-t border-black/10 px-5 py-3">
-                  <div className="h-3 w-full overflow-hidden rounded-sm bg-white/25">
+                {/* Progress bar + last updated — slim 1.5 px orange
+                    accent, matches the products list + dashboard. */}
+                <div className="border-t border-border px-5 py-3">
+                  <div className="h-1.5 w-full overflow-hidden rounded-xl bg-border">
                     <div
-                      className="h-full rounded-sm bg-white transition-all"
+                      className="h-full rounded-xl bg-accent transition-all"
                       style={{ width: `${completion}%` }}
                     />
                   </div>
-                  <span className="mt-1.5 block text-p4 text-white">
+                  <span className="mt-2 block text-p4 text-muted-foreground">
                     {doc
                       ? t("grid.lastUpdated", {
                           date: new Date(

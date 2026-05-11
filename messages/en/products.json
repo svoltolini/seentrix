@@ -13,6 +13,8 @@
       "next": "Next",
       "goToToday": "Jump to current period",
       "jumpToCurrent": "Today",
+      "emptyWindow": "No products created in this range.",
+      "jumpToLatest": "Jump to latest",
       "cadence": {
         "week": "Week",
         "month": "Month"
@@ -47,6 +49,8 @@
       "critical": "Critical"
     },
     "create": {
+      "eyebrow": "New product",
+      "sheetTitle": "Add Product",
       "title": "Add Product",
       "subtitle": "Create a new product to begin CRA compliance tracking.",
       "nameLabel": "Product name",
@@ -98,6 +102,7 @@
       "cancel": "Cancel"
     },
     "detail": {
+      "editProduct": "Edit Product",
       "tabs": {
         "overview": "Overview",
         "assessment": "Assessment",

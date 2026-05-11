@@ -389,22 +389,22 @@ export function VulnerabilitiesContent({
           className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5"
         >
           <StatCard label={t("kpi.total")} from="#066DE6" to="#FF9E55">
-            <p className="mt-2 text-h2 tabular-nums tracking-tight text-white">
+            <p className="mt-2 text-h2 tabular-nums tracking-tight text-foreground">
               {kpis.total}
             </p>
           </StatCard>
           <StatCard label={t("kpi.open")} from="#FF9E55" to="#FF6D00">
-            <p className="mt-2 text-h2 tabular-nums tracking-tight text-white">
+            <p className="mt-2 text-h2 tabular-nums tracking-tight text-foreground">
               {kpis.open}
             </p>
           </StatCard>
           <StatCard label={t("kpi.critical")} from="#E60019" to="#FF6D00">
-            <p className="mt-2 text-h2 tabular-nums tracking-tight text-white">
+            <p className="mt-2 text-h2 tabular-nums tracking-tight text-foreground">
               {kpis.critical}
             </p>
           </StatCard>
           <StatCard label={t("kpi.kev")} from="#E60019" to="#FF6D00">
-            <p className="mt-2 text-h2 tabular-nums tracking-tight text-white">
+            <p className="mt-2 text-h2 tabular-nums tracking-tight text-foreground">
               {kpis.kev}
             </p>
           </StatCard>
@@ -415,7 +415,7 @@ export function VulnerabilitiesContent({
             accentDot
             pulse={kpis.exploited > 0}
           >
-            <p className="mt-2 text-h2 tabular-nums tracking-tight text-white">
+            <p className="mt-2 text-h2 tabular-nums tracking-tight text-foreground">
               {kpis.exploited}
             </p>
           </StatCard>
@@ -424,7 +424,7 @@ export function VulnerabilitiesContent({
         {/* ── Filter bar ── */}
         <div
           data-reveal
-          className="overflow-hidden rounded-md bg-muted"
+          className="overflow-hidden rounded-md bg-card shadow-card-md"
         >
           {/* Search row — takes full width for scannability */}
           <div className="border-b border-border p-3">
@@ -496,14 +496,14 @@ export function VulnerabilitiesContent({
             <ToggleChip
               active={kevOnly}
               label={t("filter.kevOnly")}
-              color="#DC2626"
+              color="var(--destructive)"
               onClick={() => setKevOnly((v) => !v)}
             />
 
             <ToggleChip
               active={exploitOnly}
               label={t("filter.exploitedOnly")}
-              color="#DC2626"
+              color="var(--destructive)"
               onClick={() => setExploitOnly((v) => !v)}
             />
 
@@ -609,7 +609,7 @@ export function VulnerabilitiesContent({
         {/* ── Table ── */}
         <div
           data-reveal
-          className="overflow-hidden rounded-md bg-muted"
+          className="overflow-hidden rounded-md bg-card shadow-card-md"
         >
           <div className="flex items-center border-b border-border px-4 py-2.5 text-h6 text-muted-foreground">
             {canWrite && (

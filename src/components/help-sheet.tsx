@@ -4,8 +4,14 @@ import * as React from "react";
 import { Dialog as SheetPrimitive } from "@base-ui/react/dialog";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { cn } from "@/lib/utils";
 import { Icon } from "@/components/icon";
+import {
+  SideSheetBackdrop,
+  SideSheetBody,
+  SideSheetHero,
+  SideSheetFooter,
+  SideSheetPopup,
+} from "@/components/side-sheet";
 import { useCurrentLessonId } from "@/lib/academy/current-lesson-context";
 import {
   ACADEMY_LESSONS,
@@ -102,50 +108,19 @@ export function HelpSheet({
     <SheetPrimitive.Root {...rootProps}>
       {children}
       <SheetPrimitive.Portal>
-        <SheetPrimitive.Backdrop className="fixed inset-0 z-50 bg-foreground/20 backdrop-blur-sm transition-opacity duration-200 data-ending-style:opacity-0 data-starting-style:opacity-0" />
-        <SheetPrimitive.Popup
-          data-slot="help-sheet"
-          className={cn(
-            "fixed inset-y-0 right-0 z-50 flex h-full w-full flex-col overflow-hidden bg-card text-p3 text-card-foreground shadow-card-lg transition duration-200 ease-in-out sm:max-w-md",
-            "data-ending-style:translate-x-[2.5rem] data-ending-style:opacity-0 data-starting-style:translate-x-[2.5rem] data-starting-style:opacity-0",
-          )}
-        >
-          {/* HERO — soft primary wash, centralises the "what am I looking
-              at" identity (eyebrow / title / lede) at the top of every
-              side panel in the app. */}
-          <div className="flex items-start justify-between gap-3 border-b border-border bg-primary/5 px-6 pb-6 pt-7">
-            <div className="flex min-w-0 flex-col gap-2">
-              <span className="text-l6-plus uppercase tracking-[2.5px] text-primary">
-                {eyebrow}
-              </span>
-              <SheetPrimitive.Title
-                data-slot="help-sheet-title"
-                className="text-h2 text-foreground"
-              >
-                {title}
-              </SheetPrimitive.Title>
-              {description && (
-                <SheetPrimitive.Description
-                  data-slot="help-sheet-description"
-                  className="text-p2-r leading-relaxed text-muted-foreground"
-                >
-                  {description}
-                </SheetPrimitive.Description>
-              )}
-            </div>
-            <SheetPrimitive.Close
-              type="button"
-              className="flex size-8 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
-              aria-label={t("close")}
-            >
-              <Icon name="cancel-circle-half-dot-stroke-rounded" size={18} />
-            </SheetPrimitive.Close>
-          </div>
+        <SideSheetBackdrop />
+        <SideSheetPopup data-slot="help-sheet">
+          <SideSheetHero
+            eyebrow={eyebrow}
+            title={title}
+            description={description}
+            closeLabel={t("close")}
+          />
 
           {/* BODY — scrollable content. gap-5 between blocks so optional
               pieces (reference, related terms, academy link) compose
               cleanly without manual margin tuning per call site. */}
-          <div className="flex-1 space-y-5 overflow-y-auto px-6 py-5">
+          <SideSheetBody>
             {body && (
               <div className="text-p3 leading-relaxed text-muted-foreground">
                 {body}
@@ -222,16 +197,12 @@ export function HelpSheet({
                 </div>
               </Link>
             )}
-          </div>
+          </SideSheetBody>
 
           {/* FOOTER — optional anchored region for primary CTAs +
-              disclosure copy. Sticks below the scrollable body. */}
-          {footer && (
-            <div className="border-t border-border bg-card px-6 py-4">
-              {footer}
-            </div>
-          )}
-        </SheetPrimitive.Popup>
+              disclosure copy. */}
+          {footer && <SideSheetFooter>{footer}</SideSheetFooter>}
+        </SideSheetPopup>
       </SheetPrimitive.Portal>
     </SheetPrimitive.Root>
   );

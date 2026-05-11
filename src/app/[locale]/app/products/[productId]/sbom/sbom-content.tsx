@@ -3,6 +3,7 @@
 import { useState, useCallback, useTransition, useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
+import { cn } from "@/lib/utils";
 import { Icon } from "@/components/icon";
 import {
   uploadSbom,
@@ -177,11 +178,23 @@ export function SbomContent({
     });
   }
 
+  // Severity tones — palette tokens, used as a left-edge accent stripe
+  // on the white aggregate cards. Replaces per-card gradient backgrounds
+  // (red→orange→blue etc.) which violated the design memory rule
+  // "palette only, no per-card gradients".
   const SEVERITY_CARDS = [
-    { key: "critical" as const, gradient: "linear-gradient(135deg, #E60019, #FF6D00 60%, #066DE6)" },
-    { key: "high" as const, gradient: "linear-gradient(135deg, #FF9E55, #FF6D00)" },
-    { key: "medium" as const, gradient: "linear-gradient(135deg, #066DE6, #FF9E55)" },
-    { key: "low" as const, gradient: "linear-gradient(135deg, #2C3659, #4B5670)" },
+    {
+      key: "critical" as const,
+      tone: "text-destructive",
+      stripe: "bg-destructive",
+    },
+    { key: "high" as const, tone: "text-warning", stripe: "bg-warning" },
+    { key: "medium" as const, tone: "text-primary", stripe: "bg-primary" },
+    {
+      key: "low" as const,
+      tone: "text-muted-foreground",
+      stripe: "bg-muted-foreground/50",
+    },
   ];
 
   return (
@@ -218,16 +231,27 @@ export function SbomContent({
             {SEVERITY_CARDS.map((s, i) => (
               <div
                 key={s.key}
-                className="overflow-hidden rounded-md px-4 py-3 opacity-0"
+                className="relative overflow-hidden rounded-md bg-card px-4 py-3 opacity-0 shadow-card-sm"
                 style={{
-                  background: s.gradient,
                   animation: `fade-in-up 0.5s ease-out ${i * 100}ms forwards`,
                 }}
               >
-                <p className="text-l6-plus uppercase tracking-wider text-white">
+                {/* Left-edge tone accent — same recipe as the
+                    vulnerability row severity strip, ties the
+                    aggregate counts to the per-row colour key. */}
+                <span
+                  aria-hidden
+                  className={cn("absolute inset-y-0 left-0 w-1", s.stripe)}
+                />
+                <p
+                  className={cn(
+                    "text-l6-plus uppercase tracking-wider",
+                    s.tone,
+                  )}
+                >
                   {t(`scan.severity.${s.key}`)}
                 </p>
-                <p className="mt-1 text-h2 tabular-nums text-white">
+                <p className="mt-1 text-h2 tabular-nums text-foreground">
                   {aggregateStats[s.key]}
                 </p>
               </div>
