@@ -350,9 +350,7 @@ export function ConformityContent({
                           <button
                             key={st}
                             type="button"
-                            onClick={() =>
-                              startTransition(() => applyStep(step.key, st))
-                            }
+                            onClick={() => applyStep(step.key, st)}
                             className={cn(
                               "rounded-sm border-[1.5px] px-3 py-1.5 text-l6-plus transition-colors",
                               step.status === st
@@ -532,22 +530,35 @@ function GateTile({
   okLabel: string;
   notLabel: string;
 }) {
-  const color = ok ? "var(--success)" : "var(--warning)";
+  // Gate tiles sit inside the conformity hero (already bg-card), so
+  // they need a subtle inset look — bg-muted/40 carries it without
+  // competing with the parent card's shadow. A 3 px left-edge tone
+  // stripe communicates the gate state (green = ready, orange =
+  // pending) consistent with the severity-bar pattern used on
+  // vulnerabilities, releases, and the compliance-score hero.
   return (
-    <div
-      className="rounded-md border px-4 py-3"
-      style={{ borderColor: `${color}33` }}
-    >
-      <p className="text-l6-plus uppercase tracking-wide text-muted-foreground">
+    <div className="relative overflow-hidden rounded-md bg-muted/40 px-4 py-3">
+      <span
+        aria-hidden
+        className={cn(
+          "absolute inset-y-0 left-0 w-1",
+          ok ? "bg-success" : "bg-warning",
+        )}
+      />
+      <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
         {label}
       </p>
       <p
-        className="mt-1 flex items-center gap-1.5 text-l6"
-        style={{ color }}
+        className={cn(
+          "mt-1 flex items-center gap-1.5 text-l5",
+          ok ? "text-success" : "text-warning",
+        )}
       >
         <span
-          className="size-1.5 rounded-full"
-          style={{ backgroundColor: color }}
+          className={cn(
+            "size-1.5 rounded-full",
+            ok ? "bg-success" : "bg-warning",
+          )}
         />
         {ok ? okLabel : notLabel}
       </p>
