@@ -386,18 +386,28 @@ export function ConformityContent({
           </div>
         </div>
 
-        {/* DoC gate + CTA — same gradient language as the onboarding/profile
-            banners so the flagship "issue the declaration" action pops as the
-            hero moment of the page. Text flips to white on the dark gradient
-            and the primary CTA uses a white pill for maximum contrast. */}
+        {/* DoC gate + CTA — bg-primary + radial dot-grid overlay,
+            same recipe used by the product detail hero and the
+            landing TrustSection so every "primary blue panel" in the
+            app reads as one family. The earlier full-bleed
+            entity-role-bg.svg made this banner feel like a different
+            system. */}
         <div
           data-reveal
-          className="overflow-hidden rounded-md bg-cover bg-center"
-          style={{ backgroundImage: "url('/images/entity-role-bg.svg')" }}
+          className="relative overflow-hidden rounded-md bg-primary"
         >
-          <div className="flex flex-wrap items-start justify-between gap-4 p-6 md:p-8">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0"
+            style={{
+              backgroundImage:
+                "radial-gradient(circle, rgba(255,255,255,0.12) 1px, transparent 1px)",
+              backgroundSize: "24px 24px",
+            }}
+          />
+          <div className="relative flex flex-wrap items-start justify-between gap-4 p-6 md:p-8">
             <div className="min-w-0 flex-1">
-              <div className="mb-3 inline-flex items-center gap-2 rounded-sm bg-white/10 px-3 py-1 text-l6-plus uppercase tracking-wider text-white backdrop-blur-sm">
+              <div className="mb-3 inline-flex items-center gap-2 rounded-sm border-[1.5px] border-primary-foreground/30 bg-primary-foreground/15 px-3 py-1 text-l6-plus uppercase tracking-wider text-primary-foreground backdrop-blur-sm">
                 <span
                   className={cn(
                     "size-1.5 rounded-full",
@@ -408,14 +418,14 @@ export function ConformityContent({
                 />
                 {t("doc.eyebrow")}
               </div>
-              <h2 className="text-h3 leading-snug text-white">
+              <h2 className="text-h3 leading-snug text-primary-foreground">
                 {t("doc.title")}
               </h2>
-              <p className="mt-2 max-w-xl text-p3 text-white">
+              <p className="mt-2 max-w-xl text-p3 text-primary-foreground/90">
                 {t("doc.description")}
               </p>
               {state.declarationIssuedAt && state.declarationVersion && (
-                <p className="mt-3 font-mono text-p4 text-white">
+                <p className="mt-3 font-mono text-p4 text-primary-foreground/80">
                   {state.declarationVersion} ·{" "}
                   {t("doc.issuedOn", {
                     date: formatDate(state.declarationIssuedAt),
@@ -428,7 +438,7 @@ export function ConformityContent({
                 <button
                   type="button"
                   onClick={handleDownload}
-                  className="inline-flex items-center gap-2 rounded-sm border border-white/20 bg-white/10 px-4 py-2.5 text-l6 text-white backdrop-blur-sm transition-colors hover:bg-white/15"
+                  className="inline-flex items-center gap-2 rounded-sm border-[1.5px] border-primary-foreground/30 bg-primary-foreground/15 px-4 py-2.5 text-l6 text-primary-foreground backdrop-blur-sm transition-colors hover:bg-primary-foreground/25"
                 >
                   <Icon name="pdf-01-stroke-rounded" size={14} />
                   {t("doc.download")}
@@ -439,7 +449,7 @@ export function ConformityContent({
                   type="button"
                   onClick={handleIssue}
                   disabled={!allStepsComplete || issuing}
-                  className="inline-flex items-center gap-2 rounded-sm bg-white px-4 py-2.5 text-l6 text-foreground shadow-card-sm transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0"
+                  className="inline-flex items-center gap-2 rounded-sm bg-card px-4 py-2.5 text-l6 text-foreground shadow-card-sm transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0"
                 >
                   <Icon
                     name="checkmark-circle-01-stroke-rounded"

@@ -3,7 +3,23 @@
 import { useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
+import { Icon } from "@/components/icon";
 
+/**
+ * SbomUploadZone — drag-and-drop file picker for SBOM uploads.
+ *
+ * Matches the Figma "Attach File" drop zone (Create Project sheet,
+ * frame 173:16444): a primary-tinted dashed rectangle with a 5 %
+ * blue fill and a primary-coloured headline "Drag-and-drop files,
+ * or Browse". On drag-over the colour intensifies (10 % fill, full
+ * primary border).
+ *
+ * The earlier version painted the dashed border with an inline
+ * `<svg>` carrying a linear-gradient stroke (blue → orange) — that
+ * was a gradient border, exactly the thing the design memory rule
+ * forbids ("palette only, no per-card gradients"). The new layout
+ * uses plain Tailwind border classes, no SVG plumbing required.
+ */
 export function SbomUploadZone({
   onFile,
   uploading,
@@ -42,55 +58,31 @@ export function SbomUploadZone({
 
   return (
     <div>
-      <div
+      <button
+        type="button"
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         onClick={() => !uploading && inputRef.current?.click()}
+        disabled={uploading}
         className={cn(
-          "relative flex cursor-pointer flex-col items-center gap-1.5 rounded-md bg-muted px-6 py-8 text-center transition-colors",
-          dragOver ? "bg-primary/5" : "hover:bg-muted/60",
-          uploading && "pointer-events-none opacity-60"
+          "group/dropzone flex w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-md border-[1.5px] border-dashed px-6 py-10 text-center transition-colors",
+          dragOver
+            ? "border-primary bg-primary/10"
+            : "border-primary/30 bg-primary/5 hover:border-primary/60 hover:bg-primary/10",
+          uploading && "pointer-events-none opacity-60",
         )}
       >
-        {/* Gradient dashed border */}
-        <svg
-          className="pointer-events-none absolute inset-0 size-full"
-          preserveAspectRatio="none"
-        >
-          <defs>
-            <linearGradient
-              id="drop-border"
-              x1="0"
-              y1="0"
-              x2="1"
-              y2="1"
-            >
-              <stop offset="0%" stopColor="#066DE6" stopOpacity={dragOver ? 1 : 0.4} />
-              <stop offset="50%" stopColor="#FF6D00" stopOpacity={dragOver ? 1 : 0.4} />
-              <stop offset="100%" stopColor="#FF6D00" stopOpacity={dragOver ? 1 : 0.4} />
-            </linearGradient>
-          </defs>
-          <rect
-            x="1"
-            y="1"
-            rx="11"
-            ry="11"
-            fill="none"
-            stroke="url(#drop-border)"
-            strokeWidth="2"
-            strokeDasharray="8 5"
-            style={{ width: "calc(100% - 2px)", height: "calc(100% - 2px)" }}
-          />
-        </svg>
-
+        <span className="flex size-10 items-center justify-center rounded-md bg-primary/10 text-primary">
+          <Icon name="DocumentUpload" size={20} />
+        </span>
         {uploading ? (
           <p className="text-p3 text-muted-foreground">
             {t("upload.uploading")}
           </p>
         ) : (
           <>
-            <p className="text-l6 text-foreground">
+            <p className="text-l5 text-foreground">
               {dragOver ? t("upload.dropzoneActive") : t("upload.dropzone")}
             </p>
             <p className="text-p4 text-muted-foreground">
@@ -105,7 +97,7 @@ export function SbomUploadZone({
           className="hidden"
           onChange={handleInputChange}
         />
-      </div>
+      </button>
       {uploadError && (
         <p className="mt-2 rounded-md bg-destructive/10 px-3 py-2 text-p3 text-destructive">
           {uploadError}
