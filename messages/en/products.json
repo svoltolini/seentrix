@@ -25,6 +25,7 @@
     },
     "noProducts": "No products yet",
     "noProductsDescription": "Add your first product to start your CRA compliance journey. We'll guide you through every step.",
+    "noProductsDescriptionTopbar": "Use the “+ New Product” button in the top bar to add your first one — we'll guide you through every step.",
     "columns": {
       "name": "Name",
       "type": "Type",

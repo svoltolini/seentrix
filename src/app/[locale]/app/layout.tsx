@@ -5,6 +5,7 @@ import { ToastProvider } from "@/components/ui/toast";
 import { GsapProvider } from "@/components/gsap-provider";
 import { NavigationProgress } from "@/components/navigation-progress";
 import { CopilotProvider } from "@/components/copilot/copilot-provider";
+import { CreateProductSheet } from "@/components/products/create-product-sheet";
 import { createClient } from "@/lib/supabase/server";
 
 /**
@@ -111,6 +112,14 @@ export default async function AppLayout({ children }: { children: React.ReactNod
               </main>
             </div>
           </div>
+          {/* Global "+ New Product" side sheet. Opens when any
+              affordance navigates to `?new=product`; closes by
+              stripping the param. Mounted once at the layout level
+              so the trigger logic stays dead-simple (no shared
+              context, no global store). */}
+          <Suspense fallback={null}>
+            <CreateProductSheet />
+          </Suspense>
         </CopilotProvider>
       </GsapProvider>
     </ToastProvider>

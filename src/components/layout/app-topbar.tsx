@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
 import { usePathname } from "@/i18n/navigation";
 
 import { Button } from "@/components/ui/button";
@@ -104,16 +105,14 @@ export function AppTopbar({ user, orgName }: AppTopbarProps) {
 
       {/* RIGHT — actions */}
       <div className="flex shrink-0 items-center gap-3">
-        {/* Primary CTA — dark navy "+ New Product" */}
-        <Button
-          variant="dark"
-          size="default"
-          render={<a href="/app/products/new" />}
-          className="hidden lg:inline-flex"
-        >
-          <Icon name="Add" size={20} />
-          {t("topbar.newProduct") ?? "New Product"}
-        </Button>
+        {/* Primary CTA — dark navy "+ New Product". Opens the global
+            side sheet (mounted in `app/layout.tsx`) via `?new=product`
+            on the current path. The legacy /app/products/new route
+            still works for direct links but the sheet is the primary
+            UX now. Preserve any other query params currently on the
+            URL so e.g. dashboard filter state doesn't get nuked when
+            the user pops the sheet open. */}
+        <NewProductButton label={t("topbar.newProduct") ?? "New Product"} />
 
         {/* Notification bell — `NotificationsMenu` owns the bell + the
             popover that opens on click. Lazily fetches the last 10
@@ -207,5 +206,34 @@ export function AppTopbar({ user, orgName }: AppTopbarProps) {
         </DropdownMenu>
       </div>
     </header>
+  );
+}
+
+/**
+ * Build a href that preserves the current pathname + query params and
+ * sets `new=product` so the global `<CreateProductSheet />` opens.
+ * Hoisted so other affordances (welcome page, sidebar, etc.) can lift
+ * the same hook later without rewriting URL plumbing.
+ */
+export function useNewProductHref(): string {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams?.toString() ?? "");
+  params.set("new", "product");
+  return `${pathname}?${params.toString()}`;
+}
+
+function NewProductButton({ label }: { label: string }) {
+  const href = useNewProductHref();
+  return (
+    <Button
+      variant="dark"
+      size="default"
+      render={<a href={href} />}
+      className="hidden lg:inline-flex"
+    >
+      <Icon name="Add" size={20} />
+      {label}
+    </Button>
   );
 }

@@ -63,21 +63,16 @@ export function ProductsPageContent({
 
   return (
     <div className="mx-auto max-w-[1600px] space-y-8 pb-12">
-      {/* Page header — h1 + p2 muted matches the dashboard greeting */}
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <h1 className="text-h1 text-foreground">{t("title")}</h1>
-          <p className="mt-2 text-p2 text-muted-foreground">{t("subtitle")}</p>
-        </div>
-        {products.length > 0 && canCreate && (
-          <Link
-            href="/app/products/new"
-            className={buttonVariants({ size: "sm" })}
-          >
-            <Icon name="PlusIcon" className="size-3.5" />
-            {t("addProduct")}
-          </Link>
-        )}
+      {/* Page header — h1 + p2 muted matches the dashboard greeting.
+          The "+ Add Product" CTA used to live on the right side of
+          this row, but the topbar already carries a globally-visible
+          "+ New Product" button (which opens the `<CreateProductSheet
+          />`), so the page-level duplicate was retired. Same for the
+          empty-state CTA below — both routes now flow through the
+          topbar button + sheet. */}
+      <div>
+        <h1 className="text-h1 text-foreground">{t("title")}</h1>
+        <p className="mt-2 text-p2 text-muted-foreground">{t("subtitle")}</p>
       </div>
 
       {/* View-mode toggle — outline chips with active = primary fill.
@@ -176,23 +171,17 @@ export function ProductsPageContent({
           </div>
           <h3 className="text-h4 text-foreground">{t("noProducts")}</h3>
           <p className="mt-2 max-w-md text-p3 text-muted-foreground">
-            {t("noProductsDescription")}
+            {canCreate
+              ? (t.has("noProductsDescriptionTopbar")
+                  ? t("noProductsDescriptionTopbar")
+                  : t("noProductsDescription"))
+              : t("noProductsDescription")}
           </p>
-          {canCreate && (
-            <Link
-              href="/app/products/new"
-              className={buttonVariants({ className: "mt-8" })}
-            >
-              <Icon
-                name="PlusIcon"
-                data-icon="inline-start"
-                className="size-4"
-              />
-              {t("addProduct")}
-            </Link>
-          )}
+          {/* No CTA here — the topbar's "+ New Product" button is the
+              global entry point and stays visible on the empty state
+              too, so a second button next to it just adds noise. */}
           <AskSeentrixAI
-            className="mt-5"
+            className="mt-8"
             seed="I'm setting up my first product in Seentrix — what CRA fields do I actually need to fill in?"
             label="New to CRA? Ask Seentrix AI how to set up a product."
           />
