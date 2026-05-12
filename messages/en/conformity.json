@@ -54,6 +54,8 @@
     },
     "steps": {
       "title": "Workflow",
+      "eyebrow": "Workflow step",
+      "current": "Current status",
       "notesLabel": "Notes",
       "notesPlaceholder": "Add internal notes, links to evidence, or audit reference."
     },

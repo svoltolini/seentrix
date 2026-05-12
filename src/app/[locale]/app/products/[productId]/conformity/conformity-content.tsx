@@ -1,13 +1,21 @@
 "use client";
 
-import { useMemo, useState, useTransition } from "react";
+import { useEffect, useMemo, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
+import { Dialog as SheetPrimitive } from "@base-ui/react/dialog";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Icon } from "@/components/icon";
 import { FieldHelp } from "@/components/field-help";
+import {
+  SideSheetBackdrop,
+  SideSheetBody,
+  SideSheetFooter,
+  SideSheetHero,
+  SideSheetPopup,
+} from "@/components/side-sheet";
 import { StaggerReveal } from "@/components/stagger-reveal";
 import { useToast } from "@/components/ui/toast";
 import { useLocaleDate } from "@/lib/locale-date";
@@ -53,7 +61,10 @@ export function ConformityContent({
   const { formatDate } = useLocaleDate();
   const { toast } = useToast();
   const [state, setState] = useState(initial);
-  const [expandedKey, setExpandedKey] = useState<string | null>(null);
+  // Clicking a step opens it in a side sheet instead of expanding
+  // inline below the row. Single string here is the canonical
+  // controlled-mode pattern — `null` means closed.
+  const [openStepKey, setOpenStepKey] = useState<string | null>(null);
   const [, startTransition] = useTransition();
   const [issuing, setIssuing] = useState(false);
 
@@ -382,83 +393,64 @@ export function ConformityContent({
           <div className="divide-y divide-border">
             {state.steps.map((step) => {
               const color = STATUS_COLOR[step.status];
-              const expanded = expandedKey === step.key;
               return (
-                <div key={step.key}>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setExpandedKey((prev) =>
-                        prev === step.key ? null : step.key,
-                      )
-                    }
-                    className="group flex w-full items-center gap-3 px-5 py-3.5 text-left transition-colors hover:bg-muted/60"
+                <button
+                  key={step.key}
+                  type="button"
+                  onClick={() => setOpenStepKey(step.key)}
+                  className="group flex w-full items-center gap-3 px-5 py-3.5 text-left transition-colors hover:bg-muted/60"
+                >
+                  <span
+                    className="flex size-5 shrink-0 items-center justify-center rounded-full border"
+                    style={{
+                      borderColor: color,
+                      backgroundColor:
+                        step.status === "complete" ? color : "transparent",
+                    }}
                   >
-                    <span
-                      className="flex size-5 shrink-0 items-center justify-center rounded-full border"
-                      style={{
-                        borderColor: color,
-                        backgroundColor:
-                          step.status === "complete" ? color : "transparent",
-                      }}
-                    >
-                      {step.status === "complete" && (
-                        <Icon
-                          name="checkmark-circle-01-stroke-rounded"
-                          size={12}
-                          className="text-white"
-                        />
-                      )}
-                      {step.status === "in_progress" && (
-                        <span
-                          className="size-1.5 rounded-full"
-                          style={{ backgroundColor: color }}
-                        />
-                      )}
-                    </span>
-                    <span className="min-w-0 flex-1">
-                      <span className="block text-l6 text-foreground">
-                        {tStep(`${step.key}.title`)}
-                      </span>
-                      <span className="block text-p4 text-muted-foreground">
-                        {tStep(`${step.key}.description`)}
-                      </span>
-                    </span>
-                    <span
-                      className="shrink-0 rounded-sm px-2.5 py-0.5 text-l6-plus"
-                      style={{
-                        backgroundColor: `${color}1A`,
-                        color,
-                      }}
-                    >
-                      {tStatus(step.status)}
-                    </span>
-                    <Icon
-                      name="arrow-right-01-stroke-rounded"
-                      size={14}
-                      className={cn(
-                        "text-muted-foreground transition-transform",
-                        expanded && "rotate-90",
-                      )}
-                    />
-                  </button>
-                  {expanded && (
-                    <div className="border-t border-border bg-muted/40 px-5 py-5">
-                      <StepConversation
-                        step={step}
-                        canWrite={canWrite}
-                        tStatus={tStatus}
-                        t={t}
-                        onApplyStatus={(status, body) =>
-                          applyStep(step.key, status, body)
-                        }
-                        onApplyComment={(body) =>
-                          applyComment(step.key, body)
-                        }
+                    {step.status === "complete" && (
+                      <Icon
+                        name="checkmark-circle-01-stroke-rounded"
+                        size={12}
+                        className="text-white"
                       />
-                    </div>
+                    )}
+                    {step.status === "in_progress" && (
+                      <span
+                        className="size-1.5 rounded-full"
+                        style={{ backgroundColor: color }}
+                      />
+                    )}
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-l6 text-foreground">
+                      {tStep(`${step.key}.title`)}
+                    </span>
+                    <span className="block text-p4 text-muted-foreground">
+                      {tStep(`${step.key}.description`)}
+                    </span>
+                  </span>
+                  {step.comments.length > 0 && (
+                    <span className="inline-flex items-center gap-1 text-p4 text-muted-foreground">
+                      <Icon name="Message" size={14} />
+                      {step.comments.length}
+                    </span>
                   )}
-                </div>
+                  <span
+                    className="shrink-0 rounded-sm px-2.5 py-0.5 text-l6-plus"
+                    style={{
+                      backgroundColor: `${color}1A`,
+                      color,
+                    }}
+                  >
+                    {tStatus(step.status)}
+                  </span>
+                  <Icon
+                    name="arrow-right-01-stroke-rounded"
+                    size={14}
+                    className="text-muted-foreground transition-transform group-hover:text-foreground"
+                  />
+                </button>
               );
             })}
           </div>
@@ -542,6 +534,31 @@ export function ConformityContent({
           </div>
         </div>
       </StaggerReveal>
+
+      {/* Step detail side sheet — clicking any workflow row opens
+          this panel with the conversation thread + composer +
+          status pills, replacing the previous inline expansion.
+          Pulls the live step out of state so optimistic comment /
+          status updates flow through without re-fetching. */}
+      <StepDetailSheet
+        step={
+          openStepKey
+            ? state.steps.find((s) => s.key === openStepKey) ?? null
+            : null
+        }
+        open={openStepKey !== null}
+        onOpenChange={(open) => !open && setOpenStepKey(null)}
+        canWrite={canWrite}
+        tStep={tStep}
+        tStatus={tStatus}
+        t={t}
+        onApplyStatus={(status, body) => {
+          if (openStepKey) applyStep(openStepKey, status, body);
+        }}
+        onApplyComment={(body) => {
+          if (openStepKey) applyComment(openStepKey, body);
+        }}
+      />
     </div>
   );
 }
@@ -729,44 +746,80 @@ function timeAgo(iso: string): string {
   });
 }
 
-function StepConversation({
+/**
+ * StepDetailSheet — the conversation thread + status composer for a
+ * single workflow step, rendered in the canonical Nask side sheet
+ * (same primitive used by FieldHelp, the create-product affordance,
+ * and the Help Centre intro panel).
+ *
+ *   ┌──────────────────────────────────────────────┐
+ *   │ HERO   "WORKFLOW STEP"                       │
+ *   │        <Step title>          [Status chip] × │
+ *   │        <Step description>                    │
+ *   ├──────────────────────────────────────────────┤
+ *   │ BODY   Conversation thread                   │
+ *   │        avatar · name · time                  │
+ *   │        bubble                                │
+ *   │        ...                                   │
+ *   ├──────────────────────────────────────────────┤
+ *   │ FOOTER (composer)                            │
+ *   │        [textarea]                            │
+ *   │        Set status to: [pills]                │
+ *   │        helper line              [Save]      │
+ *   └──────────────────────────────────────────────┘
+ *
+ * Replaces the previous inline expansion under each step row.
+ * Putting the conversation in a side sheet keeps the workflow list
+ * scannable (rows stay compact, no jumping page height when steps
+ * are toggled) and matches the rest of the app's "detail-view in a
+ * side panel" pattern.
+ */
+function StepDetailSheet({
   step,
+  open,
+  onOpenChange,
   canWrite,
+  tStep,
   tStatus,
   t,
   onApplyStatus,
   onApplyComment,
 }: {
-  step: ConformityStep;
+  step: ConformityStep | null;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
   canWrite: boolean;
+  tStep: (key: string) => string;
   tStatus: (key: string) => string;
-  /** Full next-intl translator handle — we need `.has()` to fall back gracefully. */
   t: ReturnType<typeof useTranslations>;
   onApplyStatus: (status: ConformityStepStatus, body: string) => void;
   onApplyComment: (body: string) => void;
 }) {
   const [body, setBody] = useState("");
-  // `pendingStatus` is a LOCAL draft — clicking a status pill no
-  // longer fires a save. The new pill selection sits in this state
-  // until the user hits the explicit Save button below. This matches
-  // the user's ask: "save only when the user taps a button to save
-  // instead of the add comment".
+  // Local draft for the status pill click — actually committed only
+  // when the user hits Save. See the conversation history for why
+  // we don't immediately fire `setStepStatus` on pill click.
   const [pendingStatus, setPendingStatus] =
     useState<ConformityStepStatus | null>(null);
+
+  // Reset composer state whenever the sheet closes OR the user
+  // navigates to a different step.
+  useEffect(() => {
+    if (!open) {
+      setBody("");
+      setPendingStatus(null);
+    }
+  }, [open, step?.key]);
 
   const trimmed = body.trim();
   const hasBody = trimmed.length > 0;
   const hasStatusChange =
-    pendingStatus !== null && pendingStatus !== step.status;
-  // The Save button is the single commit point. It posts the comment
-  // and (if a different status is pending) flips the status in the
-  // same round-trip via `setStepStatus`. When no status change is
-  // pending it falls through to `addStepComment` so the comment
-  // posts in isolation.
+    !!step && pendingStatus !== null && pendingStatus !== step.status;
   const canSave = hasBody;
+  const displayStatus = pendingStatus ?? step?.status ?? "pending";
 
   function handleSave() {
-    if (!canSave) return;
+    if (!canSave || !step) return;
     if (hasStatusChange && pendingStatus) {
       onApplyStatus(pendingStatus, trimmed);
     } else {
@@ -776,150 +829,185 @@ function StepConversation({
     setPendingStatus(null);
   }
 
-  // The pill row reflects either the saved status or the user's
-  // pending draft, so the highlight follows the click instantly even
-  // though no save has fired yet.
-  const displayStatus = pendingStatus ?? step.status;
+  // Empty render when no step is selected; the sheet itself is
+  // controlled so this just prevents flashing stale content during
+  // close animations.
+  if (!step) {
+    return null;
+  }
+
+  const color = STATUS_COLOR[step.status];
+  const eyebrowKey = t.has("steps.eyebrow") ? "steps.eyebrow" : null;
 
   return (
-    <div className="flex flex-col gap-5">
-      {/* Comment thread — flat bubbles per Figma 176:16582. The
-          previous render carried `shadow-card-sm` on every bubble
-          which read as visual noise stacked down the page; the
-          reference uses plain bg-muted slabs and lets the avatar +
-          metadata carry the visual hierarchy. */}
-      {step.comments.length === 0 ? (
-        <p className="text-p4 text-muted-foreground">
-          {t.has("conversation.empty")
-            ? t("conversation.empty")
-            : "No comments yet. Start the thread with the first note."}
-        </p>
-      ) : (
-        <ul className="flex flex-col gap-4">
-          {step.comments.map((c) => (
-            <li key={c.id} className="flex items-start gap-3">
-              <Avatar size="sm">
-                <AvatarImage
-                  src={c.user?.avatar_url ?? undefined}
-                  alt=""
-                />
-                <AvatarFallback>{initialsOf(c.user?.name)}</AvatarFallback>
-              </Avatar>
-              <div className="flex min-w-0 flex-1 flex-col gap-1">
-                <div className="flex items-baseline gap-2">
-                  <p className="text-l6 text-foreground">
-                    {c.user?.name ??
-                      (t.has("conversation.unknownUser")
-                        ? t("conversation.unknownUser")
-                        : "Unknown user")}
-                  </p>
-                  <p className="text-p4 text-muted-foreground">
-                    {timeAgo(c.created_at)}
-                  </p>
-                </div>
-                <p className="w-fit max-w-full whitespace-pre-wrap rounded-md bg-muted px-3 py-2 text-p3 text-foreground">
-                  {c.body}
-                </p>
-              </div>
-            </li>
-          ))}
-        </ul>
-      )}
-
-      {/* Composer + status pills (write-capable members only). A
-          subtle border replaces the heavier shadow-card-sm wrapper
-          we had before; this section is visually lighter and the
-          comment thread above is the focus. */}
-      {canWrite && (
-        <div className="flex flex-col gap-3 rounded-md border border-border bg-card p-4">
-          <Textarea
-            value={body}
-            onChange={(e) => setBody(e.target.value)}
-            placeholder={
-              t.has("conversation.placeholder")
-                ? t("conversation.placeholder")
-                : "Add a note for this step…"
-            }
-            rows={3}
-            className="resize-none"
+    <SheetPrimitive.Root open={open} onOpenChange={onOpenChange}>
+      <SheetPrimitive.Portal>
+        <SideSheetBackdrop />
+        <SideSheetPopup data-slot="step-detail-sheet">
+          <SideSheetHero
+            eyebrow={eyebrowKey ? t(eyebrowKey) : "Workflow step"}
+            title={tStep(`${step.key}.title`)}
+            description={tStep(`${step.key}.description`)}
           />
 
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-l6-plus uppercase tracking-wider text-muted-foreground">
-              {t.has("conversation.changeStatus")
-                ? t("conversation.changeStatus")
-                : "Set status to"}
-            </span>
-            {(
-              [
-                "pending",
-                "in_progress",
-                "complete",
-                "not_applicable",
-              ] as ConformityStepStatus[]
-            ).map((st) => {
-              const active = st === displayStatus;
-              return (
-                <button
-                  key={st}
-                  type="button"
-                  onClick={() =>
-                    setPendingStatus(st === step.status ? null : st)
-                  }
-                  className={cn(
-                    "rounded-sm border-[1.5px] px-3 py-1.5 text-l6-plus transition-colors",
-                    active
-                      ? "border-[color:var(--c)] bg-[color:var(--c)]/10 text-[color:var(--c)]"
-                      : "border-border-outline bg-card text-muted-foreground hover:text-foreground",
-                  )}
-                  style={{ ["--c" as string]: STATUS_COLOR[st] }}
-                >
-                  {tStatus(st)}
-                </button>
-              );
-            })}
-          </div>
+          <SideSheetBody>
+            {/* Current status pill — repeated inside the body so the
+                user has a glanceable confirmation of what's saved
+                regardless of how far they've scrolled the thread. */}
+            <div className="flex items-center gap-2">
+              <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
+                {t.has("steps.current") ? t("steps.current") : "Status"}
+              </p>
+              <span
+                className="inline-flex items-center gap-1.5 rounded-sm px-2.5 py-0.5 text-l6-plus"
+                style={{
+                  backgroundColor: `${color}1A`,
+                  color,
+                }}
+              >
+                <span
+                  aria-hidden
+                  className="size-1.5 rounded-full"
+                  style={{ backgroundColor: color }}
+                />
+                {tStatus(step.status)}
+              </span>
+            </div>
 
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <p className="text-p4 text-muted-foreground">
-              {hasStatusChange
-                ? t.has("conversation.pendingChange")
-                  ? // next-intl substitutes {from} / {to} via the
-                    // second arg — passing the formatted strings
-                    // through the translator instead of doing a
-                    // post-hoc `.replace()`, which throws a
-                    // FORMATTING_ERROR at runtime when next-intl
-                    // sees unresolved ICU placeholders.
-                    t("conversation.pendingChange", {
-                      from: tStatus(step.status),
-                      to: tStatus(pendingStatus!),
-                    })
-                  : `Pending: ${tStatus(step.status)} → ${tStatus(pendingStatus!)}`
-                : t.has("conversation.noteRequired")
-                  ? t("conversation.noteRequired")
-                  : "Comments are saved to the audit log and can't be edited."}
-            </p>
-            <button
-              type="button"
-              disabled={!canSave}
-              onClick={handleSave}
-              className={cn(
-                "inline-flex h-9 items-center gap-1.5 rounded-sm bg-primary px-4 text-l6 text-primary-foreground transition-colors hover:bg-primary/90",
-                "disabled:cursor-not-allowed disabled:opacity-50",
-              )}
-            >
-              <Icon name="Send" size={14} />
-              {hasStatusChange
-                ? t.has("conversation.saveStatus")
-                  ? t("conversation.saveStatus")
-                  : "Save status change"
-                : t.has("conversation.save")
-                  ? t("conversation.save")
-                  : "Save comment"}
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
+            {/* Comment thread — bubbles in `bg-secondary` per the
+                user's "slightly darker" feedback. Matches the Nask
+                Grey/03 token (#E2E4EA) so the chat surface reads
+                clearly against the bg-card panel without dominating
+                the page. */}
+            {step.comments.length === 0 ? (
+              <p className="text-p4 text-muted-foreground">
+                {t.has("conversation.empty")
+                  ? t("conversation.empty")
+                  : "No comments yet. Start the thread with the first note."}
+              </p>
+            ) : (
+              <ul className="flex flex-col gap-4">
+                {step.comments.map((c) => (
+                  <li key={c.id} className="flex items-start gap-3">
+                    <Avatar size="sm">
+                      <AvatarImage
+                        src={c.user?.avatar_url ?? undefined}
+                        alt=""
+                      />
+                      <AvatarFallback>
+                        {initialsOf(c.user?.name)}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="flex min-w-0 flex-1 flex-col gap-1">
+                      <div className="flex items-baseline gap-2">
+                        <p className="text-l6 text-foreground">
+                          {c.user?.name ??
+                            (t.has("conversation.unknownUser")
+                              ? t("conversation.unknownUser")
+                              : "Unknown user")}
+                        </p>
+                        <p className="text-p4 text-muted-foreground">
+                          {timeAgo(c.created_at)}
+                        </p>
+                      </div>
+                      <p className="w-fit max-w-full whitespace-pre-wrap rounded-md bg-secondary px-3 py-2 text-p3 text-foreground">
+                        {c.body}
+                      </p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </SideSheetBody>
+
+          {canWrite && (
+            <SideSheetFooter>
+              <div className="flex flex-col gap-3">
+                <Textarea
+                  value={body}
+                  onChange={(e) => setBody(e.target.value)}
+                  placeholder={
+                    t.has("conversation.placeholder")
+                      ? t("conversation.placeholder")
+                      : "Add a note for this step…"
+                  }
+                  rows={3}
+                  className="resize-none"
+                />
+
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-l6-plus uppercase tracking-wider text-muted-foreground">
+                    {t.has("conversation.changeStatus")
+                      ? t("conversation.changeStatus")
+                      : "Set status to"}
+                  </span>
+                  {(
+                    [
+                      "pending",
+                      "in_progress",
+                      "complete",
+                      "not_applicable",
+                    ] as ConformityStepStatus[]
+                  ).map((st) => {
+                    const active = st === displayStatus;
+                    return (
+                      <button
+                        key={st}
+                        type="button"
+                        onClick={() =>
+                          setPendingStatus(st === step.status ? null : st)
+                        }
+                        className={cn(
+                          "rounded-sm border-[1.5px] px-3 py-1.5 text-l6-plus transition-colors",
+                          active
+                            ? "border-[color:var(--c)] bg-[color:var(--c)]/10 text-[color:var(--c)]"
+                            : "border-border-outline bg-card text-muted-foreground hover:text-foreground",
+                        )}
+                        style={{ ["--c" as string]: STATUS_COLOR[st] }}
+                      >
+                        {tStatus(st)}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <p className="text-p4 text-muted-foreground">
+                    {hasStatusChange
+                      ? t.has("conversation.pendingChange")
+                        ? t("conversation.pendingChange", {
+                            from: tStatus(step.status),
+                            to: tStatus(pendingStatus!),
+                          })
+                        : `Pending: ${tStatus(step.status)} → ${tStatus(pendingStatus!)}`
+                      : t.has("conversation.noteRequired")
+                        ? t("conversation.noteRequired")
+                        : "Comments are saved to the audit log and can't be edited."}
+                  </p>
+                  <button
+                    type="button"
+                    disabled={!canSave}
+                    onClick={handleSave}
+                    className={cn(
+                      "inline-flex h-9 items-center gap-1.5 rounded-sm bg-primary px-4 text-l6 text-primary-foreground transition-colors hover:bg-primary/90",
+                      "disabled:cursor-not-allowed disabled:opacity-50",
+                    )}
+                  >
+                    <Icon name="Send" size={14} />
+                    {hasStatusChange
+                      ? t.has("conversation.saveStatus")
+                        ? t("conversation.saveStatus")
+                        : "Save status change"
+                      : t.has("conversation.save")
+                        ? t("conversation.save")
+                        : "Save comment"}
+                  </button>
+                </div>
+              </div>
+            </SideSheetFooter>
+          )}
+        </SideSheetPopup>
+      </SheetPrimitive.Portal>
+    </SheetPrimitive.Root>
   );
 }
