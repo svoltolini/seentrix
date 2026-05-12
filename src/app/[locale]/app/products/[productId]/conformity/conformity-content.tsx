@@ -54,6 +54,102 @@ const STATUS_ICON: Record<ConformityStepStatus, string> = {
   not_applicable: "CloseCircle",
 };
 
+// Shared className for every status chip (row chip, sheet body
+// chip, and the four composer pills). Single source of truth means
+// none of the call sites can drift on font / size / padding.
+const STATUS_CHIP_CLASS =
+  "inline-flex h-7 shrink-0 items-center gap-1.5 rounded-sm px-2 text-l6-plus";
+
+/**
+ * StatusChip — Nask flat-chip recipe for conformity step statuses.
+ *
+ * Tier-tinted variant (`tinted=true`) reads as a live status badge:
+ * background pulls `${color}1A` (10 % alpha) and the icon + text use
+ * the same tier colour. Muted variant (`tinted=false`) reads as a
+ * dormant selector — bg-muted with muted-foreground — and powers the
+ * composer's inactive pill state.
+ *
+ * Geometry locked at h-7 + 8 px horizontal padding + 6 px gap + 16 px
+ * icon + text-l6-plus label so the four surfaces that render it
+ * (workflow row, sheet body, sheet composer pills) stay pixel-aligned.
+ */
+function StatusChip({
+  status,
+  label,
+  tinted,
+  className,
+}: {
+  status: ConformityStepStatus;
+  label: string;
+  /** `true` paints the tier-coloured fill; `false` uses bg-muted. */
+  tinted: boolean;
+  className?: string;
+}) {
+  const color = STATUS_COLOR[status];
+  const tintedStyle = tinted
+    ? ({ backgroundColor: `${color}1A`, color } as const)
+    : undefined;
+  return (
+    <span
+      className={cn(
+        STATUS_CHIP_CLASS,
+        !tinted && "bg-muted text-muted-foreground",
+        className,
+      )}
+      style={tintedStyle}
+    >
+      <Icon name={STATUS_ICON[status]} size={16} />
+      {label}
+    </span>
+  );
+}
+
+/**
+ * StatusChipButton — interactive sibling of `<StatusChip />` used by
+ * the sheet's "Set status to" composer row. Renders the exact same
+ * base recipe via `STATUS_CHIP_CLASS` so the four composer pills
+ * stay pixel-aligned with the workflow row chip + sheet body chip —
+ * the only differences are the `<button>` element, the hover state on
+ * the inactive variant, and `aria-pressed` for the active state.
+ */
+function StatusChipButton({
+  status,
+  label,
+  active,
+  onClick,
+  className,
+}: {
+  status: ConformityStepStatus;
+  label: string;
+  /** Drives the tier-tinted vs muted styling — mirrors `StatusChip.tinted`. */
+  active: boolean;
+  onClick: () => void;
+  className?: string;
+}) {
+  const color = STATUS_COLOR[status];
+  const tintedStyle = active
+    ? ({ backgroundColor: `${color}1A`, color } as const)
+    : undefined;
+  return (
+    <button
+      type="button"
+      aria-pressed={active}
+      onClick={onClick}
+      className={cn(
+        STATUS_CHIP_CLASS,
+        "transition-colors",
+        !active &&
+          "bg-muted text-muted-foreground hover:bg-secondary/60 hover:text-foreground",
+        className,
+      )}
+      style={tintedStyle}
+    >
+      <Icon name={STATUS_ICON[status]} size={16} />
+      {label}
+    </button>
+  );
+}
+
 const ROLES_CAN_WRITE = new Set([
   "admin",
   "compliance_officer",
@@ -469,6 +565,10 @@ export function ConformityContent({
           <div className="divide-y divide-border">
             {state.steps.map((step) => {
               const color = STATUS_COLOR[step.status];
+              // `color` is still referenced by the step-number
+              // badge on the left of each row (border + checkmark
+              // fill). The status chip on the right now flows
+              // through <StatusChip /> so the recipe stays unified.
               return (
                 <button
                   key={step.key}
@@ -532,22 +632,11 @@ export function ConformityContent({
                     size="sm"
                     overlap="tight"
                   />
-                  {/* Status chip matches the composer pill recipe
-                      (Figma 182:17729): h-7 + gap-1.5 + 16 px icon
-                      + text-l6-plus label. Tier-tinted bg/text via
-                      the runtime `${color}1A` hex math so the
-                      colour comes from the same STATUS_COLOR map
-                      every other surface uses. */}
-                  <span
-                    className="inline-flex h-7 shrink-0 items-center gap-1.5 rounded-sm px-2 text-l6-plus"
-                    style={{
-                      backgroundColor: `${color}1A`,
-                      color,
-                    }}
-                  >
-                    <Icon name={STATUS_ICON[step.status]} size={16} />
-                    {tStatus(step.status)}
-                  </span>
+                  <StatusChip
+                    status={step.status}
+                    label={tStatus(step.status)}
+                    tinted
+                  />
                   <Icon
                     name="arrow-right-01-stroke-rounded"
                     size={14}
@@ -1120,7 +1209,6 @@ function StepDetailSheet({
     return null;
   }
 
-  const color = STATUS_COLOR[step.status];
   const eyebrowKey = t.has("steps.eyebrow") ? "steps.eyebrow" : null;
 
   return (
@@ -1144,21 +1232,11 @@ function StepDetailSheet({
                 <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
                   {t.has("steps.current") ? t("steps.current") : "Status"}
                 </p>
-                {/* Sheet-body status chip — same h-7 + gap-1.5
-                    flat-chip recipe used by the row chips and the
-                    composer pills. The leading 16 px iconsax glyph
-                    replaces the previous 6 px tinted dot so this
-                    surface reads with the rest of the family. */}
-                <span
-                  className="inline-flex h-7 items-center gap-1.5 rounded-sm px-2 text-l6-plus"
-                  style={{
-                    backgroundColor: `${color}1A`,
-                    color,
-                  }}
-                >
-                  <Icon name={STATUS_ICON[step.status]} size={16} />
-                  {tStatus(step.status)}
-                </span>
+                <StatusChip
+                  status={step.status}
+                  label={tStatus(step.status)}
+                  tinted
+                />
               </div>
               <ContributorStack
                 contributors={contributorsOf(step)}
@@ -1298,34 +1376,17 @@ function StepDetailSheet({
                         "complete",
                         "not_applicable",
                       ] as ConformityStepStatus[]
-                    ).map((st) => {
-                      const active = st === displayStatus;
-                      return (
-                        <button
-                          key={st}
-                          type="button"
-                          onClick={() =>
-                            setPendingStatus(st === step.status ? null : st)
-                          }
-                          // Flat Figma "secondary" chip recipe
-                          // (frames 97:14277 + 182:17729): h-7
-                          // (28 px), 8 px horizontal padding, gap
-                          // 1.5 between the 16 px icon and the
-                          // text-l6-plus label. Active state keeps
-                          // the tier-tinted bg + text, no border.
-                          className={cn(
-                            "inline-flex h-7 items-center gap-1.5 rounded-sm px-2 text-l6-plus transition-colors",
-                            active
-                              ? "bg-[color:var(--c)]/10 text-[color:var(--c)]"
-                              : "bg-muted text-muted-foreground hover:bg-secondary/60 hover:text-foreground",
-                          )}
-                          style={{ ["--c" as string]: STATUS_COLOR[st] }}
-                        >
-                          <Icon name={STATUS_ICON[st]} size={16} />
-                          {tStatus(st)}
-                        </button>
-                      );
-                    })}
+                    ).map((st) => (
+                      <StatusChipButton
+                        key={st}
+                        status={st}
+                        label={tStatus(st)}
+                        active={st === displayStatus}
+                        onClick={() =>
+                          setPendingStatus(st === step.status ? null : st)
+                        }
+                      />
+                    ))}
                   </div>
                 </div>
 
