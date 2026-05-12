@@ -101,6 +101,7 @@ const NAME_MAP = {
   "Add": "Add",
   "AddSquare": "AddSquare",
   "AttachCircle": "AttachCircle",
+  "Attachment": "Attachment",
   "Archive": "Archive",
   "ArchiveAdd": "ArchiveAdd",
   "ArrowDown2": "ArrowDown2",
