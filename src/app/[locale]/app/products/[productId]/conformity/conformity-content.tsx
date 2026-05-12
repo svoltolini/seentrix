@@ -614,38 +614,37 @@ function GateTile({
    *  divider hairline sits in the middle of the gap. */
   position: "left" | "right";
 }) {
-  // No card chrome. The tile renders inline inside the hero card
-  // with just an icon + label + status — the parent grid provides
-  // the hairline divider between the two halves. Inset padding so
-  // the divider doesn't kiss the content.
+  // Icon now sits inline with the status text on the bottom row
+  // instead of dangling as a standalone block beside a two-line
+  // text column. Earlier pass had the icon vertically centered next
+  // to a label+status stack — which made it visually orphan-ish
+  // because it didn't line up with either text row. Inline gives
+  // the icon a clear anchor: it's part of the status statement.
   return (
     <div
       className={cn(
-        "flex items-center gap-3 py-3",
+        "flex flex-col gap-1.5 py-3",
         position === "left"
           ? "sm:pr-6"
           : "pt-3 sm:pl-6 sm:pt-3",
       )}
     >
-      <Icon
-        name={ok ? "TickCircle" : "Clock"}
-        size={22}
-        variant="Bold"
-        className={cn(ok ? "text-success" : "text-warning")}
-      />
-      <div className="flex min-w-0 flex-1 flex-col gap-0.5">
-        <p className="truncate text-l6-plus uppercase tracking-wider text-muted-foreground">
-          {label}
-        </p>
-        <p
-          className={cn(
-            "text-h6",
-            ok ? "text-success" : "text-warning",
-          )}
-        >
-          {ok ? okLabel : notLabel}
-        </p>
-      </div>
+      <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
+        {label}
+      </p>
+      <p
+        className={cn(
+          "inline-flex items-center gap-1.5 text-h5",
+          ok ? "text-success" : "text-warning",
+        )}
+      >
+        <Icon
+          name={ok ? "TickCircle" : "Clock"}
+          size={18}
+          variant="Bold"
+        />
+        {ok ? okLabel : notLabel}
+      </p>
     </div>
   );
 }
