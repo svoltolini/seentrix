@@ -495,7 +495,7 @@ export function ConformityContent({
                   {step.attachments.length > 0 && (
                     <span className="inline-flex items-center gap-1 text-p4 text-muted-foreground">
                       <Icon
-                        name="Attachment"
+                        name="AttachSquare"
                         size={14}
                         aria-label="Attachments"
                       />
@@ -1198,7 +1198,7 @@ function StepDetailSheet({
                           : "Attach a file (≤ 2 MB)"
                       }
                     >
-                      <Icon name="Attachment" size={16} />
+                      <Icon name="AttachSquare" size={16} />
                     </button>
                     <button
                       type="button"
