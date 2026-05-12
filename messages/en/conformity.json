@@ -148,6 +148,10 @@
       "download": "Download",
       "discard": "Discard pending file"
     },
+    "meta": {
+      "commentCount": "{count, plural, one {# Comment} other {# Comments}}",
+      "attachmentCount": "{count, plural, one {# Attachment} other {# Attachments}}"
+    },
     "conversation": {
       "empty": "No comments yet. Start the thread with the first note.",
       "placeholder": "Add a note explaining what changed and why…",

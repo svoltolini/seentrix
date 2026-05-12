@@ -496,27 +496,25 @@ export function ConformityContent({
                       {tStep(`${step.key}.description`)}
                     </span>
                   </span>
-                  {/* Meta chips — bare counts render as flat
-                      `bg-muted` pills with a 16 px icon + 12/600
-                      label (Figma frame 97:14277 secondary-chip
-                      recipe). Replaces an earlier render that put
-                      the icon + number as raw inline text, which
-                      was easy to miss next to the status pill
-                      sitting just to its right. */}
+                  {/* Meta chips — flat `bg-muted` pills with a
+                      16 px icon + "{count} Comment(s)" / "{count}
+                      Attachment(s)" label in Plus Jakarta Sans
+                      SemiBold 12, muted-foreground. Matches Figma
+                      frame 182:17729 (secondary chip recipe) — 28 px
+                      tall (`h-7`), 8 px horizontal × 6 px vertical
+                      padding, 8 px corner radius. */}
                   {step.comments.length > 0 && (
-                    <span className="inline-flex items-center gap-1.5 rounded-sm bg-muted px-2 py-1 text-l6-plus text-muted-foreground">
+                    <span className="inline-flex h-7 items-center gap-1.5 rounded-sm bg-muted px-2 text-l6-plus text-muted-foreground">
                       <Icon name="Message" size={16} />
-                      {step.comments.length}
+                      {t("meta.commentCount", { count: step.comments.length })}
                     </span>
                   )}
                   {step.attachments.length > 0 && (
-                    <span className="inline-flex items-center gap-1.5 rounded-sm bg-muted px-2 py-1 text-l6-plus text-muted-foreground">
-                      <Icon
-                        name="Attachment"
-                        size={16}
-                        aria-label="Attachments"
-                      />
-                      {step.attachments.length}
+                    <span className="inline-flex h-7 items-center gap-1.5 rounded-sm bg-muted px-2 text-l6-plus text-muted-foreground">
+                      <Icon name="Attachment" size={16} />
+                      {t("meta.attachmentCount", {
+                        count: step.attachments.length,
+                      })}
                     </span>
                   )}
                   <ContributorStack
