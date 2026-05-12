@@ -971,6 +971,10 @@ function StepDetailSheet({
   const [pendingFileName, setPendingFileName] = useState("");
   const [saving, setSaving] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  // Ref for the rename input so we can auto-focus + select-all the
+  // pre-filled name the instant a file is staged. Tells the user
+  // "you should give this a name" without making them click first.
+  const renameInputRef = useRef<HTMLInputElement>(null);
 
   // Reset composer state whenever the sheet closes OR the user
   // navigates to a different step.
@@ -982,6 +986,19 @@ function StepDetailSheet({
       setPendingFileName("");
     }
   }, [open, step?.key]);
+
+  // Auto-focus + select-all on the rename input whenever a file is
+  // freshly staged. requestAnimationFrame defers the focus until
+  // after the chip has actually mounted; without it the ref would
+  // still be null on the first render after `setPendingFile`.
+  useEffect(() => {
+    if (!pendingFile) return;
+    const id = requestAnimationFrame(() => {
+      renameInputRef.current?.focus();
+      renameInputRef.current?.select();
+    });
+    return () => cancelAnimationFrame(id);
+  }, [pendingFile]);
 
   const trimmed = body.trim();
   const hasBody = trimmed.length > 0;
@@ -1217,6 +1234,7 @@ function StepDetailSheet({
                       <Icon name="Attachment" size={14} />
                     </span>
                     <Input
+                      ref={renameInputRef}
                       value={pendingFileName}
                       onChange={(e) => setPendingFileName(e.target.value)}
                       placeholder={pendingFile.name}
