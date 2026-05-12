@@ -132,6 +132,7 @@ const NAME_MAP = {
   "Global": "Global",
   "Grid2": "Grid2",
   "HambergerMenu": "HambergerMenu",
+  "CloseCircle": "CloseCircle",
   "Document": "Document",
   "Image": "Image",
   "Note1": "Note1",

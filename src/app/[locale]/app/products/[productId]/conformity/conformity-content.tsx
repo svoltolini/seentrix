@@ -44,6 +44,16 @@ const STATUS_COLOR: Record<ConformityStepStatus, string> = {
   not_applicable: "var(--muted-foreground)",
 };
 
+// Per-status iconsax glyph for the composer status pills. Mirrors
+// the meta-chip pattern (Figma frame 182:17729) — 16 px icon on the
+// left, label on the right inside a flat `bg-muted` pill.
+const STATUS_ICON: Record<ConformityStepStatus, string> = {
+  pending: "Clock",
+  in_progress: "Refresh",
+  complete: "TickCircle",
+  not_applicable: "CloseCircle",
+};
+
 const ROLES_CAN_WRITE = new Set([
   "admin",
   "compliance_officer",
@@ -1290,18 +1300,20 @@ function StepDetailSheet({
                             setPendingStatus(st === step.status ? null : st)
                           }
                           // Flat Figma "secondary" chip recipe
-                          // (frame 97:14277): no border, bg-muted
-                          // base, text-l6-plus muted. Active state
-                          // keeps the tier-tinted bg + text without
-                          // adding a border.
+                          // (frames 97:14277 + 182:17729): h-7
+                          // (28 px), 8 px horizontal padding, gap
+                          // 1.5 between the 16 px icon and the
+                          // text-l6-plus label. Active state keeps
+                          // the tier-tinted bg + text, no border.
                           className={cn(
-                            "inline-flex h-7 items-center rounded-sm px-2 text-l6-plus transition-colors",
+                            "inline-flex h-7 items-center gap-1.5 rounded-sm px-2 text-l6-plus transition-colors",
                             active
                               ? "bg-[color:var(--c)]/10 text-[color:var(--c)]"
                               : "bg-muted text-muted-foreground hover:bg-secondary/60 hover:text-foreground",
                           )}
                           style={{ ["--c" as string]: STATUS_COLOR[st] }}
                         >
+                          <Icon name={STATUS_ICON[st]} size={16} />
                           {tStatus(st)}
                         </button>
                       );
