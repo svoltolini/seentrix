@@ -217,13 +217,21 @@ export function ConformityContent({
    * Upload a file to a workflow step. Client-side guard rails first
    * (size + MIME) so we surface a fast failure without a round-trip;
    * the server action runs the same checks again as the source of
-   * truth. No optimistic insert because the row depends on the
-   * server-issued storage path.
+   * truth. `displayName` is the user-renamed filename (defaults to
+   * the file's basename when blank).
+   *
+   * Returns the inserted attachment so the caller can chain follow-up
+   * effects (e.g. posting an auto "Uploaded …" comment in the same
+   * Save action).
    */
-  async function applyAttachment(stepKey: string, file: File) {
+  async function applyAttachment(
+    stepKey: string,
+    file: File,
+    displayName: string,
+  ): Promise<StepAttachment | null> {
     if (file.size > STEP_ATTACHMENT_MAX_BYTES) {
       toast({ type: "error", message: t("toast.fileTooLarge") });
-      return;
+      return null;
     }
     if (
       !STEP_ATTACHMENT_ALLOWED_MIMES.includes(
@@ -231,10 +239,11 @@ export function ConformityContent({
       )
     ) {
       toast({ type: "error", message: t("toast.unsupportedMime") });
-      return;
+      return null;
     }
     const formData = new FormData();
     formData.set("file", file);
+    formData.set("displayName", displayName);
     const res = await uploadStepAttachment(productId, stepKey, formData);
     if (res.error) {
       const key =
@@ -247,7 +256,7 @@ export function ConformityContent({
         type: "error",
         message: t.has(key) ? t(key) : t("toast.saveFailed"),
       });
-      return;
+      return null;
     }
     if (res.attachment) {
       setState((prev) => ({
@@ -258,8 +267,9 @@ export function ConformityContent({
             : s,
         ),
       }));
-      toast({ type: "success", message: t("toast.fileUploaded") });
+      return res.attachment;
     }
+    return null;
   }
 
   async function saveBody(patch: {
@@ -629,8 +639,9 @@ export function ConformityContent({
         onApplyComment={(body) => {
           if (openStepKey) applyComment(openStepKey, body);
         }}
-        onApplyAttachment={(file) => {
-          if (openStepKey) applyAttachment(openStepKey, file);
+        onApplyAttachment={async (file, displayName) => {
+          if (!openStepKey) return null;
+          return applyAttachment(openStepKey, file, displayName);
         }}
       />
     </div>
@@ -941,7 +952,10 @@ function StepDetailSheet({
   t: ReturnType<typeof useTranslations>;
   onApplyStatus: (status: ConformityStepStatus, body: string) => void;
   onApplyComment: (body: string) => void;
-  onApplyAttachment: (file: File) => void;
+  onApplyAttachment: (
+    file: File,
+    displayName: string,
+  ) => Promise<StepAttachment | null>;
 }) {
   const [body, setBody] = useState("");
   // Local draft for the status pill click — actually committed only
@@ -949,6 +963,13 @@ function StepDetailSheet({
   // we don't immediately fire `setStepStatus` on pill click.
   const [pendingStatus, setPendingStatus] =
     useState<ConformityStepStatus | null>(null);
+  // Pending file — picked but not yet uploaded. Deferred upload
+  // means the user can type a comment + rename the file + tweak
+  // status all before a single Save commits everything. The actual
+  // upload fires inside `handleSave`.
+  const [pendingFile, setPendingFile] = useState<File | null>(null);
+  const [pendingFileName, setPendingFileName] = useState("");
+  const [saving, setSaving] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Reset composer state whenever the sheet closes OR the user
@@ -957,6 +978,8 @@ function StepDetailSheet({
     if (!open) {
       setBody("");
       setPendingStatus(null);
+      setPendingFile(null);
+      setPendingFileName("");
     }
   }, [open, step?.key]);
 
@@ -964,18 +987,91 @@ function StepDetailSheet({
   const hasBody = trimmed.length > 0;
   const hasStatusChange =
     !!step && pendingStatus !== null && pendingStatus !== step.status;
-  const canSave = hasBody;
+  const hasPendingFile = pendingFile !== null;
+  const cleanedFileName = pendingFileName.trim();
+  // Save fires when something is staged: comment text OR a file.
+  // (A bare status change still needs a comment to justify it; the
+  // pending file's auto-mention satisfies that requirement.)
+  const canSave = !saving && (hasBody || hasPendingFile);
   const displayStatus = pendingStatus ?? step?.status ?? "pending";
 
-  function handleSave() {
-    if (!canSave || !step) return;
-    if (hasStatusChange && pendingStatus) {
-      onApplyStatus(pendingStatus, trimmed);
-    } else {
-      onApplyComment(trimmed);
+  function handleFilePick(file: File) {
+    setPendingFile(file);
+    // Default rename: strip extension so user types the human name,
+    // we re-append the extension on save.
+    const dot = file.name.lastIndexOf(".");
+    setPendingFileName(dot > 0 ? file.name.slice(0, dot) : file.name);
+  }
+
+  function clearPendingFile() {
+    setPendingFile(null);
+    setPendingFileName("");
+  }
+
+  /**
+   * Build the final comment body. Combines the user's typed text
+   * with an auto "Uploaded …" mention when a file is staged so the
+   * audit thread always records what changed in one row, not two.
+   */
+  function effectiveCommentBody(uploadedName: string | null): string {
+    const parts: string[] = [];
+    if (hasBody) parts.push(trimmed);
+    if (uploadedName) parts.push(`Uploaded "${uploadedName}"`);
+    return parts.join("\n\n");
+  }
+
+  /**
+   * Compose the final filename with extension. If the user emptied
+   * the rename field, fall back to the file's original basename.
+   */
+  function composeFinalFileName(file: File): string {
+    if (!cleanedFileName) return file.name;
+    const dot = file.name.lastIndexOf(".");
+    const ext = dot > 0 ? file.name.slice(dot) : "";
+    // If user already typed an extension, don't double-up.
+    if (ext && cleanedFileName.toLowerCase().endsWith(ext.toLowerCase())) {
+      return cleanedFileName;
     }
+    return `${cleanedFileName}${ext}`;
+  }
+
+  async function handleSave() {
+    if (!canSave || !step) return;
+    setSaving(true);
+
+    // 1) Upload file first so the comment body can reference the
+    //    final filename. If the upload fails, applyAttachment already
+    //    toasted the error; bail without firing the comment / status
+    //    update so we don't end up with a half-committed action.
+    let uploadedName: string | null = null;
+    if (pendingFile) {
+      const finalName = composeFinalFileName(pendingFile);
+      const attachment = await onApplyAttachment(pendingFile, finalName);
+      if (!attachment) {
+        setSaving(false);
+        return;
+      }
+      uploadedName = attachment.file_name;
+    }
+
+    // 2) Compose the commit text and route through the right action.
+    const commitBody = effectiveCommentBody(uploadedName);
+
+    if (hasStatusChange && pendingStatus) {
+      // setStepStatus inserts the comment alongside the status flip.
+      onApplyStatus(pendingStatus, commitBody);
+    } else if (commitBody) {
+      // No status change but at least a comment (user-typed,
+      // auto-uploaded mention, or both).
+      onApplyComment(commitBody);
+    }
+
+    // 3) Reset composer.
     setBody("");
     setPendingStatus(null);
+    setPendingFile(null);
+    setPendingFileName("");
+    setSaving(false);
   }
 
   // Empty render when no step is selected; the sheet itself is
@@ -1110,6 +1206,40 @@ function StepDetailSheet({
                   className="resize-none"
                 />
 
+                {/* Pending file chip — appears once the user picks
+                    a file. Inline editable name field so the user
+                    can rename before Save commits; the file's
+                    original extension is auto-re-appended server-
+                    side if missing. Click the × to discard. */}
+                {pendingFile && (
+                  <div className="flex items-center gap-2 rounded-md border-[1.5px] border-dashed border-primary/30 bg-primary/5 px-3 py-2">
+                    <span className="flex size-8 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary">
+                      <Icon name="Attachment" size={14} />
+                    </span>
+                    <Input
+                      value={pendingFileName}
+                      onChange={(e) => setPendingFileName(e.target.value)}
+                      placeholder={pendingFile.name}
+                      className="h-8 border-transparent bg-transparent px-1 focus-visible:border-primary"
+                    />
+                    <p className="shrink-0 text-p4 text-muted-foreground">
+                      {formatBytes(pendingFile.size)}
+                    </p>
+                    <button
+                      type="button"
+                      onClick={clearPendingFile}
+                      aria-label={
+                        t.has("attachments.discard")
+                          ? t("attachments.discard")
+                          : "Discard pending file"
+                      }
+                      className="flex size-7 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-destructive"
+                    >
+                      <Icon name="cancel-circle-half-dot-stroke-rounded" size={14} />
+                    </button>
+                  </div>
+                )}
+
                 {/* Status pill row — label on its own row, pills
                     beneath. Pills are tighter (h-7 px-2.5) so the
                     composer doesn't dominate the sheet footer. */}
@@ -1165,11 +1295,11 @@ function StepDetailSheet({
                         : "Comments are saved to the audit log and can't be edited."}
                   </p>
                   <div className="flex items-center gap-1.5">
-                    {/* Hidden file input + paperclip trigger. Files
-                        upload immediately (no draft state) — they
-                        live independently of the comment composer
-                        because the upload is a discrete action with
-                        its own success / error path. */}
+                    {/* Hidden file input + paperclip trigger. The
+                        click stages the file as `pendingFile`; the
+                        actual upload waits until the user hits Save
+                        so we can rename + post the auto-comment in
+                        the same atomic action. */}
                     <input
                       ref={fileInputRef}
                       type="file"
@@ -1177,7 +1307,7 @@ function StepDetailSheet({
                       accept={STEP_ATTACHMENT_ALLOWED_MIMES.join(",")}
                       onChange={(e) => {
                         const file = e.target.files?.[0];
-                        if (file) onApplyAttachment(file);
+                        if (file) handleFilePick(file);
                         // Reset the input so picking the same file
                         // twice in a row still fires onChange.
                         if (e.target) e.target.value = "";
@@ -1186,7 +1316,11 @@ function StepDetailSheet({
                     <button
                       type="button"
                       onClick={() => fileInputRef.current?.click()}
-                      className="inline-flex size-9 items-center justify-center rounded-sm border-[1.5px] border-border-outline bg-card text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+                      disabled={hasPendingFile}
+                      className={cn(
+                        "inline-flex size-9 items-center justify-center rounded-sm border-[1.5px] border-border-outline bg-card text-muted-foreground transition-colors hover:border-primary hover:text-primary",
+                        "disabled:cursor-not-allowed disabled:opacity-50",
+                      )}
                       aria-label={
                         t.has("attachments.attach")
                           ? t("attachments.attach")
@@ -1210,13 +1344,11 @@ function StepDetailSheet({
                       )}
                     >
                       <Icon name="Send" size={14} />
-                      {hasStatusChange
-                        ? t.has("conversation.saveStatus")
-                          ? t("conversation.saveStatus")
-                          : "Save status change"
-                        : t.has("conversation.save")
-                          ? t("conversation.save")
-                          : "Save comment"}
+                      {saveButtonLabel({
+                        hasPendingFile,
+                        hasStatusChange,
+                        t,
+                      })}
                     </button>
                   </div>
                 </div>
@@ -1233,10 +1365,88 @@ function StepDetailSheet({
 // Attachment row
 // ---------------------------------------------------------------------------
 
+/**
+ * Resolve the Save button label based on what's staged in the
+ * composer. Five paths:
+ *   - file pending + status change → "Save status & upload"
+ *   - status change only            → "Save status change"
+ *   - file pending only             → "Upload file"
+ *   - comment only                  → "Save comment"
+ * Translation keys live under `conformity.conversation.*` with
+ * sensible English fallbacks for missing entries.
+ */
+function saveButtonLabel({
+  hasPendingFile,
+  hasStatusChange,
+  t,
+}: {
+  hasPendingFile: boolean;
+  hasStatusChange: boolean;
+  t: ReturnType<typeof useTranslations>;
+}): string {
+  if (hasPendingFile && hasStatusChange) {
+    return t.has("conversation.saveStatusAndUpload")
+      ? t("conversation.saveStatusAndUpload")
+      : "Save status & upload";
+  }
+  if (hasStatusChange) {
+    return t.has("conversation.saveStatus")
+      ? t("conversation.saveStatus")
+      : "Save status change";
+  }
+  if (hasPendingFile) {
+    return t.has("conversation.upload") ? t("conversation.upload") : "Upload file";
+  }
+  return t.has("conversation.save") ? t("conversation.save") : "Save comment";
+}
+
 function formatBytes(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`;
   if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)} KB`;
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+/**
+ * Pick a tinted icon for an attachment based on its MIME type.
+ *
+ * iconsax doesn't ship a per-format glyph set (no specific
+ * `PdfIcon`, `XlsIcon`, etc.) so we hand-roll the mapping using the
+ * Document family + a tone token. Images use the dedicated `Image`
+ * glyph. Anything unrecognised falls through to the neutral
+ * "DocumentText" + primary tone.
+ */
+function fileIconFor(mimeType: string): {
+  icon: string;
+  bg: string;
+  fg: string;
+} {
+  if (mimeType.startsWith("image/")) {
+    return { icon: "Image", bg: "bg-success/10", fg: "text-success" };
+  }
+  if (mimeType === "application/pdf") {
+    return {
+      icon: "Document",
+      bg: "bg-destructive/10",
+      fg: "text-destructive",
+    };
+  }
+  if (
+    mimeType === "application/vnd.ms-excel" ||
+    mimeType ===
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
+    mimeType === "text/csv"
+  ) {
+    return { icon: "Note1", bg: "bg-success/10", fg: "text-success" };
+  }
+  if (
+    mimeType === "application/msword" ||
+    mimeType ===
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+  ) {
+    return { icon: "DocumentText", bg: "bg-primary/10", fg: "text-primary" };
+  }
+  // Plain text / fallback
+  return { icon: "DocumentText", bg: "bg-muted", fg: "text-muted-foreground" };
 }
 
 /**
@@ -1260,40 +1470,52 @@ function AttachmentRow({
     }
   }
 
-  const isImage = attachment.mime_type.startsWith("image/");
-  const iconName = isImage ? "Image" : "DocumentText";
+  const { icon, bg, fg } = fileIconFor(attachment.mime_type);
 
   return (
-    <li>
+    <li className="group/attachment flex items-center gap-3 rounded-md px-1 py-2 transition-colors hover:bg-muted/40">
+      {/* Tinted file-type icon. Tone reflects format (red for PDF,
+          green for spreadsheets / images, primary for word docs).
+          Tinted backgrounds are 10 % opacity of the token so the
+          chips read as a subtle hierarchy rather than competing
+          banner colours. */}
+      <span
+        className={cn(
+          "flex size-10 shrink-0 items-center justify-center rounded-md",
+          bg,
+          fg,
+        )}
+      >
+        <Icon name={icon} size={18} />
+      </span>
       <button
         type="button"
         onClick={handleOpen}
-        className="group/attachment flex w-full items-center gap-3 rounded-md border border-border bg-card px-3 py-2.5 text-left transition-colors hover:border-primary"
+        className="flex min-w-0 flex-1 flex-col text-left"
       >
-        <span className="flex size-9 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary">
-          <Icon name={iconName} size={16} />
+        <span className="truncate text-l6 text-foreground transition-colors group-hover/attachment:text-primary">
+          {attachment.file_name}
         </span>
-        <div className="flex min-w-0 flex-1 flex-col">
-          <p className="truncate text-l6 text-foreground group-hover/attachment:text-primary">
-            {attachment.file_name}
-          </p>
-          <p className="text-p4 text-muted-foreground">
-            {formatBytes(attachment.size_bytes)}
-            {attachment.user?.name ? ` · ${attachment.user.name}` : ""}
-            {" · "}
-            {timeAgo(attachment.created_at)}
-          </p>
-        </div>
-        <Icon
-          name="DocumentDownload"
-          size={16}
-          className="shrink-0 text-muted-foreground transition-colors group-hover/attachment:text-primary"
-          aria-label={
-            t.has("attachments.download")
-              ? t("attachments.download")
-              : "Download"
-          }
-        />
+        <span className="text-p4 text-muted-foreground">
+          {formatBytes(attachment.size_bytes)}
+          {attachment.user?.name ? ` · ${attachment.user.name}` : ""}
+          {" · "}
+          {timeAgo(attachment.created_at)}
+        </span>
+      </button>
+      {/* Circular primary download button on the right. Replaces
+          the previous monochrome `<Icon name="DocumentDownload" />`
+          — the filled-blue chip reads as a CTA, not as a decorative
+          state indicator. */}
+      <button
+        type="button"
+        onClick={handleOpen}
+        aria-label={
+          t.has("attachments.download") ? t("attachments.download") : "Download"
+        }
+        className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground transition-colors hover:bg-primary/90"
+      >
+        <Icon name="ArrowDown2" size={14} />
       </button>
     </li>
   );

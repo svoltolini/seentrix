@@ -699,6 +699,7 @@ export async function uploadStepAttachment(
   if (!canWrite(role)) return { error: "notAuthorized" };
 
   const file = formData.get("file");
+  const rawDisplayName = formData.get("displayName");
   if (!(file instanceof File) || file.size === 0) {
     return { error: "noFile" };
   }
@@ -712,6 +713,15 @@ export async function uploadStepAttachment(
   ) {
     return { error: "unsupportedMime" };
   }
+
+  // Optional user-chosen display name. Falls back to the original
+  // file's basename when blank. The displayed name lands in
+  // `file_name` (what the UI renders + the auto-comment quotes); the
+  // storage path always uses the original basename + uuid for safety.
+  const displayName =
+    typeof rawDisplayName === "string" && rawDisplayName.trim().length > 0
+      ? rawDisplayName.trim()
+      : file.name;
 
   // Path: <org_id>/<product_id>/<step_key>/<uuid>-<sanitized_name>.
   // Sanitization replaces anything outside [a-zA-Z0-9._-] with `_`
@@ -737,7 +747,7 @@ export async function uploadStepAttachment(
       step_key: stepKey,
       user_id: user.id,
       storage_path: objectName,
-      file_name: file.name,
+      file_name: displayName,
       mime_type: file.type,
       size_bytes: file.size,
     })
