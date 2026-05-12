@@ -1,6 +1,7 @@
 import * as Iconsax from "iconsax-react";
 import type { ComponentType, SVGAttributes } from "react";
 import { cn } from "@/lib/utils";
+import { CUSTOM_ICONS } from "./custom-icons";
 
 /**
  * Map of legacy HugeIcon names + lucide-react names → iconsax-react component
@@ -205,6 +206,19 @@ export function Icon({
   className,
   ...rest
 }: IconProps) {
+  // Custom Seentrix icons take precedence over iconsax — they're
+  // explicit design overrides (see `./custom-icons.tsx`). If the
+  // name matches a custom-icon entry, render it and exit early.
+  const CustomComponent = CUSTOM_ICONS[name];
+  if (CustomComponent) {
+    return (
+      <CustomComponent
+        size={size}
+        className={cn("shrink-0", className)}
+      />
+    );
+  }
+
   // Resolve through NAME_MAP first; otherwise fall through to direct Iconsax
   // export (so callers can use `<Icon name="FolderMinus" />` natively without
   // adding an alias). Falsy lookup → render placeholder.
