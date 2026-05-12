@@ -599,46 +599,46 @@ function GateTile({
   okLabel: string;
   notLabel: string;
 }) {
-  // Gate tile matches the Nask "task row" pattern used by the
-  // dashboard MeetingsList: a tinted icon block on the left
-  // (success / warning tone), label stacked over a status pill on
-  // the right. Earlier passes tried (a) tinted borders + opacity
-  // hex math and (b) bg-muted/40 panel + left-edge stripe — the
-  // user pushed back on both. This recipe leans on a proper icon
-  // square + a pill chip for the status, which reads as a polished
-  // info tile rather than a thin status bar.
+  // Gate tile reuses the Nask Project Card cover SVG (Rectangle
+  // 9548, exported once at `/public/images/project-card-cover.svg`)
+  // as a full-bleed background — same asset that paints the
+  // dashboard "My Products" hero strip and the products grid
+  // fallback. Translucent-white chips on top match the priority
+  // chip recipe from the project hero card so this surface reads
+  // as the same visual family.
+  //
+  // Status colour signal lives in the small dot (success green or
+  // warning orange) inside the otherwise neutral white chip — chip
+  // background stays uniform so the colour-blind / colour-coded
+  // signal doesn't fight the blue cover.
   return (
-    <div className="flex items-center gap-4 rounded-md border border-border bg-card p-4">
-      <span
-        className={cn(
-          "flex size-10 shrink-0 items-center justify-center rounded-md",
-          ok
-            ? "bg-success/10 text-success"
-            : "bg-warning/10 text-warning",
-        )}
-      >
-        <Icon name={ok ? "TickCircle" : "Clock"} size={20} variant="Bold" />
-      </span>
-      <div className="flex min-w-0 flex-1 flex-col gap-1">
-        <p className="truncate text-l6-plus uppercase tracking-wider text-muted-foreground">
-          {label}
-        </p>
-        <span
-          className={cn(
-            "inline-flex w-fit items-center gap-1.5 rounded-sm px-2 py-0.5 text-l6-plus uppercase tracking-wider",
-            ok
-              ? "bg-success/10 text-success"
-              : "bg-warning/10 text-warning",
-          )}
-        >
-          <span
-            className={cn(
-              "size-1.5 rounded-full",
-              ok ? "bg-success" : "bg-warning",
-            )}
-          />
-          {ok ? okLabel : notLabel}
+    <div
+      className="relative overflow-hidden rounded-md text-white"
+      style={{
+        backgroundImage: "url(/images/project-card-cover.svg)",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      <div className="relative flex items-center gap-4 p-4">
+        <span className="flex size-10 shrink-0 items-center justify-center rounded-md border-[1.5px] border-white/30 bg-white/15 text-white backdrop-blur-sm">
+          <Icon name={ok ? "TickCircle" : "Clock"} size={20} variant="Bold" />
         </span>
+        <div className="flex min-w-0 flex-1 flex-col gap-1.5">
+          <p className="truncate text-l6-plus uppercase tracking-wider text-white/85">
+            {label}
+          </p>
+          <span className="inline-flex w-fit items-center gap-1.5 rounded-sm border-[1.5px] border-white/30 bg-white/15 px-2 py-0.5 text-l6-plus uppercase tracking-wider text-white backdrop-blur-sm">
+            <span
+              aria-hidden
+              className={cn(
+                "size-1.5 rounded-full",
+                ok ? "bg-success" : "bg-warning",
+              )}
+            />
+            {ok ? okLabel : notLabel}
+          </span>
+        </div>
       </div>
     </div>
   );
