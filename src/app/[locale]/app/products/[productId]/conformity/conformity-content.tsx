@@ -286,19 +286,30 @@ export function ConformityContent({
             />
           </div>
 
-          {/* Gate status — checklist + sbom (read-only summary) */}
-          <div className="mt-5 grid grid-cols-2 gap-3">
+          {/* Gate status — checklist + sbom. Hairline-divided pair
+              of inline tiles, no card chrome. Five earlier passes
+              (1 px tinted border, bg-muted panel + stripe, bordered
+              card + icon block, wavy SVG cover) all got rejected;
+              the user landed on "remove the background and change
+              the layout". Final recipe is the same horizontal
+              icon-+-label-+-status structure but with the visual
+              container stripped — the parent hero card already
+              provides the surface, so the tiles read as ambient
+              metadata instead of competing widgets. */}
+          <div className="mt-5 grid grid-cols-1 divide-y divide-border sm:grid-cols-2 sm:divide-x sm:divide-y-0">
             <GateTile
               label={t("gate.checklist")}
               ok={state.checklistComplete}
               okLabel={t("gate.ready")}
               notLabel={t("gate.pending")}
+              position="left"
             />
             <GateTile
               label={t("gate.sbom")}
               ok={state.hasActiveSbom}
               okLabel={t("gate.ready")}
               notLabel={t("gate.pending")}
+              position="right"
             />
           </div>
         </div>
@@ -593,52 +604,47 @@ function GateTile({
   ok,
   okLabel,
   notLabel,
+  position,
 }: {
   label: string;
   ok: boolean;
   okLabel: string;
   notLabel: string;
+  /** Half-of-pair position — drives the inset padding side so the
+   *  divider hairline sits in the middle of the gap. */
+  position: "left" | "right";
 }) {
-  // Gate tile reuses the Nask Project Card cover SVG (Rectangle
-  // 9548, exported once at `/public/images/project-card-cover.svg`)
-  // as a full-bleed background — same asset that paints the
-  // dashboard "My Products" hero strip and the products grid
-  // fallback. Translucent-white chips on top match the priority
-  // chip recipe from the project hero card so this surface reads
-  // as the same visual family.
-  //
-  // Status colour signal lives in the small dot (success green or
-  // warning orange) inside the otherwise neutral white chip — chip
-  // background stays uniform so the colour-blind / colour-coded
-  // signal doesn't fight the blue cover.
+  // No card chrome. The tile renders inline inside the hero card
+  // with just an icon + label + status — the parent grid provides
+  // the hairline divider between the two halves. Inset padding so
+  // the divider doesn't kiss the content.
   return (
     <div
-      className="relative overflow-hidden rounded-md text-white"
-      style={{
-        backgroundImage: "url(/images/project-card-cover.svg)",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
+      className={cn(
+        "flex items-center gap-3 py-3",
+        position === "left"
+          ? "sm:pr-6"
+          : "pt-3 sm:pl-6 sm:pt-3",
+      )}
     >
-      <div className="relative flex items-center gap-4 p-4">
-        <span className="flex size-10 shrink-0 items-center justify-center rounded-md border-[1.5px] border-white/30 bg-white/15 text-white backdrop-blur-sm">
-          <Icon name={ok ? "TickCircle" : "Clock"} size={20} variant="Bold" />
-        </span>
-        <div className="flex min-w-0 flex-1 flex-col gap-1.5">
-          <p className="truncate text-l6-plus uppercase tracking-wider text-white/85">
-            {label}
-          </p>
-          <span className="inline-flex w-fit items-center gap-1.5 rounded-sm border-[1.5px] border-white/30 bg-white/15 px-2 py-0.5 text-l6-plus uppercase tracking-wider text-white backdrop-blur-sm">
-            <span
-              aria-hidden
-              className={cn(
-                "size-1.5 rounded-full",
-                ok ? "bg-success" : "bg-warning",
-              )}
-            />
-            {ok ? okLabel : notLabel}
-          </span>
-        </div>
+      <Icon
+        name={ok ? "TickCircle" : "Clock"}
+        size={22}
+        variant="Bold"
+        className={cn(ok ? "text-success" : "text-warning")}
+      />
+      <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+        <p className="truncate text-l6-plus uppercase tracking-wider text-muted-foreground">
+          {label}
+        </p>
+        <p
+          className={cn(
+            "text-h6",
+            ok ? "text-success" : "text-warning",
+          )}
+        >
+          {ok ? okLabel : notLabel}
+        </p>
       </div>
     </div>
   );
