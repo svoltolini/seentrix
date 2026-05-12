@@ -599,38 +599,47 @@ function GateTile({
   okLabel: string;
   notLabel: string;
 }) {
-  // Gate tiles sit inside the conformity hero (already bg-card), so
-  // they need a subtle inset look — bg-muted/40 carries it without
-  // competing with the parent card's shadow. A 3 px left-edge tone
-  // stripe communicates the gate state (green = ready, orange =
-  // pending) consistent with the severity-bar pattern used on
-  // vulnerabilities, releases, and the compliance-score hero.
+  // Gate tile matches the Nask "task row" pattern used by the
+  // dashboard MeetingsList: a tinted icon block on the left
+  // (success / warning tone), label stacked over a status pill on
+  // the right. Earlier passes tried (a) tinted borders + opacity
+  // hex math and (b) bg-muted/40 panel + left-edge stripe — the
+  // user pushed back on both. This recipe leans on a proper icon
+  // square + a pill chip for the status, which reads as a polished
+  // info tile rather than a thin status bar.
   return (
-    <div className="relative overflow-hidden rounded-md bg-muted/40 px-4 py-3">
+    <div className="flex items-center gap-4 rounded-md border border-border bg-card p-4">
       <span
-        aria-hidden
         className={cn(
-          "absolute inset-y-0 left-0 w-1",
-          ok ? "bg-success" : "bg-warning",
-        )}
-      />
-      <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
-        {label}
-      </p>
-      <p
-        className={cn(
-          "mt-1 flex items-center gap-1.5 text-l5",
-          ok ? "text-success" : "text-warning",
+          "flex size-10 shrink-0 items-center justify-center rounded-md",
+          ok
+            ? "bg-success/10 text-success"
+            : "bg-warning/10 text-warning",
         )}
       >
+        <Icon name={ok ? "TickCircle" : "Clock"} size={20} variant="Bold" />
+      </span>
+      <div className="flex min-w-0 flex-1 flex-col gap-1">
+        <p className="truncate text-l6-plus uppercase tracking-wider text-muted-foreground">
+          {label}
+        </p>
         <span
           className={cn(
-            "size-1.5 rounded-full",
-            ok ? "bg-success" : "bg-warning",
+            "inline-flex w-fit items-center gap-1.5 rounded-sm px-2 py-0.5 text-l6-plus uppercase tracking-wider",
+            ok
+              ? "bg-success/10 text-success"
+              : "bg-warning/10 text-warning",
           )}
-        />
-        {ok ? okLabel : notLabel}
-      </p>
+        >
+          <span
+            className={cn(
+              "size-1.5 rounded-full",
+              ok ? "bg-success" : "bg-warning",
+            )}
+          />
+          {ok ? okLabel : notLabel}
+        </span>
+      </div>
     </div>
   );
 }
