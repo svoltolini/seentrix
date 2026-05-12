@@ -532,13 +532,20 @@ export function ConformityContent({
                     size="sm"
                     overlap="tight"
                   />
+                  {/* Status chip matches the composer pill recipe
+                      (Figma 182:17729): h-7 + gap-1.5 + 16 px icon
+                      + text-l6-plus label. Tier-tinted bg/text via
+                      the runtime `${color}1A` hex math so the
+                      colour comes from the same STATUS_COLOR map
+                      every other surface uses. */}
                   <span
-                    className="shrink-0 rounded-sm px-2.5 py-0.5 text-l6-plus"
+                    className="inline-flex h-7 shrink-0 items-center gap-1.5 rounded-sm px-2 text-l6-plus"
                     style={{
                       backgroundColor: `${color}1A`,
                       color,
                     }}
                   >
+                    <Icon name={STATUS_ICON[step.status]} size={16} />
                     {tStatus(step.status)}
                   </span>
                   <Icon
@@ -1137,18 +1144,19 @@ function StepDetailSheet({
                 <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
                   {t.has("steps.current") ? t("steps.current") : "Status"}
                 </p>
+                {/* Sheet-body status chip — same h-7 + gap-1.5
+                    flat-chip recipe used by the row chips and the
+                    composer pills. The leading 16 px iconsax glyph
+                    replaces the previous 6 px tinted dot so this
+                    surface reads with the rest of the family. */}
                 <span
-                  className="inline-flex items-center gap-1.5 rounded-sm px-2.5 py-0.5 text-l6-plus"
+                  className="inline-flex h-7 items-center gap-1.5 rounded-sm px-2 text-l6-plus"
                   style={{
                     backgroundColor: `${color}1A`,
                     color,
                   }}
                 >
-                  <span
-                    aria-hidden
-                    className="size-1.5 rounded-full"
-                    style={{ backgroundColor: color }}
-                  />
+                  <Icon name={STATUS_ICON[step.status]} size={16} />
                   {tStatus(step.status)}
                 </span>
               </div>
