@@ -135,7 +135,17 @@
     "toast": {
       "saved": "Saved",
       "saveFailed": "Couldn't save",
-      "commentRequired": "Add a note before changing the status — every status change is recorded in the audit log."
+      "commentRequired": "Add a note before changing the status — every status change is recorded in the audit log.",
+      "fileTooLarge": "File is over the 2 MB upload limit.",
+      "unsupportedMime": "That file type isn't supported. Images, PDFs, Office documents, and plain text are accepted.",
+      "uploadFailed": "Couldn't upload the file. Please try again.",
+      "fileUploaded": "File uploaded."
+    },
+    "attachments": {
+      "title": "Attachments",
+      "attach": "Attach a file",
+      "hint": "Attach a file (≤ 2 MB)",
+      "download": "Download"
     },
     "conversation": {
       "empty": "No comments yet. Start the thread with the first note.",

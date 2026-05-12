@@ -100,6 +100,7 @@ const NAME_MAP = {
   // Lets call-sites use the canonical name without going through a legacy alias.
   "Add": "Add",
   "AddSquare": "AddSquare",
+  "AttachCircle": "AttachCircle",
   "Archive": "Archive",
   "ArchiveAdd": "ArchiveAdd",
   "ArrowDown2": "ArrowDown2",

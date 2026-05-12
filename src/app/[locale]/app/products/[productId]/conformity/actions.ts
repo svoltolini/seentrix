@@ -3,6 +3,10 @@
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { logActivity } from "@/lib/activity";
+import {
+  STEP_ATTACHMENT_ALLOWED_MIMES,
+  STEP_ATTACHMENT_MAX_BYTES,
+} from "./constants";
 
 export type ConformityRoute =
   | "module_a"
@@ -31,6 +35,25 @@ export interface StepComment {
   } | null;
 }
 
+export interface StepAttachment {
+  id: string;
+  file_name: string;
+  mime_type: string;
+  size_bytes: number;
+  storage_path: string;
+  created_at: string;
+  user: {
+    id: string | null;
+    name: string | null;
+    avatar_url: string | null;
+  } | null;
+}
+
+// Constants for attachment size + MIME allowlist live in
+// `./constants.ts` because Next.js "use server" files can only
+// export async functions (a primitive export trips a build-time
+// error). Imported at the top of this file.
+
 export interface ConformityStep {
   id?: string;
   key: string;
@@ -42,6 +65,7 @@ export interface ConformityStep {
    */
   notes: string | null;
   comments: StepComment[];
+  attachments: StepAttachment[];
   completed_at: string | null;
   completed_by: string | null;
 }
@@ -242,6 +266,52 @@ export async function loadConformity(
     .eq("product_id", productId)
     .order("created_at", { ascending: true });
 
+  // Attachments per step — same join shape as the comment fetch.
+  const { data: attachmentRows } = await supabase
+    .from("product_conformity_step_attachments")
+    .select(
+      "id, step_key, file_name, mime_type, size_bytes, storage_path, created_at, user:users(id, full_name, avatar_url)",
+    )
+    .eq("product_id", productId)
+    .order("created_at", { ascending: true });
+
+  const attachmentsByStep = new Map<string, StepAttachment[]>();
+  const typedAttachments = (attachmentRows ?? []) as unknown as Array<{
+    id: string;
+    step_key: string;
+    file_name: string;
+    mime_type: string;
+    size_bytes: number;
+    storage_path: string;
+    created_at: string;
+    user:
+      | {
+          id: string;
+          full_name: string | null;
+          avatar_url: string | null;
+        }
+      | null;
+  }>;
+  for (const row of typedAttachments) {
+    const arr = attachmentsByStep.get(row.step_key) ?? [];
+    arr.push({
+      id: row.id,
+      file_name: row.file_name,
+      mime_type: row.mime_type,
+      size_bytes: row.size_bytes,
+      storage_path: row.storage_path,
+      created_at: row.created_at,
+      user: row.user
+        ? {
+            id: row.user.id,
+            name: row.user.full_name,
+            avatar_url: row.user.avatar_url,
+          }
+        : null,
+    });
+    attachmentsByStep.set(row.step_key, arr);
+  }
+
   const commentsByStep = new Map<string, StepComment[]>();
   // PostgREST returns a foreign-key join as an array even when the
   // relation is one-to-one. Cast through `unknown` then pick the
@@ -287,6 +357,7 @@ export async function loadConformity(
       status: row?.status ?? "pending",
       notes: row?.notes ?? null,
       comments: commentsByStep.get(k) ?? [],
+      attachments: attachmentsByStep.get(k) ?? [],
       completed_at: row?.completed_at ?? null,
       completed_by: row?.completed_by ?? null,
     };
@@ -604,4 +675,145 @@ export async function issueDeclaration(
   });
   revalidatePath(`/app/products/${productId}/conformity`);
   return { version };
+}
+
+// ---------------------------------------------------------------------------
+// Attachments — file uploads on workflow steps
+// ---------------------------------------------------------------------------
+
+/**
+ * Upload a file to the `conformity-attachments` bucket and create a
+ * matching metadata row in `product_conformity_step_attachments`.
+ *
+ * Path layout: `<org_id>/<product_id>/<step_key>/<uuid>-<name>` —
+ * the leading `org_id` segment is what the storage RLS policy uses
+ * to gate access, mirroring the `document-pdfs` bucket pattern.
+ */
+export async function uploadStepAttachment(
+  productId: string,
+  stepKey: string,
+  formData: FormData,
+): Promise<{ error?: string; attachment?: StepAttachment }> {
+  const { supabase, user, orgId, role } = await getAuthContext();
+  if (!user || !orgId) return { error: "notAuthenticated" };
+  if (!canWrite(role)) return { error: "notAuthorized" };
+
+  const file = formData.get("file");
+  if (!(file instanceof File) || file.size === 0) {
+    return { error: "noFile" };
+  }
+  if (file.size > STEP_ATTACHMENT_MAX_BYTES) {
+    return { error: "fileTooLarge" };
+  }
+  if (
+    !STEP_ATTACHMENT_ALLOWED_MIMES.includes(
+      file.type as (typeof STEP_ATTACHMENT_ALLOWED_MIMES)[number],
+    )
+  ) {
+    return { error: "unsupportedMime" };
+  }
+
+  // Path: <org_id>/<product_id>/<step_key>/<uuid>-<sanitized_name>.
+  // Sanitization replaces anything outside [a-zA-Z0-9._-] with `_`
+  // so Supabase storage doesn't gag on emoji / spaces / unicode.
+  const safeName = file.name.replace(/[^a-zA-Z0-9._-]+/g, "_");
+  const objectName = `${orgId}/${productId}/${stepKey}/${crypto.randomUUID()}-${safeName}`;
+
+  const buffer = await file.arrayBuffer();
+  const { error: uploadError } = await supabase.storage
+    .from("conformity-attachments")
+    .upload(objectName, buffer, {
+      contentType: file.type,
+      upsert: false,
+    });
+  if (uploadError) {
+    return { error: "uploadFailed" };
+  }
+
+  const { data: inserted, error: insertError } = await supabase
+    .from("product_conformity_step_attachments")
+    .insert({
+      product_id: productId,
+      step_key: stepKey,
+      user_id: user.id,
+      storage_path: objectName,
+      file_name: file.name,
+      mime_type: file.type,
+      size_bytes: file.size,
+    })
+    .select(
+      "id, file_name, mime_type, size_bytes, storage_path, created_at, user:users(id, full_name, avatar_url)",
+    )
+    .single();
+
+  if (insertError) {
+    // Best-effort cleanup: remove the just-uploaded object so we
+    // don't accumulate orphans when the metadata insert fails. Even
+    // if cleanup itself fails, the storage policy makes the file
+    // unreadable to anyone but a future upload at the same path.
+    await supabase.storage
+      .from("conformity-attachments")
+      .remove([objectName]);
+    return { error: "generic" };
+  }
+
+  const row = inserted as unknown as {
+    id: string;
+    file_name: string;
+    mime_type: string;
+    size_bytes: number;
+    storage_path: string;
+    created_at: string;
+    user: {
+      id: string;
+      full_name: string | null;
+      avatar_url: string | null;
+    } | null;
+  };
+
+  await logActivity({
+    action: "conformity.attachment_added",
+    targetType: "conformity_step",
+    targetId: `${productId}:${stepKey}`,
+    metadata: { productId, stepKey, fileName: file.name },
+  });
+  revalidatePath(`/app/products/${productId}/conformity`);
+
+  return {
+    attachment: {
+      id: row.id,
+      file_name: row.file_name,
+      mime_type: row.mime_type,
+      size_bytes: row.size_bytes,
+      storage_path: row.storage_path,
+      created_at: row.created_at,
+      user: row.user
+        ? {
+            id: row.user.id,
+            name: row.user.full_name,
+            avatar_url: row.user.avatar_url,
+          }
+        : null,
+    },
+  };
+}
+
+/**
+ * Generate a short-lived signed URL the client can use to download
+ * an attachment. Default expiry: 60 seconds — enough for a click-
+ * through to start the download, not enough for the URL to leak
+ * meaningfully if logged.
+ */
+export async function getAttachmentDownloadUrl(
+  storagePath: string,
+): Promise<{ url?: string; error?: string }> {
+  const { supabase, user } = await getAuthContext();
+  if (!user) return { error: "notAuthenticated" };
+
+  const { data, error } = await supabase.storage
+    .from("conformity-attachments")
+    .createSignedUrl(storagePath, 60);
+
+  if (error || !data?.signedUrl) return { error: "generic" };
+  return { url: data.signedUrl };
 }

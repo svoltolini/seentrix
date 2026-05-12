@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState, useTransition } from "react";
+import { useEffect, useMemo, useRef, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { Dialog as SheetPrimitive } from "@base-ui/react/dialog";
 import { cn } from "@/lib/utils";
@@ -21,14 +21,21 @@ import { useToast } from "@/components/ui/toast";
 import { useLocaleDate } from "@/lib/locale-date";
 import {
   addStepComment,
+  getAttachmentDownloadUrl,
   issueDeclaration,
   setStepStatus,
   updateNotifiedBody,
+  uploadStepAttachment,
   type ConformityState,
   type ConformityStep,
   type ConformityStepStatus,
+  type StepAttachment,
   type StepComment,
 } from "./actions";
+import {
+  STEP_ATTACHMENT_ALLOWED_MIMES,
+  STEP_ATTACHMENT_MAX_BYTES,
+} from "./constants";
 
 const STATUS_COLOR: Record<ConformityStepStatus, string> = {
   pending: "var(--muted-foreground)",
@@ -203,6 +210,55 @@ export function ConformityContent({
             : s,
         ),
       }));
+    }
+  }
+
+  /**
+   * Upload a file to a workflow step. Client-side guard rails first
+   * (size + MIME) so we surface a fast failure without a round-trip;
+   * the server action runs the same checks again as the source of
+   * truth. No optimistic insert because the row depends on the
+   * server-issued storage path.
+   */
+  async function applyAttachment(stepKey: string, file: File) {
+    if (file.size > STEP_ATTACHMENT_MAX_BYTES) {
+      toast({ type: "error", message: t("toast.fileTooLarge") });
+      return;
+    }
+    if (
+      !STEP_ATTACHMENT_ALLOWED_MIMES.includes(
+        file.type as (typeof STEP_ATTACHMENT_ALLOWED_MIMES)[number],
+      )
+    ) {
+      toast({ type: "error", message: t("toast.unsupportedMime") });
+      return;
+    }
+    const formData = new FormData();
+    formData.set("file", file);
+    const res = await uploadStepAttachment(productId, stepKey, formData);
+    if (res.error) {
+      const key =
+        res.error === "fileTooLarge"
+          ? "toast.fileTooLarge"
+          : res.error === "unsupportedMime"
+            ? "toast.unsupportedMime"
+            : "toast.uploadFailed";
+      toast({
+        type: "error",
+        message: t.has(key) ? t(key) : t("toast.saveFailed"),
+      });
+      return;
+    }
+    if (res.attachment) {
+      setState((prev) => ({
+        ...prev,
+        steps: prev.steps.map((s) =>
+          s.key === stepKey
+            ? { ...s, attachments: [...s.attachments, res.attachment!] }
+            : s,
+        ),
+      }));
+      toast({ type: "success", message: t("toast.fileUploaded") });
     }
   }
 
@@ -436,6 +492,16 @@ export function ConformityContent({
                       {step.comments.length}
                     </span>
                   )}
+                  {step.attachments.length > 0 && (
+                    <span className="inline-flex items-center gap-1 text-p4 text-muted-foreground">
+                      <Icon
+                        name="AttachCircle"
+                        size={14}
+                        aria-label="Attachments"
+                      />
+                      {step.attachments.length}
+                    </span>
+                  )}
                   <ContributorStack
                     contributors={contributorsOf(step)}
                     size="sm"
@@ -562,6 +628,9 @@ export function ConformityContent({
         }}
         onApplyComment={(body) => {
           if (openStepKey) applyComment(openStepKey, body);
+        }}
+        onApplyAttachment={(file) => {
+          if (openStepKey) applyAttachment(openStepKey, file);
         }}
       />
     </div>
@@ -861,6 +930,7 @@ function StepDetailSheet({
   t,
   onApplyStatus,
   onApplyComment,
+  onApplyAttachment,
 }: {
   step: ConformityStep | null;
   open: boolean;
@@ -871,6 +941,7 @@ function StepDetailSheet({
   t: ReturnType<typeof useTranslations>;
   onApplyStatus: (status: ConformityStepStatus, body: string) => void;
   onApplyComment: (body: string) => void;
+  onApplyAttachment: (file: File) => void;
 }) {
   const [body, setBody] = useState("");
   // Local draft for the status pill click — actually committed only
@@ -878,6 +949,7 @@ function StepDetailSheet({
   // we don't immediately fire `setStepStatus` on pill click.
   const [pendingStatus, setPendingStatus] =
     useState<ConformityStepStatus | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Reset composer state whenever the sheet closes OR the user
   // navigates to a different step.
@@ -957,6 +1029,25 @@ function StepDetailSheet({
                 size="md"
               />
             </div>
+
+            {/* Attachments — list of files uploaded against this
+                step, with filename + size + uploader + a download
+                link. Click → server action mints a 60-second signed
+                URL and opens it in a new tab. */}
+            {step.attachments.length > 0 && (
+              <div className="flex flex-col gap-2">
+                <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
+                  {t.has("attachments.title")
+                    ? t("attachments.title")
+                    : "Attachments"}
+                </p>
+                <ul className="flex flex-col gap-2">
+                  {step.attachments.map((a) => (
+                    <AttachmentRow key={a.id} attachment={a} t={t} />
+                  ))}
+                </ul>
+              </div>
+            )}
 
             {/* Comment thread — bubbles in `bg-secondary` per the
                 user's "slightly darker" feedback. Matches the Nask
@@ -1073,24 +1164,61 @@ function StepDetailSheet({
                         ? t("conversation.noteRequired")
                         : "Comments are saved to the audit log and can't be edited."}
                   </p>
-                  <button
-                    type="button"
-                    disabled={!canSave}
-                    onClick={handleSave}
-                    className={cn(
-                      "inline-flex h-9 items-center gap-1.5 rounded-sm bg-primary px-4 text-l6 text-primary-foreground transition-colors hover:bg-primary/90",
-                      "disabled:cursor-not-allowed disabled:opacity-50",
-                    )}
-                  >
-                    <Icon name="Send" size={14} />
-                    {hasStatusChange
-                      ? t.has("conversation.saveStatus")
-                        ? t("conversation.saveStatus")
-                        : "Save status change"
-                      : t.has("conversation.save")
-                        ? t("conversation.save")
-                        : "Save comment"}
-                  </button>
+                  <div className="flex items-center gap-1.5">
+                    {/* Hidden file input + paperclip trigger. Files
+                        upload immediately (no draft state) — they
+                        live independently of the comment composer
+                        because the upload is a discrete action with
+                        its own success / error path. */}
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      className="hidden"
+                      accept={STEP_ATTACHMENT_ALLOWED_MIMES.join(",")}
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) onApplyAttachment(file);
+                        // Reset the input so picking the same file
+                        // twice in a row still fires onChange.
+                        if (e.target) e.target.value = "";
+                      }}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => fileInputRef.current?.click()}
+                      className="inline-flex size-9 items-center justify-center rounded-sm border-[1.5px] border-border-outline bg-card text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+                      aria-label={
+                        t.has("attachments.attach")
+                          ? t("attachments.attach")
+                          : "Attach a file"
+                      }
+                      title={
+                        t.has("attachments.hint")
+                          ? t("attachments.hint")
+                          : "Attach a file (≤ 2 MB)"
+                      }
+                    >
+                      <Icon name="AttachCircle" size={16} />
+                    </button>
+                    <button
+                      type="button"
+                      disabled={!canSave}
+                      onClick={handleSave}
+                      className={cn(
+                        "inline-flex h-9 items-center gap-1.5 rounded-sm bg-primary px-4 text-l6 text-primary-foreground transition-colors hover:bg-primary/90",
+                        "disabled:cursor-not-allowed disabled:opacity-50",
+                      )}
+                    >
+                      <Icon name="Send" size={14} />
+                      {hasStatusChange
+                        ? t.has("conversation.saveStatus")
+                          ? t("conversation.saveStatus")
+                          : "Save status change"
+                        : t.has("conversation.save")
+                          ? t("conversation.save")
+                          : "Save comment"}
+                    </button>
+                  </div>
                 </div>
               </div>
             </SideSheetFooter>
@@ -1098,5 +1226,75 @@ function StepDetailSheet({
         </SideSheetPopup>
       </SheetPrimitive.Portal>
     </SheetPrimitive.Root>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Attachment row
+// ---------------------------------------------------------------------------
+
+function formatBytes(bytes: number): string {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+/**
+ * One row inside the attachment list. Clicking the filename or the
+ * download icon mints a short-lived signed URL via
+ * `getAttachmentDownloadUrl` and opens it in a new tab. The signed
+ * URL is requested on-demand rather than baked into the page so the
+ * URL never lands in browser history or analytics referrers.
+ */
+function AttachmentRow({
+  attachment,
+  t,
+}: {
+  attachment: StepAttachment;
+  t: ReturnType<typeof useTranslations>;
+}) {
+  async function handleOpen() {
+    const res = await getAttachmentDownloadUrl(attachment.storage_path);
+    if (res.url) {
+      window.open(res.url, "_blank", "noopener,noreferrer");
+    }
+  }
+
+  const isImage = attachment.mime_type.startsWith("image/");
+  const iconName = isImage ? "Image" : "DocumentText";
+
+  return (
+    <li>
+      <button
+        type="button"
+        onClick={handleOpen}
+        className="group/attachment flex w-full items-center gap-3 rounded-md border border-border bg-card px-3 py-2.5 text-left transition-colors hover:border-primary"
+      >
+        <span className="flex size-9 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary">
+          <Icon name={iconName} size={16} />
+        </span>
+        <div className="flex min-w-0 flex-1 flex-col">
+          <p className="truncate text-l6 text-foreground group-hover/attachment:text-primary">
+            {attachment.file_name}
+          </p>
+          <p className="text-p4 text-muted-foreground">
+            {formatBytes(attachment.size_bytes)}
+            {attachment.user?.name ? ` · ${attachment.user.name}` : ""}
+            {" · "}
+            {timeAgo(attachment.created_at)}
+          </p>
+        </div>
+        <Icon
+          name="DocumentDownload"
+          size={16}
+          className="shrink-0 text-muted-foreground transition-colors group-hover/attachment:text-primary"
+          aria-label={
+            t.has("attachments.download")
+              ? t("attachments.download")
+              : "Download"
+          }
+        />
+      </button>
+    </li>
   );
 }
