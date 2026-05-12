@@ -436,6 +436,11 @@ export function ConformityContent({
                       {step.comments.length}
                     </span>
                   )}
+                  <ContributorStack
+                    contributors={contributorsOf(step)}
+                    size="sm"
+                    overlap="tight"
+                  />
                   <span
                     className="shrink-0 rounded-sm px-2.5 py-0.5 text-l6-plus"
                     style={{
@@ -733,6 +738,78 @@ function initialsOf(name: string | null | undefined): string {
     .toUpperCase();
 }
 
+type Contributor = {
+  id: string;
+  name: string | null;
+  avatar_url: string | null;
+};
+
+/**
+ * Distinct users who have acted on a workflow step. Currently
+ * derived from comment authors — once status changes carry their
+ * own audit row, this becomes the union of comment authors + status
+ * changers + attachment uploaders.
+ */
+function contributorsOf(step: ConformityStep): Contributor[] {
+  const seen = new Map<string, Contributor>();
+  for (const c of step.comments) {
+    const id = c.user?.id;
+    if (!id || seen.has(id)) continue;
+    seen.set(id, {
+      id,
+      name: c.user?.name ?? null,
+      avatar_url: c.user?.avatar_url ?? null,
+    });
+  }
+  return Array.from(seen.values());
+}
+
+/**
+ * Stacked avatar group matching the Figma frame the user pointed
+ * at (id 71:11711) — 32 px circles with `-space-x-2` overlap and a
+ * `ring-2 ring-card` halo so the silhouettes are crisp against any
+ * surface. Shows up to 3 avatars; anything beyond surfaces as a
+ * `+N` chip on the right.
+ */
+function ContributorStack({
+  contributors,
+  size = "sm",
+  overlap = "default",
+}: {
+  contributors: Contributor[];
+  size?: "sm" | "md";
+  overlap?: "default" | "tight";
+}) {
+  if (contributors.length === 0) return null;
+  const visible = contributors.slice(0, 3);
+  const extra = contributors.length - visible.length;
+  return (
+    <div
+      className={cn(
+        "flex items-center",
+        overlap === "tight" ? "-space-x-1.5" : "-space-x-2",
+      )}
+    >
+      {visible.map((u) => (
+        <Avatar key={u.id} size={size} className="ring-2 ring-card">
+          <AvatarImage src={u.avatar_url ?? undefined} alt="" />
+          <AvatarFallback>{initialsOf(u.name)}</AvatarFallback>
+        </Avatar>
+      ))}
+      {extra > 0 && (
+        <span
+          className={cn(
+            "relative inline-flex items-center justify-center rounded-full bg-muted text-l6-plus text-muted-foreground ring-2 ring-card",
+            size === "md" ? "size-8 text-l6" : "size-6 text-l6-plus",
+          )}
+        >
+          +{extra}
+        </span>
+      )}
+    </div>
+  );
+}
+
 function timeAgo(iso: string): string {
   const ms = Date.now() - new Date(iso).getTime();
   if (ms < 60_000) return "just now";
@@ -851,27 +928,34 @@ function StepDetailSheet({
           />
 
           <SideSheetBody>
-            {/* Current status pill — repeated inside the body so the
-                user has a glanceable confirmation of what's saved
-                regardless of how far they've scrolled the thread. */}
-            <div className="flex items-center gap-2">
-              <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
-                {t.has("steps.current") ? t("steps.current") : "Status"}
-              </p>
-              <span
-                className="inline-flex items-center gap-1.5 rounded-sm px-2.5 py-0.5 text-l6-plus"
-                style={{
-                  backgroundColor: `${color}1A`,
-                  color,
-                }}
-              >
+            {/* Status + contributors row — glanceable confirmation
+                of what's saved (status chip) and who has been part
+                of the thread (avatar stack). Both stay visible
+                regardless of how far the user has scrolled. */}
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="flex items-center gap-2">
+                <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
+                  {t.has("steps.current") ? t("steps.current") : "Status"}
+                </p>
                 <span
-                  aria-hidden
-                  className="size-1.5 rounded-full"
-                  style={{ backgroundColor: color }}
-                />
-                {tStatus(step.status)}
-              </span>
+                  className="inline-flex items-center gap-1.5 rounded-sm px-2.5 py-0.5 text-l6-plus"
+                  style={{
+                    backgroundColor: `${color}1A`,
+                    color,
+                  }}
+                >
+                  <span
+                    aria-hidden
+                    className="size-1.5 rounded-full"
+                    style={{ backgroundColor: color }}
+                  />
+                  {tStatus(step.status)}
+                </span>
+              </div>
+              <ContributorStack
+                contributors={contributorsOf(step)}
+                size="md"
+              />
             </div>
 
             {/* Comment thread — bubbles in `bg-secondary` per the
@@ -910,7 +994,7 @@ function StepDetailSheet({
                           {timeAgo(c.created_at)}
                         </p>
                       </div>
-                      <p className="w-fit max-w-full whitespace-pre-wrap rounded-md bg-secondary px-3 py-2 text-p3 text-foreground">
+                      <p className="w-fit max-w-full whitespace-pre-wrap rounded-md bg-secondary/60 px-3 py-2 text-p3 text-foreground">
                         {c.body}
                       </p>
                     </div>
@@ -935,40 +1019,45 @@ function StepDetailSheet({
                   className="resize-none"
                 />
 
-                <div className="flex flex-wrap items-center gap-2">
+                {/* Status pill row — label on its own row, pills
+                    beneath. Pills are tighter (h-7 px-2.5) so the
+                    composer doesn't dominate the sheet footer. */}
+                <div className="flex flex-col gap-2">
                   <span className="text-l6-plus uppercase tracking-wider text-muted-foreground">
                     {t.has("conversation.changeStatus")
                       ? t("conversation.changeStatus")
                       : "Set status to"}
                   </span>
-                  {(
-                    [
-                      "pending",
-                      "in_progress",
-                      "complete",
-                      "not_applicable",
-                    ] as ConformityStepStatus[]
-                  ).map((st) => {
-                    const active = st === displayStatus;
-                    return (
-                      <button
-                        key={st}
-                        type="button"
-                        onClick={() =>
-                          setPendingStatus(st === step.status ? null : st)
-                        }
-                        className={cn(
-                          "rounded-sm border-[1.5px] px-3 py-1.5 text-l6-plus transition-colors",
-                          active
-                            ? "border-[color:var(--c)] bg-[color:var(--c)]/10 text-[color:var(--c)]"
-                            : "border-border-outline bg-card text-muted-foreground hover:text-foreground",
-                        )}
-                        style={{ ["--c" as string]: STATUS_COLOR[st] }}
-                      >
-                        {tStatus(st)}
-                      </button>
-                    );
-                  })}
+                  <div className="flex flex-wrap gap-1.5">
+                    {(
+                      [
+                        "pending",
+                        "in_progress",
+                        "complete",
+                        "not_applicable",
+                      ] as ConformityStepStatus[]
+                    ).map((st) => {
+                      const active = st === displayStatus;
+                      return (
+                        <button
+                          key={st}
+                          type="button"
+                          onClick={() =>
+                            setPendingStatus(st === step.status ? null : st)
+                          }
+                          className={cn(
+                            "inline-flex h-7 items-center rounded-sm border-[1.5px] px-2.5 text-l6-plus transition-colors",
+                            active
+                              ? "border-[color:var(--c)] bg-[color:var(--c)]/10 text-[color:var(--c)]"
+                              : "border-border-outline bg-card text-muted-foreground hover:text-foreground",
+                          )}
+                          style={{ ["--c" as string]: STATUS_COLOR[st] }}
+                        >
+                          {tStatus(st)}
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
 
                 <div className="flex flex-wrap items-center justify-between gap-3">
