@@ -30,6 +30,18 @@ export default async function middleware(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
 
+  // 1b. Non-localized route handlers must bypass the next-intl middleware.
+  // `/auth/callback` is a route handler living at src/app/auth/callback/
+  // (outside the [locale] tree). If it falls through to intlMiddleware at
+  // the bottom, next-intl tries to resolve it as a localized *page*, finds
+  // none, and returns 404 — which is exactly what breaks the email
+  // confirmation link. Short-circuit here and return the Supabase response
+  // (session cookies already refreshed above) so Next routes straight to
+  // the handler.
+  if (pathname.startsWith("/auth/callback")) {
+    return supabaseResponse;
+  }
+
   // 2. Classify the request by path. Plain paths (no /en/ prefix).
   const isAppRoute = pathname.startsWith("/app");
   const isOnboardingRoute = pathname.startsWith("/auth/onboarding");
