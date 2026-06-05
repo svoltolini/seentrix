@@ -1,7 +1,8 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
+import { useSearchParams } from "next/navigation";
 import { Icon } from "@/components/icon";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -14,8 +15,11 @@ import type { OnboardingState, OnboardingStep } from "@/lib/onboarding-state";
  * requires) get a guided, ordered checklist with a clear primary action and a
  * link to ask the Copilot.
  *
- * Driven entirely by `getOnboardingState()` so the step order, done-flags and
- * progress here are identical to what the Copilot sees.
+ * The checklist is strictly sequential: completed steps are ticked, the single
+ * current step is highlighted and clickable, and every later step is locked
+ * (greyed out, not clickable) so the user can't jump ahead into a flow that
+ * doesn't make sense yet. Driven entirely by `getOnboardingState()` so the
+ * order, done-flags and progress match what the Copilot sees.
  */
 
 interface Props {
@@ -26,6 +30,18 @@ interface Props {
 export function GetStartedGuide({ state, firstName }: Props) {
   const t = useTranslations("dashboard");
   const next = state.nextStep;
+
+  // Build the "add product" href so the global create-product side sheet opens
+  // over the *current* page (dashboard) instead of navigating to /app/products.
+  // The sheet (mounted in app/layout.tsx) drives itself off `?new=product`.
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const sheetHref = useSheetHref(pathname, searchParams);
+
+  // Resolve a step's effective href: the first-product step opens the side
+  // sheet over the dashboard; everything else uses its declared in-app path.
+  const hrefFor = (step: OnboardingStep) =>
+    step.id === "first-product" ? sheetHref : step.href;
 
   return (
     <div className="mx-auto flex w-full max-w-[900px] flex-col gap-6">
@@ -64,27 +80,34 @@ export function GetStartedGuide({ state, firstName }: Props) {
           </div>
         </div>
         {next && (
-          <a
-            href={next.href}
+          <CtaLink
+            href={hrefForCta(next, sheetHref)}
             className={cn(buttonVariants(), "shrink-0 self-start sm:self-auto")}
           >
             {t(`steps.${next.id_key}.cta`)}
             <Icon name="ArrowRight2" size={16} />
-          </a>
+          </CtaLink>
         )}
       </div>
 
-      {/* Step checklist */}
+      {/* Step checklist — strictly sequential */}
       <ol className="flex flex-col gap-3">
-        {state.steps.map((step, idx) => (
-          <StepRow
-            key={step.id}
-            step={step}
-            index={idx + 1}
-            isNext={!step.done && step.id === next?.id}
-            t={t}
-          />
-        ))}
+        {state.steps.map((step, idx) => {
+          const isNext = !step.done && step.id === next?.id;
+          // A step is "locked" when it's neither done nor the current step.
+          const locked = !step.done && !isNext;
+          return (
+            <StepRow
+              key={step.id}
+              step={step}
+              href={hrefFor(step)}
+              index={idx + 1}
+              isNext={isNext}
+              locked={locked}
+              t={t}
+            />
+          );
+        })}
       </ol>
 
       {/* Ask-the-Copilot helper */}
@@ -103,15 +126,34 @@ export function GetStartedGuide({ state, firstName }: Props) {
   );
 }
 
+/** Append `?new=product` to the current path (preserving existing params). */
+function useSheetHref(
+  pathname: string,
+  searchParams: ReturnType<typeof useSearchParams>,
+): string {
+  const params = new URLSearchParams(searchParams?.toString() ?? "");
+  params.set("new", "product");
+  return `${pathname}?${params.toString()}`;
+}
+
+/** The CTA points at the current step; first-product opens the sheet. */
+function hrefForCta(next: OnboardingStep, sheetHref: string): string {
+  return next.id === "first-product" ? sheetHref : next.href;
+}
+
 function StepRow({
   step,
+  href,
   index,
   isNext,
+  locked,
   t,
 }: {
   step: OnboardingStep;
+  href: string;
   index: number;
   isNext: boolean;
+  locked: boolean;
   t: ReturnType<typeof useTranslations>;
 }) {
   const title = t(`steps.${step.id_key}.title`);
@@ -122,7 +164,8 @@ function StepRow({
       className={cn(
         "flex items-center gap-4 rounded-md bg-card px-5 py-4 shadow-card-sm transition-colors",
         isNext && "ring-2 ring-primary/40",
-        !step.done && "hover:bg-muted/40",
+        isNext && "hover:bg-muted/40",
+        locked && "opacity-55",
       )}
     >
       {/* Status badge */}
@@ -139,6 +182,8 @@ function StepRow({
       >
         {step.done ? (
           <Icon name="TickCircle" size={20} variant="Bold" />
+        ) : locked ? (
+          <Icon name="lock-password-stroke-rounded" size={18} />
         ) : (
           <Icon name={step.icon} size={20} />
         )}
@@ -152,7 +197,7 @@ function StepRow({
           <p
             className={cn(
               "truncate text-h6",
-              step.done ? "text-muted-foreground" : "text-foreground",
+              step.done || locked ? "text-muted-foreground" : "text-foreground",
             )}
           >
             {title}
@@ -161,7 +206,7 @@ function StepRow({
         <p className="text-p3 text-muted-foreground">{description}</p>
       </div>
 
-      {!step.done && (
+      {isNext && (
         <Icon
           name="ArrowRight2"
           size={18}
@@ -171,24 +216,44 @@ function StepRow({
     </div>
   );
 
-  // Completed steps are not clickable (nothing to do); outstanding steps link
-  // to their action. We use a plain <a> for the `?new=product` deep-link so the
-  // global create-product sheet query param survives, and the typed <Link>
-  // otherwise.
-  if (step.done) {
+  // Only the single current step is interactive. Done steps and locked future
+  // steps render as static rows so the user can't jump ahead.
+  if (!isNext) {
     return <li>{content}</li>;
   }
   return (
     <li>
-      {step.href.includes("?") ? (
-        <a href={step.href} className="block outline-none">
-          {content}
-        </a>
-      ) : (
-        <Link href={step.href} className="block outline-none">
-          {content}
-        </Link>
-      )}
+      <CtaLink href={href} className="block outline-none">
+        {content}
+      </CtaLink>
     </li>
+  );
+}
+
+/**
+ * Link that uses a plain `<a>` when the target carries a query string (so the
+ * `?new=product` sheet param survives the navigation), and the typed next-intl
+ * `<Link>` otherwise.
+ */
+function CtaLink({
+  href,
+  className,
+  children,
+}: {
+  href: string;
+  className?: string;
+  children: React.ReactNode;
+}) {
+  if (href.includes("?")) {
+    return (
+      <a href={href} className={className}>
+        {children}
+      </a>
+    );
+  }
+  return (
+    <Link href={href} className={className}>
+      {children}
+    </Link>
   );
 }
