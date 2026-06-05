@@ -1,11 +1,11 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useSearchParams } from "next/navigation";
-import { Link, usePathname } from "@/i18n/navigation";
-import { buttonVariants } from "@/components/ui/button";
+import { Link } from "@/i18n/navigation";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Icon } from "@/components/icon";
 import { Logo } from "@/components/logo";
+import { useCreateProduct } from "@/components/products/create-product-context";
 
 const BULLETS = [
   {
@@ -28,17 +28,10 @@ const BULLETS = [
 export function WelcomeContent() {
   const t = useTranslations("auth.welcome");
 
-  // Build the "create product" href so the global side sheet opens
-  // when the user clicks the primary CTA. Same pattern as the topbar
-  // button: append `?new=product` to the current URL and let the
-  // sheet (mounted in `app/layout.tsx`) drive itself off the query
-  // param. Falls back to the legacy /app/products/new route if the
-  // sheet ever fails to mount.
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const sheetParams = new URLSearchParams(searchParams?.toString() ?? "");
-  sheetParams.set("new", "product");
-  const createHref = `${pathname}?${sheetParams.toString()}`;
+  // The primary CTA opens the global create-product side sheet INSTANTLY via
+  // React state (the sheet is mounted in `app/layout.tsx` and exposes
+  // `useCreateProduct()`), so there's no route-navigation jank.
+  const { open } = useCreateProduct();
 
   return (
     <div className="mx-auto flex max-w-lg flex-col items-center py-16 text-center">
@@ -87,9 +80,9 @@ export function WelcomeContent() {
         >
           {t("skipToDashboard")}
         </Link>
-        <a href={createHref} className={buttonVariants()}>
+        <Button type="button" onClick={open}>
           {t("addFirstProduct")}
-        </a>
+        </Button>
       </div>
     </div>
   );

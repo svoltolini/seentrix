@@ -1,12 +1,10 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { usePathname } from "@/i18n/navigation";
-import { useSearchParams } from "next/navigation";
 import { Icon, type IconName } from "@/components/icon";
 import { AskSeentrixAI } from "@/components/copilot/ask-seentrix-ai";
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { useCreateProduct } from "@/components/products/create-product-context";
 
 /**
  * RequiresProductEmptyState — the shared "you need a product first" empty
@@ -16,9 +14,9 @@ import { cn } from "@/lib/utils";
  * three screens.
  *
  * The CTA opens the global create-product side sheet over the current page
- * (via `?new=product`) rather than navigating away, matching the topbar
- * "New Product" affordance. Academy and Settings never use this — they work
- * without any products.
+ * instantly via `useCreateProduct().open()` (React state, no route nav)
+ * rather than navigating away, matching the topbar "New Product" affordance.
+ * Academy and Settings never use this — they work without any products.
  */
 
 interface Props {
@@ -48,12 +46,7 @@ export function RequiresProductEmptyState({
   askLabel,
 }: Props) {
   const t = useTranslations(namespace);
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  const params = new URLSearchParams(searchParams?.toString() ?? "");
-  params.set("new", "product");
-  const sheetHref = `${pathname}?${params.toString()}`;
+  const { open } = useCreateProduct();
 
   return (
     <div className="flex flex-col items-center justify-center py-24 text-center">
@@ -64,11 +57,11 @@ export function RequiresProductEmptyState({
       <p className="mt-2 max-w-md text-p3 text-muted-foreground">
         {t(description)}
       </p>
-      {/* Plain <a> so the `?new=product` sheet param survives the navigation. */}
-      <a href={sheetHref} className={cn(buttonVariants(), "mt-8")}>
+      {/* Opens the global sheet instantly via context — no navigation. */}
+      <Button type="button" onClick={open} className="mt-8">
         <Icon name="add-01" size={16} />
         {t(ctaLabel)}
-      </a>
+      </Button>
       {askSeed && askLabel && (
         <AskSeentrixAI className="mt-4" seed={askSeed} label={askLabel} />
       )}

@@ -1,10 +1,10 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useSearchParams } from "next/navigation";
 import { usePathname, Link } from "@/i18n/navigation";
 
 import { Button } from "@/components/ui/button";
+import { useCreateProduct } from "@/components/products/create-product-context";
 import { SearchInput } from "@/components/ui/search-input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -209,27 +209,13 @@ export function AppTopbar({ user, orgName }: AppTopbarProps) {
   );
 }
 
-/**
- * Build a href that preserves the current pathname + query params and
- * sets `new=product` so the global `<CreateProductSheet />` opens.
- * Hoisted so other affordances (welcome page, sidebar, etc.) can lift
- * the same hook later without rewriting URL plumbing.
- */
-export function useNewProductHref(): string {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const params = new URLSearchParams(searchParams?.toString() ?? "");
-  params.set("new", "product");
-  return `${pathname}?${params.toString()}`;
-}
-
 function NewProductButton({ label }: { label: string }) {
-  const href = useNewProductHref();
+  const { open } = useCreateProduct();
   return (
     <Button
       variant="dark"
       size="default"
-      render={<a href={href} />}
+      onClick={open}
       className="hidden lg:inline-flex"
     >
       <Icon name="Add" size={20} />

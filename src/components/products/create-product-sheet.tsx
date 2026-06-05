@@ -31,6 +31,11 @@ import {
 } from "@/components/side-sheet";
 import { PLAN_PRODUCT_LIMITS, type OrgPlan } from "@/lib/constants/plans";
 import { cn } from "@/lib/utils";
+import {
+  CreateProductContext,
+  type CreateProductContextValue,
+} from "./create-product-context";
+import { useCallback, useMemo } from "react";
 
 /**
  * CreateProductSheet — the canonical "+ New Product" affordance,
@@ -82,21 +87,27 @@ type SheetState =
 
 const PRODUCT_TYPES = ["hardware", "software", "firmware", "iot"] as const;
 
-export function CreateProductSheet() {
+export function CreateProductSheet({
+  children,
+}: {
+  children?: React.ReactNode;
+}) {
   const t = useTranslations("products");
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const isOpen = searchParams?.get("new") === "product";
-
+  // Open state is owned locally so triggers can open the sheet INSTANTLY via
+  // React state instead of a route navigation (which was the source of the
+  // glitchy lag). The `?new=product` deep-link is mirrored into this state by
+  // the effect below.
+  const [isOpen, setIsOpen] = useState(false);
   const [orgInfo, setOrgInfo] = useState<SheetState>({ kind: "loading" });
+  const deepLink = searchParams?.get("new") === "product";
 
-  // Lazy-fetch the org's plan info the first time the sheet opens —
-  // we don't want to issue a Supabase query on every page mount.
+  // Prefetch the org's plan info ONCE on mount (not on open) so the form is
+  // already "ready" the instant the sheet appears — no Loading flash, no jank.
   useEffect(() => {
-    if (!isOpen) return;
-    if (orgInfo.kind !== "loading") return;
     let cancelled = false;
     (async () => {
       try {
@@ -116,23 +127,36 @@ export function CreateProductSheet() {
     return () => {
       cancelled = true;
     };
-  }, [isOpen, orgInfo.kind]);
+  }, []);
 
-  function handleOpenChange(next: boolean) {
-    if (next) return;
-    // Strip the query param to close — keeps deep-linking symmetric
-    // (open via ?new=product, close by removing it).
+  // Honour the `?new=product` deep-link: open the sheet and strip the param so
+  // the URL doesn't keep the sheet "sticky" on refresh/close.
+  useEffect(() => {
+    if (!deepLink) return;
+    setIsOpen(true);
     const params = new URLSearchParams(searchParams?.toString() ?? "");
     params.delete("new");
     const q = params.toString();
-    router.replace(`${pathname}${q ? `?${q}` : ""}`);
-    // Reset state so the next open re-fetches in case plan/count
-    // shifted in the meantime (e.g. another tab created a product).
-    setOrgInfo({ kind: "loading" });
+    router.replace(`${pathname}${q ? `?${q}` : ""}`, { scroll: false });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [deepLink]);
+
+  const open = useCallback(() => setIsOpen(true), []);
+  const close = useCallback(() => setIsOpen(false), []);
+
+  function handleOpenChange(next: boolean) {
+    setIsOpen(next);
   }
 
+  const ctx: CreateProductContextValue = useMemo(
+    () => ({ isOpen, open, close }),
+    [isOpen, open, close],
+  );
+
   return (
-    <SheetPrimitive.Root open={isOpen} onOpenChange={handleOpenChange}>
+    <CreateProductContext.Provider value={ctx}>
+      {children}
+      <SheetPrimitive.Root open={isOpen} onOpenChange={handleOpenChange}>
       <SheetPrimitive.Portal>
         <SideSheetBackdrop />
         <SideSheetPopup data-slot="create-product-sheet">
@@ -166,16 +190,17 @@ export function CreateProductSheet() {
             <PlanLimitBody
               plan={orgInfo.plan}
               productCount={orgInfo.productCount}
-              onClose={() => handleOpenChange(false)}
+              onClose={close}
             />
           )}
 
           {orgInfo.kind === "ready" && orgInfo.canCreate && (
-            <CreateFormBody onClose={() => handleOpenChange(false)} />
+            <CreateFormBody onClose={close} />
           )}
         </SideSheetPopup>
       </SheetPrimitive.Portal>
-    </SheetPrimitive.Root>
+      </SheetPrimitive.Root>
+    </CreateProductContext.Provider>
   );
 }
 

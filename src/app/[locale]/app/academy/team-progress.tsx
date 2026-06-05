@@ -7,6 +7,7 @@ import {
 import type { LocaleId, RoleId } from "@/lib/academy/types";
 import { Icon } from "@/components/icon";
 import { cn } from "@/lib/utils";
+import { ReferenceCard } from "@/components/reference-card";
 
 type TeamMember = {
   id: string;
@@ -108,7 +109,8 @@ export async function TeamProgress({ locale }: { locale: LocaleId }) {
 
   return (
     <div>
-      <div className="mb-5 flex flex-wrap items-center justify-between gap-6 overflow-hidden rounded-md bg-dark-cta p-6 md:p-8">
+      <ReferenceCard className="mb-5 p-6 md:p-8">
+        <div className="flex flex-wrap items-center justify-between gap-6">
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2.5">
             <span className="flex size-9 shrink-0 items-center justify-center rounded-md bg-white/10 text-white backdrop-blur-sm">
@@ -157,7 +159,8 @@ export async function TeamProgress({ locale }: { locale: LocaleId }) {
             </span>
           </div>
         </div>
-      </div>
+        </div>
+      </ReferenceCard>
 
       <div className="mb-3 flex items-center justify-end">
         <a

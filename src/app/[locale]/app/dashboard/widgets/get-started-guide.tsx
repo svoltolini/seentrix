@@ -1,10 +1,10 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { Link, usePathname } from "@/i18n/navigation";
-import { useSearchParams } from "next/navigation";
+import { Link } from "@/i18n/navigation";
 import { Icon } from "@/components/icon";
 import { AskSeentrixAI } from "@/components/copilot/ask-seentrix-ai";
+import { useCreateProduct } from "@/components/products/create-product-context";
 import { cn } from "@/lib/utils";
 import type { OnboardingState, OnboardingStep } from "@/lib/onboarding-state";
 
@@ -30,18 +30,13 @@ interface Props {
 export function GetStartedGuide({ state, firstName }: Props) {
   const t = useTranslations("dashboard");
   const next = state.nextStep;
+  const { open } = useCreateProduct();
 
-  // Build the "add product" href so the global create-product side sheet opens
-  // over the *current* page (dashboard) instead of navigating to /app/products.
-  // The sheet (mounted in app/layout.tsx) drives itself off `?new=product`.
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const sheetHref = useSheetHref(pathname, searchParams);
-
-  // Resolve a step's effective href: the first-product step opens the side
-  // sheet over the dashboard; everything else uses its declared in-app path.
-  const hrefFor = (step: OnboardingStep) =>
-    step.id === "first-product" ? sheetHref : step.href;
+  // The first-product step opens the global create-product side sheet INSTANTLY
+  // over the current page via React state (no route navigation, no jank);
+  // every other step navigates to its declared in-app path.
+  const onClickFor = (step: OnboardingStep) =>
+    step.id === "first-product" ? open : undefined;
 
   return (
     <div className="mx-auto flex w-full max-w-[900px] flex-col gap-6">
@@ -91,7 +86,8 @@ export function GetStartedGuide({ state, firstName }: Props) {
             <StepRow
               key={step.id}
               step={step}
-              href={hrefFor(step)}
+              href={step.href}
+              onClick={onClickFor(step)}
               index={idx + 1}
               isNext={isNext}
               locked={locked}
@@ -113,19 +109,10 @@ export function GetStartedGuide({ state, firstName }: Props) {
   );
 }
 
-/** Append `?new=product` to the current path (preserving existing params). */
-function useSheetHref(
-  pathname: string,
-  searchParams: ReturnType<typeof useSearchParams>,
-): string {
-  const params = new URLSearchParams(searchParams?.toString() ?? "");
-  params.set("new", "product");
-  return `${pathname}?${params.toString()}`;
-}
-
 function StepRow({
   step,
   href,
+  onClick,
   index,
   isNext,
   locked,
@@ -133,6 +120,7 @@ function StepRow({
 }: {
   step: OnboardingStep;
   href: string;
+  onClick?: () => void;
   index: number;
   isNext: boolean;
   locked: boolean;
@@ -203,39 +191,26 @@ function StepRow({
   if (!isNext) {
     return <li>{content}</li>;
   }
-  return (
-    <li>
-      <CtaLink href={href} className="block outline-none">
-        {content}
-      </CtaLink>
-    </li>
-  );
-}
-
-/**
- * Link that uses a plain `<a>` when the target carries a query string (so the
- * `?new=product` sheet param survives the navigation), and the typed next-intl
- * `<Link>` otherwise.
- */
-function CtaLink({
-  href,
-  className,
-  children,
-}: {
-  href: string;
-  className?: string;
-  children: React.ReactNode;
-}) {
-  if (href.includes("?")) {
+  // The first-product step opens the sheet via `onClick` (no navigation);
+  // everything else navigates with the typed next-intl `<Link>`.
+  if (onClick) {
     return (
-      <a href={href} className={className}>
-        {children}
-      </a>
+      <li>
+        <button
+          type="button"
+          onClick={onClick}
+          className="block w-full text-left outline-none"
+        >
+          {content}
+        </button>
+      </li>
     );
   }
   return (
-    <Link href={href} className={className}>
-      {children}
-    </Link>
+    <li>
+      <Link href={href} className="block outline-none">
+        {content}
+      </Link>
+    </li>
   );
 }
