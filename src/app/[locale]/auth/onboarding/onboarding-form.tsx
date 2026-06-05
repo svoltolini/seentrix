@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
+import { EU_EEA_COUNTRIES, OTHER_COUNTRIES } from "@/lib/constants/countries";
 
 type Step = 1 | 2 | 3;
 
@@ -294,11 +295,30 @@ export function OnboardingForm() {
               label={t("fields.country")}
               error={errors.country && t("errors.required")}
             >
-              <Input
-                placeholder={t("fields.countryPlaceholder")}
+              <select
                 aria-invalid={!!errors.country}
+                defaultValue=""
                 {...register("country")}
-              />
+                className="flex h-11 w-full rounded-md bg-input px-4 text-p2 transition-colors focus-visible:outline-none focus-visible:bg-card focus-visible:border-primary/30 border-[1.5px] border-transparent disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                <option value="" disabled>
+                  {t("fields.countryPlaceholder")}
+                </option>
+                <optgroup label={t("fields.countryGroupEu")}>
+                  {EU_EEA_COUNTRIES.map((c) => (
+                    <option key={c.code} value={c.name}>
+                      {c.name}
+                    </option>
+                  ))}
+                </optgroup>
+                <optgroup label={t("fields.countryGroupOther")}>
+                  {OTHER_COUNTRIES.map((c) => (
+                    <option key={c.code} value={c.name}>
+                      {c.name}
+                    </option>
+                  ))}
+                </optgroup>
+              </select>
             </Field>
           </>
         )}
