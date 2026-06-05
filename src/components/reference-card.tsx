@@ -15,7 +15,8 @@ import { cn } from "@/lib/utils";
 export function ReferenceCard({
   children,
   className,
-}: {
+  ...rest
+}: React.HTMLAttributes<HTMLDivElement> & {
   children: React.ReactNode;
   className?: string;
 }) {
@@ -25,6 +26,7 @@ export function ReferenceCard({
         "relative overflow-hidden rounded-md bg-primary text-primary-foreground",
         className,
       )}
+      {...rest}
     >
       <div
         aria-hidden="true"

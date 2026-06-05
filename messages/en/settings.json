@@ -151,7 +151,12 @@
           "body": "Country of your registered corporate seat. If this is outside the EU, you also need an Authorised Representative in the Union — configure that on the Entity Role tab.",
           "ref": "CRA Article 18 — manufacturers established outside the Union must appoint an authorised representative in the EU before placing products on the market."
         }
-      }
+      },
+      "readOnlyBadge": "Locked",
+      "editDetails": "Edit details",
+      "cancel": "Cancel",
+      "orgChartTotalMembers": "{count, plural, one {# team member} other {# team members}}",
+      "orgChartCapacity": "Seat capacity"
     },
     "team": {
       "title": "Team",

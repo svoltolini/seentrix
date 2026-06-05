@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Icon } from "@/components/icon";
 import { useToast } from "@/components/ui/toast";
+import { snoozeMfaEnrolment, clearMfaGrace } from "./actions";
 
 type EnrolState =
   | { kind: "idle" }
@@ -28,16 +29,29 @@ export function SecurityContent({
   hasTotp,
   factorId,
   friendlyName,
+  enrollRequired = false,
 }: {
   hasTotp: boolean;
   factorId: string | null;
   friendlyName: string | null;
+  enrollRequired?: boolean;
 }) {
   const router = useRouter();
   const { toast } = useToast();
   const [state, setState] = useState<EnrolState>({ kind: "idle" });
   const [code, setCode] = useState("");
   const [isPending, startTransition] = useTransition();
+  const [snoozePending, startSnoozeTransition] = useTransition();
+
+  // "Remind me later" — set the session grace cookie via a server action so
+  // the middleware stops redirecting here, then head to the dashboard.
+  function remindLater() {
+    startSnoozeTransition(async () => {
+      await snoozeMfaEnrolment();
+      router.push("/app/dashboard");
+      router.refresh();
+    });
+  }
 
   async function startEnrolment() {
     const supabase = createClient();
@@ -90,6 +104,8 @@ export function SecurityContent({
       toast({ type: "success", message: "2FA enabled" });
       setState({ kind: "done" });
       setCode("");
+      // 2FA is now satisfied — drop the grace cookie so nothing lingers.
+      await clearMfaGrace();
       router.refresh();
     });
   }
@@ -113,14 +129,46 @@ export function SecurityContent({
 
   return (
     <div className="space-y-6">
+      {/* Mandatory-enrolment gate banner — shown when the middleware bounced an
+          un-enrolled user here. Explains 2FA is required and offers a
+          "Remind me later" escape hatch (session-scoped grace). */}
+      {enrollRequired && !hasTotp && (
+        <div className="flex flex-wrap items-start justify-between gap-4 rounded-md border-[1.5px] border-warning/40 bg-warning/5 p-5">
+          <div className="flex items-start gap-3">
+            <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-warning/15 text-warning">
+              <Icon name="alert-02" size={18} />
+            </div>
+            <div className="min-w-0">
+              <p className="text-h6 text-foreground">
+                Two-factor authentication is required
+              </p>
+              <p className="mt-1 max-w-xl text-p3 text-muted-foreground">
+                Seentrix protects CRA compliance records, so every account must
+                use 2FA. Set it up now — it takes about a minute with any
+                authenticator app. You can postpone once, but you&apos;ll be
+                reminded each time you sign in until it&apos;s enabled.
+              </p>
+            </div>
+          </div>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={remindLater}
+            disabled={snoozePending}
+          >
+            {snoozePending ? "Saving…" : "Remind me later"}
+          </Button>
+        </div>
+      )}
+
       {/* Current state */}
       <div className="rounded-md bg-card shadow-card-lg">
         <div className="border-b border-border px-6 py-4">
           <h2 className="text-h4 text-foreground">Two-factor authentication</h2>
           <p className="mt-0.5 text-p3 text-muted-foreground">
             Adds a second step on sign-in — a 6-digit code from an
-            authenticator app on your phone. Strongly recommended, required
-            for admins of organisations on a paid plan.
+            authenticator app on your phone. Required for every Seentrix
+            account.
           </p>
         </div>
 

@@ -111,7 +111,7 @@ export default async function AcademyPage({
         </ReferenceCard>
       ) : (
         <ReferenceCard className="mb-8 p-6 md:mb-10 md:p-10">
-          <div className="flex flex-wrap items-center justify-between gap-6">
+          <div className="flex flex-wrap items-start justify-between gap-6">
             <div className="min-w-0 flex-1">
               <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-l6-plus uppercase tracking-wider text-white backdrop-blur-sm">
                 <Icon name="elearning-exchange-stroke-rounded" size={12} />
@@ -147,6 +147,11 @@ export default async function AcademyPage({
 /**
  * Static SVG progress ring for the hero. Server-rendered — no interactivity
  * needed, just a clean donut showing overall catalogue completion.
+ *
+ * Vertically stacked: the lessons-complete count sits on top, the caption
+ * ("lessons complete") below it, and a large progress ring underneath — so the
+ * ring reads as the dominant visual and stays proportional to the tall hero
+ * card. The percentage label is centred inside the ring.
  */
 function ProgressRing({
   pct,
@@ -157,39 +162,41 @@ function ProgressRing({
   centerLabel: string;
   caption: string;
 }) {
-  const r = 30;
+  const r = 34;
   const circumference = 2 * Math.PI * r;
   const dash = (pct / 100) * circumference;
   return (
-    <div className="flex shrink-0 items-center gap-3">
-      <div className="relative flex size-20 items-center justify-center">
-        <svg viewBox="0 0 72 72" className="size-20 -rotate-90">
+    <div className="flex shrink-0 flex-col items-center gap-3 text-center">
+      <div className="flex flex-col items-center">
+        <span className="text-h2 tabular-nums leading-none text-white md:text-3xl">
+          {centerLabel}
+        </span>
+        <span className="mt-1 text-p4 text-white/70">{caption}</span>
+      </div>
+      <div className="relative flex size-28 items-center justify-center md:size-32">
+        <svg viewBox="0 0 80 80" className="size-full -rotate-90">
           <circle
-            cx="36"
-            cy="36"
+            cx="40"
+            cy="40"
             r={r}
             fill="none"
             stroke="currentColor"
-            strokeWidth="6"
+            strokeWidth="7"
             className="text-white/15"
           />
           <circle
-            cx="36"
-            cy="36"
+            cx="40"
+            cy="40"
             r={r}
             fill="none"
             stroke="currentColor"
-            strokeWidth="6"
+            strokeWidth="7"
             strokeLinecap="round"
             strokeDasharray={`${dash} ${circumference}`}
             className="text-accent transition-all"
           />
         </svg>
-        <span className="absolute text-l5 tabular-nums text-white">{pct}%</span>
-      </div>
-      <div className="flex flex-col">
-        <span className="text-h5 tabular-nums text-white">{centerLabel}</span>
-        <span className="text-p4 text-white/70">{caption}</span>
+        <span className="absolute text-h4 tabular-nums text-white">{pct}%</span>
       </div>
     </div>
   );

@@ -39,105 +39,225 @@
       "manufacturer": {
         "essential_requirements_met": {
           "title": "Essential requirements met",
-          "description": "All Annex I Part I + II requirements are addressed and evidenced on the checklist."
+          "description": "All Annex I Part I + II requirements are addressed and evidenced on the checklist.",
+          "help": {
+            "title": "Meeting the essential cybersecurity requirements",
+            "body": "Your product must be designed, developed and produced so it ships with no known exploitable vulnerabilities and a secure-by-default configuration. Work through Annex I Part I: protect confidentiality and integrity of data, minimise the attack surface, allow security updates (ideally automatic), and limit data collection to what's necessary. Document how each requirement is satisfied — that evidence feeds your technical documentation and DoC.",
+            "ref": "CRA Article 13 & Annex I, Part I — Essential cybersecurity requirements"
+          }
         },
         "vulnerability_handling_operational": {
           "title": "Vulnerability handling operational",
-          "description": "A documented process to receive, triage, and fix vulnerabilities throughout the support period is in place."
+          "description": "A documented process to receive, triage, and fix vulnerabilities throughout the support period is in place.",
+          "help": {
+            "title": "Operating a vulnerability-handling process",
+            "body": "Across the support period you must identify and document vulnerabilities (including keeping an SBOM), remediate them without delay through free security updates, apply a coordinated vulnerability disclosure policy, and provide a contact address for reporting. Confirm you have a working intake channel, a triage/patching workflow, and a way to notify users when updates are available.",
+            "ref": "CRA Article 13 & Annex I, Part II — Vulnerability-handling requirements"
+          }
         },
         "technical_documentation_ready": {
           "title": "Technical documentation ready",
-          "description": "Annex II technical file is compiled and retained for 10 years post-placement."
+          "description": "Annex II technical file is compiled and retained for 10 years post-placement.",
+          "help": {
+            "title": "Preparing the technical documentation",
+            "body": "Compile the file that demonstrates conformity before placing the product on the market: a general description, design/development and vulnerability-handling information, the cybersecurity risk assessment, the SBOM, the support period, and a list of applied standards. Keep it current for the product's lifetime and update it as the product changes.",
+            "ref": "CRA Article 31 & Annex VII — Technical documentation"
+          }
         },
         "doc_issued": {
           "title": "Declaration of Conformity issued",
-          "description": "EU Declaration of Conformity is issued, signed, and kept with the technical file."
+          "description": "EU Declaration of Conformity is issued, signed, and kept with the technical file.",
+          "help": {
+            "title": "Issuing the EU Declaration of Conformity",
+            "body": "Draw up a single EU DoC stating that the essential requirements have been met. It must include the product identification, your name and address, a statement that you bear sole responsibility, references to the standards used, and the issue date. By signing it you take legal responsibility for the product's compliance.",
+            "ref": "CRA Article 28 & Annex V — EU Declaration of Conformity"
+          }
         },
         "ce_marking_affixed": {
           "title": "CE marking affixed",
-          "description": "CE marking (with notified-body number if applicable) is affixed visibly and durably."
+          "description": "CE marking (with notified-body number if applicable) is affixed visibly and durably.",
+          "help": {
+            "title": "Affixing the CE marking",
+            "body": "The CE marking goes on the product (or its packaging/documentation if size doesn't allow) visibly, legibly and indelibly before it's placed on the market. It signals conformity with the CRA and any other applicable EU legislation. Only affix it once the DoC is in place and the conformity assessment is complete.",
+            "ref": "CRA Articles 29–30 — CE marking rules and conditions"
+          }
         },
         "ten_year_records_retained": {
           "title": "10-year records retained",
-          "description": "Technical documentation, DoC, and CVD artefacts are retained for 10 years or the support period, whichever is longer."
+          "description": "Technical documentation, DoC, and CVD artefacts are retained for 10 years or the support period, whichever is longer.",
+          "help": {
+            "title": "Retaining records for ten years",
+            "body": "Keep the technical documentation and the EU Declaration of Conformity available to market-surveillance authorities for at least 10 years after the product is placed on the market, or for the support period — whichever is longer. Store them so you can produce them on request even after the product is discontinued.",
+            "ref": "CRA Article 13(13) — Record retention"
+          }
         }
       },
       "authorised_representative": {
         "written_mandate": {
           "title": "Written mandate on file",
-          "description": "Signed mandate from the non-EU manufacturer granting representation in the EU."
+          "description": "Signed mandate from the non-EU manufacturer granting representation in the EU.",
+          "help": {
+            "title": "Securing a written mandate",
+            "body": "A non-EU manufacturer must appoint you in writing before their product is placed on the EU market. The mandate must let you (1) keep the DoC and technical documentation at the authorities' disposal, (2) provide authorities with the information and documentation needed to demonstrate conformity, and (3) cooperate on corrective actions. Keep the signed mandate on file and make sure it names the specific products covered.",
+            "ref": "CRA Article 18 — Authorised representative"
+          }
         },
         "technical_documentation_on_hand": {
           "title": "Technical documentation at disposal",
-          "description": "Can make the technical documentation available to authorities on request."
+          "description": "Can make the technical documentation available to authorities on request.",
+          "help": {
+            "title": "Keeping technical documentation at disposal",
+            "body": "You must be able to hand the product's technical documentation to a market-surveillance authority on request. You don't have to author it, but you must hold a current copy (or have guaranteed access from the manufacturer) for the whole period it must be retained. Confirm you actually possess or can immediately retrieve the latest version.",
+            "ref": "CRA Article 18(2) & Article 31 — Documentation at disposal"
+          }
         },
         "doc_on_hand": {
           "title": "Declaration of Conformity at disposal",
-          "description": "Has a copy of the DoC for each product represented."
+          "description": "Has a copy of the DoC for each product represented.",
+          "help": {
+            "title": "Keeping the Declaration of Conformity at disposal",
+            "body": "Hold a copy of the manufacturer's EU Declaration of Conformity and keep it ready for authorities throughout the retention period. Check that the DoC you hold matches the product version on the market and is signed by the manufacturer.",
+            "ref": "CRA Article 18(2) & Article 28 — DoC at disposal"
+          }
         },
         "cooperate_with_authorities": {
           "title": "Cooperate with authorities",
-          "description": "Committed to providing information and cooperating with market-surveillance requests."
+          "description": "Committed to providing information and cooperating with market-surveillance requests.",
+          "help": {
+            "title": "Cooperating with market-surveillance authorities",
+            "body": "On a reasoned request you must give authorities all information and documentation (in an easily understood language) to demonstrate the product's conformity, and cooperate on any action to eliminate the cybersecurity risks of products you cover. Have a named contact and a process to respond promptly.",
+            "ref": "CRA Article 18(2) — Cooperation duties"
+          }
         },
         "terminate_if_noncompliant": {
           "title": "Terminate mandate if non-compliant",
-          "description": "Process in place to terminate the mandate if the manufacturer is acting contrary to CRA obligations, and to notify the manufacturer and authorities."
+          "description": "Process in place to terminate the mandate if the manufacturer is acting contrary to CRA obligations, and to notify the manufacturer and authorities.",
+          "help": {
+            "title": "Terminating the mandate when needed",
+            "body": "If the manufacturer acts contrary to its CRA obligations, you must terminate the mandate and inform the relevant market-surveillance authority and ENISA. Make sure your mandate agreement allows termination and that you know who to notify if it comes to that.",
+            "ref": "CRA Article 18 — Authorised representative obligations"
+          }
         }
       },
       "importer": {
         "verify_manufacturer_doc": {
           "title": "Manufacturer DoC verified",
-          "description": "Before placing, verified that the manufacturer has issued a valid Declaration of Conformity."
+          "description": "Before placing, verified that the manufacturer has issued a valid Declaration of Conformity.",
+          "help": {
+            "title": "Verifying the manufacturer's Declaration of Conformity",
+            "body": "Before placing a product on the EU market, confirm the manufacturer has drawn up the EU Declaration of Conformity and carried out the appropriate conformity assessment. Ask for the DoC and check it covers the exact product version you're importing.",
+            "ref": "CRA Article 19 — Obligations of importers"
+          }
         },
         "verify_ce_marking": {
           "title": "CE marking verified",
-          "description": "Checked that the CE marking (with notified-body number if applicable) is affixed."
+          "description": "Checked that the CE marking (with notified-body number if applicable) is affixed.",
+          "help": {
+            "title": "Verifying the CE marking",
+            "body": "Check that the CE marking is correctly affixed to the product before importing. A missing or incorrect marking is a sign the product may not be compliant — do not place it on the market until that's resolved.",
+            "ref": "CRA Article 19(2) — Importer verification"
+          }
         },
         "verify_technical_documentation": {
           "title": "Technical documentation verified",
-          "description": "Confirmed that the manufacturer has drawn up the technical documentation."
+          "description": "Confirmed that the manufacturer has drawn up the technical documentation.",
+          "help": {
+            "title": "Confirming the technical documentation exists",
+            "body": "Ensure the manufacturer has prepared the technical documentation and that the product carries the information and instructions to the user. You don't keep the full file, but you must be satisfied it exists and is available to authorities.",
+            "ref": "CRA Article 19(2) & Annex VII — Technical documentation"
+          }
         },
         "add_importer_details_to_product": {
           "title": "Importer details on product",
-          "description": "Name, registered trade name / trademark, and postal address indicated on the product or, where not possible, on its packaging or in accompanying documents."
+          "description": "Name, registered trade name / trademark, and postal address indicated on the product or, where not possible, on its packaging or in accompanying documents.",
+          "help": {
+            "title": "Adding your importer details",
+            "body": "Indicate your name, registered trade name or trademark, postal address, email and a single point of contact on the product, its packaging, or an accompanying document. This lets users and authorities reach you.",
+            "ref": "CRA Article 19(3) — Importer identification"
+          }
         },
         "store_transport_without_impact": {
           "title": "Storage / transport preserves conformity",
-          "description": "Storage and transport conditions do not jeopardise the product's compliance with essential requirements."
+          "description": "Storage and transport conditions do not jeopardise the product's compliance with essential requirements.",
+          "help": {
+            "title": "Storing and transporting without affecting conformity",
+            "body": "While the product is under your responsibility, make sure storage or transport conditions don't degrade its compliance with the essential cybersecurity requirements (for example, don't let firmware go stale or tamper protections fail).",
+            "ref": "CRA Article 19(4) — Conditions while under responsibility"
+          }
         },
         "report_exploited_vulnerabilities_to_manufacturer": {
           "title": "Report vulnerabilities to manufacturer",
-          "description": "Process in place to inform the manufacturer (and authorities where required) of actively-exploited vulnerabilities."
+          "description": "Process in place to inform the manufacturer (and authorities where required) of actively-exploited vulnerabilities.",
+          "help": {
+            "title": "Reporting vulnerabilities to the manufacturer",
+            "body": "If you learn a product you imported has a vulnerability, inform the manufacturer without delay. If it presents a significant cybersecurity risk, also inform the relevant market-surveillance authorities. Keep a record of what you reported and when.",
+            "ref": "CRA Article 19(6) — Importer reporting duties"
+          }
         },
         "cooperate_with_authorities": {
           "title": "Cooperate with authorities",
-          "description": "Provide market-surveillance authorities with all information and cooperate in corrective actions."
+          "description": "Provide market-surveillance authorities with all information and cooperate in corrective actions.",
+          "help": {
+            "title": "Cooperating with authorities",
+            "body": "On a reasoned request, provide authorities with the information and documentation needed to demonstrate conformity and cooperate on any corrective or risk-elimination action for products you've imported.",
+            "ref": "CRA Article 19(9) — Cooperation duties"
+          }
         }
       },
       "distributor": {
         "verify_ce_marking": {
           "title": "CE marking verified",
-          "description": "Checked that the CE marking is affixed and accompanied by the required documentation."
+          "description": "Checked that the CE marking is affixed and accompanied by the required documentation.",
+          "help": {
+            "title": "Verifying the CE marking",
+            "body": "Before making a product available, act with due care and check the CE marking is present. If it's missing or you believe the product is non-conforming, don't distribute it until conformity is established.",
+            "ref": "CRA Article 20 — Obligations of distributors"
+          }
         },
         "verify_importer_details": {
           "title": "Importer details present",
-          "description": "Verified the importer or manufacturer's identification is on the product / packaging / accompanying documents."
+          "description": "Verified the importer or manufacturer's identification is on the product / packaging / accompanying documents.",
+          "help": {
+            "title": "Checking importer / manufacturer details",
+            "body": "Confirm the manufacturer and, where applicable, the importer have met their identification duties — that their name and contact details appear on the product, packaging or accompanying documents.",
+            "ref": "CRA Article 20(2) — Distributor verification"
+          }
         },
         "verify_instructions_user_info": {
           "title": "User instructions present",
-          "description": "Instructions and information for use are supplied in a language easily understood by users."
+          "description": "Instructions and information for use are supplied in a language easily understood by users.",
+          "help": {
+            "title": "Checking user instructions and information",
+            "body": "Verify the product is accompanied by the instructions and information to the user required by the CRA (including the support period and how to receive security updates), in a language users can easily understand.",
+            "ref": "CRA Article 20(2) & Annex II — Information and instructions to the user"
+          }
         },
         "store_transport_without_impact": {
           "title": "Storage / transport preserves conformity",
-          "description": "Storage and transport conditions do not jeopardise compliance."
+          "description": "Storage and transport conditions do not jeopardise compliance.",
+          "help": {
+            "title": "Storing and transporting without affecting conformity",
+            "body": "While the product is under your responsibility, ensure storage or transport conditions don't compromise its compliance with the essential cybersecurity requirements.",
+            "ref": "CRA Article 20(3) — Conditions while under responsibility"
+          }
         },
         "report_exploited_vulnerabilities": {
           "title": "Escalate exploited vulnerabilities",
-          "description": "Process to inform the manufacturer / importer and authorities when an actively-exploited vulnerability comes to your attention."
+          "description": "Process to inform the manufacturer / importer and authorities when an actively-exploited vulnerability comes to your attention.",
+          "help": {
+            "title": "Escalating exploited vulnerabilities",
+            "body": "If you learn of a vulnerability in a product you distribute, inform the manufacturer without delay. Where the product poses a significant cybersecurity risk, also notify the relevant market-surveillance authorities.",
+            "ref": "CRA Article 20(5) — Distributor reporting duties"
+          }
         },
         "cooperate_with_authorities": {
           "title": "Cooperate with authorities",
-          "description": "Provide market-surveillance authorities with information and assist in corrective actions."
+          "description": "Provide market-surveillance authorities with information and assist in corrective actions.",
+          "help": {
+            "title": "Cooperating with authorities",
+            "body": "On a reasoned request, give authorities the information and documentation needed to demonstrate conformity and cooperate on any action to eliminate the cybersecurity risks of products you've made available.",
+            "ref": "CRA Article 20(8) — Cooperation duties"
+          }
         }
       }
     },
