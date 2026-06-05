@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import type { QuizQuestion } from "@/lib/academy/types";
@@ -35,6 +35,11 @@ export function Quiz({
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [outcome, setOutcome] = useState<Outcome>({ kind: "idle" });
   const [isSubmitting, startTransition] = useTransition();
+  // Anchor for the post-submit result so we can settle the viewport on it
+  // instead of leaving the user stranded mid-page when the long question list
+  // collapses into a short result card (which previously made the scroll jump
+  // around wildly).
+  const resultRef = useRef<HTMLDivElement>(null);
 
   const answeredCount = questions.filter(
     (_, i) => answers[i] !== undefined,
@@ -76,9 +81,24 @@ export function Quiz({
     });
   }
 
+  // When the quiz reaches a terminal state, gently bring the result into view.
+  // The page can jump because the tall question list collapses; a smooth
+  // scroll to the result keeps the user oriented. Run after the DOM settles.
+  useEffect(() => {
+    if (outcome.kind === "passed" || outcome.kind === "failed" || outcome.kind === "cooldown") {
+      const id = requestAnimationFrame(() => {
+        resultRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+      return () => cancelAnimationFrame(id);
+    }
+  }, [outcome.kind]);
+
   if (outcome.kind === "passed") {
     return (
-      <div className="overflow-hidden rounded-md bg-[linear-gradient(135deg,#066DE6_0%,#066DE6_45%,#FF6D00_140%)] p-8 text-white shadow-card-md">
+      <div
+        ref={resultRef}
+        className="overflow-hidden rounded-md bg-[linear-gradient(135deg,#066DE6_0%,#066DE6_45%,#FF6D00_140%)] p-8 text-white shadow-card-md"
+      >
         <div className="flex size-12 items-center justify-center rounded-full bg-white/15 backdrop-blur-sm">
           <Icon
             name="checkmark-circle-01-stroke-rounded"
@@ -152,7 +172,10 @@ export function Quiz({
       )}
 
       {outcome.kind === "failed" && (
-        <div className="rounded-md border border-destructive/30 bg-destructive/10 p-5">
+        <div
+          ref={resultRef}
+          className="rounded-md border border-destructive/30 bg-destructive/10 p-5"
+        >
           <p className="text-l5 text-destructive">
             {t("failedTitle", {
               score: Math.round(outcome.score * 100),
@@ -168,7 +191,10 @@ export function Quiz({
       )}
 
       {outcome.kind === "cooldown" && (
-        <div className="rounded-md border border-warning/30 bg-warning/10 p-5">
+        <div
+          ref={resultRef}
+          className="rounded-md border border-warning/30 bg-warning/10 p-5"
+        >
           <p className="text-l5 text-warning">
             {t("cooldownTitle")}
           </p>
