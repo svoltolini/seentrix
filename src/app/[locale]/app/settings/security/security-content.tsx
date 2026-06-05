@@ -281,10 +281,18 @@ function EnrolStep({
           Open your authenticator app (1Password, Authy, Google Authenticator,
           etc.) and scan this QR code to add Seentrix.
         </p>
-        <div
-          className="mt-4 inline-block rounded-md bg-white p-3 shadow-card-sm"
-          dangerouslySetInnerHTML={{ __html: state.qrSvg }}
-        />
+        {/* Supabase returns `totp.qr_code` as a data-URI
+            (`data:image/svg+xml;utf-8,<svg…>`), so render it as an <img> src.
+            The previous `dangerouslySetInnerHTML` approach dumped the data-URI
+            prefix as visible text above the code. */}
+        <div className="mt-4 inline-block rounded-md bg-white p-3 shadow-card-sm">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={state.qrSvg}
+            alt="Two-factor authentication QR code"
+            className="size-44"
+          />
+        </div>
       </div>
 
       <div>
