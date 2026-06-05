@@ -3,16 +3,16 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { getLesson, getLessonContent } from "@/lib/academy/lessons";
 import type { LocaleId } from "@/lib/academy/types";
-import { getLessonVideo } from "@/lib/academy/videos";
+import { getLessonAudio } from "@/lib/academy/audio";
 import { CurrentLessonProvider } from "@/lib/academy/current-lesson-context";
 import { createClient } from "@/lib/supabase/server";
 import { Icon } from "@/components/icon";
 import { Quiz } from "./quiz";
-import { LessonVideoPlayer } from "./lesson-video";
+import { LessonAudioPlayer } from "./lesson-audio";
 
 /**
- * Lesson reader. Renders the lesson hero, an optional AI-generated explainer
- * video, the numbered content sections, and the quiz. If the learner has
+ * Lesson reader. Renders the lesson hero, an optional AI-generated audio
+ * briefing, the numbered content sections, and the quiz. If the learner has
  * already passed, a completion banner with the certificate hash sits above the
  * quiz (which stays available for retakes).
  *
@@ -31,7 +31,7 @@ export default async function LessonPage({
   const locale = (await getLocale()) as LocaleId;
   const content = getLessonContent(lesson, locale);
   const t = await getTranslations("academy.lesson");
-  const video = getLessonVideo(lesson.id);
+  const audio = getLessonAudio(lesson.id);
 
   const supabase = await createClient();
   const {
@@ -97,10 +97,10 @@ export default async function LessonPage({
           </p>
         </header>
 
-        {/* AI video (only on lessons that ship one) */}
-        {video && (
+        {/* AI audio briefing (only on lessons that ship one) */}
+        {audio && (
           <div className="mb-8">
-            <LessonVideoPlayer video={video} title={content.title} />
+            <LessonAudioPlayer audio={audio} title={content.title} />
           </div>
         )}
 

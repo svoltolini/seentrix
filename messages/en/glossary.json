@@ -211,7 +211,7 @@
     "lessonCard": {
       "completed": "Completed",
       "open": "Open",
-      "video": "Video"
+      "audio": "Audio"
     },
     "byScreenCard": {
       "meta": "{count, plural, one {# lesson} other {# lessons}} · {minutes} min · {done}/{total} done"
@@ -284,10 +284,12 @@
       "certificateLabel": "Certificate",
       "downloadCertificate": "Download PDF",
       "completedBadge": "Completed",
-      "video": {
-        "badge": "AI video",
-        "caption": "{title} — explainer",
-        "play": "Play the lesson video"
+      "audio": {
+        "badge": "AI audio",
+        "caption": "{title} — audio briefing",
+        "play": "Play the audio briefing",
+        "pause": "Pause the audio briefing",
+        "seek": "Seek through the audio briefing"
       }
     }
   }

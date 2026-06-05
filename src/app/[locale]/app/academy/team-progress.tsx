@@ -5,6 +5,7 @@ import {
   requiredLessonsForRole,
 } from "@/lib/academy/lessons";
 import type { LocaleId, RoleId } from "@/lib/academy/types";
+import { Icon } from "@/components/icon";
 
 type TeamMember = {
   id: string;
@@ -69,19 +70,53 @@ export async function TeamProgress({ locale }: { locale: LocaleId }) {
 
   return (
     <div>
-      <div className="mb-5 flex flex-wrap items-start justify-between gap-4 rounded-md bg-muted p-6">
+      <div className="mb-5 flex flex-wrap items-center justify-between gap-6 overflow-hidden rounded-md bg-dark-cta p-6 md:p-8">
         <div className="min-w-0 flex-1">
-          <h2 className="text-h3 text-foreground">{t("heading")}</h2>
-          <p className="mt-1 text-p3 text-muted-foreground">
+          <div className="flex items-center gap-2.5">
+            <span className="flex size-9 shrink-0 items-center justify-center rounded-md bg-white/10 text-white backdrop-blur-sm">
+              <Icon name="task-done-02-stroke-rounded" size={18} />
+            </span>
+            <h2 className="text-h3 text-white">{t("heading")}</h2>
+          </div>
+          <p className="mt-2 max-w-xl text-p3 text-white/80">
             {t("description")}
           </p>
         </div>
-        <div className="text-right">
-          <div className="text-h2 tabular-nums text-foreground">
-            {orgPct}%
+        <div className="flex shrink-0 items-center gap-3">
+          <div className="relative flex size-20 items-center justify-center">
+            <svg viewBox="0 0 72 72" className="size-20 -rotate-90">
+              <circle
+                cx="36"
+                cy="36"
+                r="30"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="6"
+                className="text-white/15"
+              />
+              <circle
+                cx="36"
+                cy="36"
+                r="30"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="6"
+                strokeLinecap="round"
+                strokeDasharray={`${(orgPct / 100) * (2 * Math.PI * 30)} ${2 * Math.PI * 30}`}
+                className="text-accent"
+              />
+            </svg>
+            <span className="absolute text-l5 tabular-nums text-white">
+              {orgPct}%
+            </span>
           </div>
-          <div className="text-p4 text-muted-foreground">
-            {orgDone}/{memberList.length} {t("complete").toLowerCase()}
+          <div className="flex flex-col">
+            <span className="text-h5 tabular-nums text-white">
+              {orgDone}/{memberList.length}
+            </span>
+            <span className="text-p4 text-white/70">
+              {t("complete").toLowerCase()}
+            </span>
           </div>
         </div>
       </div>

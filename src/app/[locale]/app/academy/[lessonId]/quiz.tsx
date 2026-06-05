@@ -217,20 +217,24 @@ function QuestionCard({
   onSelect: (choice: number) => void;
 }) {
   const tCard = useTranslations("academy.quiz");
-  const legendId = `quiz-q${index}-legend`;
   return (
     <fieldset
       disabled={locked}
-      aria-labelledby={legendId}
-      className="rounded-md bg-card shadow-card-sm p-5"
+      className="rounded-md bg-card p-5 shadow-card-sm"
     >
+      {/* Native <legend> renders on the fieldset border edge, which made the
+          question text sit on top of the card border. We hide a semantic
+          legend for screen readers and render the visible prompt as ordinary
+          flow content inside the padding box. */}
+      <legend className="sr-only">
+        {tCard("questionPrefix")}
+        {index + 1}: {question.question}
+      </legend>
       <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
         {tCard("questionPrefix")}
         {index + 1}
       </p>
-      <legend id={legendId} className="mt-1 text-h5 text-foreground">
-        {question.question}
-      </legend>
+      <p className="mt-1 text-h5 text-foreground">{question.question}</p>
       <div className="mt-4 space-y-2" role="radiogroup">
         {question.options.map((opt, j) => {
           const isSelected = selected === j;
