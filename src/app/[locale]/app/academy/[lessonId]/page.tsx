@@ -104,16 +104,6 @@ export default async function LessonPage({
           </div>
         )}
 
-        {/* Disclaimer — accent-toned callout (tokenised). */}
-        <p className="mb-8 flex items-start gap-2 rounded-md border border-accent/20 bg-accent/[0.06] px-4 py-3 text-p4 leading-relaxed text-foreground">
-          <Icon
-            name="alert-02"
-            size={16}
-            className="mt-0.5 shrink-0 text-accent"
-          />
-          <span>{t("disclaimer")}</span>
-        </p>
-
         {/* Sections — numbered for a clear reading rhythm. */}
         <article className="space-y-10">
           {content.sections.map((section, i) => (
