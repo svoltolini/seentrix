@@ -295,7 +295,8 @@
         "play": "Play the audio briefing",
         "pause": "Pause the audio briefing",
         "seek": "Seek through the audio briefing"
-      }
+      },
+      "downloadCertificateHint": "Download your completion certificate as a PDF."
     },
     "verify": {
       "title": "Verify a certificate",

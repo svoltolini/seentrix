@@ -8,7 +8,6 @@ import { QUIZ_PASS_THRESHOLD } from "@/lib/academy/types";
 import { submitQuiz } from "../actions";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/icon";
-import { ReferenceCard } from "@/components/reference-card";
 import { cn } from "@/lib/utils";
 
 type Outcome =
@@ -109,40 +108,17 @@ export function Quiz({
   // all hooks so hook order stays stable across renders.
   if (alreadyPassed) {
     return (
-      <ReferenceCard className="p-8">
-        <div className="flex size-12 items-center justify-center rounded-full bg-white/15 backdrop-blur-sm">
-          <Icon
-            name="checkmark-circle-01-stroke-rounded"
-            size={24}
-            className="text-white"
-          />
-        </div>
-        <h3 className="mt-4 text-h3 text-white">{t("passedTitle")}</h3>
-        <p className="mt-2 text-p3 text-white/90">
-          {typeof passedScore === "number"
-            ? t("passedBody", { score: Math.round(passedScore * 100) })
-            : t("alreadyPassedShort")}
-        </p>
-      </ReferenceCard>
+      <PassedCard
+        score={typeof passedScore === "number" ? passedScore : null}
+        t={t}
+      />
     );
   }
 
   if (outcome.kind === "passed") {
     return (
       <div ref={resultRef}>
-        <ReferenceCard className="p-8">
-          <div className="flex size-12 items-center justify-center rounded-full bg-white/15 backdrop-blur-sm">
-            <Icon
-              name="checkmark-circle-01-stroke-rounded"
-              size={24}
-              className="text-white"
-            />
-          </div>
-          <h3 className="mt-4 text-h3 text-white">{t("passedTitle")}</h3>
-          <p className="mt-2 text-p3 text-white/90">
-            {t("passedBody", { score: Math.round(outcome.score * 100) })}
-          </p>
-        </ReferenceCard>
+        <PassedCard score={outcome.score} t={t} />
       </div>
     );
   }
@@ -246,6 +222,35 @@ export function Quiz({
           {t("retry")}
         </Button>
       )}
+    </div>
+  );
+}
+
+/**
+ * PassedCard — clean white "you passed" card matching the lesson audio card
+ * (rounded-md bg-card shadow + small primary pill). Full-width, no certificate
+ * code (the downloadable certificate lives in the completion row above).
+ */
+function PassedCard({
+  score,
+  t,
+}: {
+  score: number | null;
+  t: ReturnType<typeof useTranslations>;
+}) {
+  return (
+    <div className="flex w-full items-start gap-4 rounded-md bg-card p-5 shadow-card-md">
+      <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-success/10 text-success">
+        <Icon name="checkmark-circle-01-stroke-rounded" size={22} variant="Bold" />
+      </span>
+      <div className="min-w-0 flex-1">
+        <h3 className="text-h5 text-foreground">{t("passedTitle")}</h3>
+        <p className="mt-1 text-p3 text-muted-foreground">
+          {typeof score === "number"
+            ? t("passedBody", { score: Math.round(score * 100) })
+            : t("alreadyPassedShort")}
+        </p>
+      </div>
     </div>
   );
 }

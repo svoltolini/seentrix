@@ -129,26 +129,23 @@ export default async function LessonPage({
           </p>
 
           {existingCompletion && (
-            <div className="mt-5 flex flex-wrap items-start gap-3 rounded-md border border-success/25 bg-success/[0.06] p-4">
-              <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-success/15 text-success">
-                <Icon name="checkmark-circle-01-stroke-rounded" size={18} />
+            <div className="mt-5 flex w-full flex-wrap items-center gap-4 rounded-md bg-card p-5 shadow-card-md">
+              <div className="flex size-11 shrink-0 items-center justify-center rounded-full bg-success/10 text-success">
+                <Icon name="checkmark-circle-01-stroke-rounded" size={20} />
               </div>
               <div className="min-w-0 flex-1 text-p3">
-                <p className="font-semibold text-foreground">
+                <p className="text-h6 text-foreground">
                   {t("alreadyPassed", {
                     score: Math.round(existingCompletion.score * 100),
                   })}
                 </p>
                 <p className="mt-0.5 text-p4 text-muted-foreground">
-                  {t("certificateLabel")}:{" "}
-                  <span className="font-mono text-foreground/80">
-                    {existingCompletion.certificate_hash.slice(0, 16)}…
-                  </span>
+                  {t("downloadCertificateHint")}
                 </p>
               </div>
               <a
                 href={`/api/academy/certificates/${lesson.id}`}
-                className="inline-flex shrink-0 items-center gap-1.5 rounded-sm border border-success/30 bg-success/10 px-3 py-2 text-p4 font-semibold text-success transition-colors hover:bg-success/20"
+                className="inline-flex shrink-0 items-center gap-1.5 rounded-sm border border-border-outline bg-card px-3 py-2 text-p4 font-semibold text-foreground transition-colors hover:bg-muted"
               >
                 <Icon name="pdf-01-stroke-rounded" size={14} />
                 {t("downloadCertificate")}
