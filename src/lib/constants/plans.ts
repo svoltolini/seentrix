@@ -170,6 +170,10 @@ export const STRIPE_PRICE_IDS: Record<
 };
 
 export function getPlanFromPriceId(priceId: string): OrgPlan {
+  // Guard against an empty/missing price id matching an unconfigured plan:
+  // when a Stripe price-id env var is unset it defaults to "", so a blank
+  // input must never resolve to a paid plan.
+  if (!priceId) return "free";
   for (const [plan, ids] of Object.entries(STRIPE_PRICE_IDS)) {
     if (ids.monthly === priceId || ids.annual === priceId) {
       return plan as OrgPlan;
