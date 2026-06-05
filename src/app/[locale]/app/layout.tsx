@@ -102,23 +102,25 @@ export default async function AppLayout({ children }: { children: React.ReactNod
           <NavigationProgress />
         </Suspense>
         <CopilotProvider>
-          {/* Nask shell: 310px sidebar + flex-1 main column with slim topbar. */}
-          <div className="flex h-screen overflow-hidden">
-            <AppSidebar user={userProfile} orgName={orgName} />
-            <div className="flex flex-1 flex-col overflow-hidden">
-              <AppTopbar user={userProfile} orgName={orgName} />
-              <main className="flex-1 overflow-y-auto bg-background px-4 py-6 lg:px-8 lg:py-8">
-                {children}
-              </main>
-            </div>
-          </div>
-          {/* Global "+ New Product" side sheet. Opens when any
-              affordance navigates to `?new=product`; closes by
-              stripping the param. Mounted once at the layout level
-              so the trigger logic stays dead-simple (no shared
-              context, no global store). */}
+          {/* Global "+ New Product" side sheet. It now PROVIDES the
+              create-product context and wraps the shell, so any affordance
+              (topbar, dashboard, empty states) can call
+              `useCreateProduct().open()` to reveal the sheet instantly via
+              React state — no route navigation jank. The `?new=product`
+              query param is still honoured for deep-links. */}
           <Suspense fallback={null}>
-            <CreateProductSheet />
+            <CreateProductSheet>
+              {/* Nask shell: 310px sidebar + flex-1 main column with slim topbar. */}
+              <div className="flex h-screen overflow-hidden">
+                <AppSidebar user={userProfile} orgName={orgName} />
+                <div className="flex flex-1 flex-col overflow-hidden">
+                  <AppTopbar user={userProfile} orgName={orgName} />
+                  <main className="flex-1 overflow-y-auto bg-background px-4 py-6 lg:px-8 lg:py-8">
+                    {children}
+                  </main>
+                </div>
+              </div>
+            </CreateProductSheet>
           </Suspense>
         </CopilotProvider>
       </GsapProvider>

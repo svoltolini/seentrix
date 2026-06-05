@@ -5,6 +5,7 @@ import { TeamProgress } from "./team-progress";
 import type { LocaleId, RoleId } from "@/lib/academy/types";
 import { requiredLessonsForRole, allLessonIds } from "@/lib/academy/lessons";
 import { Icon } from "@/components/icon";
+import { ReferenceCard } from "@/components/reference-card";
 
 /**
  * Academy hub — Layer 2 landing.
@@ -79,23 +80,20 @@ export default async function AcademyPage({
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 md:py-12">
       {mustCompleteTraining ? (
-        <div
-          className="mb-8 overflow-hidden rounded-md bg-cover bg-center p-6 md:mb-10 md:p-10"
-          style={{ backgroundImage: "url('/images/entity-role-bg.svg')" }}
-        >
+        <ReferenceCard className="mb-8 p-6 md:mb-10 md:p-10">
           <div className="flex flex-wrap items-start justify-between gap-5">
             <div className="min-w-0 flex-1">
-              <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur-sm">
-                <span className="size-1.5 animate-pulse rounded-full bg-[#F59E0B]" />
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-l6-plus uppercase tracking-wider text-white backdrop-blur-sm">
+                <span className="size-1.5 animate-pulse rounded-full bg-accent" />
                 {t("hero.title")}
               </div>
               <h1 className="text-h2 leading-tight text-white md:text-3xl">
                 {tGate("title")}
               </h1>
-              <p className="mt-2 max-w-xl text-sm text-white md:text-base">
+              <p className="mt-2 max-w-xl text-p3 text-white/80 md:text-p2">
                 {tGate("subtitle")}
               </p>
-              <p className="mt-3 text-[13px] text-white">
+              <p className="mt-3 text-p3 text-white">
                 {tGate("progress", {
                   done: requiredDone,
                   total: requiredIds.length,
@@ -110,9 +108,9 @@ export default async function AcademyPage({
               />
             </div>
           </div>
-        </div>
+        </ReferenceCard>
       ) : (
-        <div className="mb-8 overflow-hidden rounded-md bg-dark-cta p-6 md:mb-10 md:p-10">
+        <ReferenceCard className="mb-8 p-6 md:mb-10 md:p-10">
           <div className="flex flex-wrap items-center justify-between gap-6">
             <div className="min-w-0 flex-1">
               <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-l6-plus uppercase tracking-wider text-white backdrop-blur-sm">
@@ -133,7 +131,7 @@ export default async function AcademyPage({
               caption={t("hero.completeLabel")}
             />
           </div>
-        </div>
+        </ReferenceCard>
       )}
 
       <AcademyTabs
