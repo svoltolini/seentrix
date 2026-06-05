@@ -8,7 +8,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Icon } from "@/components/icon";
 import { useToast } from "@/components/ui/toast";
-import { snoozeMfaEnrolment, clearMfaGrace } from "./actions";
+import {
+  snoozeMfaEnrolment,
+  clearMfaGrace,
+  clearUnverifiedMfaFactors,
+} from "./actions";
 
 type EnrolState =
   | { kind: "idle" }
@@ -54,54 +58,45 @@ export function SecurityContent({
   }
 
   async function startEnrolment() {
-    const supabase = createClient();
-
     // Clean up any *unverified* TOTP factors left over from a previous attempt
-    // the user abandoned (e.g. opened the QR then cancelled). Supabase keeps
-    // the half-enrolled factor around, and a second enroll with the same
-    // friendly name fails with "a factor with the friendly name ... already
-    // exists". Unenrolling the stale unverified factors first makes re-enrol
-    // idempotent. We never touch verified factors here.
-    const { data: existing } = await supabase.auth.mfa.listFactors();
-    const staleTotp = (existing?.totp ?? []).filter(
-      (f) => f.status !== "verified",
-    );
-    for (const f of staleTotp) {
-      await supabase.auth.mfa.unenroll({ factorId: f.id });
-    }
+    // the user abandoned (Cancel, navigated away, failed verify). Supabase
+    // keeps the half-enrolled factor around and a second enroll then fails with
+    // "a factor with the friendly name ... already exists" (including the empty
+    // name). We do this server-side with the service-role admin client because
+    // the client-side unenroll can require AAL2 and races the enroll call.
+    startTransition(async () => {
+      await clearUnverifiedMfaFactors();
 
-    // Don't set a friendly name at all — it's only a dashboard label and a
-    // fixed value was the source of the collision. Supabase generates a
-    // unique factor id regardless.
-    const { data, error } = await supabase.auth.mfa.enroll({
-      factorType: "totp",
-    });
-    if (error || !data) {
-      toast({
-        type: "error",
-        message: error?.message ?? "Failed to start enrolment",
+      const supabase = createClient();
+      // Use a unique friendly name so two factors can never collide on the
+      // name even if a stale one somehow slips through the cleanup above.
+      const { data, error } = await supabase.auth.mfa.enroll({
+        factorType: "totp",
+        friendlyName: `Seentrix · ${Date.now()}`,
       });
-      return;
-    }
-    setState({
-      kind: "enrolling",
-      factorId: data.id,
-      qrSvg: data.totp.qr_code,
-      secret: data.totp.secret,
+      if (error || !data) {
+        toast({
+          type: "error",
+          message: error?.message ?? "Failed to start enrolment",
+        });
+        return;
+      }
+      setState({
+        kind: "enrolling",
+        factorId: data.id,
+        qrSvg: data.totp.qr_code,
+        secret: data.totp.secret,
+      });
     });
   }
 
   // Cancelling a half-finished enrolment must remove the unverified factor it
-  // created, otherwise the next "Enable 2FA" collides on the friendly name /
-  // leaves an orphan factor behind.
+  // created, otherwise the next "Enable 2FA" collides / leaves an orphan. Use
+  // the same robust server-side cleanup.
   function cancelEnrolment() {
-    const pendingId = state.kind === "enrolling" ? state.factorId : null;
     setState({ kind: "idle" });
     setCode("");
-    if (pendingId) {
-      const supabase = createClient();
-      void supabase.auth.mfa.unenroll({ factorId: pendingId });
-    }
+    void clearUnverifiedMfaFactors();
   }
 
   async function verifyCode() {
@@ -236,8 +231,13 @@ export function SecurityContent({
               <p className="text-p3 text-muted-foreground">
                 2FA is not yet set up on this account.
               </p>
-              <Button onClick={startEnrolment} size="sm" className="mt-3">
-                Enable 2FA
+              <Button
+                onClick={startEnrolment}
+                size="sm"
+                className="mt-3"
+                disabled={isPending}
+              >
+                {isPending ? "Starting…" : "Enable 2FA"}
               </Button>
             </div>
           ) : (
