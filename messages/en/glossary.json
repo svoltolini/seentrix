@@ -260,7 +260,9 @@
       "role": "Role",
       "overall": "Overall",
       "complete": "Complete",
-      "pending": "Pending"
+      "pending": "Pending",
+      "yourProgress": "Your progress",
+      "yourTeam": "Your team ({count})"
     },
     "banner": {
       "title": "New to this screen?",
