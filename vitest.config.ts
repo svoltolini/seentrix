@@ -4,10 +4,11 @@ import tsconfigPaths from "vite-tsconfig-paths";
 export default defineConfig({
   plugins: [tsconfigPaths()],
   test: {
-    // Pure-logic unit tests run in Node. Component/integration tests that
-    // need a DOM can opt into jsdom per-file via `// @vitest-environment jsdom`.
+    // Pure-logic unit tests run in Node. Component/integration tests opt into
+    // jsdom per-file via `// @vitest-environment jsdom` at the top of the file.
     environment: "node",
     globals: true,
+    setupFiles: ["src/test/setup.ts"],
     include: ["src/**/*.{test,spec}.{ts,tsx}"],
     coverage: {
       provider: "v8",

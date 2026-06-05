@@ -59,6 +59,8 @@ const eslintConfig = defineConfig([
   globalIgnores([
     // Default ignores of eslint-config-next:
     ".next/**",
+    // Generated test-coverage output.
+    "coverage/**",
     "out/**",
     "build/**",
     "next-env.d.ts",
