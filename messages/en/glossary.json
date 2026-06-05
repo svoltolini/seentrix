@@ -205,17 +205,29 @@
     "hero": {
       "eyebrow": "CRA training",
       "title": "Seentrix Academy",
-      "description": "Short lessons on the CRA, vulnerability handling, SBOMs, and the obligations behind every field you fill in across Seentrix. Complete tracks to collect audit-ready certificates for each team member."
+      "description": "Short lessons on the CRA, vulnerability handling, SBOMs, and the obligations behind every field you fill in across Seentrix. Complete tracks to collect audit-ready certificates for each team member.",
+      "completeLabel": "lessons complete"
     },
     "lessonCard": {
       "completed": "Completed",
-      "open": "Open"
+      "open": "Open",
+      "video": "Video"
     },
     "byScreenCard": {
       "meta": "{count, plural, one {# lesson} other {# lessons}} · {minutes} min · {done}/{total} done"
     },
     "quiz": {
-      "questionPrefix": "Q"
+      "threshold": "{percent}% pass threshold",
+      "submit": "Submit answers",
+      "submitting": "Submitting…",
+      "retry": "Try again",
+      "passedTitle": "Nicely done",
+      "passedBody": "You scored {score}%. Completion recorded to your audit trail.",
+      "certificateLabel": "Certificate",
+      "failedTitle": "Not this time — {score}% (need {threshold}%)",
+      "failedBody": "Review the feedback above, then retry in {minutes} min.",
+      "cooldownTitle": "Cooldown in progress",
+      "cooldownBody": "You can retry in {minutes} min. The delay is there to make sure the quiz is actually teaching the concept."
     },
     "tabs": {
       "lessons": "Lessons",
@@ -270,20 +282,13 @@
       "quizIntro": "Five multiple-choice questions. Pass 4 of 5 to mark this lesson complete.",
       "alreadyPassed": "You passed this lesson — {score}% correct.",
       "certificateLabel": "Certificate",
-      "downloadCertificate": "Download PDF"
-    },
-    "quiz": {
-      "threshold": "{percent}% pass threshold",
-      "submit": "Submit answers",
-      "submitting": "Submitting…",
-      "retry": "Try again",
-      "passedTitle": "Nicely done",
-      "passedBody": "You scored {score}%. Completion recorded to your audit trail.",
-      "certificateLabel": "Certificate",
-      "failedTitle": "Not this time — {score}% (need {threshold}%)",
-      "failedBody": "Review the feedback above, then retry in {minutes} min.",
-      "cooldownTitle": "Cooldown in progress",
-      "cooldownBody": "You can retry in {minutes} min. The delay is there to make sure the quiz is actually teaching the concept."
+      "downloadCertificate": "Download PDF",
+      "completedBadge": "Completed",
+      "video": {
+        "badge": "AI video",
+        "caption": "{title} — explainer",
+        "play": "Play the lesson video"
+      }
     }
   }
 }

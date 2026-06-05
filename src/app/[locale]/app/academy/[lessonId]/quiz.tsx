@@ -36,7 +36,10 @@ export function Quiz({
   const [outcome, setOutcome] = useState<Outcome>({ kind: "idle" });
   const [isSubmitting, startTransition] = useTransition();
 
-  const allAnswered = questions.every((_, i) => answers[i] !== undefined);
+  const answeredCount = questions.filter(
+    (_, i) => answers[i] !== undefined,
+  ).length;
+  const allAnswered = answeredCount === questions.length;
 
   function handleSubmit() {
     const ordered = questions.map((_, i) => answers[i]);
@@ -75,20 +78,20 @@ export function Quiz({
 
   if (outcome.kind === "passed") {
     return (
-      <div
-        className="overflow-hidden rounded-md p-8"
-        style={{ background: "linear-gradient(135deg, #066DE6 0%, #FF6D00 60%, #FF6D00 100%)" }}
-      >
+      <div className="overflow-hidden rounded-md bg-[linear-gradient(135deg,#066DE6_0%,#066DE6_45%,#FF6D00_140%)] p-8 text-white shadow-card-md">
         <div className="flex size-12 items-center justify-center rounded-full bg-white/15 backdrop-blur-sm">
-          <Icon name="checkmark-circle-01-stroke-rounded" size={24} className="text-white" />
+          <Icon
+            name="checkmark-circle-01-stroke-rounded"
+            size={24}
+            className="text-white"
+          />
         </div>
-        <h3 className="mt-4 text-h3 text-white">
-          {t("passedTitle")}
-        </h3>
-        <p className="mt-2 text-p3 text-white">
+        <h3 className="mt-4 text-h3 text-white">{t("passedTitle")}</h3>
+        <p className="mt-2 text-p3 text-white/90">
           {t("passedBody", { score: Math.round(outcome.score * 100) })}
         </p>
-        <p className="mt-3 font-mono text-p4 text-white">
+        <p className="mt-4 inline-flex items-center gap-2 rounded-sm bg-white/15 px-3 py-1.5 font-mono text-p4 text-white backdrop-blur-sm">
+          <Icon name="checkmark-badge-01-stroke-rounded" size={14} />
           {t("certificateLabel")}: {outcome.certificateHash.slice(0, 16)}…
         </p>
       </div>
@@ -115,14 +118,33 @@ export function Quiz({
       ))}
 
       {outcome.kind === "idle" && (
-        <div className="flex items-center justify-between gap-3 rounded-md bg-muted px-5 py-4">
-          <p className="text-p3 text-muted-foreground">
-            {t("threshold", { percent: Math.round(QUIZ_PASS_THRESHOLD * 100) })}
-          </p>
+        <div className="flex flex-col gap-3 rounded-md bg-muted px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex min-w-0 flex-1 flex-col gap-1.5">
+            <p className="text-p3 text-muted-foreground">
+              {t("threshold", {
+                percent: Math.round(QUIZ_PASS_THRESHOLD * 100),
+              })}
+            </p>
+            {/* Answered-progress bar so the learner sees how many remain. */}
+            <div className="flex items-center gap-2">
+              <div className="h-1.5 w-32 overflow-hidden rounded-full bg-border">
+                <div
+                  className="h-full rounded-full bg-primary transition-all"
+                  style={{
+                    width: `${(answeredCount / questions.length) * 100}%`,
+                  }}
+                />
+              </div>
+              <span className="text-p4 tabular-nums text-muted-foreground">
+                {answeredCount}/{questions.length}
+              </span>
+            </div>
+          </div>
           <Button
             size="sm"
             disabled={!allAnswered || isSubmitting}
             onClick={handleSubmit}
+            className="shrink-0"
           >
             {isSubmitting ? t("submitting") : t("submit")}
           </Button>

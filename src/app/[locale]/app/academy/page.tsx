@@ -3,7 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { AcademyTabs, type TabKey } from "./academy-tabs";
 import { TeamProgress } from "./team-progress";
 import type { LocaleId, RoleId } from "@/lib/academy/types";
-import { requiredLessonsForRole } from "@/lib/academy/lessons";
+import { requiredLessonsForRole, allLessonIds } from "@/lib/academy/lessons";
 import { Icon } from "@/components/icon";
 
 /**
@@ -45,6 +45,14 @@ export default async function AcademyPage({
   }
 
   const isAdminOrCO = role === "admin" || role === "compliance_officer";
+
+  // Overall catalogue progress for the hero progress ring.
+  const totalLessons = allLessonIds().length;
+  const completedTotal = completedLessonIds.filter((id) =>
+    allLessonIds().includes(id),
+  ).length;
+  const overallPct =
+    totalLessons > 0 ? Math.round((completedTotal / totalLessons) * 100) : 0;
 
   // When the training gate is active, render the blocking banner at the top
   // of the Academy so users understand why the rest of the app isn't
@@ -104,23 +112,27 @@ export default async function AcademyPage({
           </div>
         </div>
       ) : (
-        <div
-          className="mb-8 overflow-hidden rounded-md bg-cover bg-center p-6 md:mb-10 md:p-10"
-          style={{ backgroundImage: "url('/images/entity-role-bg.svg')" }}
-        >
-          {/* Static eyebrow — no amber pulse here. The pulsing dot is
-              reserved for the gate hero (above) where it signals an
-              action the user must take. On the happy path it reads as a
-              false alarm. */}
-          <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur-sm">
-            {t("hero.eyebrow")}
+        <div className="mb-8 overflow-hidden rounded-md bg-dark-cta p-6 md:mb-10 md:p-10">
+          <div className="flex flex-wrap items-center justify-between gap-6">
+            <div className="min-w-0 flex-1">
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-l6-plus uppercase tracking-wider text-white backdrop-blur-sm">
+                <Icon name="elearning-exchange-stroke-rounded" size={12} />
+                {t("hero.eyebrow")}
+              </div>
+              <h1 className="text-h2 leading-tight text-white md:text-3xl">
+                {t("hero.title")}
+              </h1>
+              <p className="mt-2 max-w-xl text-p3 text-white/80 md:text-p2">
+                {t("hero.description")}
+              </p>
+            </div>
+            {/* Overall progress ring */}
+            <ProgressRing
+              pct={overallPct}
+              centerLabel={`${completedTotal}/${totalLessons}`}
+              caption={t("hero.completeLabel")}
+            />
           </div>
-          <h1 className="text-h2 leading-tight text-white md:text-3xl">
-            {t("hero.title")}
-          </h1>
-          <p className="mt-2 max-w-xl text-sm text-white md:text-base">
-            {t("hero.description")}
-          </p>
         </div>
       )}
 
@@ -130,6 +142,57 @@ export default async function AcademyPage({
         isAdminOrCO={isAdminOrCO}
         teamProgress={isAdminOrCO ? <TeamProgress locale={locale} /> : null}
       />
+    </div>
+  );
+}
+
+/**
+ * Static SVG progress ring for the hero. Server-rendered — no interactivity
+ * needed, just a clean donut showing overall catalogue completion.
+ */
+function ProgressRing({
+  pct,
+  centerLabel,
+  caption,
+}: {
+  pct: number;
+  centerLabel: string;
+  caption: string;
+}) {
+  const r = 30;
+  const circumference = 2 * Math.PI * r;
+  const dash = (pct / 100) * circumference;
+  return (
+    <div className="flex shrink-0 items-center gap-3">
+      <div className="relative flex size-20 items-center justify-center">
+        <svg viewBox="0 0 72 72" className="size-20 -rotate-90">
+          <circle
+            cx="36"
+            cy="36"
+            r={r}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="6"
+            className="text-white/15"
+          />
+          <circle
+            cx="36"
+            cy="36"
+            r={r}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="6"
+            strokeLinecap="round"
+            strokeDasharray={`${dash} ${circumference}`}
+            className="text-accent transition-all"
+          />
+        </svg>
+        <span className="absolute text-l5 tabular-nums text-white">{pct}%</span>
+      </div>
+      <div className="flex flex-col">
+        <span className="text-h5 tabular-nums text-white">{centerLabel}</span>
+        <span className="text-p4 text-white/70">{caption}</span>
+      </div>
     </div>
   );
 }
