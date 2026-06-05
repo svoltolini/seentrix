@@ -263,6 +263,38 @@ function parseBareMarkdownLink(
   return { label: match[1], path: match[2] };
 }
 
+/**
+ * Markdown-table helpers.
+ *
+ * A table row is any line containing a `|` that isn't a code line. The
+ * separator row is the `|---|:--:|---|` line directly under the header.
+ * `splitTableRow` trims the optional leading/trailing pipes and splits on the
+ * remaining unescaped pipes.
+ */
+function isTableRow(line: string): boolean {
+  const t = line.trim();
+  if (!t.includes("|")) return false;
+  // Must contain at least one pipe with content around it — ignore a lone `|`.
+  return /\S/.test(t.replace(/\|/g, ""));
+}
+
+function isTableSeparator(line: string): boolean {
+  const t = line.trim();
+  if (!t.includes("|") && !t.includes("-")) return false;
+  // Each cell is dashes with optional leading/trailing colons (alignment).
+  const cells = t.replace(/^\||\|$/g, "").split("|");
+  if (cells.length === 0) return false;
+  return cells.every((c) => /^\s*:?-{1,}:?\s*$/.test(c));
+}
+
+function splitTableRow(line: string): string[] {
+  return line
+    .trim()
+    .replace(/^\||\|$/g, "")
+    .split("|")
+    .map((c) => c.trim());
+}
+
 function parseHallucinatedLinkTag(
   line: string,
 ): { path: string; label: string } | null {
@@ -355,6 +387,7 @@ type Block =
   | { type: "ul"; items: string[] }
   | { type: "quote"; text: string }
   | { type: "code"; text: string }
+  | { type: "table"; headers: string[]; rows: string[][] }
   | { type: "link"; path: string; label: string };
 
 function AssistantBody({ text }: { text: string }) {
@@ -450,6 +483,45 @@ function AssistantBody({ text }: { text: string }) {
                 <code>{b.text}</code>
               </pre>
             );
+          case "table":
+            return (
+              <div
+                key={i}
+                className="-mx-1 overflow-x-auto rounded-md border border-border"
+              >
+                <table className="w-full border-collapse text-p4">
+                  <thead>
+                    <tr className="bg-muted">
+                      {b.headers.map((h, hi) => (
+                        <th
+                          key={hi}
+                          className="border-b border-border px-3 py-2 text-left text-l6-plus uppercase tracking-wide text-muted-foreground"
+                        >
+                          {renderInline(h)}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {b.rows.map((row, ri) => (
+                      <tr
+                        key={ri}
+                        className="border-b border-border last:border-0"
+                      >
+                        {row.map((cell, ci) => (
+                          <td
+                            key={ci}
+                            className="px-3 py-2 align-top text-foreground"
+                          >
+                            {renderInline(cell)}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            );
           case "link":
             return <LinkButton key={i} path={b.path} label={b.label} />;
           case "p":
@@ -499,8 +571,34 @@ function blockify(text: string): Block[] {
     flushParagraph();
   }
 
-  for (const raw of lines) {
+  for (let li = 0; li < lines.length; li++) {
+    const raw = lines[li];
     const line = raw.trimEnd();
+
+    // Markdown table — a header row of `| a | b |`, a separator row of
+    // `|---|:--:|`, then one or more data rows. The model emits these for
+    // "examples" grids; without this they'd render as raw pipe text. Detect
+    // by peeking at the next line for the separator, then greedily consume
+    // the contiguous data rows.
+    if (
+      !codeFence &&
+      isTableRow(line) &&
+      li + 1 < lines.length &&
+      isTableSeparator(lines[li + 1])
+    ) {
+      flushAll();
+      resetOl();
+      const headers = splitTableRow(line);
+      const rows: string[][] = [];
+      let j = li + 2;
+      while (j < lines.length && isTableRow(lines[j].trimEnd())) {
+        rows.push(splitTableRow(lines[j].trimEnd()));
+        j++;
+      }
+      blocks.push({ type: "table", headers, rows });
+      li = j - 1; // resume after the consumed table
+      continue;
+    }
 
     // Fenced code block — greedy capture.
     const fence = line.match(/^\s*```(\w*)\s*$/);
