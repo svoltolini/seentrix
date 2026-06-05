@@ -228,13 +228,15 @@
       "failedTitle": "Not this time — {score}% (need {threshold}%)",
       "failedBody": "Review the feedback above, then retry in {minutes} min.",
       "cooldownTitle": "Cooldown in progress",
-      "cooldownBody": "You can retry in {minutes} min. The delay is there to make sure the quiz is actually teaching the concept."
+      "cooldownBody": "You can retry in {minutes} min. The delay is there to make sure the quiz is actually teaching the concept.",
+      "alreadyPassedShort": "You have completed this lesson. It is locked to preserve your training record."
     },
     "tabs": {
       "lessons": "Lessons",
       "byScreen": "By Screen",
       "glossary": "Glossary",
-      "teamProgress": "Team Progress"
+      "teamProgress": "Team Progress",
+      "verify": "Verify certificate"
     },
     "byScreen": {
       "openScreen": "Open",
@@ -294,6 +296,23 @@
         "pause": "Pause the audio briefing",
         "seek": "Seek through the audio briefing"
       }
+    },
+    "verify": {
+      "title": "Verify a certificate",
+      "description": "Paste a certificate number to confirm it is genuine and see which team member it belongs to. Lookups are limited to your organisation.",
+      "placeholder": "Certificate number (e.g. a1b2c3d4…)",
+      "verify": "Verify",
+      "checking": "Checking…",
+      "validTitle": "Valid certificate",
+      "holder": "Holder",
+      "email": "Email",
+      "lesson": "Lesson",
+      "score": "Score",
+      "completedAt": "Completed",
+      "certificate": "Certificate",
+      "notFound": "No certificate matches that number in your organisation. It may be mistyped or invalid.",
+      "forbidden": "Only admins and compliance officers can verify certificates.",
+      "error": "Something went wrong while verifying. Please try again."
     }
   }
 }
