@@ -48,7 +48,13 @@ export function AccountContent({ account }: { account: AccountInfo | null }) {
     startProfileTransition(async () => {
       const result = await updateProfile(formData);
       if (result?.error) {
-        toast({ type: "error", message: t("profileError") });
+        toast({
+          type: "error",
+          message:
+            result.error === "avatarUploadFailed"
+              ? t("avatarError")
+              : t("profileError"),
+        });
       } else {
         toast({ type: "success", message: t("profileSaved") });
         avatarFileRef.current = null;

@@ -4,14 +4,16 @@ import { useTranslations } from "next-intl";
 import { usePathname } from "@/i18n/navigation";
 import { useSearchParams } from "next/navigation";
 import { Icon, type IconName } from "@/components/icon";
+import { AskSeentrixAI } from "@/components/copilot/ask-seentrix-ai";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 /**
- * RequiresProductEmptyState — shown on screens that have no meaning until the
- * org has at least one product (Incidents, Vulnerability Reports). Instead of
- * rendering an empty table, we explain why the screen is empty and point the
- * user at the one thing that unlocks it: adding a product.
+ * RequiresProductEmptyState — the shared "you need a product first" empty
+ * state used by every screen that has no meaning until the org has at least
+ * one product (Products, Incidents, Vulnerability Reports). One component keeps
+ * the icon + heading + body + CTA + "Ask Seentrix AI" chip identical across all
+ * three screens.
  *
  * The CTA opens the global create-product side sheet over the current page
  * (via `?new=product`) rather than navigating away, matching the topbar
@@ -30,6 +32,10 @@ interface Props {
   namespace: string;
   /** Icon shown in the badge. */
   icon?: IconName | (string & {});
+  /** Pre-seeded question for the "Ask Seentrix AI" chip. */
+  askSeed?: string;
+  /** Label for the "Ask Seentrix AI" chip. */
+  askLabel?: string;
 }
 
 export function RequiresProductEmptyState({
@@ -37,7 +43,9 @@ export function RequiresProductEmptyState({
   description,
   ctaLabel,
   namespace,
-  icon = "Box",
+  icon = "package-open-stroke-rounded",
+  askSeed,
+  askLabel,
 }: Props) {
   const t = useTranslations(namespace);
   const pathname = usePathname();
@@ -61,6 +69,9 @@ export function RequiresProductEmptyState({
         <Icon name="add-01" size={16} />
         {t(ctaLabel)}
       </a>
+      {askSeed && askLabel && (
+        <AskSeentrixAI className="mt-4" seed={askSeed} label={askLabel} />
+      )}
     </div>
   );
 }

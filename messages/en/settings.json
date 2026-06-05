@@ -359,6 +359,7 @@
       "savingProfile": "Saving…",
       "profileSaved": "Profile updated.",
       "profileError": "Failed to update profile.",
+      "avatarError": "Could not upload your photo. Please try a smaller JPG or PNG and try again.",
       "passwordTitle": "Change password",
       "currentPassword": "Current password",
       "newPassword": "New password",
