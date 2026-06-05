@@ -14,6 +14,8 @@ import {
   hasFeature,
   getPlanFromPriceId,
   PLAN_PRICES_EUR,
+  isPurchasable,
+  PURCHASABLE_PLANS,
   type OrgPlan,
 } from "@/lib/constants/plans";
 
@@ -138,7 +140,31 @@ describe("displayed prices", () => {
     }
   });
 
+  it("reflects the current Professional and Business prices", () => {
+    expect(PLAN_PRICES_EUR.professional).toEqual({ monthly: 49, annual: 490 });
+    expect(PLAN_PRICES_EUR.business).toEqual({ monthly: 179, annual: 1790 });
+  });
+
   it("keeps the free plan at zero", () => {
     expect(PLAN_PRICES_EUR.free).toEqual({ monthly: 0, annual: 0 });
+  });
+});
+
+describe("purchasable plans", () => {
+  it("marks Professional and Business as purchasable", () => {
+    expect(isPurchasable("professional")).toBe(true);
+    expect(isPurchasable("business")).toBe(true);
+  });
+
+  it("never lets Enterprise be checked out (coming soon)", () => {
+    expect(isPurchasable("enterprise")).toBe(false);
+  });
+
+  it("treats Free as non-purchasable", () => {
+    expect(isPurchasable("free")).toBe(false);
+  });
+
+  it("PURCHASABLE_PLANS contains exactly the buyable paid tiers", () => {
+    expect([...PURCHASABLE_PLANS]).toEqual(["professional", "business"]);
   });
 });

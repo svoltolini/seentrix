@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 import { createCheckoutSession } from "@/lib/stripe/actions";
 import { Link } from "@/i18n/navigation";
 import type { OrgPlan } from "@/lib/constants/plans";
-import { PLAN_PRICES_EUR } from "@/lib/constants/plans";
+import { PLAN_PRICES_EUR, isPurchasable } from "@/lib/constants/plans";
 import {
   FEATURE_CATEGORIES,
   type CellValue,
@@ -33,14 +33,11 @@ export function PricingContent() {
 
   async function handleSelectPlan(plan: OrgPlan) {
     if (plan === "free") return;
-    if (plan === "enterprise") return;
+    if (!isPurchasable(plan)) return;
 
     setLoading(plan);
 
-    const result = await createCheckoutSession(
-      plan as Exclude<OrgPlan, "free">,
-      interval,
-    );
+    const result = await createCheckoutSession(plan, interval);
 
     if (result.url) {
       // Use assign() rather than mutating location.href so the React
@@ -106,8 +103,11 @@ export function PricingContent() {
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {TIERS.map((tier) => {
           const isPro = tier.highlighted;
-          const isEnterprise = tier.plan === "enterprise";
           const isFree = tier.plan === "free";
+          // A non-free tier that isn't purchasable yet (Enterprise) is shown
+          // as "coming soon": no price, no checkout. Driven by plans.ts so
+          // adding/removing a purchasable tier needs no edits here.
+          const isComingSoon = !isFree && !isPurchasable(tier.plan);
           const prices = PLAN_PRICES_EUR[tier.plan];
           const price = interval === "annual" ? prices.annual : prices.monthly;
           const displayPrice =
@@ -155,26 +155,36 @@ export function PricingContent() {
                   </p>
                 </div>
 
-                <div className="mt-4 flex items-baseline gap-1">
-                  <span
-                    className={cn(
-                      "text-5xl font-extrabold",
-                      isPro
-                        ? "text-primary"
-                        : "text-foreground",
-                    )}
-                  >
-                    €{displayPrice}
-                  </span>
-                  <span className="text-p3 text-muted-foreground">
-                    /{t("perMonth")}
-                  </span>
-                </div>
+                {isComingSoon ? (
+                  <div className="mt-4 flex min-h-[3.75rem] items-baseline">
+                    <span className="text-3xl font-extrabold text-foreground">
+                      {t("comingSoon")}
+                    </span>
+                  </div>
+                ) : (
+                  <>
+                    <div className="mt-4 flex items-baseline gap-1">
+                      <span
+                        className={cn(
+                          "text-5xl font-extrabold",
+                          isPro
+                            ? "text-primary"
+                            : "text-foreground",
+                        )}
+                      >
+                        €{displayPrice}
+                      </span>
+                      <span className="text-p3 text-muted-foreground">
+                        /{t("perMonth")}
+                      </span>
+                    </div>
 
-                {interval === "annual" && !isFree && (
-                  <p className="mt-1 text-p4-r text-muted-foreground">
-                    {t("billedAnnually", { total: price })}
-                  </p>
+                    {interval === "annual" && !isFree && (
+                      <p className="mt-1 text-p4-r text-muted-foreground">
+                        {t("billedAnnually", { total: price })}
+                      </p>
+                    )}
+                  </>
                 )}
 
                 <div className="my-6 h-px bg-border" />
@@ -205,19 +215,16 @@ export function PricingContent() {
                         {t("getStarted")}
                       </Button>
                     </Link>
-                  ) : isEnterprise ? (
-                    <a
-                      href="mailto:sales@seentrix.com"
-                      className="block w-full"
+                  ) : isComingSoon ? (
+                    <Button
+                      variant="secondary"
+                      size="default"
+                      className="w-full"
+                      disabled
+                      aria-disabled="true"
                     >
-                      <Button
-                        variant="outline"
-                        size="default"
-                        className="w-full"
-                      >
-                        {t("contactSales")}
-                      </Button>
-                    </a>
+                      {t("comingSoon")}
+                    </Button>
                   ) : (
                     <Button
                       variant={isPro ? "default" : "outline"}

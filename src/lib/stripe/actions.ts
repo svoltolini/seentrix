@@ -2,7 +2,7 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { getStripe } from "./client";
-import { STRIPE_PRICE_IDS, type OrgPlan } from "@/lib/constants/plans";
+import { STRIPE_PRICE_IDS, isPurchasable, type OrgPlan } from "@/lib/constants/plans";
 import { logActivity } from "@/lib/activity";
 
 // ---------------------------------------------------------------------------
@@ -29,6 +29,11 @@ export async function createCheckoutSession(
   plan: Exclude<OrgPlan, "free">,
   interval: "monthly" | "annual"
 ): Promise<{ url?: string; error?: string }> {
+  // Defense in depth: only purchasable tiers can ever reach Stripe, even if a
+  // caller bypasses the UI. Non-purchasable plans (e.g. Enterprise "coming
+  // soon") are rejected before any customer/session is created.
+  if (!isPurchasable(plan)) return { error: "invalidPlan" };
+
   const { supabase, user, orgId } = await getAuthContext();
 
   if (!user || !orgId) return { error: "notAuthenticated" };

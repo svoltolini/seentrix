@@ -103,7 +103,7 @@
       },
       "professional": {
         "name": "Professional",
-        "price": "€59",
+        "price": "€49",
         "period": "/mo",
         "description": "Solo founders, 1–3 products",
         "badge": "Most Popular",
@@ -116,7 +116,7 @@
       },
       "business": {
         "name": "Business",
-        "price": "€199",
+        "price": "€179",
         "period": "/mo",
         "description": "Compliance teams, multiple products",
         "features": {
@@ -128,10 +128,10 @@
       },
       "enterprise": {
         "name": "Enterprise",
-        "price": "€749",
-        "period": "/mo",
+        "price": "Coming soon",
+        "period": "",
         "description": "Large orgs, SSO, SLA, CSM",
-        "cta": "Contact Sales",
+        "cta": "Coming soon",
         "features": {
           "f1": "Unlimited products + users",
           "f2": "SSO / SAML · parent-child orgs",
