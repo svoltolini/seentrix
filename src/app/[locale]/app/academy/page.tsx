@@ -110,27 +110,23 @@ export default async function AcademyPage({
           </div>
         </ReferenceCard>
       ) : (
-        <ReferenceCard className="mb-8 p-6 md:mb-10 md:p-10">
-          <div className="flex flex-wrap items-start justify-between gap-6">
-            <div className="min-w-0 flex-1">
-              <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-l6-plus uppercase tracking-wider text-white backdrop-blur-sm">
-                <Icon name="elearning-exchange-stroke-rounded" size={12} />
-                {t("hero.eyebrow")}
-              </div>
-              <h1 className="text-h2 leading-tight text-white md:text-3xl">
-                {t("hero.title")}
-              </h1>
-              <p className="mt-2 max-w-xl text-p3 text-white/80 md:text-p2">
-                {t("hero.description")}
-              </p>
-            </div>
-            {/* Overall progress ring */}
-            <ProgressRing
-              pct={overallPct}
-              centerLabel={`${completedTotal}/${totalLessons}`}
-              caption={t("hero.completeLabel")}
-            />
+        <ReferenceCard className="mb-8 p-6 md:mb-10 md:p-8">
+          <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-l6-plus uppercase tracking-wider text-white backdrop-blur-sm">
+            <Icon name="elearning-exchange-stroke-rounded" size={12} />
+            {t("hero.eyebrow")}
           </div>
+          <h1 className="text-h2 leading-tight text-white md:text-3xl">
+            {t("hero.title")}
+          </h1>
+          <p className="mt-2 max-w-xl text-p3 text-white/80 md:text-p2">
+            {t("hero.description")}
+          </p>
+          {/* Compact horizontal progress — a slim bar with a small caption,
+              instead of a large ring, so the hero stays low-profile. */}
+          <HeroProgress
+            pct={overallPct}
+            label={`${completedTotal}/${totalLessons} ${t("hero.completeLabel")}`}
+          />
         </ReferenceCard>
       )}
 
@@ -145,58 +141,22 @@ export default async function AcademyPage({
 }
 
 /**
- * Static SVG progress ring for the hero. Server-rendered — no interactivity
- * needed, just a clean donut showing overall catalogue completion.
- *
- * Vertically stacked: the lessons-complete count sits on top, the caption
- * ("lessons complete") below it, and a large progress ring underneath — so the
- * ring reads as the dominant visual and stays proportional to the tall hero
- * card. The percentage label is centred inside the ring.
+ * Compact horizontal progress bar for the hero. A slim accent-filled track
+ * with a small caption + percentage underneath — keeps the hero card short
+ * (the old large ring forced extra height). Server-rendered, no interactivity.
  */
-function ProgressRing({
-  pct,
-  centerLabel,
-  caption,
-}: {
-  pct: number;
-  centerLabel: string;
-  caption: string;
-}) {
-  const r = 34;
-  const circumference = 2 * Math.PI * r;
-  const dash = (pct / 100) * circumference;
+function HeroProgress({ pct, label }: { pct: number; label: string }) {
   return (
-    <div className="flex shrink-0 flex-col items-center gap-3 text-center">
-      <div className="flex flex-col items-center">
-        <span className="text-h2 tabular-nums leading-none text-white md:text-3xl">
-          {centerLabel}
-        </span>
-        <span className="mt-1 text-p4 text-white/70">{caption}</span>
+    <div className="mt-5 max-w-md">
+      <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/20">
+        <div
+          className="h-full rounded-full bg-accent transition-all"
+          style={{ width: `${pct}%` }}
+        />
       </div>
-      <div className="relative flex size-28 items-center justify-center md:size-32">
-        <svg viewBox="0 0 80 80" className="size-full -rotate-90">
-          <circle
-            cx="40"
-            cy="40"
-            r={r}
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="7"
-            className="text-white/15"
-          />
-          <circle
-            cx="40"
-            cy="40"
-            r={r}
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="7"
-            strokeLinecap="round"
-            strokeDasharray={`${dash} ${circumference}`}
-            className="text-accent transition-all"
-          />
-        </svg>
-        <span className="absolute text-h4 tabular-nums text-white">{pct}%</span>
+      <div className="mt-1.5 flex items-center justify-between">
+        <span className="text-p4 text-white/70">{label}</span>
+        <span className="text-p4 tabular-nums text-white/70">{pct}%</span>
       </div>
     </div>
   );

@@ -558,9 +558,7 @@ function OrganizationChart({
                 ? tTeam("memberCount", { count: tier.members.length })
                 : tTeam("memberCountPlural", { count: tier.members.length })
             }
-            inviteLabel={t("inviteToRole", {
-              role: tTeam(`roles.${tier.key}` as Parameters<typeof tTeam>[0]),
-            })}
+            inviteLabel={t.has("inviteShort") ? t("inviteShort") : "Invite"}
             emptyLabel={t("noOneYet")}
           />
         ))}
@@ -581,6 +579,7 @@ function RoleLane({
   isAdmin: boolean;
   roleLabel: string;
   countLabel: string;
+  /** Short "+ Invite" CTA label — a role can hold many people (plan-permitting). */
   inviteLabel: string;
   emptyLabel: string;
 }) {
@@ -653,34 +652,26 @@ function RoleLane({
           </Link>
         ))}
 
-        {isEmpty &&
-          (isAdmin ? (
-            <Link
-              href="/app/settings/team"
-              className="flex items-center gap-2 rounded-full border border-dashed px-3.5 py-2 transition-colors hover:bg-muted/60"
-              style={{ borderColor: hex ? `${hex}55` : undefined }}
-            >
-              <span
-                className="flex size-5 shrink-0 items-center justify-center rounded-full"
-                style={{
-                  backgroundColor: hex ? `${hex}25` : undefined,
-                  color: hex ?? undefined,
-                }}
-              >
-                <Icon name="add-01" size={12} />
-              </span>
-              <span
-                className="text-l6"
-                style={{ color: hex ?? undefined }}
-              >
-                {inviteLabel}
-              </span>
-            </Link>
-          ) : (
+        {/* A role can hold multiple people (plan-permitting), so the "+ Invite"
+            chip is ALWAYS present for admins — not just when the role is empty
+            — letting them add more members to the same role. It's a neutral
+            grey rounded pill so it reads as a secondary action next to the
+            member chips. Non-admins see a muted "No one yet" only when empty. */}
+        {isAdmin ? (
+          <Link
+            href="/app/settings/team"
+            className="flex items-center gap-1.5 rounded-full bg-muted px-3.5 py-2 text-l6 text-muted-foreground transition-colors hover:bg-muted/70 hover:text-foreground"
+          >
+            <Icon name="add-01" size={14} />
+            {inviteLabel}
+          </Link>
+        ) : (
+          isEmpty && (
             <span className="rounded-full border border-dashed border-border-outline px-3.5 py-2 text-p4 text-muted-foreground">
               {emptyLabel}
             </span>
-          ))}
+          )
+        )}
       </div>
     </div>
   );
