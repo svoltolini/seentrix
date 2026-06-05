@@ -72,12 +72,28 @@ export async function TeamProgress({ locale }: { locale: LocaleId }) {
     );
   }
 
+  // Count of members who have finished EVERY required lesson for their role.
   const orgDone = memberList.filter((member) => {
     const required = requiredLessonsForRole(member.role);
     const done = completionMap.get(member.id) ?? new Map();
     return required.length > 0 && required.every((id) => done.has(id));
   }).length;
-  const orgPct = Math.round((orgDone / memberList.length) * 100);
+
+  // Headline progress is the *overall* share of required lessons passed across
+  // the whole team (required lessons completed ÷ total required lessons), not
+  // the all-or-nothing "fully-complete members" count. This moves with every
+  // single completion, so the card visibly updates as people make progress
+  // instead of sitting at 0% until someone finishes their entire track.
+  let requiredTotal = 0;
+  let requiredDone = 0;
+  for (const member of memberList) {
+    const required = requiredLessonsForRole(member.role);
+    const done = completionMap.get(member.id) ?? new Map();
+    requiredTotal += required.length;
+    requiredDone += required.filter((id) => done.has(id)).length;
+  }
+  const orgPct =
+    requiredTotal > 0 ? Math.round((requiredDone / requiredTotal) * 100) : 0;
 
   // Compute a member's stats and render their card. Defined inline so it can
   // close over completionMap + locale without prop-drilling.
@@ -154,10 +170,10 @@ export async function TeamProgress({ locale }: { locale: LocaleId }) {
           </span>
           <h2 className="text-h3 text-white">{t("heading")}</h2>
         </div>
-        <p className="mt-2 max-w-xl text-p3 text-white/80">
+        <p className="mt-2 text-p3 text-white/80">
           {t("description")}
         </p>
-        <div className="mt-5 max-w-md">
+        <div className="mt-5 w-full">
           <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/20">
             <div
               className="h-full rounded-full bg-accent transition-all"

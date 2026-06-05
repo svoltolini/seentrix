@@ -217,6 +217,7 @@
       "meta": "{count, plural, one {# lesson} other {# lessons}} · {minutes} min · {done}/{total} done"
     },
     "quiz": {
+      "questionPrefix": "Question ",
       "threshold": "{percent}% pass threshold",
       "submit": "Submit answers",
       "submitting": "Submitting…",

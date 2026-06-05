@@ -118,11 +118,12 @@ export default async function AcademyPage({
           <h1 className="text-h2 leading-tight text-white md:text-3xl">
             {t("hero.title")}
           </h1>
-          <p className="mt-2 max-w-xl text-p3 text-white/80 md:text-p2">
+          <p className="mt-2 text-p3 text-white/80 md:text-p2">
             {t("hero.description")}
           </p>
-          {/* Compact horizontal progress — a slim bar with a small caption,
-              instead of a large ring, so the hero stays low-profile. */}
+          {/* Compact horizontal progress — a slim full-width bar with a small
+              caption, instead of a large ring, so the hero stays low-profile
+              while still using the card's full width. */}
           <HeroProgress
             pct={overallPct}
             label={`${completedTotal}/${totalLessons} ${t("hero.completeLabel")}`}
@@ -147,7 +148,7 @@ export default async function AcademyPage({
  */
 function HeroProgress({ pct, label }: { pct: number; label: string }) {
   return (
-    <div className="mt-5 max-w-md">
+    <div className="mt-5 w-full">
       <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/20">
         <div
           className="h-full rounded-full bg-accent transition-all"
