@@ -156,7 +156,8 @@
       "editDetails": "Edit details",
       "cancel": "Cancel",
       "orgChartTotalMembers": "{count, plural, one {# team member} other {# team members}}",
-      "orgChartCapacity": "Seat capacity"
+      "orgChartCapacity": "Seat capacity",
+      "inviteShort": "Invite"
     },
     "team": {
       "title": "Team",

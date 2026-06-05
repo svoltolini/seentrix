@@ -55,11 +55,26 @@ export function SecurityContent({
 
   async function startEnrolment() {
     const supabase = createClient();
-    // friendly_name is what shows up in the Supabase dashboard factor list;
-    // the device name is what shows up inside authenticator apps.
+
+    // Clean up any *unverified* TOTP factors left over from a previous attempt
+    // the user abandoned (e.g. opened the QR then cancelled). Supabase keeps
+    // the half-enrolled factor around, and a second enroll with the same
+    // friendly name fails with "a factor with the friendly name ... already
+    // exists". Unenrolling the stale unverified factors first makes re-enrol
+    // idempotent. We never touch verified factors here.
+    const { data: existing } = await supabase.auth.mfa.listFactors();
+    const staleTotp = (existing?.totp ?? []).filter(
+      (f) => f.status !== "verified",
+    );
+    for (const f of staleTotp) {
+      await supabase.auth.mfa.unenroll({ factorId: f.id });
+    }
+
+    // Don't set a friendly name at all — it's only a dashboard label and a
+    // fixed value was the source of the collision. Supabase generates a
+    // unique factor id regardless.
     const { data, error } = await supabase.auth.mfa.enroll({
       factorType: "totp",
-      friendlyName: `Seentrix ${new Date().toLocaleDateString()}`,
     });
     if (error || !data) {
       toast({
@@ -74,6 +89,19 @@ export function SecurityContent({
       qrSvg: data.totp.qr_code,
       secret: data.totp.secret,
     });
+  }
+
+  // Cancelling a half-finished enrolment must remove the unverified factor it
+  // created, otherwise the next "Enable 2FA" collides on the friendly name /
+  // leaves an orphan factor behind.
+  function cancelEnrolment() {
+    const pendingId = state.kind === "enrolling" ? state.factorId : null;
+    setState({ kind: "idle" });
+    setCode("");
+    if (pendingId) {
+      const supabase = createClient();
+      void supabase.auth.mfa.unenroll({ factorId: pendingId });
+    }
   }
 
   async function verifyCode() {
@@ -133,16 +161,16 @@ export function SecurityContent({
           un-enrolled user here. Explains 2FA is required and offers a
           "Remind me later" escape hatch (session-scoped grace). */}
       {enrollRequired && !hasTotp && (
-        <div className="flex flex-wrap items-start justify-between gap-4 rounded-md border-[1.5px] border-warning/40 bg-warning/5 p-5">
+        <div className="rounded-md border-[1.5px] border-warning/40 bg-warning/5 p-5">
           <div className="flex items-start gap-3">
             <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-warning/15 text-warning">
               <Icon name="alert-02" size={18} />
             </div>
-            <div className="min-w-0">
+            <div className="min-w-0 flex-1">
               <p className="text-h6 text-foreground">
                 Two-factor authentication is required
               </p>
-              <p className="mt-1 max-w-xl text-p3 text-muted-foreground">
+              <p className="mt-1 text-p3 text-muted-foreground">
                 Seentrix protects CRA compliance records, so every account must
                 use 2FA. Set it up now — it takes about a minute with any
                 authenticator app. You can postpone once, but you&apos;ll be
@@ -150,14 +178,17 @@ export function SecurityContent({
               </p>
             </div>
           </div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={remindLater}
-            disabled={snoozePending}
-          >
-            {snoozePending ? "Saving…" : "Remind me later"}
-          </Button>
+          {/* Full-width text above; the postpone action sits below it. */}
+          <div className="mt-4 flex justify-end">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={remindLater}
+              disabled={snoozePending}
+            >
+              {snoozePending ? "Saving…" : "Remind me later"}
+            </Button>
+          </div>
         </div>
       )}
 
@@ -215,10 +246,7 @@ export function SecurityContent({
               code={code}
               setCode={setCode}
               onVerify={verifyCode}
-              onCancel={() => {
-                setState({ kind: "idle" });
-                setCode("");
-              }}
+              onCancel={cancelEnrolment}
               isPending={isPending}
             />
           )}
@@ -251,18 +279,12 @@ function EnrolStep({
         </p>
         <p className="mt-1 text-p3 text-muted-foreground">
           Open your authenticator app (1Password, Authy, Google Authenticator,
-          etc.) and scan this QR code, or paste the secret manually.
+          etc.) and scan this QR code to add Seentrix.
         </p>
         <div
           className="mt-4 inline-block rounded-md bg-white p-3 shadow-card-sm"
           dangerouslySetInnerHTML={{ __html: state.qrSvg }}
         />
-        <p className="mt-3 text-p4 text-muted-foreground">
-          Manual secret:{" "}
-          <code className="rounded-md bg-muted px-1.5 py-0.5 font-mono">
-            {state.secret}
-          </code>
-        </p>
       </div>
 
       <div>
