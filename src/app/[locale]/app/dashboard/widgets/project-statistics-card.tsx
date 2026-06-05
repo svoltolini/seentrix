@@ -55,7 +55,8 @@ export function ProjectStatisticsCard({
   filterOptions,
 }: Props) {
   const t = useTranslations("dashboard");
-  const [filter, setFilter] = useState(filterOptions?.[0]?.key ?? "completed");
+  // Setter is currently unused — the filter is fixed to the first option.
+  const [filter] = useState(filterOptions?.[0]?.key ?? "completed");
 
   const dayMap = useMemo(() => {
     const m = new Map<string, DayData>();

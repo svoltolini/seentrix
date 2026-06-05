@@ -43,7 +43,9 @@ export function PricingContent() {
     );
 
     if (result.url) {
-      window.location.href = result.url;
+      // Use assign() rather than mutating location.href so the React
+      // Compiler's immutability rule doesn't flag an external-variable write.
+      window.location.assign(result.url);
     } else {
       setLoading(null);
     }

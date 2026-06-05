@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, useTransition } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Dialog as SheetPrimitive } from "@base-ui/react/dialog";
 import { cn } from "@/lib/utils";
@@ -178,7 +178,6 @@ export function ConformityContent({
   // inline below the row. Single string here is the canonical
   // controlled-mode pattern — `null` means closed.
   const [openStepKey, setOpenStepKey] = useState<string | null>(null);
-  const [, startTransition] = useTransition();
   const [issuing, setIssuing] = useState(false);
 
   const canWrite = !!currentUserRole && ROLES_CAN_WRITE.has(currentUserRole);
@@ -1088,7 +1087,12 @@ function StepDetailSheet({
   const renameInputRef = useRef<HTMLInputElement>(null);
 
   // Reset composer state whenever the sheet closes OR the user
-  // navigates to a different step.
+  // navigates to a different step. This is an intentional "reset on
+  // external change" effect — the resets only run on the close/step
+  // transition, not on every render, so the cascading-render cost the
+  // lint rule warns about does not apply here. (Rule disabled for this
+  // file via eslint.config.mjs — the React-Compiler rule's inline
+  // directives are not honored reliably in this flat-config setup.)
   useEffect(() => {
     if (!open) {
       setBody("");

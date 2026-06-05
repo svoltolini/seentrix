@@ -287,6 +287,8 @@ export function CreateProductForm({
         <div className="flex items-center gap-4">
           {imagePreview ? (
             <div className="relative">
+              {/* Local object-URL blob preview — not optimizable by next/image. */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={imagePreview}
                 alt="Product preview"

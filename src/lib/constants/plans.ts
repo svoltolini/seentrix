@@ -22,7 +22,7 @@ export function canCreateProduct(plan: OrgPlan, currentCount: number): boolean {
   return currentCount < limit;
 }
 
-export function isChecklistReadOnly(plan: OrgPlan): boolean {
+export function isChecklistReadOnly(_plan: OrgPlan): boolean {
   // Free tier now has a writable checklist — the read-only cap was
   // converting badly. Users need to *feel* the product working to upgrade.
   return false;

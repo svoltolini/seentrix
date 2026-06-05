@@ -5,7 +5,6 @@ import { Icon } from "@/components/icon";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { OptionCard } from "../components/option-card";
-import { cn } from "@/lib/utils";
 import {
   ALL_SUBCATEGORIES,
   SUBCATEGORY_GROUPS,
