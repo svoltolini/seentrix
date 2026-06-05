@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { ACADEMY_LESSONS } from "@/lib/glossary";
-import { LESSON_VIDEOS } from "@/lib/academy/videos";
+import { LESSON_AUDIO } from "@/lib/academy/audio";
 import { Icon } from "@/components/icon";
 import { cn } from "@/lib/utils";
 import { GlossaryIndex } from "@/app/[locale]/app/help/glossary/glossary-index";
@@ -84,10 +84,10 @@ function LessonsGrid({ completed }: { completed: Set<string> }) {
           title={lesson.title}
           duration={lesson.duration}
           done={completed.has(id)}
-          hasVideo={id in LESSON_VIDEOS}
+          hasAudio={id in LESSON_AUDIO}
           completedLabel={t("completed")}
           openLabel={t("open")}
-          videoLabel={t("video")}
+          audioLabel={t("audio")}
         />
       ))}
     </div>
@@ -100,20 +100,20 @@ function LessonCard({
   title,
   duration,
   done,
-  hasVideo,
+  hasAudio,
   completedLabel,
   openLabel,
-  videoLabel,
+  audioLabel,
 }: {
   id: string;
   index: number;
   title: string;
   duration: string;
   done: boolean;
-  hasVideo: boolean;
+  hasAudio: boolean;
   completedLabel: string;
   openLabel: string;
-  videoLabel: string;
+  audioLabel: string;
 }) {
   return (
     <Link
@@ -149,10 +149,10 @@ function LessonCard({
             <Icon name="time-quarter-02-stroke-rounded" size={13} />
             {duration}
           </span>
-          {hasVideo && (
+          {hasAudio && (
             <span className="inline-flex items-center gap-1 rounded-sm bg-accent/10 px-2 py-0.5 text-l6-plus text-accent">
-              <Icon name="Play" size={11} variant="Bold" />
-              {videoLabel}
+              <Icon name="VolumeHigh" size={11} />
+              {audioLabel}
             </span>
           )}
           {done ? (
