@@ -8,6 +8,7 @@ import { QUIZ_PASS_THRESHOLD } from "@/lib/academy/types";
 import { submitQuiz } from "../actions";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/icon";
+import { ReferenceCard } from "@/components/reference-card";
 import { cn } from "@/lib/utils";
 
 type Outcome =
@@ -26,9 +27,15 @@ type Outcome =
 export function Quiz({
   lessonId,
   questions,
+  alreadyPassed = false,
+  passedScore,
 }: {
   lessonId: string;
   questions: QuizQuestion[];
+  /** True when the learner has already passed this lesson — lock the quiz. */
+  alreadyPassed?: boolean;
+  /** Their recorded score (0..1), shown on the locked pass card. */
+  passedScore?: number;
 }) {
   const t = useTranslations("academy.quiz");
   const router = useRouter();
@@ -81,24 +88,28 @@ export function Quiz({
     });
   }
 
-  // When the quiz reaches a terminal state, gently bring the result into view.
-  // The page can jump because the tall question list collapses; a smooth
-  // scroll to the result keeps the user oriented. Run after the DOM settles.
+  // Only the PASSED outcome reshapes the page (the whole question list is
+  // replaced by a short card), which can leave the viewport stranded. Bring
+  // that card into view with a minimal `nearest` nudge. The failed/cooldown
+  // results render right below the (still-visible) questions where the submit
+  // button already was, so they need NO scroll — auto-scrolling them was what
+  // made the page feel like it was jumping around.
   useEffect(() => {
-    if (outcome.kind === "passed" || outcome.kind === "failed" || outcome.kind === "cooldown") {
+    if (outcome.kind === "passed") {
       const id = requestAnimationFrame(() => {
-        resultRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+        resultRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
       });
       return () => cancelAnimationFrame(id);
     }
   }, [outcome.kind]);
 
-  if (outcome.kind === "passed") {
+  // Once a lesson is passed it stays passed — the quiz is locked into a
+  // read-only "you passed" card and can't be retaken. (CRA training is
+  // pass-once; re-taking would muddy the audit trail.) This check sits AFTER
+  // all hooks so hook order stays stable across renders.
+  if (alreadyPassed) {
     return (
-      <div
-        ref={resultRef}
-        className="overflow-hidden rounded-md bg-[linear-gradient(135deg,#066DE6_0%,#066DE6_45%,#FF6D00_140%)] p-8 text-white shadow-card-md"
-      >
+      <ReferenceCard className="p-8">
         <div className="flex size-12 items-center justify-center rounded-full bg-white/15 backdrop-blur-sm">
           <Icon
             name="checkmark-circle-01-stroke-rounded"
@@ -108,12 +119,30 @@ export function Quiz({
         </div>
         <h3 className="mt-4 text-h3 text-white">{t("passedTitle")}</h3>
         <p className="mt-2 text-p3 text-white/90">
-          {t("passedBody", { score: Math.round(outcome.score * 100) })}
+          {typeof passedScore === "number"
+            ? t("passedBody", { score: Math.round(passedScore * 100) })
+            : t("alreadyPassedShort")}
         </p>
-        <p className="mt-4 inline-flex items-center gap-2 rounded-sm bg-white/15 px-3 py-1.5 font-mono text-p4 text-white backdrop-blur-sm">
-          <Icon name="checkmark-badge-01-stroke-rounded" size={14} />
-          {t("certificateLabel")}: {outcome.certificateHash.slice(0, 16)}…
-        </p>
+      </ReferenceCard>
+    );
+  }
+
+  if (outcome.kind === "passed") {
+    return (
+      <div ref={resultRef}>
+        <ReferenceCard className="p-8">
+          <div className="flex size-12 items-center justify-center rounded-full bg-white/15 backdrop-blur-sm">
+            <Icon
+              name="checkmark-circle-01-stroke-rounded"
+              size={24}
+              className="text-white"
+            />
+          </div>
+          <h3 className="mt-4 text-h3 text-white">{t("passedTitle")}</h3>
+          <p className="mt-2 text-p3 text-white/90">
+            {t("passedBody", { score: Math.round(outcome.score * 100) })}
+          </p>
+        </ReferenceCard>
       </div>
     );
   }
@@ -172,10 +201,7 @@ export function Quiz({
       )}
 
       {outcome.kind === "failed" && (
-        <div
-          ref={resultRef}
-          className="rounded-md border border-destructive/30 bg-destructive/10 p-5"
-        >
+        <div className="rounded-md border border-destructive/30 bg-destructive/10 p-5">
           <p className="text-l5 text-destructive">
             {t("failedTitle", {
               score: Math.round(outcome.score * 100),
@@ -191,10 +217,7 @@ export function Quiz({
       )}
 
       {outcome.kind === "cooldown" && (
-        <div
-          ref={resultRef}
-          className="rounded-md border border-warning/30 bg-warning/10 p-5"
-        >
+        <div className="rounded-md border border-warning/30 bg-warning/10 p-5">
           <p className="text-l5 text-warning">
             {t("cooldownTitle")}
           </p>

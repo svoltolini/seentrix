@@ -157,7 +157,12 @@ export default async function LessonPage({
           )}
 
           <div className="mt-6">
-            <Quiz lessonId={lesson.id} questions={content.quiz} />
+            <Quiz
+              lessonId={lesson.id}
+              questions={content.quiz}
+              alreadyPassed={Boolean(existingCompletion)}
+              passedScore={existingCompletion?.score}
+            />
           </div>
         </div>
       </div>

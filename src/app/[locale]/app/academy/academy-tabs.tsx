@@ -10,8 +10,14 @@ import { Icon } from "@/components/icon";
 import { cn } from "@/lib/utils";
 import { GlossaryIndex } from "@/app/[locale]/app/help/glossary/glossary-index";
 import { SCREEN_LESSONS, type ScreenKey } from "@/lib/academy/screens";
+import { CertificateVerify } from "./certificate-verify";
 
-export type TabKey = "lessons" | "by-screen" | "glossary" | "team-progress";
+export type TabKey =
+  | "lessons"
+  | "by-screen"
+  | "glossary"
+  | "team-progress"
+  | "verify";
 
 /**
  * Client-side tabbed shell for the Academy page.
@@ -48,6 +54,11 @@ export function AcademyTabs({
             {t("tabs.teamProgress")}
           </TabsTrigger>
         )}
+        {isAdminOrCO && (
+          <TabsTrigger value="verify">
+            {t.has("tabs.verify") ? t("tabs.verify") : "Verify certificate"}
+          </TabsTrigger>
+        )}
       </TabsList>
       <TabsContent value="lessons" className="mt-6">
         <LessonsGrid completed={completed} />
@@ -65,6 +76,11 @@ export function AcademyTabs({
               —
             </p>
           )}
+        </TabsContent>
+      )}
+      {isAdminOrCO && (
+        <TabsContent value="verify" className="mt-6">
+          <CertificateVerify />
         </TabsContent>
       )}
     </Tabs>
