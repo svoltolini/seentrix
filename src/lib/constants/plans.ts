@@ -189,7 +189,26 @@ export function getPlanFromPriceId(priceId: string): OrgPlan {
 // ---------------------------------------------------------------------------
 export const PLAN_PRICES_EUR = {
   free: { monthly: 0, annual: 0 },
-  professional: { monthly: 59, annual: 590 }, // 2 months free
-  business: { monthly: 199, annual: 1990 }, // 2 months free
-  enterprise: { monthly: 749, annual: 7490 }, // 2 months free
+  professional: { monthly: 49, annual: 490 }, // 2 months free
+  business: { monthly: 179, annual: 1790 }, // 2 months free
+  // Enterprise is not yet purchasable — shown as "coming soon" in the UI.
+  // Prices are placeholders and never charged while PURCHASABLE_PLANS omits it.
+  enterprise: { monthly: 749, annual: 7490 },
 } as const;
+
+// ---------------------------------------------------------------------------
+// Purchasable plans — the single source of truth for which paid tiers can be
+// checked out today. Enterprise is intentionally excluded ("coming soon");
+// the pricing UI still renders an Enterprise card/column but without a
+// checkout CTA. When Enterprise launches, add it here and create its Stripe
+// prices + env vars.
+// ---------------------------------------------------------------------------
+export const PURCHASABLE_PLANS = ["professional", "business"] as const;
+export type PurchasablePlan = (typeof PURCHASABLE_PLANS)[number];
+
+export function isPurchasable(plan: OrgPlan): plan is PurchasablePlan {
+  return (PURCHASABLE_PLANS as readonly string[]).includes(plan);
+}
+
+// Enterprise is presented as a forthcoming tier rather than a buyable one.
+export const COMING_SOON_PLANS: OrgPlan[] = ["enterprise"];
