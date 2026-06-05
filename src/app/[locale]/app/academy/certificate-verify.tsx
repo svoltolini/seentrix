@@ -5,6 +5,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Icon } from "@/components/icon";
+import { cn } from "@/lib/utils";
 import { verifyCertificate, type CertificateVerification } from "./actions";
 import type { LocaleId } from "@/lib/academy/types";
 
@@ -36,8 +37,8 @@ export function CertificateVerify() {
   }
 
   return (
-    <div className="mx-auto max-w-2xl">
-      <div className="rounded-md bg-card p-6 shadow-card-sm">
+    <div className="w-full">
+      <div className="rounded-md bg-card p-6 shadow-card-md">
         <div className="flex items-start gap-3">
           <span className="flex size-10 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary">
             <Icon name="checkmark-badge-01-stroke-rounded" size={20} />
@@ -97,11 +98,12 @@ function ResultCard({
           day: "numeric",
         }),
       },
+      { label: t("certificate"), value: result.certificateHash },
     ];
     return (
-      <div className="overflow-hidden rounded-md border-[1.5px] border-success/30 bg-success/5">
-        <div className="flex items-center gap-2.5 border-b border-success/20 px-5 py-3">
-          <span className="flex size-7 items-center justify-center rounded-full bg-success/15 text-success">
+      <div className="w-full overflow-hidden rounded-md bg-card shadow-card-md">
+        <div className="flex items-center gap-2.5 border-b border-border px-5 py-4">
+          <span className="flex size-8 items-center justify-center rounded-full bg-success/10 text-success">
             <Icon name="checkmark-circle-01-stroke-rounded" size={16} />
           </span>
           <p className="text-h6 text-foreground">{t("validTitle")}</p>
@@ -112,22 +114,20 @@ function ResultCard({
               key={r.label}
               className="flex items-baseline justify-between gap-4 px-5 py-2.5"
             >
-              <dt className="text-l6-plus uppercase tracking-wide text-muted-foreground">
+              <dt className="shrink-0 text-l6-plus uppercase tracking-wide text-muted-foreground">
                 {r.label}
               </dt>
-              <dd className="min-w-0 truncate text-right text-p3 text-foreground">
+              <dd
+                className={cn(
+                  "min-w-0 truncate text-right text-p3 text-foreground",
+                  r.label === t("certificate") &&
+                    "font-mono text-p4 text-muted-foreground",
+                )}
+              >
                 {r.value}
               </dd>
             </div>
           ))}
-          <div className="flex items-baseline justify-between gap-4 px-5 py-2.5">
-            <dt className="text-l6-plus uppercase tracking-wide text-muted-foreground">
-              {t("certificate")}
-            </dt>
-            <dd className="min-w-0 truncate text-right font-mono text-p4 text-muted-foreground">
-              {result.certificateHash}
-            </dd>
-          </div>
         </dl>
       </div>
     );
@@ -141,8 +141,8 @@ function ResultCard({
         : t("error");
 
   return (
-    <div className="flex items-start gap-3 rounded-md border border-destructive/30 bg-destructive/5 px-5 py-4">
-      <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-destructive/15 text-destructive">
+    <div className="flex w-full items-start gap-3 rounded-md bg-card px-5 py-4 shadow-card-md">
+      <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-destructive/10 text-destructive">
         <Icon name="alert-02" size={16} />
       </span>
       <p className="text-p3 text-foreground">{message}</p>
