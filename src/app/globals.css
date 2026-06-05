@@ -320,6 +320,44 @@
   }
 }
 
+/* AI "smoke" background — slow-drifting brand-coloured gradient blobs behind
+   the Ask-Seentrix-AI buttons. Two layers move on independent loops so the
+   colour field never repeats obviously, giving a soft living-gradient feel.
+   The element using this should be absolutely positioned, blurred, and clipped
+   by an `overflow-hidden rounded-*` parent. Honours reduced-motion. */
+@keyframes ai-smoke-a {
+  0%, 100% {
+    transform: translate(-12%, -8%) scale(1.1) rotate(0deg);
+  }
+  50% {
+    transform: translate(10%, 6%) scale(1.25) rotate(18deg);
+  }
+}
+
+@keyframes ai-smoke-b {
+  0%, 100% {
+    transform: translate(10%, 8%) scale(1.15) rotate(0deg);
+  }
+  50% {
+    transform: translate(-10%, -6%) scale(1) rotate(-22deg);
+  }
+}
+
+.animate-ai-smoke-a {
+  animation: ai-smoke-a 9s ease-in-out infinite;
+}
+
+.animate-ai-smoke-b {
+  animation: ai-smoke-b 11s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-ai-smoke-a,
+  .animate-ai-smoke-b {
+    animation: none;
+  }
+}
+
 /* Blog prose styles — recolored for light theme. All references go through CSS vars. */
 .prose {
   @apply text-foreground leading-relaxed;
