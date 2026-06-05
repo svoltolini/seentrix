@@ -7,6 +7,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Icon } from "@/components/icon";
 import { StaggerReveal } from "@/components/stagger-reveal";
 import { useToast } from "@/components/ui/toast";
+import { ReferenceCard } from "@/components/reference-card";
+import { FieldHelp } from "@/components/field-help";
 import {
   setObligationStatus,
   updateEntityType,
@@ -119,15 +121,10 @@ export function EntityContent({
           </p>
         </div>
 
-        {/* Entity-type picker — gradient hero. Shares the same visual
-            language as ProfileIncompleteBanner and the conformity DoC card:
-            full-bleed gradient image, no border, no dark overlay, eyebrow
-            rendered as a pill chip with a state-colored dot. */}
-        <div
-          data-reveal
-          className="overflow-hidden rounded-md bg-cover bg-center p-6 md:p-8"
-          style={{ backgroundImage: "url('/images/entity-role-bg.svg')" }}
-        >
+        {/* Entity-type picker — Reference Card hero (solid brand-blue with the
+            white dot-grid overlay), matching the canonical reference-card look
+            used across the Glossary and Academy. */}
+        <ReferenceCard data-reveal className="p-6 md:p-8">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
               <div className="mb-3 inline-flex items-center gap-2 rounded-sm bg-white/10 px-3 py-1 text-l6-plus uppercase tracking-wider text-white backdrop-blur-sm">
@@ -197,7 +194,7 @@ export function EntityContent({
               );
             })}
           </div>
-        </div>
+        </ReferenceCard>
 
         {/* Obligations list */}
         <div
@@ -245,9 +242,39 @@ export function EntityContent({
                       )}
                     </span>
                     <div className="min-w-0 flex-1">
-                      <p className="text-l6 text-foreground">
-                        {t(`obligation.${state.entityType}.${ob.key}.title`)}
-                      </p>
+                      <span className="flex items-center gap-1.5">
+                        <p className="text-l6 text-foreground">
+                          {t(`obligation.${state.entityType}.${ob.key}.title`)}
+                        </p>
+                        {t.has(
+                          `obligation.${state.entityType}.${ob.key}.help.title`,
+                        ) && (
+                          <span
+                            // Stop the row's expand/collapse toggle from firing
+                            // when the user opens the help sheet.
+                            onClick={(e) => e.stopPropagation()}
+                            role="presentation"
+                          >
+                            <FieldHelp
+                              title={t(
+                                `obligation.${state.entityType}.${ob.key}.help.title`,
+                              )}
+                              body={t(
+                                `obligation.${state.entityType}.${ob.key}.help.body`,
+                              )}
+                              reference={
+                                t.has(
+                                  `obligation.${state.entityType}.${ob.key}.help.ref`,
+                                )
+                                  ? t(
+                                      `obligation.${state.entityType}.${ob.key}.help.ref`,
+                                    )
+                                  : undefined
+                              }
+                            />
+                          </span>
+                        )}
+                      </span>
                       <p className="mt-0.5 text-p4 text-muted-foreground">
                         {t(`obligation.${state.entityType}.${ob.key}.description`)}
                       </p>

@@ -109,59 +109,6 @@ export async function TeamProgress({ locale }: { locale: LocaleId }) {
 
   return (
     <div>
-      <ReferenceCard className="mb-5 p-6 md:p-8">
-        <div className="flex flex-wrap items-center justify-between gap-6">
-        <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-2.5">
-            <span className="flex size-9 shrink-0 items-center justify-center rounded-md bg-white/10 text-white backdrop-blur-sm">
-              <Icon name="task-done-02-stroke-rounded" size={18} />
-            </span>
-            <h2 className="text-h3 text-white">{t("heading")}</h2>
-          </div>
-          <p className="mt-2 max-w-xl text-p3 text-white/80">
-            {t("description")}
-          </p>
-        </div>
-        <div className="flex shrink-0 items-center gap-3">
-          <div className="relative flex size-20 items-center justify-center">
-            <svg viewBox="0 0 72 72" className="size-20 -rotate-90">
-              <circle
-                cx="36"
-                cy="36"
-                r="30"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="6"
-                className="text-white/15"
-              />
-              <circle
-                cx="36"
-                cy="36"
-                r="30"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="6"
-                strokeLinecap="round"
-                strokeDasharray={`${(orgPct / 100) * (2 * Math.PI * 30)} ${2 * Math.PI * 30}`}
-                className="text-accent"
-              />
-            </svg>
-            <span className="absolute text-l5 tabular-nums text-white">
-              {orgPct}%
-            </span>
-          </div>
-          <div className="flex flex-col">
-            <span className="text-h5 tabular-nums text-white">
-              {orgDone}/{memberList.length}
-            </span>
-            <span className="text-p4 text-white/70">
-              {t("complete").toLowerCase()}
-            </span>
-          </div>
-        </div>
-        </div>
-      </ReferenceCard>
-
       <div className="mb-3 flex items-center justify-end">
         <a
           href="/api/academy/team-progress"
@@ -187,7 +134,7 @@ export async function TeamProgress({ locale }: { locale: LocaleId }) {
 
       {/* "Your team" — everyone else. */}
       {teammates.length > 0 && (
-        <section>
+        <section className="mb-6">
           <h3 className="mb-3 text-l6-plus uppercase tracking-wider text-muted-foreground">
             {t("yourTeam", { count: teammates.length })}
           </h3>
@@ -196,6 +143,62 @@ export async function TeamProgress({ locale }: { locale: LocaleId }) {
           </div>
         </section>
       )}
+
+      {/* Team training-status summary — moved BELOW the member cards as a
+          closing roll-up. The stat block stacks vertically (count → label →
+          ring) to mirror the Academy hero card's layout exactly. */}
+      <ReferenceCard className="p-6 md:p-8">
+        <div className="flex flex-wrap items-start justify-between gap-6">
+          <div className="min-w-0 flex-1">
+            <div className="flex items-center gap-2.5">
+              <span className="flex size-9 shrink-0 items-center justify-center rounded-md bg-white/10 text-white backdrop-blur-sm">
+                <Icon name="task-done-02-stroke-rounded" size={18} />
+              </span>
+              <h2 className="text-h3 text-white">{t("heading")}</h2>
+            </div>
+            <p className="mt-2 max-w-xl text-p3 text-white/80">
+              {t("description")}
+            </p>
+          </div>
+          <div className="flex shrink-0 flex-col items-center gap-3 text-center">
+            <div className="flex flex-col items-center">
+              <span className="text-h2 tabular-nums leading-none text-white">
+                {orgDone}/{memberList.length}
+              </span>
+              <span className="mt-1 text-p4 text-white/70">
+                {t("complete").toLowerCase()}
+              </span>
+            </div>
+            <div className="relative flex size-24 items-center justify-center">
+              <svg viewBox="0 0 80 80" className="size-full -rotate-90">
+                <circle
+                  cx="40"
+                  cy="40"
+                  r="34"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="7"
+                  className="text-white/15"
+                />
+                <circle
+                  cx="40"
+                  cy="40"
+                  r="34"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="7"
+                  strokeLinecap="round"
+                  strokeDasharray={`${(orgPct / 100) * (2 * Math.PI * 34)} ${2 * Math.PI * 34}`}
+                  className="text-accent"
+                />
+              </svg>
+              <span className="absolute text-h4 tabular-nums text-white">
+                {orgPct}%
+              </span>
+            </div>
+          </div>
+        </div>
+      </ReferenceCard>
     </div>
   );
 }
