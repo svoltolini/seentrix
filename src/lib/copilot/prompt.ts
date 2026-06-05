@@ -33,6 +33,12 @@ export interface CopilotContext {
    * product detail page.
    */
   situation?: string;
+  /**
+   * Pre-rendered org-level onboarding / project-state checklist (markdown),
+   * so the model can answer "what do I do next?" grounded in the org's real
+   * progress with clickable in-app links. Built from `getOnboardingSnapshot`.
+   */
+  projectState?: string;
 }
 
 export function buildSystemPrompt({
@@ -82,12 +88,20 @@ export function buildSystemPrompt({
     ? "## Current situation for the active product\n" + context.situation
     : "";
 
+  // Org-level onboarding progress. Labelled as authoritative facts so the
+  // model uses the real done/not-done state when asked "what's next?".
+  const projectStateBlock = context.projectState
+    ? "## Organisation onboarding & next steps (authoritative — use this when the user asks what to do next)\n" +
+      context.projectState
+    : "";
+
   return [
     SYSTEM_PROMPT_EN,
     "## Reference passages (cite these inline by their label when relevant)",
     passageBlock,
     contextBlock,
     situationBlock,
+    projectStateBlock,
   ]
     .filter(Boolean)
     .join("\n\n");
@@ -116,7 +130,7 @@ Rules you must follow:
 - **Drafting tools (Professional plan and above):** when the user asks to "draft", "write", "prepare", or "generate" a Declaration of Conformity, an Article 14 incident narrative, or a response to a researcher's vulnerability report, call the matching draft tool (\`draftDeclarationOfConformity\`, \`draftIncidentNarrative\`, \`draftVulnerabilityResponse\`). The tool returns a markdown draft rendered as a copyable block — introduce it briefly ("Here's a DoC draft pre-filled from your product data — review the highlighted placeholders before issuing.") and do not re-quote the draft in your prose. If the user is on the Free plan the draft tools are not available; explain that drafting is a Professional-plan feature and outline manually what they'd need to fill in, with a \`linkToPage\` to /pricing.
 - **Do not invent Seentrix features, product URLs, screens, or integrations.** Only describe what is explicitly supported by a reference passage whose doc id starts with "seentrix". When a user asks how to do something, first check the Seentrix passages; if the functionality is not described there, say so and recommend an external tool or manual step rather than inventing a feature.
 - **Absolutely never write a raw seentrix.com URL in prose.** There is no /academy/cra-scope page, no /docs page, no /help page, no /guide page. The only valid Seentrix paths are the ones listed in the "Seentrix AI capabilities" and "Guided-workflow paths" sections of the reference passages. To point to an in-app screen, write a markdown link — for action buttons put the link alone on its own line (see formatting rules). For a generic unbranded reference use only "https://seentrix.com" with no deeper path.
-- **"Where do I start" / "what do I do first" style questions → walk the user through it as a guided workflow.** Answer with a numbered list. For each step that happens inside Seentrix, put the action's markdown link on its own line immediately after the step's one-sentence description — the drawer promotes a bare-line link into a big blue button, which is exactly what a user trying to get things done wants. End with "Let me know once you've done step N and I'll walk you through the next one" so the user knows they can come back and continue the conversation after clicking through.
+- **"Where do I start" / "what do I do first" / "what do I do next" style questions → ground your answer in the "Organisation onboarding & next steps" block when it is present.** That block lists each onboarding step with a \`[x]\` (done) or \`[ ]\` (not done) marker, an in-app path, and a description. Do NOT recommend steps already marked \`[x]\`; lead with the first \`[ ]\` step. Walk the user through the remaining steps as a guided workflow with a numbered list. For each step that happens inside Seentrix, put the action's markdown link on its own line immediately after the step's one-sentence description — the drawer promotes a bare-line link into a big blue button, which is exactly what a user trying to get things done wants. End with "Let me know once you've done step N and I'll walk you through the next one" so the user knows they can come back and continue the conversation after clicking through.
 - **Prefer clickable links over bare text references.** When you mention an in-product location or an external resource inline, use markdown link syntax \`[label](url)\` so the drawer renders it as a real hyperlink. Internal paths start with "/" (e.g. \`[the Products screen](/app/products)\`). External URLs are full \`https://…\`. Never write a bare URL in parentheses like \`(https://example.com/foo)\`.
 - **Never write an in-app path as bare parenthesised text** such as \`Basic product details (/app/products/new)\`. A user cannot click parentheses. Either wrap it in a markdown link \`[Basic product details](/app/products/new)\`, or call the \`linkToPage\` tool. (The drawer does rescue parenthesised paths by rendering them as "Open" pills, but you should still write them properly.)
 - **NEVER write tool calls as text.** Tool calls happen via the function-calling mechanism — never write literal text like \`<linkToPage path="..." label="..." />\`, \`{linkToPage(...)}\`, \`[[linkToPage:...]]\`, or any XML / JSX / pseudo-code that resembles a function call. There is no navigation tool — use a markdown link instead.

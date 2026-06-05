@@ -5,6 +5,9 @@ import {
   requiredLessonsForRole,
 } from "@/lib/academy/lessons";
 import type { LocaleId, RoleId } from "@/lib/academy/types";
+import { Icon } from "@/components/icon";
+import { cn } from "@/lib/utils";
+import { ReferenceCard } from "@/components/reference-card";
 
 type TeamMember = {
   id: string;
@@ -33,12 +36,21 @@ export async function TeamProgress({ locale }: { locale: LocaleId }) {
   const t = await getTranslations("academy.teamProgress");
   const supabase = await createClient();
 
-  const { data: members } = await supabase
-    .from("users")
-    .select("id, full_name, email, role")
-    .order("created_at", { ascending: true });
+  const [{ data: members }, { data: auth }] = await Promise.all([
+    supabase
+      .from("users")
+      .select("id, full_name, email, role")
+      .order("created_at", { ascending: true }),
+    supabase.auth.getUser(),
+  ]);
 
   const memberList = (members ?? []) as TeamMember[];
+  const currentUserId = auth.user?.id ?? null;
+
+  // Split the viewer's own row out from the rest of the team so the two
+  // are never confused — "Your progress" sits above "Your team".
+  const me = memberList.find((m) => m.id === currentUserId) ?? null;
+  const teammates = memberList.filter((m) => m.id !== currentUserId);
 
   const { data: completions } = await supabase
     .from("academy_completions")
@@ -60,32 +72,59 @@ export async function TeamProgress({ locale }: { locale: LocaleId }) {
     );
   }
 
+  // Count of members who have finished EVERY required lesson for their role.
   const orgDone = memberList.filter((member) => {
     const required = requiredLessonsForRole(member.role);
     const done = completionMap.get(member.id) ?? new Map();
     return required.length > 0 && required.every((id) => done.has(id));
   }).length;
-  const orgPct = Math.round((orgDone / memberList.length) * 100);
+
+  // Headline progress is the *overall* share of required lessons passed across
+  // the whole team (required lessons completed ÷ total required lessons), not
+  // the all-or-nothing "fully-complete members" count. This moves with every
+  // single completion, so the card visibly updates as people make progress
+  // instead of sitting at 0% until someone finishes their entire track.
+  let requiredTotal = 0;
+  let requiredDone = 0;
+  for (const member of memberList) {
+    const required = requiredLessonsForRole(member.role);
+    const done = completionMap.get(member.id) ?? new Map();
+    requiredTotal += required.length;
+    requiredDone += required.filter((id) => done.has(id)).length;
+  }
+  const orgPct =
+    requiredTotal > 0 ? Math.round((requiredDone / requiredTotal) * 100) : 0;
+
+  // Compute a member's stats and render their card. Defined inline so it can
+  // close over completionMap + locale without prop-drilling.
+  function renderMemberCard(member: TeamMember, isYou: boolean) {
+    const required = requiredLessonsForRole(member.role);
+    const memberCompletions = completionMap.get(member.id) ?? new Map();
+    const doneCount = required.filter((id) => memberCompletions.has(id)).length;
+    const pending = required.filter((id) => !memberCompletions.has(id));
+    const pct =
+      required.length > 0 ? Math.round((doneCount / required.length) * 100) : 100;
+    const status: "complete" | "in_progress" | "not_started" =
+      pct === 100 ? "complete" : doneCount === 0 ? "not_started" : "in_progress";
+    return (
+      <MemberCard
+        key={member.id}
+        member={member}
+        isYou={isYou}
+        requiredCount={required.length}
+        doneCount={doneCount}
+        pct={pct}
+        status={status}
+        pendingLabels={pending
+          .slice(0, 3)
+          .map((id) => getLesson(id)?.i18n[locale]?.title ?? id)}
+        extraPending={Math.max(0, pending.length - 3)}
+      />
+    );
+  }
 
   return (
     <div>
-      <div className="mb-5 flex flex-wrap items-start justify-between gap-4 rounded-md bg-muted p-6">
-        <div className="min-w-0 flex-1">
-          <h2 className="text-h3 text-foreground">{t("heading")}</h2>
-          <p className="mt-1 text-p3 text-muted-foreground">
-            {t("description")}
-          </p>
-        </div>
-        <div className="text-right">
-          <div className="text-h2 tabular-nums text-foreground">
-            {orgPct}%
-          </div>
-          <div className="text-p4 text-muted-foreground">
-            {orgDone}/{memberList.length} {t("complete").toLowerCase()}
-          </div>
-        </div>
-      </div>
-
       <div className="mb-3 flex items-center justify-end">
         <a
           href="/api/academy/team-progress"
@@ -96,46 +135,66 @@ export async function TeamProgress({ locale }: { locale: LocaleId }) {
         </a>
       </div>
 
-      <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
-        {memberList.map((member) => {
-          const required = requiredLessonsForRole(member.role);
-          const memberCompletions = completionMap.get(member.id) ?? new Map();
-          const doneCount = required.filter((id) => memberCompletions.has(id))
-            .length;
-          const pending = required.filter((id) => !memberCompletions.has(id));
-          const pct =
-            required.length > 0
-              ? Math.round((doneCount / required.length) * 100)
-              : 100;
-          const status: "complete" | "in_progress" | "not_started" =
-            pct === 100
-              ? "complete"
-              : doneCount === 0
-                ? "not_started"
-                : "in_progress";
+      {/* "Your progress" — the viewer's own row, called out separately so a
+          manager never confuses their own status with the team's. */}
+      {me && (
+        <section className="mb-6">
+          <h3 className="mb-3 text-l6-plus uppercase tracking-wider text-muted-foreground">
+            {t("yourProgress")}
+          </h3>
+          <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
+            {renderMemberCard(me, true)}
+          </div>
+        </section>
+      )}
 
-          return (
-            <MemberCard
-              key={member.id}
-              member={member}
-              requiredCount={required.length}
-              doneCount={doneCount}
-              pct={pct}
-              status={status}
-              pendingLabels={pending
-                .slice(0, 3)
-                .map((id) => getLesson(id)?.i18n[locale]?.title ?? id)}
-              extraPending={Math.max(0, pending.length - 3)}
+      {/* "Your team" — everyone else. */}
+      {teammates.length > 0 && (
+        <section className="mb-6">
+          <h3 className="mb-3 text-l6-plus uppercase tracking-wider text-muted-foreground">
+            {t("yourTeam", { count: teammates.length })}
+          </h3>
+          <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
+            {teammates.map((member) => renderMemberCard(member, false))}
+          </div>
+        </section>
+      )}
+
+      {/* Team training-status summary — a closing roll-up below the member
+          cards. Uses the same compact horizontal progress bar as the Academy
+          hero (slim accent track + small caption) instead of a large ring. */}
+      <ReferenceCard className="p-6 md:p-8">
+        <div className="flex items-center gap-2.5">
+          <span className="flex size-9 shrink-0 items-center justify-center rounded-md bg-white/10 text-white backdrop-blur-sm">
+            <Icon name="task-done-02-stroke-rounded" size={18} />
+          </span>
+          <h2 className="text-h3 text-white">{t("heading")}</h2>
+        </div>
+        <p className="mt-2 text-p3 text-white/80">
+          {t("description")}
+        </p>
+        <div className="mt-5 w-full">
+          <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/20">
+            <div
+              className="h-full rounded-full bg-white transition-all"
+              style={{ width: `${orgPct}%` }}
             />
-          );
-        })}
-      </div>
+          </div>
+          <div className="mt-1.5 flex items-center justify-between">
+            <span className="text-p4 text-white/70">
+              {orgDone}/{memberList.length} {t("complete").toLowerCase()}
+            </span>
+            <span className="text-p4 tabular-nums text-white/70">{orgPct}%</span>
+          </div>
+        </div>
+      </ReferenceCard>
     </div>
   );
 }
 
 function MemberCard({
   member,
+  isYou,
   requiredCount,
   doneCount,
   pct,
@@ -144,6 +203,7 @@ function MemberCard({
   extraPending,
 }: {
   member: TeamMember;
+  isYou: boolean;
   requiredCount: number;
   doneCount: number;
   pct: number;
@@ -159,13 +219,23 @@ function MemberCard({
         : "var(--warning)";
 
   return (
-    <div className="rounded-md bg-card shadow-card-sm p-5 transition-colors duration-300 hover:bg-muted/30">
+    <div
+      className={cn(
+        "rounded-md bg-card p-5 shadow-card-sm transition-colors duration-300 hover:bg-muted/30",
+        isYou && "ring-2 ring-primary/30",
+      )}
+    >
       <div className="flex items-start gap-4">
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
             <p className="truncate text-h5 text-foreground">
               {member.full_name ?? member.email}
             </p>
+            {isYou && (
+              <span className="shrink-0 rounded-sm bg-primary/10 px-2 py-0.5 text-l6-plus uppercase tracking-wide text-primary">
+                You
+              </span>
+            )}
             <span className="shrink-0 rounded-sm bg-muted px-2 py-0.5 text-l6-plus uppercase tracking-wide text-muted-foreground">
               {member.role}
             </span>

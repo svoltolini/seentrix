@@ -111,13 +111,14 @@ export function PricingPreview() {
                   <div className="mt-4 flex items-baseline gap-1">
                     <span
                       className={cn(
-                        "text-5xl font-extrabold",
+                        "font-extrabold",
+                        isEnterprise ? "text-3xl" : "text-5xl",
                         isPro ? "text-primary" : "text-foreground",
                       )}
                     >
                       {t(`${tier}.price`)}
                     </span>
-                    {tier !== "free" && (
+                    {tier !== "free" && !isEnterprise && (
                       <span className="text-p3 text-muted-foreground">
                         {t(`${tier}.period`)}
                       </span>
@@ -141,16 +142,30 @@ export function PricingPreview() {
                     ))}
                   </ul>
 
-                  <Link
-                    href={isEnterprise ? "/pricing" : "/auth/signup"}
-                    className={buttonVariants({
-                      variant: isPro ? "default" : "outline",
-                      size: "default",
-                      className: "mt-6 w-full",
-                    })}
-                  >
-                    {isEnterprise ? t("enterprise.cta") : t("getStarted")}
-                  </Link>
+                  {isEnterprise ? (
+                    <span
+                      aria-disabled="true"
+                      className={buttonVariants({
+                        variant: "secondary",
+                        size: "default",
+                        className:
+                          "pointer-events-none mt-6 w-full opacity-50",
+                      })}
+                    >
+                      {t("enterprise.cta")}
+                    </span>
+                  ) : (
+                    <Link
+                      href="/auth/signup"
+                      className={buttonVariants({
+                        variant: isPro ? "default" : "outline",
+                        size: "default",
+                        className: "mt-6 w-full",
+                      })}
+                    >
+                      {t("getStarted")}
+                    </Link>
+                  )}
                 </div>
               </div>
             );

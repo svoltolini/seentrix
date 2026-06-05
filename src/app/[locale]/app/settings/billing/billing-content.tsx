@@ -6,13 +6,7 @@ import { Button } from "@/components/ui/button";
 import { createPortalSession } from "@/lib/stripe/actions";
 import { Link } from "@/i18n/navigation";
 import type { OrgPlan } from "@/lib/constants/plans";
-
-const PLAN_PRICE: Record<string, number> = {
-  free: 0,
-  professional: 59,
-  business: 199,
-  enterprise: 749,
-};
+import { PLAN_PRICES_EUR } from "@/lib/constants/plans";
 
 export function BillingContent({
   plan,
@@ -28,7 +22,7 @@ export function BillingContent({
   const t = useTranslations("billing");
   const [loading, setLoading] = useState(false);
 
-  const price = PLAN_PRICE[plan] ?? 0;
+  const price = PLAN_PRICES_EUR[plan]?.monthly ?? 0;
 
   async function handleManageSubscription() {
     setLoading(true);
@@ -49,10 +43,14 @@ export function BillingContent({
         </div>
       )}
 
-      {/* Current plan */}
+      {/* Current plan — orange accent panel (design-language accent surface).
+          Gradient is built from the accent tokens, not raw hex. */}
       <div
         className="overflow-hidden rounded-md"
-        style={{ background: "linear-gradient(135deg, #FF9E55, #FF6D00)" }}
+        style={{
+          background:
+            "linear-gradient(135deg, var(--accent-2), var(--accent))",
+        }}
       >
         <div className="flex items-center justify-between px-6 py-6">
           {/* Left — plan info */}

@@ -96,8 +96,13 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
+        // Match any Supabase project subdomain (production + staging both
+        // serve avatars from their own `*.supabase.co` host). Scoping to the
+        // production host only meant staging avatars failed to load and Next
+        // rendered a broken-image glyph. The public-object pathname keeps the
+        // allowance narrow.
         protocol: "https",
-        hostname: "accfirbiiejappwqpvwx.supabase.co",
+        hostname: "*.supabase.co",
         pathname: "/storage/v1/object/public/**",
       },
     ],

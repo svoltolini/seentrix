@@ -73,13 +73,12 @@ export function SideSheetPopup({
     <SheetPrimitive.Popup
       data-slot="side-sheet"
       className={cn(
-        // Matches the Copilot AI sheet's `sm:max-w-2xl` (672 px) so
-        // every side panel in the app has the same horizontal real
-        // estate. Earlier passes used the narrower `sm:max-w-md`
-        // (448 px), which felt cramped for the conformity step
-        // detail thread + composer once attachments and a longer
-        // comment list landed.
-        "fixed inset-y-0 right-0 z-50 flex h-full w-full flex-col overflow-hidden bg-card text-p3 text-card-foreground shadow-card-lg transition duration-200 ease-in-out sm:max-w-2xl",
+        // Matches the Copilot AI sheet's `sm:max-w-3xl` (768 px) so
+        // every side panel in the app has the same (roomier) horizontal
+        // real estate. Earlier passes used `sm:max-w-md` (448 px) then
+        // `2xl` (672 px); 3xl gives forms, detail threads and composers
+        // a bit more breathing room.
+        "fixed inset-y-0 right-0 z-50 flex h-full w-full flex-col overflow-hidden bg-card text-p3 text-card-foreground shadow-card-lg transition duration-200 ease-in-out sm:max-w-3xl",
         "data-ending-style:translate-x-[2.5rem] data-ending-style:opacity-0 data-starting-style:translate-x-[2.5rem] data-starting-style:opacity-0",
         className,
       )}

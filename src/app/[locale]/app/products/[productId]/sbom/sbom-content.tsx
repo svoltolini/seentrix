@@ -73,10 +73,10 @@ export function SbomContent({
     };
   }, [sboms]);
 
-  async function refreshSboms() {
+  const refreshSboms = useCallback(async () => {
     const { sboms: refreshed } = await listSboms(productId);
     setSboms(refreshed);
-  }
+  }, [productId]);
 
   const handleFile = useCallback(
     async (file: File) => {
@@ -101,7 +101,7 @@ export function SbomContent({
       router.refresh();
       await refreshSboms();
     },
-    [productId, router, t]
+    [productId, router, t, refreshSboms]
   );
 
   async function toggleExpand(sbomId: string) {

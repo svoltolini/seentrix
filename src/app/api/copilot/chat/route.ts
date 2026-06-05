@@ -309,12 +309,28 @@ async function ensureSession({
   firstUserText: string;
 }): Promise<string> {
   if (existingId) {
-    // Touch updated_at so "recent" ordering reflects activity.
-    await supabase
+    // Defence in depth: never trust a client-supplied session id. RLS
+    // already blocks reading/appending to another tenant's session, but
+    // we must not echo a foreign id back as `x-copilot-session` or treat
+    // it as the caller's thread. Confirm the row is the caller's own
+    // (org_id + user_id) before reusing it; otherwise fall through and
+    // create a fresh session. The SELECT runs on the user's RLS client,
+    // so a session belonging to another org/user simply returns no row.
+    const { data: owned } = await supabase
       .from("chat_sessions")
-      .update({ updated_at: new Date().toISOString() })
-      .eq("id", existingId);
-    return existingId;
+      .select("id")
+      .eq("id", existingId)
+      .eq("org_id", orgId)
+      .eq("user_id", userId)
+      .maybeSingle();
+    if (owned) {
+      // Touch updated_at so "recent" ordering reflects activity.
+      await supabase
+        .from("chat_sessions")
+        .update({ updated_at: new Date().toISOString() })
+        .eq("id", existingId);
+      return existingId;
+    }
   }
   const title = firstUserText.slice(0, 80) || "New conversation";
   const { data, error } = await supabase

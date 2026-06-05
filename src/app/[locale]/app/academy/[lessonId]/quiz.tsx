@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import type { QuizQuestion } from "@/lib/academy/types";
@@ -26,17 +26,31 @@ type Outcome =
 export function Quiz({
   lessonId,
   questions,
+  alreadyPassed = false,
+  passedScore,
 }: {
   lessonId: string;
   questions: QuizQuestion[];
+  /** True when the learner has already passed this lesson — lock the quiz. */
+  alreadyPassed?: boolean;
+  /** Their recorded score (0..1), shown on the locked pass card. */
+  passedScore?: number;
 }) {
   const t = useTranslations("academy.quiz");
   const router = useRouter();
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [outcome, setOutcome] = useState<Outcome>({ kind: "idle" });
   const [isSubmitting, startTransition] = useTransition();
+  // Anchor for the post-submit result so we can settle the viewport on it
+  // instead of leaving the user stranded mid-page when the long question list
+  // collapses into a short result card (which previously made the scroll jump
+  // around wildly).
+  const resultRef = useRef<HTMLDivElement>(null);
 
-  const allAnswered = questions.every((_, i) => answers[i] !== undefined);
+  const answeredCount = questions.filter(
+    (_, i) => answers[i] !== undefined,
+  ).length;
+  const allAnswered = answeredCount === questions.length;
 
   function handleSubmit() {
     const ordered = questions.map((_, i) => answers[i]);
@@ -73,24 +87,38 @@ export function Quiz({
     });
   }
 
+  // Only the PASSED outcome reshapes the page (the whole question list is
+  // replaced by a short card), which can leave the viewport stranded. Bring
+  // that card into view with a minimal `nearest` nudge. The failed/cooldown
+  // results render right below the (still-visible) questions where the submit
+  // button already was, so they need NO scroll — auto-scrolling them was what
+  // made the page feel like it was jumping around.
+  useEffect(() => {
+    if (outcome.kind === "passed") {
+      const id = requestAnimationFrame(() => {
+        resultRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      });
+      return () => cancelAnimationFrame(id);
+    }
+  }, [outcome.kind]);
+
+  // Once a lesson is passed it stays passed — the quiz is locked into a
+  // read-only "you passed" card and can't be retaken. (CRA training is
+  // pass-once; re-taking would muddy the audit trail.) This check sits AFTER
+  // all hooks so hook order stays stable across renders.
+  if (alreadyPassed) {
+    return (
+      <PassedCard
+        score={typeof passedScore === "number" ? passedScore : null}
+        t={t}
+      />
+    );
+  }
+
   if (outcome.kind === "passed") {
     return (
-      <div
-        className="overflow-hidden rounded-md p-8"
-        style={{ background: "linear-gradient(135deg, #066DE6 0%, #FF6D00 60%, #FF6D00 100%)" }}
-      >
-        <div className="flex size-12 items-center justify-center rounded-full bg-white/15 backdrop-blur-sm">
-          <Icon name="checkmark-circle-01-stroke-rounded" size={24} className="text-white" />
-        </div>
-        <h3 className="mt-4 text-h3 text-white">
-          {t("passedTitle")}
-        </h3>
-        <p className="mt-2 text-p3 text-white">
-          {t("passedBody", { score: Math.round(outcome.score * 100) })}
-        </p>
-        <p className="mt-3 font-mono text-p4 text-white">
-          {t("certificateLabel")}: {outcome.certificateHash.slice(0, 16)}…
-        </p>
+      <div ref={resultRef}>
+        <PassedCard score={outcome.score} t={t} />
       </div>
     );
   }
@@ -115,14 +143,33 @@ export function Quiz({
       ))}
 
       {outcome.kind === "idle" && (
-        <div className="flex items-center justify-between gap-3 rounded-md bg-muted px-5 py-4">
-          <p className="text-p3 text-muted-foreground">
-            {t("threshold", { percent: Math.round(QUIZ_PASS_THRESHOLD * 100) })}
-          </p>
+        <div className="flex flex-col gap-3 rounded-md bg-muted px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex min-w-0 flex-1 flex-col gap-1.5">
+            <p className="text-p3 text-muted-foreground">
+              {t("threshold", {
+                percent: Math.round(QUIZ_PASS_THRESHOLD * 100),
+              })}
+            </p>
+            {/* Answered-progress bar so the learner sees how many remain. */}
+            <div className="flex items-center gap-2">
+              <div className="h-1.5 w-32 overflow-hidden rounded-full bg-border">
+                <div
+                  className="h-full rounded-full bg-primary transition-all"
+                  style={{
+                    width: `${(answeredCount / questions.length) * 100}%`,
+                  }}
+                />
+              </div>
+              <span className="text-p4 tabular-nums text-muted-foreground">
+                {answeredCount}/{questions.length}
+              </span>
+            </div>
+          </div>
           <Button
             size="sm"
             disabled={!allAnswered || isSubmitting}
             onClick={handleSubmit}
+            className="shrink-0"
           >
             {isSubmitting ? t("submitting") : t("submit")}
           </Button>
@@ -179,6 +226,35 @@ export function Quiz({
   );
 }
 
+/**
+ * PassedCard — clean white "you passed" card matching the lesson audio card
+ * (rounded-md bg-card shadow + small primary pill). Full-width, no certificate
+ * code (the downloadable certificate lives in the completion row above).
+ */
+function PassedCard({
+  score,
+  t,
+}: {
+  score: number | null;
+  t: ReturnType<typeof useTranslations>;
+}) {
+  return (
+    <div className="flex w-full items-start gap-4 rounded-md bg-card p-5 shadow-card-md">
+      <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-success/10 text-success">
+        <Icon name="checkmark-circle-01-stroke-rounded" size={22} variant="Bold" />
+      </span>
+      <div className="min-w-0 flex-1">
+        <h3 className="text-h5 text-foreground">{t("passedTitle")}</h3>
+        <p className="mt-1 text-p3 text-muted-foreground">
+          {typeof score === "number"
+            ? t("passedBody", { score: Math.round(score * 100) })
+            : t("alreadyPassedShort")}
+        </p>
+      </div>
+    </div>
+  );
+}
+
 function QuestionCard({
   index,
   question,
@@ -195,20 +271,24 @@ function QuestionCard({
   onSelect: (choice: number) => void;
 }) {
   const tCard = useTranslations("academy.quiz");
-  const legendId = `quiz-q${index}-legend`;
   return (
     <fieldset
       disabled={locked}
-      aria-labelledby={legendId}
-      className="rounded-md bg-card shadow-card-sm p-5"
+      className="rounded-md bg-card p-5 shadow-card-sm"
     >
+      {/* Native <legend> renders on the fieldset border edge, which made the
+          question text sit on top of the card border. We hide a semantic
+          legend for screen readers and render the visible prompt as ordinary
+          flow content inside the padding box. */}
+      <legend className="sr-only">
+        {tCard("questionPrefix")}
+        {index + 1}: {question.question}
+      </legend>
       <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
         {tCard("questionPrefix")}
         {index + 1}
       </p>
-      <legend id={legendId} className="mt-1 text-h5 text-foreground">
-        {question.question}
-      </legend>
+      <p className="mt-1 text-h5 text-foreground">{question.question}</p>
       <div className="mt-4 space-y-2" role="radiogroup">
         {question.options.map((opt, j) => {
           const isSelected = selected === j;

@@ -3,11 +3,13 @@
 import { revalidatePath } from "next/cache";
 import { createHash } from "node:crypto";
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import {
   QUIZ_COOLDOWN_MINUTES,
   QUIZ_PASS_THRESHOLD,
 } from "@/lib/academy/types";
 import { getLesson } from "@/lib/academy/lessons";
+import type { LocaleId } from "@/lib/academy/types";
 import { logActivity } from "@/lib/activity";
 
 export type QuizSubmission = {
@@ -216,5 +218,96 @@ export async function listMyCompletions(): Promise<{
       completed_at: string;
       score: number;
     }>,
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Certificate verification
+// ---------------------------------------------------------------------------
+
+export type CertificateVerification =
+  | {
+      status: "valid";
+      holderName: string;
+      holderEmail: string;
+      lessonTitle: string;
+      score: number;
+      completedAt: string;
+      certificateHash: string;
+    }
+  | { status: "not_found" }
+  | { status: "forbidden" }
+  | { status: "error" };
+
+/**
+ * Verify an Academy certificate by its hash. Admins / compliance officers can
+ * paste a certificate number to confirm it's genuine and see who it belongs
+ * to. The lookup is scoped to the verifier's own organisation — you can never
+ * resolve a certificate from another org — and uses the service-role client so
+ * an admin can read teammates' completion rows (RLS otherwise scopes reads to
+ * the caller's own rows).
+ */
+export async function verifyCertificate(
+  rawHash: string,
+  locale: LocaleId,
+): Promise<CertificateVerification> {
+  const { user, orgId } = await getContext();
+  if (!user || !orgId) return { status: "forbidden" };
+
+  // Only admins and compliance officers may verify certificates.
+  const supabase = await createClient();
+  const { data: me } = await supabase
+    .from("users")
+    .select("role")
+    .eq("id", user.id)
+    .single();
+  const role = (me as { role: string } | null)?.role;
+  if (role !== "admin" && role !== "compliance_officer") {
+    return { status: "forbidden" };
+  }
+
+  // Normalise the pasted value: trim, strip a trailing ellipsis the UI shows,
+  // and lower-case (the hash is hex). We match by prefix so the truncated
+  // 16-char display value or the full 32-char hash both resolve.
+  const hash = rawHash.trim().replace(/[…\.\s]+$/, "").toLowerCase();
+  if (hash.length < 8) return { status: "not_found" };
+
+  const admin = createAdminClient();
+  const { data, error } = await admin
+    .from("academy_completions")
+    .select("user_id, lesson_id, score, completed_at, certificate_hash, org_id")
+    .eq("org_id", orgId)
+    .ilike("certificate_hash", `${hash}%`)
+    .limit(2);
+  if (error) return { status: "error" };
+  if (!data || data.length === 0) return { status: "not_found" };
+
+  const row = data[0] as {
+    user_id: string;
+    lesson_id: string;
+    score: number;
+    completed_at: string;
+    certificate_hash: string;
+  };
+
+  const { data: holder } = await admin
+    .from("users")
+    .select("full_name, email")
+    .eq("id", row.user_id)
+    .single();
+  const h = (holder as { full_name: string | null; email: string } | null) ?? null;
+
+  const lesson = getLesson(row.lesson_id);
+  const lessonTitle =
+    lesson?.i18n[locale]?.title ?? lesson?.i18n.en?.title ?? row.lesson_id;
+
+  return {
+    status: "valid",
+    holderName: h?.full_name ?? h?.email ?? "Unknown",
+    holderEmail: h?.email ?? "",
+    lessonTitle,
+    score: row.score,
+    completedAt: row.completed_at,
+    certificateHash: row.certificate_hash,
   };
 }

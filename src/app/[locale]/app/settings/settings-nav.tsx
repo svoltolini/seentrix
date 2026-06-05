@@ -29,7 +29,7 @@ export function SettingsNav() {
   }
 
   return (
-    <div className="-mx-1 flex w-full items-center gap-6 overflow-x-auto border-b border-border px-1">
+    <div className="flex w-full flex-wrap items-center gap-x-6 gap-y-1 border-b border-border">
       {TABS.map((tab) => {
         const active = isActive(tab.segment);
         return (
@@ -37,7 +37,7 @@ export function SettingsNav() {
             key={tab.key}
             href={`${basePath}${tab.segment}`}
             className={cn(
-              "relative flex h-11 shrink-0 items-center text-l6 transition-colors",
+              "relative flex h-11 items-center whitespace-nowrap text-l6 transition-colors",
               active ? "text-primary" : "text-muted-foreground hover:text-foreground",
             )}
           >

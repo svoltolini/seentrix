@@ -30,6 +30,18 @@ export default async function middleware(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
 
+  // 1b. Non-localized route handlers must bypass the next-intl middleware.
+  // `/auth/callback` is a route handler living at src/app/auth/callback/
+  // (outside the [locale] tree). If it falls through to intlMiddleware at
+  // the bottom, next-intl tries to resolve it as a localized *page*, finds
+  // none, and returns 404 — which is exactly what breaks the email
+  // confirmation link. Short-circuit here and return the Supabase response
+  // (session cookies already refreshed above) so Next routes straight to
+  // the handler.
+  if (pathname.startsWith("/auth/callback")) {
+    return supabaseResponse;
+  }
+
   // 2. Classify the request by path. Plain paths (no /en/ prefix).
   const isAppRoute = pathname.startsWith("/app");
   const isOnboardingRoute = pathname.startsWith("/auth/onboarding");
@@ -42,6 +54,11 @@ export default async function middleware(request: NextRequest) {
   // the lessons that unlock it.
   const isAcademyRoute = pathname.startsWith("/app/academy");
 
+  // The Security settings page is where a user enrols in 2FA, so it must
+  // never be gated by the 2FA-enrolment redirect (otherwise the redirect
+  // would loop). The logout action lives under /auth too.
+  const isSecurityRoute = pathname.startsWith("/app/settings/security");
+
   const orgId = user?.app_metadata?.org_id;
   const mustChangePassword = user?.app_metadata?.must_change_password === true;
   const mustCompleteTraining =
@@ -52,11 +69,30 @@ export default async function middleware(request: NextRequest) {
   // /auth/mfa until they elevate to AAL2 (password + TOTP). The MFA API
   // is cheap (no DB round-trip — works off the JWT claims).
   let needsMfaChallenge = false;
+  // 2FA-enrolment gate (soft grace). Seentrix requires every user to set up
+  // two-factor auth. A user with no verified TOTP factor is redirected to the
+  // Security settings page to enrol — UNLESS they've clicked "remind me later"
+  // this session, which drops a short-lived `2fa_grace` cookie. A persistent
+  // banner keeps nudging them. This is a soft gate: it never blocks the
+  // Security page itself (where they enrol) and is bypassable for one session
+  // at a time, so it can't lock anyone out.
+  let needsMfaEnrolment = false;
+  const hasGrace = request.cookies.get("2fa_grace")?.value === "1";
   if (user && orgId) {
     const { data: aalData } =
       await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
     needsMfaChallenge =
       aalData?.nextLevel === "aal2" && aalData.currentLevel === "aal1";
+
+    // If the user is already at/heading to AAL2 they clearly have a factor.
+    // Otherwise list factors to see whether a verified TOTP factor exists.
+    if (aalData?.nextLevel === "aal1" && aalData.currentLevel === "aal1") {
+      const { data: factors } = await supabase.auth.mfa.listFactors();
+      const hasVerifiedTotp = (factors?.totp ?? []).some(
+        (f) => f.status === "verified",
+      );
+      needsMfaEnrolment = !hasVerifiedTotp;
+    }
   }
 
   const redirectTo = (path: string) =>
@@ -91,6 +127,26 @@ export default async function middleware(request: NextRequest) {
   // Authed + already passed MFA but sitting on the challenge page → dashboard
   if (user && orgId && !needsMfaChallenge && isMfaChallengeRoute) {
     return redirectTo("/app/dashboard");
+  }
+
+  // 2FA-enrolment gate — authed user with no verified TOTP factor who hasn't
+  // taken the "remind me later" grace is redirected to the Security page to
+  // set up 2FA. Never applies to the Security page itself (to avoid a loop),
+  // to the password-change / MFA-challenge flows, or to users still in the
+  // training gate (one gate at a time). Settings sub-pages other than Security
+  // are still gated so the redirect lands on the enrolment UI.
+  if (
+    user &&
+    orgId &&
+    !mustChangePassword &&
+    !mustCompleteTraining &&
+    !needsMfaChallenge &&
+    needsMfaEnrolment &&
+    !hasGrace &&
+    isAppRoute &&
+    !isSecurityRoute
+  ) {
+    return redirectTo("/app/settings/security?enroll=1");
   }
 
   // Authed with must_change_password trying to access login/signup → change password

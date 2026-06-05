@@ -89,6 +89,12 @@ export async function signup(
       data: {
         full_name: result.data.fullName,
       },
+      // Route the confirmation link through our callback so it can
+      // exchange the code for a session and land the user on the
+      // "email confirmed" screen. Without this, Supabase falls back to
+      // the project Site URL (the marketing homepage) and the click is a
+      // dead-end with no acknowledgement.
+      emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback?type=signup`,
     },
   });
 
@@ -192,15 +198,23 @@ export async function completeOnboarding(
     const rawExt = avatarFile.name.split(".").pop()?.toLowerCase() ?? "";
     const ext = ALLOWED_EXT.has(rawExt) ? rawExt : "jpg";
     const path = `${user.id}/avatar.${ext}`;
-    const { error: uploadError } = await supabase.storage
+    // Upload via the service-role client: the project uses asymmetric (ES256)
+    // session JWTs that the Storage service can't validate against the legacy
+    // HS256 secret, so a user-scoped upload is rejected by RLS. The path is
+    // still pinned to the verified `user.id` folder. A failed avatar upload is
+    // non-fatal here — onboarding should still complete with no picture.
+    const admin = createAdminClient();
+    const { error: uploadError } = await admin.storage
       .from("avatars")
-      .upload(path, avatarFile, { upsert: true });
+      .upload(path, avatarFile, { upsert: true, contentType: avatarFile.type });
 
-    if (!uploadError) {
-      const { data: publicUrl } = supabase.storage
+    if (uploadError) {
+      console.error("[onboarding] avatar upload failed", uploadError);
+    } else {
+      const { data: publicUrl } = admin.storage
         .from("avatars")
         .getPublicUrl(path);
-      avatarUrl = publicUrl.publicUrl;
+      avatarUrl = `${publicUrl.publicUrl}?v=${Date.now()}`;
     }
   }
 

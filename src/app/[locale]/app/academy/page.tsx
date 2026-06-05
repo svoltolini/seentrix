@@ -3,8 +3,9 @@ import { createClient } from "@/lib/supabase/server";
 import { AcademyTabs, type TabKey } from "./academy-tabs";
 import { TeamProgress } from "./team-progress";
 import type { LocaleId, RoleId } from "@/lib/academy/types";
-import { requiredLessonsForRole } from "@/lib/academy/lessons";
+import { requiredLessonsForRole, allLessonIds } from "@/lib/academy/lessons";
 import { Icon } from "@/components/icon";
+import { ReferenceCard } from "@/components/reference-card";
 
 /**
  * Academy hub — Layer 2 landing.
@@ -46,6 +47,14 @@ export default async function AcademyPage({
 
   const isAdminOrCO = role === "admin" || role === "compliance_officer";
 
+  // Overall catalogue progress for the hero progress ring.
+  const totalLessons = allLessonIds().length;
+  const completedTotal = completedLessonIds.filter((id) =>
+    allLessonIds().includes(id),
+  ).length;
+  const overallPct =
+    totalLessons > 0 ? Math.round((completedTotal / totalLessons) * 100) : 0;
+
   // When the training gate is active, render the blocking banner at the top
   // of the Academy so users understand why the rest of the app isn't
   // reachable — without that explanation the redirect feels like a bug.
@@ -71,23 +80,20 @@ export default async function AcademyPage({
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 md:py-12">
       {mustCompleteTraining ? (
-        <div
-          className="mb-8 overflow-hidden rounded-md bg-cover bg-center p-6 md:mb-10 md:p-10"
-          style={{ backgroundImage: "url('/images/entity-role-bg.svg')" }}
-        >
+        <ReferenceCard className="mb-8 p-6 md:mb-10 md:p-10">
           <div className="flex flex-wrap items-start justify-between gap-5">
             <div className="min-w-0 flex-1">
-              <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur-sm">
-                <span className="size-1.5 animate-pulse rounded-full bg-[#F59E0B]" />
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-l6-plus uppercase tracking-wider text-white backdrop-blur-sm">
+                <span className="size-1.5 animate-pulse rounded-full bg-accent" />
                 {t("hero.title")}
               </div>
               <h1 className="text-h2 leading-tight text-white md:text-3xl">
                 {tGate("title")}
               </h1>
-              <p className="mt-2 max-w-xl text-sm text-white md:text-base">
+              <p className="mt-2 max-w-xl text-p3 text-white/80 md:text-p2">
                 {tGate("subtitle")}
               </p>
-              <p className="mt-3 text-[13px] text-white">
+              <p className="mt-3 text-p3 text-white">
                 {tGate("progress", {
                   done: requiredDone,
                   total: requiredIds.length,
@@ -102,26 +108,27 @@ export default async function AcademyPage({
               />
             </div>
           </div>
-        </div>
+        </ReferenceCard>
       ) : (
-        <div
-          className="mb-8 overflow-hidden rounded-md bg-cover bg-center p-6 md:mb-10 md:p-10"
-          style={{ backgroundImage: "url('/images/entity-role-bg.svg')" }}
-        >
-          {/* Static eyebrow — no amber pulse here. The pulsing dot is
-              reserved for the gate hero (above) where it signals an
-              action the user must take. On the happy path it reads as a
-              false alarm. */}
-          <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur-sm">
+        <ReferenceCard className="mb-8 p-6 md:mb-10 md:p-8">
+          <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-l6-plus uppercase tracking-wider text-white backdrop-blur-sm">
+            <Icon name="elearning-exchange-stroke-rounded" size={12} />
             {t("hero.eyebrow")}
           </div>
           <h1 className="text-h2 leading-tight text-white md:text-3xl">
             {t("hero.title")}
           </h1>
-          <p className="mt-2 max-w-xl text-sm text-white md:text-base">
+          <p className="mt-2 text-p3 text-white/80 md:text-p2">
             {t("hero.description")}
           </p>
-        </div>
+          {/* Compact horizontal progress — a slim full-width bar with a small
+              caption, instead of a large ring, so the hero stays low-profile
+              while still using the card's full width. */}
+          <HeroProgress
+            pct={overallPct}
+            label={`${completedTotal}/${totalLessons} ${t("hero.completeLabel")}`}
+          />
+        </ReferenceCard>
       )}
 
       <AcademyTabs
@@ -130,6 +137,28 @@ export default async function AcademyPage({
         isAdminOrCO={isAdminOrCO}
         teamProgress={isAdminOrCO ? <TeamProgress locale={locale} /> : null}
       />
+    </div>
+  );
+}
+
+/**
+ * Compact horizontal progress bar for the hero. A slim accent-filled track
+ * with a small caption + percentage underneath — keeps the hero card short
+ * (the old large ring forced extra height). Server-rendered, no interactivity.
+ */
+function HeroProgress({ pct, label }: { pct: number; label: string }) {
+  return (
+    <div className="mt-5 w-full">
+      <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/20">
+        <div
+          className="h-full rounded-full bg-white transition-all"
+          style={{ width: `${pct}%` }}
+        />
+      </div>
+      <div className="mt-1.5 flex items-center justify-between">
+        <span className="text-p4 text-white/70">{label}</span>
+        <span className="text-p4 tabular-nums text-white/70">{pct}%</span>
+      </div>
     </div>
   );
 }

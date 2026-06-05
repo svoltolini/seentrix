@@ -6,8 +6,9 @@ import { Link } from "@/i18n/navigation";
 import { buttonVariants } from "@/components/ui/button";
 import { Icon } from "@/components/icon";
 import { cn } from "@/lib/utils";
-import { AskSeentrixAI } from "@/components/copilot/ask-seentrix-ai";
+import { RequiresProductEmptyState } from "@/components/requires-product-empty-state";
 import { ProjectHeroCard } from "../dashboard/widgets/project-hero-card";
+// (AskSeentrixAI now lives inside RequiresProductEmptyState)
 import { ProductCardList } from "./components/product-card-list";
 import { ProductTimeline } from "./components/product-timeline";
 import type { ProductListItem } from "./actions";
@@ -60,6 +61,24 @@ export function ProductsPageContent({
   );
 
   const limit = PLAN_PRODUCT_LIMITS[plan];
+
+  // Empty org → the same centred "no product" treatment used by Incidents and
+  // Vulnerability Reports (icon + copy + CTA + Ask-AI chip), with no page-title
+  // chrome, so every "nothing here yet" screen reads identically. The CTA opens
+  // the global create-product sheet over this page.
+  if (products.length === 0) {
+    return (
+      <RequiresProductEmptyState
+        namespace="products"
+        icon="package-open-stroke-rounded"
+        title="noProducts"
+        description="noProductsDescription"
+        ctaLabel="addProduct"
+        askSeed="I'm setting up my first product in Seentrix — what CRA fields do I actually need to fill in?"
+        askLabel="New to CRA? Ask Seentrix AI how to set up a product."
+      />
+    );
+  }
 
   return (
     <div className="mx-auto max-w-[1600px] space-y-8 pb-12">
@@ -159,34 +178,9 @@ export function ProductsPageContent({
         </div>
       )}
 
-      {/* Body — empty state, grid, kanban list, or timeline. */}
-      {products.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-24 text-center">
-          <div className="mb-6 flex size-14 items-center justify-center rounded-full bg-primary/10">
-            <Icon
-              name="package-open-stroke-rounded"
-              size={28}
-              className="text-primary"
-            />
-          </div>
-          <h3 className="text-h4 text-foreground">{t("noProducts")}</h3>
-          <p className="mt-2 max-w-md text-p3 text-muted-foreground">
-            {canCreate
-              ? (t.has("noProductsDescriptionTopbar")
-                  ? t("noProductsDescriptionTopbar")
-                  : t("noProductsDescription"))
-              : t("noProductsDescription")}
-          </p>
-          {/* No CTA here — the topbar's "+ New Product" button is the
-              global entry point and stays visible on the empty state
-              too, so a second button next to it just adds noise. */}
-          <AskSeentrixAI
-            className="mt-8"
-            seed="I'm setting up my first product in Seentrix — what CRA fields do I actually need to fill in?"
-            label="New to CRA? Ask Seentrix AI how to set up a product."
-          />
-        </div>
-      ) : view === "grid" ? (
+      {/* Body — grid, kanban list, or timeline. The empty state is handled by
+          an early return above. */}
+      {view === "grid" ? (
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {sorted.map((p) => {
             const categoryKey = p.cra_category ?? "default";

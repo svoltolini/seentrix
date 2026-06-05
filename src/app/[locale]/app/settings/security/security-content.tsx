@@ -8,6 +8,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Icon } from "@/components/icon";
 import { useToast } from "@/components/ui/toast";
+import {
+  snoozeMfaEnrolment,
+  clearMfaGrace,
+  clearUnverifiedMfaFactors,
+} from "./actions";
 
 type EnrolState =
   | { kind: "idle" }
@@ -28,38 +33,70 @@ export function SecurityContent({
   hasTotp,
   factorId,
   friendlyName,
+  enrollRequired = false,
 }: {
   hasTotp: boolean;
   factorId: string | null;
   friendlyName: string | null;
+  enrollRequired?: boolean;
 }) {
   const router = useRouter();
   const { toast } = useToast();
   const [state, setState] = useState<EnrolState>({ kind: "idle" });
   const [code, setCode] = useState("");
   const [isPending, startTransition] = useTransition();
+  const [snoozePending, startSnoozeTransition] = useTransition();
+
+  // "Remind me later" — set the session grace cookie via a server action so
+  // the middleware stops redirecting here, then head to the dashboard.
+  function remindLater() {
+    startSnoozeTransition(async () => {
+      await snoozeMfaEnrolment();
+      router.push("/app/dashboard");
+      router.refresh();
+    });
+  }
 
   async function startEnrolment() {
-    const supabase = createClient();
-    // friendly_name is what shows up in the Supabase dashboard factor list;
-    // the device name is what shows up inside authenticator apps.
-    const { data, error } = await supabase.auth.mfa.enroll({
-      factorType: "totp",
-      friendlyName: `Seentrix ${new Date().toLocaleDateString()}`,
-    });
-    if (error || !data) {
-      toast({
-        type: "error",
-        message: error?.message ?? "Failed to start enrolment",
+    // Clean up any *unverified* TOTP factors left over from a previous attempt
+    // the user abandoned (Cancel, navigated away, failed verify). Supabase
+    // keeps the half-enrolled factor around and a second enroll then fails with
+    // "a factor with the friendly name ... already exists" (including the empty
+    // name). We do this server-side with the service-role admin client because
+    // the client-side unenroll can require AAL2 and races the enroll call.
+    startTransition(async () => {
+      await clearUnverifiedMfaFactors();
+
+      const supabase = createClient();
+      // Use a unique friendly name so two factors can never collide on the
+      // name even if a stale one somehow slips through the cleanup above.
+      const { data, error } = await supabase.auth.mfa.enroll({
+        factorType: "totp",
+        friendlyName: `Seentrix · ${Date.now()}`,
       });
-      return;
-    }
-    setState({
-      kind: "enrolling",
-      factorId: data.id,
-      qrSvg: data.totp.qr_code,
-      secret: data.totp.secret,
+      if (error || !data) {
+        toast({
+          type: "error",
+          message: error?.message ?? "Failed to start enrolment",
+        });
+        return;
+      }
+      setState({
+        kind: "enrolling",
+        factorId: data.id,
+        qrSvg: data.totp.qr_code,
+        secret: data.totp.secret,
+      });
     });
+  }
+
+  // Cancelling a half-finished enrolment must remove the unverified factor it
+  // created, otherwise the next "Enable 2FA" collides / leaves an orphan. Use
+  // the same robust server-side cleanup.
+  function cancelEnrolment() {
+    setState({ kind: "idle" });
+    setCode("");
+    void clearUnverifiedMfaFactors();
   }
 
   async function verifyCode() {
@@ -90,6 +127,8 @@ export function SecurityContent({
       toast({ type: "success", message: "2FA enabled" });
       setState({ kind: "done" });
       setCode("");
+      // 2FA is now satisfied — drop the grace cookie so nothing lingers.
+      await clearMfaGrace();
       router.refresh();
     });
   }
@@ -113,14 +152,49 @@ export function SecurityContent({
 
   return (
     <div className="space-y-6">
+      {/* Mandatory-enrolment gate banner — shown when the middleware bounced an
+          un-enrolled user here. Explains 2FA is required and offers a
+          "Remind me later" escape hatch (session-scoped grace). */}
+      {enrollRequired && !hasTotp && (
+        <div className="rounded-md border-[1.5px] border-warning/40 bg-warning/5 p-5">
+          <div className="flex items-start gap-3">
+            <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-warning/15 text-warning">
+              <Icon name="alert-02" size={18} />
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="text-h6 text-foreground">
+                Two-factor authentication is required
+              </p>
+              <p className="mt-1 text-p3 text-muted-foreground">
+                Seentrix protects CRA compliance records, so every account must
+                use 2FA. Set it up now — it takes about a minute with any
+                authenticator app. You can postpone once, but you&apos;ll be
+                reminded each time you sign in until it&apos;s enabled.
+              </p>
+            </div>
+          </div>
+          {/* Full-width text above; the postpone action sits below it. */}
+          <div className="mt-4 flex justify-end">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={remindLater}
+              disabled={snoozePending}
+            >
+              {snoozePending ? "Saving…" : "Remind me later"}
+            </Button>
+          </div>
+        </div>
+      )}
+
       {/* Current state */}
       <div className="rounded-md bg-card shadow-card-lg">
         <div className="border-b border-border px-6 py-4">
           <h2 className="text-h4 text-foreground">Two-factor authentication</h2>
           <p className="mt-0.5 text-p3 text-muted-foreground">
             Adds a second step on sign-in — a 6-digit code from an
-            authenticator app on your phone. Strongly recommended, required
-            for admins of organisations on a paid plan.
+            authenticator app on your phone. Required for every Seentrix
+            account.
           </p>
         </div>
 
@@ -157,8 +231,13 @@ export function SecurityContent({
               <p className="text-p3 text-muted-foreground">
                 2FA is not yet set up on this account.
               </p>
-              <Button onClick={startEnrolment} size="sm" className="mt-3">
-                Enable 2FA
+              <Button
+                onClick={startEnrolment}
+                size="sm"
+                className="mt-3"
+                disabled={isPending}
+              >
+                {isPending ? "Starting…" : "Enable 2FA"}
               </Button>
             </div>
           ) : (
@@ -167,10 +246,7 @@ export function SecurityContent({
               code={code}
               setCode={setCode}
               onVerify={verifyCode}
-              onCancel={() => {
-                setState({ kind: "idle" });
-                setCode("");
-              }}
+              onCancel={cancelEnrolment}
               isPending={isPending}
             />
           )}
@@ -203,18 +279,20 @@ function EnrolStep({
         </p>
         <p className="mt-1 text-p3 text-muted-foreground">
           Open your authenticator app (1Password, Authy, Google Authenticator,
-          etc.) and scan this QR code, or paste the secret manually.
+          etc.) and scan this QR code to add Seentrix.
         </p>
-        <div
-          className="mt-4 inline-block rounded-md bg-white p-3 shadow-card-sm"
-          dangerouslySetInnerHTML={{ __html: state.qrSvg }}
-        />
-        <p className="mt-3 text-p4 text-muted-foreground">
-          Manual secret:{" "}
-          <code className="rounded-md bg-muted px-1.5 py-0.5 font-mono">
-            {state.secret}
-          </code>
-        </p>
+        {/* Supabase returns `totp.qr_code` as a data-URI
+            (`data:image/svg+xml;utf-8,<svg…>`), so render it as an <img> src.
+            The previous `dangerouslySetInnerHTML` approach dumped the data-URI
+            prefix as visible text above the code. */}
+        <div className="mt-4 inline-block rounded-md bg-white p-3 shadow-card-sm">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={state.qrSvg}
+            alt="Two-factor authentication QR code"
+            className="size-44"
+          />
+        </div>
       </div>
 
       <div>

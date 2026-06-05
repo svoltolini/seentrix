@@ -53,12 +53,16 @@ export function TimelineSection() {
   const reduced = useReducedMotion();
 
   useEffect(() => {
-    setNow(new Date());
-    // Day-grain precision is enough — re-tick once a minute so the chip
-    // stays accurate without burning a 1Hz interval (the hero countdown
-    // already runs at 1Hz).
+    // Set the first value on the next frame rather than synchronously in the
+    // effect body (avoids a cascading render). Day-grain precision is enough —
+    // re-tick once a minute so the chip stays accurate without burning a 1Hz
+    // interval (the hero countdown already runs at 1Hz).
+    const raf = requestAnimationFrame(() => setNow(new Date()));
     const id = setInterval(() => setNow(new Date()), 60_000);
-    return () => clearInterval(id);
+    return () => {
+      clearInterval(id);
+      cancelAnimationFrame(raf);
+    };
   }, []);
 
   useEffect(() => {

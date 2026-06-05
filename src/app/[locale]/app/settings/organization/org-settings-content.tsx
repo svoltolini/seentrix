@@ -74,6 +74,33 @@ export function OrgSettingsContent({
   const [contactEmail, setContactEmail] = useState(org?.contact_email ?? "");
   const [website, setWebsite] = useState(org?.website ?? "");
 
+  // Read-only by default. The org's legal identity feeds the Declaration of
+  // Conformity, so an accidental edit by anyone with access is risky — the
+  // whole form sits behind an explicit "Edit" gate. Toggling on enables every
+  // field; Cancel restores the last-saved values; Save persists + locks again.
+  const [isEditing, setIsEditing] = useState(false);
+  const editable = isAdmin && isEditing;
+
+  function resetToSaved() {
+    setName(org?.name ?? "");
+    setAddressLine1(org?.address_line1 ?? "");
+    setAddressLine2(org?.address_line2 ?? "");
+    setPostalCode(org?.postal_code ?? "");
+    setCity(org?.city ?? "");
+    setCountry(org?.country ?? "");
+    setLegalName(org?.legal_name ?? "");
+    setRegistrationNumber(org?.registration_number ?? "");
+    setSignatoryName(org?.signatory_name ?? "");
+    setSignatoryPosition(org?.signatory_position ?? "");
+    setContactEmail(org?.contact_email ?? "");
+    setWebsite(org?.website ?? "");
+  }
+
+  function cancelEdit() {
+    resetToSaved();
+    setIsEditing(false);
+  }
+
   // Fields mandatory for DoC issuance; shown inline so users know why.
   const docReadyFields: { key: string; value: string }[] = [
     { key: "legalName", value: legalName },
@@ -90,7 +117,7 @@ export function OrgSettingsContent({
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!isAdmin) return;
+    if (!isAdmin || !isEditing) return;
 
     const formData = new FormData();
     formData.set("name", name);
@@ -112,6 +139,7 @@ export function OrgSettingsContent({
         toast({ type: "error", message: t("error") });
       } else {
         toast({ type: "success", message: t("saved") });
+        setIsEditing(false);
         router.refresh();
       }
     });
@@ -129,8 +157,29 @@ export function OrgSettingsContent({
       {/* General */}
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="rounded-md bg-card shadow-card-lg">
-          <div className="border-b border-border px-6 py-4">
-            <h2 className="text-h4 text-foreground">{t("title")}</h2>
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-6 py-4">
+            <div className="flex items-center gap-2.5">
+              <h2 className="text-h4 text-foreground">{t("title")}</h2>
+              {isAdmin && !isEditing && (
+                <span className="inline-flex items-center gap-1.5 rounded-sm bg-muted px-2 py-0.5 text-l6-plus uppercase tracking-wide text-muted-foreground">
+                  <Icon name="lock-password-stroke-rounded" size={12} />
+                  {t.has("readOnlyBadge") ? t("readOnlyBadge") : "Locked"}
+                </span>
+              )}
+            </div>
+            {/* Edit gate — the whole form is read-only until the admin opts in,
+                so a stray click can't overwrite DoC-critical legal details. */}
+            {isAdmin && !isEditing && (
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => setIsEditing(true)}
+              >
+                <Icon name="pencil-edit-02-stroke-rounded" size={15} />
+                {t.has("editDetails") ? t("editDetails") : "Edit details"}
+              </Button>
+            )}
           </div>
           <div className="space-y-5 px-6 py-5">
             <div className="flex flex-col gap-1.5">
@@ -143,7 +192,7 @@ export function OrgSettingsContent({
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder={t("namePlaceholder")}
-                disabled={!isAdmin}
+                disabled={!editable}
                 required
               />
             </div>
@@ -183,7 +232,7 @@ export function OrgSettingsContent({
                 value={legalName}
                 onChange={(e) => setLegalName(e.target.value)}
                 placeholder={t("legalNamePlaceholder")}
-                disabled={!isAdmin}
+                disabled={!editable}
               />
               <p className="text-p4 text-muted-foreground">
                 {t("legalNameHint")}
@@ -199,7 +248,7 @@ export function OrgSettingsContent({
                 value={registrationNumber}
                 onChange={(e) => setRegistrationNumber(e.target.value)}
                 placeholder={t("registrationNumberPlaceholder")}
-                disabled={!isAdmin}
+                disabled={!editable}
               />
               <p className="text-p4 text-muted-foreground">
                 {t("registrationNumberHint")}
@@ -228,7 +277,7 @@ export function OrgSettingsContent({
                   value={signatoryName}
                   onChange={(e) => setSignatoryName(e.target.value)}
                   placeholder={t("signatoryNamePlaceholder")}
-                  disabled={!isAdmin}
+                  disabled={!editable}
                 />
               </div>
               <div className="flex flex-col gap-1.5">
@@ -241,7 +290,7 @@ export function OrgSettingsContent({
                   value={signatoryPosition}
                   onChange={(e) => setSignatoryPosition(e.target.value)}
                   placeholder={t("signatoryPositionPlaceholder")}
-                  disabled={!isAdmin}
+                  disabled={!editable}
                 />
               </div>
             </div>
@@ -257,7 +306,7 @@ export function OrgSettingsContent({
                   value={contactEmail}
                   onChange={(e) => setContactEmail(e.target.value)}
                   placeholder="contact@example.com"
-                  disabled={!isAdmin}
+                  disabled={!editable}
                 />
               </div>
               <div className="flex flex-col gap-1.5">
@@ -271,7 +320,7 @@ export function OrgSettingsContent({
                   value={website}
                   onChange={(e) => setWebsite(e.target.value)}
                   placeholder="https://example.com"
-                  disabled={!isAdmin}
+                  disabled={!editable}
                 />
               </div>
             </div>
@@ -297,7 +346,7 @@ export function OrgSettingsContent({
                 value={addressLine1}
                 onChange={(e) => setAddressLine1(e.target.value)}
                 placeholder={t("addressLine1Placeholder")}
-                disabled={!isAdmin}
+                disabled={!editable}
               />
             </div>
             <div className="flex flex-col gap-1.5">
@@ -310,7 +359,7 @@ export function OrgSettingsContent({
                 value={addressLine2}
                 onChange={(e) => setAddressLine2(e.target.value)}
                 placeholder={t("addressLine2Placeholder")}
-                disabled={!isAdmin}
+                disabled={!editable}
               />
             </div>
             <div className="grid gap-5 sm:grid-cols-2">
@@ -324,7 +373,7 @@ export function OrgSettingsContent({
                   value={postalCode}
                   onChange={(e) => setPostalCode(e.target.value)}
                   placeholder={t("postalCodePlaceholder")}
-                  disabled={!isAdmin}
+                  disabled={!editable}
                 />
               </div>
               <div className="flex flex-col gap-1.5">
@@ -337,7 +386,7 @@ export function OrgSettingsContent({
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
                   placeholder={t("cityPlaceholder")}
-                  disabled={!isAdmin}
+                  disabled={!editable}
                 />
               </div>
             </div>
@@ -351,14 +400,26 @@ export function OrgSettingsContent({
                 value={country}
                 onChange={(e) => setCountry(e.target.value)}
                 placeholder={t("countryPlaceholder")}
-                disabled={!isAdmin}
+                disabled={!editable}
               />
             </div>
           </div>
         </div>
 
-        {isAdmin && (
-          <div className="flex justify-end">
+        {/* Save / Cancel — only while editing. The sticky-feeling bar keeps the
+            two actions together so the user always has an obvious way out
+            without saving. */}
+        {isAdmin && isEditing && (
+          <div className="flex items-center justify-end gap-2">
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              onClick={cancelEdit}
+              disabled={isPending}
+            >
+              {t.has("cancel") ? t("cancel") : "Cancel"}
+            </Button>
             <Button type="submit" size="sm" disabled={isPending}>
               {isPending ? t("saving") : t("save")}
             </Button>
@@ -366,7 +427,7 @@ export function OrgSettingsContent({
         )}
       </form>
 
-      {/* Organization chart — vertical tree */}
+      {/* Organization chart — role-tier board */}
       <OrganizationChart
         plan={org?.plan ?? "free"}
         members={members}
@@ -385,11 +446,15 @@ export function OrgSettingsContent({
 }
 
 // ---------------------------------------------------------------------------
-// Organization chart — vertical tree.
-// A single vertical trunk runs the height of the tree, branching right into
-// a box per CRA role. The trunk caps with a rounded corner at the first and
-// last tier so the endpoints don't hang. Empty roles show a dashed "Invite a
-// <role>" branch for admins, or a muted "No one yet" for everyone else.
+// Organization chart — role-tier board.
+//
+// Redesigned from the old vertical-trunk tree into a clean tier board: a
+// summary header with the total head-count + a seat-capacity meter, then one
+// rounded "lane" per CRA role. Each lane carries a colored accent rail, a role
+// badge with its head-count, and the members as compact avatar chips that flow
+// horizontally. Empty roles show a dashed "Invite a <role>" chip for admins or
+// a muted "No one yet" for everyone else. The whole thing reads at a glance and
+// scales cleanly from one person to a full org.
 // ---------------------------------------------------------------------------
 
 function OrganizationChart({
@@ -415,7 +480,7 @@ function OrganizationChart({
     ? "var(--destructive)"
     : nearCap
       ? "var(--warning)"
-      : "var(--success)";
+      : "var(--primary)";
 
   const tiers = ROLE_HIERARCHY.map((tier) => ({
     ...tier,
@@ -424,183 +489,154 @@ function OrganizationChart({
 
   return (
     <div className="overflow-hidden rounded-md bg-card shadow-card-lg">
-      <div className="border-b border-border px-6 py-4">
-        <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+      {/* Header — title + total head-count + capacity meter */}
+      <div className="border-b border-border px-6 py-5">
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div className="min-w-0">
             <h2 className="text-h4 text-foreground">{t("orgChart")}</h2>
             <p className="mt-0.5 text-p3 text-muted-foreground">
               {t("orgChartDescription")}
             </p>
           </div>
-          <div className="flex items-center gap-3">
-            <span className="text-p3 tabular-nums text-muted-foreground">
-              {unlimited
-                ? t("seatsUsedUnlimited", { count: used })
-                : t("seatsUsed", { count: used, limit })}
+          <div className="flex items-center gap-2 rounded-md bg-muted px-3 py-2">
+            <Icon
+              name="Profile2User"
+              size={16}
+              className="text-muted-foreground"
+            />
+            <span className="text-l6 tabular-nums text-foreground">
+              {t("orgChartTotalMembers", { count: used })}
             </span>
-            {isAdmin && !unlimited && nearCap && (
-              <Link
-                href="/app/settings/billing"
-                className="text-l6 text-primary hover:underline"
-              >
-                {t("upgrade")}
-              </Link>
-            )}
           </div>
         </div>
-        {!unlimited && (
-          <div className="mt-3 h-1.5 overflow-hidden rounded-sm bg-border">
-            <div
-              className="h-full rounded-sm transition-all duration-500"
-              style={{ width: `${pct}%`, backgroundColor: capacityColor }}
-            />
+
+        {/* Capacity meter */}
+        <div className="mt-4">
+          <div className="flex items-center justify-between">
+            <span className="text-l6-plus uppercase tracking-wide text-muted-foreground">
+              {t("orgChartCapacity")}
+            </span>
+            <div className="flex items-center gap-3">
+              <span className="text-p4 tabular-nums text-muted-foreground">
+                {unlimited
+                  ? t("seatsUsedUnlimited", { count: used })
+                  : t("seatsUsed", { count: used, limit })}
+              </span>
+              {isAdmin && !unlimited && nearCap && (
+                <Link
+                  href="/app/settings/billing"
+                  className="text-l6 text-primary hover:underline"
+                >
+                  {t("upgrade")}
+                </Link>
+              )}
+            </div>
           </div>
-        )}
+          {!unlimited && (
+            <div className="mt-2 h-1.5 overflow-hidden rounded-sm bg-border">
+              <div
+                className="h-full rounded-sm transition-all duration-500"
+                style={{ width: `${pct}%`, backgroundColor: capacityColor }}
+              />
+            </div>
+          )}
+        </div>
       </div>
 
-      <div className="px-6 py-6">
-        {/* Tree: each tier draws its own connector SVG so the trunk + L-bend
-            are precise at any row height; no overlap tricks. Top and bottom
-            tiers cap the trunk with a rounded corner. */}
-        <ol>
-          {tiers.map((tier, i) => (
-            <RoleBranch
-              key={tier.key}
-              tier={tier}
-              isFirst={i === 0}
-              isLast={i === tiers.length - 1}
-              isAdmin={isAdmin}
-              tTeam={tTeam}
-              inviteLabel={t("inviteToRole", {
-                role: tTeam(`roles.${tier.key}` as Parameters<typeof tTeam>[0]),
-              })}
-              emptyLabel={t("noOneYet")}
-            />
-          ))}
-        </ol>
+      {/* Role lanes */}
+      <div className="divide-y divide-border">
+        {tiers.map((tier) => (
+          <RoleLane
+            key={tier.key}
+            tier={tier}
+            isAdmin={isAdmin}
+            roleLabel={tTeam(
+              `roles.${tier.key}` as Parameters<typeof tTeam>[0],
+            )}
+            countLabel={
+              tier.members.length === 1
+                ? tTeam("memberCount", { count: tier.members.length })
+                : tTeam("memberCountPlural", { count: tier.members.length })
+            }
+            inviteLabel={t.has("inviteShort") ? t("inviteShort") : "Invite"}
+            emptyLabel={t("noOneYet")}
+          />
+        ))}
       </div>
     </div>
   );
 }
 
-function RoleBranch({
+function RoleLane({
   tier,
-  isFirst,
-  isLast,
   isAdmin,
-  tTeam,
+  roleLabel,
+  countLabel,
   inviteLabel,
   emptyLabel,
 }: {
   tier: (typeof ROLE_HIERARCHY)[number] & { members: TeamMember[] };
-  isFirst: boolean;
-  isLast: boolean;
   isAdmin: boolean;
-  tTeam: ReturnType<typeof useTranslations>;
+  roleLabel: string;
+  countLabel: string;
+  /** Short "+ Invite" CTA label — a role can hold many people (plan-permitting). */
   inviteLabel: string;
   emptyLabel: string;
 }) {
-  const hex = tier.bg.match(/#[0-9A-Fa-f]{6}/)?.[0] ?? "#6B7280";
-  // Trunk geometry — kept constant across tiers so the SVG paths line up.
-  // STUB_Y matches the vertical center of the size-11 (44px) badge so the
-  // horizontal stub points straight at the role icon.
-  const STUB_Y = 22;
-  const RADIUS = 8;
-  const STROKE = {
-    stroke: "var(--border)",
-    strokeOpacity: "1",
-    strokeWidth: "1",
-    vectorEffect: "non-scaling-stroke" as const,
-  };
+  const hex = tier.bg.match(/#[0-9A-Fa-f]{6}/)?.[0] ?? null;
+  const isEmpty = tier.members.length === 0;
 
   return (
-    <li
-      className={cn(
-        "relative list-none",
-        !isLast && "pb-5", // gap before next tier; trunk runs through it
-      )}
-      style={{ paddingLeft: 40 }}
-    >
-      {/* Connector: vertical trunk + horizontal stub to the badge. Top and
-          bottom tiers get a rounded L-corner so the trunk caps cleanly; the
-          middle tiers use a plain T-junction. */}
-      <svg
+    <div className="relative flex flex-col gap-4 px-6 py-5 sm:flex-row sm:items-start">
+      {/* Accent rail — a slim colored bar pinned to the lane's left edge. */}
+      <span
         aria-hidden
-        className="pointer-events-none absolute left-0 top-0 h-full"
-        width="40"
-        height="100%"
-        preserveAspectRatio="none"
-        style={{ overflow: "visible" }}
-      >
-        {/* Vertical trunk. Clipped by STUB_Y ± RADIUS on the end tiers so
-            the straight segment meets the arc without overlap. */}
-        <line
-          x1="17"
-          y1={isFirst ? STUB_Y + RADIUS : 0}
-          x2="17"
-          y2={isLast ? STUB_Y - RADIUS : "100%"}
-          {...STROKE}
-        />
-        {/* Top-left L-arc — caps the top of the trunk on the first tier. */}
-        {isFirst && (
-          <path
-            d={`M ${17 + RADIUS} ${STUB_Y} A ${RADIUS} ${RADIUS} 0 0 1 17 ${STUB_Y + RADIUS}`}
-            fill="none"
-            {...STROKE}
-          />
+        className={cn(
+          "absolute inset-y-3 left-0 w-1 rounded-r-sm",
+          hex ? "" : tier.bg,
         )}
-        {/* Bottom-left L-arc — caps the bottom of the trunk on the last tier. */}
-        {isLast && (
-          <path
-            d={`M 17 ${STUB_Y - RADIUS} A ${RADIUS} ${RADIUS} 0 0 0 ${17 + RADIUS} ${STUB_Y}`}
-            fill="none"
-            {...STROKE}
-          />
-        )}
-        {/* Horizontal stub. Starts past the corner on end tiers so the arc
-            joins it without a kink. */}
-        <line
-          x1={isFirst || isLast ? 17 + RADIUS : 17}
-          y1={STUB_Y}
-          x2="40"
-          y2={STUB_Y}
-          {...STROKE}
-        />
-      </svg>
+        style={hex ? { backgroundColor: hex } : undefined}
+      />
 
-      {/* Tier badge */}
-      <div className="flex items-center gap-2.5">
+      {/* Role identity — fixed-width column so the member chips align. */}
+      <div className="flex shrink-0 items-center gap-3 sm:w-56">
         <div
           className={cn(
             "flex size-11 shrink-0 items-center justify-center rounded-md text-white shadow-card-sm",
-            tier.bg,
+            hex ? "" : tier.bg,
           )}
+          style={hex ? { backgroundColor: hex } : undefined}
         >
           <Icon name={tier.icon} size={18} />
         </div>
-        <div>
-          <p className="text-l5" style={{ color: hex }}>
-            {tTeam(`roles.${tier.key}` as Parameters<typeof tTeam>[0])}
+        <div className="min-w-0">
+          <p
+            className="text-l5"
+            style={{ color: hex ?? undefined }}
+            // Fall back to the tier color class when there's no hex match
+            // (the Tailwind token roles use class-based colors).
+          >
+            <span className={hex ? "" : tier.color}>{roleLabel}</span>
           </p>
           <p className="mt-0.5 text-p4 tabular-nums text-muted-foreground">
-            {tier.members.length === 1
-              ? tTeam("memberCount", { count: tier.members.length })
-              : tTeam("memberCountPlural", { count: tier.members.length })}
+            {countLabel}
           </p>
         </div>
       </div>
 
-      {/* Members — plain indented list; the trunk above already carries the
-          hierarchy signal, sub-connectors would just add clutter. */}
-      <div className="mt-2.5 ml-[22px] space-y-1.5">
+      {/* Members — avatar chips that flow horizontally and wrap. */}
+      <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
         {tier.members.map((member) => (
           <Link
             key={member.id}
             href="/app/settings/team"
-            className="group flex items-center gap-3 rounded-md border border-transparent px-3 py-2 transition-all hover:-translate-y-0.5 hover:border-border-outline hover:bg-muted"
+            className="group flex items-center gap-2.5 rounded-full border border-border-outline bg-card py-1 pl-1 pr-3.5 transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-card-sm"
           >
-            <div className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-muted text-l6-plus text-muted-foreground">
+            <span className="flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-full bg-muted text-l6-plus text-muted-foreground">
               {member.avatar_url ? (
+                // Tiny remote avatar from Supabase storage — next/image
+                // optimization isn't worth the cost for a 32px chip.
+                // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={member.avatar_url}
                   alt=""
@@ -609,48 +645,34 @@ function RoleBranch({
               ) : (
                 (member.full_name ?? member.email).charAt(0).toUpperCase()
               )}
-            </div>
-            <div className="min-w-0 flex-1">
-              <p className="truncate text-l6 text-foreground group-hover:text-primary">
-                {member.full_name ?? member.email}
-              </p>
-              <p className="truncate text-p4 text-muted-foreground">
-                {member.email}
-              </p>
-            </div>
-            <Icon
-              name="arrow-right-01-stroke-rounded"
-              size={14}
-              className="shrink-0 text-muted-foreground transition-colors group-hover:text-muted-foreground"
-            />
+            </span>
+            <span className="truncate text-l6 text-foreground group-hover:text-primary">
+              {member.full_name ?? member.email}
+            </span>
           </Link>
         ))}
 
-        {tier.members.length === 0 &&
-          (isAdmin ? (
-            <Link
-              href="/app/settings/team"
-              className="flex items-center gap-3 rounded-md border border-dashed px-3 py-2.5 transition-colors hover:bg-muted/60"
-              style={{ borderColor: `${hex}50` }}
-            >
-              <span
-                className="flex size-9 shrink-0 items-center justify-center rounded-full"
-                style={{ backgroundColor: `${hex}25`, color: hex }}
-              >
-                <Icon name="add-01" size={13} />
-              </span>
-              <span className="text-l6" style={{ color: hex }}>
-                {inviteLabel}
-              </span>
-            </Link>
-          ) : (
-            <div className="flex items-center gap-3 rounded-md border border-dashed border-border-outline px-3 py-2.5">
-              <span className="text-p3 text-muted-foreground">
-                {emptyLabel}
-              </span>
-            </div>
-          ))}
+        {/* A role can hold multiple people (plan-permitting), so the "+ Invite"
+            chip is ALWAYS present for admins — not just when the role is empty
+            — letting them add more members to the same role. It's a neutral
+            grey rounded pill so it reads as a secondary action next to the
+            member chips. Non-admins see a muted "No one yet" only when empty. */}
+        {isAdmin ? (
+          <Link
+            href="/app/settings/team"
+            className="flex items-center gap-1.5 rounded-full bg-muted px-3.5 py-2 text-l6 text-muted-foreground transition-colors hover:bg-muted/70 hover:text-foreground"
+          >
+            <Icon name="add-01" size={14} />
+            {inviteLabel}
+          </Link>
+        ) : (
+          isEmpty && (
+            <span className="rounded-full border border-dashed border-border-outline px-3.5 py-2 text-p4 text-muted-foreground">
+              {emptyLabel}
+            </span>
+          )
+        )}
       </div>
-    </li>
+    </div>
   );
 }

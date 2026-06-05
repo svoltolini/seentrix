@@ -155,11 +155,12 @@ export function CopilotSheet() {
         className={cn(
           // Override the base Sheet's `sm:max-w-sm` (384 px). Copilot
           // conversations need more horizontal space for code blocks,
-          // citation pills, link buttons, and multi-paragraph drafts
-          // than a side-panel drawer. `2xl` = 672 px — ~75 % wider
-          // than the default, still leaves the page visible behind it.
+          // citation pills, link buttons, tables, and multi-paragraph
+          // drafts than a side-panel drawer. `3xl` = 768 px — wider than
+          // the default while still leaving the page visible behind it,
+          // and matched to the shared SideSheetPopup width.
           "flex-col gap-0 border-l border-border bg-card p-0",
-          "data-[side=right]:sm:max-w-2xl",
+          "data-[side=right]:sm:max-w-3xl",
         )}
       >
         <SheetTitle className="sr-only">{t("title")}</SheetTitle>
@@ -284,23 +285,21 @@ export function CopilotSheet() {
           className="flex flex-col gap-2 border-t border-border bg-card px-4 pt-3 pb-4"
         >
           {/*
-            Flex row with `items-end` — when the textarea is one line
-            (32 px tall) the button (32 px tall) aligns at the bottom of
-            the container which, combined with the container's symmetric
-            py-2, reads as vertically centred. When the textarea grows
-            past one line the button stays in the bottom-right corner,
-            matching the ChatGPT composer convention.
+            Flex row with `items-end` so the send button sits in the
+            bottom-right corner of the composer (ChatGPT convention). The
+            textarea now opens at two lines for a roomier prompt box and
+            still auto-grows up to the max height.
           */}
-          <div className="flex items-end gap-2 rounded-md bg-input px-3.5 py-2 border-[1.5px] border-transparent transition focus-within:bg-card focus-within:border-primary/30">
+          <div className="flex items-end gap-2 rounded-md bg-input px-3.5 py-2.5 border-[1.5px] border-transparent transition focus-within:bg-card focus-within:border-primary/30">
             <textarea
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={onComposerKey}
               placeholder={t("placeholder")}
-              rows={1}
-              // Single-line height = 32 px so it matches the button.
-              // leading-6 + py-1 gives 24 + 4 + 4 = 32.
-              className="max-h-[180px] min-h-[32px] flex-1 resize-none bg-transparent py-1 text-p2 leading-6 text-foreground outline-none placeholder:text-muted-foreground"
+              rows={2}
+              // Two-line starting height = 56 px (leading-6 × 2 + py-1 × 2).
+              // Grows with content up to the max, then scrolls.
+              className="max-h-[180px] min-h-[56px] flex-1 resize-none bg-transparent py-1 text-p2 leading-6 text-foreground outline-none placeholder:text-muted-foreground"
               disabled={isStreaming}
             />
             {isStreaming ? (

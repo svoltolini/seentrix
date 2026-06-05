@@ -263,6 +263,38 @@ function parseBareMarkdownLink(
   return { label: match[1], path: match[2] };
 }
 
+/**
+ * Markdown-table helpers.
+ *
+ * A table row is any line containing a `|` that isn't a code line. The
+ * separator row is the `|---|:--:|---|` line directly under the header.
+ * `splitTableRow` trims the optional leading/trailing pipes and splits on the
+ * remaining unescaped pipes.
+ */
+function isTableRow(line: string): boolean {
+  const t = line.trim();
+  if (!t.includes("|")) return false;
+  // Must contain at least one pipe with content around it — ignore a lone `|`.
+  return /\S/.test(t.replace(/\|/g, ""));
+}
+
+function isTableSeparator(line: string): boolean {
+  const t = line.trim();
+  if (!t.includes("|") && !t.includes("-")) return false;
+  // Each cell is dashes with optional leading/trailing colons (alignment).
+  const cells = t.replace(/^\||\|$/g, "").split("|");
+  if (cells.length === 0) return false;
+  return cells.every((c) => /^\s*:?-{1,}:?\s*$/.test(c));
+}
+
+function splitTableRow(line: string): string[] {
+  return line
+    .trim()
+    .replace(/^\||\|$/g, "")
+    .split("|")
+    .map((c) => c.trim());
+}
+
 function parseHallucinatedLinkTag(
   line: string,
 ): { path: string; label: string } | null {
@@ -313,17 +345,30 @@ function DraftBlock({ title, draft }: { title: string; draft: string }) {
 }
 
 function LinkButton({ path, label }: { path: string; label: string }) {
-  return (
-    <Link
-      href={path}
-      className="inline-flex w-fit items-center gap-2 rounded-sm bg-primary/10 px-3.5 py-2 text-l6 text-primary border-[1.5px] border-primary/25 transition hover:bg-primary/15 hover:border-primary/50"
-    >
+  const cls =
+    "inline-flex w-fit items-center gap-2 rounded-sm bg-primary/10 px-3.5 py-2 text-l6 text-primary border-[1.5px] border-primary/25 transition hover:bg-primary/15 hover:border-primary/50";
+  const inner = (
+    <>
       <Icon
         name="arrow-right-01-stroke-rounded"
         size={13}
         className="text-primary"
       />
       {label}
+    </>
+  );
+  // Query-string paths (e.g. ?new=product) use a plain <a> because the typed
+  // i18n Link can fail to render them.
+  if (path.includes("?")) {
+    return (
+      <a href={path} className={cls}>
+        {inner}
+      </a>
+    );
+  }
+  return (
+    <Link href={path} className={cls}>
+      {inner}
     </Link>
   );
 }
@@ -338,10 +383,11 @@ type Block =
   | { type: "h3"; text: string; numeral?: string }
   | { type: "h4"; text: string }
   | { type: "hr" }
-  | { type: "ol"; items: string[] }
+  | { type: "ol"; items: string[]; start: number }
   | { type: "ul"; items: string[] }
   | { type: "quote"; text: string }
   | { type: "code"; text: string }
+  | { type: "table"; headers: string[]; rows: string[][] }
   | { type: "link"; path: string; label: string };
 
 function AssistantBody({ text }: { text: string }) {
@@ -390,9 +436,15 @@ function AssistantBody({ text }: { text: string }) {
               />
             );
           case "ol":
+            // Use an explicit `start` so a numbered list that the renderer had
+            // to split across blocks (because sub-content sat between items)
+            // keeps counting up instead of restarting at 1. Many models also
+            // emit a literal "1." for every item; the CSS counter ignores that
+            // source number and counts by position, which is what we want.
             return (
               <ol
                 key={i}
+                start={b.start}
                 className="ml-5 space-y-1.5 list-decimal marker:text-primary marker:font-semibold"
               >
                 {b.items.map((item, j) => (
@@ -431,6 +483,45 @@ function AssistantBody({ text }: { text: string }) {
                 <code>{b.text}</code>
               </pre>
             );
+          case "table":
+            return (
+              <div
+                key={i}
+                className="-mx-1 overflow-x-auto rounded-md border border-border"
+              >
+                <table className="w-full border-collapse text-p4">
+                  <thead>
+                    <tr className="bg-muted">
+                      {b.headers.map((h, hi) => (
+                        <th
+                          key={hi}
+                          className="border-b border-border px-3 py-2 text-left text-l6-plus uppercase tracking-wide text-muted-foreground"
+                        >
+                          {renderInline(h)}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {b.rows.map((row, ri) => (
+                      <tr
+                        key={ri}
+                        className="border-b border-border last:border-0"
+                      >
+                        {row.map((cell, ci) => (
+                          <td
+                            key={ci}
+                            className="px-3 py-2 align-top text-foreground"
+                          >
+                            {renderInline(cell)}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            );
           case "link":
             return <LinkButton key={i} path={b.path} label={b.label} />;
           case "p":
@@ -450,8 +541,12 @@ function blockify(text: string): Block[] {
   const lines = text.split("\n");
   const blocks: Block[] = [];
   let buf: string[] = [];
-  let list: { kind: "ol" | "ul"; items: string[] } | null = null;
+  let list: { kind: "ol" | "ul"; items: string[]; start: number } | null = null;
   let codeFence: { lang: string; lines: string[] } | null = null;
+  // Running ordered-list counter. Keeps numbering continuous when a list is
+  // split across blocks by intervening sub-content (paragraphs). Reset only at
+  // a real section break (heading / hr) via `resetOl()`.
+  let olCount = 0;
 
   function flushParagraph() {
     const joined = buf.join("\n").trim();
@@ -460,17 +555,50 @@ function blockify(text: string): Block[] {
   }
   function flushList() {
     if (list) {
-      blocks.push({ type: list.kind, items: list.items });
+      if (list.kind === "ol") {
+        blocks.push({ type: "ol", items: list.items, start: list.start });
+      } else {
+        blocks.push({ type: "ul", items: list.items });
+      }
       list = null;
     }
+  }
+  function resetOl() {
+    olCount = 0;
   }
   function flushAll() {
     flushList();
     flushParagraph();
   }
 
-  for (const raw of lines) {
+  for (let li = 0; li < lines.length; li++) {
+    const raw = lines[li];
     const line = raw.trimEnd();
+
+    // Markdown table — a header row of `| a | b |`, a separator row of
+    // `|---|:--:|`, then one or more data rows. The model emits these for
+    // "examples" grids; without this they'd render as raw pipe text. Detect
+    // by peeking at the next line for the separator, then greedily consume
+    // the contiguous data rows.
+    if (
+      !codeFence &&
+      isTableRow(line) &&
+      li + 1 < lines.length &&
+      isTableSeparator(lines[li + 1])
+    ) {
+      flushAll();
+      resetOl();
+      const headers = splitTableRow(line);
+      const rows: string[][] = [];
+      let j = li + 2;
+      while (j < lines.length && isTableRow(lines[j].trimEnd())) {
+        rows.push(splitTableRow(lines[j].trimEnd()));
+        j++;
+      }
+      blocks.push({ type: "table", headers, rows });
+      li = j - 1; // resume after the consumed table
+      continue;
+    }
 
     // Fenced code block — greedy capture.
     const fence = line.match(/^\s*```(\w*)\s*$/);
@@ -495,16 +623,19 @@ function blockify(text: string): Block[] {
     const h2 = line.match(/^\s*##\s+(.+?)\s*#*\s*$/);
     if (h4) {
       flushAll();
+      resetOl();
       blocks.push({ type: "h4", text: h4[1] });
       continue;
     }
     if (h3) {
       flushAll();
+      resetOl();
       blocks.push({ type: "h3", text: h3[1] });
       continue;
     }
     if (h2) {
       flushAll();
+      resetOl();
       blocks.push({ type: "h2", text: h2[1] });
       continue;
     }
@@ -522,6 +653,7 @@ function blockify(text: string): Block[] {
       /^[A-Z0-9][A-Z0-9 :()?&\-/]{6,}$/.test(trimmed)
     ) {
       flushAll();
+      resetOl();
       blocks.push({ type: "h2", text: toTitleCase(trimmed) });
       continue;
     }
@@ -548,6 +680,7 @@ function blockify(text: string): Block[] {
       buf.length === 0
     ) {
       flushAll();
+      resetOl();
       blocks.push({ type: "h2", text: trimmed });
       continue;
     }
@@ -555,6 +688,7 @@ function blockify(text: string): Block[] {
     // Horizontal rule.
     if (/^\s*(---|\*\*\*|___)\s*$/.test(line)) {
       flushAll();
+      resetOl();
       blocks.push({ type: "hr" });
       continue;
     }
@@ -612,22 +746,28 @@ function blockify(text: string): Block[] {
       const body = ol[2].trim();
       if (body.length >= 4 && /^[A-Z0-9][A-Z0-9 &()\-/]*$/.test(body)) {
         flushAll();
-        blocks.push({ type: "h3", text: body, numeral: `${ol[1]}.` });
+        // Number these section headers with the running counter (not the
+        // model's literal source number, which is often "1." for every item).
+        olCount += 1;
+        blocks.push({ type: "h3", text: body, numeral: `${olCount}.` });
         continue;
       }
       flushParagraph();
       if (!list || list.kind !== "ol") {
         flushList();
-        list = { kind: "ol", items: [] };
+        // Continue numbering from the running counter so a split list doesn't
+        // restart at 1.
+        list = { kind: "ol", items: [], start: olCount + 1 };
       }
       list.items.push(ol[2]);
+      olCount += 1;
       continue;
     }
     if (ul) {
       flushParagraph();
       if (!list || list.kind !== "ul") {
         flushList();
-        list = { kind: "ul", items: [] };
+        list = { kind: "ul", items: [], start: 0 };
       }
       list.items.push(ul[1]);
       continue;
@@ -757,17 +897,28 @@ function CitationPill({ label }: { label: string }) {
  * because the middleware matcher only sees locale-prefixed routes.
  */
 function PathPill({ path }: { path: string }) {
-  return (
-    <Link
-      href={path}
-      className="mx-1 inline-flex -translate-y-[1px] items-center gap-1 rounded-sm bg-card border border-border px-2 py-[2px] align-baseline text-l6-plus text-foreground transition hover:bg-muted"
-    >
+  const cls =
+    "mx-1 inline-flex -translate-y-[1px] items-center gap-1 rounded-sm bg-card border border-border px-2 py-[2px] align-baseline text-l6-plus text-foreground transition hover:bg-muted";
+  const inner = (
+    <>
       <Icon
         name="arrow-right-01-stroke-rounded"
         size={10}
         className="text-foreground"
       />
       Open
+    </>
+  );
+  if (path.includes("?")) {
+    return (
+      <a href={path} className={cls}>
+        {inner}
+      </a>
+    );
+  }
+  return (
+    <Link href={path} className={cls}>
+      {inner}
     </Link>
   );
 }
@@ -790,6 +941,19 @@ function InlineLink({ label, href }: { label: string; href: string }) {
     return <span className="font-medium text-foreground">{label}</span>;
   }
   if (href.startsWith("/")) {
+    // The typed next-intl <Link> can choke on hrefs that carry a query string
+    // (e.g. `/app/products?new=product`) and silently fail to render an
+    // anchor — leaving the raw markdown visible. For internal paths WITH a
+    // query string, fall back to a plain <a> (still same-origin, the
+    // ?new=product deep-link still opens the create-product sheet). Paths
+    // without a query keep the locale-aware typed Link.
+    if (href.includes("?")) {
+      return (
+        <a href={href} className={className}>
+          {label}
+        </a>
+      );
+    }
     return (
       <Link href={href} className={className}>
         {label}

@@ -5,11 +5,19 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { ACADEMY_LESSONS } from "@/lib/glossary";
+import { LESSON_AUDIO } from "@/lib/academy/audio";
 import { Icon } from "@/components/icon";
+import { cn } from "@/lib/utils";
 import { GlossaryIndex } from "@/app/[locale]/app/help/glossary/glossary-index";
 import { SCREEN_LESSONS, type ScreenKey } from "@/lib/academy/screens";
+import { CertificateVerify } from "./certificate-verify";
 
-export type TabKey = "lessons" | "by-screen" | "glossary" | "team-progress";
+export type TabKey =
+  | "lessons"
+  | "by-screen"
+  | "glossary"
+  | "team-progress"
+  | "verify";
 
 /**
  * Client-side tabbed shell for the Academy page.
@@ -46,6 +54,11 @@ export function AcademyTabs({
             {t("tabs.teamProgress")}
           </TabsTrigger>
         )}
+        {isAdminOrCO && (
+          <TabsTrigger value="verify">
+            {t.has("tabs.verify") ? t("tabs.verify") : "Verify certificate"}
+          </TabsTrigger>
+        )}
       </TabsList>
       <TabsContent value="lessons" className="mt-6">
         <LessonsGrid completed={completed} />
@@ -65,6 +78,11 @@ export function AcademyTabs({
           )}
         </TabsContent>
       )}
+      {isAdminOrCO && (
+        <TabsContent value="verify" className="mt-6">
+          <CertificateVerify />
+        </TabsContent>
+      )}
     </Tabs>
   );
 }
@@ -73,16 +91,19 @@ function LessonsGrid({ completed }: { completed: Set<string> }) {
   const t = useTranslations("academy.lessonCard");
   const lessons = Object.entries(ACADEMY_LESSONS);
   return (
-    <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-      {lessons.map(([id, lesson]) => (
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+      {lessons.map(([id, lesson], i) => (
         <LessonCard
           key={id}
           id={id}
+          index={i + 1}
           title={lesson.title}
           duration={lesson.duration}
           done={completed.has(id)}
+          hasAudio={id in LESSON_AUDIO}
           completedLabel={t("completed")}
           openLabel={t("open")}
+          audioLabel={t("audio")}
         />
       ))}
     </div>
@@ -91,31 +112,65 @@ function LessonsGrid({ completed }: { completed: Set<string> }) {
 
 function LessonCard({
   id,
+  index,
   title,
   duration,
   done,
+  hasAudio,
   completedLabel,
   openLabel,
+  audioLabel,
 }: {
   id: string;
+  index: number;
   title: string;
   duration: string;
   done: boolean;
+  hasAudio: boolean;
   completedLabel: string;
   openLabel: string;
+  audioLabel: string;
 }) {
   return (
     <Link
       href={`/app/academy/${id}`}
-      className="group flex items-start gap-4 rounded-md bg-card shadow-card-sm p-6 transition-colors duration-300 hover:bg-muted/30"
+      className="group flex items-start gap-4 rounded-md bg-card p-5 shadow-card-sm transition-shadow duration-300 hover:shadow-card-md"
     >
+      {/* Status / index badge */}
+      <span
+        className={cn(
+          "flex size-11 shrink-0 items-center justify-center rounded-md text-l5",
+          done
+            ? "bg-success/10 text-success"
+            : "bg-primary/10 text-primary",
+        )}
+      >
+        {done ? (
+          <Icon
+            name="checkmark-circle-01-stroke-rounded"
+            size={22}
+            variant="Bold"
+          />
+        ) : (
+          <span className="tabular-nums">{index}</span>
+        )}
+      </span>
+
       <div className="min-w-0 flex-1">
-        <p className="text-h5 text-foreground group-hover:text-primary">
+        <p className="text-h6 text-foreground group-hover:text-primary">
           {title}
         </p>
-        <div className="mt-1.5 flex items-center gap-2 text-p4">
-          <span className="text-muted-foreground">{duration}</span>
-          <span className="text-muted-foreground">·</span>
+        <div className="mt-2 flex flex-wrap items-center gap-2 text-p4">
+          <span className="inline-flex items-center gap-1 text-muted-foreground">
+            <Icon name="time-quarter-02-stroke-rounded" size={13} />
+            {duration}
+          </span>
+          {hasAudio && (
+            <span className="inline-flex items-center gap-1 rounded-sm bg-accent/10 px-2 py-0.5 text-l6-plus text-accent">
+              <Icon name="VolumeHigh" size={11} />
+              {audioLabel}
+            </span>
+          )}
           {done ? (
             <span className="inline-flex items-center gap-1 rounded-sm bg-success/10 px-2 py-0.5 text-l6-plus text-success">
               {completedLabel}
@@ -130,7 +185,7 @@ function LessonCard({
       <Icon
         name="arrow-right-01-stroke-rounded"
         size={16}
-        className="shrink-0 text-muted-foreground transition-colors group-hover:text-primary"
+        className="mt-1 shrink-0 text-muted-foreground transition-colors group-hover:text-primary"
       />
     </Link>
   );
