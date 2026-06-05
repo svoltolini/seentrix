@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { useSearchParams } from "next/navigation";
 import { Icon } from "@/components/icon";
-import { buttonVariants } from "@/components/ui/button";
+import { AskSeentrixAI } from "@/components/copilot/ask-seentrix-ai";
 import { cn } from "@/lib/utils";
 import type { OnboardingState, OnboardingStep } from "@/lib/onboarding-state";
 
@@ -57,37 +57,28 @@ export function GetStartedGuide({ state, firstName }: Props) {
         </p>
       </div>
 
-      {/* Progress + primary CTA card */}
-      <div className="flex flex-col gap-4 rounded-md bg-card p-6 shadow-card-md sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex flex-col gap-2">
-          <p className="text-h4 text-foreground">
-            {t("getStarted.progressLabel", {
-              done: state.completedCount,
-              total: state.totalCount,
-            })}
-          </p>
+      {/* Progress card. No CTA button here — the active step in the checklist
+          below is the single, unambiguous call to action, so a duplicate
+          "add product" button would just be noise. */}
+      <div className="flex flex-col gap-2 rounded-md bg-card p-6 shadow-card-md">
+        <p className="text-h4 text-foreground">
+          {t("getStarted.progressLabel", {
+            done: state.completedCount,
+            total: state.totalCount,
+          })}
+        </p>
+        <div
+          className="h-2 w-full overflow-hidden rounded-full bg-muted"
+          role="progressbar"
+          aria-valuenow={state.progress}
+          aria-valuemin={0}
+          aria-valuemax={100}
+        >
           <div
-            className="h-2 w-full max-w-[280px] overflow-hidden rounded-full bg-muted"
-            role="progressbar"
-            aria-valuenow={state.progress}
-            aria-valuemin={0}
-            aria-valuemax={100}
-          >
-            <div
-              className="h-full rounded-full bg-primary transition-all"
-              style={{ width: `${state.progress}%` }}
-            />
-          </div>
+            className="h-full rounded-full bg-primary transition-all"
+            style={{ width: `${state.progress}%` }}
+          />
         </div>
-        {next && (
-          <CtaLink
-            href={hrefForCta(next, sheetHref)}
-            className={cn(buttonVariants(), "shrink-0 self-start sm:self-auto")}
-          >
-            {t(`steps.${next.id_key}.cta`)}
-            <Icon name="ArrowRight2" size={16} />
-          </CtaLink>
-        )}
       </div>
 
       {/* Step checklist — strictly sequential */}
@@ -110,18 +101,14 @@ export function GetStartedGuide({ state, firstName }: Props) {
         })}
       </ol>
 
-      {/* Ask-the-Copilot helper */}
-      <div className="flex items-center gap-3 rounded-md border border-dashed border-border-outline bg-muted/40 px-5 py-4">
-        <span className="flex size-10 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary">
-          <Icon name="ai-magic-stroke-rounded" size={20} />
-        </span>
-        <div className="min-w-0 flex-1">
-          <p className="text-h6 text-foreground">{t("getStarted.askTitle")}</p>
-          <p className="text-p3 text-muted-foreground">
-            {t("getStarted.askDescription")}
-          </p>
-        </div>
-      </div>
+      {/* Ask-the-Copilot helper — a real button that opens the AI drawer with a
+          pre-seeded "what do I do next?" question. */}
+      <AskSeentrixAI
+        variant="banner"
+        seed="I just set up my company in Seentrix. What do I need to do next to get started with CRA compliance?"
+        label={t("getStarted.askTitle")}
+        sublabel={t("getStarted.askDescription")}
+      />
     </div>
   );
 }
@@ -134,11 +121,6 @@ function useSheetHref(
   const params = new URLSearchParams(searchParams?.toString() ?? "");
   params.set("new", "product");
   return `${pathname}?${params.toString()}`;
-}
-
-/** The CTA points at the current step; first-product opens the sheet. */
-function hrefForCta(next: OnboardingStep, sheetHref: string): string {
-  return next.id === "first-product" ? sheetHref : next.href;
 }
 
 function StepRow({

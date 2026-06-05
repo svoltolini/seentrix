@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import type { OrgPlan } from "@/lib/constants/plans";
@@ -437,22 +438,38 @@ export async function updateProfile(formData: FormData): Promise<ActionResult> {
   const fullName = (formData.get("fullName") as string)?.trim();
   if (!fullName) return { error: "nameRequired" };
 
-  // Handle avatar upload
+  // Handle avatar upload.
+  //
+  // The upload runs through the service-role client, NOT the user's RLS
+  // client. The project signs user sessions with asymmetric (ES256) JWTs,
+  // which the Storage service does not validate against the legacy HS256
+  // secret — so a user-scoped storage upload is rejected with a 403
+  // "row violates row-level security policy" even though the path is correct.
+  // The service-role client bypasses RLS; we still scope the object path to
+  // `${user.id}/...` (the verified, server-side user id) so a user can only
+  // ever write their own avatar.
   let avatarUrl: string | undefined;
   const avatarFile = formData.get("avatar") as File | null;
   if (avatarFile && avatarFile.size > 0) {
+    const admin = createAdminClient();
     const ext = avatarFile.name.split(".").pop() || "jpg";
     const path = `${user.id}/avatar.${ext}`;
-    const { error: uploadError } = await supabase.storage
+    const { error: uploadError } = await admin.storage
       .from("avatars")
-      .upload(path, avatarFile, { upsert: true });
+      .upload(path, avatarFile, { upsert: true, contentType: avatarFile.type });
 
-    if (!uploadError) {
-      const { data: publicUrl } = supabase.storage
-        .from("avatars")
-        .getPublicUrl(path);
-      avatarUrl = publicUrl.publicUrl;
+    if (uploadError) {
+      // Surface the failure instead of silently saving only the name — the
+      // user explicitly tried to set a picture, so a silent success is
+      // misleading.
+      console.error("[updateProfile] avatar upload failed", uploadError);
+      return { error: "avatarUploadFailed" };
     }
+
+    const { data: publicUrl } = admin.storage.from("avatars").getPublicUrl(path);
+    // Cache-bust so the new image shows immediately rather than serving the
+    // previously-cached avatar at the same path.
+    avatarUrl = `${publicUrl.publicUrl}?v=${Date.now()}`;
   }
 
   const { error } = await supabase.auth.updateUser({
@@ -464,12 +481,17 @@ export async function updateProfile(formData: FormData): Promise<ActionResult> {
   const updateData: Record<string, unknown> = { full_name: fullName };
   if (avatarUrl !== undefined) updateData.avatar_url = avatarUrl;
 
-  await supabase
+  const { error: dbError } = await supabase
     .from("users")
     .update(updateData)
     .eq("id", user.id);
 
+  if (dbError) return { error: "generic" };
+
   await logActivity({ action: "profile.updated", targetType: "user", targetId: user.id });
+
+  // Refresh the app shell so the topbar avatar + name pick up the change.
+  revalidatePath("/app", "layout");
 
   return {};
 }

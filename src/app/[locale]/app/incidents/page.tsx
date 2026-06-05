@@ -22,6 +22,8 @@ export default async function IncidentsPage() {
         title="empty.noProductTitle"
         description="empty.noProductDescription"
         ctaLabel="empty.noProductCta"
+        askSeed="How does incident reporting work under the CRA, and what do I need to set up in Seentrix to handle it?"
+        askLabel="New to CRA? Ask Seentrix AI about incident reporting."
       />
     );
   }
