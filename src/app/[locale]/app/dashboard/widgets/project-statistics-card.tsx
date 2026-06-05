@@ -6,73 +6,73 @@ import { Icon } from "@/components/icon";
 import { cn } from "@/lib/utils";
 
 /**
- * ProjectStatisticsCard — verbatim 1:1 of the "Project Statistics" card from
- * Figma frame `28:1755` / `142:15583` (id `28:2183`).
+ * ProjectStatisticsCard — "Project Statistics" weekly activity chart, styled
+ * after Figma frame `28:1755` / `142:15583` (id `28:2183`).
+ *
+ * Each weekday renders one bar whose height encodes that day's *real* activity
+ * count (events logged to `public.activities`), normalised to the busiest day
+ * in the window. Earlier versions rendered a second fabricated bar
+ * (`count * 0.55`) as a fake "comparison baseline"; that made a brand-new,
+ * empty organisation show phantom data, so the second series was removed and an
+ * explicit empty state was added.
  *
  * Geometry:
- *   container 696×346, `bg-card rounded-[10px] shadow-card-lg`
- *   header at top:18: title 18/700 + filter-chip cluster on the right
- *   y-axis labels: 0/20/40/60/80/100, 14/500 muted, gridlines 6 × 1px
- *   x-axis days: Monday..Sunday at top:312, label 14/500 muted
- *   bars: 24px wide, rounded-tl/tr-[6px], 2 bars per day (paired)
- *     bar A (Rectangle 9561) — primary blue gradient
- *     bar B (Rectangle 9568) — accent orange (solid)
- *
- * Props:
- *   data — 7 entries (one per weekday) with two values each (`a` and `b`)
- *   primaryLabel / secondaryLabel — drive the legend chips on the header
+ *   container `bg-card rounded-md shadow-card-lg p-[18px]`, min-h 346
+ *   y-axis ticks 0/20/40/60/80/100, 6 gridlines
+ *   x-axis Monday..Sunday
+ *   bars: 24px wide, rounded top, primary-blue gradient
  */
 
 const DAYS = [
   "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday",
 ] as const;
 
-interface DayData {
-  /** Label for the X axis. */
+export interface DayActivity {
+  /** Weekday key for the X axis. */
   day: (typeof DAYS)[number];
-  /** Primary bar value (0-100). */
-  a: number;
-  /** Secondary bar value (0-100). */
-  b: number;
+  /** Raw activity count for that day (>= 0). */
+  count: number;
 }
 
 const Y_TICKS = [100, 80, 60, 40, 20, 0];
 
 interface Props {
   /** Exactly 7 values, Mon → Sun. Missing days fall through to 0. */
-  data?: DayData[];
-  primaryLabel?: string;
-  secondaryLabel?: string;
+  data?: DayActivity[];
   title?: string;
-  filterOptions?: { key: string; label: string }[];
+  legendLabel?: string;
 }
 
-export function ProjectStatisticsCard({
-  data,
-  primaryLabel,
-  secondaryLabel,
-  title,
-  filterOptions,
-}: Props) {
+export function ProjectStatisticsCard({ data, title, legendLabel }: Props) {
   const t = useTranslations("dashboard");
-  // Setter is currently unused — the filter is fixed to the first option.
-  const [filter] = useState(filterOptions?.[0]?.key ?? "completed");
+  const [filter] = useState("week");
+
+  const days = useMemo(() => data ?? [], [data]);
+  const maxCount = useMemo(
+    () => Math.max(0, ...days.map((d) => d.count)),
+    [days],
+  );
+  const hasActivity = maxCount > 0;
 
   const dayMap = useMemo(() => {
-    const m = new Map<string, DayData>();
-    (data ?? []).forEach((d) => m.set(d.day, d));
+    const m = new Map<string, number>();
+    days.forEach((d) => m.set(d.day, d.count));
     return m;
-  }, [data]);
+  }, [days]);
 
-  const resolvedTitle = title ?? (t.has("statistics.title") ? t("statistics.title") : "Project Statistics");
-  const labelPrimary = primaryLabel ?? (t.has("statistics.primary") ? t("statistics.primary") : "Task Completed");
-  const labelSecondary = secondaryLabel ?? (t.has("statistics.secondary") ? t("statistics.secondary") : "Task Created");
-  const timeWindow = filterOptions?.find((o) => o.key === filter)?.label ??
-    (t.has("statistics.weekFilter") ? t("statistics.weekFilter") : "Week");
+  const resolvedTitle =
+    title ??
+    (t.has("statistics.title") ? t("statistics.title") : "Project Statistics");
+  const resolvedLegend =
+    legendLabel ??
+    (t.has("statistics.activity") ? t("statistics.activity") : "Activity");
+  const timeWindow =
+    filter === "week"
+      ? t.has("statistics.weekFilter")
+        ? t("statistics.weekFilter")
+        : "This week"
+      : filter;
 
-  // min-h pinned at the Figma reference height (346) so the chart never
-  // collapses, but allowed to grow on tall viewports rather than capping
-  // at a fixed value that leaves whitespace below the bars on wide screens.
   return (
     <div className="flex min-h-[346px] w-full flex-col rounded-md bg-card p-[18px] shadow-card-lg">
       {/* Header */}
@@ -84,8 +84,7 @@ export function ProjectStatisticsCard({
               aria-hidden
               className="inline-block size-2 rounded-full bg-primary"
             />
-            {labelPrimary}
-            <Icon name="ArrowDown2" size={14} className="text-muted-foreground" />
+            {resolvedLegend}
           </FilterChip>
           <FilterChip>
             {timeWindow}
@@ -94,114 +93,109 @@ export function ProjectStatisticsCard({
         </div>
       </div>
 
-      {/* Chart */}
-      <div className="relative mt-6 flex flex-1 gap-3">
-        {/* Y-axis */}
-        <div className="flex w-9 flex-col justify-between pr-2 text-p3 text-muted-foreground">
-          {Y_TICKS.map((tick) => (
-            <span key={tick} className="leading-none">
-              {tick}
-            </span>
-          ))}
-        </div>
+      {hasActivity ? (
+        <>
+          {/* Chart */}
+          <div className="relative mt-6 flex flex-1 gap-3">
+            {/* Y-axis */}
+            <div className="flex w-9 flex-col justify-between pr-2 text-p3 text-muted-foreground">
+              {Y_TICKS.map((tick) => (
+                <span key={tick} className="leading-none">
+                  {tick}
+                </span>
+              ))}
+            </div>
 
-        {/* Plot area */}
-        <div className="relative flex-1">
-          {/* Horizontal gridlines, 6 x equal-spaced */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 flex flex-col justify-between"
-          >
-            {Y_TICKS.map((_, i) => (
+            {/* Plot area */}
+            <div className="relative flex-1">
+              {/* Horizontal gridlines */}
               <div
-                key={i}
-                className={cn(
-                  "h-px w-full",
-                  i === Y_TICKS.length - 1 ? "bg-border-outline" : "bg-border-strong",
-                )}
-              />
+                aria-hidden
+                className="pointer-events-none absolute inset-0 flex flex-col justify-between"
+              >
+                {Y_TICKS.map((_, i) => (
+                  <div
+                    key={i}
+                    className={cn(
+                      "h-px w-full",
+                      i === Y_TICKS.length - 1
+                        ? "bg-border-outline"
+                        : "bg-border-strong",
+                    )}
+                  />
+                ))}
+              </div>
+
+              {/* Bars — one per weekday, real activity count */}
+              <div className="relative flex h-full items-end justify-between pb-1">
+                {DAYS.map((day) => {
+                  const count = dayMap.get(day) ?? 0;
+                  const pct = Math.round((count / maxCount) * 100);
+                  return (
+                    <div
+                      key={day}
+                      className="flex h-full flex-1 flex-col items-center justify-end"
+                    >
+                      <Bar value={pct} count={count} />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
+          {/* X-axis labels */}
+          <div className="mt-2 flex pl-9">
+            {DAYS.map((day) => (
+              <div
+                key={day}
+                className="flex-1 text-center text-p3 text-muted-foreground"
+              >
+                {t.has(`statistics.day.${day}`)
+                  ? t(`statistics.day.${day}`)
+                  : day.charAt(0).toUpperCase() + day.slice(1, 3)}
+              </div>
             ))}
           </div>
-
-          {/* Bars */}
-          <div className="relative flex h-full items-end justify-between pb-1">
-            {DAYS.map((day) => {
-              const d = dayMap.get(day) ?? { day, a: 0, b: 0 };
-              return (
-                <div
-                  key={day}
-                  className="flex h-full flex-1 flex-col items-center justify-end gap-1"
-                >
-                  <div className="flex h-full items-end gap-2">
-                    <Bar value={d.a} tone="primary" />
-                    <Bar value={d.b} tone="accent" />
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-
-      {/* X-axis labels */}
-      <div className="mt-2 flex pl-9">
-        {DAYS.map((day) => (
-          <div
-            key={day}
-            className="flex-1 text-center text-p3 text-muted-foreground"
-          >
-            {t.has(`statistics.day.${day}`)
-              ? t(`statistics.day.${day}`)
-              : day.charAt(0).toUpperCase() + day.slice(1, 3)}
-          </div>
-        ))}
-      </div>
-
-      {/* Legend (small, bottom-right) */}
-      <div className="mt-3 flex items-center justify-end gap-4 text-p4">
-        <span className="flex items-center gap-1.5 text-muted-foreground">
-          <span className="size-2.5 rounded-sm bg-primary" />
-          {labelPrimary}
-        </span>
-        <span className="flex items-center gap-1.5 text-muted-foreground">
-          <span className="size-2.5 rounded-sm bg-accent" />
-          {labelSecondary}
-        </span>
-      </div>
+        </>
+      ) : (
+        <EmptyChart
+          message={
+            t.has("statistics.empty")
+              ? t("statistics.empty")
+              : "No activity yet this week. As you and your team work through products, SBOMs and checklists, your weekly activity will show up here."
+          }
+        />
+      )}
     </div>
   );
 }
 
-function Bar({
-  value,
-  tone,
-}: {
-  value: number;
-  tone: "primary" | "accent";
-}) {
+function Bar({ value, count }: { value: number; count: number }) {
   const clamped = Math.max(0, Math.min(100, value));
   return (
     <div
-      className={cn(
-        "relative w-6 overflow-hidden rounded-tl-md rounded-tr-md transition-all",
-        tone === "primary"
-          ? "bg-[linear-gradient(180deg,#066DE6_0%,#6DA9F0_120%)]"
-          : "bg-accent",
-      )}
+      className="relative w-6 overflow-hidden rounded-tl-md rounded-tr-md bg-[linear-gradient(180deg,#066DE6_0%,#6DA9F0_120%)] transition-all"
       style={{ height: `${clamped}%`, minHeight: clamped > 0 ? 4 : 0 }}
-      aria-label={`${tone}: ${clamped}%`}
+      aria-label={`${count}`}
     />
   );
 }
 
+function EmptyChart({ message }: { message: string }) {
+  return (
+    <div className="mt-6 flex flex-1 flex-col items-center justify-center gap-3 rounded-md border border-dashed border-border-outline bg-muted/40 px-6 py-10 text-center">
+      <span className="flex size-11 items-center justify-center rounded-full bg-primary/10 text-primary">
+        <Icon name="Chart" size={22} />
+      </span>
+      <p className="max-w-xs text-p3 text-muted-foreground">{message}</p>
+    </div>
+  );
+}
+
 /**
- * Filter chip — verbatim Figma spec from the design-system memory:
- *   `bg-card border-[1.5px] border-border-outline rounded-sm
- *    px-2.5 py-1.5 gap-3.5 text-p3` with an optional 14-16 px arrow.
- *
- * Earlier values (gap-2, px-3, h-9) were close but read tighter than
- * the Figma reference; the spec values give the chip more breathing
- * room around the label + chevron.
+ * Filter chip — Figma spec: `bg-card border-[1.5px] border-border-outline
+ * rounded-sm px-2.5 py-1.5 gap-3.5 text-p3` with an optional chevron.
  */
 function FilterChip({ children }: { children: React.ReactNode }) {
   return (

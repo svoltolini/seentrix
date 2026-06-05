@@ -1,4 +1,8 @@
 import type { CopilotContext } from "./prompt";
+import {
+  getOnboardingSnapshot,
+} from "@/lib/onboarding-state-server";
+import { onboardingStateToPromptBlock } from "@/lib/onboarding-state";
 
 /**
  * Turn the raw `page.path` hint from the client into a rich context
@@ -58,7 +62,25 @@ export async function enrichPageContext(
     orgCountry,
   } = args;
 
-  const base: CopilotContext = { locale, orgName, orgCountry, plan };
+  // Org-level onboarding/project state is page-independent — compute it once
+  // and attach to the base context so "what do I do next?" is always grounded
+  // in the org's real progress, no matter which screen the user is on. A
+  // failure here is non-fatal: we fall back to a context without project state.
+  let projectState: string | undefined;
+  try {
+    const snapshot = await getOnboardingSnapshot({ supabase, orgId });
+    projectState = onboardingStateToPromptBlock(snapshot);
+  } catch (err) {
+    console.error("[copilot] onboarding snapshot failed", err);
+  }
+
+  const base: CopilotContext = {
+    locale,
+    orgName,
+    orgCountry,
+    plan,
+    projectState,
+  };
 
   if (!pagePath) return base;
 
@@ -261,5 +283,6 @@ export async function enrichPageContext(
     productName,
     productType,
     situation,
+    projectState,
   };
 }

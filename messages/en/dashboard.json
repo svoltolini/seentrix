@@ -194,6 +194,92 @@
       "totalLast30d": "actions · last 30 days",
       "peak": "Peak day",
       "noData": "No team activity in the last 30 days."
+    },
+    "team": "Team",
+    "kpi": {
+      "heading": "Key metrics",
+      "products": "Products",
+      "productsAssessed": "{count} assessed",
+      "avgCompliance": "Avg. compliance",
+      "openVulns": "Open vulnerabilities",
+      "criticalCount": "{count} critical",
+      "overdue": "Overdue tasks",
+      "daysValue": "{days}d"
+    },
+    "statistics": {
+      "title": "Project Statistics",
+      "activity": "Activity",
+      "weekFilter": "This week",
+      "empty": "No activity yet this week. As you and your team work through products, SBOMs and checklists, your weekly activity will show up here.",
+      "day": {
+        "monday": "Mon",
+        "tuesday": "Tue",
+        "wednesday": "Wed",
+        "thursday": "Thu",
+        "friday": "Fri",
+        "saturday": "Sat",
+        "sunday": "Sun"
+      }
+    },
+    "calendar": {
+      "title": "Compliance Calendar",
+      "prev": "Previous month",
+      "next": "Next month",
+      "legendDeadline": "CRA deadline",
+      "legendTask": "Your task",
+      "upcoming": "Upcoming",
+      "empty": "Nothing scheduled.",
+      "dueToday": "Due today",
+      "inDays": "In {days} days",
+      "day": {
+        "mon": "Mon",
+        "tue": "Tue",
+        "wed": "Wed",
+        "thu": "Thu",
+        "fri": "Fri",
+        "sat": "Sat",
+        "sun": "Sun"
+      }
+    },
+    "getStarted": {
+      "title": "Welcome to Seentrix",
+      "greeting": "Welcome, {name}",
+      "subtitle": "Let’s get your organisation ready for the EU Cyber Resilience Act. Work through these steps and we’ll guide you the whole way.",
+      "progressLabel": "{done} of {total} steps complete",
+      "askTitle": "Not sure where to start?",
+      "askDescription": "Open Seentrix AI from the top bar and ask “What do I need to do next?” — it knows exactly where your organisation stands."
+    },
+    "steps": {
+      "company-profile": {
+        "title": "Complete your company profile",
+        "description": "Add your legal entity details so Seentrix can generate a Declaration of Conformity.",
+        "cta": "Complete profile"
+      },
+      "first-product": {
+        "title": "Add your first product",
+        "description": "Register a product to start tracking its CRA compliance journey.",
+        "cta": "Add product"
+      },
+      "classify-product": {
+        "title": "Classify your product under the CRA",
+        "description": "Run the guided assessment to determine the product’s CRA category and conformity route.",
+        "cta": "Classify product"
+      },
+      "upload-sbom": {
+        "title": "Upload a Software Bill of Materials",
+        "description": "Upload a CycloneDX or SPDX SBOM so Seentrix can surface known vulnerabilities.",
+        "cta": "Upload SBOM"
+      },
+      "triage-vulnerabilities": {
+        "title": "Triage your vulnerabilities",
+        "description": "Review open vulnerabilities and mark each resolved or accepted.",
+        "cta": "Review vulnerabilities"
+      },
+      "complete-checklist": {
+        "title": "Work through the conformity checklist",
+        "description": "Complete the essential-requirement checklist for each product to reach full conformity.",
+        "cta": "Open checklist"
+      }
     }
   }
 }
