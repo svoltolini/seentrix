@@ -7,6 +7,7 @@ import {
   STEP_ATTACHMENT_ALLOWED_MIMES,
   STEP_ATTACHMENT_MAX_BYTES,
 } from "./constants";
+import { isChecklistComplete, hasScannedActiveSbom } from "./gate";
 
 export type ConformityRoute =
   | "module_a"
@@ -383,10 +384,9 @@ export async function loadConformity(
         .eq("is_active", true),
     ]);
 
-  const checklistComplete =
-    (assessableCount ?? 0) > 0 && assessableCount === completedCount;
-  const hasActiveSbom = (sboms ?? []).some(
-    (s) => !!(s as { last_scanned_at: string | null }).last_scanned_at,
+  const checklistComplete = isChecklistComplete(assessableCount, completedCount);
+  const hasActiveSbom = hasScannedActiveSbom(
+    (sboms ?? []) as { last_scanned_at: string | null }[],
   );
 
   return {

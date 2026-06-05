@@ -2,6 +2,16 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { parseSbom, type SbomFormat } from "@/lib/sbom/parser";
+import {
+  type OsvBatchResult,
+  type Severity,
+  cvssToSeverity,
+  enrichVulns,
+  extractCvssScore,
+  extractVulnId,
+  fetchKevCveIds,
+  OSV_QUERYBATCH_URL,
+} from "@/lib/sbom/osv";
 import { logActivity } from "@/lib/activity";
 
 // ---------------------------------------------------------------------------
@@ -64,16 +74,6 @@ async function getAuthContext() {
 
   const orgId = user.app_metadata?.org_id as string | undefined;
   return { supabase, user, orgId: orgId ?? null };
-}
-
-type Severity = "critical" | "high" | "medium" | "low";
-
-function cvssToSeverity(score: number | null): Severity {
-  if (score === null) return "medium";
-  if (score >= 9.0) return "critical";
-  if (score >= 7.0) return "high";
-  if (score >= 4.0) return "medium";
-  return "low";
 }
 
 // ---------------------------------------------------------------------------
@@ -286,118 +286,6 @@ export async function toggleSbomActive(
 }
 
 // ---------------------------------------------------------------------------
-// Scan vulnerabilities via OSV.dev + CISA KEV
-// ---------------------------------------------------------------------------
-
-interface OsvVuln {
-  id: string;
-  aliases?: string[];
-  summary?: string;
-  details?: string;
-  severity?: { type: string; score: string }[];
-  database_specific?: Record<string, unknown>;
-  published?: string;
-  references?: { type: string; url: string }[];
-}
-
-interface OsvBatchResult {
-  results: { vulns?: OsvVuln[] }[];
-}
-
-// OSV.dev's /v1/querybatch returns a minimal response by design — only
-// { id, modified } per vuln, no severity, no description, no
-// database_specific. We *must* follow up with /v1/vulns/{id} for each
-// unique vuln id to recover the data we need for severity bucketing and
-// description text. Without this, every CVE buckets to the null-score
-// fallback in cvssToSeverity (= "medium"), which is why QA was seeing
-// everything labelled medium regardless of actual severity.
-async function enrichVulns(
-  vulns: OsvVuln[],
-): Promise<Map<string, OsvVuln>> {
-  const enriched = new Map<string, OsvVuln>();
-  const uniqueIds = Array.from(new Set(vulns.map((v) => v.id)));
-
-  const PARALLEL = 10;
-  for (let i = 0; i < uniqueIds.length; i += PARALLEL) {
-    const batch = uniqueIds.slice(i, i + PARALLEL);
-    const results = await Promise.allSettled(
-      batch.map(async (id) => {
-        const res = await fetch(`https://api.osv.dev/v1/vulns/${id}`, {
-          headers: { "Content-Type": "application/json" },
-        });
-        if (!res.ok) return null;
-        return (await res.json()) as OsvVuln;
-      }),
-    );
-    results.forEach((r, idx) => {
-      if (r.status === "fulfilled" && r.value) {
-        enriched.set(batch[idx], r.value);
-      }
-    });
-  }
-
-  // Fall back to the sparse stub when /v1/vulns/{id} didn't return (rate
-  // limit, transient error). Severity extraction will still return null
-  // for these, which is honest — we shouldn't pretend we know.
-  for (const v of vulns) {
-    if (!enriched.has(v.id)) enriched.set(v.id, v);
-  }
-
-  return enriched;
-}
-
-function extractCvssScore(vuln: OsvVuln): number | null {
-  // 1. Check database_specific.cvss.score (GitHub, npm, etc.)
-  const dbSpecific = vuln.database_specific;
-  if (dbSpecific) {
-    const cvss = dbSpecific.cvss as Record<string, unknown> | undefined;
-    if (cvss?.score && typeof cvss.score === "number") return cvss.score;
-  }
-
-  // 2. Check severity array for CVSS_V3 or CVSS_V4
-  if (vuln.severity) {
-    for (const s of vuln.severity) {
-      if (s.type === "CVSS_V3" || s.type === "CVSS_V4") {
-        // Try to extract base score from vector string like "CVSS:3.1/AV:N/AC:L/..."
-        const match = s.score.match(/\/(?:S:[UC]\/)?C:([HLN])\/I:([HLN])\/A:([HLN])/);
-        if (match) {
-          // Rough heuristic from base CIA metrics
-          const weights: Record<string, number> = { H: 3, L: 1, N: 0 };
-          const sum =
-            (weights[match[1]] ?? 0) +
-            (weights[match[2]] ?? 0) +
-            (weights[match[3]] ?? 0);
-          if (sum >= 8) return 9.0;
-          if (sum >= 5) return 7.5;
-          if (sum >= 2) return 5.0;
-          return 3.0;
-        }
-      }
-    }
-  }
-
-  // 3. Check database_specific.severity string
-  if (dbSpecific) {
-    const sevStr = (dbSpecific.severity as string | undefined)?.toUpperCase?.();
-    if (sevStr === "CRITICAL") return 9.5;
-    if (sevStr === "HIGH") return 7.5;
-    if (sevStr === "MODERATE" || sevStr === "MEDIUM") return 5.0;
-    if (sevStr === "LOW") return 2.5;
-  }
-
-  return null;
-}
-
-function extractVulnId(vuln: OsvVuln): string {
-  // Prefer CVE ID, then GHSA, then OSV id
-  if (vuln.aliases) {
-    const cve = vuln.aliases.find((a) => a.startsWith("CVE-"));
-    if (cve) return cve;
-  }
-  return vuln.id;
-}
-
-// ---------------------------------------------------------------------------
 // Update vulnerability status (for MTTR tracking)
 // ---------------------------------------------------------------------------
 
@@ -473,22 +361,8 @@ export async function scanVulnerabilities(
     })
     .eq("sbom_id", sbomId);
 
-  // 3. Fetch CISA KEV catalog
-  let kevCveIds: Set<string> = new Set();
-  try {
-    const kevResponse = await fetch(
-      "https://www.cisa.gov/sites/default/files/feeds/known-exploited-vulnerabilities.json",
-      { next: { revalidate: 86400 } } // cache 24h
-    );
-    if (kevResponse.ok) {
-      const kevData = (await kevResponse.json()) as {
-        vulnerabilities: { cveID: string }[];
-      };
-      kevCveIds = new Set(kevData.vulnerabilities.map((v) => v.cveID));
-    }
-  } catch {
-    // KEV fetch is best-effort — continue without it
-  }
+  // 3. Fetch CISA KEV catalog (best-effort; empty set on failure)
+  const kevCveIds = await fetchKevCveIds();
 
   // 4. Query OSV.dev in batches of 1000
   const BATCH_SIZE = 1000;
@@ -508,7 +382,7 @@ export async function scanVulnerabilities(
 
     let batchResults: OsvBatchResult;
     try {
-      const response = await fetch("https://api.osv.dev/v1/querybatch", {
+      const response = await fetch(OSV_QUERYBATCH_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ queries }),
