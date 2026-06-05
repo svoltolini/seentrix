@@ -176,7 +176,7 @@ export async function TeamProgress({ locale }: { locale: LocaleId }) {
         <div className="mt-5 w-full">
           <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/20">
             <div
-              className="h-full rounded-full bg-dark-cta transition-all"
+              className="h-full rounded-full bg-white transition-all"
               style={{ width: `${orgPct}%` }}
             />
           </div>
