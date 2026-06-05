@@ -36,6 +36,13 @@ export async function GET(request: NextRequest) {
         return redirectTo("/app/dashboard");
       }
 
+      // Freshly-confirmed signups (no org yet) get an explicit
+      // "email confirmed" acknowledgement before the account-setup form,
+      // rather than being dropped straight into onboarding.
+      if (type === "signup") {
+        return redirectTo("/auth/confirmed");
+      }
+
       return redirectTo("/auth/onboarding");
     }
   }

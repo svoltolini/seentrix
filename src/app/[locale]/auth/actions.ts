@@ -89,6 +89,12 @@ export async function signup(
       data: {
         full_name: result.data.fullName,
       },
+      // Route the confirmation link through our callback so it can
+      // exchange the code for a session and land the user on the
+      // "email confirmed" screen. Without this, Supabase falls back to
+      // the project Site URL (the marketing homepage) and the click is a
+      // dead-end with no acknowledgement.
+      emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback?type=signup`,
     },
   });
 
