@@ -58,7 +58,10 @@
     },
     "empty": {
       "title": "No reports yet",
-      "description": "When someone submits a vulnerability through your public page, it'll land here for triage."
+      "description": "When someone submits a vulnerability through your public page, it'll land here for triage.",
+      "noProductTitle": "Add a product first",
+      "noProductDescription": "Vulnerability reports are tied to your products. Add your first product so researchers and your team have something to report against.",
+      "noProductCta": "Add your first product"
     },
     "row": {
       "anonymous": "Anonymous",

@@ -101,9 +101,13 @@ function humanize(
   if (t.has(labelKey)) {
     return t(labelKey, { target: target?.trim() || "—" });
   }
-  return t("dashboard.actionLabels.fallback", {
+  // Unknown action — humanise the raw key and capitalise the first word so the
+  // notifications popover never shows a lowercase fragment like
+  // "organization created".
+  const raw = t("dashboard.actionLabels.fallback", {
     action: action.replace(/[._]/g, " "),
   });
+  return raw.length ? raw.charAt(0).toUpperCase() + raw.slice(1) : raw;
 }
 
 export function NotificationsMenu() {
@@ -154,6 +158,9 @@ export function NotificationsMenu() {
   const viewAllLabel = t.has("topbar.notificationsViewAll")
     ? t("topbar.notificationsViewAll")
     : "View all activity";
+  // Only offer "View all activity" when there is at least one event to view.
+  // A brand-new org with no activity gets a dead-end link otherwise.
+  const showViewAll = loaded && items.length > 0;
 
   return (
     <DropdownMenu onOpenChange={handleOpenChange}>
@@ -230,14 +237,17 @@ export function NotificationsMenu() {
           </div>
         )}
 
-        <DropdownMenuSeparator className="my-0" />
-
-        <Link
-          href="/app/dashboard"
-          className="block px-4 py-3 text-center text-p3 text-primary transition-colors hover:bg-muted"
-        >
-          {viewAllLabel}
-        </Link>
+        {showViewAll && (
+          <>
+            <DropdownMenuSeparator className="my-0" />
+            <Link
+              href="/app/settings/activity"
+              className="block px-4 py-3 text-center text-p3 text-primary transition-colors hover:bg-muted"
+            >
+              {viewAllLabel}
+            </Link>
+          </>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );

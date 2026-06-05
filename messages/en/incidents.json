@@ -59,7 +59,10 @@
       "title": "No incidents yet",
       "description": "When a security incident or actively-exploited vulnerability is detected, file it here to start the 24h / 72h / 14d reporting clock.",
       "filtered": "No incidents match your filters",
-      "filteredDescription": "Try adjusting the filters above."
+      "filteredDescription": "Try adjusting the filters above.",
+      "noProductTitle": "Add a product first",
+      "noProductDescription": "Incidents are reported against a specific product. Add your first product to start tracking incidents and the CRA 24h / 72h / 14d reporting clock.",
+      "noProductCta": "Add your first product"
     },
     "new": {
       "cta": "New incident",

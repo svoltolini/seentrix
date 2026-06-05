@@ -79,7 +79,8 @@
         "evidence_removed": "Removed a piece of evidence",
         "evidence_uploaded": "Uploaded evidence — {target}",
         "item_description_changed": "Edited a checklist description",
-        "item_status_changed": "Updated a checklist item"
+        "item_status_changed": "Updated a checklist item",
+        "item_assigned": "Assigned a checklist item"
       },
       "document": {
         "pdf_generated": "Generated a document PDF",
@@ -92,7 +93,10 @@
         "role_changed": "Updated a team member's role"
       },
       "organization": {
-        "updated": "Updated organisation settings"
+        "updated": "Updated organisation settings",
+        "created": "Created the organisation",
+        "entity_type_changed": "Changed the organisation entity type",
+        "security_updated": "Updated security settings"
       },
       "password": {
         "changed": "Changed their password"
@@ -101,7 +105,8 @@
         "assessed": "Assessed a product",
         "created": "Created the product {target}",
         "deleted": "Deleted a product",
-        "updated": "Updated {target}"
+        "updated": "Updated {target}",
+        "support_updated": "Updated a product support period"
       },
       "profile": {
         "updated": "Updated their profile"
@@ -111,7 +116,37 @@
         "scanned": "Scanned an SBOM",
         "uploaded": "Uploaded an SBOM — {target}"
       },
-      "fallback": "{action}"
+      "fallback": "{action}",
+      "academy": {
+        "lesson_completed": "Completed an Academy lesson"
+      },
+      "conformity": {
+        "attachment_added": "Added a conformity attachment",
+        "declaration_issued": "Issued a Declaration of Conformity",
+        "notified_body_updated": "Updated notified-body details"
+      },
+      "entity_obligation": {
+        "updated": "Updated entity obligations"
+      },
+      "gdpr": {
+        "deletion_cancelled": "Cancelled an account-deletion request",
+        "deletion_requested": "Requested account deletion",
+        "export_generated": "Generated a data export"
+      },
+      "incident": {
+        "closed": "Closed an incident",
+        "detected": "Reported an incident",
+        "updated": "Updated an incident",
+        "user_notified": "Notified users about an incident"
+      },
+      "release": {
+        "deleted": "Deleted a release",
+        "published": "Published a release"
+      },
+      "vulnerability": {
+        "assigned": "Assigned a vulnerability",
+        "note_added": "Added a vulnerability note"
+      }
     },
     "activityType": {
       "assessment": "Assessment",
