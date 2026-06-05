@@ -1,0 +1,105 @@
+name: CI
+
+# Gate every push and PR on the full quality suite. Steps run sequentially
+# in one job so they execute in a strict order and fail fast: the first
+# broken check aborts the run and no later check (or merge) proceeds.
+on:
+  push:
+  pull_request:
+
+# Cancel superseded runs on the same ref to save CI minutes.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: Lint, Types, Tests, Build
+    runs-on: ubuntu-latest
+    # Non-secret placeholders so `next build` can collect page data in CI.
+    # The build only needs these env vars to be present, not real values;
+    # nothing here is sensitive. Real secrets live in repo/environment
+    # secrets and are never required for the build to compile.
+    env:
+      MISTRAL_API_KEY: ci-dummy
+      NEXT_PUBLIC_SUPABASE_URL: https://ci-dummy.supabase.co
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ci-dummy-anon-key
+      SUPABASE_SERVICE_ROLE_KEY: ci-dummy-service-role-key
+      NEXT_PUBLIC_SITE_URL: http://localhost:3000
+      NEXT_PUBLIC_APP_URL: http://localhost:3000
+      STRIPE_SECRET_KEY: sk_test_ci_dummy
+      STRIPE_WEBHOOK_SECRET: whsec_ci_dummy
+      RESEND_API_KEY: ci-dummy
+      RESEND_FROM_ADDRESS: ci@example.com
+      UPSTASH_REDIS_REST_URL: https://ci-dummy.upstash.io
+      UPSTASH_REDIS_REST_TOKEN: ci-dummy
+      TURNSTILE_SECRET_KEY: ci-dummy
+      NEXT_PUBLIC_TURNSTILE_SITE_KEY: ci-dummy
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      # --- Quality gates, in order. Each records its outcome for the summary;
+      # `||` captures the exit code without aborting mid-step, then the step
+      # re-exits non-zero so the job fails fast and skips the rest. ---
+
+      - name: Lint (eslint)
+        id: lint
+        run: |
+          npm run lint
+          echo "status=passed" >> "$GITHUB_OUTPUT"
+
+      - name: Type-check (tsc --noEmit)
+        id: typecheck
+        run: |
+          npm run typecheck
+          echo "status=passed" >> "$GITHUB_OUTPUT"
+
+      - name: Tests (Vitest — unit, component, MSW integration)
+        id: tests
+        run: |
+          npm test
+          echo "status=passed" >> "$GITHUB_OUTPUT"
+
+      - name: Build (next build)
+        id: build
+        run: |
+          npm run build
+          echo "status=passed" >> "$GITHUB_OUTPUT"
+
+      # --- Status summary posted to the PR check (GitHub Step Summary).
+      # Runs even on failure so reviewers see exactly which gate broke. ---
+      - name: Status summary
+        if: always()
+        run: |
+          pass() { [ "$1" = "passed" ] && echo "✅ Passed" || echo "❌ Failed / skipped"; }
+          {
+            echo "## CI Quality Gates"
+            echo ""
+            echo "Sequential, fail-fast order — a failed gate skips the ones below it."
+            echo ""
+            echo "| Gate | Result |"
+            echo "| --- | --- |"
+            echo "| Lint (eslint) | $(pass '${{ steps.lint.outputs.status }}') |"
+            echo "| Type-check (tsc --noEmit) | $(pass '${{ steps.typecheck.outputs.status }}') |"
+            echo "| Tests (Vitest incl. MSW integration) | $(pass '${{ steps.tests.outputs.status }}') |"
+            echo "| Build (next build) | $(pass '${{ steps.build.outputs.status }}') |"
+            echo ""
+            if [ "${{ job.status }}" = "success" ]; then
+              echo "**All gates green — safe to merge.**"
+            else
+              echo "**One or more gates failed — merge is blocked until CI is green.**"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
