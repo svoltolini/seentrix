@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
-import { usePathname } from "@/i18n/navigation";
+import { usePathname, Link } from "@/i18n/navigation";
 
 import { Button } from "@/components/ui/button";
 import { SearchInput } from "@/components/ui/search-input";
@@ -174,7 +174,7 @@ export function AppTopbar({ user, orgName }: AppTopbarProps) {
             {!user?.avatarUrl && (
               <>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem render={<a href="/app/settings/account" />}>
+                <DropdownMenuItem render={<Link href="/app/settings/account" />}>
                   <Icon name="Camera" size={16} className="text-primary" />
                   <span className="text-primary">
                     {t.has("topbar.addProfilePicture")
@@ -187,11 +187,11 @@ export function AppTopbar({ user, orgName }: AppTopbarProps) {
 
             <DropdownMenuSeparator />
 
-            <DropdownMenuItem render={<a href="/app/settings/account" />}>
+            <DropdownMenuItem render={<Link href="/app/settings/account" />}>
               <Icon name="Setting2" size={16} />
               {accountLabel}
             </DropdownMenuItem>
-            <DropdownMenuItem render={<a href="/app/help/glossary" />}>
+            <DropdownMenuItem render={<Link href="/app/help/glossary" />}>
               <Icon name="MessageQuestion" size={16} />
               {t("nav.help") ?? "Help"}
             </DropdownMenuItem>

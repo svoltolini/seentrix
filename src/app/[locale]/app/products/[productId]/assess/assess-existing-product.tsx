@@ -5,7 +5,6 @@ import { Icon } from "@/components/icon";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { StepIndicator } from "../../new/components/step-indicator";
@@ -28,7 +27,7 @@ import { CATEGORY_COLORS } from "../constants";
 
 export function AssessExistingProduct({
   product,
-  locale,
+  locale: _locale,
 }: {
   product: ProductDetail;
   locale: string;

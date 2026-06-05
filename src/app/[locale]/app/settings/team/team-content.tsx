@@ -52,7 +52,7 @@ export function TeamContent({
   const t = useTranslations("settings.team");
   const router = useRouter();
   const params = useParams();
-  const locale = (params.locale as string) || "en";
+  const _locale = (params.locale as string) || "en";
   const { toast } = useToast();
   const [members, setMembers] = useState(initialMembers);
   const [removeTarget, setRemoveTarget] = useState<TeamMember | null>(null);
@@ -197,6 +197,9 @@ export function TeamContent({
                 {/* Avatar */}
                 <div className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-primary/15 text-l6-plus text-primary">
                   {member.avatar_url ? (
+                    // Tiny remote avatar from Supabase storage — next/image
+                    // optimization not worth the remote-domain config here.
+                    // eslint-disable-next-line @next/next/no-img-element
                     <img
                       src={member.avatar_url}
                       alt=""

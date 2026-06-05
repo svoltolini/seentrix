@@ -26,10 +26,21 @@ export function CountdownTimer() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setTime(calcTimeLeft());
-    setMounted(true);
-    const id = setInterval(() => setTime(calcTimeLeft()), 1000);
-    return () => clearInterval(id);
+    // Drive every update (including the first) from the interval callback so
+    // we never call setState synchronously in the effect body. We render a
+    // neutral "00" placeholder until `mounted` flips, avoiding an SSR/client
+    // hydration mismatch on the live clock.
+    const tick = () => {
+      setTime(calcTimeLeft());
+      setMounted(true);
+    };
+    const id = setInterval(tick, 1000);
+    // Kick off the first tick on the next frame instead of inline.
+    const raf = requestAnimationFrame(tick);
+    return () => {
+      clearInterval(id);
+      cancelAnimationFrame(raf);
+    };
   }, []);
 
   const boxes = [

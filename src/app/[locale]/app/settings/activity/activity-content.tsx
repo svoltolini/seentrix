@@ -128,6 +128,9 @@ export function ActivityContent({ activities }: { activities: Activity[] }) {
                 >
                   {/* Avatar */}
                   {activity.actor_avatar_url ? (
+                    // Tiny remote avatar from Supabase storage — next/image
+                    // optimization not worth the remote-domain config here.
+                    // eslint-disable-next-line @next/next/no-img-element
                     <img
                       src={activity.actor_avatar_url}
                       alt={activity.actor_name ?? ""}

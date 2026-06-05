@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 import { Term } from "@/components/glossary/term";
 import type { Lesson } from "@/lib/academy/types";
 

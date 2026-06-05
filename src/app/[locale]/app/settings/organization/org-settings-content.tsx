@@ -601,6 +601,9 @@ function RoleBranch({
           >
             <div className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-muted text-l6-plus text-muted-foreground">
               {member.avatar_url ? (
+                // Tiny remote avatar from Supabase storage — next/image
+                // optimization not worth the remote-domain config here.
+                // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={member.avatar_url}
                   alt=""

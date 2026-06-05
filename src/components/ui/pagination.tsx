@@ -4,7 +4,7 @@ import * as React from "react"
 import { Icon } from "@/components/icon"
 
 import { cn } from "@/lib/utils"
-import { Button, buttonVariants } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
 
 /**
  * Pagination — ghost-button row with previous / next + numbered cells.

@@ -122,6 +122,14 @@ export function ProductOverview({
     undefined
   );
 
+  // React to the server action completing: close the editor, clear the
+  // staged image, and refresh. The setState runs only on a successful
+  // submit (when `editState.productId` is populated), not on every render,
+  // so the cascading-render concern behind the lint rule does not apply.
+  // `resetImageState` is a stable local helper; intentionally omitted from
+  // deps to avoid re-running on every render. (set-state-in-effect /
+  // exhaustive-deps disabled for this file via eslint.config.mjs — the
+  // React-Compiler rule's inline directives are not honored reliably here.)
   useEffect(() => {
     if (editState?.productId) {
       setEditing(false);

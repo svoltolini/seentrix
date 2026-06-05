@@ -23,12 +23,19 @@ import { useEffect, useState } from "react";
  *     }, [reduced]);
  */
 export function useReducedMotion(): boolean | null {
-  const [reduced, setReduced] = useState<boolean | null>(null);
+  // Lazy initializer: read the media query during the first client render
+  // instead of synchronously inside an effect (which triggers a cascading
+  // re-render). Stays `null` during SSR where `window` is unavailable.
+  const [reduced, setReduced] = useState<boolean | null>(() => {
+    if (typeof window === "undefined") return null;
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  });
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReduced(mq.matches);
     const onChange = (e: MediaQueryListEvent) => setReduced(e.matches);
+    // Subscribe only; the initial value comes from the lazy initializer above.
+    // Attaching the listener immediately catches any change since first render.
     mq.addEventListener("change", onChange);
     return () => mq.removeEventListener("change", onChange);
   }, []);

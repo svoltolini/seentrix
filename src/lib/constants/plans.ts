@@ -22,7 +22,7 @@ export function canCreateProduct(plan: OrgPlan, currentCount: number): boolean {
   return currentCount < limit;
 }
 
-export function isChecklistReadOnly(plan: OrgPlan): boolean {
+export function isChecklistReadOnly(_plan: OrgPlan): boolean {
   // Free tier now has a writable checklist — the read-only cap was
   // converting badly. Users need to *feel* the product working to upgrade.
   return false;
@@ -170,6 +170,10 @@ export const STRIPE_PRICE_IDS: Record<
 };
 
 export function getPlanFromPriceId(priceId: string): OrgPlan {
+  // Guard against an empty/missing price id matching an unconfigured plan:
+  // when a Stripe price-id env var is unset it defaults to "", so a blank
+  // input must never resolve to a paid plan.
+  if (!priceId) return "free";
   for (const [plan, ids] of Object.entries(STRIPE_PRICE_IDS)) {
     if (ids.monthly === priceId || ids.annual === priceId) {
       return plan as OrgPlan;
