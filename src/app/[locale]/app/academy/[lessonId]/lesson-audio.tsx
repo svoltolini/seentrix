@@ -29,7 +29,12 @@ export function LessonAudioPlayer({
   const ref = useRef<HTMLAudioElement>(null);
   const [playing, setPlaying] = useState(false);
   const [current, setCurrent] = useState(0);
-  const [duration, setDuration] = useState(audio.durationSeconds);
+  // Start at 0 and let the real file's metadata set the duration. We do NOT
+  // seed from `audio.durationSeconds` because that static value is the English
+  // briefing's length, which is wrong for the de/fr/it audio (each language's
+  // narration runs a different length). `preload="metadata"` resolves the true
+  // duration almost immediately, so the label is correct per language.
+  const [duration, setDuration] = useState(0);
 
   function toggle() {
     const el = ref.current;
@@ -88,7 +93,7 @@ export function LessonAudioPlayer({
             }}
           />
           <span className="shrink-0 text-p4 tabular-nums text-muted-foreground">
-            {fmt(current)} / {fmt(duration)}
+            {fmt(current)} / {duration > 0 ? fmt(duration) : "--:--"}
           </span>
         </div>
       </div>
