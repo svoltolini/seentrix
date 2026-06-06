@@ -12,6 +12,7 @@ import {
   snoozeMfaEnrolment,
   clearMfaGrace,
   clearUnverifiedMfaFactors,
+  clearMfaEnrolledCookie,
 } from "./actions";
 
 type EnrolState =
@@ -145,6 +146,9 @@ export function SecurityContent({
         toast({ type: "error", message: error.message });
         return;
       }
+      // Clear the cached enrolment hint so the middleware re-checks (and the
+      // mandatory-2FA gate re-engages) on the next navigation.
+      await clearMfaEnrolledCookie();
       toast({ type: "success", message: "2FA removed" });
       router.refresh();
     });

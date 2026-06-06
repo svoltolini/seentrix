@@ -36,6 +36,16 @@ export async function clearMfaGrace(): Promise<void> {
 }
 
 /**
+ * Clears the cached "MFA enrolled" hint cookie. Call after a user disables
+ * 2FA so the middleware re-checks enrolment (and re-engages the mandatory
+ * gate) on the next navigation instead of trusting the stale cached flag.
+ */
+export async function clearMfaEnrolledCookie(): Promise<void> {
+  const store = await cookies();
+  store.delete("2fa_enrolled");
+}
+
+/**
  * Remove every *unverified* TOTP factor for the current user.
  *
  * Abandoning the QR step (Cancel, navigating away, a failed verify) leaves a

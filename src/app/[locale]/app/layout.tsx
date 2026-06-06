@@ -6,7 +6,7 @@ import { GsapProvider } from "@/components/gsap-provider";
 import { NavigationProgress } from "@/components/navigation-progress";
 import { CopilotProvider } from "@/components/copilot/copilot-provider";
 import { CreateProductSheet } from "@/components/products/create-product-sheet";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getAuthUser } from "@/lib/supabase/server";
 
 /**
  * Pull a usable display name out of whatever sources we have. The
@@ -43,9 +43,9 @@ function resolveDisplayName(opts: {
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  // Request-deduped via React cache() so the layout + page + widgets share a
+  // single getUser() network round-trip per navigation.
+  const user = await getAuthUser();
 
   let avatarUrl: string | null = null;
   let displayName: string | null = null;
