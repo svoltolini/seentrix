@@ -56,16 +56,6 @@ export default async function ContactPage({
               </li>
             ))}
           </ul>
-
-          <p className="mt-8 text-p3 text-muted-foreground">
-            {t("directEmail")}{" "}
-            <a
-              href="mailto:support@seentrix.com"
-              className="text-primary underline-offset-2 hover:underline"
-            >
-              support@seentrix.com
-            </a>
-          </p>
         </aside>
 
         {/* Enquiry form. */}

@@ -1,37 +1,36 @@
 {
-  "contact": {
-    "title": "Seentrix individuell auf Ihre Organisation zuschneiden",
-    "subtitle": "Große Produktportfolios, regulierte Branchen, Konzernstrukturen, SSO oder individuelle SLAs – sagen Sie uns, was Sie benötigen, und wir gestalten einen Plan und Preis nach Ihren Anforderungen.",
-    "form": {
-      "nameLabel": "Ihr Name",
-      "namePlaceholder": "Erika Mustermann",
-      "emailLabel": "Geschäftliche E-Mail",
-      "emailPlaceholder": "erika@unternehmen.de",
-      "companyLabel": "Unternehmen",
-      "companyPlaceholder": "Muster Fertigungs GmbH",
-      "productsLabel": "Ungefähre Anzahl der Produkte",
-      "productsPlaceholder": "z. B. 40",
-      "messageLabel": "Was benötigen Sie?",
-      "messagePlaceholder": "Beschreiben Sie uns Ihr Portfolio, Ihre Teamgröße, Ihren Compliance-Zeitplan und etwaige Anforderungen wie SSO, Datenhaltungsort oder einen individuellen Rahmenvertrag.",
-      "submit": "Anfrage senden",
-      "submitting": "Wird gesendet…",
-      "success": "Vielen Dank – wir haben Ihre Anfrage erhalten und melden uns innerhalb eines Werktags.",
-      "error": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut oder schreiben Sie uns direkt an support@seentrix.com.",
-      "rateLimited": "Zu viele Anfragen aus diesem Netzwerk. Bitte warten Sie einige Minuten und versuchen Sie es erneut.",
-      "captchaFailed": "Ihre Identität als Mensch konnte nicht bestätigt werden. Bitte laden Sie die Seite neu und versuchen Sie es erneut.",
-      "validation": "Bitte geben Sie Ihren Namen, eine gültige geschäftliche E-Mail-Adresse und eine kurze Nachricht ein.",
-      "privacy": "Wir verwenden Ihre Daten ausschließlich zur Beantwortung dieser Anfrage. Weitere Informationen finden Sie in unserer Datenschutzrichtlinie."
-    },
-    "highlights": {
-      "title": "Konzipiert für Organisationen, die über Self-Service hinausgewachsen sind",
-      "items": {
-        "scale": "Unbegrenzte Produkte und Teammitglieder",
-        "sso": "SSO/SAML und Verknüpfung von Mutter-/Tochterorganisationen",
-        "monitoring": "Echtzeit-Schwachstellenwarnungen",
-        "support": "Dedizierter CSM, geführtes Onboarding und individueller Rahmenvertrag",
-        "residency": "Individuelle Datenresidenz und SLA-Verpflichtungen"
-      }
-    },
-    "directEmail": "Bevorzugen Sie E-Mail? Schreiben Sie uns an"
+ "contact": {
+  "title": "Seentrix individuell auf Ihre Organisation zuschneiden",
+  "subtitle": "Große Produktportfolios, regulierte Branchen, Konzernstrukturen, SSO oder individuelle SLAs – sagen Sie uns, was Sie benötigen, und wir gestalten einen Plan und Preis nach Ihren Anforderungen.",
+  "form": {
+   "nameLabel": "Ihr Name",
+   "namePlaceholder": "Erika Mustermann",
+   "emailLabel": "Geschäftliche E-Mail",
+   "emailPlaceholder": "erika@unternehmen.de",
+   "companyLabel": "Unternehmen",
+   "companyPlaceholder": "Muster Fertigungs GmbH",
+   "productsLabel": "Ungefähre Anzahl der Produkte",
+   "productsPlaceholder": "z. B. 40",
+   "messageLabel": "Was benötigen Sie?",
+   "messagePlaceholder": "Beschreiben Sie uns Ihr Portfolio, Ihre Teamgröße, Ihren Compliance-Zeitplan und etwaige Anforderungen wie SSO, Datenhaltungsort oder einen individuellen Rahmenvertrag.",
+   "submit": "Anfrage senden",
+   "submitting": "Wird gesendet…",
+   "success": "Vielen Dank – wir haben Ihre Anfrage erhalten und melden uns innerhalb eines Werktags.",
+   "error": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut oder schreiben Sie uns direkt an support@seentrix.com.",
+   "rateLimited": "Zu viele Anfragen aus diesem Netzwerk. Bitte warten Sie einige Minuten und versuchen Sie es erneut.",
+   "captchaFailed": "Ihre Identität als Mensch konnte nicht bestätigt werden. Bitte laden Sie die Seite neu und versuchen Sie es erneut.",
+   "validation": "Bitte geben Sie Ihren Namen, eine gültige geschäftliche E-Mail-Adresse und eine kurze Nachricht ein.",
+   "privacy": "Wir verwenden Ihre Daten ausschließlich zur Beantwortung dieser Anfrage. Weitere Informationen finden Sie in unserer Datenschutzrichtlinie."
+  },
+  "highlights": {
+   "title": "Konzipiert für Organisationen, die über Self-Service hinausgewachsen sind",
+   "items": {
+    "scale": "Unbegrenzte Produkte und Teammitglieder",
+    "sso": "SSO/SAML und Verknüpfung von Mutter-/Tochterorganisationen",
+    "monitoring": "Echtzeit-Schwachstellenwarnungen",
+    "support": "Dedizierter CSM, geführtes Onboarding und individueller Rahmenvertrag",
+    "residency": "Individuelle Datenresidenz und SLA-Verpflichtungen"
+   }
   }
+ }
 }
