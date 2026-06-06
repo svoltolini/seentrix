@@ -1,9 +1,0 @@
-Dans cette leçon, nous découvrons trois signaux complémentaires qui nous aident à prioriser les vulnérabilités : CVSS, EPSS et KEV. Aucun des trois ne remplace un jugement contextuel — mais ensemble, ils constituent une base solide.
-
-CVSS évalue la sévérité intrinsèque d'une vulnérabilité sur une échelle de zéro à dix. C'est la lingua franca de tous les flux de vulnérabilités, mais c'est une propriété statique : un CVSS-9,8 « critique » dans un composant désactivé reste un risque faible dans notre contexte. CVSS v4 est la spécification actuelle ; de nombreux flux publient encore des scores v3. CVSS fournit l'hypothèse de départ, pas la réponse définitive.
-
-EPSS complète CVSS en y ajoutant la dimension de la probabilité. C'est une estimation quotidienne entre zéro et un indiquant si un CVE sera exploité dans les trente prochains jours. La plupart des CVE sont en dessous de 0,01 et ne seront jamais exploités. Lorsque l'EPSS dépasse 0,5 et que le CVSS est également élevé, cela signifie généralement : corriger cette semaine.
-
-KEV est le signal le plus fort. Le catalogue Known Exploited Vulnerabilities de la CISA liste les CVE activement exploités dans la nature. Une inscription au KEV fait remonter une vulnérabilité en tête de la file de triage, indépendamment de son CVSS ou de son EPSS. Dans Seentrix, les entrées inscrites au KEV sont signalées par un point rouge dans le tableau.
-
-L'art consiste à lire les trois signaux de manière combinée. C'est parti.

@@ -1,9 +1,0 @@
-Dans cette leçon, nous abordons CRA 101 : le périmètre et le calendrier du règlement sur la cyber-résilience.
-
-Le Cyber Resilience Act, règlement UE 2024/2847, est une loi à portée européenne qui fixe des exigences essentielles de cybersécurité pour tout produit comportant des éléments numériques mis sur le marché de l'Union. Si nous livrons du matériel, des logiciels, du firmware ou un appareil IoT à quiconque dans l'UE, le CRA nous s'applique. Deux points le distinguent des directives européennes précédentes : c'est un règlement directement contraignant, sans transposition nationale, et il couvre l'intégralité du cycle de vie du produit, pas seulement la mise sur le marché.
-
-Le règlement reconnaît quatre rôles d'opérateur économique : fabricant, mandataire, importateur et distributeur. Le fabricant, c'est-à-dire celui qui met un produit sur le marché de l'UE sous son propre nom, supporte la majorité des obligations. Dans Seentrix, ce rôle se configure directement dans les paramètres de l'entité.
-
-Trois dates sont déterminantes. Le 11 juin 2026, les organismes notifiés doivent être désignés si notre procédure d'évaluation en requiert un. À partir du 11 septembre 2026, l'obligation de notification Article 14 entre en vigueur : en cas de vulnérabilité activement exploitée, le chronomètre 24h/72h/14 jours s'enclenche. Enfin, le 11 décembre 2027 marque la date de conformité complète : déclaration de conformité, marquage CE, et politique de divulgation des vulnérabilités publiée. Les amendes peuvent atteindre 15 millions d'euros ou 2,5 % du chiffre d'affaires annuel mondial.
-
-Seentrix transforme ces exigences en flux de travail concret : classification des produits, génération de SBOM, suivi des vulnérabilités, émission de la déclaration de conformité et décompte Article 14. Allons-y.

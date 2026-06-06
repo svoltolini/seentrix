@@ -1,9 +1,0 @@
-In dieser Lektion geht es um Artikel 14 und die Vorfallsmeldepflichten — den Dreistufen-Zähler ab Kenntnisnahme einer aktiv ausgenutzten Schwachstelle oder eines schweren Vorfalls. Verpasste Fristen bedeuten Bußgelder im Millionenbereich.
-
-Artikel 14 wird in dem Moment ausgelöst, in dem wir Kenntnis erlangen — entweder von einer aktiv ausgenutzten Schwachstelle, zum Beispiel einem KEV-Eintrag oder ausgenutzten Exploit-Code, oder von einem schweren Vorfall, der die Produktsicherheit betrifft. „Kenntnisnahme" ist ein faktischer Standard: Der Zähler läuft ab dem ersten glaubwürdigen internen Signal, nicht ab der formellen Entscheidung eines Gremiums. In Seentrix setzt „Vorfälle → Neuer Vorfall" diesen Zeitstempel in der Audit-Spur.
-
-Die drei Fristen sind klar gegliedert. In den ersten vierundzwanzig Stunden reichen wir eine Frühwarnung ein — kurz, knapp, Vorfall benennen, Verdacht auf böswillige Aktivität und betroffene EU-Mitgliedstaaten nennen. Innerhalb von zweiundsiebzig Stunden folgt der Vorfallsbericht: Schweregrad, Indicators of Compromise, betroffene Produkte und Nutzer sowie laufende Abhilfemaßnahmen. Nach vierzehn Tagen kommt der Abschlussbericht mit Root-Cause-Analyse, ergriffenen und geplanten Maßnahmen, Restrisiko und Kommunikation. Alle drei Meldungen gehen über die ENISA-Meldeplattform. Seentrix zeigt dabei Countdown-Ringe, damit das Team die Restzeit immer im Blick hat.
-
-Nicht vergessen: Artikel 14 Absatz 6 verpflichtet uns zusätzlich, betroffene Nutzer ohne ungebührliche Verzögerung zu benachrichtigen und Abhilfeanweisungen bereitzustellen. Das ist der häufigste Audit-Befund nach Vorfällen.
-
-Tauchen wir jetzt in die Details ein.

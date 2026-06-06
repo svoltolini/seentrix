@@ -1,9 +1,0 @@
-Diese Lektion widmet sich Anhang I des CRA — den grundlegenden Cybersicherheitsanforderungen.
-
-Anhang I ist in zwei Teile gegliedert, und beide gelten für jedes Produkt mit digitalen Elementen, das wir auf dem EU-Markt bereitstellen. Fehlt einer der Teile, ist die Konformitätserklärung ungültig.
-
-Teil I definiert dreizehn Produktanforderungen, die das Produkt selbst zum Zeitpunkt des Inverkehrbringens erfüllen muss. Diese lassen sich in fünf Themenbereiche zusammenfassen: keine bekannten ausnutzbaren Schwachstellen beim Markteintritt — wofür ein aktiver SBOM-Scan nötig ist — Secure by Default, also eine sichere Auslieferungskonfiguration, Identitäts- und Zugriffskontrolle mit Authentifizierung und Least-Privilege-Prinzip, Datenschutz mit Vertraulichkeit und Integrität, sowie Resilienz und minimierte Angriffsfläche. Wer die harmonisierten Normen der Serie EN 18031 anwendet, erhält eine Konformitätsvermutung: die Erfüllung der Anforderungen wird so lange angenommen, bis eine Marktüberwachungsbehörde das Gegenteil beweist.
-
-Teil II regelt die operative Seite und enthält acht Prozesspflichten, die während des gesamten Support-Zeitraums laufen. Dazu gehören aktives SBOM-Scanning, die Behebung von Schwachstellen durch Sicherheitsupdates ohne ungebührliche Verzögerung, ein öffentlicher CVD-Kontaktpunkt mit Offenlegungsrichtlinie sowie die Information betroffener Nutzer. Teil I ist eine einmalige Hürde beim Launch. Teil II läuft kontinuierlich. Prüfer kontrollieren beides — wer drei Jahre nach dem Start keine Sicherheitsupdates mehr liefert, ist nicht konform, auch wenn Teil I damals erfüllt war.
-
-In Seentrix spiegelt die Checkliste diese beiden Teile direkt wider und hilft uns, jeden Nachweis einzeln zu dokumentieren. Tauchen wir ein.

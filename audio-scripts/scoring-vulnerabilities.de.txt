@@ -1,9 +1,0 @@
-In dieser Lektion lernen wir drei komplementäre Signale kennen, die uns helfen, Schwachstellen zu priorisieren: CVSS, EPSS und KEV. Keines der drei ersetzt eine kontextbezogene Einschätzung — aber zusammen bilden sie eine solide Grundlage.
-
-CVSS bewertet die intrinsische Schwere einer Schwachstelle auf einer Skala von null bis zehn. Es ist die gemeinsame Sprache aller Schwachstellen-Feeds, aber eine statische Eigenschaft: Ein CVSS-9,8 „Kritisch" in einer deaktivierten Komponente ist trotzdem geringes Risiko in unserem Kontext. CVSS v4 ist die aktuelle Spezifikation; viele Feeds melden noch v3. CVSS liefert die Ausgangsannahme, nicht die Endentscheidung.
-
-EPSS ergänzt CVSS um die Dimension der Wahrscheinlichkeit. Es ist eine tägliche Schätzung zwischen null und eins dafür, ob eine CVE in den nächsten dreißig Tagen ausgenutzt wird. Die meisten CVEs liegen unter 0,01 und werden nie ausgenutzt. Wenn EPSS über 0,5 liegt und gleichzeitig der CVSS hoch ist, bedeutet das in der Regel: diese Woche fixen.
-
-KEV ist das stärkste Signal. Der CISA Known Exploited Vulnerabilities Katalog listet CVEs, die aktiv in freier Wildbahn ausgenutzt werden. Ein KEV-Eintrag schiebt eine Schwachstelle unabhängig von CVSS oder EPSS direkt ganz oben in die Triage-Warteschlange. In Seentrix sind KEV-gelistete Einträge mit einem roten Punkt in der Tabelle markiert.
-
-Die Kunst liegt darin, alle drei Signale kombiniert zu lesen. Los gehts.

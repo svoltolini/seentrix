@@ -1,9 +1,0 @@
-In dieser Lektion geht es um den Support-Zeitraum und die Pflichten zur Lieferung von Sicherheitsupdates — eine der greifbarsten Anforderungen des CRA für Endnutzer.
-
-CRA Artikel 13 in Verbindung mit Anhang I Teil II legt eine klare Untergrenze fest: Jedes Produkt muss einen Support-Zeitraum von mindestens fünf Jahren ab dem ersten in Verkehr gebrachten Gerät haben. Ist die erwartete Nutzungsdauer länger — etwa bei Industrie- oder Medizingeräten mit zehn bis fünfzehn Jahren —, dann gilt die längere Dauer. Den Support-Zeitraum legen wir in Seentrix unter Releases → Support-Zeitraum fest, und er erscheint auf jedem Endnutzer-Informationsblatt.
-
-Ein Sicherheitsupdate ist ein Release, dessen einziger Zweck das Schließen von Schwachstellen ist. Artikel 13(8) verlangt, solche Updates ohne ungebührliche Verzögerung und kostenfrei zu liefern. Was „ohne ungebührliche Verzögerung" bedeutet, hängt vom Schweregrad ab: Bei einem CISA-KEV-Eintrag sind Tage der Maßstab, bei einem niedrigen CVSS-Score können Wochen vertretbar sein, wenn eine dokumentierte Risikobewertung vorliegt. Seentrix versieht jedes Release automatisch mit einem Zeitstempel — der Nachweis entsteht also von selbst.
-
-Zusätzlich muss der Update-Kanal in den Endnutzerinformationen angegeben sein. Ob OTA-Push, Paketmanager, Download-Portal oder USB-Stick — Nutzer müssen wissen, wie sie Updates erhalten. Ändert sich der Kanal im Laufe des Lebenszyklus, ist eine explizite Kommunikation an betroffene Nutzer erforderlich.
-
-Tauchen wir jetzt in die Details ein.

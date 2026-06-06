@@ -1,9 +1,0 @@
-Dans cette leçon, nous examinons les rôles des opérateurs économiques au titre du CRA.
-
-Le CRA distingue quatre rôles : fabricant, mandataire, importateur et distributeur. Le choix du bon rôle n'est pas anodin — il détermine directement quelles obligations s'appliquent à nous. Un mauvais rôle donne une mauvaise liste de contrôle, ce qui produit de mauvaises preuves lors d'un audit.
-
-En tant que fabricant, nous mettons un produit sur le marché de l'UE sous notre propre nom ou marque. Cela nous rend responsables de l'ensemble complet des obligations : Annexe I, Annexe V, Article 13 et Article 14. La plupart des clients Seentrix se trouvent dans ce rôle. Le mandataire est une partie établie dans l'UE, mandatée par écrit par un fabricant hors UE, qui détient la documentation technique et assure la liaison avec les autorités de surveillance. L'Article 18 l'impose sans exception pour tout fabricant établi hors de l'UE. L'importateur met sur le marché de l'UE des produits fabriqués hors UE et vérifie la déclaration de conformité, le marquage CE et la validité du mandataire. Il ne produit pas la déclaration de conformité, mais est tenu responsable des produits non conformes. Le distributeur dispose de l'ensemble d'obligations le plus léger, mais a le devoir de refuser de vendre des produits manifestement non conformes.
-
-Une règle particulièrement importante est celle de la modification substantielle : tout distributeur ou importateur qui modifie substantiellement un produit — nouveau firmware, rebranding, modification de sa posture de cybersécurité — devient le fabricant aux yeux du CRA, avec l'ensemble complet des obligations. Apposer notre marque sur un produit OEM et flasher notre firmware est une modification substantielle. Conditionner le produit dans une boîte avec un dépliant ne l'est pas.
-
-Dans Seentrix, le paramètre de rôle détermine les tâches affichées dans la liste de contrôle. Allons-y.

@@ -1,9 +1,0 @@
-Dans cette leçon, nous abordons la période de support et les obligations de mise à jour de sécurité — l'une des exigences les plus concrètes du CRA pour les utilisateurs finaux.
-
-L'article 13 du CRA combiné à l'Annexe I Partie II fixe un plancher clair : chaque produit doit avoir une période de support d'au moins cinq ans à compter de la première unité mise sur le marché. Si la durée de vie prévue est plus longue — comme pour les appareils industriels ou médicaux nécessitant dix à quinze ans —, c'est la durée plus longue qui s'applique. Nous définissons notre période de support dans Seentrix sous Releases → Période de support, et elle figure sur chaque fiche d'information destinée aux utilisateurs finaux.
-
-Une mise à jour de sécurité est une version dont l'unique objectif est de corriger des vulnérabilités. L'Article 13(8) impose de les livrer sans retard injustifié et gratuitement. Ce que signifie « sans retard injustifié » dépend de la sévérité : pour un CVE inscrit au CISA KEV, la norme se compte en jours ; pour une découverte à CVSS faible, des semaines peuvent être défendables si une évaluation des risques documentée est disponible. Seentrix horodate automatiquement chaque version, la preuve se constitue donc d'elle-même.
-
-Le canal de mise à jour doit également être déclaré dans les informations destinées aux utilisateurs finaux. Qu'il s'agisse d'un push OTA, d'un gestionnaire de paquets, d'un portail de téléchargement ou d'une clé USB, les utilisateurs doivent savoir comment recevoir les mises à jour. Si le canal change en cours de cycle de vie, une communication explicite aux utilisateurs concernés est nécessaire.
-
-Entrons maintenant dans les détails.
