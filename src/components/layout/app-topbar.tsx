@@ -6,6 +6,7 @@ import { usePathname, Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { useCreateProduct } from "@/components/products/create-product-context";
 import { TopbarSearch } from "./topbar-search";
+import { LanguagePicker } from "@/components/language-picker";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -109,6 +110,11 @@ export function AppTopbar({ user, orgName }: AppTopbarProps) {
             URL so e.g. dashboard filter state doesn't get nuked when
             the user pops the sheet open. */}
         <NewProductButton label={t("topbar.newProduct") ?? "New Product"} />
+
+        {/* Quick language switch — compact EN/DE/FR/IT toggle. Persists to
+            the user profile + cookie and re-renders the whole app. Full
+            labelled control also lives in Settings → Account. */}
+        <LanguagePicker variant="menu" align="end" />
 
         {/* Notification bell — `NotificationsMenu` owns the bell + the
             popover that opens on click. Lazily fetches the last 10

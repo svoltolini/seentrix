@@ -1,6 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import createIntlMiddleware from "next-intl/middleware";
 import { routing } from "./i18n/routing";
+import { LOCALE_COOKIE, isLocale } from "./i18n/locales";
 import { createClient } from "./lib/supabase/middleware";
 
 /**
@@ -61,6 +62,28 @@ export default async function middleware(request: NextRequest) {
 
   const orgId = user?.app_metadata?.org_id;
   const mustChangePassword = user?.app_metadata?.must_change_password === true;
+
+  // Locale cookie sync. With `localePrefix: "never"`, next-intl resolves the
+  // active language from the NEXT_LOCALE cookie. If an authed user has no such
+  // cookie yet (e.g. just logged in, or set their language on another device),
+  // hydrate it ONCE from their saved `preferred_locale`. The cookie's presence
+  // means this DB read happens at most once per session — every later request
+  // already has the cookie, so this stays cheap (mirrors the 2fa_enrolled
+  // pattern). The user can override anytime via the language picker, which
+  // writes both the row and the cookie.
+  let localeCookieToSet: string | null = null;
+  if (user && !request.cookies.get(LOCALE_COOKIE)) {
+    const { data: profile } = await supabase
+      .from("users")
+      .select("preferred_locale")
+      .eq("id", user.id)
+      .maybeSingle();
+    const pref = (profile as { preferred_locale?: string } | null)
+      ?.preferred_locale;
+    if (isLocale(pref) && pref !== "en") {
+      localeCookieToSet = pref;
+    }
+  }
   const mustCompleteTraining =
     user?.app_metadata?.must_complete_training === true;
 
@@ -205,8 +228,25 @@ export default async function middleware(request: NextRequest) {
     return redirectTo("/app/academy");
   }
 
+  // 3b. If we resolved a preferred locale for this user, set the NEXT_LOCALE
+  // cookie on the *request* so next-intl's middleware (run next) renders in
+  // that language on this very request, not just subsequent ones.
+  if (localeCookieToSet) {
+    request.cookies.set(LOCALE_COOKIE, localeCookieToSet);
+  }
+
   // 4. Run next-intl middleware (sets the locale + locale cookie)
   const intlResponse = intlMiddleware(request);
+
+  // 4b. Persist the resolved locale cookie on the response too.
+  if (localeCookieToSet) {
+    intlResponse.cookies.set(LOCALE_COOKIE, localeCookieToSet, {
+      path: "/",
+      maxAge: 60 * 60 * 24 * 365,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+    });
+  }
 
   // 5. Merge Supabase session cookies onto the intl response
   supabaseResponse.cookies.getAll().forEach((cookie) => {
