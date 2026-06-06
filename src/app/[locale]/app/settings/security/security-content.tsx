@@ -162,8 +162,8 @@ export function SecurityContent({
       {enrollRequired && !hasTotp && (
         <div className="rounded-md border-[1.5px] border-warning/40 bg-warning/5 p-5">
           <div className="flex items-start gap-3">
-            <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-warning/15 text-warning">
-              <Icon name="alert-02" size={18} />
+            <div className="flex size-9 shrink-0 items-center justify-center rounded-md bg-warning/15 text-warning">
+              <Icon name="alert-02" size={18} variant="Bold" />
             </div>
             <div className="min-w-0 flex-1">
               <p className="text-h6 text-foreground">
@@ -206,9 +206,10 @@ export function SecurityContent({
           {hasTotp ? (
             <div className="flex flex-wrap items-center justify-between gap-3 rounded-md border border-success/30 bg-success/5 p-4">
               <div className="flex items-start gap-3">
-                <div className="flex size-8 items-center justify-center rounded-full bg-success/20 text-success">
+                <div className="flex size-8 items-center justify-center rounded-md bg-success/20 text-success">
                   <Icon
                     name="checkmark-circle-01-stroke-rounded"
+                    variant="Bold"
                     size={16}
                   />
                 </div>

@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { Icon } from "@/components/icon";
+import { IconBadge } from "@/components/ui/icon-badge";
 import { FieldHelp } from "@/components/field-help";
 import { StaggerReveal } from "@/components/stagger-reveal";
 import { StatCard } from "@/components/stat-card";
@@ -221,9 +222,7 @@ export function ReleasesContent({
           </div>
           {releases.length === 0 ? (
             <div className="overflow-hidden rounded-md bg-card shadow-card-md px-6 py-20 text-center">
-              <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-primary/10">
-                <Icon name="package" size={28} className="text-primary" />
-              </div>
+              <IconBadge name="package" tone="primary" size="xl" className="mx-auto" />
               <h2 className="mt-5 text-h4 text-foreground">
                 {t("empty.title")}
               </h2>

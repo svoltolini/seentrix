@@ -135,7 +135,6 @@ export default async function LessonPage({
                 name="checkmark-circle-01-stroke-rounded"
                 tone="success"
                 size="lg"
-                shape="circle"
               />
               <div className="min-w-0 flex-1 text-p3">
                 <p className="text-h6 text-foreground">

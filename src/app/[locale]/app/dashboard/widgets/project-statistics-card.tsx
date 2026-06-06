@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Icon } from "@/components/icon";
+import { IconBadge } from "@/components/ui/icon-badge";
 import { cn } from "@/lib/utils";
 
 /**
@@ -185,9 +186,7 @@ function Bar({ value, count }: { value: number; count: number }) {
 function EmptyChart({ message }: { message: string }) {
   return (
     <div className="mt-6 flex flex-1 flex-col items-center justify-center gap-3 rounded-md border border-dashed border-border-outline bg-muted/40 px-6 py-10 text-center">
-      <span className="flex size-11 items-center justify-center rounded-full bg-primary/10 text-primary">
-        <Icon name="Chart" size={22} />
-      </span>
+      <IconBadge name="Chart" tone="primary" size="lg" />
       <p className="max-w-xs text-p3 text-muted-foreground">{message}</p>
     </div>
   );

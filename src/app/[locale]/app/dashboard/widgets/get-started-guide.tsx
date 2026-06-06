@@ -138,10 +138,10 @@ function StepRow({
         locked && "opacity-55",
       )}
     >
-      {/* Status badge */}
+      {/* Status badge — rounded-square IconBadge standard (filled icon). */}
       <span
         className={cn(
-          "flex size-10 shrink-0 items-center justify-center rounded-full",
+          "flex size-10 shrink-0 items-center justify-center rounded-md",
           step.done
             ? "bg-success/10 text-success"
             : isNext
@@ -153,9 +153,9 @@ function StepRow({
         {step.done ? (
           <Icon name="TickCircle" size={20} variant="Bold" />
         ) : locked ? (
-          <Icon name="lock-password-stroke-rounded" size={18} />
+          <Icon name="lock-password-stroke-rounded" size={18} variant="Bold" />
         ) : (
-          <Icon name={step.icon} size={20} />
+          <Icon name={step.icon} size={20} variant="Bold" />
         )}
       </span>
 

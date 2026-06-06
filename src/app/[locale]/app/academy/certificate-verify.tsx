@@ -109,7 +109,6 @@ function ResultCard({
             name="checkmark-circle-01-stroke-rounded"
             tone="success"
             size="sm"
-            shape="circle"
           />
           <p className="text-h6 text-foreground">{t("validTitle")}</p>
         </div>
@@ -147,7 +146,7 @@ function ResultCard({
 
   return (
     <div className="flex w-full items-start gap-3 rounded-md bg-card px-5 py-4 shadow-card-md">
-      <IconBadge name="alert-02" tone="destructive" size="sm" shape="circle" />
+      <IconBadge name="alert-02" tone="destructive" size="sm" />
       <p className="text-p3 text-foreground">{message}</p>
     </div>
   );

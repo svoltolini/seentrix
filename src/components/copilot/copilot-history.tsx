@@ -197,7 +197,7 @@ export function CopilotHistory({
           <div className="flex h-full flex-col items-center justify-center gap-3 px-6 py-12 text-center">
             <span
               aria-hidden="true"
-              className="flex size-12 items-center justify-center rounded-full bg-destructive/10 text-destructive"
+              className="flex size-12 items-center justify-center rounded-md bg-destructive/10 text-destructive"
             >
               <Icon name="Warning2" size={22} variant="Bold" />
             </span>

@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { Icon } from "@/components/icon";
+import { IconBadge } from "@/components/ui/icon-badge";
 import { FieldHelp } from "@/components/field-help";
 import { StaggerReveal } from "@/components/stagger-reveal";
 import { StatCard } from "@/components/stat-card";
@@ -295,8 +296,8 @@ export function IncidentsContent({
             data-reveal
             className="overflow-hidden rounded-md bg-card shadow-card-md px-6 py-20 text-center"
           >
-            <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-warning/10">
-              <Icon name="alert-02" size={28} className="text-warning" />
+            <div className="mx-auto">
+              <IconBadge name="alert-02" tone="warning" size="xl" />
             </div>
             <h2 className="mt-5 text-h4 text-foreground">
               {incidents.length === 0

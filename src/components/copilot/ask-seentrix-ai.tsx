@@ -47,7 +47,6 @@ export function AskSeentrixAI({
           name="ai-magic-stroke-rounded"
           tone="primary"
           size="lg"
-          shape="circle"
           className="transition group-hover:bg-primary/15"
         />
         {/* Copy */}

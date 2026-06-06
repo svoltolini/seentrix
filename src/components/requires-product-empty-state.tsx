@@ -54,7 +54,6 @@ export function RequiresProductEmptyState({
       <IconBadge
         name={icon}
         tone="primary"
-        shape="circle"
         iconSize={28}
         className="mb-6 size-14"
       />

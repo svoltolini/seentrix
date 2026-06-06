@@ -74,7 +74,7 @@ export function SbomUploadZone({
         )}
       >
         <span className="flex size-10 items-center justify-center rounded-md bg-primary/10 text-primary">
-          <Icon name="DocumentUpload" size={20} />
+          <Icon name="DocumentUpload" size={20} variant="Bold" />
         </span>
         {uploading ? (
           <p className="text-p3 text-muted-foreground">

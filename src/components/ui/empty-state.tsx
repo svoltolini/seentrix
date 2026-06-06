@@ -31,8 +31,8 @@ function EmptyState({
       {...props}
     >
       {icon && (
-        <div className="flex size-14 items-center justify-center rounded-full bg-muted text-muted-foreground">
-          <Icon name={icon} size={28} />
+        <div className="flex size-14 items-center justify-center rounded-md bg-muted text-muted-foreground">
+          <Icon name={icon} size={28} variant="Bold" />
         </div>
       )}
       <div className="flex flex-col gap-1">

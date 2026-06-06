@@ -98,7 +98,7 @@ export function ActivityFeedWidget({ items, emptyMessage }: Props) {
                   TONE_BG[item.iconTone ?? "primary"]
                 }`}
               >
-                <Icon name={item.icon ?? "Notification"} size={20} />
+                <Icon name={item.icon ?? "Notification"} size={20} variant="Bold" />
               </span>
             )}
             <div className="flex flex-1 flex-col gap-1 truncate">

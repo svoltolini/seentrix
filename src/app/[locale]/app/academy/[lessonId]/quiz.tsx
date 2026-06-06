@@ -244,7 +244,6 @@ function PassedCard({
         name="checkmark-circle-01-stroke-rounded"
         tone="success"
         size="lg"
-        shape="circle"
         iconSize={22}
       />
       <div className="min-w-0 flex-1">

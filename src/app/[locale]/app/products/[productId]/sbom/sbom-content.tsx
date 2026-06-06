@@ -4,7 +4,7 @@ import { useState, useCallback, useTransition, useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
-import { Icon } from "@/components/icon";
+import { IconBadge } from "@/components/ui/icon-badge";
 import {
   uploadSbom,
   deleteSbom,
@@ -275,13 +275,7 @@ export function SbomContent({
         <div
           className="flex flex-col items-center justify-center overflow-hidden rounded-md bg-card shadow-card-md py-16 text-center"
         >
-          <div className="mb-5 flex size-14 items-center justify-center rounded-full bg-primary/10">
-            <Icon
-              name="chip-stroke-rounded"
-              size={28}
-              className="text-primary"
-            />
-          </div>
+          <IconBadge name="chip-stroke-rounded" tone="primary" size="xl" className="mb-5" />
           <p className="text-h4 text-foreground">
             {t("list.empty")}
           </p>

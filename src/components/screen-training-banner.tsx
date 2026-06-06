@@ -64,8 +64,8 @@ export async function ScreenTrainingBanner({
       data-storage-key={storageKey}
       className="mb-5 flex flex-wrap items-center gap-3 rounded-md border border-warning/25 bg-warning/5 p-4"
     >
-      <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-warning/15 text-warning">
-        <Icon name="elearning-exchange-stroke-rounded" size={16} />
+      <div className="flex size-9 shrink-0 items-center justify-center rounded-md bg-warning/15 text-warning">
+        <Icon name="elearning-exchange-stroke-rounded" size={16} variant="Bold" />
       </div>
       <div className="min-w-0 flex-1">
         <p className="text-l5 text-foreground">{t("title")}</p>

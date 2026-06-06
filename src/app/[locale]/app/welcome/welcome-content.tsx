@@ -58,6 +58,7 @@ export function WelcomeContent() {
                 <Icon
                   name={bullet.icon}
                   size={20}
+                  variant="Bold"
                   className="text-primary"
                 />
               </div>

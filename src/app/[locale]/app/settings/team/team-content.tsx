@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Icon } from "@/components/icon";
+import { IconBadge } from "@/components/ui/icon-badge";
 import { FieldHelp } from "@/components/field-help";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import {
@@ -551,13 +552,7 @@ function TeamUpgradePrompt() {
 
   return (
     <div className="flex flex-col items-center justify-center rounded-md border border-dashed border-border-outline bg-card py-20 text-center">
-      <div className="mb-5 flex size-14 items-center justify-center rounded-full bg-primary/10">
-        <Icon
-          name="lock-password-stroke-rounded"
-          size={28}
-          className="text-primary"
-        />
-      </div>
+      <IconBadge name="lock-password-stroke-rounded" tone="primary" size="xl" className="mb-5" />
       <h3 className="text-h4 text-foreground">
         {t("title")}
       </h3>
