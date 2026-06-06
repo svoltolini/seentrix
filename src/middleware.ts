@@ -78,20 +78,41 @@ export default async function middleware(request: NextRequest) {
   // at a time, so it can't lock anyone out.
   let needsMfaEnrolment = false;
   const hasGrace = request.cookies.get("2fa_grace")?.value === "1";
+  // Perf: remember "this user has a verified TOTP factor" in a cookie so we
+  // don't pay a `listFactors()` network round-trip to Supabase Auth on EVERY
+  // navigation. Once enrolled, a user stays enrolled, so the cached flag is
+  // safe; it's cleared on sign-out with the rest of the session cookies.
+  const mfaEnrolledCookie = request.cookies.get("2fa_enrolled")?.value === "1";
+  let setMfaEnrolledCookie = false;
   if (user && orgId) {
+    // getAuthenticatorAssuranceLevel() reads the JWT claims — no network call,
+    // so this stays cheap on every request.
     const { data: aalData } =
       await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
     needsMfaChallenge =
       aalData?.nextLevel === "aal2" && aalData.currentLevel === "aal1";
 
-    // If the user is already at/heading to AAL2 they clearly have a factor.
-    // Otherwise list factors to see whether a verified TOTP factor exists.
-    if (aalData?.nextLevel === "aal1" && aalData.currentLevel === "aal1") {
-      const { data: factors } = await supabase.auth.mfa.listFactors();
-      const hasVerifiedTotp = (factors?.totp ?? []).some(
-        (f) => f.status === "verified",
-      );
-      needsMfaEnrolment = !hasVerifiedTotp;
+    // A user at AAL2 (or heading there) clearly has a verified factor.
+    if (aalData?.nextLevel === "aal2") {
+      if (!mfaEnrolledCookie) setMfaEnrolledCookie = true;
+    } else if (
+      aalData?.nextLevel === "aal1" &&
+      aalData.currentLevel === "aal1"
+    ) {
+      // Only hit listFactors() when we DON'T already know they're enrolled
+      // (no cached flag) and they haven't snoozed the gate. This collapses the
+      // common case (already enrolled, or grace cookie set) to zero network
+      // calls here.
+      if (mfaEnrolledCookie || hasGrace) {
+        needsMfaEnrolment = false;
+      } else {
+        const { data: factors } = await supabase.auth.mfa.listFactors();
+        const hasVerifiedTotp = (factors?.totp ?? []).some(
+          (f) => f.status === "verified",
+        );
+        needsMfaEnrolment = !hasVerifiedTotp;
+        if (hasVerifiedTotp) setMfaEnrolledCookie = true;
+      }
     }
   }
 
@@ -191,6 +212,18 @@ export default async function middleware(request: NextRequest) {
   supabaseResponse.cookies.getAll().forEach((cookie) => {
     intlResponse.cookies.set(cookie.name, cookie.value, cookie);
   });
+
+  // 5b. Persist the "MFA enrolled" hint so subsequent navigations skip the
+  // listFactors() network call. Session cookie (no maxAge) so it clears on
+  // browser/session end alongside the auth cookies.
+  if (setMfaEnrolledCookie) {
+    intlResponse.cookies.set("2fa_enrolled", "1", {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      path: "/",
+    });
+  }
 
   return intlResponse;
 }
