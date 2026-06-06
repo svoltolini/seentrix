@@ -157,10 +157,10 @@ export function CopilotSheet() {
           // conversations need more horizontal space for code blocks,
           // citation pills, link buttons, tables, and multi-paragraph
           // drafts than a side-panel drawer. `3xl` = 768 px — wider than
-          // the default while still leaving the page visible behind it,
-          // and matched to the shared SideSheetPopup width.
+          // the default while still leaving the page visible behind it;
+          // ~10% wider than 3xl; matched to the shared SideSheetPopup width.
           "flex-col gap-0 border-l border-border bg-card p-0",
-          "data-[side=right]:sm:max-w-3xl",
+          "data-[side=right]:sm:max-w-[845px]",
         )}
       >
         <SheetTitle className="sr-only">{t("title")}</SheetTitle>

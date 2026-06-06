@@ -21,6 +21,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Icon } from "@/components/icon";
+import { IconBadge } from "@/components/ui/icon-badge";
 import { FieldHelp } from "@/components/field-help";
 import {
   SideSheetBackdrop,
@@ -283,13 +284,13 @@ function CreateFormBody({ onClose }: { onClose: () => void }) {
           />
         </div>
 
-        {/* Type — 4 segmented pills */}
+        {/* Type — 4 segmented pills, all on one row (the wider sheet fits them). */}
         <div className="flex flex-col gap-2">
           <Label>
             {t("create.typeLabel")}
             <FieldHelp {...tip("type")} />
           </Label>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-4 gap-2">
             {PRODUCT_TYPES.map((type) => {
               const active = selectedType === type;
               return (
@@ -380,22 +381,46 @@ function CreateFormBody({ onClose }: { onClose: () => void }) {
           />
         </div>
 
-        {/* Start-assessment toggle */}
-        <label className="flex cursor-pointer items-start gap-3 rounded-md border border-border-outline bg-card p-3">
+        {/* Start-assessment toggle — a richer selectable card: an IconBadge,
+            title + description, and a switch-style affordance. Selecting it
+            highlights the whole card so it reads as a deliberate choice. */}
+        <label
+          className={cn(
+            "group flex cursor-pointer items-start gap-3.5 rounded-md border-[1.5px] p-4 transition",
+            startAssessment
+              ? "border-primary/40 bg-primary/5"
+              : "border-border-outline bg-card hover:border-primary/25",
+          )}
+        >
           <input
             type="checkbox"
             checked={startAssessment}
             onChange={(e) => setStartAssessment(e.target.checked)}
-            className="mt-0.5 size-4 shrink-0 accent-primary"
+            className="sr-only"
           />
-          <div>
-            <span className="text-l6 text-foreground">
+          <IconBadge name="ShieldTick" tone="primary" size="lg" />
+          <div className="min-w-0 flex-1">
+            <span className="text-l5 text-foreground">
               {t("create.startAssessment")}
             </span>
-            <p className="mt-0.5 text-p4 text-muted-foreground">
+            <p className="mt-1 text-p4 leading-relaxed text-muted-foreground">
               {t("create.startAssessmentDescription")}
             </p>
           </div>
+          {/* Switch-style indicator. */}
+          <span
+            className={cn(
+              "mt-0.5 flex h-5 w-9 shrink-0 items-center rounded-full p-0.5 transition",
+              startAssessment ? "bg-primary" : "bg-border",
+            )}
+          >
+            <span
+              className={cn(
+                "size-4 rounded-full bg-white shadow-sm transition",
+                startAssessment ? "translate-x-4" : "translate-x-0",
+              )}
+            />
+          </span>
         </label>
       </SideSheetBody>
 

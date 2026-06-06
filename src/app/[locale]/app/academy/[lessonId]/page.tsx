@@ -7,6 +7,7 @@ import { getLessonAudio } from "@/lib/academy/audio";
 import { CurrentLessonProvider } from "@/lib/academy/current-lesson-context";
 import { createClient } from "@/lib/supabase/server";
 import { Icon } from "@/components/icon";
+import { IconBadge } from "@/components/ui/icon-badge";
 import { Quiz } from "./quiz";
 import { LessonAudioPlayer } from "./lesson-audio";
 
@@ -130,9 +131,12 @@ export default async function LessonPage({
 
           {existingCompletion && (
             <div className="mt-5 flex w-full flex-wrap items-center gap-4 rounded-md bg-card p-5 shadow-card-md">
-              <div className="flex size-11 shrink-0 items-center justify-center rounded-full bg-success/10 text-success">
-                <Icon name="checkmark-circle-01-stroke-rounded" size={20} />
-              </div>
+              <IconBadge
+                name="checkmark-circle-01-stroke-rounded"
+                tone="success"
+                size="lg"
+                shape="circle"
+              />
               <div className="min-w-0 flex-1 text-p3">
                 <p className="text-h6 text-foreground">
                   {t("alreadyPassed", {

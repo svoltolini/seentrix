@@ -274,7 +274,7 @@ export function ProductOverview({
 
       {/* Edit sheet */}
       <Sheet open={editing} onOpenChange={(open) => { setEditing(open); if (!open) resetImageState(); }}>
-        <SheetContent side="right" className="overflow-y-auto sm:max-w-3xl">
+        <SheetContent side="right" className="overflow-y-auto sm:max-w-[845px]">
           <SheetHeader>
             <SheetTitle>{t("edit.title")}</SheetTitle>
             <SheetDescription>{t("detail.overview.edit")}</SheetDescription>

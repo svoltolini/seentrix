@@ -59,7 +59,7 @@ export function KpiStrip({ kpis }: Props) {
                 TONE[kpi.tone].badge,
               )}
             >
-              <Icon name={kpi.icon} size={18} />
+              <Icon name={kpi.icon} size={18} variant="Bold" />
             </span>
             <div className="flex flex-col gap-0.5">
               <p className="text-h3 leading-none text-foreground">
