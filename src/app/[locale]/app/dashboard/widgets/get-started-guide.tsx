@@ -129,16 +129,20 @@ function StepRow({
   const content = (
     <div
       className={cn(
-        "flex items-center gap-4 rounded-md bg-card px-5 py-4 shadow-card-sm transition-colors",
+        // Structure mirrors the AI intro side-view feature item EXACTLY:
+        // items-start, gap-4, a size-9 rounded-md icon badge, then a
+        // flex-col gap-1 with a text-h5 title + text-p3-r body.
+        "flex items-start gap-4 rounded-md bg-card px-5 py-4 shadow-card-sm transition-colors",
         isNext && "ring-2 ring-primary/40",
         isNext && "hover:bg-muted/40",
         locked && "opacity-55",
       )}
     >
-      {/* Status badge — rounded-square IconBadge standard (filled icon). */}
+      {/* Status badge — same size-9 rounded-md filled-icon chip as the AI
+          side-view items. */}
       <span
         className={cn(
-          "flex size-10 shrink-0 items-center justify-center rounded-md",
+          "flex size-9 shrink-0 items-center justify-center rounded-md",
           step.done
             ? "bg-success/10 text-success"
             : isNext
@@ -148,16 +152,15 @@ function StepRow({
         aria-hidden
       >
         {step.done ? (
-          <Icon name="TickCircle" size={20} variant="Bold" />
+          <Icon name="TickCircle" size={18} variant="Bold" />
         ) : locked ? (
           <Icon name="lock-password-stroke-rounded" size={18} variant="Bold" />
         ) : (
-          <Icon name={step.icon} size={20} variant="Bold" />
+          <Icon name={step.icon} size={18} variant="Bold" />
         )}
       </span>
 
-      {/* Title + body block — mirrors the AI intro side-view feature items
-          exactly: text-h5 title, text-p3-r body, gap-1, no truncation. */}
+      {/* Title + body block — identical classes to the AI side-view item. */}
       <div className="flex min-w-0 flex-1 flex-col gap-1">
         <p
           className={cn(
