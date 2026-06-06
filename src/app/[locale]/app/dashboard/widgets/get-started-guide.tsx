@@ -129,20 +129,20 @@ function StepRow({
   const content = (
     <div
       className={cn(
-        // Structure mirrors the AI intro side-view feature item EXACTLY:
-        // items-start, gap-4, a size-9 rounded-md icon badge, then a
-        // flex-col gap-1 with a text-h5 title + text-p3-r body.
-        "flex items-start gap-4 rounded-md bg-card px-5 py-4 shadow-card-sm transition-colors",
+        // Structure mirrors the "Ask Seentrix AI" banner on this same screen:
+        // items-center, gap-4, a size-11 rounded-md icon badge, then a
+        // flex-col gap-0.5 with a text-h6 title + text-p3 body.
+        "flex items-center gap-4 rounded-md bg-card px-5 py-4 shadow-card-sm transition-colors",
         isNext && "ring-2 ring-primary/40",
         isNext && "hover:bg-muted/40",
         locked && "opacity-55",
       )}
     >
-      {/* Status badge — same size-9 rounded-md filled-icon chip as the AI
-          side-view items. */}
+      {/* Status badge — same size-11 rounded-md filled-icon chip as the
+          "Ask Seentrix AI" banner. */}
       <span
         className={cn(
-          "flex size-9 shrink-0 items-center justify-center rounded-md",
+          "flex size-11 shrink-0 items-center justify-center rounded-md",
           step.done
             ? "bg-success/10 text-success"
             : isNext
@@ -152,25 +152,27 @@ function StepRow({
         aria-hidden
       >
         {step.done ? (
-          <Icon name="TickCircle" size={18} variant="Bold" />
+          <Icon name="TickCircle" size={20} variant="Bold" />
         ) : locked ? (
-          <Icon name="lock-password-stroke-rounded" size={18} variant="Bold" />
+          <Icon name="lock-password-stroke-rounded" size={20} variant="Bold" />
         ) : (
-          <Icon name={step.icon} size={18} variant="Bold" />
+          <Icon name={step.icon} size={20} variant="Bold" />
         )}
       </span>
 
-      {/* Title + body block — identical classes to the AI side-view item. */}
-      <div className="flex min-w-0 flex-1 flex-col gap-1">
+      {/* Title + body block — identical classes to the "Ask Seentrix AI"
+          banner that sits on this same screen: text-h6 title, text-p3 body,
+          gap-0.5. */}
+      <div className="flex min-w-0 flex-1 flex-col gap-0.5">
         <p
           className={cn(
-            "text-h5",
+            "text-h6",
             step.done || locked ? "text-muted-foreground" : "text-foreground",
           )}
         >
           {title}
         </p>
-        <p className="text-p3-r text-muted-foreground">{description}</p>
+        <p className="text-p3 text-muted-foreground">{description}</p>
       </div>
 
       {isNext && (
