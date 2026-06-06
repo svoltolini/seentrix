@@ -74,8 +74,6 @@ export function ProductsPageContent({
         title="noProducts"
         description="noProductsDescription"
         ctaLabel="addProduct"
-        askSeed="I'm setting up my first product in Seentrix — what CRA fields do I actually need to fill in?"
-        askLabel="New to CRA? Ask Seentrix AI how to set up a product."
       />
     );
   }
