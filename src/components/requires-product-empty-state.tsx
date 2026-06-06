@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { Icon, type IconName } from "@/components/icon";
+import { IconBadge } from "@/components/ui/icon-badge";
 import { AskSeentrixAI } from "@/components/copilot/ask-seentrix-ai";
 import { Button } from "@/components/ui/button";
 import { useCreateProduct } from "@/components/products/create-product-context";
@@ -50,9 +51,13 @@ export function RequiresProductEmptyState({
 
   return (
     <div className="flex flex-col items-center justify-center py-24 text-center">
-      <div className="mb-6 flex size-14 items-center justify-center rounded-full bg-primary/10">
-        <Icon name={icon} size={28} className="text-primary" />
-      </div>
+      <IconBadge
+        name={icon}
+        tone="primary"
+        shape="circle"
+        iconSize={28}
+        className="mb-6 size-14"
+      />
       <h3 className="text-h4 text-foreground">{t(title)}</h3>
       <p className="mt-2 max-w-md text-p3 text-muted-foreground">
         {t(description)}

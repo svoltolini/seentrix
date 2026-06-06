@@ -7,7 +7,7 @@ import type { QuizQuestion } from "@/lib/academy/types";
 import { QUIZ_PASS_THRESHOLD } from "@/lib/academy/types";
 import { submitQuiz } from "../actions";
 import { Button } from "@/components/ui/button";
-import { Icon } from "@/components/icon";
+import { IconBadge } from "@/components/ui/icon-badge";
 import { cn } from "@/lib/utils";
 
 type Outcome =
@@ -240,9 +240,13 @@ function PassedCard({
 }) {
   return (
     <div className="flex w-full items-start gap-4 rounded-md bg-card p-5 shadow-card-md">
-      <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-success/10 text-success">
-        <Icon name="checkmark-circle-01-stroke-rounded" size={22} variant="Bold" />
-      </span>
+      <IconBadge
+        name="checkmark-circle-01-stroke-rounded"
+        tone="success"
+        size="lg"
+        shape="circle"
+        iconSize={22}
+      />
       <div className="min-w-0 flex-1">
         <h3 className="text-h5 text-foreground">{t("passedTitle")}</h3>
         <p className="mt-1 text-p3 text-muted-foreground">
