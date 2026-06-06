@@ -22,6 +22,7 @@ const anchors = [
 
 const pageLinks = [
   { href: "/blog", key: "blog" },
+  { href: "/contact", key: "contact" },
 ] as const;
 
 export function LandingHeader({ isAuthed = false }: { isAuthed?: boolean }) {

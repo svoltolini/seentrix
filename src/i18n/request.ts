@@ -35,6 +35,7 @@ export default getRequestConfig(async () => {
       ...(await import("../../messages/en/settings.json")).default,
       ...(await import("../../messages/en/glossary.json")).default,
       ...(await import("../../messages/en/copilot.json")).default,
+      ...(await import("../../messages/en/contact.json")).default,
     },
   };
 });

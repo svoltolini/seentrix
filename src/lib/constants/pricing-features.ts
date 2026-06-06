@@ -81,7 +81,6 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
       { key: "endUserInfoPdf", free: false, professional: true, business: true, enterprise: true },
       { key: "docTemplates", free: false, professional: "Essentials", business: "Full library", enterprise: "Full + custom" },
       { key: "technicalFileBuilder", free: false, professional: false, business: "coming-soon", enterprise: "coming-soon" },
-      { key: "customBranding", free: false, professional: false, business: false, enterprise: "coming-soon" },
     ],
   },
   {
@@ -128,7 +127,6 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
       { key: "gdprExport", free: true, professional: true, business: true, enterprise: true },
       { key: "gdprDelete", free: true, professional: true, business: true, enterprise: true },
       { key: "activityCsv", free: false, professional: true, business: true, enterprise: true },
-      { key: "siemLogExport", free: false, professional: false, business: false, enterprise: "coming-soon" },
       // EU data residency is a flat product guarantee, not a tier upsell —
       // every plan stores customer data in eu-west-2 (London) Supabase.
       { key: "dataResidency", free: "EU", professional: "EU", business: "EU", enterprise: "EU" },
@@ -144,9 +142,6 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
     rows: [
       { key: "apiAccess", free: false, professional: false, business: "1000 req/day", enterprise: "Unlimited" },
       { key: "webhooks", free: false, professional: false, business: "coming-soon", enterprise: "coming-soon" },
-      { key: "ssoSaml", free: false, professional: false, business: false, enterprise: "coming-soon" },
-      { key: "parentChildOrgs", free: false, professional: false, business: false, enterprise: "coming-soon" },
-      { key: "marketSurveillanceBundle", free: false, professional: false, business: false, enterprise: "coming-soon" },
     ],
   },
   {
@@ -169,7 +164,6 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
       // support is not currently offered.
       { key: "supportChannel", free: "Community", professional: "Email", business: "Priority email + live chat", enterprise: "Dedicated CSM + live chat" },
       { key: "onboarding", free: "Self-serve", professional: "Self-serve", business: "1h guided call", enterprise: "2-week guided" },
-      { key: "customMsa", free: false, professional: false, business: false, enterprise: true },
     ],
   },
 ];

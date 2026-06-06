@@ -11,13 +11,14 @@ import { Icon } from "@/components/icon";
 import { cn } from "@/lib/utils";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
-const tiers = ["free", "professional", "business", "enterprise"] as const;
+// Three self-serve tiers only. Enterprise is no longer a card here — it's the
+// full-width contact band below, matching the /pricing page.
+const tiers = ["free", "professional", "business"] as const;
 
 const tierFeatures: Record<string, string[]> = {
   free: ["f1", "f2", "f3"],
   professional: ["f1", "f2", "f3", "f4"],
   business: ["f1", "f2", "f3", "f4"],
-  enterprise: ["f1", "f2", "f3", "f4"],
 };
 
 export function PricingPreview() {
@@ -69,10 +70,9 @@ export function PricingPreview() {
           </p>
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {tiers.map((tier) => {
             const isPro = tier === "professional";
-            const isEnterprise = tier === "enterprise";
             const features = tierFeatures[tier];
 
             return (
@@ -111,14 +111,13 @@ export function PricingPreview() {
                   <div className="mt-4 flex items-baseline gap-1">
                     <span
                       className={cn(
-                        "font-extrabold",
-                        isEnterprise ? "text-3xl" : "text-5xl",
+                        "text-5xl font-extrabold",
                         isPro ? "text-primary" : "text-foreground",
                       )}
                     >
                       {t(`${tier}.price`)}
                     </span>
-                    {tier !== "free" && !isEnterprise && (
+                    {tier !== "free" && (
                       <span className="text-p3 text-muted-foreground">
                         {t(`${tier}.period`)}
                       </span>
@@ -142,34 +141,45 @@ export function PricingPreview() {
                     ))}
                   </ul>
 
-                  {isEnterprise ? (
-                    <span
-                      aria-disabled="true"
-                      className={buttonVariants({
-                        variant: "secondary",
-                        size: "default",
-                        className:
-                          "pointer-events-none mt-6 w-full opacity-50",
-                      })}
-                    >
-                      {t("enterprise.cta")}
-                    </span>
-                  ) : (
-                    <Link
-                      href="/auth/signup"
-                      className={buttonVariants({
-                        variant: isPro ? "default" : "outline",
-                        size: "default",
-                        className: "mt-6 w-full",
-                      })}
-                    >
-                      {t("getStarted")}
-                    </Link>
-                  )}
+                  <Link
+                    href="/auth/signup"
+                    className={buttonVariants({
+                      variant: isPro ? "default" : "outline",
+                      size: "default",
+                      className: "mt-6 w-full",
+                    })}
+                  >
+                    {t("getStarted")}
+                  </Link>
                 </div>
               </div>
             );
           })}
+        </div>
+
+        {/* Enterprise / custom contact band — mirrors the band on /pricing.
+            Replaces the old fourth "Enterprise" card; routes bespoke buyers
+            to /contact. */}
+        <div className="mt-6 flex flex-col items-start gap-4 rounded-md bg-dark-cta p-6 shadow-card-md sm:flex-row sm:items-center sm:justify-between sm:p-8">
+          <div>
+            <h3 className="text-h4 text-primary-foreground">
+              {t("enterpriseBand.title")}
+            </h3>
+            <p className="mt-1 text-p3 text-primary-foreground/80">
+              {t("enterpriseBand.subtitle")}
+            </p>
+          </div>
+          <Link
+            href="/contact"
+            className={buttonVariants({
+              variant: "secondary",
+              size: "lg",
+              className: "w-full shrink-0 sm:w-auto",
+            })}
+          >
+            <span>{t("enterpriseBand.cta")}</span>
+            <Icon name="ArrowRight2" size={16} aria-hidden="true" />
+          </Link>
         </div>
 
         {/* CTA — links directly to the #compare anchor on /pricing so
