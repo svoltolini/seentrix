@@ -5,7 +5,7 @@ import { TeamProgress } from "./team-progress";
 import type { LocaleId, RoleId } from "@/lib/academy/types";
 import { requiredLessonsForRole, allLessonIds } from "@/lib/academy/lessons";
 import { Icon } from "@/components/icon";
-import { ReferenceCard } from "@/components/reference-card";
+import { ReferenceCard, ReferenceBadge } from "@/components/reference-card";
 
 /**
  * Academy hub — Layer 2 landing.
@@ -83,10 +83,10 @@ export default async function AcademyPage({
         <ReferenceCard className="mb-8 p-6 md:mb-10 md:p-10">
           <div className="flex flex-wrap items-start justify-between gap-5">
             <div className="min-w-0 flex-1">
-              <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-l6-plus uppercase tracking-wider text-white backdrop-blur-sm">
+              <ReferenceBadge className="mb-3">
                 <span className="size-1.5 animate-pulse rounded-full bg-accent" />
                 {t("hero.title")}
-              </div>
+              </ReferenceBadge>
               <h1 className="text-h2 leading-tight text-white md:text-3xl">
                 {tGate("title")}
               </h1>
@@ -111,10 +111,10 @@ export default async function AcademyPage({
         </ReferenceCard>
       ) : (
         <ReferenceCard className="mb-8 p-6 md:mb-10 md:p-8">
-          <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-l6-plus uppercase tracking-wider text-white backdrop-blur-sm">
+          <ReferenceBadge className="mb-3">
             <Icon name="elearning-exchange-stroke-rounded" size={12} />
             {t("hero.eyebrow")}
-          </div>
+          </ReferenceBadge>
           <h1 className="text-h2 leading-tight text-white md:text-3xl">
             {t("hero.title")}
           </h1>

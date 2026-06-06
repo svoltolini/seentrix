@@ -5,9 +5,10 @@ import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
 import { Icon } from "@/components/icon";
+import { IconBadge } from "@/components/ui/icon-badge";
 import { StaggerReveal } from "@/components/stagger-reveal";
 import { useToast } from "@/components/ui/toast";
-import { ReferenceCard } from "@/components/reference-card";
+import { ReferenceCard, ReferenceBadge } from "@/components/reference-card";
 import { FieldHelp } from "@/components/field-help";
 import {
   setObligationStatus,
@@ -121,34 +122,42 @@ export function EntityContent({
           </p>
         </div>
 
-        {/* Entity-type picker — Reference Card hero (solid brand-blue with the
-            white dot-grid overlay), matching the canonical reference-card look
-            used across the Glossary and Academy. */}
+        {/* Role hero — contents span the full card width; progress is a
+            horizontal bar (no circle), matching the Academy hero. */}
         <ReferenceCard data-reveal className="p-6 md:p-8">
-          <div className="flex items-start justify-between gap-3">
-            <div className="min-w-0">
-              <div className="mb-3 inline-flex items-center gap-2 rounded-sm bg-white/10 px-3 py-1 text-l6-plus uppercase tracking-wider text-white backdrop-blur-sm">
-                <span
-                  className={cn(
-                    "size-1.5 rounded-full",
-                    progress === 100
-                      ? "bg-success"
-                      : "animate-pulse bg-warning",
-                  )}
-                />
-                {t("progressLabel")}
-              </div>
-              <h2 className="text-h3 leading-snug text-white">
-                {t("type.title")}
-              </h2>
-              <p className="mt-2 max-w-md text-p3 text-white">
-                {t("type.description")}
-              </p>
+          <ReferenceBadge className="mb-3">
+            <span
+              className={cn(
+                "size-1.5 rounded-full",
+                progress === 100 ? "bg-success" : "animate-pulse bg-warning",
+              )}
+            />
+            {t("progressLabel")}
+          </ReferenceBadge>
+          <h2 className="text-h3 leading-snug text-white">
+            {t("type.title")}
+          </h2>
+          <p className="mt-2 text-p3 text-white/80">
+            {t("type.description")}
+          </p>
+          <div className="mt-5 w-full">
+            <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/20">
+              <div
+                className="h-full rounded-full bg-white transition-all"
+                style={{ width: `${progress}%` }}
+              />
             </div>
-            <ProgressRing value={progress} onDark />
+            <div className="mt-1.5 flex items-center justify-end">
+              <span className="text-p4 tabular-nums text-white/70">
+                {progress}%
+              </span>
+            </div>
           </div>
+        </ReferenceCard>
 
-          <div className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2">
+        {/* Role selector — OUTSIDE the reference card, on normal card
+            surfaces with the rounded-square filled IconBadge treatment. */}
+        <div data-reveal className="grid grid-cols-1 gap-3 md:grid-cols-2">
             {ENTITY_ORDER.map((ty) => {
               const active = state.entityType === ty;
               return (
@@ -158,43 +167,37 @@ export function EntityContent({
                   disabled={!canEdit}
                   onClick={() => handleTypeChange(ty)}
                   className={cn(
-                    "group flex items-start gap-3 rounded-md border-[1.5px] p-4 text-left backdrop-blur-md transition-all",
+                    "group flex items-start gap-3.5 rounded-md border-[1.5px] bg-card p-4 text-left shadow-card-sm transition-all",
                     active
-                      ? "border-white/60 bg-white/15 shadow-lg shadow-black/20"
-                      : "border-white/15 bg-white/5 hover:-translate-y-0.5 hover:border-white/40 hover:bg-white/10",
+                      ? "border-primary/40 bg-primary/5"
+                      : "border-border-outline hover:-translate-y-0.5 hover:border-primary/25 hover:shadow-card-md",
                     !canEdit && "cursor-not-allowed opacity-70",
                   )}
                 >
-                  <span
-                    className={cn(
-                      "flex size-10 shrink-0 items-center justify-center rounded-full border transition-colors",
-                      active
-                        ? "border-white/50 bg-white/25 text-white"
-                        : "border-white/20 bg-white/10 text-white group-hover:text-white",
-                    )}
-                  >
-                    <Icon name={ENTITY_ICON[ty]} size={18} />
-                  </span>
-                  <div className="min-w-0">
+                  <IconBadge
+                    name={ENTITY_ICON[ty]}
+                    tone={active ? "primary" : "muted"}
+                    size="lg"
+                  />
+                  <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
-                      <p className="text-l6 text-white">
+                      <p className="text-h5 text-foreground">
                         {tType(`${ty}.title`)}
                       </p>
                       {active && (
-                        <span className="rounded-sm bg-white/20 px-2 py-0.5 text-l6-plus uppercase tracking-wide text-white">
+                        <span className="rounded-sm bg-primary/10 px-2 py-0.5 text-l6-plus uppercase tracking-wide text-primary">
                           {t("type.current")}
                         </span>
                       )}
                     </div>
-                    <p className="mt-1 text-p4 leading-relaxed text-white">
+                    <p className="mt-1 text-p3-r leading-relaxed text-muted-foreground">
                       {tType(`${ty}.description`)}
                     </p>
                   </div>
                 </button>
               );
             })}
-          </div>
-        </ReferenceCard>
+        </div>
 
         {/* Obligations list */}
         <div
@@ -338,73 +341,6 @@ export function EntityContent({
           </div>
         </div>
       </StaggerReveal>
-    </div>
-  );
-}
-
-function ProgressRing({
-  value,
-  label,
-  onDark,
-}: {
-  value: number;
-  label?: string;
-  onDark?: boolean;
-}) {
-  const SIZE = 72;
-  const STROKE = 7;
-  const R = (SIZE - STROKE) / 2;
-  const CIRC = 2 * Math.PI * R;
-  const offset = CIRC * (1 - value / 100);
-  const color = onDark
-    ? "#ffffff"
-    : value >= 100
-      ? "var(--success)"
-      : value >= 50
-        ? "var(--warning)"
-        : "var(--primary)";
-  return (
-    <div className="flex flex-col items-center">
-      <div className="relative" style={{ width: SIZE, height: SIZE }}>
-        <svg width={SIZE} height={SIZE} className="-rotate-90">
-          <circle
-            cx={SIZE / 2}
-            cy={SIZE / 2}
-            r={R}
-            fill="none"
-            stroke={onDark ? "#ffffff" : "var(--border)"}
-            strokeOpacity={onDark ? 0.2 : 0.25}
-            strokeWidth={STROKE}
-          />
-          <circle
-            cx={SIZE / 2}
-            cy={SIZE / 2}
-            r={R}
-            fill="none"
-            stroke={color}
-            strokeWidth={STROKE}
-            strokeLinecap="round"
-            strokeDasharray={CIRC}
-            strokeDashoffset={offset}
-            className="transition-all duration-500"
-          />
-        </svg>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-l6 tabular-nums" style={{ color }}>
-            {value}%
-          </span>
-        </div>
-      </div>
-      {label && (
-        <span
-          className={cn(
-            "mt-1 text-l6-plus uppercase tracking-wide",
-            onDark ? "text-white" : "text-muted-foreground",
-          )}
-        >
-          {label}
-        </span>
-      )}
     </div>
   );
 }

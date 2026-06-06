@@ -166,14 +166,14 @@ function StepRow({
           </span>
           <p
             className={cn(
-              "truncate text-h6",
+              "truncate text-h5",
               step.done || locked ? "text-muted-foreground" : "text-foreground",
             )}
           >
             {title}
           </p>
         </div>
-        <p className="text-p3 text-muted-foreground">{description}</p>
+        <p className="text-p3-r text-muted-foreground">{description}</p>
       </div>
 
       {isNext && (
