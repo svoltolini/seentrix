@@ -56,7 +56,10 @@ export function ReferenceBadge({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-2 rounded-sm border-[1.5px] border-primary-foreground/30 bg-primary-foreground/15 px-2.5 py-0.5 text-l6-plus uppercase tracking-wider text-primary-foreground backdrop-blur-sm",
+        // Small rounded-full pill: 10px uppercase label, translucent white
+        // fill + border, blurred. Kept deliberately compact so it reads as a
+        // subtle eyebrow on every reference card.
+        "inline-flex items-center gap-1.5 rounded-full border border-primary-foreground/30 bg-primary-foreground/15 px-2.5 py-0.5 text-[10px] font-semibold uppercase leading-tight tracking-wider text-primary-foreground backdrop-blur-sm",
         className,
       )}
     >

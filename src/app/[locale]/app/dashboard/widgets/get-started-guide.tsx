@@ -78,7 +78,7 @@ export function GetStartedGuide({ state, firstName }: Props) {
 
       {/* Step checklist — strictly sequential */}
       <ol className="flex flex-col gap-3">
-        {state.steps.map((step, idx) => {
+        {state.steps.map((step) => {
           const isNext = !step.done && step.id === next?.id;
           // A step is "locked" when it's neither done nor the current step.
           const locked = !step.done && !isNext;
@@ -88,7 +88,6 @@ export function GetStartedGuide({ state, firstName }: Props) {
               step={step}
               href={step.href}
               onClick={onClickFor(step)}
-              index={idx + 1}
               isNext={isNext}
               locked={locked}
               t={t}
@@ -113,7 +112,6 @@ function StepRow({
   step,
   href,
   onClick,
-  index,
   isNext,
   locked,
   t,
@@ -121,7 +119,6 @@ function StepRow({
   step: OnboardingStep;
   href: string;
   onClick?: () => void;
-  index: number;
   isNext: boolean;
   locked: boolean;
   t: ReturnType<typeof useTranslations>;
@@ -159,20 +156,17 @@ function StepRow({
         )}
       </span>
 
-      <div className="flex min-w-0 flex-1 flex-col">
-        <div className="flex items-center gap-2">
-          <span className="text-p4 font-semibold uppercase tracking-wider text-muted-foreground">
-            {index}
-          </span>
-          <p
-            className={cn(
-              "truncate text-h5",
-              step.done || locked ? "text-muted-foreground" : "text-foreground",
-            )}
-          >
-            {title}
-          </p>
-        </div>
+      {/* Title + body block — mirrors the AI intro side-view feature items
+          exactly: text-h5 title, text-p3-r body, gap-1, no truncation. */}
+      <div className="flex min-w-0 flex-1 flex-col gap-1">
+        <p
+          className={cn(
+            "text-h5",
+            step.done || locked ? "text-muted-foreground" : "text-foreground",
+          )}
+        >
+          {title}
+        </p>
         <p className="text-p3-r text-muted-foreground">{description}</p>
       </div>
 
