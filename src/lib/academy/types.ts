@@ -15,7 +15,7 @@ export type RoleId =
   | "editor"
   | "viewer";
 
-export type LocaleId = "en" | "de";
+export type LocaleId = "en" | "de" | "fr" | "it";
 
 /** A single lesson section — a heading + prose body. */
 export interface LessonSection {
@@ -60,8 +60,13 @@ export interface Lesson {
   requiredForRoles: RoleId[];
   /** Other lesson ids a learner should complete first (optional). */
   prerequisites?: string[];
-  /** Per-locale content. */
-  i18n: Record<LocaleId, LessonLocale>;
+  /**
+   * Per-locale content. English (`en`) is required and is the fallback for any
+   * locale not yet authored (see `getLessonContent`). German/French/Italian are
+   * optional so locales can be filled in incrementally without breaking the
+   * build.
+   */
+  i18n: { en: LessonLocale } & Partial<Record<LocaleId, LessonLocale>>;
 }
 
 /** Quiz pass threshold — 4 out of 5 answers correct. */
