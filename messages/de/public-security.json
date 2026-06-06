@@ -1,0 +1,37 @@
+{
+  "publicSecurity": {
+    "eyebrow": "Sicherheitsoffenlegung",
+    "title": "Schwachstelle an {org} melden",
+    "subtitle": "Wenn Sie eine Sicherheitslücke in einem unserer Produkte entdeckt haben, möchten wir davon erfahren. Wir praktizieren koordinierte Offenlegung und verpflichten uns, gültige Meldungen innerhalb von 72 Stunden zu bestätigen.",
+    "emailCta": "E-Mail an {email}",
+    "policyTitle": "Offenlegungsrichtlinie",
+    "severity": {
+      "critical": "Kritisch",
+      "high": "Hoch",
+      "medium": "Mittel",
+      "low": "Niedrig"
+    },
+    "form": {
+      "title": "Bericht einreichen",
+      "description": "Alle mit * gekennzeichneten Felder sind Pflichtfelder. Sie können anonym einreichen; wir werden den Bericht dennoch untersuchen, können Ihnen jedoch nicht antworten.",
+      "titleLabel": "Titel",
+      "titlePlaceholder": "Kurze Zusammenfassung",
+      "descriptionLabel": "Beschreibung",
+      "descriptionPlaceholder": "Was Sie gefunden haben, wie es zu reproduzieren ist, potenzielle Auswirkung.",
+      "affectedProductLabel": "Betroffenes Produkt",
+      "affectedProductPlaceholder": "Produktname / Version / Modell",
+      "severityLabel": "Vorgeschlagener Schweregrad",
+      "reporterNameLabel": "Ihr Name",
+      "reporterEmailLabel": "Ihre E-Mail",
+      "reporterHandleLabel": "Handle (optional)",
+      "reporterHandlePlaceholder": "@sie",
+      "anonymousNote": "Anonymes Einreichen ist möglich – wir können Sie jedoch nicht kontaktieren.",
+      "submit": "Bericht einreichen",
+      "submitting": "Wird eingereicht…",
+      "submitFailed": "Der Bericht konnte nicht eingereicht werden. Bitte schreiben Sie uns stattdessen eine E-Mail.",
+      "captchaFailed": "Ihre Identität als Mensch konnte nicht bestätigt werden. Laden Sie die Seite neu und versuchen Sie es erneut.",
+      "successTitle": "Bericht erhalten",
+      "successDescription": "Vielen Dank für die verantwortungsvolle Offenlegung. Wenn Sie eine E-Mail-Adresse hinterlassen haben, melden wir uns innerhalb von 72 Stunden."
+    }
+  }
+}

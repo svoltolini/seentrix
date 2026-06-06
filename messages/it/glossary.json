@@ -1,0 +1,319 @@
+{
+  "glossary": {
+    "_meta": {
+      "eyebrow": "Glossario",
+      "pageTitle": "Glossario",
+      "pageSubtitle": "Definizioni in linguaggio semplice del vocabolario CRA, della sicurezza e degli SBOM che incontrerai in Seentrix.",
+      "searchPlaceholder": "Cerca termini…",
+      "relatedHeading": "Termini correlati",
+      "lessonHeading": "Approfondimento"
+    },
+    "vulnerability": {
+      "title": "Vulnerabilità",
+      "body": "Un punto debole nel codice, nella progettazione o nella configurazione di un prodotto che un attaccante può sfruttare per incidere su riservatezza, integrità o disponibilità. Una vulnerabilità è diversa da un bug: tutti i bug sfruttabili sono vulnerabilità, ma non tutti i bug hanno un impatto sulla sicurezza. In Seentrix, le vulnerabilità vengono rilevate scansionando l'SBOM attivo e tramite segnalazioni dirette attraverso l'intake PSIRT."
+    },
+    "cve": {
+      "title": "CVE",
+      "body": "Common Vulnerabilities and Exposures — un identificatore pubblico (es. CVE-2024-12345) assegnato da MITRE a ciascuna vulnerabilità software pubblicamente nota. I CVE sono la lingua franca per il tracciamento delle vulnerabilità: vendor, scanner e avvisi vi fanno tutti riferimento. Seentrix associa l'ID CVE a ogni riscontro affinché il tuo audit trail sia interoperabile con qualsiasi strumento esterno.",
+      "ref": "L'Articolo 13(8) del CRA fa implicitamente riferimento ai CVE quando richiede ai fabbricanti di \"affrontare le vulnerabilità\" — i revisori si aspettano che i tuoi ticket di correzione citino gli ID CVE."
+    },
+    "cvss": {
+      "title": "CVSS",
+      "body": "Common Vulnerability Scoring System — un punteggio da 0.0 a 10.0 che quantifica la gravità di una vulnerabilità. I punteggi si suddividono in Basso (0.1-3.9), Medio (4.0-6.9), Alto (7.0-8.9), Critico (9.0-10.0). CVSS v4 (2023) è la versione attuale; molti scanner riportano ancora la v3. Usa il CVSS come punto di partenza per il triage, non come decisione finale — EPSS e KEV spesso cambiano la priorità."
+    },
+    "epss": {
+      "title": "EPSS",
+      "body": "Exploit Prediction Scoring System — una stima di probabilità da 0.0 a 1.0, aggiornata quotidianamente, che un dato CVE venga sfruttato nei prossimi 30 giorni. La maggior parte dei CVE ha un EPSS inferiore a 0.01. Un EPSS superiore a 0.5 combinato con un CVSS alto di solito significa \"applica la patch questa settimana\". EPSS è mantenuto dalla comunità FIRST.org."
+    },
+    "kev": {
+      "title": "Catalogo KEV",
+      "body": "Il catalogo delle vulnerabilità sfruttate note (Known Exploited Vulnerabilities) della CISA — un elenco curato di CVE che vengono attivamente sfruttati. Se una vulnerabilità nel tuo SBOM è nel catalogo KEV, deve salire in cima alla coda di triage indipendentemente dal suo punteggio CVSS. La CISA aggiunge circa 5-10 CVE al catalogo KEV ogni settimana."
+    },
+    "actively_exploited": {
+      "title": "Sfruttata attivamente",
+      "body": "Una vulnerabilità è sfruttata attivamente quando ci sono prove credibili di attacchi reali che la utilizzano — proof-of-concept pubblico weaponizzato, rapporti di threat intelligence, prove nei log o presenza nel catalogo CISA KEV. In Seentrix puoi contrassegnare qualsiasi vulnerabilità come sfruttata attivamente, il che attiva immediatamente il clock di segnalazione degli incidenti dell'Articolo 14.",
+      "ref": "CRA Articolo 14(1) — i fabbricanti devono notificare a ENISA qualsiasi vulnerabilità sfruttata attivamente nei loro prodotti entro 24 ore dalla scoperta."
+    },
+    "advisory": {
+      "title": "Avviso di sicurezza",
+      "body": "Una dichiarazione formale e pubblica che descrive una vulnerabilità, il suo impatto e la correzione. Di solito pubblicata in formati leggibili da macchina come CSAF o VEX in modo che gli utenti a valle possano acquisirla automaticamente. La pubblicazione di avvisi è uno degli obblighi fondamentali della gestione di un PSIRT."
+    },
+    "cvd": {
+      "title": "Divulgazione coordinata delle vulnerabilità",
+      "body": "Una politica + processo per la gestione delle segnalazioni di vulnerabilità in ingresso: un intake pubblico, un SLA di triage, una dichiarazione di porto sicuro per i ricercatori in buona fede e una tempistica coordinata tra la patch del vendor e la divulgazione pubblica del ricercatore. Il CRA rende la CVD un obbligo formale.",
+      "ref": "CRA Allegato I Parte II(1) — i fabbricanti devono avere una politica CVD. La pagina di sicurezza pubblica di Seentrix è il lato intake di tale politica."
+    },
+    "psirt": {
+      "title": "PSIRT",
+      "body": "Product Security Incident Response Team — il team (non necessariamente a tempo pieno) che gestisce l'intake delle vulnerabilità, il triage, il coordinamento con i ricercatori e la pubblicazione di avvisi per un prodotto. Per le piccole aziende il PSIRT potrebbe essere un ingegnere che svolge un secondo ruolo. Il CRA presuppone che tu ne abbia uno anche se non lo chiami così."
+    },
+    "sbom": {
+      "title": "SBOM",
+      "body": "Distinta base del software (Software Bill of Materials) — un inventario leggibile da macchina di ogni componente (incluse le dipendenze transitive) in un software, insieme a versioni e licenze. L'SBOM è l'input per la scansione delle vulnerabilità: non puoi trovare una vulnerabilità se non sai cosa distribuisci. Seentrix accetta CycloneDX e SPDX.",
+      "ref": "CRA Allegato I Parte I(2)(a)(v) — i prodotti devono \"identificare e documentare i componenti rilevanti\". Un SBOM è il modo pratico per soddisfare tale requisito."
+    },
+    "cyclonedx": {
+      "title": "CycloneDX",
+      "body": "Un formato SBOM gestito da OWASP (XML o JSON). CycloneDX è popolare nell'ecosistema degli strumenti di sicurezza ed è particolarmente adatto a rappresentare le relazioni di dipendenza e le vulnerabilità insieme ai componenti. Seentrix analizza CycloneDX in modo nativo."
+    },
+    "spdx": {
+      "title": "SPDX",
+      "body": "Software Package Data Exchange — un formato SBOM standardizzato ISO/IEC 5962 gestito dalla Linux Foundation (tag-value, JSON, YAML, RDF). SPDX ha le più solide capacità di rappresentazione delle licenze di qualsiasi formato SBOM ed è il formato di riferimento per gli appalti federali statunitensi. Seentrix analizza SPDX in modo nativo."
+    },
+    "semver": {
+      "title": "Semver",
+      "body": "Versionamento semantico — una convenzione di versionamento a tre numeri (MAJOR.MINOR.PATCH) dove gli incrementi hanno significati definiti: MAJOR per modifiche incompatibili, MINOR per funzionalità retrocompatibili, PATCH per correzioni retrocompatibili. Seentrix accetta qualsiasi stringa di versione, ma le versioni conformi a semver rendono più facile agli utenti decidere se aggiornare."
+    },
+    "digest": {
+      "title": "Digest",
+      "body": "Un'impronta digitale di lunghezza fissa (di solito un hash SHA-256) di un file o artefatto. Se cambi anche un solo byte, il digest cambia completamente. I digest consentono agli utenti a valle di verificare che il binario scaricato sia quello che hai distribuito — essenziale per l'integrità della supply chain."
+    },
+    "hash": {
+      "title": "Hash",
+      "body": "Una funzione matematica unidirezionale che mappa dati di qualsiasi dimensione in un output di lunghezza fissa (il digest). Gli hash crittografici (SHA-256, SHA-3) sono progettati in modo che input diversi producano output diversi e non sia possibile invertire l'output per ottenere l'input. Utilizzati per verifiche di integrità e firme."
+    },
+    "signing": {
+      "title": "Firma del codice",
+      "body": "Allegare una firma crittografica a un artefatto software per provare che proviene da te e non è stato manomesso. Le implementazioni variano: GPG per l'open source, Authenticode per Windows, Sigstore per il cloud-native, firma del vendor OS per il mobile. Le release firmate sono un modo pratico per soddisfare i requisiti di protezione dell'integrità del CRA.",
+      "ref": "CRA Allegato I Parte I(3)(h) — i prodotti devono implementare la protezione dell'integrità dei dati archiviati, trasmessi ed elaborati."
+    },
+    "cra": {
+      "title": "CRA",
+      "body": "Cyber Resilience Act — Regolamento (UE) 2024/2847. Un regolamento UE che impone requisiti di cibersicurezza ai \"prodotti con elementi digitali\" immessi sul mercato UE, inclusi hardware, software, firmware e IoT. Adottato nel 2024, con obblighi che si applicano progressivamente fino al 2027 (conformità completa entro l'11 dicembre 2027)."
+    },
+    "annex_i": {
+      "title": "Allegato I",
+      "body": "I requisiti essenziali di cibersicurezza, suddivisi in Parte I (requisiti di cibersicurezza per il prodotto stesso — sicurezza predefinita, integrità, minimizzazione dei dati, ecc.) e Parte II (requisiti di gestione delle vulnerabilità — SBOM, politica CVD, aggiornamenti di sicurezza, ecc.). Ogni prodotto nell'ambito deve soddisfare tutti i requisiti applicabili."
+    },
+    "annex_v": {
+      "title": "Allegato V",
+      "body": "Il contenuto obbligatorio della dichiarazione di conformità UE: identificazione del fabbricante, identificazione del prodotto, elenco delle norme armonizzate applicate, procedura di valutazione della conformità, dati dell'organismo notificato (ove rilevante), firma di una persona autorizzata. Seentrix compila tutto questo automaticamente dalle impostazioni che fornisci."
+    },
+    "article_13": {
+      "title": "Articolo 13",
+      "body": "L'articolo del CRA che elenca gli obblighi del fabbricante: marcatura CE, documentazione tecnica, valutazione della conformità, gestione delle vulnerabilità, periodo di supporto, punto di contatto per la cibersicurezza e l'obbligo di fornire aggiornamenti di sicurezza senza indebito ritardo per tutta la durata del periodo di supporto (minimo 5 anni)."
+    },
+    "article_14": {
+      "title": "Articolo 14",
+      "body": "L'articolo del CRA che impone la segnalazione degli incidenti. Quando un fabbricante viene a conoscenza di una vulnerabilità sfruttata attivamente o di un incidente grave che incide sulla sicurezza del suo prodotto, deve presentare un preallarme entro 24 ore, un rapporto completo sull'incidente entro 72 ore e un rapporto finale entro 14 giorni — tutti tramite il punto unico di ingresso ENISA."
+    },
+    "essential_requirements": {
+      "title": "Requisiti essenziali",
+      "body": "L'elenco delle proprietà di cibersicurezza che un prodotto deve avere per essere immesso sul mercato UE, definito nell'Allegato I Parte I del CRA. Esempi: nessuna vulnerabilità sfruttabile nota al momento dell'immissione sul mercato, configurazione sicura per impostazione predefinita, superficie di attacco minimizzata, protezione dell'integrità e dell'autenticità, minimizzazione dei dati. La conformità alle norme armonizzate (serie EN 18031) fornisce una presunzione di conformità."
+    },
+    "conformity_assessment": {
+      "title": "Valutazione della conformità",
+      "body": "La procedura formale che determina se il tuo prodotto soddisfa i requisiti essenziali. Il CRA offre quattro percorsi: Modulo A (autovalutazione, predefinito per i prodotti non critici), Modulo B+C (esame del tipo da parte di un organismo notificato per Importante Classe II), Modulo H (audit completo del sistema di qualità) e lo schema di certificazione europea di cibersicurezza."
+    },
+    "module_a": {
+      "title": "Modulo A",
+      "body": "Controllo interno della produzione — il percorso di autovalutazione. Il fabbricante predispone la documentazione tecnica, dichiara la conformità, appone la marcatura CE e si assume la piena responsabilità. Non è coinvolto alcun organismo notificato. Disponibile per i prodotti non classificati come Importante Classe I o II o Critico."
+    },
+    "module_b_c": {
+      "title": "Modulo B+C",
+      "body": "Esame UE del tipo (Modulo B) seguito dalla conformità al tipo (Modulo C). Un organismo notificato esamina un campione rappresentativo del prodotto, rilascia un certificato di esame UE del tipo, e quindi il fabbricante dichiara che ogni unità prodotta è conforme a quel tipo. Obbligatorio per i prodotti di Importante Classe II."
+    },
+    "module_h": {
+      "title": "Modulo H",
+      "body": "Garanzia qualità totale — un organismo notificato verifica e approva il sistema di qualità completo del fabbricante (progettazione, produzione, ispezione finale, test). Le verifiche di sorveglianza si ripetono annualmente. Più costoso del Modulo B+C ma copre tutte le varianti di prodotto con un unico certificato. Obbligatorio per i prodotti Critici e disponibile per l'Importante Classe II."
+    },
+    "ce_marking": {
+      "title": "Marcatura CE",
+      "body": "Il logo CE sui prodotti e sulle confezioni, che segnala la conformità alle normative UE applicabili. Ai sensi del CRA, apporre la marcatura CE a un prodotto con elementi digitali è un'attestazione che soddisfa i requisiti essenziali ed è stato sottoposto alla corretta procedura di valutazione della conformità. La marcatura CE illegittima comporta sanzioni fino a €15 milioni o al 2,5% del fatturato mondiale."
+    },
+    "doc": {
+      "title": "Dichiarazione di conformità",
+      "body": "Un documento legale firmato in cui il fabbricante dichiara che il suo prodotto è conforme a ogni normativa UE applicabile (CRA + altre). Deve essere redatto prima di immettere il prodotto sul mercato, conservato in archivio per 10 anni e messo a disposizione delle autorità di vigilanza del mercato su richiesta. Seentrix lo genera dalle impostazioni del prodotto e dell'organizzazione.",
+      "ref": "CRA Allegato V definisce il contenuto obbligatorio della dichiarazione di conformità."
+    },
+    "notified_body": {
+      "title": "Organismo notificato",
+      "body": "Un'organizzazione indipendente di terze parti designata da uno Stato membro dell'UE per eseguire valutazioni della conformità. Ognuno ha un identificatore univoco a quattro cifre (es. 0197 per TÜV Rheinland) e un ambito di attività per cui è competente. È necessario sceglierne uno prima di richiedere il Modulo B+C o il Modulo H."
+    },
+    "nando": {
+      "title": "NANDO",
+      "body": "Il database della Commissione delle organizzazioni notificate e designate con il nuovo approccio. Ogni organismo notificato competente per eseguire valutazioni della conformità CRA è elencato lì con il suo ambito, indirizzo e ID a quattro cifre. Il posto autorevole dove scegliere un organismo notificato. Ricerca: ec.europa.eu/growth/tools-databases/nando."
+    },
+    "authorised_representative": {
+      "title": "Rappresentante autorizzato",
+      "body": "Una persona fisica o giuridica stabilita nell'UE, mandatata per iscritto da un fabbricante non UE, per svolgere compiti specifici per conto del fabbricante (conservazione della documentazione tecnica, cooperazione con la vigilanza del mercato, ecc.). Obbligatorio prima che un fabbricante non UE possa immettere prodotti sul mercato UE.",
+      "ref": "CRA Articolo 18."
+    },
+    "market_surveillance": {
+      "title": "Vigilanza del mercato",
+      "body": "La funzione dell'autorità nazionale che garantisce che i prodotti immessi sul mercato UE siano conformi alle normative applicabili. Ogni Stato membro ne designa una. Possono richiedere documentazione tecnica, ispezionare prodotti, vietare vendite, ordinare richiami e comminare sanzioni. Ai sensi del CRA, di solito concedono 30-60 giorni per rispondere a una richiesta di documentazione."
+    },
+    "placing_on_market": {
+      "title": "Immissione sul mercato",
+      "body": "Il momento legale in cui un prodotto viene reso disponibile per la prima volta sul mercato UE per la distribuzione o l'uso, sia a titolo oneroso che gratuito. Da quel momento iniziano gli obblighi CRA del fabbricante e inizia a decorrere il periodo di supporto. Consegnare un dispositivo a un cliente nell'UE significa immetterlo sul mercato, anche un'unità beta."
+    },
+    "early_warning": {
+      "title": "Preallarme",
+      "body": "La prima delle tre notifiche di incidenti CRA. Deve raggiungere ENISA entro 24 ore dalla scoperta di una vulnerabilità sfruttata attivamente o di un incidente grave. Contenuto minimo: descrizione generale, se si sospetta attività dolosa e gli Stati membri UE in cui il prodotto è in uso. Può essere sintetica — il rapporto di 72 ore colma le lacune."
+    },
+    "incident_report": {
+      "title": "Rapporto sull'incidente",
+      "body": "Il follow-up di 72 ore al preallarme di 24 ore. Include la valutazione della gravità, l'ambito della compromissione, gli indicatori di compromissione (IOC) ove disponibili, la mitigazione in corso e i prodotti e utenti interessati. Può ancora essere rivisto nel rapporto finale di 14 giorni."
+    },
+    "final_report": {
+      "title": "Rapporto finale",
+      "body": "La notifica conclusiva di 14 giorni. Analisi della causa principale, le misure correttive adottate (e che si adotteranno), il rischio residuo e come hai comunicato agli utenti interessati. Questo è quello che i revisori esamineranno a fondo anni dopo, quindi sii esaustivo."
+    },
+    "triage": {
+      "title": "Triage",
+      "body": "Il processo di decidere, per ogni vulnerabilità o segnalazione in arrivo, quale sia effettivamente la gravità e cosa fare a riguardo. In Seentrix, il triage sposta una segnalazione lungo la pipeline triage → indagine → risolto / duplicato / spam e allega note che diventano parte dell'audit trail."
+    },
+    "severity": {
+      "title": "Gravità",
+      "body": "Un'etichetta qualitativa (Critica / Alta / Media / Bassa) per quanto sia grave una vulnerabilità o un incidente nel tuo contesto specifico. Non corrisponde al CVSS: un punteggio CVSS Critico su un componente che non usi effettivamente ha gravità Bassa. La gravità determina gli obblighi di segnalazione CRA ai sensi dell'Articolo 14."
+    },
+    "enisa": {
+      "title": "ENISA",
+      "body": "L'Agenzia dell'Unione europea per la cibersicurezza. Ai sensi del CRA, ENISA gestisce la piattaforma di segnalazione unica dove i fabbricanti presentano le notifiche di incidenti di 24h / 72h / 14g. Gestisce inoltre il database europeo delle vulnerabilità (EUVD) e coordina con i CSIRT nazionali."
+    },
+    "csirt": {
+      "title": "CSIRT",
+      "body": "Computer Security Incident Response Team — team a livello nazionale (uno per ogni Stato membro UE più quello di ENISA) che coordinano la risposta agli incidenti. Ai sensi del CRA, i CSIRT ricevono le notifiche dell'Articolo 14 dalla piattaforma unica ENISA e possono contattarti direttamente per ulteriori informazioni."
+    },
+    "support_period": {
+      "title": "Periodo di supporto",
+      "body": "La finestra temporale in cui un fabbricante si impegna a fornire aggiornamenti di sicurezza per un prodotto. Dichiarato pubblicamente (sulle informazioni per l'utente finale, sulla DoC e sulla confezione del prodotto) e vincolante — non puoi ridurlo dopo. Il CRA impone un minimo di 5 anni, più lungo se la durata prevista del prodotto è superiore.",
+      "ref": "CRA Articolo 13 + Allegato I Parte II(8)."
+    },
+    "update_channel": {
+      "title": "Canale di aggiornamento",
+      "body": "Come gli aggiornamenti di sicurezza raggiungono fisicamente gli utenti finali — push OTA, pull tramite package manager (apt, npm, Docker Hub), portale di download, aggiornamento USB inviato dal vendor, o sostituzione manuale. Il CRA richiede che il canale di aggiornamento sia dichiarato nelle informazioni per l'utente finale affinché gli utenti sappiano come rimanere aggiornati."
+    },
+    "release": {
+      "title": "Release",
+      "body": "Una singola versione distribuibile di un prodotto, caratterizzata da una stringa di versione e da un artefatto di build. Seentrix traccia le release in modo che tu possa evidenziare che l'impegno di supporto viene rispettato: un periodo di supporto di 5 anni con zero release è un segnale di allarme per i revisori."
+    },
+    "security_update": {
+      "title": "Aggiornamento di sicurezza",
+      "body": "Una release il cui scopo principale è la correzione di una o più vulnerabilità. Ai sensi dell'Articolo 13(8) del CRA, gli aggiornamenti di sicurezza devono essere resi disponibili \"senza indebito ritardo e gratuitamente\". Contrassegnare una release come aggiornamento di sicurezza in Seentrix la segnala automaticamente nel registro delle prove di conformità."
+    }
+  },
+  "help": {
+    "fieldHelp": "Guida al campo",
+    "craReference": "Riferimento CRA",
+    "relatedTerms": "Termini correlati",
+    "academy": "Academy",
+    "openLesson": "Apri lezione →",
+    "close": "Chiudi"
+  },
+  "academy": {
+    "hero": {
+      "eyebrow": "Formazione CRA",
+      "title": "Seentrix Academy",
+      "description": "Lezioni brevi sul CRA, sulla gestione delle vulnerabilità, sugli SBOM e sugli obblighi dietro ogni campo che compili in Seentrix. Completa i percorsi per raccogliere certificati pronti per l'audit per ogni membro del team.",
+      "completeLabel": "lezioni completate"
+    },
+    "lessonCard": {
+      "completed": "Completato",
+      "open": "Apri",
+      "audio": "Audio"
+    },
+    "byScreenCard": {
+      "meta": "{count, plural, one {# lezione} other {# lezioni}} · {minutes} min · {done}/{total} completate"
+    },
+    "quiz": {
+      "questionPrefix": "Domanda ",
+      "threshold": "Soglia di superamento {percent}%",
+      "submit": "Invia risposte",
+      "submitting": "Invio in corso…",
+      "retry": "Riprova",
+      "passedTitle": "Ottimo lavoro",
+      "passedBody": "Hai ottenuto {score}%. Completamento registrato nel tuo audit trail.",
+      "certificateLabel": "Certificato",
+      "failedTitle": "Non questa volta — {score}% (necessario {threshold}%)",
+      "failedBody": "Rivedi il feedback qui sopra, poi riprova tra {minutes} min.",
+      "cooldownTitle": "Periodo di attesa in corso",
+      "cooldownBody": "Puoi riprovare tra {minutes} min. Il ritardo è lì per assicurarsi che il quiz stia effettivamente insegnando il concetto.",
+      "alreadyPassedShort": "Hai completato questa lezione. È bloccata per preservare il tuo registro di formazione."
+    },
+    "tabs": {
+      "lessons": "Lezioni",
+      "byScreen": "Per schermata",
+      "glossary": "Glossario",
+      "teamProgress": "Avanzamento del team",
+      "verify": "Verifica certificato"
+    },
+    "byScreen": {
+      "openScreen": "Apri",
+      "screens": {
+        "dashboard": "Dashboard",
+        "products": "Prodotti",
+        "sbom": "SBOM",
+        "vulnerabilities": "Vulnerabilità",
+        "conformity": "Conformità",
+        "releases": "Release",
+        "incidents": "Incidenti",
+        "reports": "Segnalazioni di vulnerabilità",
+        "settingsOrganization": "Impostazioni → Organizzazione",
+        "settingsEntity": "Impostazioni → Ruolo entità",
+        "settingsTeam": "Impostazioni → Team"
+      }
+    },
+    "teamProgress": {
+      "heading": "Stato della formazione del team",
+      "description": "Chi ha superato quale lezione obbligatoria, quando e con quale punteggio. Pronto per l'audit — scarica un CSV per i regolatori.",
+      "exportCsv": "Scarica CSV",
+      "noTeam": "Nessun membro del team ancora.",
+      "member": "Membro",
+      "role": "Ruolo",
+      "overall": "Complessivo",
+      "complete": "Completato",
+      "pending": "In attesa",
+      "yourProgress": "I tuoi progressi",
+      "yourTeam": "Il tuo team ({count})"
+    },
+    "banner": {
+      "title": "Nuovo in questa schermata?",
+      "body": "{count, plural, one {# lezione la copre in {minutes} min} other {# lezioni la coprono in {minutes} min}}.",
+      "cta": "Apri Academy →",
+      "dismiss": "Non ora"
+    },
+    "gate": {
+      "title": "Completa la tua formazione per continuare",
+      "subtitle": "Ogni membro del team deve superare le lezioni obbligatorie per il proprio ruolo prima di utilizzare Seentrix. Obbligatorio ai sensi del CRA e della politica di audit della nostra organizzazione.",
+      "progress": "{done} di {total} lezioni obbligatorie superate",
+      "continue": "Continua"
+    },
+    "lesson": {
+      "backToAcademy": "Academy",
+      "questionCount": "{count} domande del quiz",
+      "disclaimer": "Materiale didattico, non consulenza legale. Consulta un esperto CRA qualificato per le decisioni giuridicamente vincolanti.",
+      "quizHeading": "Verifica la tua comprensione",
+      "quizIntro": "Cinque domande a scelta multipla. Rispondi correttamente a 4 su 5 per segnare la lezione come completata.",
+      "alreadyPassed": "Hai superato questa lezione — {score}% di risposte corrette.",
+      "certificateLabel": "Certificato",
+      "downloadCertificate": "Scarica PDF",
+      "completedBadge": "Completato",
+      "audio": {
+        "badge": "Audio AI",
+        "caption": "{title} — briefing audio",
+        "play": "Riproduci il briefing audio",
+        "pause": "Metti in pausa il briefing audio",
+        "seek": "Scorri il briefing audio"
+      },
+      "downloadCertificateHint": "Scarica il tuo certificato di completamento in formato PDF."
+    },
+    "verify": {
+      "title": "Verifica un certificato",
+      "description": "Incolla un numero di certificato per confermarne l'autenticità e vedere a quale membro del team appartiene. Le verifiche sono limitate alla tua organizzazione.",
+      "placeholder": "Numero del certificato (es. a1b2c3d4…)",
+      "verify": "Verifica",
+      "checking": "Verifica in corso…",
+      "validTitle": "Certificato valido",
+      "holder": "Titolare",
+      "email": "Email",
+      "lesson": "Lezione",
+      "score": "Punteggio",
+      "completedAt": "Completato il",
+      "certificate": "Certificato",
+      "notFound": "Nessun certificato corrisponde a quel numero nella tua organizzazione. Potrebbe essere errato o non valido.",
+      "forbidden": "Solo amministratori e responsabili conformità possono verificare i certificati.",
+      "error": "Qualcosa è andato storto durante la verifica. Riprova."
+    }
+  }
+}

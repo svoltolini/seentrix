@@ -1,0 +1,160 @@
+{
+  "checklist": {
+    "title": "Compliance-Checkliste",
+    "subtitle": "Verfolgen Sie die grundlegenden Cybersicherheitsanforderungen gemäß CRA Anhang I für dieses Produkt.",
+    "score": "Compliance-Score",
+    "partI": "Teil I – Sicherheitsanforderungen",
+    "partIDescription": "Grundlegende Cybersicherheitsanforderungen für Produkte mit digitalen Elementen.",
+    "partII": "Teil II – Umgang mit Schwachstellen",
+    "partIIDescription": "Anforderungen an den Umgang mit Schwachstellen über den gesamten Produktlebenszyklus.",
+    "getStarted": "Bereit zum Start",
+    "getStartedDescription": "Beginnen Sie mit der Bearbeitung der CRA-Anforderungen – wir führen Sie Schritt für Schritt. Wählen Sie unten einen Punkt aus, um zu beginnen.",
+    "itemCount": "{completed} von {total} abgeschlossen",
+    "view": {
+      "kanban": "Kanban",
+      "list": "Liste"
+    },
+    "kanban": {
+      "backlog": "Rückstand",
+      "onProgress": "In Bearbeitung",
+      "completed": "Abgeschlossen",
+      "notApplicable": "Nicht zutreffend",
+      "empty": "Keine Aufgaben hier"
+    },
+    "notesLabel": "Notizen",
+    "notesPlaceholder": "Notizen, Beobachtungen oder Implementierungsdetails hinzufügen…",
+    "evidenceLabel": "Nachweise",
+    "uploadEvidence": "Datei hochladen",
+    "removeFile": "Entfernen",
+    "guidanceLabel": "Hinweise",
+    "statusLabel": "Status",
+    "articleLabel": "Artikel",
+    "assigneeLabel": "Zugewiesen an",
+    "assignTo": "Zuweisen an…",
+    "unassign": "Zuweisung aufheben",
+    "unassigned": "Nicht zugewiesen",
+    "saving": "Wird gespeichert…",
+    "saved": "Gespeichert",
+    "uploadError": "Dateiupload fehlgeschlagen. Bitte versuchen Sie es erneut.",
+    "statuses": {
+      "pending": "Nicht begonnen",
+      "in_progress": "In Bearbeitung",
+      "completed": "Abgeschlossen",
+      "not_applicable": "Nicht zutreffend"
+    },
+    "requirements": {
+      "secure_by_design": {
+        "title": "Security by Design & Default",
+        "description": "Produkte sind so zu konzipieren, zu entwickeln und herzustellen, dass sie ein angemessenes Maß an Cybersicherheit basierend auf den Risiken gewährleisten.",
+        "guidance": "Integrieren Sie Cybersicherheit in alle Phasen des Produktlebenszyklus, von der Konzeption über Design, Entwicklung, Produktion bis hin zur Wartung. Führen Sie während des Designs eine Bedrohungsmodellierung durch. Stellen Sie sicher, dass das Produkt mit den sichersten Standardeinstellungen ausgeliefert wird."
+      },
+      "no_known_vulnerabilities": {
+        "title": "Keine bekannten ausnutzbaren Schwachstellen",
+        "description": "Produkte sind ohne bekannte ausnutzbare Schwachstellen auszuliefern.",
+        "guidance": "Führen Sie vor der Veröffentlichung umfassende Schwachstellen-Scans durch. Nutzen Sie automatisierte SAST/DAST-Tools in Ihrer CI/CD-Pipeline. Überwachen Sie CVE-Datenbanken und NVD-Feeds für Komponenten in Ihrer SBOM. Etablieren Sie ein Sicherheits-Review-Gate vor der Veröffentlichung."
+      },
+      "risk_based_assessment": {
+        "title": "Cybersicherheits-Risikobewertung",
+        "description": "Basierend auf einer angemessenen Cybersicherheits-Risikobewertung sind Produkte so zu gestalten, dass identifizierte Risiken gemindert werden.",
+        "guidance": "Dokumentieren Sie eine formelle Cybersicherheits-Risikobewertung, die Vertraulichkeit, Integrität und Verfügbarkeit abdeckt. Identifizieren Sie Bedrohungsakteure, Angriffsvektoren und potenzielle Auswirkungen. Verwenden Sie etablierte Frameworks wie STRIDE oder OCTAVE. Aktualisieren Sie die Bewertung, wenn sich die Bedrohungslandschaft ändert."
+      },
+      "secure_default_config": {
+        "title": "Sichere Standardkonfiguration",
+        "description": "Produkte sind mit einer sicheren Standardkonfiguration auszuliefern, einschließlich der Möglichkeit, das Produkt auf den Originalzustand zurückzusetzen.",
+        "guidance": "Deaktivieren Sie unnötige Dienste und Ports standardmäßig. Verlangen Sie beim ersten Einsatz eine starke Authentifizierung. Vermeiden Sie Standard- oder fest kodierte Passwörter. Stellen Sie einen Werksreset-Mechanismus bereit, der das Produkt in einen sicheren Ausgangszustand zurücksetzt. Dokumentieren Sie die Standardkonfiguration."
+      },
+      "unauthorized_access_protection": {
+        "title": "Schutz vor unbefugtem Zugriff",
+        "description": "Produkte sind vor unbefugtem Zugriff auf Daten und Funktionen zu schützen, einschließlich geeigneter Authentifizierung, Identitäts- und Zugriffsverwaltung.",
+        "guidance": "Implementieren Sie rollenbasierte Zugriffssteuerung (RBAC). Nutzen Sie Multi-Faktor-Authentifizierung, wo angemessen. Setzen Sie starke Passwortrichtlinien durch. Wenden Sie das Prinzip der minimalen Rechtevergabe an. Protokollieren Sie alle Authentifizierungsversuche und Entscheidungen zur Zugriffssteuerung."
+      },
+      "data_confidentiality": {
+        "title": "Vertraulichkeit der Daten",
+        "description": "Produkte sind so zu gestalten, dass die Vertraulichkeit gespeicherter, übertragener oder anderweitig verarbeiteter Daten, ob personenbezogen oder sonstige, geschützt wird.",
+        "guidance": "Verschlüsseln Sie ruhende Daten mit AES-256 oder gleichwertig. Verschlüsseln Sie Daten bei der Übertragung mit TLS 1.2+. Schützen Sie kryptografische Schlüssel mit sicherem Schlüsselmanagement. Implementieren Sie sicheren Speicher für sensible Konfigurationen. Klassifizieren Sie Daten nach Sensibilitätsstufe."
+      },
+      "data_integrity": {
+        "title": "Integrität von Daten, Befehlen & Konfiguration",
+        "description": "Produkte sind so zu gestalten, dass die Integrität gespeicherter, übertragener oder anderweitig verarbeiteter Daten, Befehle, Programme und Konfigurationen geschützt wird.",
+        "guidance": "Verwenden Sie kryptografisches Hashing und digitale Signaturen zur Erkennung von Manipulationen. Implementieren Sie sichere Boot-Ketten, wo anwendbar. Validieren Sie alle eingehenden Befehle und Konfigurationen. Schützen Sie die Integrität von Firmware-Updates durch Code-Signing."
+      },
+      "data_minimization": {
+        "title": "Datenminimierung",
+        "description": "Produkte verarbeiten nur Daten, die für den vorgesehenen Verwendungszweck angemessen, relevant und auf das Notwendige beschränkt sind.",
+        "guidance": "Prüfen Sie Datenerhebungspraktiken anhand der Produktanforderungen. Minimieren Sie auf dem Gerät gespeicherte und an externe Dienste übertragene Daten. Implementieren Sie Datenaufbewahrungsrichtlinien. Schaffen Sie Transparenz darüber, welche Daten erhoben werden und warum. Stellen Sie die Einhaltung der DSGVO-Grundsätze zur Datenminimierung sicher."
+      },
+      "availability_resilience": {
+        "title": "Verfügbarkeit & Ausfallsicherheit",
+        "description": "Produkte sind so zu konzipieren und herzustellen, dass Verfügbarkeit und Ausfallsicherheit gewährleistet sind, einschließlich der Widerstandsfähigkeit gegenüber Denial-of-Service-Angriffen.",
+        "guidance": "Implementieren Sie Ratenbegrenzung und Verkehrsmanagement. Gestalten Sie das System für einen graziösen Abbau unter Last. Testen Sie die Ausfallsicherheit gegenüber gängigen DoS-Angriffsmustern. Implementieren Sie Redundanz für kritische Funktionen. Definieren und dokumentieren Sie Wiederherstellungsverfahren."
+      },
+      "attack_surface_minimization": {
+        "title": "Minimierung der Angriffsfläche",
+        "description": "Produkte minimieren ihre eigene Angriffsfläche, einschließlich externer Schnittstellen, und reduzieren die negativen Auswirkungen auf die Verfügbarkeit von Diensten anderer Geräte oder Netzwerke.",
+        "guidance": "Deaktivieren oder entfernen Sie nicht verwendete Dienste, Ports und Protokolle. Beschränken Sie exponierte APIs auf das Notwendige. Implementieren Sie Netzwerksegmentierungsfähigkeiten. Beschränken Sie Debug- und Diagnoseschnittstellen in der Produktion. Überprüfen und reduzieren Sie die Angriffsfläche regelmäßig."
+      },
+      "incident_impact_reduction": {
+        "title": "Reduzierung der Auswirkungen von Sicherheitsvorfällen",
+        "description": "Produkte sind so zu gestalten, dass die Auswirkungen eines Sicherheitsvorfalls durch geeignete Mechanismen und Techniken zur Angriffsabwehr begrenzt werden.",
+        "guidance": "Implementieren Sie Sandboxing oder Prozessisolierung, wo machbar. Verwenden Sie Speicherschutzmechanismen (ASLR, DEP, Stack-Canaries). Wenden Sie das Prinzip der minimalen Rechtevergabe für alle Komponenten an. Implementieren Sie Fail-Safe-Modi. Gestalten Sie Eindämmungsgrenzen, um laterale Bewegungen zu verhindern."
+      },
+      "security_logging": {
+        "title": "Protokollierung & Überwachung von Sicherheitsereignissen",
+        "description": "Produkte bieten die Möglichkeit, relevante interne Aktivitäten aufzuzeichnen und zu überwachen, einschließlich des Zugriffs auf oder der Änderung von Daten, Diensten oder Funktionen.",
+        "guidance": "Protokollieren Sie alle sicherheitsrelevanten Ereignisse: Authentifizierung, Autorisierung, Konfigurationsänderungen, Fehlerbedingungen. Verwenden Sie strukturierte Protokollformate. Implementieren Sie manipulationssicheren Protokollspeicher. Stellen Sie Schnittstellen für den Protokollexport in SIEM-Systeme bereit. Fügen Sie ausreichend Details für die Untersuchung von Sicherheitsvorfällen hinzu."
+      },
+      "security_updates": {
+        "title": "Mechanismus für Sicherheitsupdates",
+        "description": "Produkte stellen sicher, dass Schwachstellen durch Sicherheitsupdates behoben werden können, einschließlich automatischer Updates, wo angemessen.",
+        "guidance": "Implementieren Sie einen OTA-Aktualisierungsmechanismus (Over-the-Air) mit Integritätsprüfung. Unterstützen Sie automatische Sicherheitsupdates mit Benutzerbenachrichtigung. Stellen Sie die Update-Bereitstellung für den gesamten Unterstützungszeitraum sicher. Signieren Sie alle Updates digital. Stellen Sie eine Rollback-Funktion für den Fall fehlgeschlagener Updates bereit."
+      }
+    },
+    "vulnerabilityRequirements": {
+      "vulnerability_identification": {
+        "title": "Identifizierung & Dokumentation von Schwachstellen",
+        "description": "Identifizieren und dokumentieren Sie Schwachstellen und Komponenten des Produkts, unter anderem durch Erstellung einer Software-Stückliste.",
+        "guidance": "Pflegen Sie eine vollständige und aktuelle SBOM (CycloneDX- oder SPDX-Format). Überwachen Sie kontinuierlich neue Schwachstellen in allen Komponenten. Verwenden Sie automatisierte Tools zur Schwachstellensuche. Dokumentieren Sie bekannte Schwachstellen zusammen mit dem Mitigationsstatus."
+      },
+      "vulnerability_remediation": {
+        "title": "Zeitnahe Behebung von Schwachstellen",
+        "description": "Beheben Sie Schwachstellen unverzüglich, unter anderem durch die Bereitstellung von Sicherheitsupdates.",
+        "guidance": "Definieren Sie SLAs für die Behebung von Schwachstellen nach Schweregrad (z. B. kritisch innerhalb von 24 Stunden, hoch innerhalb von 7 Tagen). Implementieren Sie einen optimierten Patch-Prozess. Verfolgen Sie alle Schwachstellen von der Entdeckung bis zur Behebung. Priorisieren Sie nach Ausnutzbarkeit und Auswirkung."
+      },
+      "security_testing": {
+        "title": "Regelmäßige Sicherheitstests",
+        "description": "Wenden Sie wirksame und regelmäßige Tests und Überprüfungen der Sicherheit des Produkts mit digitalen Elementen an.",
+        "guidance": "Führen Sie regelmäßige Penetrationstests durch (mindestens jährlich). Integrieren Sie automatisierte Sicherheitstests in CI/CD (SAST, DAST, SCA). Führen Sie Fuzz-Tests an Eingabe-Parsern durch. Überprüfen Sie die Sicherheit nach jeder Hauptversion. Beauftragen Sie regelmäßig externe Sicherheitsprüfer."
+      },
+      "vulnerability_disclosure": {
+        "title": "Öffentliche Offenlegung von Schwachstellen",
+        "description": "Sobald ein Sicherheitsupdate verfügbar ist, sind Informationen über behobene Schwachstellen öffentlich zu machen, einschließlich Beschreibung und Kennung.",
+        "guidance": "Veröffentlichen Sie Sicherheitshinweise für jede behobene Schwachstelle. Geben Sie CVE-IDs an, wo zutreffend. Beschreiben Sie die Schwachstelle, betroffene Versionen und behobene Versionen. Stellen Sie klare Upgrade-Anweisungen bereit. Pflegen Sie ein öffentliches Archiv für Sicherheitshinweise."
+      },
+      "coordinated_disclosure_policy": {
+        "title": "Richtlinie zur koordinierten Offenlegung von Schwachstellen",
+        "description": "Etablieren und durchsetzen Sie eine Richtlinie zur koordinierten Offenlegung von Schwachstellen.",
+        "guidance": "Veröffentlichen Sie eine Richtlinie zur Offenlegung von Schwachstellen (VDP) auf Ihrer Website. Stellen Sie einen Sicherheitskontakt bereit (z. B. security@unternehmen.de). Definieren Sie einen klaren Zeitplan für die Bestätigung (48h) und Lösung. Bieten Sie rechtliche Sicherheit für gutgläubige Sicherheitsforscher. Befolgen Sie die Richtlinien nach ISO/IEC 29147."
+      },
+      "vulnerability_info_sharing": {
+        "title": "Weitergabe von Schwachstelleninformationen",
+        "description": "Ergreifen Sie Maßnahmen, um den Informationsaustausch über Schwachstellen im Produkt und in Drittanbieterkomponenten zu erleichtern.",
+        "guidance": "Beteiligen Sie sich an relevanten ISACs (Information Sharing and Analysis Centers). Teilen Sie Schwachstellendaten mit CSIRT/CERT-Organisationen. Benachrichtigen Sie nachgelagerte Nutzer und Integratoren über Komponentenschwachstellen. Verwenden Sie standardisierte Formate (CSAF, VEX) für die Schwachstellenkommunikation."
+      },
+      "sbom_maintenance": {
+        "title": "SBOM-Erstellung & -Pflege",
+        "description": "Stellen Sie eine Software-Stückliste in einem gängigen und maschinenlesbaren Format bereit, das mindestens die Top-Level-Abhängigkeiten abdeckt.",
+        "guidance": "Erstellen Sie SBOMs im CycloneDX- oder SPDX-Format. Geben Sie mindestens an: Komponentenname, Version, Lieferant und eindeutige Kennung (pURL/CPE). Aktualisieren Sie die SBOM bei jedem Release. Stellen Sie die SBOM Kunden und Behörden auf Anfrage zur Verfügung. Automatisieren Sie die SBOM-Generierung als Teil des Build-Prozesses."
+      },
+      "security_advisories": {
+        "title": "Veröffentlichung von Sicherheitshinweisen",
+        "description": "Verbreiten Sie zeitnah Sicherheitshinweise zu identifizierten Schwachstellen, einschließlich Informationen zu verfügbaren Patches oder Mitigationsmaßnahmen.",
+        "guidance": "Etablieren Sie einen Prozess zur Veröffentlichung von Sicherheitshinweisen. Geben Sie Schweregradbewertung (CVSS), betroffene Produkte/Versionen, Abhilfemaßnahmen und Zeitplan an. Verteilen Sie Hinweise über mehrere Kanäle (Website, E-Mail-Listen, Produktbenachrichtigungen). Erfüllen Sie die CRA-Anforderung, ENISA innerhalb von 24 Stunden über aktiv ausgenutzte Schwachstellen zu informieren."
+      }
+    },
+    "errors": {
+      "notAuthenticated": "Sie müssen angemeldet sein, um fortzufahren.",
+      "productNotFound": "Produkt nicht gefunden.",
+      "generic": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
+    }
+  }
+}

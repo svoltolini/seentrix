@@ -1,0 +1,269 @@
+{
+  "entity": {
+    "title": "Rolle des Wirtschaftsakteurs",
+    "subtitle": "Der CRA weist Herstellern, Bevollmächtigten, Einführern und Händlern unterschiedliche Pflichten zu. Wählen Sie die Rolle, die Ihre Organisation einnimmt – die Pflichtenliste passt sich entsprechend an.",
+    "progressLabel": "Fortschritt",
+    "type": {
+      "title": "Ihre Rolle",
+      "description": "Nur Administratoren und Compliance Officer können die Rolle ändern. Ein Wechsel setzt die Pflichtenliste neu auf.",
+      "current": "Aktuell",
+      "manufacturer": {
+        "title": "Hersteller",
+        "description": "Sie bringen Produkte mit digitalen Elementen unter Ihrem eigenen Namen oder Ihrer Marke auf dem EU-Markt in Verkehr."
+      },
+      "authorised_representative": {
+        "title": "Bevollmächtigter",
+        "description": "Eine mandatierte Person in der EU, die im Namen eines Nicht-EU-Herstellers handelt."
+      },
+      "importer": {
+        "title": "Einführer",
+        "description": "Sie bringen ein Produkt eines Nicht-EU-Herstellers auf dem EU-Markt in Verkehr."
+      },
+      "distributor": {
+        "title": "Händler",
+        "description": "Sie stellen Produkte auf dem EU-Markt bereit, ohne Hersteller oder Einführer zu sein."
+      }
+    },
+    "status": {
+      "pending": "Ausstehend",
+      "in_progress": "In Bearbeitung",
+      "complete": "Abgeschlossen",
+      "not_applicable": "Nicht zutreffend"
+    },
+    "obligations": {
+      "title": "Pflichten des {entity}",
+      "notesLabel": "Nachweisnotizen",
+      "notesPlaceholder": "Wo die Nachweise zu finden sind, wer sie abgezeichnet hat, Link zum Dokument."
+    },
+    "obligation": {
+      "manufacturer": {
+        "essential_requirements_met": {
+          "title": "Grundlegende Anforderungen erfüllt",
+          "description": "Alle Anforderungen aus Anhang I Teil I + II sind erfüllt und auf der Checkliste belegt.",
+          "help": {
+            "title": "Erfüllung der grundlegenden Cybersicherheitsanforderungen",
+            "body": "Ihr Produkt muss so konzipiert, entwickelt und hergestellt sein, dass es ohne bekannte ausnutzbare Schwachstellen und mit einer sicheren Standardkonfiguration ausgeliefert wird. Arbeiten Sie Anhang I Teil I durch: Vertraulichkeit und Integrität der Daten schützen, Angriffsfläche minimieren, Sicherheitsupdates ermöglichen (idealerweise automatisch) und Datenerhebung auf das Notwendige beschränken. Dokumentieren Sie, wie jede Anforderung erfüllt wird – diese Nachweise fließen in Ihre technische Dokumentation und Konformitätserklärung ein.",
+            "ref": "CRA Artikel 13 & Anhang I, Teil I – Grundlegende Cybersicherheitsanforderungen"
+          }
+        },
+        "vulnerability_handling_operational": {
+          "title": "Umgang mit Schwachstellen operativ",
+          "description": "Ein dokumentierter Prozess zum Empfangen, Priorisieren und Beheben von Schwachstellen über den gesamten Unterstützungszeitraum ist etabliert.",
+          "help": {
+            "title": "Betrieb eines Schwachstellen-Handhabungsprozesses",
+            "body": "Während des Unterstützungszeitraums müssen Sie Schwachstellen identifizieren und dokumentieren (einschließlich Pflege einer SBOM), diese unverzüglich durch kostenlose Sicherheitsupdates beheben, eine Richtlinie zur koordinierten Offenlegung von Schwachstellen anwenden und eine Kontaktadresse für Meldungen bereitstellen. Bestätigen Sie, dass Sie einen funktionierenden Eingangskanal, einen Triage-/Patching-Workflow und eine Möglichkeit haben, Nutzer über verfügbare Updates zu informieren.",
+            "ref": "CRA Artikel 13 & Anhang I, Teil II – Anforderungen an den Umgang mit Schwachstellen"
+          }
+        },
+        "technical_documentation_ready": {
+          "title": "Technische Dokumentation bereit",
+          "description": "Die technische Dokumentation gemäß Anhang II ist zusammengestellt und wird 10 Jahre nach Inverkehrbringen aufbewahrt.",
+          "help": {
+            "title": "Vorbereitung der technischen Dokumentation",
+            "body": "Stellen Sie die Akte zusammen, die die Konformität vor dem Inverkehrbringen des Produkts belegt: eine allgemeine Beschreibung, Informationen zu Entwurf/Entwicklung und Schwachstellenhandhabung, die Cybersicherheits-Risikobewertung, die SBOM, den Unterstützungszeitraum und eine Liste angewandter Normen. Halten Sie sie während der gesamten Produktlebensdauer aktuell und aktualisieren Sie sie, wenn das Produkt geändert wird.",
+            "ref": "CRA Artikel 31 & Anhang VII – Technische Dokumentation"
+          }
+        },
+        "doc_issued": {
+          "title": "Konformitätserklärung ausgestellt",
+          "description": "Die EU-Konformitätserklärung ist ausgestellt, unterzeichnet und zusammen mit der technischen Akte aufbewahrt.",
+          "help": {
+            "title": "Ausstellen der EU-Konformitätserklärung",
+            "body": "Erstellen Sie eine einzige EU-Konformitätserklärung, in der bestätigt wird, dass die grundlegenden Anforderungen erfüllt sind. Sie muss die Produktkennung, Ihren Namen und Ihre Adresse, eine Erklärung Ihrer alleinigen Verantwortung, Verweise auf die angewandten Normen und das Ausstellungsdatum enthalten. Mit Ihrer Unterschrift übernehmen Sie die rechtliche Verantwortung für die Konformität des Produkts.",
+            "ref": "CRA Artikel 28 & Anhang V – EU-Konformitätserklärung"
+          }
+        },
+        "ce_marking_affixed": {
+          "title": "CE-Kennzeichnung angebracht",
+          "description": "Die CE-Kennzeichnung (mit Kennnummer der notifizierten Stelle, falls zutreffend) ist sichtbar und dauerhaft angebracht.",
+          "help": {
+            "title": "Anbringen der CE-Kennzeichnung",
+            "body": "Die CE-Kennzeichnung wird am Produkt (oder seiner Verpackung/Dokumentation, wenn die Größe dies nicht erlaubt) sichtbar, lesbar und dauerhaft angebracht, bevor es auf den Markt gebracht wird. Sie signalisiert die Konformität mit dem CRA und anderen anwendbaren EU-Rechtsvorschriften. Bringen Sie sie erst an, wenn die Konformitätserklärung vorliegt und die Konformitätsbewertung abgeschlossen ist.",
+            "ref": "CRA Artikel 29–30 – Regelungen und Bedingungen zur CE-Kennzeichnung"
+          }
+        },
+        "ten_year_records_retained": {
+          "title": "10-jährige Aufbewahrung gewährleistet",
+          "description": "Technische Dokumentation, Konformitätserklärung und CVD-Artefakte werden 10 Jahre oder den Unterstützungszeitraum, je nachdem welcher länger ist, aufbewahrt.",
+          "help": {
+            "title": "Aufbewahrung von Unterlagen für zehn Jahre",
+            "body": "Halten Sie die technische Dokumentation und die EU-Konformitätserklärung für Marktüberwachungsbehörden mindestens 10 Jahre nach dem Inverkehrbringen des Produkts bereit, oder für den Unterstützungszeitraum – je nachdem welcher länger ist. Bewahren Sie sie so auf, dass Sie sie auf Anfrage auch nach Einstellung des Produkts vorlegen können.",
+            "ref": "CRA Artikel 13(13) – Aufbewahrungspflicht"
+          }
+        }
+      },
+      "authorised_representative": {
+        "written_mandate": {
+          "title": "Schriftliches Mandat vorhanden",
+          "description": "Unterzeichnetes Mandat des Nicht-EU-Herstellers zur Vertretung in der EU.",
+          "help": {
+            "title": "Einholen eines schriftlichen Mandats",
+            "body": "Ein Nicht-EU-Hersteller muss Sie schriftlich bevollmächtigen, bevor sein Produkt auf dem EU-Markt in Verkehr gebracht wird. Das Mandat muss Ihnen gestatten, (1) die Konformitätserklärung und technische Dokumentation für Behörden bereitzuhalten, (2) Behörden mit den zur Konformitätsnachweisführung benötigten Informationen und Dokumenten zu versorgen und (3) bei Korrekturmaßnahmen mitzuwirken. Bewahren Sie das unterzeichnete Mandat auf und stellen Sie sicher, dass es die abgedeckten Produkte benennt.",
+            "ref": "CRA Artikel 18 – Bevollmächtigter"
+          }
+        },
+        "technical_documentation_on_hand": {
+          "title": "Technische Dokumentation verfügbar",
+          "description": "Kann die technische Dokumentation auf Anfrage den Behörden zur Verfügung stellen.",
+          "help": {
+            "title": "Bereithalten der technischen Dokumentation",
+            "body": "Sie müssen einer Marktüberwachungsbehörde auf Anfrage die technische Dokumentation des Produkts aushändigen können. Sie müssen sie nicht selbst erstellen, aber Sie müssen eine aktuelle Kopie besitzen (oder garantierten Zugang beim Hersteller haben) für den gesamten Aufbewahrungszeitraum. Bestätigen Sie, dass Sie tatsächlich die neueste Version besitzen oder sofort abrufen können.",
+            "ref": "CRA Artikel 18(2) & Artikel 31 – Dokumentation zur Verfügung halten"
+          }
+        },
+        "doc_on_hand": {
+          "title": "Konformitätserklärung verfügbar",
+          "description": "Verfügt über eine Kopie der Konformitätserklärung für jedes vertretene Produkt.",
+          "help": {
+            "title": "Bereithalten der Konformitätserklärung",
+            "body": "Bewahren Sie eine Kopie der EU-Konformitätserklärung des Herstellers auf und halten Sie sie während des gesamten Aufbewahrungszeitraums für Behörden bereit. Stellen Sie sicher, dass die von Ihnen bewahrte Konformitätserklärung der auf dem Markt befindlichen Produktversion entspricht und vom Hersteller unterzeichnet ist.",
+            "ref": "CRA Artikel 18(2) & Artikel 28 – Konformitätserklärung verfügbar halten"
+          }
+        },
+        "cooperate_with_authorities": {
+          "title": "Mit Behörden kooperieren",
+          "description": "Verpflichtung zur Bereitstellung von Informationen und Kooperation bei Anfragen der Marktüberwachung.",
+          "help": {
+            "title": "Zusammenarbeit mit Marktüberwachungsbehörden",
+            "body": "Auf begründeten Antrag müssen Sie Behörden alle Informationen und Dokumentation (in leicht verständlicher Sprache) zur Verfügung stellen, um die Konformität des Produkts nachzuweisen, und bei Maßnahmen zur Beseitigung der Cybersicherheitsrisiken der von Ihnen abgedeckten Produkte mitwirken. Benennen Sie einen Ansprechpartner und etablieren Sie einen Prozess für prompte Antworten.",
+            "ref": "CRA Artikel 18(2) – Kooperationspflichten"
+          }
+        },
+        "terminate_if_noncompliant": {
+          "title": "Mandat bei Nichtkonformität beenden",
+          "description": "Prozess zur Beendigung des Mandats, wenn der Hersteller gegen CRA-Pflichten verstößt, und zur Benachrichtigung des Herstellers und der Behörden.",
+          "help": {
+            "title": "Beendigung des Mandats bei Bedarf",
+            "body": "Wenn der Hersteller gegen seine CRA-Pflichten verstößt, müssen Sie das Mandat kündigen und die zuständige Marktüberwachungsbehörde und ENISA informieren. Stellen Sie sicher, dass Ihr Mandatsvertrag eine Kündigung ermöglicht und dass Sie wissen, wen Sie im Bedarfsfall informieren müssen.",
+            "ref": "CRA Artikel 18 – Pflichten des Bevollmächtigten"
+          }
+        }
+      },
+      "importer": {
+        "verify_manufacturer_doc": {
+          "title": "Konformitätserklärung des Herstellers überprüft",
+          "description": "Vor dem Inverkehrbringen überprüft, dass der Hersteller eine gültige Konformitätserklärung ausgestellt hat.",
+          "help": {
+            "title": "Überprüfung der Konformitätserklärung des Herstellers",
+            "body": "Bestätigen Sie vor dem Inverkehrbringen eines Produkts auf dem EU-Markt, dass der Hersteller die EU-Konformitätserklärung erstellt und das entsprechende Konformitätsbewertungsverfahren durchgeführt hat. Fordern Sie die Konformitätserklärung an und prüfen Sie, ob sie die genaue Produktversion abdeckt, die Sie einführen.",
+            "ref": "CRA Artikel 19 – Pflichten der Einführer"
+          }
+        },
+        "verify_ce_marking": {
+          "title": "CE-Kennzeichnung überprüft",
+          "description": "Überprüft, dass die CE-Kennzeichnung (mit Kennnummer der notifizierten Stelle, falls zutreffend) angebracht ist.",
+          "help": {
+            "title": "Überprüfung der CE-Kennzeichnung",
+            "body": "Prüfen Sie vor der Einfuhr, ob die CE-Kennzeichnung korrekt am Produkt angebracht ist. Eine fehlende oder fehlerhafte Kennzeichnung ist ein Zeichen dafür, dass das Produkt möglicherweise nicht konform ist – bringen Sie es erst dann auf den Markt, wenn dies geklärt ist.",
+            "ref": "CRA Artikel 19(2) – Verifizierung durch Einführer"
+          }
+        },
+        "verify_technical_documentation": {
+          "title": "Technische Dokumentation überprüft",
+          "description": "Bestätigt, dass der Hersteller die technische Dokumentation erstellt hat.",
+          "help": {
+            "title": "Bestätigung des Vorhandenseins der technischen Dokumentation",
+            "body": "Stellen Sie sicher, dass der Hersteller die technische Dokumentation erstellt hat und das Produkt die Benutzerinformationen und -anweisungen enthält. Sie bewahren die vollständige Akte nicht auf, müssen aber sicherstellen, dass sie existiert und für Behörden verfügbar ist.",
+            "ref": "CRA Artikel 19(2) & Anhang VII – Technische Dokumentation"
+          }
+        },
+        "add_importer_details_to_product": {
+          "title": "Einführer-Angaben am Produkt",
+          "description": "Name, eingetragener Handelsname/Marke und Postanschrift sind am Produkt oder, wenn nicht möglich, auf seiner Verpackung oder in Begleitdokumenten angegeben.",
+          "help": {
+            "title": "Hinzufügen Ihrer Einführer-Angaben",
+            "body": "Geben Sie Ihren Namen, Ihren eingetragenen Handelsnamen oder Ihre Marke, Postanschrift, E-Mail und eine einzige Kontaktstelle am Produkt, auf der Verpackung oder in einem Begleitdokument an. So können Nutzer und Behörden Sie erreichen.",
+            "ref": "CRA Artikel 19(3) – Identifizierung des Einführers"
+          }
+        },
+        "store_transport_without_impact": {
+          "title": "Lagerung/Transport erhält Konformität",
+          "description": "Lagerungs- und Transportbedingungen gefährden die Konformität des Produkts mit den grundlegenden Anforderungen nicht.",
+          "help": {
+            "title": "Lagerung und Transport ohne Beeinträchtigung der Konformität",
+            "body": "Solange das Produkt in Ihrer Verantwortung steht, stellen Sie sicher, dass Lagerungs- oder Transportbedingungen seine Konformität mit den grundlegenden Cybersicherheitsanforderungen nicht beeinträchtigen (z. B. Firmware nicht veralten lassen oder Manipulationsschutz nicht versagen lassen).",
+            "ref": "CRA Artikel 19(4) – Bedingungen während der Verantwortlichkeit"
+          }
+        },
+        "report_exploited_vulnerabilities_to_manufacturer": {
+          "title": "Schwachstellen an Hersteller melden",
+          "description": "Prozess zur unverzüglichen Information des Herstellers (und der Behörden, wo erforderlich) über aktiv ausgenutzte Schwachstellen.",
+          "help": {
+            "title": "Melden von Schwachstellen an den Hersteller",
+            "body": "Wenn Sie erfahren, dass ein von Ihnen eingeführtes Produkt eine Schwachstelle aufweist, informieren Sie den Hersteller unverzüglich. Wenn es ein erhebliches Cybersicherheitsrisiko darstellt, informieren Sie auch die zuständigen Marktüberwachungsbehörden. Führen Sie Aufzeichnungen über das Gemeldete und den Zeitpunkt.",
+            "ref": "CRA Artikel 19(6) – Meldepflichten des Einführers"
+          }
+        },
+        "cooperate_with_authorities": {
+          "title": "Mit Behörden kooperieren",
+          "description": "Marktüberwachungsbehörden mit allen Informationen versorgen und bei Korrekturmaßnahmen kooperieren.",
+          "help": {
+            "title": "Zusammenarbeit mit Behörden",
+            "body": "Stellen Sie auf begründeten Antrag Behörden die zur Konformitätsnachweisführung benötigten Informationen und Dokumentation zur Verfügung und wirken Sie bei Korrektur- oder Risikobeseitigungsmaßnahmen für von Ihnen eingeführte Produkte mit.",
+            "ref": "CRA Artikel 19(9) – Kooperationspflichten"
+          }
+        }
+      },
+      "distributor": {
+        "verify_ce_marking": {
+          "title": "CE-Kennzeichnung überprüft",
+          "description": "Überprüft, dass die CE-Kennzeichnung angebracht und von der erforderlichen Dokumentation begleitet ist.",
+          "help": {
+            "title": "Überprüfung der CE-Kennzeichnung",
+            "body": "Handeln Sie mit der gebotenen Sorgfalt und prüfen Sie vor der Bereitstellung eines Produkts, ob die CE-Kennzeichnung vorhanden ist. Wenn sie fehlt oder Sie glauben, dass das Produkt nicht konform ist, vertreiben Sie es erst, wenn die Konformität festgestellt wurde.",
+            "ref": "CRA Artikel 20 – Pflichten der Händler"
+          }
+        },
+        "verify_importer_details": {
+          "title": "Einführer-Angaben vorhanden",
+          "description": "Überprüft, dass die Identifizierungsangaben des Einführers oder Herstellers am Produkt/auf der Verpackung/in Begleitdokumenten vorhanden sind.",
+          "help": {
+            "title": "Überprüfung der Einführer-/Herstellerangaben",
+            "body": "Bestätigen Sie, dass Hersteller und ggf. Einführer ihren Identifizierungspflichten nachgekommen sind – dass ihr Name und ihre Kontaktdaten am Produkt, auf der Verpackung oder in Begleitdokumenten erscheinen.",
+            "ref": "CRA Artikel 20(2) – Verifizierung durch Händler"
+          }
+        },
+        "verify_instructions_user_info": {
+          "title": "Benutzeranweisungen vorhanden",
+          "description": "Anweisungen und Benutzerinformationen sind in einer für Nutzer leicht verständlichen Sprache beigefügt.",
+          "help": {
+            "title": "Überprüfung der Benutzeranweisungen und -informationen",
+            "body": "Stellen Sie sicher, dass dem Produkt die vom CRA geforderten Benutzerinformationen und -anweisungen beigefügt sind (einschließlich Unterstützungszeitraum und Empfang von Sicherheitsupdates), in einer für Nutzer leicht verständlichen Sprache.",
+            "ref": "CRA Artikel 20(2) & Anhang II – Benutzerinformationen und -anweisungen"
+          }
+        },
+        "store_transport_without_impact": {
+          "title": "Lagerung/Transport erhält Konformität",
+          "description": "Lagerungs- und Transportbedingungen gefährden die Konformität nicht.",
+          "help": {
+            "title": "Lagerung und Transport ohne Beeinträchtigung der Konformität",
+            "body": "Solange das Produkt in Ihrer Verantwortung steht, stellen Sie sicher, dass Lagerungs- oder Transportbedingungen seine Konformität mit den grundlegenden Cybersicherheitsanforderungen nicht beeinträchtigen.",
+            "ref": "CRA Artikel 20(3) – Bedingungen während der Verantwortlichkeit"
+          }
+        },
+        "report_exploited_vulnerabilities": {
+          "title": "Aktiv ausgenutzte Schwachstellen eskalieren",
+          "description": "Prozess zur Information des Herstellers/Einführers und der Behörden, wenn eine aktiv ausgenutzte Schwachstelle bekannt wird.",
+          "help": {
+            "title": "Eskalation aktiv ausgenutzter Schwachstellen",
+            "body": "Wenn Sie von einer Schwachstelle in einem von Ihnen vertriebenen Produkt erfahren, informieren Sie den Hersteller unverzüglich. Wenn das Produkt ein erhebliches Cybersicherheitsrisiko darstellt, benachrichtigen Sie auch die zuständigen Marktüberwachungsbehörden.",
+            "ref": "CRA Artikel 20(5) – Meldepflichten des Händlers"
+          }
+        },
+        "cooperate_with_authorities": {
+          "title": "Mit Behörden kooperieren",
+          "description": "Marktüberwachungsbehörden mit Informationen versorgen und bei Korrekturmaßnahmen unterstützen.",
+          "help": {
+            "title": "Zusammenarbeit mit Behörden",
+            "body": "Stellen Sie auf begründeten Antrag Behörden die zur Konformitätsnachweisführung benötigten Informationen und Dokumentation zur Verfügung und wirken Sie bei Maßnahmen zur Beseitigung der Cybersicherheitsrisiken von Ihnen bereitgestellter Produkte mit.",
+            "ref": "CRA Artikel 20(8) – Kooperationspflichten"
+          }
+        }
+      }
+    },
+    "toast": {
+      "saved": "Gespeichert",
+      "saveFailed": "Speichern fehlgeschlagen"
+    }
+  }
+}

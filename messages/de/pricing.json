@@ -1,0 +1,216 @@
+{
+ "pricing": {
+  "title": "Einfache, transparente Preise",
+  "subtitle": "Wählen Sie den Plan, der Ihren CRA-Compliance-Anforderungen entspricht. Jeder Plan umfasst EU-Datenresidenz und die vollständige Academy.",
+  "billingInterval": "Abrechnungsintervall",
+  "monthly": "Monatlich",
+  "annual": "Jährlich",
+  "savePercent": "2 Monate gratis",
+  "perMonth": "Mo.",
+  "billedAnnually": "{total} € jährlich abgerechnet",
+  "mostPopular": "Am beliebtesten",
+  "getStarted": "Erste Schritte",
+  "subscribe": "Abonnieren",
+  "contactSales": "Vertrieb kontaktieren",
+  "comingSoon": "Demnächst verfügbar",
+  "redirecting": "Weiterleitung…",
+  "plans": {
+   "free": {
+    "name": "Free",
+    "description": "CRA-Anforderungen für ein Produkt erkunden.",
+    "features": {
+     "f1": "1 Produkt · 1 Nutzer",
+     "f2": "CRA-Geltungsbereichsbewertung + Produktklassifizierung",
+     "f3": "Vollständige Compliance-Checkliste (Anhang I)",
+     "f4": "Academy + Glossar (vollständiger Zugang)",
+     "f5": "30-tägiges Aktivitätsprotokoll",
+     "f6": "Community-Support"
+    }
+   },
+   "professional": {
+    "name": "Professional",
+    "description": "Für Einzelgründer und Hersteller mit 1–3 Produkten.",
+    "features": {
+     "f1": "3 Produkte · 3 Nutzer",
+     "f2": "Alles aus Free, plus:",
+     "f3": "Unbegrenzte SBOM-Uploads + Schwachstellen-Scanning",
+     "f4": "Konformitätserklärung + Endnutzer-Info-PDFs",
+     "f5": "Sicherheitsvorfall-Meldung (24h/72h/14 Tage)",
+     "f6": "90-tägiges Aktivitätsprotokoll",
+     "f7": "E-Mail-Support (48h Reaktionszeit)"
+    }
+   },
+   "business": {
+    "name": "Business",
+    "description": "Für Hersteller mit mehreren Produktlinien und einem aktiven Compliance-Team.",
+    "features": {
+     "f1": "15 Produkte · 10 Nutzer",
+     "f2": "Alles aus Professional, plus:",
+     "f3": "Tägliche Dauerüberwachung auf Schwachstellen",
+     "f4": "Öffentliche PSIRT-Seite + security.txt",
+     "f5": "Vollständige Dokumentvorlagenbibliothek",
+     "f6": "API-Zugang (1000 Anfr./Tag)",
+     "f7": "Prioritätssupport (8h) + geführtes Onboarding",
+     "f8": "99,5 % SLA"
+    }
+   },
+   "enterprise": {
+    "name": "Enterprise",
+    "description": "Für große Organisationen, regulierte Branchen und Konzernstrukturen.",
+    "features": {
+     "f1": "Unbegrenzte Produkte · unbegrenzte Nutzer",
+     "f2": "Alles aus Business, plus:",
+     "f3": "Echtzeit-Schwachstellenwarnungen",
+     "f4": "SSO/SAML · Verknüpfung von Mutter-/Tochterorganisationen",
+     "f5": "Vollständiger API-Zugang · individuelle Integrationen",
+     "f6": "Dedizierter CSM + Telefonsupport",
+     "f7": "2-wöchiges geführtes Onboarding · individueller Rahmenvertrag",
+     "f8": "99,9 % SLA + individuelle Datenresidenz"
+    }
+   }
+  },
+  "comparison": {
+   "title": "Pläne vergleichen",
+   "subtitle": "Jede Funktion, über alle Tarife.",
+   "comingSoon": "Demnächst verfügbar",
+   "yes": "Enthalten",
+   "no": "Nicht enthalten",
+   "unlimited": "Unbegrenzt",
+   "featuresLabel": "Funktion",
+   "categories": {
+    "limits": {
+     "title": "Limits",
+     "rows": {
+      "products": "Produkte",
+      "users": "Teammitglieder",
+      "sbomUploads": "SBOM-Uploads",
+      "activityLogRetention": "Aufbewahrung des Aktivitätsprotokolls"
+     }
+    },
+    "craCompliance": {
+     "title": "CRA-Compliance",
+     "rows": {
+      "scopeAssessment": "CRA-Geltungsbereichsbewertungs-Assistent",
+      "productClassification": "Produktklassifizierung (Standard/wichtig/kritisch)",
+      "complianceChecklist": "Compliance-Checkliste Anhang I",
+      "conformityAssessment": "Konformitätsbewertung (Modul A/B+C/H)",
+      "entityRoleObligations": "Pflichten nach Wirtschaftsakteursrolle (Hersteller/Einführer/Händler/Bevollmächtigter)",
+      "notifiedBodyTracking": "Verfolgung notifizierter Stellen"
+     }
+    },
+    "sbomVulns": {
+     "title": "SBOM + Schwachstellen",
+     "rows": {
+      "sbomUpload": "SBOM-Upload (CycloneDX + SPDX)",
+      "componentCatalog": "Komponentenkatalog",
+      "vulnScanning": "Schwachstellen-Scanning (OSV.dev)",
+      "kevFlagging": "CISA-KEV-Kennzeichnung",
+      "cvssBucketing": "CVSS-Schweregradklassifizierung",
+      "triageMttr": "Priorisierungs-Workflow + MTTR-Verfolgung",
+      "activelyExploited": "Kennzeichnung aktiv ausgenutzter Schwachstellen",
+      "monitoringFrequency": "Häufigkeit der Dauerüberwachung",
+      "vexCsafExport": "VEX/CSAF-Export"
+     }
+    },
+    "documents": {
+     "title": "Dokumente + PDFs",
+     "rows": {
+      "docPdf": "Konformitätserklärung PDF",
+      "endUserInfoPdf": "Endnutzer-Informationsblatt PDF (Anhang II(3))",
+      "docTemplates": "Dokumentvorlagenbibliothek",
+      "technicalFileBuilder": "Technische-Akte-Ersteller",
+      "customBranding": "Individuelles Branding auf PDFs"
+     }
+    },
+    "incidents": {
+     "title": "Sicherheitsvorfall-Management",
+     "rows": {
+      "incidentReporting": "Sicherheitsvorfall-Meldung (Artikel 14)",
+      "deadlineTracking": "24h/72h/14-Tage-Fristenverfolgung",
+      "incidentPdf": "Sicherheitsvorfall-Bericht-PDF-Exporte",
+      "enisaFilingAssist": "ENISA-Einreichungsassistenz",
+      "cveLinkage": "CVE-Verknüpfung aus Sicherheitsvorfällen"
+     }
+    },
+    "psirt": {
+     "title": "Öffentliche Sicherheit (PSIRT)",
+     "rows": {
+      "publicPsirtPage": "Öffentliche PSIRT-Seite (/security/<slug>)",
+      "securityTxt": "security.txt (RFC 9116)",
+      "publicVulnIntake": "Öffentlicher Schwachstellenberichts-Eingang",
+      "psirtTriageWorkflow": "PSIRT-Priorisierungs-Workflow"
+     }
+    },
+    "lifecycle": {
+     "title": "Produktlebenszyklus",
+     "rows": {
+      "releasesTracking": "Release-Verfolgung + CVE-Fix-Zuordnung",
+      "supportPeriodTracking": "Unterstützungszeitraum-Verfolgung",
+      "updateChannelTracking": "Update-Kanal-Verfolgung"
+     }
+    },
+    "training": {
+     "title": "Schulung + Hilfe",
+     "rows": {
+      "academyLessons": "Academy (10 CRA-Lektionen)",
+      "quizzesCertificates": "Quizze + PDF-Zertifikate",
+      "teamProgressTracking": "Team-Fortschritts-Verfolgung",
+      "csvExport": "CSV-Export des Team-Fortschritts",
+      "byScreenRecommendations": "Lektionsempfehlungen nach Bildschirm",
+      "glossary": "CRA-Glossar (50+ Begriffe)"
+     }
+    },
+    "dataExports": {
+     "title": "Daten + Exporte",
+     "rows": {
+      "gdprExport": "DSGVO-Datenexport (Art. 20)",
+      "gdprDelete": "DSGVO-Löschrecht (Art. 17)",
+      "activityCsv": "Aktivitätsprotokoll-CSV-Export",
+      "siemLogExport": "SIEM-Protokollexport",
+      "dataResidency": "Datenresidenz",
+      "currencyBilling": "Abrechnungswährung"
+     }
+    },
+    "integrations": {
+     "title": "Integrationen",
+     "rows": {
+      "apiAccess": "REST-API-Zugang",
+      "webhooks": "Webhooks",
+      "ssoSaml": "SSO/SAML",
+      "parentChildOrgs": "Verknüpfung von Mutter-/Tochterorganisationen",
+      "marketSurveillanceBundle": "Marktüberwachungs-Nachweispaket"
+     }
+    },
+    "security": {
+     "title": "Sicherheit",
+     "rows": {
+      "twoFactor": "Zwei-Faktor-Authentifizierung (TOTP)",
+      "roleBasedAccess": "Rollenbasierter Zugriff (5 Rollen)",
+      "multiAdminDeletion": "Mehrfach-Administrator-Löschbestätigung",
+      "auditLog": "Audit-Protokoll",
+      "rowLevelSecurity": "Zeilenebenen-Sicherheit (Organisations-Isolation)",
+      "rateLimiting": "Missbrauchs-Ratenbegrenzung auf öffentlichen Endpunkten"
+     }
+    },
+    "support": {
+     "title": "Support",
+     "rows": {
+      "supportChannel": "Support-Kanal",
+      "onboarding": "Onboarding",
+      "customMsa": "Individueller Rahmenvertrag / Rechtsbedingungen"
+     }
+    }
+   }
+  },
+  "enterpriseBand": {
+   "title": "Benötigen Sie mehr als Business?",
+   "subtitle": "Für große Portfolios, regulierte Branchen, SSO, Konzernstrukturen oder individuelle SLAs gestalten wir einen Plan und Preis nach Ihren Anforderungen.",
+   "bullets": {
+    "b1": "Unbegrenzte Produkte und Teammitglieder",
+    "b2": "SSO/SAML · Konzernstruktur-Verknüpfung · Echtzeit-Warnungen",
+    "b3": "Dedizierter CSM, geführtes Onboarding und individueller Rahmenvertrag"
+   },
+   "cta": "Kontakt aufnehmen"
+  }
+ }
+}

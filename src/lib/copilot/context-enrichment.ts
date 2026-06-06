@@ -24,7 +24,7 @@ interface EnrichArgs {
   >;
   orgId: string;
   plan: string;
-  locale: "en";
+  locale: "en" | "de" | "fr" | "it";
   pagePath?: string;
   orgName?: string;
   orgCountry?: string;

@@ -1,0 +1,307 @@
+{
+  "documents": {
+    "title": "Dokumente",
+    "subtitle": "Verwalten Sie die CRA-Compliance-Dokumentation für dieses Produkt.",
+    "grid": {
+      "statusNotStarted": "Nicht begonnen",
+      "statusDraft": "Entwurf",
+      "statusFinal": "Endgültig",
+      "lastUpdated": "Aktualisiert am {date}",
+      "neverEdited": "Noch nicht begonnen"
+    },
+    "types": {
+      "declaration_of_conformity": {
+        "title": "Konformitätserklärung",
+        "description": "EU-Konformitätserklärung gemäß CRA Anhang V. Erforderlich für das Inverkehrbringen Ihres Produkts auf dem EU-Markt."
+      },
+      "vulnerability_disclosure_policy": {
+        "title": "Richtlinie zur Offenlegung von Schwachstellen",
+        "description": "Prozess zur koordinierten Offenlegung von Schwachstellen. Erforderlich gemäß CRA Artikel 11."
+      },
+      "incident_report": {
+        "title": "Vorlage für Sicherheitsvorfall-Meldung",
+        "description": "Vorlage für Sicherheitsvorfall-Benachrichtigungen gemäß CRA Artikel 14. Für Meldungen an ENISA."
+      },
+      "risk_assessment": {
+        "title": "Risikobewertungsmatrix",
+        "description": "Cybersicherheits-Risikobewertung. Identifiziert Bedrohungen, Schwachstellen und Mitigationsmaßnahmen."
+      },
+      "technical_documentation": {
+        "title": "Technische Dokumentation",
+        "description": "Gliederung der technischen Dokumentation gemäß CRA Anhang VII. Umfasst Entwurf, Entwicklung und Tests."
+      }
+    },
+    "editor": {
+      "back": "Zurück zu Dokumenten",
+      "save": "Dokument speichern",
+      "saving": "Wird gespeichert…",
+      "saved": "Dokument erfolgreich gespeichert.",
+      "generatePdf": "PDF erstellen",
+      "generatingPdf": "Wird erstellt…",
+      "downloadPdf": "PDF herunterladen",
+      "pdfGenerated": "PDF erfolgreich erstellt.",
+      "markFinal": "Als endgültig markieren",
+      "markDraft": "In Entwurf zurücksetzen",
+      "errors": {
+        "notAuthenticated": "Sie müssen angemeldet sein.",
+        "generic": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
+        "saveFailed": "Speichern fehlgeschlagen. Bitte versuchen Sie es erneut.",
+        "documentNotFound": "Dokument nicht gefunden.",
+        "noContent": "Bitte speichern Sie das Dokument, bevor Sie ein PDF erstellen.",
+        "uploadFailed": "PDF-Upload fehlgeschlagen. Bitte versuchen Sie es erneut.",
+        "noPdf": "Kein PDF verfügbar. Bitte erstellen Sie zunächst eines.",
+        "planRequired": "PDF-Export erfordert einen Professional-Plan oder höher."
+      }
+    },
+    "fields": {
+      "manufacturerName": "Name des Herstellers",
+      "manufacturerNamePlaceholder": "z. B. Muster GmbH",
+      "manufacturerAddress": "Adresse des Herstellers",
+      "manufacturerAddressPlaceholder": "Vollständige Postanschrift…",
+      "productName": "Produktname",
+      "productNamePlaceholder": "z. B. Smart Thermostat Pro",
+      "productIdentification": "Produktkennung",
+      "productIdentificationPlaceholder": "Modellnummer, Seriennummer oder eindeutige Kennung…",
+      "conformityStatement": "Konformitätserklärung",
+      "conformityStatementPlaceholder": "Das oben genannte Produkt entspricht den Anforderungen des Cyber Resilience Act…",
+      "standardsApplied": "Angewandte Normen",
+      "standardsAppliedPlaceholder": "z. B. IEC 62443, ETSI EN 303 645",
+      "standardsAppliedHint": "Kommagetrennte Liste harmonisierter Normen oder Spezifikationen.",
+      "notifiedBodyName": "Name der notifizierten Stelle",
+      "notifiedBodyNamePlaceholder": "z. B. TÜV Rheinland",
+      "notifiedBodyNumber": "Kennnummer der notifizierten Stelle",
+      "notifiedBodyNumberPlaceholder": "z. B. 0035",
+      "place": "Ort",
+      "placePlaceholder": "z. B. Berlin, Deutschland",
+      "date": "Datum",
+      "signatoryName": "Name des Unterzeichners",
+      "signatoryNamePlaceholder": "Vollständiger Name der bevollmächtigten Person",
+      "signatoryPosition": "Position des Unterzeichners",
+      "signatoryPositionPlaceholder": "z. B. Chief Technology Officer",
+      "policyScope": "Geltungsbereich der Richtlinie",
+      "policyScopePlaceholder": "Beschreiben Sie, welche Systeme und Produkte diese Richtlinie abdeckt…",
+      "reportingChannels": "Meldekanäle",
+      "reportingChannelsPlaceholder": "z. B. security@beispiel.de, https://beispiel.de/security",
+      "responseTimeline": "Reaktionszeitplan",
+      "responseTimelinePlaceholder": "z. B. Erste Bestätigung innerhalb von 24 Stunden, Triage innerhalb von 72 Stunden…",
+      "disclosureTimeline": "Offenlegungszeitplan",
+      "disclosureTimelinePlaceholder": "z. B. Koordinierte öffentliche Offenlegung nach 90 Tagen…",
+      "safeHarborStatement": "Safe-Harbour-Erklärung",
+      "safeHarborStatementPlaceholder": "Zusicherung, dass gutgläubige Melder keine rechtlichen Schritte zu befürchten haben…",
+      "incidentTitle": "Titel des Sicherheitsvorfalls",
+      "incidentTitlePlaceholder": "Kurzer Titel für den Sicherheitsvorfall…",
+      "incidentDate": "Datum des Sicherheitsvorfalls",
+      "incidentDescription": "Beschreibung des Sicherheitsvorfalls",
+      "incidentDescriptionPlaceholder": "Detaillierte Beschreibung des Vorfalls…",
+      "impactAssessment": "Auswirkungsbeurteilung",
+      "impactAssessmentPlaceholder": "Betroffene Systeme, Nutzer und Daten…",
+      "mitigationActions": "Mitigationsmaßnahmen",
+      "mitigationActionsPlaceholder": "Ergriffene Maßnahmen zur Eindämmung und Behebung…",
+      "notificationDate": "Meldedatum an ENISA",
+      "riskTitle": "Bewertungstitel",
+      "riskTitlePlaceholder": "z. B. Cybersicherheits-Risikobewertung Q1 2026",
+      "threatDescription": "Bedrohungsbeschreibung",
+      "threatDescriptionPlaceholder": "Beschreiben Sie die Bedrohungslandschaft und Bedrohungsakteure…",
+      "vulnerabilitiesIdentified": "Identifizierte Schwachstellen",
+      "vulnerabilitiesIdentifiedPlaceholder": "Bekannte Schwachstellen und Schwachpunkte auflisten…",
+      "riskLevel": "Gesamtrisikoniveau",
+      "riskLevelLow": "Niedrig",
+      "riskLevelMedium": "Mittel",
+      "riskLevelHigh": "Hoch",
+      "riskLevelCritical": "Kritisch",
+      "mitigationPlan": "Mitigationsplan",
+      "mitigationPlanPlaceholder": "Geplante Maßnahmen zur Reduzierung identifizierter Risiken…",
+      "residualRisk": "Restrisiko",
+      "residualRiskPlaceholder": "Verbleibendes Risiko nach Mitigationsmaßnahmen…",
+      "techDocScope": "Geltungsbereich",
+      "techDocScopePlaceholder": "Produkte und Systeme, die durch diese Dokumentation abgedeckt werden…",
+      "designDescription": "Entwurfsbeschreibung",
+      "designDescriptionPlaceholder": "Architektur, Komponenten und Entwurfsentscheidungen…",
+      "developmentProcess": "Entwicklungsprozess",
+      "developmentProcessPlaceholder": "Entwicklungsmethodik, Werkzeuge und sichere Programmierpraktiken…",
+      "testingResults": "Tests und Verifizierung",
+      "testingResultsPlaceholder": "Testpläne, -ergebnisse und Verifizierungsaktivitäten…",
+      "updateMechanism": "Update-Mechanismus",
+      "updateMechanismPlaceholder": "Wie Sicherheitsupdates an Nutzer bereitgestellt werden…",
+      "supportPeriod": "Unterstützungszeitraum",
+      "supportPeriodPlaceholder": "z. B. 5 Jahre ab Verkaufsdatum",
+      "tooltips": {
+        "manufacturerName": {
+          "title": "Name des Herstellers",
+          "body": "Die juristische Person, die das Produkt auf dem EU-Markt in Verkehr bringt. Muss genau mit dem Namen Ihrer Unternehmensregistrierung übereinstimmen – Käufer und notifizierte Stellen gleichen dies mit Handelsregistereintragungen ab.",
+          "ref": "CRA Anhang IV, Punkt 1(a)"
+        },
+        "manufacturerAddress": {
+          "title": "Adresse des Herstellers",
+          "body": "Ihre eingetragene Geschäftsadresse einschließlich Postleitzahl und Land. Verwenden Sie die bei Ihrer Steuerbehörde hinterlegte Adresse – nicht eine Versand- oder Marketingadresse.",
+          "ref": "CRA Anhang IV, Punkt 1(a)"
+        },
+        "productName": {
+          "title": "Produktname",
+          "body": "Der Handelsname, den Käufer sehen – wie er auf der Verpackung und in der Produktliste steht. Stimmen Sie ihn genau mit dem in den Marketingunterlagen verwendeten Namen ab.",
+          "ref": "CRA Anhang IV, Punkt 2"
+        },
+        "productIdentification": {
+          "title": "Produktkennung",
+          "body": "Eine eindeutige Kennung, die dieses Produkt von anderen von Ihnen gelieferten Varianten unterscheidet. Kann eine Modellnummer, SKU, GTIN oder ein Hardware-Serienbereich sein. Käufer müssen jede bestimmte Einheit auf diese Erklärung zurückführen können.",
+          "ref": "CRA Anhang IV, Punkt 2"
+        },
+        "conformityStatement": {
+          "title": "Konformitätserklärung",
+          "body": "Der Rechtssatz, der bestätigt, dass das Produkt die grundlegenden Cybersicherheitsanforderungen des CRA erfüllt. Der Standard-Mustertext entspricht dem in Anhang IV empfohlenen Wortlaut – ändern Sie ihn nur, wenn ein Rechtsanwalt eine Variante genehmigt hat.",
+          "ref": "CRA Anhang IV, Punkt 3"
+        },
+        "standardsApplied": {
+          "title": "Angewandte Normen",
+          "body": "Kommagetrennte Liste der harmonisierten Normen oder technischen Spezifikationen, die Sie zur Konformitätsnachweisführung verwendet haben. Gängige Beispiele: IEC 62443-4-2 für industrielle IoT, ETSI EN 303 645 für Consumer-IoT, ISO/IEC 27034 für Anwendungssicherheit.",
+          "ref": "CRA Anhang IV, Punkt 4"
+        },
+        "notifiedBodyName": {
+          "title": "Name der notifizierten Stelle",
+          "body": "Nur erforderlich, wenn Ihr Konformitätsbewertungsverfahren eine notifizierte Stelle einbezieht (Modul B+C, H oder europäische Cybersicherheitszertifizierung). Leer lassen, wenn Sie sich nach Modul A selbst bewertet haben.",
+          "ref": "CRA Anhang IV, Punkt 5"
+        },
+        "notifiedBodyNumber": {
+          "title": "Kennnummer der notifizierten Stelle",
+          "body": "Die vierstellige Nummer, die der Europäischen Kommission der notifizierten Stelle zugewiesen wurde (z. B. 0035 für TÜV Rheinland LGA). Erforderlich, wenn der Name der notifizierten Stelle angegeben ist.",
+          "ref": "CRA Anhang IV, Punkt 5"
+        },
+        "place": {
+          "title": "Ausstellungsort",
+          "body": "Stadt und Land, in dem die Erklärung unterzeichnet wird. Normalerweise Ihr Unternehmenssitz.",
+          "ref": "CRA Anhang IV, Punkt 6"
+        },
+        "date": {
+          "title": "Ausstellungsdatum",
+          "body": "Das Datum, an dem Sie die Erklärung unterzeichnen. Muss am oder vor dem Datum liegen, an dem das Produkt erstmals auf dem EU-Markt in Verkehr gebracht wird.",
+          "ref": "CRA Anhang IV, Punkt 6"
+        },
+        "signatoryName": {
+          "title": "Name des Unterzeichners",
+          "body": "Vollständiger Name der Person, die vom Hersteller rechtlich bevollmächtigt ist, die Erklärung zu unterzeichnen. Typischerweise ein Direktor, CTO oder Compliance Officer mit formaler Vertretungsbefugnis.",
+          "ref": "CRA Anhang IV, Punkt 7"
+        },
+        "signatoryPosition": {
+          "title": "Position des Unterzeichners",
+          "body": "Die Berufsbezeichnung des Unterzeichners innerhalb der juristischen Person des Herstellers (z. B. Chief Technology Officer, Compliance-Direktor). Belegt, dass die Person die Befugnis hat, das Unternehmen zu verpflichten.",
+          "ref": "CRA Anhang IV, Punkt 7"
+        },
+        "policyScope": {
+          "title": "Geltungsbereich der Richtlinie",
+          "body": "Die Produkte, Versionen und Dienste, die diese Richtlinie abdeckt. Seien Sie konkret – Käufer und Forscher sollten auf Anhieb erkennen können, ob ihr Fund unter die Richtlinie fällt.",
+          "ref": "CRA Artikel 13, Punkt 2"
+        },
+        "reportingChannels": {
+          "title": "Meldekanäle",
+          "body": "Wo Forscher Schwachstellenberichte einreichen sollen. Geben Sie mindestens einen sicheren Kanal an (E-Mail + PGP-Schlüssel, verschlüsseltes Formular oder VDP-Plattform). RFC 9116 (security.txt) ist das empfohlene Erkennungsformat.",
+          "ref": "CRA Artikel 11"
+        },
+        "responseTimeline": {
+          "title": "Reaktionszeitplan",
+          "body": "Die maximale Zeit zwischen Eingang eines Berichts und der Bestätigung gegenüber dem Forscher. Branchenstandard ist 24–72 Stunden für die erste Bestätigung, 5–10 Werktage für Triage und Schweregradbeurteilung.",
+          "ref": "CRA Artikel 11"
+        },
+        "disclosureTimeline": {
+          "title": "Offenlegungszeitplan",
+          "body": "Wann und wie Sie eine CVE oder einen Hinweis veröffentlichen, sobald ein Fix verfügbar ist. Der CRA fördert koordinierte Offenlegung abgestimmt auf die Patch-Veröffentlichung; übliche Branchenpraxis sind 90 Tage ab erstem Bericht.",
+          "ref": "CRA Artikel 11"
+        },
+        "safeHarborStatement": {
+          "title": "Safe-Harbour-Erklärung",
+          "body": "Zusicherung, dass gutgläubige Sicherheitsforscher keine rechtlichen Schritte oder vertragliche Strafen für das Auffinden und Melden von Schwachstellen im Geltungsbereich der Richtlinie zu befürchten haben. Standardpraxis verweist auf CFAA/Computer Misuse Act Safe-Harbour-Formulierungen.",
+          "ref": "CRA Artikel 11"
+        },
+        "incidentTitle": {
+          "title": "Titel des Sicherheitsvorfalls",
+          "body": "Kurze Kennung für den Sicherheitsvorfall – was Sie in internen Mitteilungen und ENISA-Einreichungen verwenden. Z. B. \"INC-2026-007 – Auth-Bypass in Firmware 2.1.4\".",
+          "ref": "CRA Artikel 14"
+        },
+        "incidentDate": {
+          "title": "Datum des Sicherheitsvorfalls",
+          "body": "Wann der Sicherheitsvorfall tatsächlich eingetreten ist, nicht wann Sie ihn entdeckt haben. Wenn unbekannt, verwenden Sie Ihre beste Schätzung und notieren Sie dies in der Beschreibung.",
+          "ref": "CRA Artikel 14, Punkt 1"
+        },
+        "incidentDescription": {
+          "title": "Beschreibung des Sicherheitsvorfalls",
+          "body": "Zusammenfassung in verständlicher Sprache, was geschehen ist, welches Asset betroffen war und wie es entdeckt wurde. Angestrebt werden 3–5 Sätze – Details gehören in die Auswirkungsbeurteilung.",
+          "ref": "CRA Artikel 14, Punkt 2(a)"
+        },
+        "impactAssessment": {
+          "title": "Auswirkungsbeurteilung",
+          "body": "Die tatsächlichen oder erwarteten Folgen. Geben Sie die Anzahl betroffener Nutzer/Geräte, offengelegte Daten, Ausfallzeiten und etwaige Sicherheitsimplikationen an. ENISA erwartet, dass der Schweregrad den Meldeplan bestimmt.",
+          "ref": "CRA Artikel 14, Punkt 2(b)"
+        },
+        "mitigationActions": {
+          "title": "Mitigationsmaßnahmen",
+          "body": "Was Sie getan haben und was Sie planen zu tun – kurzfristige Eindämmung, langfristige Behebung und Kundenleitfaden. Der 72-Stunden-Zwischenbericht des CRA erwartet einen glaubwürdigen Mitigationsplan.",
+          "ref": "CRA Artikel 14, Punkt 4"
+        },
+        "notificationDate": {
+          "title": "Meldedatum",
+          "body": "Wann Sie CSIRT/ENISA benachrichtigt haben. Der CRA-Takt erfordert eine Frühwarnung innerhalb von 24 Stunden nach Bekanntwerden, einen Zwischenbericht innerhalb von 72 Stunden und einen Abschlussbericht innerhalb eines Monats.",
+          "ref": "CRA Artikel 14, Punkt 3"
+        },
+        "riskTitle": {
+          "title": "Risikotitel",
+          "body": "Kurze Bezeichnung für dieses Risiko – wie Sie es in einem Statusbericht nennen würden. Z. B. \"RA-04 – Firmware-Integritäts-Bypass über OTA-Kanal\".",
+          "ref": "CRA Anhang I, Teil I.1"
+        },
+        "threatDescription": {
+          "title": "Bedrohungsbeschreibung",
+          "body": "Was ein Angreifer erreichen möchte und welche Fähigkeiten er benötigt. Decken Sie Bedrohungsakteur, Angriffsvektor und Ziel ab. Verweisen Sie auf STRIDE- oder LINDDUN-Kategorien, wenn Sie ein Bedrohungsmodell-Framework einsetzen.",
+          "ref": "CRA Anhang I, Teil I.1"
+        },
+        "vulnerabilitiesIdentified": {
+          "title": "Identifizierte Schwachstellen",
+          "body": "Die Schwachpunkte in Ihrem Produkt, die die Bedrohung ausnutzen könnte. Seien Sie konkret – verweisen Sie auf spezifische Code-Pfade, Designfehler, Konfigurationsstandards oder Drittanbieterkomponenten.",
+          "ref": "CRA Anhang I, Teil I.2"
+        },
+        "riskLevel": {
+          "title": "Risikoniveau",
+          "body": "Kombinierte Wahrscheinlichkeits-×-Auswirkungs-Bewertung unter Berücksichtigung bestehender Kontrollen. Die meisten CRA-konformen Frameworks verwenden die Stufen Niedrig/Mittel/Hoch/Kritisch; richten Sie sich an der Risikomanagementpolitik Ihres Unternehmens aus, falls vorhanden.",
+          "ref": "CRA Anhang I, Teil I.3"
+        },
+        "mitigationPlan": {
+          "title": "Mitigationsplan",
+          "body": "Die Kontrollen, die Sie hinzufügen oder stärken, um das Risiko auf ein akzeptables Niveau zu senken. Geben Sie an, wer für jede Maßnahme verantwortlich ist, was \"erledigt\" bedeutet und das angestrebte Abschlussdatum.",
+          "ref": "CRA Anhang I, Teil I.4"
+        },
+        "residualRisk": {
+          "title": "Restrisiko",
+          "body": "Das nach Mitigationsmaßnahmen verbleibende Risiko. Dokumentieren Sie, warum dieses Niveau akzeptabel ist und welche Führungskraft es akzeptiert hat – Prüfer werden nach beidem fragen.",
+          "ref": "CRA Anhang I, Teil I.4"
+        },
+        "techDocScope": {
+          "title": "Geltungsbereich der Dokumentation",
+          "body": "Was diese technische Akte abdeckt – normalerweise eine einzelne Produktfamilie oder Hardwareplattform. Geben Sie dies explizit an, damit eine notifizierte Stelle ihre Bewertung einschränken kann.",
+          "ref": "CRA Anhang VII, Punkt 1"
+        },
+        "designDescription": {
+          "title": "Entwurfsbeschreibung",
+          "body": "Übergeordnete Architektur: Komponenten, Datenflüsse, Vertrauensgrenzen und sicherheitsrelevante Entwurfsentscheidungen. Diagramme sind besser als Prosa – fügen Sie sie ein oder verlinken Sie auf eine Architekturpräsentation.",
+          "ref": "CRA Anhang VII, Punkt 2"
+        },
+        "developmentProcess": {
+          "title": "Entwicklungsprozess",
+          "body": "Wie Sie sicheren Code ausliefern: SDLC-Phasen, Code-Review-Richtlinie, statische/dynamische Analysetools, Abhängigkeits-Scanning und Sicherheits-Gates bei jedem Meilenstein. Verweisen Sie auf Ihr internes Richtliniendokument, falls vorhanden.",
+          "ref": "CRA Anhang VII, Punkt 3"
+        },
+        "testingResults": {
+          "title": "Tests & Verifizierung",
+          "body": "Zusammenfassung von Penetrationstests, Fuzzing-Kampagnen, Konformitätsbewertungen und Schwachstellen-Scans. Verlinken oder hängen Sie die vollständigen Berichte an; dieser Abschnitt ist die Zusammenfassung für die Geschäftsleitung.",
+          "ref": "CRA Anhang VII, Punkt 4"
+        },
+        "updateMechanism": {
+          "title": "Update-Mechanismus",
+          "body": "Wie Sie Sicherheitsupdates an installierte Produkte bereitstellen: OTA, App-Store, manueller Download usw. Der CRA schreibt vor, dass Updates während des gesamten Unterstützungszeitraums des Produkts verfügbar sind.",
+          "ref": "CRA Anhang VII, Punkt 5"
+        },
+        "supportPeriod": {
+          "title": "Unterstützungszeitraum",
+          "body": "Der Zeitraum, in dem Sie kostenlose Sicherheitsupdates bereitstellen. CRA Artikel 13 schreibt mindestens 5 Jahre vor, oder die erwartete Produktlebensdauer, falls länger.",
+          "ref": "CRA Artikel 13"
+        }
+      }
+    }
+  }
+}

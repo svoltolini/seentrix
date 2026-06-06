@@ -1,0 +1,117 @@
+{
+  "releases": {
+    "type": {
+      "security": "Sicurezza",
+      "bugfix": "Correzione di bug",
+      "feature": "Funzionalità",
+      "maintenance": "Manutenzione"
+    },
+    "support": {
+      "title": "Periodo di supporto",
+      "description": "L'Allegato I Parte II del CRA richiede di fornire aggiornamenti di sicurezza per tutto il periodo di supporto del prodotto — minimo 5 anni.",
+      "startLabel": "Inizio supporto",
+      "endLabel": "Fine supporto",
+      "updateChannelLabel": "Canale di aggiornamento",
+      "updateChannelPlaceholder": "es. OTA, gestore pacchetti, portale di download",
+      "inSupport": "In supporto · {days}g rimanenti",
+      "expiringSoon": "Scade tra {days}g",
+      "outOfSupport": "Fuori supporto · {days}g fa",
+      "tooltips": {
+        "start": {
+          "title": "Inizio del periodo di supporto",
+          "body": "La data da cui ci si impegna a fornire aggiornamenti di sicurezza. Di solito coincide con la data di lancio del prodotto o con la prima immissione sul mercato.",
+          "ref": "CRA Allegato I Parte II(8) — i fabbricanti devono fornire aggiornamenti di sicurezza \"per un periodo di tempo proporzionato all'uso previsto del prodotto\", e in ogni caso per almeno 5 anni dall'immissione sul mercato (Articolo 13)."
+        },
+        "end": {
+          "title": "Fine del periodo di supporto",
+          "body": "L'ultima data in cui verranno distribuiti aggiornamenti di sicurezza per questo prodotto. Deve essere almeno 5 anni dopo la data di inizio del supporto; è accettabile un periodo più lungo (e spesso atteso per dispositivi industriali/medicali).",
+          "ref": "CRA Articolo 13 — il periodo di supporto è un impegno vincolante dichiarato agli utenti finali e stampato sulla scheda informativa di cibersicurezza per l'utente finale. Terminare il supporto prima del previsto costituisce una violazione del CRA."
+        },
+        "updateChannel": {
+          "title": "Canale di aggiornamento",
+          "body": "Come gli aggiornamenti di sicurezza raggiungono gli utenti finali — Over-The-Air (OTA), gestore pacchetti (apt/npm), download dal portale, sostituzione manuale, ecc. Gli utenti finali devono saperlo per rimanere protetti.",
+          "ref": "CRA Allegato II(3) delle informazioni per l'utente finale — il periodo di supporto dichiarato è privo di significato a meno che gli utenti non sappiano anche come vengono distribuiti gli aggiornamenti. Obbligatorio sulla scheda informativa di cibersicurezza per l'utente finale."
+        }
+      }
+    },
+    "kpi": {
+      "total": "Release",
+      "security": "Sicurezza",
+      "cvesFixed": "CVE corretti",
+      "latest": "Ultima"
+    },
+    "list": {
+      "title": "Storico delle release",
+      "cvesFixed": "CVE corretti",
+      "signedDigest": "Firma",
+      "delete": "Elimina release",
+      "confirmDelete": "Eliminare questa release? Questa operazione non può essere annullata."
+    },
+    "empty": {
+      "title": "Nessuna release registrata",
+      "description": "Pubblica una release per registrare gli aggiornamenti di sicurezza, i CVE corretti e i digest firmati nel tuo audit trail CRA."
+    },
+    "new": {
+      "cta": "Pubblica release",
+      "title": "Pubblica una nuova release",
+      "description": "Registra la versione, la data e i CVE corretti in modo che il tuo audit trail dimostri che l'impegno di supporto viene rispettato.",
+      "versionLabel": "Versione",
+      "releasedAtLabel": "Data di rilascio",
+      "typeLabel": "Tipo",
+      "cvesLabel": "CVE corretti (separati da virgole o spazi)",
+      "cvesPlaceholder": "CVE-2024-0001, CVE-2024-0002",
+      "notesLabel": "Note di rilascio",
+      "notesPlaceholder": "Cosa è incluso in questa release…",
+      "digestLabel": "Digest firmato",
+      "digestPlaceholder": "SHA-256 o identità del firmatario",
+      "cancel": "Annulla",
+      "create": "Pubblica",
+      "tooltips": {
+        "version": {
+          "title": "Versione",
+          "body": "Identificatore di versione semver o interno (es. 1.2.3, 2024-04-17-build42). Deve identificare univocamente questa specifica build — utenti e revisori lo usano per stabilire se un dato dispositivo è stato aggiornato.",
+          "ref": "CRA Allegato II(2) — la documentazione tecnica deve includere identificatori di versione tracciabili dal prodotto a questo record."
+        },
+        "releasedAt": {
+          "title": "Data di rilascio",
+          "body": "La data in cui hai reso disponibile questa versione agli utenti finali — non quando è stata unita al main o quando la build è stata completata. Utilizzata per misurare il requisito CRA \"senza indebito ritardo\" per gli aggiornamenti di sicurezza.",
+          "ref": "CRA Articolo 13(8) — gli aggiornamenti di sicurezza devono essere resi disponibili \"senza indebito ritardo e gratuitamente\". Questa data è il timestamp verificabile."
+        },
+        "type": {
+          "title": "Tipo di release",
+          "body": "Sicurezza = almeno una vulnerabilità corretta. Correzione di bug = bug non di sicurezza. Funzionalità = nuove funzionalità. Manutenzione = pulizia interna, nessuna modifica visibile all'utente. \"Sicurezza\" contrassegna automaticamente la release come aggiornamento di sicurezza nel registro delle prove CRA.",
+          "ref": "CRA Articolo 13(8) — gli aggiornamenti di sicurezza hanno obblighi distinti (gratuiti, senza indebito ritardo, comunicati agli utenti). Taggare correttamente qui è ciò che rende misurabili tali obblighi."
+        },
+        "cves": {
+          "title": "CVE corretti",
+          "body": "Elenca ogni CVE che questa release corregge — separati da virgole o spazi. Si collega al registro delle vulnerabilità e chiude il cerchio dal rilevamento → triage → correzione. Il campo vuoto va bene per le release non di sicurezza.",
+          "ref": "CRA Articolo 13(8) — gli aggiornamenti di sicurezza devono affrontare le vulnerabilità sfruttabili note. Mantenere questo campo accurato è la prova che un revisore chiederà."
+        },
+        "notes": {
+          "title": "Note di rilascio",
+          "body": "Riepilogo rivolto ai clienti. Linguaggio semplice, includi istruzioni di aggiornamento e qualsiasi modifica incompatibile. Pubblicato sul portale di download e allegato alla scheda informativa di cibersicurezza per l'utente finale.",
+          "ref": "CRA Allegato II(3) delle informazioni per l'utente finale — gli utenti hanno bisogno di informazioni sufficienti per decidere se applicare l'aggiornamento."
+        },
+        "digest": {
+          "title": "Digest firmato",
+          "body": "Hash SHA-256 dell'artefatto firmato o l'identità del firmatario (es. impronta digitale della chiave GPG, identità Sigstore). Prova di integrità che consente a un cliente di verificare che il binario scaricato sia quello che hai distribuito.",
+          "ref": "CRA Allegato I Parte I(3)(h) — i prodotti devono includere \"protezione dell'integrità dei dati archiviati, trasmessi ed elaborati\". Un digest di release firmato è il modo comune in cui questo viene dimostrato per il software."
+        }
+      }
+    },
+    "toast": {
+      "saved": "Salvato",
+      "saveFailed": "Impossibile salvare",
+      "created": "Release pubblicata",
+      "createFailed": "Impossibile pubblicare la release",
+      "deleted": "Release eliminata",
+      "deleteFailed": "Impossibile eliminare la release"
+    },
+    "dashboard": {
+      "title": "Finestra di supporto",
+      "expiringSoon": "in scadenza entro 90g",
+      "outOfSupport": "fuori supporto",
+      "missing": "nessuna data di supporto"
+    }
+  }
+}

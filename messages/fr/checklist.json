@@ -1,0 +1,160 @@
+{
+  "checklist": {
+    "title": "Liste de contrôle de conformité",
+    "subtitle": "Suivez les exigences essentielles de cybersécurité de l'Annexe I du CRA pour ce produit.",
+    "score": "Score de conformité",
+    "partI": "Partie I — Exigences de sécurité",
+    "partIDescription": "Exigences essentielles de cybersécurité pour les produits comportant des éléments numériques.",
+    "partII": "Partie II — Traitement des vulnérabilités",
+    "partIIDescription": "Exigences relatives au traitement des vulnérabilités tout au long du cycle de vie du produit.",
+    "getStarted": "Prêt à commencer",
+    "getStartedDescription": "Commencez à parcourir les exigences du CRA — nous vous guiderons étape par étape. Sélectionnez un élément ci-dessous pour démarrer.",
+    "itemCount": "{completed} sur {total} complétés",
+    "view": {
+      "kanban": "Kanban",
+      "list": "Liste"
+    },
+    "kanban": {
+      "backlog": "Backlog",
+      "onProgress": "En cours",
+      "completed": "Terminé",
+      "notApplicable": "Non applicable",
+      "empty": "Aucune tâche ici"
+    },
+    "notesLabel": "Notes",
+    "notesPlaceholder": "Ajoutez des notes, observations ou détails d'implémentation…",
+    "evidenceLabel": "Preuves",
+    "uploadEvidence": "Téléverser un fichier",
+    "removeFile": "Supprimer",
+    "guidanceLabel": "Recommandations",
+    "statusLabel": "Statut",
+    "articleLabel": "Article",
+    "assigneeLabel": "Assigné à",
+    "assignTo": "Assigner à…",
+    "unassign": "Non assigné",
+    "unassigned": "Non assigné",
+    "saving": "Enregistrement…",
+    "saved": "Enregistré",
+    "uploadError": "Échec du téléversement. Veuillez réessayer.",
+    "statuses": {
+      "pending": "Non commencé",
+      "in_progress": "En cours",
+      "completed": "Terminé",
+      "not_applicable": "N/A"
+    },
+    "requirements": {
+      "secure_by_design": {
+        "title": "Sécurité dès la conception et par défaut",
+        "description": "Les produits doivent être conçus, développés et produits pour garantir un niveau approprié de cybersécurité basé sur les risques.",
+        "guidance": "Intégrez la cybersécurité à toutes les phases du cycle de vie du produit, de la conception à la maintenance. Effectuez une modélisation des menaces lors de la conception. Assurez-vous que le produit est livré avec les paramètres les plus sécurisés activés par défaut."
+      },
+      "no_known_vulnerabilities": {
+        "title": "Aucune vulnérabilité exploitable connue",
+        "description": "Les produits doivent être livrés sans vulnérabilités exploitables connues.",
+        "guidance": "Mettez en œuvre une analyse complète des vulnérabilités avant la mise en production. Utilisez des outils SAST/DAST automatisés dans votre pipeline CI/CD. Surveillez les bases de données CVE et les flux NVD pour les composants de votre SBOM. Établissez un contrôle de sécurité avant chaque mise en production."
+      },
+      "risk_based_assessment": {
+        "title": "Évaluation des risques de cybersécurité",
+        "description": "Sur la base d'une évaluation des risques de cybersécurité appropriée, les produits doivent être conçus pour atténuer les risques identifiés.",
+        "guidance": "Documentez une évaluation formelle des risques de cybersécurité couvrant la confidentialité, l'intégrité et la disponibilité. Identifiez les acteurs de la menace, les vecteurs d'attaque et les impacts potentiels. Utilisez des cadres établis comme STRIDE ou OCTAVE. Mettez à jour l'évaluation lorsque le paysage des menaces évolue."
+      },
+      "secure_default_config": {
+        "title": "Configuration sécurisée par défaut",
+        "description": "Les produits doivent être livrés avec une configuration sécurisée par défaut, y compris la possibilité de remettre le produit dans son état d'origine.",
+        "guidance": "Désactivez par défaut les services et ports inutiles. Exigez une authentification forte lors de la première utilisation. Évitez les mots de passe par défaut ou codés en dur. Fournissez un mécanisme de réinitialisation usine qui ramène le produit dans un état sécurisé connu. Documentez la configuration par défaut."
+      },
+      "unauthorized_access_protection": {
+        "title": "Protection contre les accès non autorisés",
+        "description": "Les produits doivent protéger contre les accès non autorisés aux données et aux fonctions, avec une authentification, une gestion des identités et des accès appropriées.",
+        "guidance": "Mettez en œuvre un contrôle d'accès basé sur les rôles (RBAC). Utilisez l'authentification multifacteur lorsque c'est approprié. Appliquez des politiques de mot de passe robustes. Appliquez le principe du moindre privilège. Journalisez toutes les tentatives d'authentification et les décisions de contrôle d'accès."
+      },
+      "data_confidentiality": {
+        "title": "Confidentialité des données",
+        "description": "Les produits doivent protéger la confidentialité des données stockées, transmises ou autrement traitées, qu'elles soient personnelles ou autres.",
+        "guidance": "Chiffrez les données au repos avec AES-256 ou équivalent. Chiffrez les données en transit avec TLS 1.2+. Protégez les clés cryptographiques avec une gestion sécurisée des clés. Mettez en œuvre un stockage sécurisé pour la configuration sensible. Classifiez les données par niveau de sensibilité."
+      },
+      "data_integrity": {
+        "title": "Intégrité des données, commandes et configuration",
+        "description": "Les produits doivent protéger l'intégrité des données, commandes, programmes et configurations stockés, transmis ou autrement traités.",
+        "guidance": "Utilisez le hachage cryptographique et les signatures numériques pour détecter les altérations. Mettez en œuvre des chaînes de démarrage sécurisé lorsque c'est applicable. Validez toutes les commandes et configurations entrantes. Protégez l'intégrité des mises à jour de firmware par signature de code."
+      },
+      "data_minimization": {
+        "title": "Minimisation des données",
+        "description": "Les produits doivent traiter uniquement les données adéquates, pertinentes et limitées à ce qui est nécessaire pour l'usage prévu.",
+        "guidance": "Auditez les pratiques de collecte de données par rapport aux exigences du produit. Minimisez les données stockées sur l'appareil et transmises aux services externes. Mettez en œuvre des politiques de conservation des données. Assurez la transparence sur les données collectées et pourquoi. Assurez la conformité aux principes de minimisation des données du RGPD."
+      },
+      "availability_resilience": {
+        "title": "Disponibilité & Résilience",
+        "description": "Les produits doivent être conçus et produits pour assurer la disponibilité et la résilience, y compris la résistance aux attaques par déni de service.",
+        "guidance": "Mettez en œuvre la limitation du débit et la gestion du trafic. Concevez pour une dégradation gracieuse sous charge. Testez la résilience contre les schémas d'attaque DoS courants. Mettez en œuvre la redondance pour les fonctions critiques. Définissez et documentez les procédures de récupération."
+      },
+      "attack_surface_minimization": {
+        "title": "Minimisation de la surface d'attaque",
+        "description": "Les produits doivent minimiser leur propre surface d'attaque, notamment les interfaces externes, et réduire l'impact négatif sur la disponibilité des services fournis par d'autres appareils ou réseaux.",
+        "guidance": "Désactivez ou supprimez les services, ports et protocoles inutilisés. Minimisez les API exposées au strict nécessaire. Mettez en œuvre des capacités de segmentation réseau. Limitez les interfaces de débogage et de diagnostic en production. Examinez et réduisez régulièrement la surface d'attaque."
+      },
+      "incident_impact_reduction": {
+        "title": "Réduction de l'impact des incidents",
+        "description": "Les produits doivent être conçus pour limiter l'impact d'un incident en utilisant des mécanismes et techniques d'atténuation des exploitations appropriés.",
+        "guidance": "Mettez en œuvre le sandboxing ou l'isolation des processus lorsque c'est faisable. Utilisez des mécanismes de protection de la mémoire (ASLR, DEP, canaris de pile). Appliquez le principe du moindre privilège pour tous les composants. Mettez en œuvre des modes de sécurité. Concevez des périmètres de confinement pour prévenir les mouvements latéraux."
+      },
+      "security_logging": {
+        "title": "Journalisation et surveillance des événements de sécurité",
+        "description": "Les produits doivent offrir la capacité d'enregistrer et de surveiller les activités internes pertinentes, notamment l'accès aux données, services ou fonctions ou leur modification.",
+        "guidance": "Journalisez tous les événements liés à la sécurité : authentification, autorisation, modifications de configuration, conditions d'erreur. Utilisez des formats de journalisation structurés. Mettez en œuvre un stockage de journaux résistant aux altérations. Fournissez des interfaces pour l'export des journaux vers des systèmes SIEM. Incluez suffisamment de détails pour l'investigation des incidents."
+      },
+      "security_updates": {
+        "title": "Mécanisme de mises à jour de sécurité",
+        "description": "Les produits doivent garantir que les vulnérabilités peuvent être traitées via des mises à jour de sécurité, y compris des mises à jour automatiques lorsque c'est approprié.",
+        "guidance": "Mettez en œuvre un mécanisme de mise à jour OTA (over-the-air) avec vérification de l'intégrité. Supportez les mises à jour de sécurité automatiques avec notification des utilisateurs. Assurez la livraison des mises à jour pendant toute la période de support. Signez numériquement toutes les mises à jour. Fournissez une capacité de retour en arrière en cas d'échec des mises à jour."
+      }
+    },
+    "vulnerabilityRequirements": {
+      "vulnerability_identification": {
+        "title": "Identification et documentation des vulnérabilités",
+        "description": "Identifier et documenter les vulnérabilités et composants contenus dans le produit, notamment en établissant une nomenclature logicielle.",
+        "guidance": "Maintenez un SBOM complet et à jour (format CycloneDX ou SPDX). Surveillez en continu les nouvelles vulnérabilités dans tous les composants. Utilisez des outils d'analyse automatisée des vulnérabilités. Documentez les vulnérabilités connues avec leur statut d'atténuation."
+      },
+      "vulnerability_remediation": {
+        "title": "Remédiation rapide des vulnérabilités",
+        "description": "Traiter et remédier aux vulnérabilités sans délai, notamment en fournissant des mises à jour de sécurité.",
+        "guidance": "Définissez des SLA de remédiation des vulnérabilités basés sur la sévérité (ex. : critique sous 24h, élevée sous 7 jours). Mettez en œuvre un processus de correction rationalisé. Suivez toutes les vulnérabilités de la découverte à la résolution. Priorisez en fonction de l'exploitabilité et de l'impact."
+      },
+      "security_testing": {
+        "title": "Tests de sécurité réguliers",
+        "description": "Appliquer des tests et révisions de sécurité efficaces et réguliers du produit comportant des éléments numériques.",
+        "guidance": "Réalisez des tests d'intrusion réguliers (au moins annuellement). Intégrez des tests de sécurité automatisés dans le CI/CD (SAST, DAST, SCA). Effectuez des tests de fuzzing sur les analyseurs d'entrées. Examinez la sécurité après chaque version majeure. Faites appel périodiquement à des auditeurs de sécurité externes."
+      },
+      "vulnerability_disclosure": {
+        "title": "Divulgation publique des vulnérabilités",
+        "description": "Une fois une mise à jour de sécurité disponible, divulguer publiquement des informations sur les vulnérabilités corrigées, notamment une description et une identification.",
+        "guidance": "Publiez des avis de sécurité pour chaque vulnérabilité corrigée. Incluez les identifiants CVE lorsque c'est applicable. Décrivez la vulnérabilité, les versions affectées et les versions corrigées. Fournissez des instructions de mise à niveau claires. Maintenez une archive publique des avis de sécurité."
+      },
+      "coordinated_disclosure_policy": {
+        "title": "Politique de divulgation coordonnée des vulnérabilités",
+        "description": "Mettre en place et appliquer une politique de divulgation coordonnée des vulnérabilités.",
+        "guidance": "Publiez une politique de divulgation des vulnérabilités (VDP) sur votre site web. Fournissez un contact de sécurité (ex. : security@entreprise.com). Définissez un calendrier clair pour l'accusé de réception (48h) et la résolution. Offrez une clause de protection juridique aux chercheurs en sécurité de bonne foi. Suivez les recommandations de la norme ISO/IEC 29147."
+      },
+      "vulnerability_info_sharing": {
+        "title": "Partage d'informations sur les vulnérabilités",
+        "description": "Prendre des mesures pour faciliter le partage d'informations sur les vulnérabilités dans le produit et les composants tiers.",
+        "guidance": "Participez aux ISAC (Information Sharing and Analysis Centers) pertinents. Partagez les données de vulnérabilité avec les organisations CSIRT/CERT. Notifiez les utilisateurs en aval et les intégrateurs des vulnérabilités de composants. Utilisez des formats standardisés (CSAF, VEX) pour la communication des vulnérabilités."
+      },
+      "sbom_maintenance": {
+        "title": "Création et maintenance du SBOM",
+        "description": "Fournir une nomenclature logicielle dans un format couramment utilisé et lisible par machine couvrant au minimum les dépendances de premier niveau.",
+        "guidance": "Générez le SBOM au format CycloneDX ou SPDX. Incluez au minimum : nom du composant, version, fournisseur et identifiant unique (pURL/CPE). Mettez à jour le SBOM à chaque version. Rendez le SBOM disponible aux clients et aux autorités sur demande. Automatisez la génération du SBOM dans le processus de build."
+      },
+      "security_advisories": {
+        "title": "Publication des avis de sécurité",
+        "description": "Diffuser en temps utile des avis de sécurité sur les vulnérabilités identifiées, notamment des informations sur les correctifs ou mesures d'atténuation disponibles.",
+        "guidance": "Établissez un processus de publication des avis de sécurité. Incluez l'évaluation de la sévérité (CVSS), les produits/versions affectés, les étapes de remédiation et le calendrier. Diffusez les avis via plusieurs canaux (site web, listes de diffusion, notifications produit). Satisfaites l'exigence du CRA de notifier ENISA dans les 24 heures pour les vulnérabilités activement exploitées."
+      }
+    },
+    "errors": {
+      "notAuthenticated": "Vous devez être connecté pour continuer.",
+      "productNotFound": "Produit introuvable.",
+      "generic": "Une erreur s'est produite. Veuillez réessayer."
+    }
+  }
+}

@@ -1,0 +1,269 @@
+{
+  "entity": {
+    "title": "Ruolo dell'operatore economico",
+    "subtitle": "Il CRA assegna obblighi diversi a fabbricanti, rappresentanti autorizzati, importatori e distributori. Seleziona il ruolo che la tua organizzazione svolge — la lista di controllo degli obblighi si adatta di conseguenza.",
+    "progressLabel": "Avanzamento",
+    "type": {
+      "title": "Il tuo ruolo",
+      "description": "Solo gli amministratori e i responsabili conformità possono modificare il ruolo. Il cambio reinizializza la lista degli obblighi.",
+      "current": "Attuale",
+      "manufacturer": {
+        "title": "Fabbricante",
+        "description": "Immetti prodotti con elementi digitali sul mercato UE con il tuo nome o marchio."
+      },
+      "authorised_representative": {
+        "title": "Rappresentante autorizzato",
+        "description": "Una persona mandataria nell'UE che agisce per conto di un fabbricante non UE."
+      },
+      "importer": {
+        "title": "Importatore",
+        "description": "Immetti sul mercato UE un prodotto di un fabbricante non UE."
+      },
+      "distributor": {
+        "title": "Distributore",
+        "description": "Metti a disposizione prodotti sul mercato UE senza essere il fabbricante o l'importatore."
+      }
+    },
+    "status": {
+      "pending": "In attesa",
+      "in_progress": "In corso",
+      "complete": "Completato",
+      "not_applicable": "N/A"
+    },
+    "obligations": {
+      "title": "Obblighi del {entity}",
+      "notesLabel": "Note sulle prove",
+      "notesPlaceholder": "Dove si trovano le prove, chi le ha approvate, link al documento."
+    },
+    "obligation": {
+      "manufacturer": {
+        "essential_requirements_met": {
+          "title": "Requisiti essenziali soddisfatti",
+          "description": "Tutti i requisiti dell'Allegato I Parte I + II sono affrontati ed evidenziati nella lista di controllo.",
+          "help": {
+            "title": "Soddisfare i requisiti essenziali di cibersicurezza",
+            "body": "Il tuo prodotto deve essere progettato, sviluppato e prodotto in modo da essere fornito senza vulnerabilità sfruttabili note e con una configurazione sicura per impostazione predefinita. Lavora attraverso l'Allegato I Parte I: proteggi la riservatezza e l'integrità dei dati, minimizza la superficie di attacco, consenti gli aggiornamenti di sicurezza (preferibilmente automatici) e limita la raccolta dei dati a quanto necessario. Documenta come viene soddisfatto ciascun requisito — tali prove alimentano la documentazione tecnica e la DoC.",
+            "ref": "CRA Articolo 13 e Allegato I, Parte I — Requisiti essenziali di cibersicurezza"
+          }
+        },
+        "vulnerability_handling_operational": {
+          "title": "Gestione delle vulnerabilità operativa",
+          "description": "È in vigore un processo documentato per ricevere, eseguire il triage e correggere le vulnerabilità per tutto il periodo di supporto.",
+          "help": {
+            "title": "Gestione di un processo di gestione delle vulnerabilità",
+            "body": "Durante il periodo di supporto devi identificare e documentare le vulnerabilità (incluso il mantenimento di un SBOM), rimediare senza indugio tramite aggiornamenti di sicurezza gratuiti, applicare una politica di divulgazione coordinata delle vulnerabilità e fornire un indirizzo di contatto per le segnalazioni. Verifica di avere un canale di ricezione funzionante, un flusso di lavoro di triage/patching e un modo per notificare agli utenti quando sono disponibili aggiornamenti.",
+            "ref": "CRA Articolo 13 e Allegato I, Parte II — Requisiti di gestione delle vulnerabilità"
+          }
+        },
+        "technical_documentation_ready": {
+          "title": "Documentazione tecnica pronta",
+          "description": "Il fascicolo tecnico dell'Allegato II è compilato e conservato per 10 anni dopo l'immissione sul mercato.",
+          "help": {
+            "title": "Preparazione della documentazione tecnica",
+            "body": "Compila il fascicolo che dimostra la conformità prima di immettere il prodotto sul mercato: una descrizione generale, informazioni su progettazione/sviluppo e gestione delle vulnerabilità, la valutazione del rischio di cibersicurezza, l'SBOM, il periodo di supporto e un elenco delle norme applicate. Mantienilo aggiornato per tutta la vita del prodotto e aggiornalo al variare del prodotto.",
+            "ref": "CRA Articolo 31 e Allegato VII — Documentazione tecnica"
+          }
+        },
+        "doc_issued": {
+          "title": "Dichiarazione di conformità emessa",
+          "description": "La dichiarazione di conformità UE è emessa, firmata e conservata con il fascicolo tecnico.",
+          "help": {
+            "title": "Emissione della dichiarazione di conformità UE",
+            "body": "Predisponi un'unica DoC UE che attesti il soddisfacimento dei requisiti essenziali. Deve includere l'identificazione del prodotto, il tuo nome e indirizzo, una dichiarazione che assumi la piena responsabilità, i riferimenti alle norme utilizzate e la data di emissione. Firmandola, ti assumi la responsabilità legale per la conformità del prodotto.",
+            "ref": "CRA Articolo 28 e Allegato V — Dichiarazione di conformità UE"
+          }
+        },
+        "ce_marking_affixed": {
+          "title": "Marcatura CE apposta",
+          "description": "La marcatura CE (con il numero dell'organismo notificato, se applicabile) è apposta in modo visibile e duraturo.",
+          "help": {
+            "title": "Apposizione della marcatura CE",
+            "body": "La marcatura CE va sul prodotto (o sulla sua confezione/documentazione se le dimensioni non lo consentono) in modo visibile, leggibile e indelebile prima di essere immesso sul mercato. Segnala la conformità al CRA e a qualsiasi altra normativa UE applicabile. Apponi la marcatura solo dopo che la DoC è in vigore e la valutazione della conformità è completa.",
+            "ref": "CRA Articoli 29-30 — Norme e condizioni per la marcatura CE"
+          }
+        },
+        "ten_year_records_retained": {
+          "title": "Registrazioni conservate per 10 anni",
+          "description": "La documentazione tecnica, la DoC e gli artefatti CVD sono conservati per 10 anni o per il periodo di supporto, a seconda di quale sia più lungo.",
+          "help": {
+            "title": "Conservazione dei registri per dieci anni",
+            "body": "Tieni la documentazione tecnica e la dichiarazione di conformità UE a disposizione delle autorità di vigilanza del mercato per almeno 10 anni dopo che il prodotto è stato immesso sul mercato, o per il periodo di supporto — a seconda di quale sia più lungo. Conservali in modo da poterli produrre su richiesta anche dopo che il prodotto è stato dismesso.",
+            "ref": "CRA Articolo 13(13) — Conservazione dei registri"
+          }
+        }
+      },
+      "authorised_representative": {
+        "written_mandate": {
+          "title": "Mandato scritto in archivio",
+          "description": "Mandato firmato dal fabbricante non UE che conferisce la rappresentanza nell'UE.",
+          "help": {
+            "title": "Ottenere un mandato scritto",
+            "body": "Un fabbricante non UE deve nominarti per iscritto prima che il suo prodotto venga immesso sul mercato UE. Il mandato deve permetterti di (1) tenere la DoC e la documentazione tecnica a disposizione delle autorità, (2) fornire alle autorità le informazioni e la documentazione necessarie per dimostrare la conformità, e (3) cooperare alle azioni correttive. Conserva il mandato firmato in archivio e assicurati che menzioni i prodotti specifici coperti.",
+            "ref": "CRA Articolo 18 — Rappresentante autorizzato"
+          }
+        },
+        "technical_documentation_on_hand": {
+          "title": "Documentazione tecnica a disposizione",
+          "description": "In grado di mettere la documentazione tecnica a disposizione delle autorità su richiesta.",
+          "help": {
+            "title": "Tenere la documentazione tecnica a disposizione",
+            "body": "Devi essere in grado di consegnare la documentazione tecnica del prodotto a un'autorità di vigilanza del mercato su richiesta. Non devi necessariamente redigerla, ma devi detenere una copia aggiornata (o avere accesso garantito dal fabbricante) per tutto il periodo in cui deve essere conservata. Verifica di possedere effettivamente o di poter recuperare immediatamente la versione più recente.",
+            "ref": "CRA Articolo 18(2) e Articolo 31 — Documentazione a disposizione"
+          }
+        },
+        "doc_on_hand": {
+          "title": "Dichiarazione di conformità a disposizione",
+          "description": "Detiene una copia della DoC per ciascun prodotto rappresentato.",
+          "help": {
+            "title": "Tenere la dichiarazione di conformità a disposizione",
+            "body": "Detieni una copia della dichiarazione di conformità UE del fabbricante e tienila pronta per le autorità per tutto il periodo di conservazione. Verifica che la DoC in tuo possesso corrisponda alla versione del prodotto sul mercato e sia firmata dal fabbricante.",
+            "ref": "CRA Articolo 18(2) e Articolo 28 — DoC a disposizione"
+          }
+        },
+        "cooperate_with_authorities": {
+          "title": "Cooperare con le autorità",
+          "description": "Si è impegnato a fornire informazioni e a cooperare con le richieste di vigilanza del mercato.",
+          "help": {
+            "title": "Cooperare con le autorità di vigilanza del mercato",
+            "body": "Su richiesta motivata devi fornire alle autorità tutte le informazioni e la documentazione (in una lingua facilmente comprensibile) per dimostrare la conformità del prodotto, e cooperare a qualsiasi azione per eliminare i rischi di cibersicurezza dei prodotti che copri. Designa un referente e predisponi un processo per rispondere tempestivamente.",
+            "ref": "CRA Articolo 18(2) — Obblighi di cooperazione"
+          }
+        },
+        "terminate_if_noncompliant": {
+          "title": "Rescindi il mandato in caso di non conformità",
+          "description": "Processo in vigore per rescindere il mandato se il fabbricante agisce in violazione degli obblighi CRA, e per notificarlo al fabbricante e alle autorità.",
+          "help": {
+            "title": "Rescissione del mandato quando necessario",
+            "body": "Se il fabbricante agisce in violazione dei propri obblighi CRA, devi rescindere il mandato e informare la pertinente autorità di vigilanza del mercato e ENISA. Assicurati che il tuo accordo di mandato consenta la rescissione e sappi chi contattare nel caso in cui si arrivi a questo.",
+            "ref": "CRA Articolo 18 — Obblighi del rappresentante autorizzato"
+          }
+        }
+      },
+      "importer": {
+        "verify_manufacturer_doc": {
+          "title": "DoC del fabbricante verificata",
+          "description": "Prima dell'immissione sul mercato, ha verificato che il fabbricante abbia emesso una dichiarazione di conformità valida.",
+          "help": {
+            "title": "Verifica della dichiarazione di conformità del fabbricante",
+            "body": "Prima di immettere un prodotto sul mercato UE, verifica che il fabbricante abbia redatto la dichiarazione di conformità UE e abbia eseguito la procedura di valutazione della conformità appropriata. Richiedi la DoC e verifica che copra l'esatta versione del prodotto che stai importando.",
+            "ref": "CRA Articolo 19 — Obblighi degli importatori"
+          }
+        },
+        "verify_ce_marking": {
+          "title": "Marcatura CE verificata",
+          "description": "Ha verificato che la marcatura CE (con il numero dell'organismo notificato, se applicabile) sia apposta.",
+          "help": {
+            "title": "Verifica della marcatura CE",
+            "body": "Verifica che la marcatura CE sia correttamente apposta al prodotto prima di importarlo. Una marcatura assente o errata è un segnale che il prodotto potrebbe non essere conforme — non immetterlo sul mercato finché il problema non è risolto.",
+            "ref": "CRA Articolo 19(2) — Verifica dell'importatore"
+          }
+        },
+        "verify_technical_documentation": {
+          "title": "Documentazione tecnica verificata",
+          "description": "Ha confermato che il fabbricante ha predisposto la documentazione tecnica.",
+          "help": {
+            "title": "Verifica dell'esistenza della documentazione tecnica",
+            "body": "Assicurati che il fabbricante abbia predisposto la documentazione tecnica e che il prodotto rechi le informazioni e le istruzioni per l'utente. Non sei tenuto a conservare il fascicolo completo, ma devi avere la certezza che esista e sia disponibile alle autorità.",
+            "ref": "CRA Articolo 19(2) e Allegato VII — Documentazione tecnica"
+          }
+        },
+        "add_importer_details_to_product": {
+          "title": "Dati dell'importatore sul prodotto",
+          "description": "Nome, nome commerciale registrato/marchio e indirizzo postale indicati sul prodotto o, ove non possibile, sulla sua confezione o nei documenti di accompagnamento.",
+          "help": {
+            "title": "Aggiunta dei dati dell'importatore",
+            "body": "Indica il tuo nome, nome commerciale registrato o marchio, indirizzo postale, email e un unico punto di contatto sul prodotto, sulla sua confezione o in un documento di accompagnamento. Ciò consente a utenti e autorità di raggiungerti.",
+            "ref": "CRA Articolo 19(3) — Identificazione dell'importatore"
+          }
+        },
+        "store_transport_without_impact": {
+          "title": "Stoccaggio/trasporto preserva la conformità",
+          "description": "Le condizioni di stoccaggio e trasporto non compromettono la conformità del prodotto ai requisiti essenziali.",
+          "help": {
+            "title": "Stoccaggio e trasporto senza incidere sulla conformità",
+            "body": "Mentre il prodotto è sotto la tua responsabilità, assicurati che le condizioni di stoccaggio o trasporto non degradino la sua conformità ai requisiti essenziali di cibersicurezza (ad esempio, non lasciare che il firmware si invecchi o che le protezioni antimanomissione vengano meno).",
+            "ref": "CRA Articolo 19(4) — Condizioni durante la responsabilità"
+          }
+        },
+        "report_exploited_vulnerabilities_to_manufacturer": {
+          "title": "Segnala le vulnerabilità al fabbricante",
+          "description": "Processo in vigore per informare il fabbricante (e le autorità ove richiesto) delle vulnerabilità sfruttate attivamente.",
+          "help": {
+            "title": "Segnalazione delle vulnerabilità al fabbricante",
+            "body": "Se vieni a conoscenza di una vulnerabilità in un prodotto che hai importato, informa il fabbricante senza indugio. Se presenta un rischio significativo di cibersicurezza, informa anche le pertinenti autorità di vigilanza del mercato. Conserva una registrazione di cosa hai segnalato e quando.",
+            "ref": "CRA Articolo 19(6) — Obblighi di segnalazione dell'importatore"
+          }
+        },
+        "cooperate_with_authorities": {
+          "title": "Cooperare con le autorità",
+          "description": "Fornire alle autorità di vigilanza del mercato tutte le informazioni e cooperare alle azioni correttive.",
+          "help": {
+            "title": "Cooperazione con le autorità",
+            "body": "Su richiesta motivata, fornisci alle autorità le informazioni e la documentazione necessarie per dimostrare la conformità e coopera a qualsiasi azione correttiva o di eliminazione del rischio per i prodotti che hai importato.",
+            "ref": "CRA Articolo 19(9) — Obblighi di cooperazione"
+          }
+        }
+      },
+      "distributor": {
+        "verify_ce_marking": {
+          "title": "Marcatura CE verificata",
+          "description": "Ha verificato che la marcatura CE sia apposta e accompagnata dalla documentazione richiesta.",
+          "help": {
+            "title": "Verifica della marcatura CE",
+            "body": "Prima di mettere a disposizione un prodotto, agisci con la dovuta diligenza e verifica che la marcatura CE sia presente. Se manca o ritieni che il prodotto non sia conforme, non distribuirlo finché la conformità non è accertata.",
+            "ref": "CRA Articolo 20 — Obblighi dei distributori"
+          }
+        },
+        "verify_importer_details": {
+          "title": "Dati dell'importatore presenti",
+          "description": "Ha verificato che l'identificazione dell'importatore o del fabbricante sia sul prodotto/confezione/documenti di accompagnamento.",
+          "help": {
+            "title": "Verifica dei dati dell'importatore/fabbricante",
+            "body": "Verifica che il fabbricante e, ove applicabile, l'importatore abbiano adempiuto ai propri obblighi di identificazione — che il loro nome e i dati di contatto compaiano sul prodotto, sulla confezione o nei documenti di accompagnamento.",
+            "ref": "CRA Articolo 20(2) — Verifica del distributore"
+          }
+        },
+        "verify_instructions_user_info": {
+          "title": "Istruzioni per l'utente presenti",
+          "description": "Le istruzioni e le informazioni per l'uso sono fornite in una lingua facilmente comprensibile dagli utenti.",
+          "help": {
+            "title": "Verifica delle istruzioni e delle informazioni per l'utente",
+            "body": "Verifica che il prodotto sia accompagnato dalle istruzioni e dalle informazioni per l'utente richieste dal CRA (incluso il periodo di supporto e come ricevere gli aggiornamenti di sicurezza), in una lingua facilmente comprensibile dagli utenti.",
+            "ref": "CRA Articolo 20(2) e Allegato II — Informazioni e istruzioni per l'utente"
+          }
+        },
+        "store_transport_without_impact": {
+          "title": "Stoccaggio/trasporto preserva la conformità",
+          "description": "Le condizioni di stoccaggio e trasporto non compromettono la conformità.",
+          "help": {
+            "title": "Stoccaggio e trasporto senza incidere sulla conformità",
+            "body": "Mentre il prodotto è sotto la tua responsabilità, assicurati che le condizioni di stoccaggio o trasporto non compromettano la sua conformità ai requisiti essenziali di cibersicurezza.",
+            "ref": "CRA Articolo 20(3) — Condizioni durante la responsabilità"
+          }
+        },
+        "report_exploited_vulnerabilities": {
+          "title": "Segnala le vulnerabilità sfruttate",
+          "description": "Processo per informare il fabbricante/importatore e le autorità quando viene a tua conoscenza una vulnerabilità sfruttata attivamente.",
+          "help": {
+            "title": "Segnalazione delle vulnerabilità sfruttate",
+            "body": "Se vieni a conoscenza di una vulnerabilità in un prodotto che distribuisci, informa il fabbricante senza indugio. Laddove il prodotto presenti un rischio significativo di cibersicurezza, notifica anche le pertinenti autorità di vigilanza del mercato.",
+            "ref": "CRA Articolo 20(5) — Obblighi di segnalazione del distributore"
+          }
+        },
+        "cooperate_with_authorities": {
+          "title": "Cooperare con le autorità",
+          "description": "Fornire alle autorità di vigilanza del mercato informazioni e assistere nelle azioni correttive.",
+          "help": {
+            "title": "Cooperazione con le autorità",
+            "body": "Su richiesta motivata, fornisci alle autorità le informazioni e la documentazione necessarie per dimostrare la conformità e coopera a qualsiasi azione per eliminare i rischi di cibersicurezza dei prodotti che hai messo a disposizione.",
+            "ref": "CRA Articolo 20(8) — Obblighi di cooperazione"
+          }
+        }
+      }
+    },
+    "toast": {
+      "saved": "Salvato",
+      "saveFailed": "Impossibile salvare"
+    }
+  }
+}

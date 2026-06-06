@@ -1,0 +1,117 @@
+{
+  "releases": {
+    "type": {
+      "security": "Sécurité",
+      "bugfix": "Correction de bug",
+      "feature": "Fonctionnalité",
+      "maintenance": "Maintenance"
+    },
+    "support": {
+      "title": "Période de support",
+      "description": "L'Annexe I Partie II du CRA vous impose de fournir des mises à jour de sécurité tout au long de la période de support du produit — cinq ans minimum.",
+      "startLabel": "Début du support",
+      "endLabel": "Fin du support",
+      "updateChannelLabel": "Canal de mise à jour",
+      "updateChannelPlaceholder": "ex. OTA, gestionnaire de paquets, portail de téléchargement",
+      "inSupport": "En support · {days}j restants",
+      "expiringSoon": "Expire dans {days}j",
+      "outOfSupport": "Hors support · il y a {days}j",
+      "tooltips": {
+        "start": {
+          "title": "Début de la période de support",
+          "body": "La date à partir de laquelle vous vous engagez à fournir des mises à jour de sécurité. Généralement identique à la date de lancement du produit ou de sa première mise sur le marché.",
+          "ref": "CRA Annexe I Partie II(8) — les fabricants doivent fournir des mises à jour de sécurité « pendant une durée proportionnelle à l'utilisation prévue du produit », et en tout état de cause pendant au moins 5 ans à compter de la mise sur le marché (Article 13)."
+        },
+        "end": {
+          "title": "Fin de la période de support",
+          "body": "La dernière date à laquelle vous livrerez des mises à jour de sécurité pour ce produit. Doit être au moins 5 ans après la date de début du support ; une durée plus longue est acceptable (et souvent attendue pour les appareils industriels ou médicaux).",
+          "ref": "CRA Article 13 — la période de support est un engagement contraignant déclaré aux utilisateurs finaux et mentionné sur la fiche d'information de cybersécurité destinée aux utilisateurs. Mettre fin au support avant la date déclarée constitue une violation du CRA."
+        },
+        "updateChannel": {
+          "title": "Canal de mise à jour",
+          "body": "Comment les mises à jour de sécurité parviennent aux utilisateurs finaux — Over-The-Air (OTA), gestionnaire de paquets (apt/npm), téléchargement via portail, remplacement manuel, etc. Les utilisateurs finaux ont besoin de cette information pour rester protégés.",
+          "ref": "CRA Annexe II(3) de la fiche d'information destinée aux utilisateurs finaux — la période de support déclarée est sans signification si les utilisateurs ne savent pas comment les mises à jour sont délivrées. Requis sur la fiche d'information de cybersécurité destinée aux utilisateurs finaux."
+        }
+      }
+    },
+    "kpi": {
+      "total": "Versions",
+      "security": "Sécurité",
+      "cvesFixed": "CVE corrigés",
+      "latest": "Dernière"
+    },
+    "list": {
+      "title": "Historique des versions",
+      "cvesFixed": "CVE corrigés",
+      "signedDigest": "Signature",
+      "delete": "Supprimer la version",
+      "confirmDelete": "Supprimer cette version ? Cette action est irréversible."
+    },
+    "empty": {
+      "title": "Aucune version enregistrée",
+      "description": "Publiez une version pour enregistrer les mises à jour de sécurité, les CVE corrigés et les condensés signés dans votre trace d'audit CRA."
+    },
+    "new": {
+      "cta": "Publier une version",
+      "title": "Publier une nouvelle version",
+      "description": "Enregistrez la version, la date et les CVE corrigés afin que votre trace d'audit démontre le respect de l'engagement de support.",
+      "versionLabel": "Version",
+      "releasedAtLabel": "Date de publication",
+      "typeLabel": "Type",
+      "cvesLabel": "CVE corrigés (séparés par des virgules ou des espaces)",
+      "cvesPlaceholder": "CVE-2024-0001, CVE-2024-0002",
+      "notesLabel": "Notes de version",
+      "notesPlaceholder": "Ce qui est inclus dans cette version…",
+      "digestLabel": "Condensé signé",
+      "digestPlaceholder": "SHA-256 ou identité de signature",
+      "cancel": "Annuler",
+      "create": "Publier",
+      "tooltips": {
+        "version": {
+          "title": "Version",
+          "body": "Identifiant de version semver ou interne (ex. 1.2.3, 2024-04-17-build42). Doit identifier de manière unique ce build spécifique — les utilisateurs et auditeurs s'en servent pour vérifier si un appareil donné est corrigé.",
+          "ref": "CRA Annexe II(2) — la documentation technique doit inclure des identifiants de version traçables depuis le produit jusqu'à cet enregistrement."
+        },
+        "releasedAt": {
+          "title": "Date de publication",
+          "body": "La date à laquelle vous avez rendu cette version généralement disponible aux utilisateurs finaux — pas la date de fusion dans la branche principale ni la fin du build. Utilisée pour mesurer l'exigence « sans retard injustifié » du CRA pour les mises à jour de sécurité.",
+          "ref": "CRA Article 13(8) — les mises à jour de sécurité doivent être mises à disposition « sans retard injustifié et gratuitement ». Cette date constitue l'horodatage vérifiable."
+        },
+        "type": {
+          "title": "Type de version",
+          "body": "Sécurité = au moins une vulnérabilité corrigée. Correction de bug = bugs non liés à la sécurité. Fonctionnalité = nouvelles fonctions. Maintenance = nettoyage interne, sans modification visible par l'utilisateur. « Sécurité » marque automatiquement la version comme mise à jour de sécurité dans le registre de preuves CRA.",
+          "ref": "CRA Article 13(8) — les mises à jour de sécurité ont des obligations distinctes (gratuites, sans retard injustifié, communiquées aux utilisateurs). Un étiquetage correct ici est ce qui rend ces obligations mesurables."
+        },
+        "cves": {
+          "title": "CVE corrigés",
+          "body": "Listez tous les CVE corrigés par cette version — séparés par des virgules ou des espaces. Lie au registre des vulnérabilités et boucle la boucle de la détection → triage → correction. Laisser vide est acceptable pour les versions non liées à la sécurité.",
+          "ref": "CRA Article 13(8) — les mises à jour de sécurité doivent traiter les vulnérabilités exploitables connues. Maintenir ce champ à jour constitue la preuve qu'un auditeur demandera."
+        },
+        "notes": {
+          "title": "Notes de version",
+          "body": "Résumé destiné aux clients. En langage clair, incluez les instructions de mise à jour et tout changement incompatible. Publié sur le portail de téléchargement et joint à la fiche d'information de cybersécurité destinée aux utilisateurs finaux.",
+          "ref": "CRA Annexe II(3) de la fiche d'information destinée aux utilisateurs finaux — les utilisateurs ont besoin d'informations suffisantes pour décider d'appliquer ou non la mise à jour."
+        },
+        "digest": {
+          "title": "Condensé signé",
+          "body": "Empreinte SHA-256 de l'artefact signé ou identité du signataire (ex. empreinte de clé GPG, identité Sigstore). Preuve d'intégrité permettant à un client de vérifier que le binaire téléchargé est bien celui que vous avez livré.",
+          "ref": "CRA Annexe I Partie I(3)(h) — les produits doivent inclure « la protection de l'intégrité des données stockées, transmises et traitées ». Un condensé de version signé est la manière courante d'en apporter la preuve pour les logiciels."
+        }
+      }
+    },
+    "toast": {
+      "saved": "Enregistré",
+      "saveFailed": "Impossible d'enregistrer",
+      "created": "Version publiée",
+      "createFailed": "Impossible de publier la version",
+      "deleted": "Version supprimée",
+      "deleteFailed": "Impossible de supprimer la version"
+    },
+    "dashboard": {
+      "title": "Fenêtre de support",
+      "expiringSoon": "expirant dans 90j",
+      "outOfSupport": "hors support",
+      "missing": "aucune date de support"
+    }
+  }
+}

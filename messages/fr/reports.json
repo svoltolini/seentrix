@@ -1,0 +1,79 @@
+{
+  "reports": {
+    "breadcrumb": "Rapports de vulnérabilités",
+    "title": "Boîte de réception de la divulgation coordonnée",
+    "subtitle": "Rapports de vulnérabilités entrants provenant de la page de sécurité publique. Triez, analysez et répondez sans perdre la trace d'audit.",
+    "status": {
+      "triage": "À trier",
+      "accepted": "Accepté",
+      "investigating": "En cours d'analyse",
+      "resolved": "Résolu",
+      "duplicate": "Doublon",
+      "spam": "Spam"
+    },
+    "kpi": {
+      "triage": "À trier",
+      "investigating": "En cours d'analyse",
+      "resolved": "Résolu",
+      "total": "Total"
+    },
+    "settings": {
+      "title": "Page de sécurité publique",
+      "description": "Publiez une URL publique permettant aux chercheurs de contacter votre équipe de sécurité et de soumettre des rapports. Fonctionne nativement avec les conventions security.txt.",
+      "enablePublic": "Publier publiquement",
+      "slugLabel": "Identifiant URL",
+      "contactLabel": "Adresse e-mail de contact sécurité",
+      "policyLabel": "Politique de divulgation",
+      "policyPlaceholder": "Comment vous traitez les rapports, votre engagement envers la divulgation coordonnée, déclaration de port sûr, etc.",
+      "openPublic": "Ouvrir la page publique ↗",
+      "downloadSecurityTxt": "security.txt ↓",
+      "saved": "Enregistré",
+      "saveFailed": "Impossible d'enregistrer",
+      "slugTaken": "Cet identifiant est déjà utilisé",
+      "tooltips": {
+        "slug": {
+          "title": "Identifiant URL",
+          "body": "Identifiant court pour l'URL de votre page de sécurité publique (lettres minuscules, chiffres, tirets). La page sera accessible à /security/<slug>. Choisissez quelque chose de court et mémorisable — les chercheurs tentent souvent /security/acme avant de chercher un security.txt.",
+          "ref": "CRA Article 13(4) — les fabricants doivent fournir un point de contact pour les questions de cybersécurité. Une URL stable et facilement trouvable satisfait cette obligation et sert également de lien Policy dans le fichier security.txt (RFC 9116)."
+        },
+        "contact": {
+          "title": "Adresse e-mail de contact sécurité",
+          "body": "Boîte aux lettres dédiée ou alias pour les rapports de vulnérabilités (ex. security@acme.com). Doit être surveillé pendant les heures ouvrables au minimum. Publié sur votre page de sécurité et intégré dans le champ Contact du fichier security.txt téléchargeable.",
+          "ref": "CRA Article 13(4) — le point de contact doit rester disponible tout au long de la période de support du produit et être en mesure de recevoir des rapports de vulnérabilités."
+        },
+        "policy": {
+          "title": "Politique de divulgation",
+          "body": "Déclaration en langage clair décrivant comment vous traitez les rapports entrants : délais de réponse, périmètre, port sûr légal pour les chercheurs de bonne foi, et modalités de coordination de la divulgation. Publiée telle quelle sur la page publique — définissez les attentes avant qu'un chercheur soumette un rapport.",
+          "ref": "CRA Annexe I Partie II(1) — les fabricants doivent disposer d'une politique de divulgation coordonnée des vulnérabilités. Ce champ est l'endroit où vous la publiez."
+        },
+        "enablePublic": {
+          "title": "Publier publiquement",
+          "body": "Interrupteur principal — lorsqu'il est activé, la page /security/<slug> est accessible par toute personne sur Internet et accepte les soumissions anonymes. Lorsqu'il est désactivé, la page renvoie une erreur 404 et l'accueil est fermé. Désactivez pendant la configuration, activez une fois votre processus de triage prêt.",
+          "ref": "CRA Annexe I Partie II(1) + Article 11 — la politique CVD et l'accueil doivent être opérationnels avant la mise sur le marché du produit. Laisser cette option désactivée après le lancement est non conforme."
+        }
+      }
+    },
+    "list": {
+      "title": "Rapports entrants"
+    },
+    "empty": {
+      "title": "Aucun rapport pour l'instant",
+      "description": "Lorsqu'une personne soumet une vulnérabilité via votre page publique, elle apparaîtra ici pour être triée.",
+      "noProductTitle": "Ajoutez d'abord un produit",
+      "noProductDescription": "Les rapports de vulnérabilités sont associés à vos produits. Ajoutez votre premier produit afin que les chercheurs et votre équipe aient quelque chose à signaler.",
+      "noProductCta": "Ajouter votre premier produit"
+    },
+    "row": {
+      "anonymous": "Anonyme",
+      "productLabel": "Produit concerné",
+      "triageNotes": "Notes de triage",
+      "setStatus": "Définir le statut",
+      "notesLabel": "Notes internes",
+      "notesPlaceholder": "Ce que vous avez vérifié, ce que vous avez trouvé, les prochaines étapes. Non visible par le rapporteur."
+    },
+    "toast": {
+      "updated": "Rapport mis à jour",
+      "updateFailed": "Impossible de mettre à jour le rapport"
+    }
+  }
+}

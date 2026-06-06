@@ -1,0 +1,93 @@
+{
+  "vulnerabilities": {
+    "title": "Vulnérabilités",
+    "status": {
+      "open": "Ouverte",
+      "in_progress": "En cours",
+      "resolved": "Résolue",
+      "accepted": "Acceptée"
+    },
+    "severity": {
+      "critical": "Critique",
+      "high": "Élevée",
+      "medium": "Moyenne",
+      "low": "Faible"
+    },
+    "resolution": {
+      "fix": "Correction",
+      "mitigation": "Atténuation",
+      "false_positive": "Faux positif",
+      "wont_fix": "Ne sera pas corrigé"
+    },
+    "kpi": {
+      "total": "Total",
+      "open": "Ouvertes",
+      "critical": "Critiques ouvertes",
+      "kev": "KEV",
+      "exploited": "Activement exploitées"
+    },
+    "filter": {
+      "searchPlaceholder": "Rechercher un CVE ou un composant",
+      "status": "Statut",
+      "severity": "Sévérité",
+      "kevOnly": "KEV uniquement",
+      "exploitedOnly": "Exploitées",
+      "anyAssignee": "Tout responsable",
+      "unassigned": "Non assignée",
+      "byMember": "Par membre",
+      "assignee": "Responsable",
+      "clearAll": "Tout effacer",
+      "activeFilters": "{count, plural, one {# filtre} other {# filtres}}"
+    },
+    "bulk": {
+      "selected": "{count, plural, one {# sélectionnée} other {# sélectionnées}}",
+      "changeStatus": "Modifier le statut",
+      "assign": "Assigner",
+      "unassign": "Désassigner",
+      "clear": "Effacer"
+    },
+    "table": {
+      "cve": "CVE",
+      "component": "Composant",
+      "age": "Ancienneté",
+      "assignee": "Responsable",
+      "status": "Statut",
+      "selectAll": "Tout sélectionner",
+      "selectRow": "Sélectionner {cve}"
+    },
+    "empty": {
+      "title": "Aucune vulnérabilité pour l'instant",
+      "description": "Téléversez et analysez un SBOM pour faire remonter les CVE. Les résultats apparaîtront ici pour le triage.",
+      "filtered": "Aucune vulnérabilité ne correspond à ces filtres.",
+      "clearFilters": "Effacer les filtres"
+    },
+    "row": {
+      "actively_exploited": "Exploitée",
+      "daysOld": "{days}j",
+      "unassign": "Désassigner",
+      "assign": "Assigner",
+      "unassigned": "Non assignée",
+      "more": "Plus d'actions",
+      "markExploited": "Marquer comme activement exploitée",
+      "unmarkExploited": "Retirer le marquage d'exploitation"
+    },
+    "modal": {
+      "resolveTitle": "{count, plural, one {Résoudre la vulnérabilité} other {Résoudre # vulnérabilités}}",
+      "acceptTitle": "{count, plural, one {Accepter la vulnérabilité} other {Accepter # vulnérabilités}}",
+      "resolveDescription": "Documentez comment cela a été résolu. Cette information est consignée dans la trace d'audit pour vos dossiers CRA.",
+      "acceptDescription": "Justifiez pourquoi vous acceptez ce risque plutôt que de le corriger. Cette information est consignée dans la trace d'audit pour vos dossiers CRA.",
+      "cancel": "Annuler",
+      "resolutionTypeLabel": "Type de résolution",
+      "notesLabel": "Notes",
+      "notesPlaceholder": "Décrivez la correction, l'atténuation ou la justification pour accepter le risque."
+    },
+    "toast": {
+      "updateFailed": "Impossible d'appliquer la modification",
+      "statusUpdated": "Statut mis à jour",
+      "bulkUpdated": "{count} vulnérabilités mises à jour",
+      "assignmentUpdated": "Assignation mise à jour",
+      "markedExploited": "Marquée comme activement exploitée",
+      "unmarkedExploited": "Marquage d'exploitation retiré"
+    }
+  }
+}

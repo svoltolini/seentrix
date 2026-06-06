@@ -1,0 +1,42 @@
+{
+ "app": {
+  "name": "Seentrix",
+  "tagline": "Piattaforma di conformità CRA per fabbricanti"
+ },
+ "nav": {
+  "dashboard": "Dashboard",
+  "products": "Prodotti",
+  "incidents": "Incidenti",
+  "reports": "Segnalazioni",
+  "settings": "Impostazioni",
+  "logout": "Esci",
+  "myAccount": "Il mio account",
+  "help": "Assistenza",
+  "glossary": "Glossario",
+  "academy": "Academy",
+  "error": "Qualcosa è andato storto",
+  "errorDescription": "Si è verificato un errore imprevisto. Riprova.",
+  "tryAgain": "Riprova"
+ },
+ "sidebar": {
+  "overview": "Area di lavoro",
+  "compliance": "Conformità",
+  "management": "Gestione",
+  "helpTitle": "Centro assistenza",
+  "helpBody": "Dubbi sulla conformità CRA? Chiedi all'AI Copilot di Seentrix.",
+  "helpCta": "Consulta ora"
+ },
+ "topbar": {
+  "searchPlaceholder": "Cerca prodotti…",
+  "searching": "Ricerca in corso…",
+  "noResults": "Nessun prodotto corrisponde alla tua ricerca.",
+  "newProduct": "Nuovo prodotto",
+  "notifications": "Notifiche",
+  "notificationsTitle": "Notifiche",
+  "notificationsEmpty": "Sei in pari con tutto.",
+  "notificationsLoading": "Caricamento…",
+  "notificationsViewAll": "Visualizza tutta l'attività",
+  "addProfilePicture": "Aggiungi un'immagine del profilo",
+  "language": "Lingua"
+ }
+}

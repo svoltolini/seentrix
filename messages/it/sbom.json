@@ -1,0 +1,80 @@
+{
+  "sbom": {
+    "title": "Distinta base del software",
+    "subtitle": "Carica e gestisci SBOM per questo prodotto.",
+    "upload": {
+      "title": "Carica SBOM",
+      "dropzone": "Trascina e rilascia il tuo file SBOM qui",
+      "dropzoneActive": "Rilascia il tuo file qui",
+      "browse": "o sfoglia i file",
+      "formats": "Supportati: CycloneDX (JSON/XML), SPDX (JSON)",
+      "uploading": "Caricamento e analisi in corso…",
+      "success": "SBOM caricato con successo.",
+      "errors": {
+        "noFile": "Seleziona un file.",
+        "invalidFormat": "Formato SBOM non riconosciuto. Supportati: CycloneDX JSON/XML, SPDX JSON.",
+        "tooLarge": "Il file è troppo grande. La dimensione massima è 50 MB.",
+        "parseFailed": "Impossibile analizzare il file SBOM. Verifica il formato.",
+        "uploadFailed": "Caricamento non riuscito. Riprova.",
+        "notAuthenticated": "Devi effettuare l'accesso.",
+        "generic": "Qualcosa è andato storto. Riprova."
+      }
+    },
+    "list": {
+      "empty": "Nessun SBOM caricato ancora",
+      "emptyDescription": "Carica il tuo primo SBOM per scansionare le vulnerabilità. Supportiamo i formati CycloneDX e SPDX.",
+      "deleteConfirm": "Eliminare questo SBOM?",
+      "deleteDescription": "Questa operazione rimuoverà definitivamente l'SBOM, tutti i dati dei componenti e i risultati della scansione delle vulnerabilità. Questa azione non può essere annullata.",
+      "deleteCancel": "Annulla",
+      "deleteSubmit": "Elimina",
+      "deleting": "Eliminazione in corso…",
+      "archived": "Archiviato",
+      "archive": "Archivia",
+      "restore": "Ripristina"
+    },
+    "formats": {
+      "cyclonedx": "CycloneDX",
+      "spdx": "SPDX"
+    },
+    "components": {
+      "title": "Componenti",
+      "name": "Nome",
+      "version": "Versione",
+      "license": "Licenza",
+      "supplier": "Fornitore",
+      "purl": "PURL",
+      "vulns": "Vulnerabilità",
+      "noVersion": "—",
+      "noLicense": "—",
+      "noSupplier": "—",
+      "showAll": "Mostra tutti i {count} componenti",
+      "showLess": "Mostra meno",
+      "loading": "Caricamento componenti…",
+      "sortBy": "Ordina per",
+      "sortName": "Nome",
+      "sortVulns": "Vulnerabilità"
+    },
+    "scan": {
+      "scanButton": "Scansiona le vulnerabilità",
+      "rescan": "Ripeti la scansione",
+      "scanning": "Scansione in corso…",
+      "scanningDescription": "Query in corso su OSV.dev e catalogo CISA KEV…",
+      "lastScanned": "Scansionato il {date}",
+      "vuln": "vulnerabilità",
+      "vulns": "vulnerabilità",
+      "noVulns": "Nessuna vulnerabilità",
+      "noVulnsForComp": "Nessuna vulnerabilità trovata per questo componente.",
+      "loadingVulns": "Caricamento vulnerabilità…",
+      "totalLabel": "totale",
+      "kevLabel": "CISA KEV",
+      "noDescription": "Nessuna descrizione disponibile.",
+      "viewDetails": "Vedi dettagli →",
+      "severity": {
+        "critical": "Critica",
+        "high": "Alta",
+        "medium": "Media",
+        "low": "Bassa"
+      }
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+ "app": {
+  "name": "Seentrix",
+  "tagline": "CRA-Compliance-Plattform für Hersteller"
+ },
+ "nav": {
+  "dashboard": "Dashboard",
+  "products": "Produkte",
+  "incidents": "Sicherheitsvorfälle",
+  "reports": "Schwachstellenmeldungen",
+  "settings": "Einstellungen",
+  "logout": "Abmelden",
+  "myAccount": "Mein Konto",
+  "help": "Hilfe",
+  "glossary": "Glossar",
+  "academy": "Academy",
+  "error": "Es ist ein Fehler aufgetreten",
+  "errorDescription": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+  "tryAgain": "Erneut versuchen"
+ },
+ "sidebar": {
+  "overview": "Arbeitsbereich",
+  "compliance": "Compliance",
+  "management": "Verwaltung",
+  "helpTitle": "Hilfe-Center",
+  "helpBody": "Fragen zur CRA-Compliance? Fragen Sie den Seentrix KI-Copiloten.",
+  "helpCta": "Jetzt konsultieren"
+ },
+ "topbar": {
+  "searchPlaceholder": "Produkte suchen…",
+  "searching": "Suche läuft…",
+  "noResults": "Keine Produkte entsprechen Ihrer Suche.",
+  "newProduct": "Neues Produkt",
+  "notifications": "Benachrichtigungen",
+  "notificationsTitle": "Benachrichtigungen",
+  "notificationsEmpty": "Alles erledigt.",
+  "notificationsLoading": "Wird geladen…",
+  "notificationsViewAll": "Alle Aktivitäten anzeigen",
+  "addProfilePicture": "Profilbild hinzufügen",
+  "language": "Sprache"
+ }
+}
