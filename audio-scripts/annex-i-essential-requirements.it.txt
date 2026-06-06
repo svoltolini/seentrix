@@ -1,0 +1,9 @@
+Questa lezione riguarda l'Allegato I del CRA: i requisiti essenziali di cibersicurezza.
+
+L'Allegato I è suddiviso in due parti, entrambe applicabili a ogni prodotto con elementi digitali che immettiamo sul mercato dell'UE. L'assenza di una delle due invalida la dichiarazione di conformità.
+
+La Parte I definisce tredici proprietà di cibersicurezza che il prodotto stesso deve presentare al momento dell'immissione sul mercato. Queste si raggruppano in cinque temi: nessuna vulnerabilità sfruttabile nota all'immissione sul mercato, il che richiede una scansione SBOM attiva; sicuro per impostazione predefinita, ovvero una configurazione fornita già sicura; identità e controllo degli accessi con autenticazione e principio del privilegio minimo; protezione dei dati con riservatezza e integrità; infine, resilienza e superficie di attacco minimizzata. Applicare le norme armonizzate della serie EN 18031 conferisce una presunzione di conformità legale: la conformità è presunta finché un'autorità di vigilanza del mercato non dimostra il contrario.
+
+La Parte II impone il lato operativo con otto obblighi di processo che valgono per l'intero periodo di supporto. Includono la scansione SBOM attiva, la correzione delle vulnerabilità tramite aggiornamenti di sicurezza senza ritardi indebiti, un punto di contatto pubblico CVD con politica di divulgazione e la notifica degli utenti interessati. La Parte I è un controllo unico al lancio. La Parte II è continua. I revisori verificano entrambe: un prodotto che soddisfaceva la Parte I il primo giorno ma ha smesso di distribuire aggiornamenti tre anni dopo è in violazione.
+
+In Seentrix la lista di controllo rispecchia direttamente queste due parti e ci aiuta a documentare ogni prova singolarmente. Entriamo nel dettaglio.

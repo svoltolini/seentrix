@@ -1,0 +1,9 @@
+Dans cette leçon, nous abordons les fondamentaux de la SBOM — ce qu'est une nomenclature logicielle, pourquoi l'Annexe I du CRA en exige une, comment en générer une et comment Seentrix la transforme en renseignement sur les vulnérabilités.
+
+Une SBOM est un inventaire complet et lisible par machine de toutes les dépendances d'un produit — directes et transitives — avec les numéros de version et les licences. L'Annexe I Partie I du CRA impose d'identifier et de documenter les composants pertinents ; une SBOM est le moyen pratique de satisfaire cette exigence. Sans SBOM, le balayage des vulnérabilités est tout simplement impossible — nous ne savons littéralement pas ce que contient notre produit. Avec une SBOM, chaque nouveau CVE publié contre nos composants apparaît automatiquement dans le système.
+
+Pour le format, deux options s'offrent à nous : CycloneDX de l'OWASP, en JSON ou XML, est performant pour les résultats de sécurité et très répandu dans les outils de sécurité. SPDX de la Linux Foundation est standardisé ISO/IEC 5962 et dispose de la représentation des licences la plus complète — un bon choix par défaut pour les entreprises. Seentrix accepte les deux nativement. Choisissez un format par produit et tenez-vous y.
+
+Les SBOM doivent être générées, pas rédigées à la main. Les outils courants sont Syft d'Anchore pour les conteneurs et les systèmes de fichiers, cdxgen pour les systèmes de build polyglottes, la commande native npm sbom depuis npm v10, et docker sbom pour les images Docker. Le fichier généré est déposé dans l'onglet SBOM de Seentrix. Une seule SBOM par produit est active à la fois — c'est elle qui alimente le scanner et la documentation technique de la déclaration de conformité.
+
+Entrons maintenant dans les détails.

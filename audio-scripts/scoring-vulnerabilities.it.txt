@@ -1,0 +1,9 @@
+In questa lezione conosciamo tre segnali complementari che ci aiutano a priorizzare le vulnerabilità: CVSS, EPSS e KEV. Nessuno dei tre sostituisce un giudizio contestuale — ma insieme formano una base solida.
+
+CVSS valuta la gravità intrinseca di una vulnerabilità su una scala da zero a dieci. È la lingua franca di tutti i feed di vulnerabilità, ma è una proprietà statica: un CVSS-9,8 «critico» in un componente disabilitato rimane comunque un rischio basso nel nostro contesto. CVSS v4 è la specifica attuale; molti feed pubblicano ancora punteggi v3. Il CVSS fornisce l'ipotesi iniziale, non la risposta definitiva.
+
+EPSS integra il CVSS aggiungendo la dimensione della probabilità. È una stima giornaliera tra zero e uno che indica se un CVE verrà sfruttato nei prossimi trenta giorni. La maggior parte dei CVE è al di sotto di 0,01 e non verrà mai sfruttata. Quando EPSS supera 0,5 e il CVSS è anch'esso elevato, questo significa in genere: correggere questa settimana.
+
+KEV è il segnale più forte. Il catalogo Known Exploited Vulnerabilities della CISA elenca i CVE sfruttati attivamente in the wild. Una voce nel KEV fa salire una vulnerabilità in cima alla coda di triage, indipendentemente dal CVSS o dall'EPSS. In Seentrix, le voci incluse nel KEV sono contrassegnate da un punto rosso nella tabella.
+
+L'arte sta nel leggere tutti e tre i segnali in modo combinato. Iniziamo.

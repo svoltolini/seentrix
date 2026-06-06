@@ -1,0 +1,9 @@
+In dieser Lektion geht es um CRA 101 — Anwendungsbereich und Zeitplan des Cyber Resilience Act.
+
+Der Cyber Resilience Act, Verordnung EU 2024/2847, ist ein EU-weites Gesetz, das grundlegende Cybersicherheitsanforderungen für alle Produkte mit digitalen Elementen festlegt, die auf dem EU-Markt bereitgestellt werden. Liefern wir Hardware, Software, Firmware oder ein IoT-Gerät an jemanden in der EU, gilt der CRA — ohne Ausnahme. Anders als frühere EU-Richtlinien ist er eine direkt verbindliche Verordnung, die den gesamten Produktlebenszyklus abdeckt, nicht nur den Moment des Verkaufs.
+
+Die Verordnung unterscheidet vier Wirtschaftsakteursrollen: Hersteller, Bevollmächtigter, Einführer und Händler. Als Hersteller — also wenn wir ein Produkt unter eigenem Namen auf den EU-Markt bringen — tragen wir die umfangreichsten Pflichten. In Seentrix lässt sich die Rolle unter Einstellungen direkt festlegen.
+
+Drei Termine sind entscheidend. Am 11. Juni 2026 müssen notifizierte Stellen benannt sein, sofern unser Konformitätsverfahren eine erfordert. Ab dem 11. September 2026 gilt die Artikel-14-Meldepflicht: bei einer aktiv ausgenutzten Schwachstelle sind wir verpflichtet, innerhalb von 24 Stunden, 72 Stunden und 14 Tagen zu melden. Und ab dem 11. Dezember 2027 müssen alle Produkte vollständig CRA-konform sein — mit Konformitätserklärung, CE-Kennzeichnung und veröffentlichter Offenlegungsrichtlinie. Bei Verstößen drohen Bußgelder bis zu 15 Millionen Euro oder 2,5 Prozent des weltweiten Jahresumsatzes.
+
+Seentrix unterstützt dabei, diesen Weg systematisch zu gehen: von der Produktklassifizierung über SBOM-Erzeugung und Schwachstellenverfolgung bis hin zur Konformitätserklärung und dem Artikel-14-Meldezähler. Legen wir los.

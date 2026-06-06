@@ -1,0 +1,9 @@
+In dieser Lektion schauen wir uns die Wirtschaftsakteursrollen unter dem CRA an.
+
+Der CRA unterscheidet vier Rollen: Hersteller, Bevollmächtigter, Einführer und Händler. Die Wahl der richtigen Rolle ist nicht kosmetisch — sie bestimmt direkt, welche Pflichten wir haben. Falsche Rolle bedeutet falsche Checkliste, und das bedeutet falsche Nachweise im Audit.
+
+Als Hersteller bringen wir ein Produkt unter eigenem Namen oder eigener Marke auf den EU-Markt. Damit verantworten wir das volle Pflichtensatz: Anhang I, Anhang V, Artikel 13 und Artikel 14. Die meisten Seentrix-Nutzer sind in dieser Rolle. Ein Bevollmächtigter ist eine in der EU ansässige Partei, die schriftlich durch einen Nicht-EU-Hersteller mandatiert wird, die technische Dokumentation hält und gegenüber der Marktüberwachung agiert. Artikel 18 verlangt dies zwingend bei jedem Hersteller außerhalb der EU. Der Einführer bringt Produkte von Nicht-EU-Herstellern auf den EU-Markt und prüft Konformitätserklärung, CE-Kennzeichnung und gültigen Bevollmächtigten. Er erstellt keine eigene Konformitätserklärung, haftet aber bei nicht-konformen Produkten. Der Händler hat das leichteste Pflichtenset, darf aber offensichtlich nicht-konforme Produkte nicht verkaufen.
+
+Eine besonders wichtige Regel ist die der wesentlichen Modifikation: Wer ein Produkt durch neue Firmware, Umbenennung oder Änderung seiner Cybersicherheitseigenschaften wesentlich verändert, wird im Sinne des CRA selbst zum Hersteller — mit dem vollen Pflichtensatz. Ein OEM-Produkt zu white-labeln und eigene Firmware zu flashen ist eine wesentliche Modifikation. Es mit einer Beilage in eine Box zu packen hingegen nicht.
+
+In Seentrix legt die Einstellung unter Einstellungen fest, welche Aufgaben die Checkliste enthält. Legen wir los.

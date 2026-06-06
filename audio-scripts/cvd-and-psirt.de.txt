@@ -1,0 +1,9 @@
+In dieser Lektion geht es um koordinierte Offenlegung und PSIRT — den Betrieb des öffentlichen Sicherheits-Intakes, den Umgang mit Sicherheitsforschern und die Veröffentlichung von Advisories, die Betreiberseite von CRA Anhang I Teil II.
+
+Coordinated Vulnerability Disclosure, kurz CVD, ist eine öffentliche Zusage: Wer bei uns einen Sicherheitsfund macht, weiß, wie er ihn melden kann, was wir dann tun und welchen rechtlichen Safe-Harbour er dabei genießt. Der CRA verlangt diese Richtlinie nach Anhang I Teil II Absatz 1. Jenseits der Compliance hat eine klare CVD-Richtlinie auch einen praktischen Effekt: Sie prägt die Qualität der Meldungen, die wir erhalten. Ohne Richtlinie meldet kein seriöser Forscher.
+
+Eine gute CVD-Richtlinie enthält fünf Kernelemente. Erstens den Scope — welche Produkte, Versionen und Domains erfasst sind. Zweitens den Intake-Kanal, also wo gemeldet wird, bei uns die öffentliche PSIRT-URL. Drittens klare Reaktions-SLAs: fünf Werktage bis zur Bestätigung, dreißig Tage bis zum Triage-Urteil, neunzig Tage bis zum Fix. Viertens eine Safe-Harbour-Erklärung, die gutwillig arbeitende Forscher vor zivil- und strafrechtlicher Verfolgung schützt. Fünftens Credit und koordinierte Offenlegung — wir nennen Forscher im Advisory und stimmen den Veröffentlichungszeitplan gemeinsam ab.
+
+Das PSIRT ist das Team, das diese Richtlinie in die Praxis umsetzt: Intake annehmen, triagieren, mit Engineering koordinieren, Advisories veröffentlichen. Bei kleinen Unternehmen kann das eine einzige Person mit Doppelrolle sein — wichtig ist, dass die Funktion existiert und berechenbar reagiert. In Seentrix ist der Reports-Tab die operative Oberfläche für all das.
+
+Jetzt tauchen wir in die Details ein.

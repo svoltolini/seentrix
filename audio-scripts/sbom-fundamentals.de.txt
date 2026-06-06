@@ -1,0 +1,9 @@
+In dieser Lektion geht es um SBOM-Grundlagen — was eine Software Bill of Materials ist, warum der CRA eine verlangt, wie man sie erzeugt und wie Seentrix daraus Schwachstellen-Intelligenz macht.
+
+Eine SBOM ist ein maschinenlesbares vollständiges Inventar aller Abhängigkeiten eines Produkts — direkte und transitive — mit Versionsnummern und Lizenzen. Anhang I Teil I des CRA verlangt, relevante Komponenten zu identifizieren und zu dokumentieren; eine SBOM ist der praktische Weg, diesen Anforderung zu erfüllen. Ohne SBOM ist Schwachstellen-Scanning schlicht unmöglich — wir wissen buchstäblich nicht, was im Produkt steckt. Mit einer SBOM erscheint jede neu veröffentlichte CVE gegen unsere Komponenten automatisch im System.
+
+Für das Format stehen zwei Optionen zur Wahl: CycloneDX vom OWASP, in JSON oder XML, ist stark bei Sicherheits-Findings und in Security-Tools weit verbreitet. SPDX von der Linux Foundation ist ISO/IEC 5962 standardisiert und hat die stärkste Lizenzdarstellung — ein guter Enterprise-Default. Seentrix versteht beide nativ. Wählt ein Format pro Produkt und bleibt dabei.
+
+SBOMs sollte man generieren, nicht von Hand schreiben. Gängige Tools sind Syft von Anchore für Container und Dateisysteme, cdxgen für polyglotte Build-Systeme, der native npm-sbom-Befehl seit npm v10 und docker sbom für Docker-Images. Die erzeugte Datei lädt man im SBOM-Tab in Seentrix hoch. Nur eine SBOM pro Produkt ist gleichzeitig aktiv — sie ist die Quelle für den Scanner und die technische Dokumentation der Konformitätserklärung.
+
+Tauchen wir jetzt tiefer ein.

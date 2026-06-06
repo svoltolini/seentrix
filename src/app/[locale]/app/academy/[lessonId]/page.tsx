@@ -32,7 +32,7 @@ export default async function LessonPage({
   const locale = (await getLocale()) as LocaleId;
   const content = getLessonContent(lesson, locale);
   const t = await getTranslations("academy.lesson");
-  const audio = getLessonAudio(lesson.id);
+  const audio = getLessonAudio(lesson.id, locale);
 
   const supabase = await createClient();
   const {

@@ -1,0 +1,9 @@
+In dieser Lektion geht es um die Konformitätserklärung — das unterzeichnete Rechtsdokument, mit dem wir ein CE-gekennzeichnetes Produkt auf den EU-Markt bringen.
+
+Die Konformitätserklärung, kurz DoC, ist unsere eigene Rechtsaussage, dass das Produkt alle einschlägigen EU-Verordnungen erfüllt — den CRA und alles andere, was zutrifft. Kein Zertifikat, keine Behörde stellt sie uns aus. Wir stellen sie selbst aus, wir unterschreiben sie, und wir bewahren sie zehn Jahre auf. Wichtig: Die DoC muss vor dem ersten Inverkehrbringen existieren. Ein einziges Gerät ohne gültige DoC auszuliefern ist ein Verstoß, auch wenn die Unterlagen später nachgereicht werden.
+
+Anhang V des CRA listet sieben Pflichtfelder, die alle ausgefüllt sein müssen, sonst ist die DoC ungültig. Dazu gehören Herstellername und Adresse, Produktname und Seriennummer, eine Erklärung der alleinigen Verantwortung, die angewandten harmonisierten Normen der EN-18031-Serie, die Konformitätsroute, der Unterzeichner sowie Ort und Datum. Seentrix erzeugt die DoC-PDF automatisch aus diesen Feldern. Fehlt eines, bleibt der Button „Erklärung ausstellen" deaktiviert.
+
+Eine DoC ist an eine bestimmte Produktversion gebunden. Eine neue Hardware-Revision, eine wesentliche Firmware-Änderung, ein Wechsel der Konformitätsroute oder ein Wechsel der notifizierten Stelle erfordern eine neue DoC. Reine Sicherheitsupdates hingegen nicht. Die Zehnjahresfrist zur Aufbewahrung beginnt ab dem letzten verkauften Gerät, nicht ab dem Ausstellungsdatum.
+
+Tauchen wir jetzt tiefer in die Details ein.

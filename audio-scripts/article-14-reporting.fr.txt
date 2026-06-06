@@ -1,0 +1,9 @@
+Dans cette leçon, nous abordons l'Article 14 et les obligations de notification d'incident — le chronomètre en trois étapes qui démarre dès que nous avons connaissance d'une vulnérabilité activement exploitée ou d'un incident grave. Manquer une fenêtre expose à des amendes se chiffrant en millions d'euros.
+
+L'Article 14 est déclenché dès le moment où nous prenons connaissance — soit d'une vulnérabilité activement exploitée, par exemple une entrée KEV ou un code d'exploitation armé, soit d'un incident grave affectant la sécurité du produit. « Prendre connaissance » est un critère factuel : le chronomètre démarre au premier signal interne crédible, et non lorsque le comité de révision des incidents rend une décision formelle. Dans Seentrix, l'action « Incidents → Nouvel incident » enregistre ce moment dans la piste d'audit.
+
+Les trois fenêtres sont clairement structurées. Dans les vingt-quatre premières heures, nous déposons une notification d'alerte précoce — courte, succincte, nommant l'incident, mentionnant tout soupçon d'activité malveillante et les États membres UE concernés. Dans les soixante-douze heures suit le rapport d'incident : évaluation de la gravité, indicateurs de compromission, produits et utilisateurs affectés, mesures d'atténuation en cours. Après quatorze jours vient le rapport final avec l'analyse des causes profondes, les mesures correctives prises et prévues, le risque résiduel et la communication aux utilisateurs. Les trois rapports sont déposés via la plateforme de notification unique d'ENISA. Seentrix affiche des anneaux de décompte pour que l'équipe voie le temps restant à tout moment.
+
+À ne pas oublier : l'Article 14(6) nous impose également d'informer les utilisateurs concernés sans retard injustifié et de leur fournir des conseils d'atténuation. C'est le manquement le plus fréquemment relevé lors des audits post-incident.
+
+Entrons maintenant dans les détails.

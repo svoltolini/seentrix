@@ -1,0 +1,9 @@
+Dans cette leçon, nous abordons la déclaration de conformité — le document juridique signé qui nous permet de mettre un produit marqué CE sur le marché de l'Union européenne.
+
+La déclaration de conformité, ou DoC, est notre affirmation juridique signée que le produit satisfait à toutes les réglementations UE applicables — le CRA et tout ce qui concerne le produit. Ce n'est pas un certificat délivré par une autorité. C'est nous qui l'émettons, nous qui la signons et nous qui la conservons pendant dix ans. Point essentiel : la DoC doit exister avant que le produit soit mis sur le marché. Livrer une seule unité sans DoC valide constitue une infraction, même si les documents sont fournis ultérieurement.
+
+L'Annexe V du CRA énumère sept champs obligatoires dont l'omission rend la DoC invalide. Ces champs comprennent le nom et l'adresse du fabricant, le nom et le numéro de série du produit, une déclaration de responsabilité exclusive, les normes harmonisées de la série EN 18031 appliquées, la procédure de conformité, le signataire, ainsi que le lieu et la date. Seentrix génère le PDF de la DoC à partir de ces champs automatiquement. Si l'un d'eux est manquant, le bouton « Émettre la déclaration » reste désactivé.
+
+Une DoC est liée à une version de produit spécifique. Une nouvelle révision matérielle, une mise à jour firmware substantielle, un changement de procédure de conformité ou un changement d'organisme notifié nécessitent une nouvelle DoC. Les mises à jour de sécurité pures, elles, n'en nécessitent pas. La période de conservation de dix ans court à compter de la dernière unité mise sur le marché, et non à compter de la date d'émission.
+
+Entrons maintenant dans les détails.

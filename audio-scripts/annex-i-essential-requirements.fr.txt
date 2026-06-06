@@ -1,0 +1,9 @@
+Cette leçon porte sur l'Annexe I du CRA : les exigences essentielles de cybersécurité.
+
+L'Annexe I est divisée en deux parties, toutes deux applicables à chaque produit comportant des éléments numériques que nous mettons sur le marché de l'UE. L'absence de l'une ou de l'autre invalide la déclaration de conformité.
+
+La Partie I définit treize propriétés de cybersécurité que le produit lui-même doit présenter au moment de la mise sur le marché. Ces propriétés se regroupent en cinq thèmes : aucune vulnérabilité exploitable connue à la mise sur le marché, ce qui suppose un scan SBOM actif ; sécurisé par défaut, c'est-à-dire une configuration livrée sûre ; identité et contrôle d'accès avec authentification et principe de moindre privilège ; protection des données incluant confidentialité et intégrité ; enfin, résilience et surface d'attaque minimisée. Appliquer les normes harmonisées de la série EN 18031 confère une présomption de conformité légale : la conformité est présumée jusqu'à preuve contraire par une autorité de surveillance du marché.
+
+La Partie II impose le volet opérationnel avec huit obligations de processus qui courent tout au long de la période de support. Cela comprend la surveillance active SBOM, la correction des vulnérabilités par des mises à jour de sécurité sans retard injustifié, un point de contact public CVD assorti d'une politique de divulgation, et la notification des utilisateurs concernés. La Partie I est un contrôle unique au lancement. La Partie II est continue. Les auditeurs vérifient les deux — un produit qui avait satisfait la Partie I au premier jour mais a cessé de livrer des mises à jour trois ans plus tard est en infraction.
+
+Dans Seentrix, la liste de contrôle reflète directement ces deux parties et nous aide à documenter chaque preuve individuellement. Entrons dans le vif du sujet.

@@ -1,0 +1,9 @@
+In questa lezione tratteremo la divulgazione coordinata delle vulnerabilità e il PSIRT — la gestione dell'intake pubblico di sicurezza, le relazioni con i ricercatori e la pubblicazione degli avvisi, la prospettiva dell'operatore rispetto all'Allegato I Parte II del CRA.
+
+La Coordinated Vulnerability Disclosure, o CVD, è un impegno pubblico: chiunque scopra un problema di sicurezza da noi sa come segnalarlo, cosa faremo di conseguenza e quale protezione legale otterrà in cambio. Il CRA impone questa politica ai sensi dell'Allegato I Parte II(1). Al di là della conformità, una politica CVD chiara ha anche un effetto pratico: influisce sulla qualità delle segnalazioni che riceviamo. Senza una politica, nessun ricercatore serio ci contatterà.
+
+Una buona politica CVD contiene cinque elementi fondamentali. In primo luogo, il perimetro — quali prodotti, versioni e domini sono coperti. In secondo luogo, il canale di intake, ovvero dove inviare le segnalazioni, nel nostro caso l'URL PSIRT pubblica. In terzo luogo, SLA di risposta chiari: cinque giorni lavorativi per la conferma di ricezione, trenta giorni per il verdetto di triage, novanta giorni per la correzione. In quarto luogo, una clausola di protezione legale che tutela i ricercatori che agiscono in buona fede da azioni civili o penali. In quinto luogo, il credito e la divulgazione coordinata — menzioniamo i ricercatori nell'avviso e concordiamo insieme i tempi della pubblicazione.
+
+Il PSIRT è il team che mette in pratica questa politica: gestire l'intake, effettuare il triage, coordinarsi con l'ingegneria, pubblicare gli avvisi. Nelle piccole aziende può trattarsi di una sola persona con un secondo ruolo — l'importante è che la funzione esista e risponda in modo prevedibile. In Seentrix, la scheda Segnalazioni è la superficie operativa per tutto questo.
+
+Entriamo ora nei dettagli.

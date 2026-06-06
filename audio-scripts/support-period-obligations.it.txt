@@ -1,0 +1,9 @@
+In questa lezione tratteremo il periodo di supporto e gli obblighi di aggiornamento di sicurezza — uno dei requisiti più concreti del CRA per gli utenti finali.
+
+L'articolo 13 del CRA combinato con l'Allegato I Parte II stabilisce un minimo chiaro: ogni prodotto deve avere un periodo di supporto di almeno cinque anni dalla prima unità immessa sul mercato. Se la vita utile prevista è più lunga — come per i dispositivi industriali o medicali che richiedono da dieci a quindici anni —, si applica la durata maggiore. Impostiamo il nostro periodo di supporto in Seentrix sotto Releases → Periodo di supporto, e questo appare su ogni scheda informativa per l'utente finale.
+
+Un aggiornamento di sicurezza è una release il cui unico scopo è correggere vulnerabilità. L'Articolo 13(8) impone di distribuirli senza indebito ritardo e gratuitamente. Cosa significa «senza indebito ritardo» dipende dalla gravità: per un CVE iscritto al CISA KEV la misura è in giorni; per una scoperta a CVSS basso, settimane possono essere difendibili se è disponibile una valutazione del rischio documentata. Seentrix registra automaticamente ogni release con un timestamp, quindi la prova si costituisce da sola.
+
+Il canale di aggiornamento deve essere dichiarato nelle informazioni per l'utente finale. Che si tratti di push OTA, gestore di pacchetti, portale di download o chiavetta USB, gli utenti devono sapere come ricevere gli aggiornamenti. Se il canale cambia durante il ciclo di vita, è necessaria una comunicazione esplicita agli utenti interessati.
+
+Entriamo ora nei dettagli.
