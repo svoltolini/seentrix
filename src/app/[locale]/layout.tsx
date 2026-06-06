@@ -1,28 +1,26 @@
-import { hasLocale, NextIntlClientProvider } from "next-intl";
-import { getMessages, setRequestLocale } from "next-intl/server";
-import { notFound } from "next/navigation";
-import { routing } from "@/i18n/routing";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages } from "next-intl/server";
 import { CookieConsent } from "@/components/cookie-consent";
 
-export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }));
-}
-
+/**
+ * Locale layout.
+ *
+ * With `localePrefix: "never"` the active language is negotiated per-request
+ * from the `NEXT_LOCALE` cookie (set by the language picker / middleware), NOT
+ * from a URL segment. We therefore read the resolved locale via `getLocale()`
+ * (which reflects that negotiation) rather than from `params.locale`, and we do
+ * NOT call `setRequestLocale` / `generateStaticParams` — those statically
+ * pin a page to one locale at build time, which would make runtime
+ * cookie-based switching impossible. The whole `[locale]` tree is already
+ * effectively dynamic (auth/cookies), so rendering per-request is correct.
+ */
 export default async function LocaleLayout({
   children,
-  params,
 }: {
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
 }) {
-  const { locale } = await params;
-
-  if (!hasLocale(routing.locales, locale)) {
-    notFound();
-  }
-
-  setRequestLocale(locale);
-
+  const locale = await getLocale();
   const messages = await getMessages();
 
   return (

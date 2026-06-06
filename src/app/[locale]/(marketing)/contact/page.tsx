@@ -1,4 +1,4 @@
-import { setRequestLocale, getTranslations } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import { Icon } from "@/components/icon";
 import { ContactForm } from "./contact-form";
 
@@ -13,8 +13,7 @@ export default async function ContactPage({
 }: {
   params: Promise<{ locale: string }>;
 }) {
-  const { locale } = await params;
-  setRequestLocale(locale);
+  await params;
 
   const t = await getTranslations("contact");
   const highlightKeys = [
