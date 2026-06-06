@@ -2,7 +2,6 @@
 
 import { useTransition } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { useRouter } from "@/i18n/navigation";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -37,16 +36,22 @@ export function LanguagePicker({
 }) {
   const t = useTranslations("settings.language");
   const active = useLocale();
-  const router = useRouter();
   const [pending, startTransition] = useTransition();
 
   const current: Locale = isLocale(active) ? active : "en";
 
   function choose(locale: Locale) {
     if (locale === current) return;
+    // Persist server-side (writes the user row + the NEXT_LOCALE cookie), then
+    // do a FULL reload. With `localePrefix: "never"`, next-intl resolves the
+    // language purely from that cookie; a full top-level reload re-issues the
+    // request with the freshly-set cookie and re-renders every RSC (layouts,
+    // metadata, server components) in the new language. A soft
+    // `router.refresh()` raced the action's Set-Cookie and left the page on
+    // the old locale — hence the hard reload (language changes are rare).
     startTransition(async () => {
       await setPreferredLocale(locale);
-      router.refresh();
+      window.location.assign(window.location.href);
     });
   }
 
