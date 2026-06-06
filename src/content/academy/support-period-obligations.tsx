@@ -253,6 +253,259 @@ export const lesson: Lesson = {
         },
       ],
     },
+    fr: {
+      title: "Période de support et obligations de mise à jour de sécurité",
+      summary:
+        "L'engagement d'au moins 5 ans pour continuer à livrer des mises à jour de sécurité, et le canal par lequel les utilisateurs les reçoivent.",
+      sections: [
+        {
+          heading: "Le plancher de la période de support",
+          body: (
+            <p>
+              CRA Article 13 + Annexe I Partie II(8) établissent une
+              base : chaque produit doit avoir une{" "}
+              <Term id="support_period">période de support</Term> d'au moins{" "}
+              <strong>5 ans</strong> à compter de la première unité mise
+              sur le marché, ou plus longtemps si la durée de vie prévue
+              du produit est plus longue. Les appareils industriels et
+              médicaux nécessitent souvent 10 à 15 ans. Nous la définissons
+              sous Releases → Période de support, et elle figure sur chaque
+              fiche d'information destinée aux utilisateurs finaux.
+            </p>
+          ),
+        },
+        {
+          heading: "Ce qui compte comme mise à jour de sécurité",
+          body: (
+            <p>
+              Une <Term id="security_update">mise à jour de sécurité</Term>{" "}
+              est une version dont l'objet est de corriger une ou plusieurs
+              vulnérabilités. L'Article 13(8) nous impose de les livrer{" "}
+              <em>sans retard injustifié et gratuitement</em> — ce libellé
+              compte lors des audits. « Sans retard injustifié » dépend
+              du contexte : pour un CVE inscrit au{" "}
+              <Term id="kev">CISA KEV</Term>, quelques jours. Pour une
+              découverte à{" "}
+              <Term id="cvss">CVSS faible</Term>, des semaines peuvent être
+              défendables si votre évaluation des risques le documente.
+              Seentrix horodate chaque version, donc la preuve est
+              automatique.
+            </p>
+          ),
+        },
+        {
+          heading: "Le canal de mise à jour doit être déclaré",
+          body: (
+            <p>
+              Les informations destinées aux utilisateurs finaux prévues par
+              l'Annexe II doivent indiquer{" "}
+              <em>comment</em> les mises à jour parviennent aux utilisateurs
+              — push OTA, gestionnaire de paquets, portail de téléchargement,
+              clé USB ou rappel. Une période de support déclarée est sans
+              valeur si les utilisateurs ne connaissent pas le canal.
+              L'onglet Releases → Période de support de Seentrix nous demande
+              de nommer le canal et l'intègre dans le PDF d'informations
+              destinées aux utilisateurs finaux généré automatiquement.
+              Changer de canal en cours de cycle de vie nécessite une
+              communication explicite aux utilisateurs concernés.
+            </p>
+          ),
+        },
+      ],
+      quiz: [
+        {
+          question:
+            "Quelle est la durée minimale de la période de support au titre du CRA ?",
+          options: [
+            "2 ans",
+            "5 ans",
+            "10 ans",
+            "La durée de vie prévue du produit, sans plancher fixe",
+          ],
+          correctIndex: 1,
+          explanation:
+            "CRA Article 13 + Annexe I Partie II(8) imposent un minimum de 5 ans, ou plus si la durée de vie prévue du produit est plus longue. « Jusqu'à 5 ans » est un plancher, pas un plafond.",
+        },
+        {
+          question:
+            "L'Article 13(8) dispose que les mises à jour de sécurité doivent être fournies « sans retard injustifié et ___ » — qu'est-ce qui complète la phrase ?",
+          options: [
+            "dans le cadre de contrats de support payant",
+            "gratuitement",
+            "contre une redevance proportionnelle à la sévérité",
+            "à la discrétion du fabricant",
+          ],
+          correctIndex: 1,
+          explanation:
+            "Article 13(8) : les mises à jour de sécurité doivent être fournies « sans retard injustifié et gratuitement ». Facturer des correctifs de sécurité pour des produits dans leur période de support constitue une violation du CRA.",
+        },
+        {
+          question:
+            "Nous avons lancé un produit il y a 3 ans et souhaitons arrêter de livrer des mises à jour de sécurité. Est-ce légal ?",
+          options: [
+            "Oui, après 2 ans nous pouvons faire ce que nous voulons",
+            "Non — le CRA impose au moins 5 ans, donc nous sommes en infraction à l'année 3",
+            "Seulement si nous remboursons chaque client",
+            "Oui, si nous arrêtons le produit",
+          ],
+          correctIndex: 1,
+          explanation:
+            "5 ans est le plancher légal. Abandonner le support à l'année 3 est une infraction même si nous arrêtons le produit commercialement ; nous devons des mises à jour de sécurité aux utilisateurs existants pour la période déclarée.",
+        },
+        {
+          question:
+            "Pourquoi le canal de mise à jour doit-il figurer sur les informations destinées aux utilisateurs finaux ?",
+          options: [
+            "C'est facultatif",
+            "Une promesse de période de support est vide de sens si les utilisateurs ne peuvent pas trouver ni installer les mises à jour",
+            "Le CRA exige un canal unique par produit",
+            "L'autorité de surveillance du marché fournit le canal à notre place",
+          ],
+          correctIndex: 1,
+          explanation:
+            "L'Annexe II des informations destinées aux utilisateurs finaux exige le canal de mise à jour car l'engagement de période de support n'a pas de sens sans un moyen pour les utilisateurs de recevoir et d'installer les mises à jour.",
+        },
+        {
+          question:
+            "Quel écran Seentrix est la source faisant autorité pour notre période de support déclarée ?",
+          options: [
+            "Paramètres → Organisation",
+            "Produits → [produit] → Releases → Période de support",
+            "Conformité → Organisme notifié",
+            "Paramètres → Activité",
+          ],
+          correctIndex: 1,
+          explanation:
+            "La section Releases → Période de support de chaque page produit est l'endroit où nous déclarons la date de début, la date de fin et le canal de mise à jour. Ces valeurs alimentent le PDF d'informations destinées aux utilisateurs finaux et le widget de fenêtre de support du tableau de bord.",
+        },
+      ],
+    },
+    it: {
+      title: "Periodo di supporto e obblighi di aggiornamento di sicurezza",
+      summary:
+        "L'impegno di almeno 5 anni a continuare a rilasciare aggiornamenti di sicurezza e il canale attraverso cui gli utenti li ricevono.",
+      sections: [
+        {
+          heading: "Il livello minimo del periodo di supporto",
+          body: (
+            <p>
+              CRA Articolo 13 + Allegato I Parte II(8) stabiliscono una
+              base: ogni prodotto deve avere un{" "}
+              <Term id="support_period">periodo di supporto</Term> di almeno{" "}
+              <strong>5 anni</strong> dalla prima unità immessa sul mercato,
+              o più a lungo se la vita utile prevista del prodotto è più
+              lunga. I dispositivi industriali e medicali richiedono
+              regolarmente 10–15 anni. Lo impostiamo sotto Releases →
+              Periodo di supporto, e appare su ogni scheda informativa
+              per l'utente finale.
+            </p>
+          ),
+        },
+        {
+          heading: "Cosa conta come aggiornamento di sicurezza",
+          body: (
+            <p>
+              Un <Term id="security_update">aggiornamento di sicurezza</Term>{" "}
+              è una release il cui scopo è correggere una o più
+              vulnerabilità. L'Articolo 13(8) ci impone di distribuirli{" "}
+              <em>senza indebito ritardo e gratuitamente</em> — questa
+              formulazione conta negli audit. «Senza indebito ritardo»
+              dipende dal contesto: per un CVE iscritto al{" "}
+              <Term id="kev">CISA KEV</Term>, giorni. Per una scoperta a{" "}
+              <Term id="cvss">CVSS basso</Term>, settimane possono essere
+              difendibili se la valutazione del rischio lo documenta.
+              Seentrix registra con timestamp ogni release, quindi la prova
+              è automatica.
+            </p>
+          ),
+        },
+        {
+          heading: "Il canale di aggiornamento deve essere dichiarato",
+          body: (
+            <p>
+              Le informazioni per l'utente finale previste dall'Allegato II
+              devono indicare{" "}
+              <em>come</em> gli aggiornamenti raggiungono gli utenti —
+              push OTA, gestore di pacchetti, portale di download, chiavetta
+              USB o richiamo. Un periodo di supporto dichiarato è privo di
+              significato se gli utenti non conoscono il canale. La scheda
+              Releases → Periodo di supporto di Seentrix ci chiede di
+              indicare il canale e lo include nel PDF informativo per
+              l'utente finale generato automaticamente. Cambiare il canale
+              durante il ciclo di vita richiede una comunicazione esplicita
+              agli utenti interessati.
+            </p>
+          ),
+        },
+      ],
+      quiz: [
+        {
+          question:
+            "Qual è la durata minima del periodo di supporto ai sensi del CRA?",
+          options: [
+            "2 anni",
+            "5 anni",
+            "10 anni",
+            "La vita utile prevista del prodotto, senza un minimo fisso",
+          ],
+          correctIndex: 1,
+          explanation:
+            "CRA Articolo 13 + Allegato I Parte II(8) impongono un minimo di 5 anni, o più se la vita utile prevista del prodotto è più lunga. «Fino a 5 anni» è un minimo, non un massimo.",
+        },
+        {
+          question:
+            "L'Articolo 13(8) prevede che gli aggiornamenti di sicurezza debbano essere forniti «senza indebito ritardo e ___» — cosa completa la frase?",
+          options: [
+            "nell'ambito di contratti di supporto a pagamento",
+            "gratuitamente",
+            "contro un corrispettivo proporzionale alla gravità",
+            "a discrezione del fabbricante",
+          ],
+          correctIndex: 1,
+          explanation:
+            "Articolo 13(8): gli aggiornamenti di sicurezza devono essere forniti «senza indebito ritardo e gratuitamente». Addebitare costi per patch di sicurezza per prodotti nel loro periodo di supporto viola il CRA.",
+        },
+        {
+          question:
+            "Abbiamo lanciato un prodotto 3 anni fa e vogliamo smettere di rilasciare aggiornamenti di sicurezza. È legale?",
+          options: [
+            "Sì, dopo 2 anni possiamo fare quello che vogliamo",
+            "No — il CRA impone almeno 5 anni, quindi siamo in violazione al terzo anno",
+            "Solo se rimborsiamo ogni cliente",
+            "Sì, se discontinuiamo il prodotto",
+          ],
+          correctIndex: 1,
+          explanation:
+            "5 anni è il minimo legale. Interrompere il supporto al terzo anno è una violazione anche se discontinuiamo il prodotto commercialmente; dobbiamo aggiornamenti di sicurezza agli utenti esistenti per il periodo dichiarato.",
+        },
+        {
+          question:
+            "Perché il canale di aggiornamento deve essere indicato nelle informazioni per l'utente finale?",
+          options: [
+            "È facoltativo",
+            "Una promessa di periodo di supporto è priva di significato se gli utenti non riescono a trovare o installare gli aggiornamenti",
+            "Il CRA richiede un canale unico per prodotto",
+            "L'autorità di vigilanza del mercato fornisce il canale al posto nostro",
+          ],
+          correctIndex: 1,
+          explanation:
+            "L'Allegato II delle informazioni per l'utente finale richiede il canale di aggiornamento perché l'impegno sul periodo di supporto è privo di significato senza un modo per gli utenti di ricevere e installare gli aggiornamenti.",
+        },
+        {
+          question:
+            "Quale schermata Seentrix è la fonte autorevole per il nostro periodo di supporto dichiarato?",
+          options: [
+            "Impostazioni → Organizzazione",
+            "Prodotti → [prodotto] → Releases → Periodo di supporto",
+            "Conformità → Organismo notificato",
+            "Impostazioni → Attività",
+          ],
+          correctIndex: 1,
+          explanation:
+            "La sezione Releases → Periodo di supporto di ogni pagina prodotto è il luogo in cui dichiariamo la data di inizio, la data di fine e il canale di aggiornamento. Questi valori alimentano il PDF informativo per l'utente finale e il widget della finestra di supporto nel dashboard.",
+        },
+      ],
+    },
   },
 };
 
