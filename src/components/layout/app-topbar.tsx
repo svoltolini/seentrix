@@ -5,7 +5,7 @@ import { usePathname, Link } from "@/i18n/navigation";
 
 import { Button } from "@/components/ui/button";
 import { useCreateProduct } from "@/components/products/create-product-context";
-import { SearchInput } from "@/components/ui/search-input";
+import { TopbarSearch } from "./topbar-search";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -92,15 +92,11 @@ export function AppTopbar({ user, orgName }: AppTopbarProps) {
         </h1>
       </div>
 
-      {/* CENTRE — search. Hidden on small viewports; truly centred at md+
-          because the column is `1fr` and the search has `max-w` capped
-          plus `justify-center` on the wrapper. */}
+      {/* CENTRE — live product quick-search. Hidden on small viewports;
+          truly centred at md+ because the column is `1fr` and the search
+          has `max-w` capped plus `justify-center` on the wrapper. */}
       <div className="hidden justify-center md:flex">
-        <SearchInput
-          placeholder={t("topbar.searchPlaceholder") ?? "Search products, incidents, reports…"}
-          aria-label={t("topbar.searchPlaceholder") ?? "Search"}
-          className="w-full max-w-[480px]"
-        />
+        <TopbarSearch className="max-w-[480px]" />
       </div>
 
       {/* RIGHT — actions */}

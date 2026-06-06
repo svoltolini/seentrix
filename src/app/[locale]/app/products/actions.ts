@@ -104,6 +104,56 @@ export interface ProductListItem {
   created_at: string;
 }
 
+/**
+ * Lightweight product search for the top-bar quick-search dropdown.
+ *
+ * Returns at most `limit` products in the current org whose name contains the
+ * query (case-insensitive). Intentionally selects only the columns the
+ * dropdown renders (id, name, type, image_url, cra_category) rather than the
+ * full row + compliance computation that `listProducts` does — this runs on
+ * every debounced keystroke, so it stays cheap. Org scoping is enforced by
+ * RLS plus the explicit org_id filter.
+ */
+export async function searchProducts(
+  query: string,
+  limit = 8,
+): Promise<{
+  results: Pick<
+    ProductListItem,
+    "id" | "name" | "type" | "image_url" | "cra_category"
+  >[];
+}> {
+  const trimmed = query.trim();
+  if (trimmed.length < 1) return { results: [] };
+
+  const { supabase, orgId } = await getAuthContext();
+  if (!orgId) return { results: [] };
+
+  // Escape PostgREST `ilike` wildcards so a literal % or _ in the query can't
+  // widen the match set.
+  const escaped = trimmed.replace(/[%_]/g, (m) => `\\${m}`);
+
+  const { data, error } = await supabase
+    .from("products")
+    .select("id, name, type, image_url, cra_category")
+    .eq("org_id", orgId)
+    .ilike("name", `%${escaped}%`)
+    .order("created_at", { ascending: false })
+    .limit(limit);
+
+  if (error || !data) return { results: [] };
+
+  return {
+    results: data.map((p) => ({
+      id: p.id as string,
+      name: p.name as string,
+      type: (p.type as string | null) ?? null,
+      image_url: (p.image_url as string | null) ?? null,
+      cra_category: (p.cra_category as string | null) ?? null,
+    })),
+  };
+}
+
 export async function listProducts(): Promise<{
   products: ProductListItem[];
   error?: string;
@@ -570,8 +620,17 @@ export async function getDashboardStats(): Promise<DashboardStats> {
   // ---------------------------------------------------------------------
   const twelveWeeksAgo = new Date();
   twelveWeeksAgo.setDate(twelveWeeksAgo.getDate() - 84);
+  // Activity velocity now feeds the dashboard "Project Statistics" chart,
+  // which offers This week / This month / This year views. Pull from the
+  // start of the current calendar year (local time) so the year view has
+  // real data, and also cover the trailing ~30 days for an org created late
+  // in the year. Bounded by whichever is earlier.
+  const now = new Date();
+  const startOfYear = new Date(now.getFullYear(), 0, 1, 0, 0, 0, 0);
   const thirtyDaysAgo = new Date();
   thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+  const velocityStart =
+    startOfYear < thirtyDaysAgo ? startOfYear : thirtyDaysAgo;
   const today = new Date().toISOString().split("T")[0];
 
   const [
@@ -628,12 +687,13 @@ export async function getDashboardStats(): Promise<DashboardStats> {
           .order("due_date", { ascending: true })
           .limit(5)
       : Promise.resolve({ data: null }),
-    // 5. Activity velocity — last 30 days
+    // 5. Activity velocity — from start of year (or trailing 30 days),
+    //    whichever is earlier. Feeds the Project Statistics chart.
     supabase
       .from("activities")
       .select("created_at")
       .eq("org_id", orgId)
-      .gte("created_at", thirtyDaysAgo.toISOString()),
+      .gte("created_at", velocityStart.toISOString()),
     // 6. Full overdue count (not just top 5)
     productIds.length > 0
       ? supabase
@@ -914,14 +974,25 @@ export async function getDashboardStats(): Promise<DashboardStats> {
   overdueCount = fullOverdueCountRes.count ?? overdueItems.length;
 
   // --- Process activity velocity ---
+  // Build a dense daily map (one entry per calendar day, no gaps) from
+  // `velocityStart` through today, keyed by UTC date (YYYY-MM-DD). A dense
+  // series lets the Project Statistics chart bucket by week / month / year
+  // on the client without having to infer missing days. Days with no
+  // activity stay at 0.
   const activityVelocity: ActivityVelocityPoint[] = [];
   const velocityMap: Record<string, number> = {};
 
-  // Fill all 30 days with 0
-  for (let i = 29; i >= 0; i--) {
-    const d = new Date();
-    d.setDate(d.getDate() - i);
-    velocityMap[d.toISOString().split("T")[0]] = 0;
+  const cursor = new Date(
+    Date.UTC(
+      velocityStart.getUTCFullYear(),
+      velocityStart.getUTCMonth(),
+      velocityStart.getUTCDate(),
+    ),
+  );
+  const endUtc = new Date();
+  while (cursor <= endUtc) {
+    velocityMap[cursor.toISOString().split("T")[0]] = 0;
+    cursor.setUTCDate(cursor.getUTCDate() + 1);
   }
 
   if (activityVelocityResult.data) {

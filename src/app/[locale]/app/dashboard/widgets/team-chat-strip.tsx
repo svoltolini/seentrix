@@ -3,13 +3,12 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 /**
- * TeamChatStrip — 3-per-row grid in the dashboard right rail.
- *
- * Earlier passes tried 5 horizontal tiles in a single row, which
- * truncated long first names even after we shrunk the wrapper. With
- * 3 columns each tile gets ~95 px (322 px rail / 3 - gaps), more than
- * enough for a full first name + a 46 px avatar. Wraps to a second
- * row at 4-6 members; we cap at 6 to keep the rail compact.
+ * TeamChatStrip — left-aligned list of team members in the dashboard right
+ * rail. Each row is an avatar on the left with the member's name beside it,
+ * all flush-left (per user request). Earlier this was a 3-column grid of
+ * centred avatar-over-name tiles; the left-aligned row reads more like a
+ * roster and gives long names the full rail width instead of a ~95 px tile.
+ * Capped at 6 members to keep the rail compact.
  */
 
 export interface TeamChatItem {
@@ -17,11 +16,6 @@ export interface TeamChatItem {
   name: string;
   avatarUrl: string | null;
   onClick?: () => void;
-}
-
-function firstName(full: string): string {
-  const parts = full.trim().split(/\s+/);
-  return parts[0] ?? full;
 }
 
 function initialsOf(name: string): string {
@@ -36,24 +30,24 @@ export function TeamChatStrip({ members }: Props) {
   if (members.length === 0) return null;
 
   return (
-    <div className="grid grid-cols-3 gap-3">
+    <div className="flex flex-col gap-1">
       {members.slice(0, 6).map((m) => (
         <button
           key={m.id}
           type="button"
           onClick={m.onClick}
-          className="group/chat-tile flex min-w-0 flex-col items-center gap-2 outline-none"
+          className="group/chat-tile flex w-full min-w-0 items-center gap-3 rounded-md px-1 py-1.5 text-left outline-none transition-colors hover:bg-muted/60"
           aria-label={m.name}
         >
           <Avatar
             size="lg"
-            className="size-11 shrink-0 transition-transform group-hover/chat-tile:scale-105"
+            className="size-9 shrink-0 transition-transform group-hover/chat-tile:scale-105"
           >
             <AvatarImage src={m.avatarUrl ?? undefined} alt={m.name} />
             <AvatarFallback>{initialsOf(m.name)}</AvatarFallback>
           </Avatar>
-          <span className="w-full truncate text-center text-p3 text-muted-foreground">
-            {firstName(m.name)}
+          <span className="min-w-0 flex-1 truncate text-p3 text-foreground">
+            {m.name}
           </span>
         </button>
       ))}

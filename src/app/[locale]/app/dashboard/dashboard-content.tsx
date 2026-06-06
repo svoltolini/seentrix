@@ -54,6 +54,7 @@ import {
 import { TeamChatStrip, type TeamChatItem } from "./widgets/team-chat-strip";
 import { GetStartedGuide } from "./widgets/get-started-guide";
 import { KpiStrip, type Kpi } from "./widgets/kpi-strip";
+import { useCopilot } from "@/components/copilot/copilot-context";
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -187,6 +188,7 @@ export function DashboardContent(
   },
 ) {
   const t = useTranslations("dashboard");
+  const { open: openCopilot } = useCopilot();
 
   const {
     totalProducts,
@@ -238,14 +240,14 @@ export function DashboardContent(
     [onboardingStatsInput, profileStatus?.complete],
   );
 
-  // ---- Bar-chart data: real Mon→Sun activity counts ----------------------
-  const chartData = useMemo<DayActivity[]>(() => {
-    const days = [
-      "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday",
-    ] as const;
-    const last7 = activityVelocity.slice(-7);
-    return days.map((day, i) => ({ day, count: last7[i]?.count ?? 0 }));
-  }, [activityVelocity]);
+  // ---- Bar-chart data: dense daily activity series, real dates ------------
+  // The card buckets these by the selected timeframe (week/month/year) using
+  // each point's real date — no positional weekday guessing.
+  const chartData = useMemo<DayActivity[]>(
+    () =>
+      activityVelocity.map((p) => ({ date: p.date, count: p.count })),
+    [activityVelocity],
+  );
 
   const featured = useMemo(() => pickFeaturedProducts(products), [products]);
 
@@ -318,15 +320,34 @@ export function DashboardContent(
   ]);
 
   // ---- Right-rail upcoming CRA deadlines (meeting-list cards) -------------
-  const meetings = upcomingCraDeadlines().map((d) => ({
-    id: d.id,
-    icon: "Calendar" as const,
-    title: t(`deadline.${d.labelKey}`),
-    subtitle: `${daysUntil(d.date)} ${
-      t.has("deadline.daysAway") ? t("deadline.daysAway") : "days away"
-    }`,
-    cta: { label: t.has("deadline.view") ? t("deadline.view") : "View" },
-  }));
+  // The "View" CTA opens the Copilot with a deadline-specific question so the
+  // AI can explain what that milestone means and what the user needs to have
+  // done by then — more useful than navigating to a static page.
+  const meetings = upcomingCraDeadlines().map((d) => {
+    const deadlineName = t(`deadline.${d.labelKey}`);
+    const deadlineDate = new Date(d.date).toLocaleDateString(undefined, {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+    const seed = `Explain the CRA "${deadlineName}" deadline on ${deadlineDate}: what does it mean, what do I need to have in place and do before that date, and how does it apply to my products in Seentrix?`;
+    return {
+      id: d.id,
+      icon: "Calendar" as const,
+      title: deadlineName,
+      subtitle: `${daysUntil(d.date)} ${
+        t.has("deadline.daysAway") ? t("deadline.daysAway") : "days away"
+      }`,
+      cta: {
+        label: t.has("deadline.explain")
+          ? t("deadline.explain")
+          : t.has("deadline.view")
+            ? t("deadline.view")
+            : "Explain",
+        onClick: () => openCopilot(seed),
+      },
+    };
+  });
 
   // ---- Calendar tracker events (CRA deadlines + overdue tasks) -----------
   const calendarEvents = useMemo<CalendarEvent[]>(() => {
@@ -421,7 +442,7 @@ export function DashboardContent(
         {/* MAIN COLUMN */}
         <div className="flex min-w-0 flex-col gap-6">
           {/* Project Statistics activity chart */}
-          <ProjectStatisticsCard data={chartData} />
+          <ProjectStatisticsCard points={chartData} />
 
           {/* My Products — 2 hero cards */}
           {totalProducts > 0 && featured.length > 0 && (
