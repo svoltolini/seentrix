@@ -108,13 +108,13 @@ export default async function CopilotAdminPage() {
   return (
     <div className="mx-auto flex max-w-5xl flex-col gap-10 py-4">
       <header className="flex flex-col gap-2">
-        <span className="text-l6-plus uppercase tracking-[0.18em] text-[#066DE6]">
+        <span className="text-l6-plus uppercase tracking-[0.18em] text-primary">
           Copilot · staff review
         </span>
-        <h1 className="font-heading text-2xl font-semibold text-foreground">
+        <h1 className="font-heading text-h1 text-foreground">
           Copilot feedback
         </h1>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-p2-r text-muted-foreground">
           Cross-org diagnostics for the last 30 days. Use this to decide
           what corpus content to add or what prompt rule to tighten.
         </p>
@@ -126,17 +126,17 @@ export default async function CopilotAdminPage() {
         <StatCard
           label="Thumbs up"
           value={thumbUpCount}
-          accent="text-emerald-400"
+          accent="text-success"
         />
         <StatCard
           label="Thumbs down"
           value={thumbDownCount}
-          accent="text-rose-400"
+          accent="text-destructive"
         />
         <StatCard
           label="No-retrieval turns"
           value={noRetrievalCount}
-          accent="text-amber-400"
+          accent="text-warning"
           sub={
             totalAssistantCount
               ? `${Math.round((noRetrievalCount / totalAssistantCount) * 100)}%`
@@ -148,10 +148,10 @@ export default async function CopilotAdminPage() {
       {/* ---- Thumbs-down list ------------------------------------------- */}
       <section className="flex flex-col gap-3">
         <div className="flex items-baseline justify-between">
-          <h2 className="font-heading text-base font-semibold text-foreground">
+          <h2 className="font-heading text-h4 text-foreground">
             Recent 👎 ({negatives.length})
           </h2>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-p4-r text-muted-foreground">
             Snapshot of question + answer at rating time — survives
             transcript retention purges.
           </p>
@@ -170,10 +170,10 @@ export default async function CopilotAdminPage() {
       {/* ---- KB gaps ----------------------------------------------------- */}
       <section className="flex flex-col gap-3">
         <div className="flex items-baseline justify-between">
-          <h2 className="font-heading text-base font-semibold text-foreground">
+          <h2 className="font-heading text-h4 text-foreground">
             KB-gap candidates ({gaps.length})
           </h2>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-p4-r text-muted-foreground">
             Assistant turns where retrieval returned zero passages.
           </p>
         </div>
@@ -230,14 +230,14 @@ function StatCard({
         {label}
       </p>
       <p
-        className={`mt-1 font-heading text-2xl font-semibold ${
+        className={`mt-1 font-heading text-h1 ${
           accent ?? "text-foreground"
         }`}
       >
         {value.toLocaleString()}
       </p>
       {sub && (
-        <p className="mt-0.5 text-xs text-muted-foreground">{sub}</p>
+        <p className="mt-0.5 text-p4-r text-muted-foreground">{sub}</p>
       )}
     </div>
   );
@@ -246,7 +246,7 @@ function StatCard({
 function FeedbackRow({ row }: { row: ThumbsDownRow }) {
   return (
     <article className="flex flex-col gap-3 rounded-md bg-muted p-4 ring-1 ring-white/[0.06]">
-      <header className="flex items-center justify-between text-xs text-muted-foreground">
+      <header className="flex items-center justify-between text-p4-r text-muted-foreground">
         <span>{new Date(row.created_at).toLocaleString()}</span>
         <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-[10px]">
           session {row.session_id.slice(0, 8)}
@@ -256,7 +256,7 @@ function FeedbackRow({ row }: { row: ThumbsDownRow }) {
         <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
           Question
         </p>
-        <p className="mt-1 whitespace-pre-wrap text-sm text-foreground">
+        <p className="mt-1 whitespace-pre-wrap text-p2-r text-foreground">
           {row.question || "—"}
         </p>
       </div>
@@ -264,7 +264,7 @@ function FeedbackRow({ row }: { row: ThumbsDownRow }) {
         <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
           Answer
         </p>
-        <p className="mt-1 max-h-64 overflow-y-auto whitespace-pre-wrap rounded-lg bg-muted px-3 py-2 text-sm text-foreground/90">
+        <p className="mt-1 max-h-64 overflow-y-auto whitespace-pre-wrap rounded-lg bg-muted px-3 py-2 text-p2-r text-foreground/90">
           {row.answer || "—"}
         </p>
       </div>
@@ -277,7 +277,7 @@ function FeedbackRow({ row }: { row: ThumbsDownRow }) {
             {row.retrieved_sections.map((s) => (
               <span
                 key={s}
-                className="rounded bg-[#066DE6]/15 px-2 py-0.5 text-l6-plus text-[#93C5FD]"
+                className="rounded bg-primary/15 px-2 py-0.5 text-l6-plus text-primary-foreground"
               >
                 {s}
               </span>
@@ -290,7 +290,7 @@ function FeedbackRow({ row }: { row: ThumbsDownRow }) {
           <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
             User comment
           </p>
-          <p className="mt-1 whitespace-pre-wrap rounded-lg bg-rose-500/8 px-3 py-2 text-sm text-rose-200 ring-1 ring-rose-500/20">
+          <p className="mt-1 whitespace-pre-wrap rounded-lg bg-destructive/8 px-3 py-2 text-p2-r text-destructive-foreground ring-1 ring-destructive/20">
             {row.comment}
           </p>
         </div>
@@ -302,13 +302,13 @@ function FeedbackRow({ row }: { row: ThumbsDownRow }) {
 function GapRowView({ row }: { row: GapRow }) {
   return (
     <article className="flex flex-col gap-2 rounded-md bg-muted p-4 ring-1 ring-white/[0.06]">
-      <header className="flex items-center justify-between text-xs text-muted-foreground">
+      <header className="flex items-center justify-between text-p4-r text-muted-foreground">
         <span>{new Date(row.created_at).toLocaleString()}</span>
         <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-[10px]">
           session {row.session_id.slice(0, 8)}
         </code>
       </header>
-      <p className="max-h-40 overflow-y-auto whitespace-pre-wrap text-sm text-foreground/90">
+      <p className="max-h-40 overflow-y-auto whitespace-pre-wrap text-p2-r text-foreground/90">
         {row.content}
       </p>
     </article>
@@ -317,7 +317,7 @@ function GapRowView({ row }: { row: GapRow }) {
 
 function EmptyPanel({ text }: { text: string }) {
   return (
-    <div className="rounded-md bg-muted p-6 text-center text-sm text-muted-foreground ring-1 ring-white/[0.04]">
+    <div className="rounded-md bg-muted p-6 text-center text-p2-r text-muted-foreground ring-1 ring-white/[0.04]">
       {text}
     </div>
   );

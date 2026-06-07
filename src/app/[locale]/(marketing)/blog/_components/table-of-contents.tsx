@@ -54,7 +54,7 @@ export function TableOfContents({
 
   return (
     <nav>
-      <h3 className="mb-4 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+      <h3 className="mb-4 text-l6-plus uppercase tracking-widest text-muted-foreground">
         {title}
       </h3>
       <ul className="relative space-y-1">
@@ -70,10 +70,10 @@ export function TableOfContents({
               href={`#${h.id}`}
               onClick={(e) => handleClick(e, h.id)}
               className={cn(
-                "block py-1 text-[13px] leading-snug transition-colors hover:text-foreground",
+                "block py-1 text-p3-r leading-snug transition-colors hover:text-foreground",
                 h.level === 3 ? "pl-6" : "pl-4",
                 activeId === h.id
-                  ? "font-medium text-foreground"
+                  ? "text-foreground"
                   : "text-muted-foreground"
               )}
             >

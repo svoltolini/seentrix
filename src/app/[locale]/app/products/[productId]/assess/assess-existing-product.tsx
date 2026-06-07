@@ -121,10 +121,10 @@ export function AssessExistingProduct({
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-semibold text-foreground">
+            <h2 className="text-h3 text-foreground">
               {t("detail.assessment.completed")}
             </h2>
-            <p className="mt-1 text-sm text-muted-foreground">
+            <p className="mt-1 text-p2-r text-muted-foreground">
               {t("detail.assessment.completedDescription")}
             </p>
           </div>
@@ -147,7 +147,7 @@ export function AssessExistingProduct({
           <CardContent>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
               <div className="flex flex-col gap-1.5">
-                <span className="text-xs text-muted-foreground">
+                <span className="text-p4-r text-muted-foreground">
                   {tAssessment("result.classification")}
                 </span>
                 <div className="flex items-center gap-2">
@@ -157,17 +157,17 @@ export function AssessExistingProduct({
                       colors?.dot ?? "bg-muted-foreground"
                     )}
                   />
-                  <span className="text-base font-semibold text-foreground">
+                  <span className="text-h4 text-foreground">
                     {t(`categories.${product.cra_category}`)}
                   </span>
                 </div>
               </div>
               {product.conformity_route && (
                 <div className="flex flex-col gap-1.5">
-                  <span className="text-xs text-muted-foreground">
+                  <span className="text-p4-r text-muted-foreground">
                     {tAssessment("result.conformityRoute")}
                   </span>
-                  <span className="text-base font-semibold text-foreground">
+                  <span className="text-h4 text-foreground">
                     {tAssessment(
                       `result.routes.${product.conformity_route}`
                     )}
@@ -175,10 +175,10 @@ export function AssessExistingProduct({
                 </div>
               )}
               <div className="flex flex-col gap-1.5">
-                <span className="text-xs text-muted-foreground">
+                <span className="text-p4-r text-muted-foreground">
                   {t("detail.overview.notifiedBody")}
                 </span>
-                <span className="text-base font-semibold text-foreground">
+                <span className="text-h4 text-foreground">
                   {product.requires_notified_body
                     ? t("detail.overview.yes")
                     : t("detail.overview.no")}
@@ -196,7 +196,7 @@ export function AssessExistingProduct({
     return (
       <div className="mx-auto w-full max-w-4xl space-y-8">
         <div className="text-center">
-          <h2 className="text-lg font-semibold text-foreground">
+          <h2 className="text-h3 text-foreground">
             {t("detail.assessment.title")}
           </h2>
         </div>
@@ -210,7 +210,7 @@ export function AssessExistingProduct({
   return (
     <div className="mx-auto w-full max-w-2xl space-y-8">
       <div className="text-center">
-        <h2 className="text-lg font-semibold text-foreground">
+        <h2 className="text-h3 text-foreground">
           {t("detail.assessment.title")}
         </h2>
       </div>
@@ -220,12 +220,12 @@ export function AssessExistingProduct({
       <Card>
         <CardContent>
           {error && (
-            <p className="mb-4 text-sm text-destructive">
+            <p className="mb-4 text-p2-r text-destructive">
               {t.has(`errors.${error}`) ? t(`errors.${error}`) : t("errors.generic")}
             </p>
           )}
 
-          <h3 className="mb-4 text-base font-semibold text-foreground">
+          <h3 className="mb-4 text-h4 text-foreground">
             {stepLabels[step - 1]}
           </h3>
 

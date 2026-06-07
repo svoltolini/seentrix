@@ -17,7 +17,7 @@ export default function ImpressumPage() {
   return (
     <>
       <h1>Legal notice (Impressum)</h1>
-      <p className="text-xs text-muted-foreground">
+      <p className="text-p4-r text-muted-foreground">
         Last updated: {new Date().toISOString().slice(0, 10)}
       </p>
 
@@ -113,7 +113,7 @@ export default function ImpressumPage() {
         written consent.
       </p>
 
-      <p className="mt-6 text-xs text-muted-foreground">
+      <p className="mt-6 text-p4-r text-muted-foreground">
         Seentrix Ltd · Companies House 17169165 · 167-169 Great Portland
         Street, London W1W 5PF, United Kingdom
       </p>

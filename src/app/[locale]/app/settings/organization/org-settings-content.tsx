@@ -22,7 +22,7 @@ const ROLE_HIERARCHY: { key: string; color: string; bg: string; icon: string }[]
   { key: "admin", color: "text-primary", bg: "bg-primary", icon: "crown-stroke-rounded" },
   { key: "cto", color: "text-accent", bg: "bg-accent", icon: "terminal-stroke-rounded" },
   { key: "compliance_officer", color: "text-accent", bg: "bg-accent", icon: "task-done-02-stroke-rounded" },
-  { key: "editor", color: "text-[#FF9E55]", bg: "bg-[#FF9E55]", icon: "pencil-edit-02-stroke-rounded" },
+  { key: "editor", color: "text-accent", bg: "bg-accent", icon: "pencil-edit-02-stroke-rounded" },
   { key: "viewer", color: "text-muted-foreground", bg: "bg-muted-foreground", icon: "glasses-stroke-rounded" },
 ];
 

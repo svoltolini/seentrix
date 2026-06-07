@@ -27,7 +27,7 @@ const ROLE_STYLE: Record<string, string> = {
   admin: "bg-primary/15 text-primary",
   compliance_officer: "bg-accent/15 text-accent",
   cto: "bg-accent/15 text-accent",
-  editor: "bg-[#FF9E55]/15 text-[#FF9E55]",
+  editor: "bg-accent/15 text-accent",
   viewer: "bg-muted text-muted-foreground",
 };
 
@@ -196,7 +196,7 @@ export function TeamContent({
                 className="flex items-center gap-4 px-6 py-3.5"
               >
                 {/* Avatar */}
-                <div className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-primary/15 text-l6-plus text-primary">
+                <div className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-md bg-primary/15 text-l6-plus text-primary">
                   {member.avatar_url ? (
                     // Tiny remote avatar from Supabase storage — next/image
                     // optimization not worth the remote-domain config here.

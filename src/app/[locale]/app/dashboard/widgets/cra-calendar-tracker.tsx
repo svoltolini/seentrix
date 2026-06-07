@@ -234,7 +234,7 @@ export function CraCalendarTracker({ events }: Props) {
 
       {/* Event list */}
       <div className="flex flex-col gap-2 border-t border-border-outline pt-3">
-        <p className="text-p4 font-semibold uppercase tracking-wider text-muted-foreground">
+        <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
           {selected
             ? selected.toLocaleDateString(undefined, {
                 month: "long",

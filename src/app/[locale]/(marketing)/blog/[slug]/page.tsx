@@ -116,7 +116,7 @@ export default async function BlogPostPage({
       {/* Back link */}
       <Link
         href="/blog"
-        className="mb-8 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+        className="mb-8 inline-flex items-center gap-1.5 text-p2-r text-muted-foreground transition-colors hover:text-foreground"
       >
         <Icon name="ArrowLeft" className="size-4" />
         {t("backToBlog")}
@@ -130,7 +130,7 @@ export default async function BlogPostPage({
         <h1 className="text-h1 tracking-tight">
           {post.title}
         </h1>
-        <div className="mt-4 flex items-center gap-4 text-sm text-muted-foreground">
+        <div className="mt-4 flex items-center gap-4 text-p2-r text-muted-foreground">
           <span className="flex items-center gap-1.5">
             <Icon name="Calendar" className="size-4" />
             {new Date(post.date).toLocaleDateString("en-US", {

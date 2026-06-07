@@ -1626,7 +1626,7 @@ function AttachmentRow({
         aria-label={
           t.has("attachments.download") ? t("attachments.download") : "Download"
         }
-        className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground transition-colors hover:bg-primary/90"
+        className="flex size-8 shrink-0 items-center justify-center rounded-md bg-primary text-primary-foreground transition-colors hover:bg-primary/90"
       >
         <Icon name="ArrowDown2" size={14} />
       </button>

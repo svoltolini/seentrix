@@ -162,7 +162,7 @@ function MilestoneCard({
       className="flex flex-col rounded-md border border-border bg-card p-7 shadow-card-md transition-shadow hover:shadow-card-lg"
     >
       {/* Index */}
-      <span className="text-3xl font-extrabold leading-none text-primary">
+      <span className="text-h1 leading-none text-primary">
         {String(index).padStart(2, "0")}
       </span>
 

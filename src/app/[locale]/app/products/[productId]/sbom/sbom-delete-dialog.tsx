@@ -32,7 +32,7 @@ export function SbomDeleteDialog({
       {target && (
         <div className="flex items-center gap-2 rounded-lg bg-muted/50 px-3 py-2">
           <Icon name="package" size={16} className="shrink-0 text-muted-foreground" />
-          <span className="truncate text-sm font-medium">
+          <span className="truncate text-l4">
             {target.file_name}
           </span>
         </div>

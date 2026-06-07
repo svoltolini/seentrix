@@ -20,8 +20,8 @@ export default function AppError({
         <CardContent className="flex flex-col items-center gap-4 py-10 text-center">
           <IconBadge name="alert-02" tone="destructive" size="xl" />
           <div>
-            <h2 className="text-lg font-semibold">{t("error")}</h2>
-            <p className="mt-1 text-sm text-muted-foreground">
+            <h2 className="text-h3">{t("error")}</h2>
+            <p className="mt-1 text-p2-r text-muted-foreground">
               {t("errorDescription")}
             </p>
           </div>

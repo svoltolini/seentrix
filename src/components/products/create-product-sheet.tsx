@@ -353,7 +353,7 @@ function CreateFormBody({ onClose }: { onClose: () => void }) {
                   type="button"
                   onClick={removeImage}
                   aria-label={t("create.imageRemove")}
-                  className="absolute -right-2 -top-2 flex size-6 items-center justify-center rounded-full border border-border-outline bg-card text-muted-foreground shadow-card-sm transition hover:border-destructive hover:bg-destructive hover:text-white"
+                  className="absolute -right-2 -top-2 flex size-6 items-center justify-center rounded-full border border-border-outline bg-card text-muted-foreground shadow-card-sm transition hover:border-destructive hover:bg-destructive hover:text-primary-foreground"
                 >
                   <Icon name="CloseCircle" size={14} aria-hidden="true" />
                 </button>
@@ -416,7 +416,7 @@ function CreateFormBody({ onClose }: { onClose: () => void }) {
           >
             <span
               className={cn(
-                "size-4 rounded-full bg-white shadow-sm transition",
+                "size-4 rounded-full bg-primary-foreground shadow-sm transition",
                 startAssessment ? "translate-x-4" : "translate-x-0",
               )}
             />

@@ -73,7 +73,7 @@ export function MeetingsList({ meetings, emptyMessage }: Props) {
                 variant="outline"
                 size="sm"
                 onClick={m.cta.onClick}
-                className="h-8 shrink-0 rounded-sm border-[1.5px] border-border-outline px-3 text-p3 font-medium"
+                className="h-8 shrink-0 rounded-sm border-[1.5px] border-border-outline px-3 text-p3"
               >
                 {m.cta.label}
               </Button>

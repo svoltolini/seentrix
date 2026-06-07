@@ -61,7 +61,7 @@ export default async function LessonPage({
       <div className="mx-auto max-w-3xl px-4 py-8 md:py-12">
         <Link
           href="/app/academy"
-          className="mb-6 inline-flex items-center gap-1.5 text-p4 font-medium text-muted-foreground transition-colors hover:text-foreground"
+          className="mb-6 inline-flex items-center gap-1.5 text-p4 text-muted-foreground transition-colors hover:text-foreground"
         >
           <Icon
             name="arrow-right-01-stroke-rounded"
@@ -110,7 +110,7 @@ export default async function LessonPage({
           {content.sections.map((section, i) => (
             <section key={i} className="scroll-mt-24">
               <div className="mb-3 flex items-center gap-3">
-                <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-primary/10 text-l6-plus text-primary">
+                <span className="flex size-7 shrink-0 items-center justify-center rounded-md bg-primary/10 text-l6-plus text-primary">
                   {i + 1}
                 </span>
                 <h2 className="text-h4 text-foreground">{section.heading}</h2>
@@ -148,7 +148,7 @@ export default async function LessonPage({
               </div>
               <a
                 href={`/api/academy/certificates/${lesson.id}`}
-                className="inline-flex shrink-0 items-center gap-1.5 rounded-sm border border-border-outline bg-card px-3 py-2 text-p4 font-semibold text-foreground transition-colors hover:bg-muted"
+                className="inline-flex shrink-0 items-center gap-1.5 rounded-sm border border-border-outline bg-card px-3 py-2 text-p4 text-foreground transition-colors hover:bg-muted"
               >
                 <Icon name="pdf-01-stroke-rounded" size={14} />
                 {t("downloadCertificate")}

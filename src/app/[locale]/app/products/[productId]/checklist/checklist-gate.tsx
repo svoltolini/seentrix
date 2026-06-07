@@ -13,10 +13,10 @@ export function ChecklistGate({ productId }: { productId: string }) {
       <div className="mb-5">
         <IconBadge name="shield-check" tone="primary" size="xl" />
       </div>
-      <h3 className="text-base font-semibold text-foreground">
+      <h3 className="text-h4 text-foreground">
         {t("detail.checklist.notAssessed")}
       </h3>
-      <p className="mt-2 max-w-sm text-sm text-muted-foreground">
+      <p className="mt-2 max-w-sm text-p2-r text-muted-foreground">
         {t("detail.checklist.notAssessedDescription")}
       </p>
       <Link

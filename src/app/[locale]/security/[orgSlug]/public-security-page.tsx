@@ -20,11 +20,26 @@ const SEVERITIES: SeveritySuggestion[] = [
   "medium",
   "low",
 ];
-const SEVERITY_COLOR: Record<SeveritySuggestion, string> = {
-  critical: "#DC2626",
-  high: "#D97706",
-  medium: "#066DE6",
-  low: "#6B7280",
+const SEVERITY_TOKEN: Record<
+  SeveritySuggestion,
+  { active: string; base: string }
+> = {
+  critical: {
+    active: "border-destructive/40 bg-destructive/10 text-destructive",
+    base: "border-border text-muted-foreground hover:text-foreground",
+  },
+  high: {
+    active: "border-warning/40 bg-warning/10 text-warning",
+    base: "border-border text-muted-foreground hover:text-foreground",
+  },
+  medium: {
+    active: "border-primary/40 bg-primary/10 text-primary",
+    base: "border-border text-muted-foreground hover:text-foreground",
+  },
+  low: {
+    active: "border-muted-foreground/30 bg-muted text-muted-foreground",
+    base: "border-border text-muted-foreground hover:text-foreground",
+  },
 };
 
 export function PublicSecurityPage({
@@ -86,19 +101,19 @@ export function PublicSecurityPage({
           className="overflow-hidden rounded-md bg-cover bg-center px-8 py-10"
           style={{ backgroundImage: "url('/images/empty-state-bg.png')" }}
         >
-          <p className="text-l6-plus uppercase tracking-wider text-white">
+          <p className="text-l6-plus uppercase tracking-wider text-primary-foreground">
             {t("eyebrow")}
           </p>
-          <h1 className="mt-2 text-h1 leading-tight text-white">
+          <h1 className="mt-2 text-h1 leading-tight text-primary-foreground">
             {t("title", { org: orgName })}
           </h1>
-          <p className="mt-3 max-w-xl text-sm text-white">
+          <p className="mt-3 max-w-xl text-p2-r text-primary-foreground">
             {t("subtitle")}
           </p>
           {contactEmail && (
             <a
               href={`mailto:${contactEmail}?subject=[Security] `}
-              className="mt-5 inline-flex items-center gap-2 rounded-lg bg-white px-4 py-2.5 text-sm font-semibold text-black transition-transform hover:-translate-y-0.5"
+              className="mt-5 inline-flex items-center gap-2 rounded-lg bg-card px-4 py-2.5 text-h5 text-foreground transition-transform hover:-translate-y-0.5"
             >
               <Icon name="lock-password-stroke-rounded" size={14} />
               {t("emailCta", { email: contactEmail })}
@@ -109,10 +124,10 @@ export function PublicSecurityPage({
         {/* Disclosure policy */}
         {policy && (
           <section className="mt-6 rounded-md border border-border bg-card p-6">
-            <h2 className="text-sm font-semibold text-foreground">
+            <h2 className="text-h5 text-foreground">
               {t("policyTitle")}
             </h2>
-            <p className="mt-3 whitespace-pre-wrap text-sm leading-relaxed text-muted-foreground">
+            <p className="mt-3 whitespace-pre-wrap text-p2-r leading-relaxed text-muted-foreground">
               {policy}
             </p>
           </section>
@@ -120,33 +135,33 @@ export function PublicSecurityPage({
 
         {/* Intake form */}
         <section className="mt-6 rounded-md border border-border bg-card p-6">
-          <h2 className="text-sm font-semibold text-foreground">
+          <h2 className="text-h5 text-foreground">
             {t("form.title")}
           </h2>
-          <p className="mt-1 text-xs text-muted-foreground">
+          <p className="mt-1 text-p4-r text-muted-foreground">
             {t("form.description")}
           </p>
 
           {submitted ? (
-            <div className="mt-6 rounded-lg border border-[#16A34A]/30 bg-[#16A34A]/10 p-5 text-center">
-              <div className="mx-auto flex size-10 items-center justify-center rounded-full bg-[#16A34A]/25">
+            <div className="mt-6 rounded-md border border-success/30 bg-success/10 p-5 text-center">
+              <div className="mx-auto flex size-10 items-center justify-center rounded-md bg-success/25">
                 <Icon
                   name="checkmark-circle-01-stroke-rounded"
                   size={20}
-                  className="text-[#16A34A]"
+                  className="text-success"
                 />
               </div>
-              <h3 className="mt-3 text-sm font-semibold text-[#16A34A]">
+              <h3 className="mt-3 text-h5 text-success">
                 {t("form.successTitle")}
               </h3>
-              <p className="mt-1 text-xs text-muted-foreground">
+              <p className="mt-1 text-p4-r text-muted-foreground">
                 {t("form.successDescription")}
               </p>
             </div>
           ) : (
             <div className="mt-5 space-y-4">
               <div>
-                <label className="text-xs font-medium text-muted-foreground">
+                <label className="text-p4 text-muted-foreground">
                   {t("form.titleLabel")} *
                 </label>
                 <Input
@@ -157,7 +172,7 @@ export function PublicSecurityPage({
                 />
               </div>
               <div>
-                <label className="text-xs font-medium text-muted-foreground">
+                <label className="text-p4 text-muted-foreground">
                   {t("form.descriptionLabel")} *
                 </label>
                 <Textarea
@@ -168,7 +183,7 @@ export function PublicSecurityPage({
                 />
               </div>
               <div>
-                <label className="text-xs font-medium text-muted-foreground">
+                <label className="text-p4 text-muted-foreground">
                   {t("form.affectedProductLabel")}
                 </label>
                 <Input
@@ -179,7 +194,7 @@ export function PublicSecurityPage({
                 />
               </div>
               <div>
-                <label className="text-xs font-medium text-muted-foreground">
+                <label className="text-p4 text-muted-foreground">
                   {t("form.severityLabel")}
                 </label>
                 <div className="mt-1.5 grid grid-cols-4 gap-2">
@@ -189,12 +204,11 @@ export function PublicSecurityPage({
                       type="button"
                       onClick={() => setSeverity(s === severity ? null : s)}
                       className={cn(
-                        "rounded-lg border px-2 py-1.5 text-xs font-semibold transition-colors",
+                        "rounded-lg border px-2 py-1.5 text-l6-plus transition-colors",
                         severity === s
-                          ? "border-[color:var(--c)] bg-[color:var(--c)]/10 text-[color:var(--c)]"
-                          : "border-border text-muted-foreground hover:text-foreground",
+                          ? SEVERITY_TOKEN[s].active
+                          : SEVERITY_TOKEN[s].base,
                       )}
-                      style={{ ["--c" as string]: SEVERITY_COLOR[s] }}
                     >
                       {t(`severity.${s}`)}
                     </button>
@@ -203,7 +217,7 @@ export function PublicSecurityPage({
               </div>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
-                  <label className="text-xs font-medium text-muted-foreground">
+                  <label className="text-p4 text-muted-foreground">
                     {t("form.reporterNameLabel")}
                   </label>
                   <Input
@@ -213,7 +227,7 @@ export function PublicSecurityPage({
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-medium text-muted-foreground">
+                  <label className="text-p4 text-muted-foreground">
                     {t("form.reporterEmailLabel")}
                   </label>
                   <Input
@@ -225,7 +239,7 @@ export function PublicSecurityPage({
                 </div>
               </div>
               <div>
-                <label className="text-xs font-medium text-muted-foreground">
+                <label className="text-p4 text-muted-foreground">
                   {t("form.reporterHandleLabel")}
                 </label>
                 <Input
@@ -235,7 +249,7 @@ export function PublicSecurityPage({
                   className="mt-1.5"
                 />
               </div>
-              <p className="text-[11px] text-muted-foreground">
+              <p className="text-p4-r text-muted-foreground">
                 {t("form.anonymousNote")}
               </p>
               <Turnstile onToken={setCaptchaToken} className="self-start" />
