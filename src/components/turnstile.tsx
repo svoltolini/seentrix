@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { Icon } from "@/components/icon";
+import { cn } from "@/lib/utils";
 
 declare global {
   interface Window {
@@ -52,10 +54,18 @@ export function Turnstile({
   onToken,
   onExpire,
   className,
+  label,
 }: {
   onToken: (token: string) => void;
   onExpire?: () => void;
   className?: string;
+  /**
+   * Optional on-brand label shown above the widget (e.g. "Security check").
+   * When provided, the widget is wrapped in a Seentrix-styled container so the
+   * third-party challenge reads as a deliberate part of the form. Cloudflare
+   * locks the widget's internals, but we own the frame, theme, and label.
+   */
+  label?: string;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<string | null>(null);
@@ -96,6 +106,9 @@ export function Turnstile({
         sitekey,
         appearance: "interaction-only",
         size: "flexible",
+        // Pin to the light theme so the widget always matches Seentrix's
+        // white-card UI instead of following the OS dark-mode preference.
+        theme: "light",
         callback: onToken,
         "expired-callback": onExpire,
       });
@@ -119,5 +132,35 @@ export function Turnstile({
   }, [sitekey]);
 
   if (!sitekey) return null;
-  return <div ref={containerRef} className={className} />;
+
+  const widget = <div ref={containerRef} />;
+
+  // Plain widget (no branded frame) when no label is requested.
+  if (!label) {
+    return <div className={className}>{widget}</div>;
+  }
+
+  // Branded container: a subtle rounded-md card with a shield icon + label in
+  // Seentrix typography, framing the Cloudflare challenge so it looks like a
+  // deliberate part of the form rather than a bare third-party widget.
+  return (
+    <div
+      className={cn(
+        "flex w-full flex-col gap-2.5 rounded-md border border-border-outline bg-muted/40 px-4 py-3.5",
+        className,
+      )}
+    >
+      <span className="inline-flex items-center gap-2 text-l6-plus uppercase tracking-wider text-muted-foreground">
+        <Icon
+          name="ShieldTick"
+          size={14}
+          variant="Bold"
+          aria-hidden="true"
+          className="text-primary"
+        />
+        {label}
+      </span>
+      {widget}
+    </div>
+  );
 }

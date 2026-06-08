@@ -54,6 +54,7 @@ export function PublicSecurityPage({
   policy: string | null;
 }) {
   const t = useTranslations("publicSecurity");
+  const tc = useTranslations("common");
   const { toast } = useToast();
   const [submitted, setSubmitted] = useState(false);
   const [title, setTitle] = useState("");
@@ -252,7 +253,11 @@ export function PublicSecurityPage({
               <p className="text-p4-r text-muted-foreground">
                 {t("form.anonymousNote")}
               </p>
-              <Turnstile onToken={setCaptchaToken} className="self-start" />
+              <Turnstile
+                onToken={setCaptchaToken}
+                label={tc("securityCheck")}
+                className="self-start"
+              />
               <Button
                 onClick={handleSubmit}
                 disabled={!title.trim() || !description.trim() || pending}

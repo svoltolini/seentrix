@@ -13,6 +13,7 @@ import { Turnstile } from "@/components/turnstile";
 
 export function NewsletterSection() {
   const t = useTranslations("landing.newsletter");
+  const tc = useTranslations("common");
   const [state, action, isPending] = useActionState<NewsletterState, FormData>(
     subscribeNewsletter,
     undefined
@@ -96,8 +97,8 @@ export function NewsletterSection() {
             </Button>
           </form>
 
-          <div className="mt-3 flex justify-center">
-            <Turnstile onToken={setCaptchaToken} />
+          <div className="mx-auto mt-3 w-full max-w-sm">
+            <Turnstile onToken={setCaptchaToken} label={tc("securityCheck")} />
           </div>
 
           {state?.status === "success" && (

@@ -38,5 +38,8 @@
   "notificationsViewAll": "View all activity",
   "addProfilePicture": "Add a profile picture",
   "language": "Language"
+ },
+ "common": {
+  "securityCheck": "Security check"
  }
 }

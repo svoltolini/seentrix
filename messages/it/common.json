@@ -38,5 +38,8 @@
   "notificationsViewAll": "Visualizza tutta l'attività",
   "addProfilePicture": "Aggiungi un'immagine del profilo",
   "language": "Lingua"
+ },
+ "common": {
+  "securityCheck": "Controllo di sicurezza"
  }
 }

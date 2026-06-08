@@ -17,6 +17,7 @@ import { submitContactEnquiry, type ContactState } from "./actions";
  */
 export function ContactForm() {
   const t = useTranslations("contact.form");
+  const tc = useTranslations("common");
   const [state, action, isPending] = useActionState<ContactState, FormData>(
     submitContactEnquiry,
     undefined,
@@ -115,7 +116,7 @@ export function ContactForm() {
         value={captchaToken ?? ""}
       />
       <div className="flex justify-start">
-        <Turnstile onToken={setCaptchaToken} />
+        <Turnstile onToken={setCaptchaToken} label={tc("securityCheck")} />
       </div>
 
       {state?.status === "error" && (
