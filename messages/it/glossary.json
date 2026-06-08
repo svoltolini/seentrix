@@ -191,6 +191,21 @@
     "security_update": {
       "title": "Aggiornamento di sicurezza",
       "body": "Una release il cui scopo principale è la correzione di una o più vulnerabilità. Ai sensi dell'Articolo 13(8) del CRA, gli aggiornamenti di sicurezza devono essere resi disponibili \"senza indebito ritardo e gratuitamente\". Contrassegnare una release come aggiornamento di sicurezza in Seentrix la segnala automaticamente nel registro delle prove di conformità."
+    },
+    "annex_vii": {
+      "title": "Allegato VII (documentazione tecnica)",
+      "body": "L'elenco del CRA di ciò che il fascicolo tecnico di un prodotto deve contenere: una descrizione generale e la destinazione d'uso; le informazioni su progettazione, sviluppo e produzione — inclusi i diagrammi di architettura e di flusso di dati (2(a)), la SBOM, la politica di divulgazione coordinata delle vulnerabilità e la descrizione degli aggiornamenti sicuri (2(b)); la valutazione dei rischi di cibersicurezza; la giustificazione del periodo di supporto; le norme applicate; i rapporti sui test di sicurezza effettuati; e la dichiarazione di conformità. La scheda «Diagrammi e prove» di Seentrix alimenta i punti 1.3, 2(a) e 6.",
+      "ref": "Allegato VII del CRA — la documentazione tecnica che un fabbricante deve redigere prima di immettere un prodotto sul mercato e conservare per 10 anni (o il periodo di supporto, se più lungo)."
+    },
+    "threat_model": {
+      "title": "Modello di minaccia",
+      "body": "Un'analisi strutturata di come un prodotto potrebbe essere attaccato: quali asset protegge, i confini di fiducia che i dati attraversano, i punti di ingresso che un attaccante potrebbe raggiungere e le mitigazioni in atto per ogni minaccia plausibile. La modellazione delle minacce (es. STRIDE su un diagramma di flusso di dati) è la pratica di security-by-design attesa dietro una valutazione dei rischi CRA credibile — trasforma «abbiamo pensato alla sicurezza» in un artefatto documentato che un revisore può seguire.",
+      "ref": "La modellazione delle minacce non è nominata testualmente nel CRA, ma l'allegato I parte I(1) (sicurezza fin dalla progettazione) e la valutazione dei rischi dell'articolo 13 di fatto la richiedono."
+    },
+    "data_flow_diagram": {
+      "title": "Diagramma di flusso di dati",
+      "body": "Un disegno che mostra come i dati si muovono attraverso un prodotto — i processi, gli archivi di dati, le entità esterne e i confini di fiducia tra di essi. È la base su cui si esegue la modellazione delle minacce ed è uno dei diagrammi che l'allegato VII 2(a) del CRA si aspetta nel fascicolo tecnico, accanto alla descrizione dell'architettura di sistema.",
+      "ref": "Allegato VII 2(a) del CRA — la documentazione tecnica deve includere una descrizione della progettazione e dello sviluppo, compresi i diagrammi di flusso di dati."
     }
   },
   "help": {

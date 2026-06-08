@@ -280,3 +280,47 @@ minimum:
    handling.
 7. A copy of the EU Declaration of Conformity.
 8. Where applicable, SBOM and vulnerability disclosure policy.
+
+## Architecture and data-flow diagrams (Annex VII 2(a))
+
+Annex VII point 2(a) requires the technical documentation to describe the
+design and development of the product, and this is understood to include
+the system architecture and how data flows through the product. In
+practice manufacturers provide:
+
+- an **architecture diagram** showing the product's components, the
+  interfaces between them, and any external systems it talks to;
+- a **data-flow diagram** showing how data (especially personal or
+  security-relevant data) moves between processes, data stores, and
+  external entities, with the trust boundaries marked;
+- an **environment / deployment diagram** showing where the product runs
+  and what it depends on; and
+- for hardware, **photographs or illustrations** of the device (Annex VII
+  point 1.3).
+
+These drawings are not optional decoration: a market-surveillance
+authority uses them to understand what they are assessing, and they are
+the canvas on which threat modelling is performed.
+
+## Threat modelling as a secure-by-design practice
+
+Threat modelling is the expected secure-by-design practice behind a
+credible Article 13 risk assessment, even though the CRA does not name it
+verbatim. Working over a data-flow diagram, the team identifies the assets
+each component protects, the trust boundaries data crosses, the entry
+points an attacker could reach, and — for each plausible threat — the
+mitigation in place. STRIDE (spoofing, tampering, repudiation, information
+disclosure, denial of service, elevation of privilege) is a common
+checklist. The mitigations identified feed directly into the Annex I
+Part I requirement-by-requirement mapping in the risk assessment.
+
+## Test reports and security-testing evidence (Annex VII point 6)
+
+Annex VII point 6 requires reports of the tests carried out to verify
+conformity with the essential requirements (including the Annex I Part II
+vulnerability-handling obligations). Acceptable evidence includes
+penetration-test reports, fuzzing results, static and dynamic code
+analysis output, and third-party security assessments. This evidence,
+retained for at least 10 years (or the support period if longer) alongside
+the rest of the technical file, is what turns a claim of "we tested this"
+into proof an auditor can follow.

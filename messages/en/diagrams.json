@@ -1,0 +1,104 @@
+{
+  "diagrams": {
+    "seed": {
+      "label": "New to diagrams & evidence?",
+      "sublabel": "Ask Seentrix AI which architecture and data-flow diagrams the CRA expects in your Annex VII technical file — and what counts as test-report evidence."
+    },
+    "types": {
+      "architecture": "Architecture",
+      "data_flow": "Data flow",
+      "environment": "Environment",
+      "threat_model": "Threat model",
+      "hardware_layout": "Hardware layout"
+    },
+    "diagrams": {
+      "title": "Diagrams",
+      "subtitle": "Architecture, data-flow, environment, threat-model and hardware-layout drawings for your Annex VII technical file.",
+      "new": "New diagram",
+      "empty": "No diagrams yet",
+      "emptyDescription": "Create your first architecture or data-flow diagram. Annex VII 2(a) expects a description of the product's design, development and data flows.",
+      "deleteTitle": "Delete diagram",
+      "deleteDescription": "This permanently deletes the diagram and its saved drawing. This action cannot be undone.",
+      "deleteConfirm": "Delete diagram",
+      "deleteCancel": "Cancel",
+      "deleting": "Deleting…"
+    },
+    "card": {
+      "open": "Open",
+      "actions": "Diagram actions",
+      "rename": "Rename",
+      "delete": "Delete",
+      "renameTitle": "Rename diagram",
+      "renameCancel": "Cancel",
+      "renameConfirm": "Save",
+      "renaming": "Saving…"
+    },
+    "editor": {
+      "titleLabel": "Diagram title",
+      "titlePlaceholder": "e.g. System architecture overview",
+      "titleRequired": "Please enter a title before saving.",
+      "close": "Close",
+      "save": "Save",
+      "saving": "Saving…",
+      "errors": {
+        "invalidType": "Pick a valid diagram type.",
+        "titleRequired": "A title is required.",
+        "noScene": "There's nothing to save yet.",
+        "sceneTooLarge": "This drawing is too large to save (10 MB max).",
+        "previewTooLarge": "The preview image is too large.",
+        "uploadFailed": "Saving the drawing failed. Please try again.",
+        "notAuthorized": "You don't have permission to edit diagrams.",
+        "notAuthenticated": "You must be signed in.",
+        "generic": "Something went wrong. Please try again."
+      }
+    },
+    "evidence": {
+      "title": "Evidence",
+      "subtitle": "Test reports, penetration tests, code analysis and other evidence that backs your Annex VII technical file.",
+      "add": "Add evidence",
+      "empty": "No evidence yet",
+      "emptyDescription": "Upload test reports, penetration-test results or code-analysis output. Annex VII point 6 requires reports of the security tests carried out.",
+      "addTitle": "Add evidence",
+      "addDescription": "Upload a file, give it a title, and tag it with a category and the Annex VII point it supports.",
+      "dropzone": "Drag-and-drop a file, or browse",
+      "dropzoneHint": "PDF, image, document, CSV or zip. Max 25 MB.",
+      "titleLabel": "Title",
+      "titlePlaceholder": "e.g. Penetration test report Q2 2026",
+      "categoryLabel": "Category",
+      "annexLabel": "Annex VII point",
+      "annexNone": "Not mapped",
+      "annexPoint": "Point {point}",
+      "annexShort": "VII · {point}",
+      "cancel": "Cancel",
+      "uploading": "Uploading…",
+      "submit": "Upload evidence",
+      "download": "Download",
+      "delete": "Delete",
+      "deleteTitle": "Delete evidence",
+      "deleteDescription": "This permanently deletes the evidence file. This action cannot be undone.",
+      "deleteConfirm": "Delete evidence",
+      "deleteCancel": "Cancel",
+      "deleting": "Deleting…",
+      "categories": {
+        "test_report": "Test report",
+        "penetration_test": "Penetration test",
+        "code_analysis": "Code analysis",
+        "fuzzing": "Fuzzing",
+        "third_party_test": "Third-party test",
+        "due_diligence": "Due diligence",
+        "hardware_photo": "Hardware photo",
+        "other": "Other"
+      },
+      "errors": {
+        "noFile": "Choose a file to upload.",
+        "fileTooLarge": "That file is too large (25 MB max).",
+        "unsupportedMime": "That file type isn't supported.",
+        "invalidCategory": "Pick a valid category.",
+        "uploadFailed": "The upload failed. Please try again.",
+        "notAuthorized": "You don't have permission to add evidence.",
+        "notAuthenticated": "You must be signed in.",
+        "generic": "Something went wrong. Please try again."
+      }
+    }
+  }
+}

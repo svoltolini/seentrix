@@ -1,0 +1,104 @@
+{
+  "diagrams": {
+    "seed": {
+      "label": "Nouveau dans les schémas et preuves ?",
+      "sublabel": "Demandez à Seentrix AI quels schémas d'architecture et de flux de données le CRA attend dans votre dossier technique de l'annexe VII — et ce qui constitue une preuve de rapport de test."
+    },
+    "types": {
+      "architecture": "Architecture",
+      "data_flow": "Flux de données",
+      "environment": "Environnement",
+      "threat_model": "Modèle de menaces",
+      "hardware_layout": "Schéma matériel"
+    },
+    "diagrams": {
+      "title": "Schémas",
+      "subtitle": "Schémas d'architecture, de flux de données, d'environnement, de modèle de menaces et de matériel pour votre dossier technique de l'annexe VII.",
+      "new": "Nouveau schéma",
+      "empty": "Aucun schéma pour l'instant",
+      "emptyDescription": "Créez votre premier schéma d'architecture ou de flux de données. L'annexe VII 2(a) attend une description de la conception, du développement et des flux de données du produit.",
+      "deleteTitle": "Supprimer le schéma",
+      "deleteDescription": "Cette action supprime définitivement le schéma et son dessin enregistré. Elle est irréversible.",
+      "deleteConfirm": "Supprimer le schéma",
+      "deleteCancel": "Annuler",
+      "deleting": "Suppression…"
+    },
+    "card": {
+      "open": "Ouvrir",
+      "actions": "Actions du schéma",
+      "rename": "Renommer",
+      "delete": "Supprimer",
+      "renameTitle": "Renommer le schéma",
+      "renameCancel": "Annuler",
+      "renameConfirm": "Enregistrer",
+      "renaming": "Enregistrement…"
+    },
+    "editor": {
+      "titleLabel": "Titre du schéma",
+      "titlePlaceholder": "p. ex. Vue d'ensemble de l'architecture système",
+      "titleRequired": "Veuillez saisir un titre avant d'enregistrer.",
+      "close": "Fermer",
+      "save": "Enregistrer",
+      "saving": "Enregistrement…",
+      "errors": {
+        "invalidType": "Choisissez un type de schéma valide.",
+        "titleRequired": "Un titre est requis.",
+        "noScene": "Il n'y a encore rien à enregistrer.",
+        "sceneTooLarge": "Ce dessin est trop volumineux pour être enregistré (10 Mo max).",
+        "previewTooLarge": "L'image d'aperçu est trop volumineuse.",
+        "uploadFailed": "L'enregistrement du dessin a échoué. Veuillez réessayer.",
+        "notAuthorized": "Vous n'avez pas la permission de modifier les schémas.",
+        "notAuthenticated": "Vous devez être connecté.",
+        "generic": "Une erreur s'est produite. Veuillez réessayer."
+      }
+    },
+    "evidence": {
+      "title": "Preuves",
+      "subtitle": "Rapports de test, tests d'intrusion, analyses de code et autres preuves qui étayent votre dossier technique de l'annexe VII.",
+      "add": "Ajouter une preuve",
+      "empty": "Aucune preuve pour l'instant",
+      "emptyDescription": "Téléversez des rapports de test, des résultats de tests d'intrusion ou des sorties d'analyse de code. Le point 6 de l'annexe VII exige des rapports sur les tests de sécurité réalisés.",
+      "addTitle": "Ajouter une preuve",
+      "addDescription": "Téléversez un fichier, donnez-lui un titre et associez-le à une catégorie et au point de l'annexe VII qu'il étaye.",
+      "dropzone": "Glissez-déposez un fichier, ou parcourez",
+      "dropzoneHint": "PDF, image, document, CSV ou zip. 25 Mo max.",
+      "titleLabel": "Titre",
+      "titlePlaceholder": "p. ex. Rapport de test d'intrusion T2 2026",
+      "categoryLabel": "Catégorie",
+      "annexLabel": "Point de l'annexe VII",
+      "annexNone": "Non associé",
+      "annexPoint": "Point {point}",
+      "annexShort": "VII · {point}",
+      "cancel": "Annuler",
+      "uploading": "Téléversement…",
+      "submit": "Téléverser la preuve",
+      "download": "Télécharger",
+      "delete": "Supprimer",
+      "deleteTitle": "Supprimer la preuve",
+      "deleteDescription": "Cette action supprime définitivement le fichier de preuve. Elle est irréversible.",
+      "deleteConfirm": "Supprimer la preuve",
+      "deleteCancel": "Annuler",
+      "deleting": "Suppression…",
+      "categories": {
+        "test_report": "Rapport de test",
+        "penetration_test": "Test d'intrusion",
+        "code_analysis": "Analyse de code",
+        "fuzzing": "Fuzzing",
+        "third_party_test": "Test par un tiers",
+        "due_diligence": "Diligence raisonnable",
+        "hardware_photo": "Photo du matériel",
+        "other": "Autre"
+      },
+      "errors": {
+        "noFile": "Choisissez un fichier à téléverser.",
+        "fileTooLarge": "Ce fichier est trop volumineux (25 Mo max).",
+        "unsupportedMime": "Ce type de fichier n'est pas pris en charge.",
+        "invalidCategory": "Choisissez une catégorie valide.",
+        "uploadFailed": "Le téléversement a échoué. Veuillez réessayer.",
+        "notAuthorized": "Vous n'avez pas la permission d'ajouter des preuves.",
+        "notAuthenticated": "Vous devez être connecté.",
+        "generic": "Une erreur s'est produite. Veuillez réessayer."
+      }
+    }
+  }
+}

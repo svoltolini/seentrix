@@ -191,6 +191,21 @@
     "security_update": {
       "title": "Mise à jour de sécurité",
       "body": "Une version dont l'objectif principal est de corriger une ou plusieurs vulnérabilités. En vertu de l'Article 13(8) du CRA, les mises à jour de sécurité doivent être mises à disposition « sans retard indu et gratuitement ». Marquer une version comme mise à jour de sécurité dans Seentrix la signale automatiquement dans le registre de preuves de conformité."
+    },
+    "annex_vii": {
+      "title": "Annexe VII (documentation technique)",
+      "body": "La liste du CRA de ce que le dossier technique d'un produit doit contenir : une description générale et la destination prévue ; les informations de conception, de développement et de production — y compris les schémas d'architecture et de flux de données (2(a)), le SBOM, la politique de divulgation coordonnée des vulnérabilités et la description des mises à jour sécurisées (2(b)) ; l'évaluation des risques de cybersécurité ; la justification de la période de support ; les normes appliquées ; les rapports sur les tests de sécurité réalisés ; et la déclaration de conformité. L'onglet « Schémas & preuves » de Seentrix alimente les points 1.3, 2(a) et 6.",
+      "ref": "Annexe VII du CRA — la documentation technique qu'un fabricant doit établir avant la mise sur le marché d'un produit et conserver pendant 10 ans (ou la période de support, si elle est plus longue)."
+    },
+    "threat_model": {
+      "title": "Modèle de menaces",
+      "body": "Une analyse structurée de la manière dont un produit pourrait être attaqué : les actifs qu'il protège, les frontières de confiance que les données franchissent, les points d'entrée qu'un attaquant pourrait atteindre et les mesures d'atténuation en place pour chaque menace plausible. La modélisation des menaces (p. ex. STRIDE sur un diagramme de flux de données) est la pratique de sécurité dès la conception attendue derrière une évaluation des risques CRA crédible — elle transforme « nous avons pensé à la sécurité » en un artefact documenté qu'un auditeur peut suivre.",
+      "ref": "La modélisation des menaces n'est pas nommée textuellement dans le CRA, mais l'annexe I partie I(1) (sécurité dès la conception) et l'évaluation des risques de l'article 13 l'exigent de fait."
+    },
+    "data_flow_diagram": {
+      "title": "Diagramme de flux de données",
+      "body": "Un schéma qui montre comment les données circulent dans un produit — les processus, les magasins de données, les entités externes et les frontières de confiance entre eux. C'est le support sur lequel se fait la modélisation des menaces, et l'un des schémas que l'annexe VII 2(a) du CRA attend dans le dossier technique, aux côtés de la description de l'architecture système.",
+      "ref": "Annexe VII 2(a) du CRA — la documentation technique doit inclure une description de la conception et du développement, y compris des diagrammes de flux de données."
     }
   },
   "help": {

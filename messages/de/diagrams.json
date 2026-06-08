@@ -1,0 +1,104 @@
+{
+  "diagrams": {
+    "seed": {
+      "label": "Neu bei Diagrammen & Nachweisen?",
+      "sublabel": "Fragen Sie Seentrix AI, welche Architektur- und Datenflussdiagramme der CRA in Ihrer technischen Dokumentation nach Anhang VII erwartet – und was als Testbericht-Nachweis gilt."
+    },
+    "types": {
+      "architecture": "Architektur",
+      "data_flow": "Datenfluss",
+      "environment": "Umgebung",
+      "threat_model": "Bedrohungsmodell",
+      "hardware_layout": "Hardware-Layout"
+    },
+    "diagrams": {
+      "title": "Diagramme",
+      "subtitle": "Architektur-, Datenfluss-, Umgebungs-, Bedrohungsmodell- und Hardware-Layout-Zeichnungen für Ihre technische Dokumentation nach Anhang VII.",
+      "new": "Neues Diagramm",
+      "empty": "Noch keine Diagramme",
+      "emptyDescription": "Erstellen Sie Ihr erstes Architektur- oder Datenflussdiagramm. Anhang VII 2(a) erwartet eine Beschreibung des Designs, der Entwicklung und der Datenflüsse des Produkts.",
+      "deleteTitle": "Diagramm löschen",
+      "deleteDescription": "Dadurch werden das Diagramm und die gespeicherte Zeichnung dauerhaft gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.",
+      "deleteConfirm": "Diagramm löschen",
+      "deleteCancel": "Abbrechen",
+      "deleting": "Wird gelöscht…"
+    },
+    "card": {
+      "open": "Öffnen",
+      "actions": "Diagrammaktionen",
+      "rename": "Umbenennen",
+      "delete": "Löschen",
+      "renameTitle": "Diagramm umbenennen",
+      "renameCancel": "Abbrechen",
+      "renameConfirm": "Speichern",
+      "renaming": "Wird gespeichert…"
+    },
+    "editor": {
+      "titleLabel": "Diagrammtitel",
+      "titlePlaceholder": "z. B. Überblick Systemarchitektur",
+      "titleRequired": "Bitte geben Sie vor dem Speichern einen Titel ein.",
+      "close": "Schließen",
+      "save": "Speichern",
+      "saving": "Wird gespeichert…",
+      "errors": {
+        "invalidType": "Wählen Sie einen gültigen Diagrammtyp.",
+        "titleRequired": "Ein Titel ist erforderlich.",
+        "noScene": "Es gibt noch nichts zu speichern.",
+        "sceneTooLarge": "Diese Zeichnung ist zu groß zum Speichern (max. 10 MB).",
+        "previewTooLarge": "Das Vorschaubild ist zu groß.",
+        "uploadFailed": "Das Speichern der Zeichnung ist fehlgeschlagen. Bitte erneut versuchen.",
+        "notAuthorized": "Sie sind nicht berechtigt, Diagramme zu bearbeiten.",
+        "notAuthenticated": "Sie müssen angemeldet sein.",
+        "generic": "Etwas ist schiefgelaufen. Bitte erneut versuchen."
+      }
+    },
+    "evidence": {
+      "title": "Nachweise",
+      "subtitle": "Testberichte, Penetrationstests, Code-Analysen und weitere Nachweise, die Ihre technische Dokumentation nach Anhang VII belegen.",
+      "add": "Nachweis hinzufügen",
+      "empty": "Noch keine Nachweise",
+      "emptyDescription": "Laden Sie Testberichte, Penetrationstest-Ergebnisse oder Code-Analyse-Ausgaben hoch. Anhang VII Punkt 6 verlangt Berichte über die durchgeführten Sicherheitstests.",
+      "addTitle": "Nachweis hinzufügen",
+      "addDescription": "Laden Sie eine Datei hoch, geben Sie ihr einen Titel und versehen Sie sie mit einer Kategorie und dem Anhang-VII-Punkt, den sie belegt.",
+      "dropzone": "Datei hierher ziehen oder durchsuchen",
+      "dropzoneHint": "PDF, Bild, Dokument, CSV oder ZIP. Max. 25 MB.",
+      "titleLabel": "Titel",
+      "titlePlaceholder": "z. B. Penetrationstestbericht Q2 2026",
+      "categoryLabel": "Kategorie",
+      "annexLabel": "Anhang-VII-Punkt",
+      "annexNone": "Nicht zugeordnet",
+      "annexPoint": "Punkt {point}",
+      "annexShort": "VII · {point}",
+      "cancel": "Abbrechen",
+      "uploading": "Wird hochgeladen…",
+      "submit": "Nachweis hochladen",
+      "download": "Herunterladen",
+      "delete": "Löschen",
+      "deleteTitle": "Nachweis löschen",
+      "deleteDescription": "Dadurch wird die Nachweisdatei dauerhaft gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.",
+      "deleteConfirm": "Nachweis löschen",
+      "deleteCancel": "Abbrechen",
+      "deleting": "Wird gelöscht…",
+      "categories": {
+        "test_report": "Testbericht",
+        "penetration_test": "Penetrationstest",
+        "code_analysis": "Code-Analyse",
+        "fuzzing": "Fuzzing",
+        "third_party_test": "Test durch Dritte",
+        "due_diligence": "Sorgfaltsprüfung",
+        "hardware_photo": "Hardware-Foto",
+        "other": "Sonstiges"
+      },
+      "errors": {
+        "noFile": "Wählen Sie eine Datei zum Hochladen.",
+        "fileTooLarge": "Diese Datei ist zu groß (max. 25 MB).",
+        "unsupportedMime": "Dieser Dateityp wird nicht unterstützt.",
+        "invalidCategory": "Wählen Sie eine gültige Kategorie.",
+        "uploadFailed": "Der Upload ist fehlgeschlagen. Bitte erneut versuchen.",
+        "notAuthorized": "Sie sind nicht berechtigt, Nachweise hinzuzufügen.",
+        "notAuthenticated": "Sie müssen angemeldet sein.",
+        "generic": "Etwas ist schiefgelaufen. Bitte erneut versuchen."
+      }
+    }
+  }
+}

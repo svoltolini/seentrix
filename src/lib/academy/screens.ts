@@ -50,6 +50,15 @@ export const SCREEN_LESSONS = {
       "annex-i-essential-requirements",
     ],
   },
+  diagrams: {
+    key: "diagrams",
+    href: "/app/products",
+    icon: "Category",
+    lessons: [
+      "threat-modelling-and-diagrams",
+      "annex-i-essential-requirements",
+    ],
+  },
   releases: {
     key: "releases",
     href: "/app/products",

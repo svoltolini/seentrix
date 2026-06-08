@@ -35,6 +35,7 @@ export const GLOSSARY_TERMS = [
   "cra",
   "annex_i",
   "annex_v",
+  "annex_vii",
   "article_13",
   "article_14",
   "essential_requirements",
@@ -64,6 +65,10 @@ export const GLOSSARY_TERMS = [
   "update_channel",
   "release",
   "security_update",
+
+  // Secure-by-design & technical documentation
+  "threat_model",
+  "data_flow_diagram",
 ] as const;
 
 export type GlossaryTermId = (typeof GLOSSARY_TERMS)[number];
@@ -94,6 +99,7 @@ export const GLOSSARY_RELATED: Partial<Record<GlossaryTermId, GlossaryTermId[]>>
   cra: ["annex_i", "annex_v", "article_13", "article_14"],
   annex_i: ["essential_requirements", "cra", "sbom"],
   annex_v: ["doc", "notified_body", "ce_marking"],
+  annex_vii: ["annex_i", "threat_model", "data_flow_diagram", "sbom"],
   article_13: ["support_period", "cra"],
   article_14: ["early_warning", "incident_report", "final_report", "enisa"],
   essential_requirements: ["annex_i", "conformity_assessment"],
@@ -121,6 +127,9 @@ export const GLOSSARY_RELATED: Partial<Record<GlossaryTermId, GlossaryTermId[]>>
   update_channel: ["support_period", "release", "security_update"],
   release: ["security_update", "semver", "digest"],
   security_update: ["release", "support_period", "article_13"],
+
+  threat_model: ["data_flow_diagram", "annex_vii", "annex_i"],
+  data_flow_diagram: ["threat_model", "annex_vii"],
 };
 
 /**
@@ -171,6 +180,10 @@ export const GLOSSARY_LESSONS: Partial<Record<GlossaryTermId, string>> = {
   update_channel: "support-period-obligations",
   release: "support-period-obligations",
   security_update: "support-period-obligations",
+
+  annex_vii: "threat-modelling-and-diagrams",
+  threat_model: "threat-modelling-and-diagrams",
+  data_flow_diagram: "threat-modelling-and-diagrams",
 };
 
 /**
@@ -218,6 +231,10 @@ export const ACADEMY_LESSONS = {
   "cvd-and-psirt": {
     title: "Coordinated vulnerability disclosure and PSIRT",
     duration: "6 min",
+  },
+  "threat-modelling-and-diagrams": {
+    title: "Threat modelling, diagrams and Annex VII evidence",
+    duration: "8 min",
   },
 } satisfies Record<string, { title: string; duration: string }>;
 
