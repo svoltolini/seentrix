@@ -241,6 +241,21 @@
       "title": "Allegato VI — DoC semplificata",
       "body": "La dichiarazione di conformità UE semplificata: una forma breve che nomina il prodotto e il fabbricante con una dichiarazione che la dichiarazione di conformità completa è disponibile a un determinato indirizzo internet. È ciò che un fabbricante può stampare sul prodotto o sull'imballaggio; l'indirizzo rimanda a una pagina pubblica che ospita la dichiarazione. Seentrix la pubblica a /doc/<org-slug>/<product-id> quando il prodotto è pubblicato e l'organizzazione ha abilitato le pagine pubbliche.",
       "ref": "Allegato VI del CRA — dichiarazione di conformità UE semplificata."
+    },
+    "supply_chain": {
+      "title": "Catena di fornitura",
+      "body": "La catena di operatori economici attorno a un prodotto: fornitori a monte (fornitori di componenti e software, produttori conto terzi) e operatori a valle (importatori, distributori, rivenditori). Il CRA richiede registri di diligenza e tracciabilità — nomi e indirizzi — conservati per dieci anni affinché un prodotto sia tracciabile in entrambe le direzioni.",
+      "ref": "Articolo 23 del CRA — diligenza e registri di tracciabilità della catena di fornitura (conservazione 10 anni)."
+    },
+    "post_market_monitoring": {
+      "title": "Monitoraggio post-commercializzazione",
+      "body": "Il dovere del fabbricante di continuare a sorvegliare un prodotto con elementi digitali — e i componenti di terzi che integra — per le vulnerabilità per tutto il periodo di supporto, e di tenere un registro documentato degli aspetti di cibersicurezza individuati nel tempo. In Seentrix è il registro di monitoraggio nella scheda Ciclo di vita & catena di fornitura.",
+      "ref": "Articolo 13(7) del CRA — monitoraggio post-commercializzazione continuo e documentazione."
+    },
+    "corrective_action": {
+      "title": "Azione correttiva / richiamo",
+      "body": "Quando un prodotto presenta un rischio di cibersicurezza significativo, il fabbricante deve riportarlo a conformità, ritirarlo dal mercato o richiamarlo — e conservare una procedura documentata per farlo. Le autorità possono richiedere un'azione correttiva; la procedura indica chi decide, come raggiungere i clienti e come distribuire la correzione.",
+      "ref": "Articolo 13(21) del CRA — misure correttive quando un prodotto presenta un rischio di cibersicurezza significativo."
     }
   },
   "help": {

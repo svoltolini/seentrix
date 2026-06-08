@@ -1,0 +1,107 @@
+{
+  "lifecycle": {
+    "title": "Cycle de vie & chaîne d'approvisionnement",
+    "subtitle": "Registres post-commercialisation : module de conformité, registre de la chaîne d'approvisionnement, journal de surveillance, calendrier des tests de sécurité, avis de vulnérabilité et fin de support — tous exportables.",
+    "actions": {
+      "export": "Exporter le registre",
+      "saveNotes": "Enregistrer les notes",
+      "add": "Ajouter"
+    },
+    "feedback": { "saved": "Enregistré." },
+    "errors": { "generic": "Une erreur est survenue. Veuillez réessayer." },
+    "sections": {
+      "conformity": "Module de conformité & surveillance",
+      "supplyChain": "Registre de la chaîne d'approvisionnement",
+      "monitoring": "Surveillance post-commercialisation",
+      "advisories": "Avis de vulnérabilité",
+      "securityTests": "Tests de sécurité récurrents",
+      "endOfSupport": "Fin de support & action corrective"
+    },
+    "conformity": {
+      "description": "Le module d'évaluation de la conformité choisi, l'organisme notifié et les notes des audits de surveillance (art. 32 / annexe VIII).",
+      "route": "Voie de conformité",
+      "notifiedBody": "Organisme notifié",
+      "surveillance": "Notes de surveillance / d'audit",
+      "surveillancePlaceholder": "Notes des audits de surveillance de l'organisme notifié…"
+    },
+    "routes": {
+      "module_a": "Module A — contrôle interne",
+      "module_b_c": "Module B+C — examen UE de type",
+      "module_h": "Module H — assurance qualité complète",
+      "european_certification": "Certification européenne de cybersécurité"
+    },
+    "supply": {
+      "description": "Fournisseurs en amont et opérateurs en aval de la chaîne d'approvisionnement du produit (art. 23).",
+      "retention": "Conservez ces registres 10 ans après la mise sur le marché (art. 23).",
+      "upstream": "Fournisseur en amont",
+      "downstream": "Opérateur en aval",
+      "empty": "Aucune entrée de chaîne d'approvisionnement.",
+      "name": "Nom",
+      "address": "Adresse",
+      "contact": "Contact"
+    },
+    "monitoring": {
+      "description": "Un journal continu des aspects de cybersécurité documentés et des vulnérabilités tout au long de la vie du produit (art. 13(7)).",
+      "empty": "Aucune entrée de surveillance.",
+      "descriptionField": "Description",
+      "noSeverity": "Gravité…"
+    },
+    "sources": {
+      "internal_review": "Examen interne",
+      "advisory": "Avis",
+      "incident": "Incident",
+      "security_test": "Test de sécurité",
+      "external_report": "Signalement externe",
+      "other": "Autre"
+    },
+    "severities": {
+      "critical": "Critique",
+      "high": "Élevé",
+      "medium": "Moyen",
+      "low": "Faible",
+      "info": "Info"
+    },
+    "advisories": {
+      "description": "Un avis de divulgation publique par vulnérabilité corrigée (annexe I partie II(4)).",
+      "empty": "Aucun avis pour l'instant.",
+      "ref": "Réf.",
+      "title": "Titre",
+      "fixed": "Corrigé dans",
+      "public": "Public",
+      "private": "Privé"
+    },
+    "tests": {
+      "description": "Un calendrier et un journal de tests de sécurité récurrents — tests d'intrusion, fuzzing, analyse de code (annexe I partie II(3)).",
+      "empty": "Aucun test programmé.",
+      "everyDays": "tous les {n} jours",
+      "last": "dernier",
+      "next": "prochain",
+      "frequency": "Tous les N jours",
+      "result": "Résultat"
+    },
+    "testTypes": {
+      "penetration_test": "Test d'intrusion",
+      "code_analysis": "Analyse de code",
+      "fuzzing": "Fuzzing",
+      "sast": "SAST",
+      "dast": "DAST",
+      "third_party_audit": "Audit par un tiers",
+      "other": "Autre"
+    },
+    "eos": {
+      "description": "La date de fin de support, l'avis de fin de support aux utilisateurs (art. 13(19)) et la procédure d'action corrective / de rappel (art. 13(21)).",
+      "supportEnd": "Fin du support",
+      "unset": "Définissez la période de support dans l'aperçu du produit.",
+      "notified": "Utilisateurs notifiés le {date}",
+      "markNotified": "Marquer les utilisateurs notifiés",
+      "notice": "Avis de fin de support",
+      "noticePlaceholder": "Le message que reçoivent les utilisateurs à la fin du support…",
+      "corrective": "Procédure d'action corrective / de rappel",
+      "correctivePlaceholder": "Comment vous retirerez, rappellerez ou corrigerez le produit s'il présente un risque de cybersécurité important…"
+    },
+    "pdf": {
+      "title": "Registre du cycle de vie & de la chaîne d'approvisionnement",
+      "none": "Rien d'enregistré"
+    }
+  }
+}

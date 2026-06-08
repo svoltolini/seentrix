@@ -1,0 +1,107 @@
+{
+  "lifecycle": {
+    "title": "Ciclo di vita & catena di fornitura",
+    "subtitle": "Registri post-commercializzazione: modulo di conformità, registro della catena di fornitura, log di monitoraggio, calendario dei test di sicurezza, advisory sulle vulnerabilità e fine supporto — tutti esportabili.",
+    "actions": {
+      "export": "Esporta registro",
+      "saveNotes": "Salva note",
+      "add": "Aggiungi"
+    },
+    "feedback": { "saved": "Salvato." },
+    "errors": { "generic": "Qualcosa è andato storto. Riprova." },
+    "sections": {
+      "conformity": "Modulo di conformità & sorveglianza",
+      "supplyChain": "Registro della catena di fornitura",
+      "monitoring": "Monitoraggio post-commercializzazione",
+      "advisories": "Advisory sulle vulnerabilità",
+      "securityTests": "Test di sicurezza ricorrenti",
+      "endOfSupport": "Fine supporto & azione correttiva"
+    },
+    "conformity": {
+      "description": "Il modulo di valutazione della conformità scelto, l'organismo notificato e le eventuali note degli audit di sorveglianza (art. 32 / allegato VIII).",
+      "route": "Via di conformità",
+      "notifiedBody": "Organismo notificato",
+      "surveillance": "Note di sorveglianza / audit",
+      "surveillancePlaceholder": "Note degli audit di sorveglianza dell'organismo notificato…"
+    },
+    "routes": {
+      "module_a": "Modulo A — controllo interno",
+      "module_b_c": "Modulo B+C — esame UE del tipo",
+      "module_h": "Modulo H — garanzia qualità totale",
+      "european_certification": "Certificazione europea di cibersicurezza"
+    },
+    "supply": {
+      "description": "Fornitori a monte e operatori a valle nella catena di fornitura del prodotto (art. 23).",
+      "retention": "Conserva questi registri per 10 anni dopo l'immissione sul mercato (art. 23).",
+      "upstream": "Fornitore a monte",
+      "downstream": "Operatore a valle",
+      "empty": "Nessuna voce della catena di fornitura.",
+      "name": "Nome",
+      "address": "Indirizzo",
+      "contact": "Contatto"
+    },
+    "monitoring": {
+      "description": "Un registro continuo degli aspetti di cibersicurezza documentati e delle vulnerabilità durante la vita del prodotto (art. 13(7)).",
+      "empty": "Nessuna voce di monitoraggio.",
+      "descriptionField": "Descrizione",
+      "noSeverity": "Gravità…"
+    },
+    "sources": {
+      "internal_review": "Revisione interna",
+      "advisory": "Advisory",
+      "incident": "Incidente",
+      "security_test": "Test di sicurezza",
+      "external_report": "Segnalazione esterna",
+      "other": "Altro"
+    },
+    "severities": {
+      "critical": "Critico",
+      "high": "Alto",
+      "medium": "Medio",
+      "low": "Basso",
+      "info": "Info"
+    },
+    "advisories": {
+      "description": "Un advisory di divulgazione pubblica per ogni vulnerabilità risolta (allegato I parte II(4)).",
+      "empty": "Nessun advisory.",
+      "ref": "Rif.",
+      "title": "Titolo",
+      "fixed": "Risolta in",
+      "public": "Pubblico",
+      "private": "Privato"
+    },
+    "tests": {
+      "description": "Un calendario e un log di test di sicurezza ricorrenti — penetration test, fuzzing, analisi del codice (allegato I parte II(3)).",
+      "empty": "Nessun test programmato.",
+      "everyDays": "ogni {n} giorni",
+      "last": "ultimo",
+      "next": "prossimo",
+      "frequency": "Ogni N giorni",
+      "result": "Risultato"
+    },
+    "testTypes": {
+      "penetration_test": "Penetration test",
+      "code_analysis": "Analisi del codice",
+      "fuzzing": "Fuzzing",
+      "sast": "SAST",
+      "dast": "DAST",
+      "third_party_audit": "Audit di terze parti",
+      "other": "Altro"
+    },
+    "eos": {
+      "description": "La data di fine supporto, l'avviso di fine supporto agli utenti (art. 13(19)) e la procedura di azione correttiva / richiamo (art. 13(21)).",
+      "supportEnd": "Il supporto termina",
+      "unset": "Imposta il periodo di supporto nella panoramica del prodotto.",
+      "notified": "Utenti notificati il {date}",
+      "markNotified": "Segna utenti notificati",
+      "notice": "Avviso di fine supporto",
+      "noticePlaceholder": "Il messaggio che gli utenti ricevono alla fine del supporto…",
+      "corrective": "Procedura di azione correttiva / richiamo",
+      "correctivePlaceholder": "Come ritirerai, richiamerai o correggerai il prodotto se presenta un rischio di cibersicurezza significativo…"
+    },
+    "pdf": {
+      "title": "Registro del ciclo di vita & della catena di fornitura",
+      "none": "Niente registrato"
+    }
+  }
+}

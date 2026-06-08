@@ -442,3 +442,45 @@ coverage panel grades each of the nine sections Present, Partial or Missing
 and links to the tab where each gap is fixed; releasing a version stamps the
 Article 13(13) retention deadline, and released files are retained
 (soft-archived), never hard-deleted.
+
+## Lifecycle & supply-chain records (Art 32 / Annex VIII, Art 23, Art 13(7), Annex I II.3/II.4, Art 13(19)/(21))
+
+The CRA's obligations continue across the whole product life, not just at
+launch. Several distinct records matter:
+
+**Conformity-assessment modules (Article 32 + Annex VIII).** Depending on the
+product's CRA category the manufacturer follows module A (internal control),
+module B+C (EU-type examination plus conformity to type), module H (full
+quality assurance) or a European cybersecurity certification scheme. Where a
+notified body is involved, keep its name and number, its certificate, and the
+notes from any surveillance audit.
+
+**Supply-chain register (Article 23).** Importers and distributors must
+exercise due diligence and keep records that let a product be traced both
+upstream (to suppliers) and downstream (to the operators they supplied), with
+names and addresses, retained for ten years.
+
+**Post-market monitoring (Article 13(7)).** The manufacturer monitors the
+product and the third-party components it integrates for vulnerabilities
+throughout the support period, and keeps a documented record of the
+cybersecurity aspects identified over time.
+
+**Public vulnerability advisories (Annex I Part II(4)).** Once a vulnerability
+is fixed, the manufacturer publicly discloses information about it — the
+affected and fixed versions and, where it helps users, mitigation guidance.
+
+**Recurring security testing (Annex I Part II(3)).** The manufacturer applies
+effective and regular tests and reviews of the product's security (penetration
+tests, fuzzing, code analysis) and keeps a schedule and log.
+
+**End-of-support and corrective action (Article 13(19), (21)).** Users are
+told when the support period ends; and the manufacturer keeps a corrective-
+action / recall procedure to withdraw or remediate a product that presents a
+significant cybersecurity risk.
+
+In Seentrix all of these live on each product's **Lifecycle & Supply Chain**
+tab: the conformity-module surveillance notes, the supply-chain register (with
+the 10-year retention reminder), the post-market monitoring log, per-fix
+advisories (with a public toggle), the recurring security-test schedule, and
+the end-of-support notice + corrective-action procedure — exportable as one
+register PDF. Use the `getLifecycleStatus` tool to summarise what's recorded.

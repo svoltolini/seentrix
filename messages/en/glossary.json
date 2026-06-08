@@ -241,6 +241,21 @@
       "title": "Annex VI — Simplified DoC",
       "body": "The simplified EU declaration of conformity: a short form naming the product and manufacturer plus a statement that the full declaration of conformity is available at a stated internet address. It is what a manufacturer can print on the product or packaging; the address points to a public page hosting the declaration. Seentrix publishes it at /doc/<org-slug>/<product-id> when the product is published and the org has public pages enabled.",
       "ref": "CRA Annex VI — simplified EU declaration of conformity."
+    },
+    "supply_chain": {
+      "title": "Supply chain",
+      "body": "The chain of economic operators around a product: upstream suppliers (component and software vendors, contract manufacturers) and downstream operators (importers, distributors, resellers). The CRA requires due diligence and traceability records — names and addresses — kept for ten years so a product can be traced both ways.",
+      "ref": "CRA Article 23 — supply-chain due diligence and traceability records (10-year retention)."
+    },
+    "post_market_monitoring": {
+      "title": "Post-market monitoring",
+      "body": "The manufacturer's duty to keep watching a product with digital elements — and the third-party components it integrates — for vulnerabilities throughout the support period, and to keep a documented record of the cybersecurity aspects identified over time. In Seentrix it's the monitoring register on the Lifecycle & Supply Chain tab.",
+      "ref": "CRA Article 13(7) — ongoing post-market monitoring and documentation."
+    },
+    "corrective_action": {
+      "title": "Corrective action / recall",
+      "body": "When a product presents a significant cybersecurity risk, the manufacturer must bring it into conformity, withdraw it from the market, or recall it — and keep a documented procedure for doing so. Authorities can require corrective action; the procedure says who decides, how customers are reached, and how the fix is distributed.",
+      "ref": "CRA Article 13(21) — corrective measures where a product presents a significant cybersecurity risk."
     }
   },
   "help": {

@@ -241,6 +241,21 @@
       "title": "Annexe VI — DoC simplifiée",
       "body": "La déclaration UE de conformité simplifiée : une version courte nommant le produit et le fabricant, avec une mention indiquant que la déclaration de conformité complète est disponible à une adresse internet donnée. C'est ce qu'un fabricant peut imprimer sur le produit ou l'emballage ; l'adresse renvoie à une page publique hébergeant la déclaration. Seentrix la publie à /doc/<org-slug>/<product-id> lorsque le produit est publié et que l'organisation a activé les pages publiques.",
       "ref": "Annexe VI du CRA — déclaration UE de conformité simplifiée."
+    },
+    "supply_chain": {
+      "title": "Chaîne d'approvisionnement",
+      "body": "La chaîne d'opérateurs économiques autour d'un produit : fournisseurs en amont (fournisseurs de composants et de logiciels, fabricants sous contrat) et opérateurs en aval (importateurs, distributeurs, revendeurs). Le CRA exige des registres de diligence et de traçabilité — noms et adresses — conservés dix ans afin qu'un produit puisse être tracé dans les deux sens.",
+      "ref": "Article 23 du CRA — diligence et registres de traçabilité de la chaîne d'approvisionnement (conservation 10 ans)."
+    },
+    "post_market_monitoring": {
+      "title": "Surveillance post-commercialisation",
+      "body": "L'obligation du fabricant de continuer à surveiller un produit comportant des éléments numériques — et les composants tiers qu'il intègre — pour les vulnérabilités pendant toute la période de support, et de tenir un registre documenté des aspects de cybersécurité identifiés au fil du temps. Dans Seentrix, c'est le registre de surveillance de l'onglet Cycle de vie & chaîne d'approvisionnement.",
+      "ref": "Article 13(7) du CRA — surveillance post-commercialisation continue et documentation."
+    },
+    "corrective_action": {
+      "title": "Action corrective / rappel",
+      "body": "Lorsqu'un produit présente un risque de cybersécurité important, le fabricant doit le mettre en conformité, le retirer du marché ou le rappeler — et conserver une procédure documentée à cet effet. Les autorités peuvent exiger une action corrective ; la procédure indique qui décide, comment joindre les clients et comment distribuer le correctif.",
+      "ref": "Article 13(21) du CRA — mesures correctives lorsqu'un produit présente un risque de cybersécurité important."
     }
   },
   "help": {

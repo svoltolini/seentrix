@@ -84,6 +84,11 @@ export const GLOSSARY_TERMS = [
   // Conformity documents
   "annex_ii",
   "annex_vi",
+
+  // Lifecycle & supply chain
+  "supply_chain",
+  "post_market_monitoring",
+  "corrective_action",
 ] as const;
 
 export type GlossaryTermId = (typeof GLOSSARY_TERMS)[number];
@@ -156,6 +161,10 @@ export const GLOSSARY_RELATED: Partial<Record<GlossaryTermId, GlossaryTermId[]>>
 
   annex_ii: ["doc", "support_period", "annex_v"],
   annex_vi: ["doc", "ce_marking", "annex_v"],
+
+  supply_chain: ["post_market_monitoring", "support_period"],
+  post_market_monitoring: ["supply_chain", "advisory", "support_period"],
+  corrective_action: ["support_period", "post_market_monitoring"],
 };
 
 /**
@@ -221,6 +230,10 @@ export const GLOSSARY_LESSONS: Partial<Record<GlossaryTermId, string>> = {
 
   annex_ii: "annex-ii-user-information",
   annex_vi: "ce-marking-and-simplified-doc",
+
+  supply_chain: "post-market-monitoring-supply-chain",
+  post_market_monitoring: "post-market-monitoring-supply-chain",
+  corrective_action: "end-of-support-corrective-action",
 };
 
 /**
@@ -291,6 +304,18 @@ export const ACADEMY_LESSONS = {
   },
   "annex-ii-user-information": {
     title: "Annex II user information",
+    duration: "7 min",
+  },
+  "conformity-modules": {
+    title: "Conformity-assessment modules",
+    duration: "7 min",
+  },
+  "post-market-monitoring-supply-chain": {
+    title: "Post-market monitoring & supply chain",
+    duration: "8 min",
+  },
+  "end-of-support-corrective-action": {
+    title: "End-of-support & corrective action",
     duration: "7 min",
   },
 } satisfies Record<string, { title: string; duration: string }>;

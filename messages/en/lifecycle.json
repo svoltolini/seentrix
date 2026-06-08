@@ -1,0 +1,107 @@
+{
+  "lifecycle": {
+    "title": "Lifecycle & Supply Chain",
+    "subtitle": "Post-market records: the conformity module, supply-chain register, monitoring log, security-test schedule, vulnerability advisories, and end-of-support — all exportable.",
+    "actions": {
+      "export": "Export register",
+      "saveNotes": "Save notes",
+      "add": "Add"
+    },
+    "feedback": { "saved": "Saved." },
+    "errors": { "generic": "Something went wrong. Please try again." },
+    "sections": {
+      "conformity": "Conformity module & surveillance",
+      "supplyChain": "Supply-chain register",
+      "monitoring": "Post-market monitoring",
+      "advisories": "Vulnerability advisories",
+      "securityTests": "Recurring security tests",
+      "endOfSupport": "End-of-support & corrective action"
+    },
+    "conformity": {
+      "description": "The chosen conformity-assessment module, notified body, and any surveillance-audit notes (Art 32 / Annex VIII).",
+      "route": "Conformity route",
+      "notifiedBody": "Notified body",
+      "surveillance": "Surveillance / audit notes",
+      "surveillancePlaceholder": "Notes from notified-body surveillance audits…"
+    },
+    "routes": {
+      "module_a": "Module A — internal control",
+      "module_b_c": "Module B+C — EU-type examination",
+      "module_h": "Module H — full quality assurance",
+      "european_certification": "European cybersecurity certification"
+    },
+    "supply": {
+      "description": "Upstream suppliers and downstream operators in the product's supply chain (Art 23).",
+      "retention": "Keep these records for 10 years after placing on the market (Art 23).",
+      "upstream": "Upstream supplier",
+      "downstream": "Downstream operator",
+      "empty": "No supply-chain entries yet.",
+      "name": "Name",
+      "address": "Address",
+      "contact": "Contact"
+    },
+    "monitoring": {
+      "description": "A running log of documented cybersecurity aspects and vulnerabilities over the product's life (Art 13(7)).",
+      "empty": "No monitoring entries yet.",
+      "descriptionField": "Description",
+      "noSeverity": "Severity…"
+    },
+    "sources": {
+      "internal_review": "Internal review",
+      "advisory": "Advisory",
+      "incident": "Incident",
+      "security_test": "Security test",
+      "external_report": "External report",
+      "other": "Other"
+    },
+    "severities": {
+      "critical": "Critical",
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low",
+      "info": "Info"
+    },
+    "advisories": {
+      "description": "A public-disclosure advisory per remediated vulnerability (Annex I Part II(4)).",
+      "empty": "No advisories yet.",
+      "ref": "Ref.",
+      "title": "Title",
+      "fixed": "Fixed in",
+      "public": "Public",
+      "private": "Private"
+    },
+    "tests": {
+      "description": "A recurring security-testing schedule and log — penetration tests, fuzzing, code analysis (Annex I Part II(3)).",
+      "empty": "No tests scheduled yet.",
+      "everyDays": "every {n} days",
+      "last": "last",
+      "next": "next",
+      "frequency": "Every N days",
+      "result": "Result"
+    },
+    "testTypes": {
+      "penetration_test": "Penetration test",
+      "code_analysis": "Code analysis",
+      "fuzzing": "Fuzzing",
+      "sast": "SAST",
+      "dast": "DAST",
+      "third_party_audit": "Third-party audit",
+      "other": "Other"
+    },
+    "eos": {
+      "description": "The support-period end-date, the end-of-support notice to users (Art 13(19)) and the corrective-action / recall procedure (Art 13(21)).",
+      "supportEnd": "Support ends",
+      "unset": "Set the support period on the product overview.",
+      "notified": "Users notified {date}",
+      "markNotified": "Mark users notified",
+      "notice": "End-of-support notice",
+      "noticePlaceholder": "The message users receive when support ends…",
+      "corrective": "Corrective-action / recall procedure",
+      "correctivePlaceholder": "How you will withdraw, recall or remediate the product if it presents a significant cybersecurity risk…"
+    },
+    "pdf": {
+      "title": "Lifecycle & Supply-Chain Register",
+      "none": "None recorded"
+    }
+  }
+}

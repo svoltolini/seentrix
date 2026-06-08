@@ -60,6 +60,16 @@ export const SCREEN_LESSONS = {
       "declaration-of-conformity",
     ],
   },
+  lifecycle: {
+    key: "lifecycle",
+    href: "/app/products",
+    icon: "recycle-01-stroke-rounded",
+    lessons: [
+      "post-market-monitoring-supply-chain",
+      "end-of-support-corrective-action",
+      "conformity-modules",
+    ],
+  },
   diagrams: {
     key: "diagrams",
     href: "/app/products",

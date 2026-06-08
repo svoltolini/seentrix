@@ -15,6 +15,9 @@ import annexViiTechnicalFile from "@/content/academy/annex-vii-technical-file";
 import enisaSingleReportingPlatform from "@/content/academy/enisa-single-reporting-platform";
 import ceMarkingAndSimplifiedDoc from "@/content/academy/ce-marking-and-simplified-doc";
 import annexIiUserInformation from "@/content/academy/annex-ii-user-information";
+import conformityModules from "@/content/academy/conformity-modules";
+import postMarketMonitoringSupplyChain from "@/content/academy/post-market-monitoring-supply-chain";
+import endOfSupportCorrectiveAction from "@/content/academy/end-of-support-corrective-action";
 import type { Lesson, LocaleId, RoleId } from "@/lib/academy/types";
 
 /**
@@ -44,6 +47,9 @@ export const LESSONS: Record<string, Lesson> = {
   [enisaSingleReportingPlatform.id]: enisaSingleReportingPlatform,
   [ceMarkingAndSimplifiedDoc.id]: ceMarkingAndSimplifiedDoc,
   [annexIiUserInformation.id]: annexIiUserInformation,
+  [conformityModules.id]: conformityModules,
+  [postMarketMonitoringSupplyChain.id]: postMarketMonitoringSupplyChain,
+  [endOfSupportCorrectiveAction.id]: endOfSupportCorrectiveAction,
 };
 
 export function getLesson(id: string): Lesson | null {

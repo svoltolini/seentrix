@@ -47,6 +47,7 @@ const PRODUCT_TAB_TITLES: Record<string, string> = {
   "risk-assessment": "Risk Assessment",
   "technical-file": "Technical File",
   identity: "Identity & CE",
+  lifecycle: "Lifecycle & Supply Chain",
   "technical-documentation": "Technical documentation",
   incidents: "Incidents",
   academy: "Team training",

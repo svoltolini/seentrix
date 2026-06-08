@@ -491,6 +491,68 @@ export function buildCopilotTools({ supabase, orgId, plan }: Ctx) {
     }),
 
     // -------------------------------------------------------------------
+    // getLifecycleStatus — post-market lifecycle & supply-chain summary.
+    // -------------------------------------------------------------------
+    getLifecycleStatus: tool({
+      description:
+        "Summarise a product's post-market lifecycle & supply-chain records: counts of supply-chain entries (upstream suppliers / downstream operators), post-market monitoring entries, total vs public vulnerability advisories, scheduled security tests and how many are overdue, whether end-of-support users have been notified, and whether a corrective-action procedure is documented. Use when the user asks 'what lifecycle records do I have?', 'is my supply-chain register complete?', or 'which security tests are overdue?'.",
+      inputSchema: z.object({
+        productId: z
+          .string()
+          .uuid()
+          .describe("Product id (UUID) returned by searchProducts."),
+      }),
+      execute: async ({ productId }) => {
+        const [
+          { data: product },
+          { data: suppliers },
+          { data: monitoring },
+          { data: advisories },
+          { data: tests },
+        ] = await Promise.all([
+          supabase
+            .from("products")
+            .select("eos_notified_at, corrective_action_procedure, support_period_end")
+            .eq("id", productId)
+            .eq("org_id", orgId)
+            .maybeSingle(),
+          supabase.from("supply_chain_entries").select("relation").eq("product_id", productId),
+          supabase.from("monitoring_entries").select("id").eq("product_id", productId),
+          supabase.from("vulnerability_advisories").select("is_public").eq("product_id", productId),
+          supabase.from("security_tests").select("next_due").eq("product_id", productId),
+        ]);
+        if (!product) return { error: "product_not_found" };
+        const p = product as {
+          eos_notified_at: string | null;
+          corrective_action_procedure: string | null;
+          support_period_end: string | null;
+        };
+        const sup = (suppliers as { relation: string }[] | null) ?? [];
+        const adv = (advisories as { is_public: boolean }[] | null) ?? [];
+        const tst = (tests as { next_due: string | null }[] | null) ?? [];
+        const today = new Date().toISOString().slice(0, 10);
+        return {
+          supplyChain: {
+            upstream: sup.filter((s) => s.relation === "upstream_supplier").length,
+            downstream: sup.filter((s) => s.relation === "downstream_operator").length,
+            total: sup.length,
+          },
+          monitoringEntries: ((monitoring as unknown[] | null) ?? []).length,
+          advisories: { total: adv.length, public: adv.filter((a) => a.is_public).length },
+          securityTests: {
+            total: tst.length,
+            overdue: tst.filter((x) => x.next_due && x.next_due < today).length,
+          },
+          endOfSupport: {
+            supportPeriodEnd: p.support_period_end,
+            usersNotified: !!p.eos_notified_at,
+            correctiveActionDocumented: !!p.corrective_action_procedure?.trim(),
+          },
+        };
+      },
+    }),
+
+    // -------------------------------------------------------------------
     // findCve — pull a CVE / GHSA record directly from OSV.
     // -------------------------------------------------------------------
     findCve: tool({

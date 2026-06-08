@@ -241,6 +241,21 @@
       "title": "Anhang VI — Vereinfachte Konformitätserklärung",
       "body": "Die vereinfachte EU-Konformitätserklärung: eine Kurzform mit Produkt und Hersteller sowie der Angabe, dass die vollständige Konformitätserklärung unter einer bestimmten Internetadresse verfügbar ist. Dies kann ein Hersteller auf Produkt oder Verpackung drucken; die Adresse verweist auf eine öffentliche Seite mit der Erklärung. Seentrix veröffentlicht sie unter /doc/<org-slug>/<product-id>, wenn das Produkt veröffentlicht ist und die Organisation öffentliche Seiten aktiviert hat.",
       "ref": "CRA Anhang VI — vereinfachte EU-Konformitätserklärung."
+    },
+    "supply_chain": {
+      "title": "Lieferkette",
+      "body": "Die Kette der Wirtschaftsakteure rund um ein Produkt: vorgelagerte Zulieferer (Komponenten- und Softwareanbieter, Auftragsfertiger) und nachgelagerte Akteure (Importeure, Händler, Wiederverkäufer). Der CRA verlangt Sorgfalts- und Rückverfolgbarkeitsaufzeichnungen — Namen und Anschriften — die zehn Jahre aufbewahrt werden, damit ein Produkt in beide Richtungen rückverfolgbar ist.",
+      "ref": "CRA Artikel 23 — Sorgfaltspflicht und Rückverfolgbarkeitsaufzeichnungen in der Lieferkette (10 Jahre Aufbewahrung)."
+    },
+    "post_market_monitoring": {
+      "title": "Nachmarktüberwachung",
+      "body": "Die Pflicht des Herstellers, ein Produkt mit digitalen Elementen — und die integrierten Drittkomponenten — während des gesamten Supportzeitraums auf Schwachstellen zu beobachten und einen dokumentierten Nachweis der im Lauf der Zeit festgestellten Cybersicherheitsaspekte zu führen. In Seentrix ist dies das Überwachungsregister im Reiter Lebenszyklus & Lieferkette.",
+      "ref": "CRA Artikel 13(7) — laufende Nachmarktüberwachung und Dokumentation."
+    },
+    "corrective_action": {
+      "title": "Korrekturmaßnahme / Rückruf",
+      "body": "Stellt ein Produkt ein erhebliches Cybersicherheitsrisiko dar, muss der Hersteller es in Konformität bringen, vom Markt nehmen oder zurückrufen — und ein dokumentiertes Verfahren dafür führen. Behörden können Korrekturmaßnahmen verlangen; das Verfahren regelt, wer entscheidet, wie Kunden erreicht werden und wie die Behebung verteilt wird.",
+      "ref": "CRA Artikel 13(21) — Korrekturmaßnahmen bei erheblichem Cybersicherheitsrisiko."
     }
   },
   "help": {

@@ -1,0 +1,107 @@
+{
+  "lifecycle": {
+    "title": "Lebenszyklus & Lieferkette",
+    "subtitle": "Nachmarkt-Aufzeichnungen: Konformitätsmodul, Lieferkettenregister, Überwachungsprotokoll, Sicherheitstestplan, Schwachstellen-Advisories und Support-Ende — alle exportierbar.",
+    "actions": {
+      "export": "Register exportieren",
+      "saveNotes": "Notizen speichern",
+      "add": "Hinzufügen"
+    },
+    "feedback": { "saved": "Gespeichert." },
+    "errors": { "generic": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut." },
+    "sections": {
+      "conformity": "Konformitätsmodul & Überwachung",
+      "supplyChain": "Lieferkettenregister",
+      "monitoring": "Nachmarktüberwachung",
+      "advisories": "Schwachstellen-Advisories",
+      "securityTests": "Wiederkehrende Sicherheitstests",
+      "endOfSupport": "Support-Ende & Korrekturmaßnahmen"
+    },
+    "conformity": {
+      "description": "Das gewählte Konformitätsbewertungsmodul, die notifizierte Stelle und etwaige Notizen aus Überwachungsaudits (Art. 32 / Anhang VIII).",
+      "route": "Konformitätsweg",
+      "notifiedBody": "Notifizierte Stelle",
+      "surveillance": "Überwachungs-/Auditnotizen",
+      "surveillancePlaceholder": "Notizen aus Überwachungsaudits der notifizierten Stelle…"
+    },
+    "routes": {
+      "module_a": "Modul A — interne Kontrolle",
+      "module_b_c": "Modul B+C — EU-Baumusterprüfung",
+      "module_h": "Modul H — umfassende Qualitätssicherung",
+      "european_certification": "Europäische Cybersicherheitszertifizierung"
+    },
+    "supply": {
+      "description": "Vorgelagerte Zulieferer und nachgelagerte Akteure in der Lieferkette des Produkts (Art. 23).",
+      "retention": "Diese Aufzeichnungen 10 Jahre nach dem Inverkehrbringen aufbewahren (Art. 23).",
+      "upstream": "Vorgelagerter Zulieferer",
+      "downstream": "Nachgelagerter Akteur",
+      "empty": "Noch keine Lieferketteneinträge.",
+      "name": "Name",
+      "address": "Anschrift",
+      "contact": "Kontakt"
+    },
+    "monitoring": {
+      "description": "Ein laufendes Protokoll dokumentierter Cybersicherheitsaspekte und Schwachstellen über die Produktlebensdauer (Art. 13(7)).",
+      "empty": "Noch keine Überwachungseinträge.",
+      "descriptionField": "Beschreibung",
+      "noSeverity": "Schweregrad…"
+    },
+    "sources": {
+      "internal_review": "Interne Prüfung",
+      "advisory": "Advisory",
+      "incident": "Vorfall",
+      "security_test": "Sicherheitstest",
+      "external_report": "Externe Meldung",
+      "other": "Sonstiges"
+    },
+    "severities": {
+      "critical": "Kritisch",
+      "high": "Hoch",
+      "medium": "Mittel",
+      "low": "Niedrig",
+      "info": "Info"
+    },
+    "advisories": {
+      "description": "Ein Veröffentlichungs-Advisory pro behobener Schwachstelle (Anhang I Teil II(4)).",
+      "empty": "Noch keine Advisories.",
+      "ref": "Ref.",
+      "title": "Titel",
+      "fixed": "Behoben in",
+      "public": "Öffentlich",
+      "private": "Privat"
+    },
+    "tests": {
+      "description": "Ein wiederkehrender Sicherheitstestplan und ein Protokoll — Penetrationstests, Fuzzing, Code-Analyse (Anhang I Teil II(3)).",
+      "empty": "Noch keine Tests geplant.",
+      "everyDays": "alle {n} Tage",
+      "last": "zuletzt",
+      "next": "nächster",
+      "frequency": "Alle N Tage",
+      "result": "Ergebnis"
+    },
+    "testTypes": {
+      "penetration_test": "Penetrationstest",
+      "code_analysis": "Code-Analyse",
+      "fuzzing": "Fuzzing",
+      "sast": "SAST",
+      "dast": "DAST",
+      "third_party_audit": "Audit durch Dritte",
+      "other": "Sonstiges"
+    },
+    "eos": {
+      "description": "Das Enddatum des Supportzeitraums, die Support-Ende-Mitteilung an Nutzer (Art. 13(19)) und das Verfahren für Korrekturmaßnahmen/Rückruf (Art. 13(21)).",
+      "supportEnd": "Support endet",
+      "unset": "Legen Sie den Supportzeitraum in der Produktübersicht fest.",
+      "notified": "Nutzer benachrichtigt am {date}",
+      "markNotified": "Nutzer als benachrichtigt markieren",
+      "notice": "Support-Ende-Mitteilung",
+      "noticePlaceholder": "Die Nachricht, die Nutzer erhalten, wenn der Support endet…",
+      "corrective": "Verfahren für Korrekturmaßnahmen/Rückruf",
+      "correctivePlaceholder": "Wie Sie das Produkt zurückziehen, zurückrufen oder beheben, falls es ein erhebliches Cybersicherheitsrisiko darstellt…"
+    },
+    "pdf": {
+      "title": "Lebenszyklus- & Lieferkettenregister",
+      "none": "Nichts erfasst"
+    }
+  }
+}
