@@ -45,6 +45,7 @@ const PRODUCT_TAB_TITLES: Record<string, string> = {
   documents: "Documents",
   diagrams: "Diagrams & Evidence",
   "risk-assessment": "Risk Assessment",
+  "technical-file": "Technical File",
   "technical-documentation": "Technical documentation",
   incidents: "Incidents",
   academy: "Team training",

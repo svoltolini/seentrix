@@ -113,7 +113,8 @@
         "conformity": "Conformité",
         "riskAssessment": "Évaluation des risques",
         "diagrams": "Schémas & preuves",
-        "documents": "Documents"
+        "documents": "Documents",
+        "technicalFile": "Dossier technique"
       },
       "overview": {
         "title": "Vue d'ensemble du produit",

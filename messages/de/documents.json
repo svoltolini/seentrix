@@ -41,6 +41,7 @@
       "downloadPdf": "PDF herunterladen",
       "pdfGenerated": "PDF erfolgreich erstellt.",
       "markFinal": "Als endgültig markieren",
+      "retainedUntil": "Aufbewahrt bis {date}",
       "markDraft": "In Entwurf zurücksetzen",
       "errors": {
         "notAuthenticated": "Sie müssen angemeldet sein.",

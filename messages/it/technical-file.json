@@ -1,0 +1,109 @@
+{
+  "technical-file": {
+    "title": "Fascicolo tecnico",
+    "subtitle": "Assembla la documentazione tecnica dell'allegato VII del CRA — compilata in ordine da tutto ciò che il prodotto già contiene — e rilascia versioni datate e conservate.",
+    "actions": {
+      "assemble": "Assembla & anteprima",
+      "assembling": "Assemblaggio…",
+      "release": "Rilascia versione",
+      "newVersion": "Nuova versione",
+      "downloadPdf": "PDF",
+      "archive": "Archivia"
+    },
+    "coverage": {
+      "heading": "Copertura allegato VII",
+      "summary": "{present} sezioni su {total} complete",
+      "present": "Presente",
+      "partial": "Parziale",
+      "missing": "Mancante",
+      "fix": "Correggi →"
+    },
+    "points": {
+      "general_description": "Descrizione generale, destinazione d'uso & versioni",
+      "design_architecture": "Progettazione — diagrammi di architettura & flusso dei dati",
+      "vuln_handling": "Gestione delle vulnerabilità — SBOM, politica di divulgazione, aggiornamenti sicuri",
+      "production_monitoring": "Processi di produzione & monitoraggio",
+      "risk_assessment": "Valutazione dei rischi di cibersicurezza",
+      "support_period": "Periodo di supporto",
+      "standards": "Norme applicate",
+      "test_reports": "Rapporti di prova",
+      "declaration_of_conformity": "Dichiarazione di conformità UE"
+    },
+    "history": {
+      "heading": "Cronologia delle versioni",
+      "version": "Versione {n}",
+      "archived": "archiviata",
+      "released": "Rilasciata il {date}",
+      "retainedUntil": "conservata fino al {date}"
+    },
+    "feedback": {
+      "assembled": "Fascicolo tecnico assemblato.",
+      "released": "Versione rilasciata."
+    },
+    "errors": {
+      "generic": "Qualcosa è andato storto. Riprova.",
+      "notAuthenticated": "Effettua nuovamente l'accesso.",
+      "notAuthorized": "Non hai i permessi per modificare il fascicolo tecnico.",
+      "draftExists": "Esiste già una bozza.",
+      "noVersions": "Non c'è ancora alcuna versione da revisionare.",
+      "noPdf": "Per questa versione non è ancora disponibile alcun PDF.",
+      "notFound": "Prodotto non trovato."
+    },
+    "diagramTypes": {
+      "architecture": "Architettura",
+      "data_flow": "Flusso dei dati",
+      "environment": "Ambiente",
+      "threat_model": "Modello di minaccia",
+      "hardware_layout": "Layout hardware"
+    },
+    "evidenceCategories": {
+      "test_report": "Rapporto di prova",
+      "penetration_test": "Penetration test",
+      "code_analysis": "Analisi del codice",
+      "fuzzing": "Fuzzing",
+      "third_party_test": "Test di terze parti",
+      "due_diligence": "Due diligence",
+      "hardware_photo": "Foto hardware",
+      "other": "Altro"
+    },
+    "docStatus": {
+      "not_started": "Non iniziata",
+      "draft": "Bozza",
+      "final": "Definitiva"
+    },
+    "pdf": {
+      "title": "Documentazione tecnica (allegato VII)",
+      "version": "Versione",
+      "retainedUntil": "Conservata fino al",
+      "retentionNote": "tenuta a disposizione delle autorità di vigilanza del mercato (art. 13(13))",
+      "coverageHeading": "Riepilogo della copertura dell'allegato VII",
+      "none": "Niente registrato",
+      "noPreview": "Nessuna anteprima disponibile",
+      "missingDiagrams": "Nessun diagramma ancora aggiunto.",
+      "missingRa": "Nessuna valutazione dei rischi rilasciata.",
+      "missingEvidence": "Nessun rapporto di prova ancora caricato.",
+      "components": "componenti",
+      "yes": "Presente",
+      "raApplies": "applicabili",
+      "raNa": "non applicabili",
+      "raUnmapped": "non mappati",
+      "f_manufacturer": "Fabbricante",
+      "f_address": "Indirizzo",
+      "f_description": "Descrizione",
+      "f_intendedUse": "Destinazione d'uso",
+      "f_connectivity": "Connettività",
+      "f_type": "Tipo / categoria CRA",
+      "f_versions": "Versioni software",
+      "f_sbom": "SBOM",
+      "f_vdp": "Politica di divulgazione coordinata delle vulnerabilità",
+      "f_securityContact": "Contatto di sicurezza",
+      "f_updateMechanism": "Meccanismo di aggiornamento sicuro",
+      "f_production": "Produzione & monitoraggio",
+      "f_raReleased": "Valutazione dei rischi rilasciata",
+      "f_supportPeriod": "Periodo di supporto",
+      "f_standards": "Norme applicate",
+      "f_docStatus": "Stato della dichiarazione di conformità",
+      "f_signatory": "Firmatario"
+    }
+  }
+}

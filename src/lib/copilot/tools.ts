@@ -2,6 +2,12 @@ import { tool } from "ai";
 import { z } from "zod";
 import type { createClient } from "@/lib/supabase/server";
 import { CRA_REQUIREMENTS } from "@/lib/constants/cra-requirements";
+import {
+  computeManifest,
+  coverageScore,
+  TEST_REPORT_CATEGORIES,
+  type ManifestInput,
+} from "@/lib/constants/annex-vii";
 
 /**
  * Agentic lookup tools — Phase 2 Pillar 3.
@@ -285,6 +291,136 @@ export function buildCopilotTools({ supabase, orgId, plan }: Ctx) {
           unmapped,
           missingImplementation,
           missingJustification,
+        };
+      },
+    }),
+
+    // -------------------------------------------------------------------
+    // getTechnicalFileCoverage — Annex VII completeness for one product.
+    // -------------------------------------------------------------------
+    getTechnicalFileCoverage: tool({
+      description:
+        "Report which of the 9 Annex VII technical-file sections are Present / Partial / Missing for a product, plus an overall completeness percentage. Sections: (1) general description, (2a) architecture/data-flow diagrams, (2b) SBOM + vulnerability-handling, (2c) production & monitoring, (3) risk assessment, (4) support period, (5) standards applied, (6) test reports, (7) Declaration of Conformity. Use this when the user asks 'what's missing from my technical file?', 'is my Annex VII file complete?', or similar.",
+      inputSchema: z.object({
+        productId: z
+          .string()
+          .uuid()
+          .describe("Product id (UUID) returned by searchProducts."),
+      }),
+      execute: async ({ productId }) => {
+        const parse = (c: string | null): Record<string, string> => {
+          if (!c) return {};
+          try {
+            return JSON.parse(c) as Record<string, string>;
+          } catch {
+            return {};
+          }
+        };
+        const has = (v: string | undefined | null) => !!v && v.trim().length > 0;
+
+        const { data: product } = await supabase
+          .from("products")
+          .select(
+            "type, description, intended_use, support_period_start, support_period_end, update_channel",
+          )
+          .eq("id", productId)
+          .eq("org_id", orgId)
+          .maybeSingle();
+        if (!product) return { error: "product_not_found" };
+
+        const [
+          { data: org },
+          { data: releases },
+          { data: diagrams },
+          { data: sbomRows },
+          { data: evidence },
+          { data: raRows },
+          { data: docRows },
+        ] = await Promise.all([
+          supabase
+            .from("organizations")
+            .select("security_contact_email")
+            .eq("id", orgId)
+            .maybeSingle(),
+          supabase.from("product_releases").select("id").eq("product_id", productId),
+          supabase.from("product_diagrams").select("type").eq("product_id", productId),
+          supabase
+            .from("sboms")
+            .select("id")
+            .eq("product_id", productId)
+            .eq("is_active", true)
+            .limit(1),
+          supabase
+            .from("product_evidence")
+            .select("category")
+            .eq("product_id", productId),
+          supabase
+            .from("risk_assessments")
+            .select("status")
+            .eq("product_id", productId),
+          supabase
+            .from("documents")
+            .select("document_type, status, content")
+            .eq("product_id", productId),
+        ]);
+
+        const p = product as Record<string, string | null>;
+        const diagramTypes = (diagrams as { type: string }[] | null) ?? [];
+        const evCats = new Set(
+          ((evidence as { category: string }[] | null) ?? []).map((e) => e.category),
+        );
+        const ras = (raRows as { status: string }[] | null) ?? [];
+        const docs: Record<string, { status: string; content: Record<string, string> }> = {};
+        for (const d of (docRows as { document_type: string; status: string; content: string | null }[] | null) ?? []) {
+          docs[d.document_type] = { status: d.status, content: parse(d.content) };
+        }
+        const doc = docs["declaration_of_conformity"];
+        const vdp = docs["vulnerability_disclosure_policy"];
+        const techDoc = docs["technical_documentation"];
+
+        const input: ManifestInput = {
+          hasDescription: has(p.description),
+          hasIntendedUse: has(p.intended_use),
+          releasesCount: ((releases as unknown[] | null) ?? []).length,
+          isHardware: p.type === "hardware",
+          hasHardwarePhoto:
+            evCats.has("hardware_photo") ||
+            diagramTypes.some((d) => d.type === "hardware_layout"),
+          hasArchitectureDiagram: diagramTypes.some(
+            (d) => d.type === "architecture" || d.type === "data_flow",
+          ),
+          hasAnyDiagram: diagramTypes.length > 0,
+          hasActiveSbom: (((sbomRows as unknown[] | null) ?? []).length) > 0,
+          hasVdpPolicy: !!vdp && vdp.status !== "not_started",
+          hasSecurityContact: has(
+            (org as { security_contact_email: string | null } | null)?.security_contact_email,
+          ),
+          hasUpdateMechanism:
+            has(techDoc?.content.update_mechanism) || has(p.update_channel),
+          hasProductionInfo:
+            has(techDoc?.content.development_process) ||
+            has(techDoc?.content.testing_results),
+          hasReleasedRiskAssessment: ras.some((r) => r.status === "released"),
+          hasDraftRiskAssessment: ras.some((r) => r.status === "draft"),
+          hasSupportStart: has(p.support_period_start),
+          hasSupportEnd: has(p.support_period_end),
+          hasStandards: has(doc?.content.standards_applied),
+          hasTestReports: [...evCats].some((c) =>
+            (TEST_REPORT_CATEGORIES as readonly string[]).includes(c),
+          ),
+          hasOtherEvidence: evCats.has("due_diligence") || evCats.has("other"),
+          docStatus:
+            (doc?.status as "final" | "draft" | "not_started") ?? "not_started",
+        };
+
+        const manifest = computeManifest(input);
+        return {
+          score: coverageScore(manifest),
+          points: manifest.map((e) => ({
+            point: e.point,
+            ref: e.ref,
+            coverage: e.coverage,
+          })),
         };
       },
     }),

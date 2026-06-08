@@ -69,6 +69,16 @@ export const SCREEN_LESSONS = {
       "threat-modelling-and-diagrams",
     ],
   },
+  "technical-file": {
+    key: "technical-file",
+    href: "/app/products",
+    icon: "DocumentText",
+    lessons: [
+      "annex-vii-technical-file",
+      "sbom-fundamentals",
+      "annex-i-essential-requirements",
+    ],
+  },
   releases: {
     key: "releases",
     href: "/app/products",

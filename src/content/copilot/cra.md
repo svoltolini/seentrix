@@ -358,3 +358,39 @@ all 21 Annex I requirements, enforces a justification on every
 not-applicable item before a version can be released, derives the inherent
 risk band from the likelihood and impact, and snapshots dated, versioned
 PDFs that feed Annex VII point 3 of the technical file.
+
+## The Annex VII technical documentation (Annex VII and Article 13(13))
+
+Annex VII sets out the technical documentation a manufacturer must draw up
+before placing a product with digital elements on the market, and keep up
+to date. It has eight numbered points: (1) a general description of the
+product — its intended purpose, versions, and, for hardware, photographs or
+illustrations; (2) a description of the design, development and production,
+broken into (2a) the system architecture and how software/hardware
+components build on or feed each other, including data-flow diagrams, (2b)
+the cybersecurity vulnerability-handling processes — the SBOM, the
+coordinated-vulnerability-disclosure policy, the security contact, and the
+secure-update mechanism — and (2c) the production and monitoring processes;
+(3) the cybersecurity risk assessment (Article 13); (4) the support period
+and how the manufacturer determined it; (5) a list of the harmonised
+standards or technical specifications applied; (6) reports of the tests
+carried out to verify conformity; and (7) a copy of the EU Declaration of
+Conformity.
+
+The documentation must be drawn up before the product is placed on the
+market and kept current throughout its life. Article 13(13) requires the
+manufacturer to keep the technical documentation and the EU Declaration of
+Conformity at the disposal of market-surveillance authorities for at least
+ten years after the product is placed on the market, or for the support
+period, whichever is longer.
+
+In Seentrix this lives on each product's **Technical File** tab. It does not
+re-enter data: it compiles what the other tabs already hold (the general
+description and software versions, the architecture/data-flow diagrams and
+evidence, the SBOM and disclosure policy, the released risk assessment, the
+support period, the applied standards, the test reports, and the
+Declaration of Conformity) into one branded, versioned Annex VII PDF. A live
+coverage panel grades each of the nine sections Present, Partial or Missing
+and links to the tab where each gap is fixed; releasing a version stamps the
+Article 13(13) retention deadline, and released files are retained
+(soft-archived), never hard-deleted.

@@ -216,6 +216,16 @@
       "title": "Risque résiduel",
       "body": "Le niveau de risque qui subsiste pour une menace donnée une fois les mesures d'atténuation en place — par opposition au risque inhérent avant atténuation. Dans l'évaluation des risques de Seentrix, chaque exigence applicable de l'annexe I enregistre un risque inhérent (dérivé d'une matrice probabilité × impact en Faible/Moyen/Élevé) et le risque résiduel restant après application de la mise en œuvre décrite.",
       "ref": "Soutient l'Article 13(3) du CRA : l'évaluation des risques doit démontrer que les risques identifiés sont atténués à un niveau acceptable."
+    },
+    "technical_documentation": {
+      "title": "Documentation technique (annexe VII)",
+      "body": "L'ensemble des documents que l'annexe VII du CRA impose au fabricant de constituer et de tenir à jour : une description générale du produit, la conception et le développement (architecture du système et schémas de flux de données, SBOM et processus de gestion des vulnérabilités, production et surveillance), l'évaluation des risques, la période de support, les normes appliquées, les rapports d'essais et la déclaration de conformité. Elle doit exister avant la mise sur le marché. Dans Seentrix, l'onglet Dossier technique l'assemble dans l'ordre de l'annexe VII à partir des autres onglets.",
+      "ref": "Annexe VII et article 13 du CRA — la documentation technique doit être établie avant la mise sur le marché et tenue à jour."
+    },
+    "retention_period": {
+      "title": "Période de conservation",
+      "body": "Durée pendant laquelle le CRA impose de tenir les documents de conformité à la disposition des autorités. La documentation technique et la déclaration UE de conformité doivent être conservées au moins dix ans après la mise sur le marché, ou pendant la période de support si elle est plus longue. Seentrix horodate cette échéance sur chaque dossier technique publié et conserve les fichiers publiés (archivés) au lieu de les supprimer.",
+      "ref": "Article 13(13) du CRA : tenir la documentation technique et la DoC à la disposition des autorités de surveillance du marché pendant au moins 10 ans (ou la période de support)."
     }
   },
   "help": {

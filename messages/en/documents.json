@@ -41,6 +41,7 @@
       "downloadPdf": "Download PDF",
       "pdfGenerated": "PDF generated successfully.",
       "markFinal": "Mark as Final",
+      "retainedUntil": "Retained until {date}",
       "markDraft": "Revert to Draft",
       "errors": {
         "notAuthenticated": "You must be signed in.",

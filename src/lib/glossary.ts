@@ -73,6 +73,10 @@ export const GLOSSARY_TERMS = [
   // Risk assessment
   "risk_assessment",
   "residual_risk",
+
+  // Documentation & retention
+  "technical_documentation",
+  "retention_period",
 ] as const;
 
 export type GlossaryTermId = (typeof GLOSSARY_TERMS)[number];
@@ -137,6 +141,9 @@ export const GLOSSARY_RELATED: Partial<Record<GlossaryTermId, GlossaryTermId[]>>
 
   risk_assessment: ["article_13", "annex_i", "threat_model", "residual_risk"],
   residual_risk: ["risk_assessment", "threat_model"],
+
+  technical_documentation: ["annex_vii", "retention_period", "doc"],
+  retention_period: ["technical_documentation", "annex_vii"],
 };
 
 /**
@@ -194,6 +201,9 @@ export const GLOSSARY_LESSONS: Partial<Record<GlossaryTermId, string>> = {
 
   risk_assessment: "risk-assessment-fundamentals",
   residual_risk: "risk-assessment-fundamentals",
+
+  technical_documentation: "annex-vii-technical-file",
+  retention_period: "annex-vii-technical-file",
 };
 
 /**
@@ -249,6 +259,10 @@ export const ACADEMY_LESSONS = {
   "risk-assessment-fundamentals": {
     title: "How to do the CRA risk assessment",
     duration: "9 min",
+  },
+  "annex-vii-technical-file": {
+    title: "The Annex VII technical file & retention",
+    duration: "8 min",
   },
 } satisfies Record<string, { title: string; duration: string }>;
 

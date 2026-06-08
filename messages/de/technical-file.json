@@ -1,0 +1,109 @@
+{
+  "technical-file": {
+    "title": "Technische Dokumentation",
+    "subtitle": "Stellen Sie die technische Dokumentation nach CRA Anhang VII zusammen — geordnet aus allem kompiliert, was Ihr Produkt bereits enthält — und geben Sie datierte, aufbewahrte Versionen frei.",
+    "actions": {
+      "assemble": "Zusammenstellen & Vorschau",
+      "assembling": "Wird zusammengestellt…",
+      "release": "Version freigeben",
+      "newVersion": "Neue Version",
+      "downloadPdf": "PDF",
+      "archive": "Archivieren"
+    },
+    "coverage": {
+      "heading": "Abdeckung Anhang VII",
+      "summary": "{present} von {total} Abschnitten vollständig",
+      "present": "Vorhanden",
+      "partial": "Teilweise",
+      "missing": "Fehlt",
+      "fix": "Beheben →"
+    },
+    "points": {
+      "general_description": "Allgemeine Beschreibung, Verwendungszweck & Versionen",
+      "design_architecture": "Design — Architektur- & Datenflussdiagramme",
+      "vuln_handling": "Schwachstellenbehandlung — SBOM, Offenlegungsrichtlinie, sichere Updates",
+      "production_monitoring": "Produktions- & Überwachungsprozesse",
+      "risk_assessment": "Cybersicherheits-Risikobewertung",
+      "support_period": "Supportzeitraum",
+      "standards": "Angewandte Normen",
+      "test_reports": "Testberichte",
+      "declaration_of_conformity": "EU-Konformitätserklärung"
+    },
+    "history": {
+      "heading": "Versionsverlauf",
+      "version": "Version {n}",
+      "archived": "archiviert",
+      "released": "Freigegeben am {date}",
+      "retainedUntil": "aufbewahrt bis {date}"
+    },
+    "feedback": {
+      "assembled": "Technische Dokumentation zusammengestellt.",
+      "released": "Version freigegeben."
+    },
+    "errors": {
+      "generic": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.",
+      "notAuthenticated": "Bitte melden Sie sich erneut an.",
+      "notAuthorized": "Sie haben keine Berechtigung, die technische Dokumentation zu bearbeiten.",
+      "draftExists": "Es existiert bereits ein Entwurf.",
+      "noVersions": "Es gibt noch keine Version zum Überarbeiten.",
+      "noPdf": "Für diese Version ist noch kein PDF verfügbar.",
+      "notFound": "Produkt nicht gefunden."
+    },
+    "diagramTypes": {
+      "architecture": "Architektur",
+      "data_flow": "Datenfluss",
+      "environment": "Umgebung",
+      "threat_model": "Bedrohungsmodell",
+      "hardware_layout": "Hardware-Layout"
+    },
+    "evidenceCategories": {
+      "test_report": "Testbericht",
+      "penetration_test": "Penetrationstest",
+      "code_analysis": "Code-Analyse",
+      "fuzzing": "Fuzzing",
+      "third_party_test": "Test durch Dritte",
+      "due_diligence": "Sorgfaltsprüfung",
+      "hardware_photo": "Hardware-Foto",
+      "other": "Sonstiges"
+    },
+    "docStatus": {
+      "not_started": "Nicht begonnen",
+      "draft": "Entwurf",
+      "final": "Endgültig"
+    },
+    "pdf": {
+      "title": "Technische Dokumentation (Anhang VII)",
+      "version": "Version",
+      "retainedUntil": "Aufbewahrt bis",
+      "retentionNote": "für Marktüberwachungsbehörden bereitgehalten (Art. 13(13))",
+      "coverageHeading": "Zusammenfassung der Abdeckung nach Anhang VII",
+      "none": "Nichts erfasst",
+      "noPreview": "Keine Vorschau verfügbar",
+      "missingDiagrams": "Noch keine Diagramme hinzugefügt.",
+      "missingRa": "Keine freigegebene Risikobewertung.",
+      "missingEvidence": "Noch keine Testberichte hochgeladen.",
+      "components": "Komponenten",
+      "yes": "Vorhanden",
+      "raApplies": "anwendbar",
+      "raNa": "nicht anwendbar",
+      "raUnmapped": "nicht zugeordnet",
+      "f_manufacturer": "Hersteller",
+      "f_address": "Adresse",
+      "f_description": "Beschreibung",
+      "f_intendedUse": "Verwendungszweck",
+      "f_connectivity": "Konnektivität",
+      "f_type": "Typ / CRA-Kategorie",
+      "f_versions": "Softwareversionen",
+      "f_sbom": "SBOM",
+      "f_vdp": "Richtlinie zur koordinierten Offenlegung von Schwachstellen",
+      "f_securityContact": "Sicherheitskontakt",
+      "f_updateMechanism": "Mechanismus für sichere Updates",
+      "f_production": "Produktion & Überwachung",
+      "f_raReleased": "Freigegebene Risikobewertung",
+      "f_supportPeriod": "Supportzeitraum",
+      "f_standards": "Angewandte Normen",
+      "f_docStatus": "Status der Konformitätserklärung",
+      "f_signatory": "Unterzeichner"
+    }
+  }
+}

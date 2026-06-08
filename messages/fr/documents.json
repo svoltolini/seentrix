@@ -41,6 +41,7 @@
       "downloadPdf": "Télécharger le PDF",
       "pdfGenerated": "PDF généré avec succès.",
       "markFinal": "Marquer comme final",
+      "retainedUntil": "Conservé jusqu'au {date}",
       "markDraft": "Revenir au brouillon",
       "errors": {
         "notAuthenticated": "Vous devez être connecté.",

@@ -49,6 +49,7 @@ const NAMESPACES = [
   "contact",
   "diagrams",
   "risk-assessment",
+  "technical-file",
 ] as const;
 
 type Messages = Record<string, unknown>;

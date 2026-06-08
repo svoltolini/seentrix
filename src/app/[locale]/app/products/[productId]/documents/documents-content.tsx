@@ -290,6 +290,15 @@ export function DocumentsContent({
         {/* Actions */}
         {doc && (
           <div className="flex flex-wrap items-center gap-3 rounded-md bg-card shadow-card-sm px-5 py-4">
+            {doc.retention_until && status === "final" && (
+              <span className="inline-flex items-center rounded-sm bg-primary/10 px-2.5 py-1 text-l6-plus uppercase tracking-wider text-primary">
+                {t.has("editor.retainedUntil")
+                  ? t("editor.retainedUntil", {
+                      date: new Date(doc.retention_until).toLocaleDateString(),
+                    })
+                  : `Retained until ${new Date(doc.retention_until).toLocaleDateString()}`}
+              </span>
+            )}
             <Button
               variant="outline"
               size="sm"

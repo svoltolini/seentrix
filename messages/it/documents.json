@@ -41,6 +41,7 @@
       "downloadPdf": "Scarica PDF",
       "pdfGenerated": "PDF generato con successo.",
       "markFinal": "Contrassegna come definitivo",
+      "retainedUntil": "Conservato fino al {date}",
       "markDraft": "Ripristina come bozza",
       "errors": {
         "notAuthenticated": "Devi effettuare l'accesso.",

@@ -216,6 +216,16 @@
       "title": "Restrisiko",
       "body": "Das Risiko, das für eine bestimmte Bedrohung nach Umsetzung der mindernden Maßnahmen verbleibt — im Gegensatz zum inhärenten Risiko vor der Minderung. In der Seentrix-Risikobewertung erfasst jede anwendbare Anhang-I-Anforderung ein inhärentes Risiko (abgeleitet aus einer Matrix aus Eintrittswahrscheinlichkeit × Auswirkung in Niedrig/Mittel/Hoch) und das Restrisiko, das nach der beschriebenen Umsetzung verbleibt.",
       "ref": "Unterstützt CRA Artikel 13(3): die Risikobewertung muss zeigen, dass identifizierte Risiken auf ein akzeptables Maß gemindert werden."
+    },
+    "technical_documentation": {
+      "title": "Technische Dokumentation (Anhang VII)",
+      "body": "Die Dokumente, die CRA Anhang VII vom Hersteller verlangt und die aktuell zu halten sind: eine allgemeine Produktbeschreibung, Design und Entwicklung (Systemarchitektur und Datenflussdiagramme, SBOM und Prozesse zur Schwachstellenbehandlung, Produktion und Überwachung), die Risikobewertung, der Supportzeitraum, die angewandten Normen, die Testberichte und die Konformitätserklärung. Sie muss vor dem Inverkehrbringen vorliegen. In Seentrix stellt der Reiter „Technische Dokumentation“ sie in der Reihenfolge des Anhangs VII aus den anderen Reitern zusammen.",
+      "ref": "CRA Anhang VII und Artikel 13 — die technische Dokumentation muss vor dem Inverkehrbringen erstellt und aktuell gehalten werden."
+    },
+    "retention_period": {
+      "title": "Aufbewahrungsfrist",
+      "body": "Wie lange der CRA verlangt, Compliance-Unterlagen für Behörden bereitzuhalten. Die technische Dokumentation und die EU-Konformitätserklärung sind mindestens zehn Jahre nach dem Inverkehrbringen aufzubewahren, oder für den Supportzeitraum, falls dieser länger ist. Seentrix stempelt diese Frist auf jede freigegebene technische Dokumentation und bewahrt freigegebene Dateien (archiviert) auf, statt sie zu löschen.",
+      "ref": "CRA Artikel 13(13): technische Dokumentation und Konformitätserklärung mindestens 10 Jahre (oder den Supportzeitraum) für Marktüberwachungsbehörden bereithalten."
     }
   },
   "help": {

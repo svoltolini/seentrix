@@ -216,6 +216,16 @@
       "title": "Rischio residuo",
       "body": "Il livello di rischio che permane per una determinata minaccia dopo l'applicazione delle misure di mitigazione — in contrapposizione al rischio inerente prima della mitigazione. Nella valutazione dei rischi di Seentrix ogni requisito applicabile dell'allegato I registra un rischio inerente (derivato da una matrice probabilità × impatto in Basso/Medio/Alto) e il rischio residuo che rimane dopo l'implementazione descritta.",
       "ref": "Supporta l'Articolo 13(3) del CRA: la valutazione dei rischi deve dimostrare che i rischi identificati sono mitigati a un livello accettabile."
+    },
+    "technical_documentation": {
+      "title": "Documentazione tecnica (allegato VII)",
+      "body": "L'insieme dei documenti che l'allegato VII del CRA impone al fabbricante di redigere e mantenere aggiornati: una descrizione generale del prodotto, la progettazione e lo sviluppo (architettura di sistema e diagrammi di flusso dei dati, SBOM e processi di gestione delle vulnerabilità, produzione e monitoraggio), la valutazione dei rischi, il periodo di supporto, le norme applicate, i rapporti di prova e la dichiarazione di conformità. Deve esistere prima dell'immissione sul mercato. In Seentrix la scheda Fascicolo tecnico la assembla nell'ordine dell'allegato VII a partire dalle altre schede.",
+      "ref": "Allegato VII e articolo 13 del CRA — la documentazione tecnica deve essere redatta prima dell'immissione sul mercato e tenuta aggiornata."
+    },
+    "retention_period": {
+      "title": "Periodo di conservazione",
+      "body": "Per quanto tempo il CRA richiede di tenere a disposizione delle autorità i documenti di conformità. La documentazione tecnica e la dichiarazione di conformità UE devono essere conservate per almeno dieci anni dopo l'immissione sul mercato, o per il periodo di supporto se più lungo. Seentrix marca questa scadenza su ogni fascicolo tecnico rilasciato e conserva i file rilasciati (archiviati) anziché eliminarli.",
+      "ref": "Articolo 13(13) del CRA: tenere la documentazione tecnica e la DoC a disposizione delle autorità di vigilanza del mercato per almeno 10 anni (o il periodo di supporto)."
     }
   },
   "help": {

@@ -1,0 +1,109 @@
+{
+  "technical-file": {
+    "title": "Technical File",
+    "subtitle": "Assemble the CRA Annex VII technical documentation — compiled in order from everything your product already holds — and release dated, retained versions.",
+    "actions": {
+      "assemble": "Assemble & preview",
+      "assembling": "Assembling…",
+      "release": "Release version",
+      "newVersion": "New version",
+      "downloadPdf": "PDF",
+      "archive": "Archive"
+    },
+    "coverage": {
+      "heading": "Annex VII coverage",
+      "summary": "{present} of {total} sections complete",
+      "present": "Present",
+      "partial": "Partial",
+      "missing": "Missing",
+      "fix": "Fix →"
+    },
+    "points": {
+      "general_description": "General description, intended purpose & versions",
+      "design_architecture": "Design — architecture & data-flow diagrams",
+      "vuln_handling": "Vulnerability handling — SBOM, disclosure policy, secure updates",
+      "production_monitoring": "Production & monitoring processes",
+      "risk_assessment": "Cybersecurity risk assessment",
+      "support_period": "Support period",
+      "standards": "Standards applied",
+      "test_reports": "Test reports",
+      "declaration_of_conformity": "EU Declaration of Conformity"
+    },
+    "history": {
+      "heading": "Version history",
+      "version": "Version {n}",
+      "archived": "archived",
+      "released": "Released {date}",
+      "retainedUntil": "retained until {date}"
+    },
+    "feedback": {
+      "assembled": "Technical file assembled.",
+      "released": "Version released."
+    },
+    "errors": {
+      "generic": "Something went wrong. Please try again.",
+      "notAuthenticated": "Please sign in again.",
+      "notAuthorized": "You don't have permission to edit the technical file.",
+      "draftExists": "A draft already exists.",
+      "noVersions": "There is no version to revise yet.",
+      "noPdf": "No PDF is available for this version yet.",
+      "notFound": "Product not found."
+    },
+    "diagramTypes": {
+      "architecture": "Architecture",
+      "data_flow": "Data flow",
+      "environment": "Environment",
+      "threat_model": "Threat model",
+      "hardware_layout": "Hardware layout"
+    },
+    "evidenceCategories": {
+      "test_report": "Test report",
+      "penetration_test": "Penetration test",
+      "code_analysis": "Code analysis",
+      "fuzzing": "Fuzzing",
+      "third_party_test": "Third-party test",
+      "due_diligence": "Due diligence",
+      "hardware_photo": "Hardware photo",
+      "other": "Other"
+    },
+    "docStatus": {
+      "not_started": "Not started",
+      "draft": "Draft",
+      "final": "Final"
+    },
+    "pdf": {
+      "title": "Technical Documentation (Annex VII)",
+      "version": "Version",
+      "retainedUntil": "Retained until",
+      "retentionNote": "kept available to market-surveillance authorities (Art 13(13))",
+      "coverageHeading": "Annex VII coverage summary",
+      "none": "None recorded",
+      "noPreview": "No preview available",
+      "missingDiagrams": "No diagrams added yet.",
+      "missingRa": "No released risk assessment.",
+      "missingEvidence": "No test reports uploaded yet.",
+      "components": "components",
+      "yes": "Present",
+      "raApplies": "apply",
+      "raNa": "not applicable",
+      "raUnmapped": "unmapped",
+      "f_manufacturer": "Manufacturer",
+      "f_address": "Address",
+      "f_description": "Description",
+      "f_intendedUse": "Intended purpose",
+      "f_connectivity": "Connectivity",
+      "f_type": "Type / CRA category",
+      "f_versions": "Software versions",
+      "f_sbom": "SBOM",
+      "f_vdp": "Coordinated vulnerability disclosure policy",
+      "f_securityContact": "Security contact",
+      "f_updateMechanism": "Secure-update mechanism",
+      "f_production": "Production & monitoring",
+      "f_raReleased": "Released risk assessment",
+      "f_supportPeriod": "Support period",
+      "f_standards": "Standards applied",
+      "f_docStatus": "Declaration of Conformity status",
+      "f_signatory": "Signatory"
+    }
+  }
+}

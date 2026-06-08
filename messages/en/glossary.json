@@ -216,6 +216,16 @@
       "title": "Residual risk",
       "body": "The level of risk that remains for a given threat once the mitigating controls are in place — as opposed to the inherent risk before mitigation. In the Seentrix risk assessment each applicable Annex I requirement records an inherent risk (derived from a Low/Medium/High likelihood × impact matrix) and the residual risk left after the implementation described is applied.",
       "ref": "Supports CRA Article 13(3): the risk assessment must show that identified risks are mitigated to an acceptable level."
+    },
+    "technical_documentation": {
+      "title": "Technical documentation (Annex VII)",
+      "body": "The set of documents CRA Annex VII requires a manufacturer to compile and keep current: a general product description, the design and development (system architecture and data-flow diagrams, the SBOM and vulnerability-handling processes, production and monitoring), the risk assessment, the support period, the standards applied, the test reports, and the Declaration of Conformity. It must exist before the product is placed on the market. In Seentrix the Technical File tab assembles it in Annex VII order from the other tabs.",
+      "ref": "CRA Annex VII and Article 13 — the technical documentation must be drawn up before placing on the market and kept up to date."
+    },
+    "retention_period": {
+      "title": "Retention period",
+      "body": "How long the CRA requires compliance records to be kept available to authorities. The technical documentation and the EU Declaration of Conformity must be retained for at least ten years after the product is placed on the market, or for the support period if that is longer. Seentrix stamps this deadline on each released technical file and keeps released files (soft-archived) rather than deleting them.",
+      "ref": "CRA Article 13(13): keep the technical documentation and DoC available to market-surveillance authorities for at least 10 years, or the support period if longer."
     }
   },
   "help": {

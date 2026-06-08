@@ -26,6 +26,8 @@ export interface DocumentRecord {
   version: number;
   file_url: string | null;
   generated_at: string | null;
+  released_at: string | null;
+  retention_until: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -60,7 +62,7 @@ export async function listDocuments(
   const { data, error } = await supabase
     .from("documents")
     .select(
-      "id, product_id, document_type, title, content, status, version, file_url, generated_at, created_at, updated_at"
+      "id, product_id, document_type, title, content, status, version, file_url, generated_at, released_at, retention_until, created_at, updated_at"
     )
     .eq("product_id", productId)
     .order("document_type", { ascending: true });
@@ -84,7 +86,7 @@ export async function getDocument(
   const { data, error } = await supabase
     .from("documents")
     .select(
-      "id, product_id, document_type, title, content, status, version, file_url, generated_at, created_at, updated_at"
+      "id, product_id, document_type, title, content, status, version, file_url, generated_at, released_at, retention_until, created_at, updated_at"
     )
     .eq("id", documentId)
     .single();
@@ -166,9 +168,45 @@ export async function updateDocumentStatus(
 
   if (!user) return { error: "notAuthenticated" };
 
+  const patch: Record<string, unknown> = { status };
+
+  // Retention stamping (Art 13(13)): when a Declaration of Conformity is
+  // marked final, stamp its release date + the retention deadline (10 years,
+  // or the support-period end if later). Idempotent — the first release date
+  // is preserved on re-finalization.
+  if (status === "final") {
+    const { data: doc } = await supabase
+      .from("documents")
+      .select("document_type, product_id, released_at")
+      .eq("id", documentId)
+      .single();
+    const d = doc as {
+      document_type: string;
+      product_id: string;
+      released_at: string | null;
+    } | null;
+    if (d?.document_type === "declaration_of_conformity") {
+      const { data: product } = await supabase
+        .from("products")
+        .select("support_period_end")
+        .eq("id", d.product_id)
+        .single();
+      const supportEnd = (product as { support_period_end: string | null } | null)
+        ?.support_period_end;
+      const { retentionUntil } = await import("@/lib/constants/annex-vii");
+      const releasedAt = d.released_at ? new Date(d.released_at) : new Date();
+      const retention = retentionUntil(
+        releasedAt,
+        supportEnd ? new Date(supportEnd) : null,
+      );
+      patch.released_at = d.released_at ?? releasedAt.toISOString();
+      patch.retention_until = retention.toISOString();
+    }
+  }
+
   const { error } = await supabase
     .from("documents")
-    .update({ status })
+    .update(patch)
     .eq("id", documentId);
 
   if (error) return { error: "generic" };
