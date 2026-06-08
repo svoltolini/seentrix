@@ -42,6 +42,11 @@ const en: Messages = {
   section6: "6. Declaration of Conformity reference",
   docVersion: "DoC version",
   docIssued: "Issued on",
+  intendedUse: "Intended use",
+  knownRisks: "Known and foreseeable cybersecurity risks",
+  knownRisksNone:
+    "No specific risks identified beyond standard secure-use practices.",
+  docUrl: "Where the EU Declaration of Conformity can be accessed",
 };
 
 const de: Messages = {
@@ -74,6 +79,11 @@ const de: Messages = {
   section6: "6. Verweis auf die Konformitätserklärung",
   docVersion: "Version der Konformitätserklärung",
   docIssued: "Ausgestellt am",
+  intendedUse: "Verwendungszweck",
+  knownRisks: "Bekannte und vorhersehbare Cybersicherheitsrisiken",
+  knownRisksNone:
+    "Über die üblichen Praktiken zur sicheren Nutzung hinaus wurden keine spezifischen Risiken festgestellt.",
+  docUrl: "Wo die EU-Konformitätserklärung abgerufen werden kann",
 };
 
 const fr: Messages = {
@@ -106,6 +116,11 @@ const fr: Messages = {
   section6: "6. Référence de la déclaration de conformité",
   docVersion: "Version de la déclaration de conformité",
   docIssued: "Émise le",
+  intendedUse: "Utilisation prévue",
+  knownRisks: "Risques de cybersécurité connus et prévisibles",
+  knownRisksNone:
+    "Aucun risque spécifique identifié au-delà des pratiques d’utilisation sécurisée standard.",
+  docUrl: "Où la déclaration UE de conformité peut être consultée",
 };
 
 const it: Messages = {
@@ -138,6 +153,11 @@ const it: Messages = {
   section6: "6. Riferimento alla dichiarazione di conformità",
   docVersion: "Versione della dichiarazione di conformità",
   docIssued: "Rilasciata il",
+  intendedUse: "Destinazione d’uso",
+  knownRisks: "Rischi di cibersicurezza noti e prevedibili",
+  knownRisksNone:
+    "Non sono stati identificati rischi specifici oltre alle normali pratiche di uso sicuro.",
+  docUrl: "Dove è possibile consultare la dichiarazione di conformità UE",
 };
 
 const MESSAGES: Record<Locale, Messages> = { en, de, fr, it };

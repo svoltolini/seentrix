@@ -18,6 +18,7 @@ const TABS = [
   { key: "diagrams", segment: "/diagrams" },
   { key: "documents", segment: "/documents" },
   { key: "technicalFile", segment: "/technical-file" },
+  { key: "identity", segment: "/identity" },
 ] as const;
 
 /**

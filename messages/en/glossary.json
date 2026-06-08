@@ -231,6 +231,16 @@
       "title": "Single Reporting Platform (SRP)",
       "body": "The single electronic entry point established by ENISA for filing CRA Article 14 notifications. The manufacturer submits the 24-hour early warning, the 72-hour intermediate report and the final report through it; the platform routes them to the coordinating CSIRT and the relevant authorities and returns a reference number per submission. In Seentrix each incident exports a structured submission package per stage and records the SRP reference number it returns.",
       "ref": "CRA Article 14: severe incidents and actively-exploited vulnerabilities are notified via the single reporting platform established by ENISA."
+    },
+    "annex_ii": {
+      "title": "Annex II — User information",
+      "body": "The information and instructions to the user that must accompany a product with digital elements: the manufacturer's identity and single point of contact, where to find the vulnerability-disclosure policy, the intended use and known/foreseeable cybersecurity risks, the support-period end-date, where the EU Declaration of Conformity can be accessed, and secure installation/operation/decommissioning guidance. In Seentrix it is generated as the end-user information sheet from the Identity & CE tab.",
+      "ref": "CRA Annex II — information and instructions to the user; the support-period end-date is buyer-facing under Article 13(19)."
+    },
+    "annex_vi": {
+      "title": "Annex VI — Simplified DoC",
+      "body": "The simplified EU declaration of conformity: a short form naming the product and manufacturer plus a statement that the full declaration of conformity is available at a stated internet address. It is what a manufacturer can print on the product or packaging; the address points to a public page hosting the declaration. Seentrix publishes it at /doc/<org-slug>/<product-id> when the product is published and the org has public pages enabled.",
+      "ref": "CRA Annex VI — simplified EU declaration of conformity."
     }
   },
   "help": {

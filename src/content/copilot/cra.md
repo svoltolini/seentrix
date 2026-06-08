@@ -280,6 +280,35 @@ contain at minimum:
 
 ---
 
+## Simplified DoC (Annex VI), CE marking (Article 30) and product identity (Article 13(15)-(16))
+
+The **simplified EU declaration of conformity** (Annex VI) is a short-form
+declaration — the product, the manufacturer, and a statement that the full EU
+declaration of conformity is available at a stated internet address. It is what
+you can print on the product or packaging; the address points to a public page
+that hosts the declaration.
+
+**CE marking (Article 30 / Regulation (EC) No 765/2008).** The CE marking is
+affixed visibly, legibly and indelibly to the product before it is placed on
+the market; where the nature of the product does not allow that, it goes on the
+packaging and in the accompanying documents. It expresses conformity with the
+CRA and any other applicable Union legislation. Manufacturers should record
+where the marking is applied (product / packaging / documentation / website).
+
+**Product identification (Article 13(15)-(16)).** The manufacturer must indicate
+on the product — or, where not possible, on its packaging or in an accompanying
+document — a type, batch or serial number or other element allowing the product
+to be identified, together with the manufacturer's name, registered trade
+name/mark, postal address and a single point of contact.
+
+In Seentrix these live on each product's **Identity & CE** tab: the type / batch
+/ serial fields, the CE affixing record, and a toggle that publishes the
+simplified DoC at a public URL (`/doc/<org-slug>/<product-id>`) once the org has
+enabled public pages. The buyer-facing end-user information (Annex II, including
+the support-period end-date under Art 13(19)) is generated from the same screen.
+
+---
+
 ## Annex VII — Technical documentation
 
 The technical dossier the manufacturer must keep for ten years. At

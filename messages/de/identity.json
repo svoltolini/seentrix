@@ -1,0 +1,93 @@
+{
+  "identity": {
+    "title": "Identität & CE",
+    "subtitle": "Produktidentifikation, CE-Kennzeichnung, die öffentliche vereinfachte Konformitätserklärung und die Endnutzerinformationen für Käufer.",
+    "actions": {
+      "save": "Speichern",
+      "saving": "Wird gespeichert…"
+    },
+    "identity": {
+      "heading": "Produktidentifikation",
+      "description": "Typ, Charge und Seriennummer, die das Produkt eindeutig identifizieren (CRA Art. 13(15)–(16)).",
+      "model_number": "Typ-/Modellnummer",
+      "model_numberPlaceholder": "z. B. RTR-2400",
+      "batch_number": "Chargennummer",
+      "batch_numberPlaceholder": "z. B. 2026-W23",
+      "serial_number": "Seriennummer / -bereich",
+      "serial_numberPlaceholder": "z. B. SN-0001…9999",
+      "notifiedBodyCertificate": "Zertifikatsnummer der notifizierten Stelle",
+      "notifiedBodyCertificatePlaceholder": "Zertifikatsnr., falls eine notifizierte Stelle beteiligt war",
+      "notifiedBodyCertificateNote": "Nur für Produkte, deren Konformitätsweg eine notifizierte Stelle erforderte.",
+      "manufacturer": "Hersteller",
+      "manufacturerNote": "Aus Ihrer Organisationseinheit übernommen — bearbeiten Sie sie unter Einstellungen → Entität."
+    },
+    "ce": {
+      "heading": "CE-Kennzeichnung",
+      "description": "Erfassen Sie, wo und wann die CE-Kennzeichnung angebracht wird (Art. 30).",
+      "locations": "Wo die CE-Kennzeichnung angebracht ist",
+      "location": {
+        "product": "Auf dem Produkt",
+        "packaging": "Auf der Verpackung",
+        "documentation": "In der Dokumentation",
+        "website": "Auf der Website"
+      },
+      "affixedAt": "Angebracht am",
+      "notes": "Notizen",
+      "notesPlaceholder": "Details dazu, wie die Kennzeichnung angebracht wird…",
+      "help": {
+        "title": "CE-Kennzeichnung",
+        "body": "Die CE-Kennzeichnung wird vor dem Inverkehrbringen sichtbar, lesbar und dauerhaft am Produkt angebracht; ist dies nicht möglich, erfolgt sie auf der Verpackung und in den Begleitunterlagen. Sie bescheinigt die Konformität mit dem CRA (und sonstigem anwendbarem Unionsrecht).",
+        "ref": "CRA Artikel 30 + Verordnung (EG) Nr. 765/2008 — allgemeine Grundsätze der CE-Kennzeichnung."
+      }
+    },
+    "simplified": {
+      "heading": "Vereinfachte Konformitätserklärung (Anhang VI)",
+      "description": "Veröffentlichen Sie eine Kurzform-Konformitätserklärung unter einer öffentlichen URL — die Adresse, die Sie auf Produkt oder Verpackung drucken können, damit jeder die Erklärung erreicht.",
+      "publish": "Veröffentlichen",
+      "unpublish": "Zurückziehen",
+      "published": "Vereinfachte Konformitätserklärung veröffentlicht.",
+      "unpublished": "Vereinfachte Konformitätserklärung zurückgezogen.",
+      "needsPublicPages": "Aktivieren Sie öffentliche Seiten für Ihre Organisation (Einstellungen → öffentlichen Slug festlegen + öffentliche Sicherheitsseite aktivieren), um eine vereinfachte Konformitätserklärung zu veröffentlichen.",
+      "notPublished": "Nicht veröffentlicht. Veröffentlichen Sie, um die öffentliche URL freizugeben.",
+      "copied": "URL kopiert.",
+      "copy": "Kopieren",
+      "open": "Öffnen",
+      "help": {
+        "title": "Vereinfachte Konformitätserklärung",
+        "body": "Anhang VI erlaubt eine vereinfachte Konformitätserklärung — das Produkt, der Hersteller und die Angabe, dass die vollständige EU-Konformitätserklärung unter einer bestimmten Internetadresse verfügbar ist. Dies ist die Seite, auf die diese Adresse verweist.",
+        "ref": "CRA Anhang VI — vereinfachte EU-Konformitätserklärung."
+      }
+    },
+    "annexII": {
+      "heading": "Endnutzerinformationen (Anhang II)",
+      "description": "Das käuferseitige Cybersicherheits-Informationsblatt, das dem Produkt beiliegen muss — deckt die Anhang-II-Punkte 1–9 ab.",
+      "knownRisks": "Bekannte & vorhersehbare Cybersicherheitsrisiken",
+      "knownRisksPlaceholder": "Risiken, die ein Nutzer kennen sollte, und wie sie zu mindern sind (Anhang II Punkt 5)…",
+      "supportEnd": "Ende des Supportzeitraums (käuferseitig — Art. 13(19))",
+      "supportEndUnset": "Legen Sie den Supportzeitraum in der Produktübersicht fest.",
+      "generate": "PDF erstellen",
+      "generating": "Wird erstellt…",
+      "generateFailed": "Endnutzerinformationen konnten nicht erstellt werden."
+    },
+    "feedback": {
+      "saved": "Gespeichert."
+    },
+    "errors": {
+      "generic": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut."
+    },
+    "public": {
+      "eyebrow": "Vereinfachte EU-Konformitätserklärung",
+      "title": "Konformitätserklärung",
+      "statement": "{manufacturer} erklärt in alleiniger Verantwortung, dass das Produkt „{product}“ der Verordnung (EU) 2024/2847 (Cyber Resilience Act) und dem sonstigen darauf anwendbaren Unionsrecht entspricht.",
+      "product": "Produkt",
+      "type": "Typ",
+      "identification": "Identifikation",
+      "docVersion": "Version der Erklärung",
+      "supportEnd": "Sicherheitssupport bis",
+      "manufacturer": "Hersteller",
+      "contact": "Kontakt",
+      "fullDocNote": "Die vollständige EU-Konformitätserklärung und die technische Dokumentation sind beim Hersteller auf Anfrage unter dem oben genannten Kontakt erhältlich.",
+      "footer": "Veröffentlicht über Seentrix · vereinfachte Konformitätserklärung nach CRA Anhang VI."
+    }
+  }
+}

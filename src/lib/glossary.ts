@@ -80,6 +80,10 @@ export const GLOSSARY_TERMS = [
 
   // Reporting
   "single_reporting_platform",
+
+  // Conformity documents
+  "annex_ii",
+  "annex_vi",
 ] as const;
 
 export type GlossaryTermId = (typeof GLOSSARY_TERMS)[number];
@@ -149,6 +153,9 @@ export const GLOSSARY_RELATED: Partial<Record<GlossaryTermId, GlossaryTermId[]>>
   retention_period: ["technical_documentation", "annex_vii"],
 
   single_reporting_platform: ["article_14", "enisa", "csirt"],
+
+  annex_ii: ["doc", "support_period", "annex_v"],
+  annex_vi: ["doc", "ce_marking", "annex_v"],
 };
 
 /**
@@ -211,6 +218,9 @@ export const GLOSSARY_LESSONS: Partial<Record<GlossaryTermId, string>> = {
   retention_period: "annex-vii-technical-file",
 
   single_reporting_platform: "enisa-single-reporting-platform",
+
+  annex_ii: "annex-ii-user-information",
+  annex_vi: "ce-marking-and-simplified-doc",
 };
 
 /**
@@ -273,6 +283,14 @@ export const ACADEMY_LESSONS = {
   },
   "enisa-single-reporting-platform": {
     title: "The ENISA Single Reporting Platform",
+    duration: "7 min",
+  },
+  "ce-marking-and-simplified-doc": {
+    title: "CE marking & the simplified Declaration of Conformity",
+    duration: "7 min",
+  },
+  "annex-ii-user-information": {
+    title: "Annex II user information",
     duration: "7 min",
   },
 } satisfies Record<string, { title: string; duration: string }>;

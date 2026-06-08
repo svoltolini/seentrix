@@ -231,6 +231,16 @@
       "title": "Piattaforma di segnalazione unica (SRP)",
       "body": "L'unico punto di accesso elettronico istituito dall'ENISA per presentare le notifiche dell'Articolo 14 del CRA. Il fabbricante vi presenta l'allerta precoce a 24 ore, il rapporto intermedio a 72 ore e il rapporto finale; la piattaforma li instrada al CSIRT coordinatore e alle autorità competenti e restituisce un numero di riferimento per ogni submission. In Seentrix ogni incidente esporta un pacchetto di submission strutturato per fase e registra il numero di riferimento SRP restituito.",
       "ref": "Articolo 14 del CRA: gli incidenti gravi e le vulnerabilità attivamente sfruttate sono notificati tramite la piattaforma di segnalazione unica istituita dall'ENISA."
+    },
+    "annex_ii": {
+      "title": "Allegato II — Informazioni per l'utente",
+      "body": "Le informazioni e istruzioni per l'utente che devono accompagnare un prodotto con elementi digitali: l'identità e il punto di contatto unico del fabbricante, dove trovare la politica di divulgazione delle vulnerabilità, la destinazione d'uso e i rischi di cibersicurezza noti/prevedibili, la data di fine del periodo di supporto, dove è possibile consultare la dichiarazione di conformità UE, e le indicazioni per installazione/uso/dismissione sicuri. In Seentrix sono generate come scheda informativa per l'utente finale dalla scheda Identità & CE.",
+      "ref": "Allegato II del CRA — informazioni e istruzioni per l'utente; la data di fine supporto è destinata all'acquirente ai sensi dell'articolo 13(19)."
+    },
+    "annex_vi": {
+      "title": "Allegato VI — DoC semplificata",
+      "body": "La dichiarazione di conformità UE semplificata: una forma breve che nomina il prodotto e il fabbricante con una dichiarazione che la dichiarazione di conformità completa è disponibile a un determinato indirizzo internet. È ciò che un fabbricante può stampare sul prodotto o sull'imballaggio; l'indirizzo rimanda a una pagina pubblica che ospita la dichiarazione. Seentrix la pubblica a /doc/<org-slug>/<product-id> quando il prodotto è pubblicato e l'organizzazione ha abilitato le pagine pubbliche.",
+      "ref": "Allegato VI del CRA — dichiarazione di conformità UE semplificata."
     }
   },
   "help": {

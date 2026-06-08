@@ -231,6 +231,16 @@
       "title": "Single Reporting Platform (SRP)",
       "body": "Der von der ENISA eingerichtete einheitliche elektronische Zugangspunkt für Meldungen nach CRA Artikel 14. Der Hersteller reicht darüber die 24-Stunden-Frühwarnung, den 72-Stunden-Zwischenbericht und den Abschlussbericht ein; die Plattform leitet sie an das koordinierende CSIRT und die zuständigen Behörden weiter und gibt pro Einreichung eine Referenznummer zurück. In Seentrix exportiert jeder Vorfall pro Phase ein strukturiertes Einreichungspaket und erfasst die zurückgegebene SRP-Referenznummer.",
       "ref": "CRA Artikel 14: schwere Vorfälle und aktiv ausgenutzte Schwachstellen werden über die von der ENISA eingerichtete Single Reporting Platform gemeldet."
+    },
+    "annex_ii": {
+      "title": "Anhang II — Nutzerinformationen",
+      "body": "Die Informationen und Anweisungen für den Nutzer, die einem Produkt mit digitalen Elementen beiliegen müssen: Identität und zentrale Anlaufstelle des Herstellers, wo die Schwachstellen-Offenlegungsrichtlinie zu finden ist, der Verwendungszweck und bekannte/vorhersehbare Cybersicherheitsrisiken, das Enddatum des Supportzeitraums, wo die EU-Konformitätserklärung abrufbar ist, sowie Hinweise zur sicheren Installation/zum Betrieb/zur Außerbetriebnahme. In Seentrix wird sie als Endnutzer-Informationsblatt auf dem Reiter Identität & CE erzeugt.",
+      "ref": "CRA Anhang II — Informationen und Anweisungen für den Nutzer; das Enddatum des Supportzeitraums ist nach Artikel 13(19) käuferseitig."
+    },
+    "annex_vi": {
+      "title": "Anhang VI — Vereinfachte Konformitätserklärung",
+      "body": "Die vereinfachte EU-Konformitätserklärung: eine Kurzform mit Produkt und Hersteller sowie der Angabe, dass die vollständige Konformitätserklärung unter einer bestimmten Internetadresse verfügbar ist. Dies kann ein Hersteller auf Produkt oder Verpackung drucken; die Adresse verweist auf eine öffentliche Seite mit der Erklärung. Seentrix veröffentlicht sie unter /doc/<org-slug>/<product-id>, wenn das Produkt veröffentlicht ist und die Organisation öffentliche Seiten aktiviert hat.",
+      "ref": "CRA Anhang VI — vereinfachte EU-Konformitätserklärung."
     }
   },
   "help": {

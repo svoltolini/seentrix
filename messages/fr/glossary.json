@@ -231,6 +231,16 @@
       "title": "Plateforme de signalement unique (SRP)",
       "body": "Le point d'entrée électronique unique établi par l'ENISA pour déposer les notifications de l'Article 14 du CRA. Le fabricant y soumet l'alerte précoce à 24 heures, le rapport intermédiaire à 72 heures et le rapport final ; la plateforme les achemine vers le CSIRT coordinateur et les autorités compétentes et renvoie un numéro de référence par soumission. Dans Seentrix, chaque incident exporte un dossier de soumission structuré par étape et enregistre le numéro de référence SRP renvoyé.",
       "ref": "Article 14 du CRA : les incidents graves et les vulnérabilités activement exploitées sont notifiés via la plateforme de signalement unique établie par l'ENISA."
+    },
+    "annex_ii": {
+      "title": "Annexe II — Informations à l'utilisateur",
+      "body": "Les informations et instructions à l'utilisateur qui doivent accompagner un produit comportant des éléments numériques : l'identité et le point de contact unique du fabricant, où trouver la politique de divulgation des vulnérabilités, l'utilisation prévue et les risques de cybersécurité connus/prévisibles, la date de fin de la période de support, où la déclaration UE de conformité peut être consultée, et les consignes d'installation/exploitation/mise hors service sécurisées. Dans Seentrix, elles sont générées sous forme de fiche d'information à l'utilisateur final depuis l'onglet Identité & CE.",
+      "ref": "Annexe II du CRA — informations et instructions à l'utilisateur ; la date de fin de support est destinée à l'acheteur en vertu de l'article 13(19)."
+    },
+    "annex_vi": {
+      "title": "Annexe VI — DoC simplifiée",
+      "body": "La déclaration UE de conformité simplifiée : une version courte nommant le produit et le fabricant, avec une mention indiquant que la déclaration de conformité complète est disponible à une adresse internet donnée. C'est ce qu'un fabricant peut imprimer sur le produit ou l'emballage ; l'adresse renvoie à une page publique hébergeant la déclaration. Seentrix la publie à /doc/<org-slug>/<product-id> lorsque le produit est publié et que l'organisation a activé les pages publiques.",
+      "ref": "Annexe VI du CRA — déclaration UE de conformité simplifiée."
     }
   },
   "help": {

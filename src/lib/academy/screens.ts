@@ -50,6 +50,16 @@ export const SCREEN_LESSONS = {
       "annex-i-essential-requirements",
     ],
   },
+  identity: {
+    key: "identity",
+    href: "/app/products",
+    icon: "barcode-stroke-rounded",
+    lessons: [
+      "ce-marking-and-simplified-doc",
+      "annex-ii-user-information",
+      "declaration-of-conformity",
+    ],
+  },
   diagrams: {
     key: "diagrams",
     href: "/app/products",

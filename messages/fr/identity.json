@@ -1,0 +1,93 @@
+{
+  "identity": {
+    "title": "Identité & CE",
+    "subtitle": "Identification du produit, marquage CE, déclaration de conformité simplifiée publique et informations destinées à l'utilisateur final.",
+    "actions": {
+      "save": "Enregistrer",
+      "saving": "Enregistrement…"
+    },
+    "identity": {
+      "heading": "Identification du produit",
+      "description": "Le type, le lot et le numéro de série qui identifient le produit de manière unique (CRA Art. 13(15)–(16)).",
+      "model_number": "Numéro de type / modèle",
+      "model_numberPlaceholder": "p. ex. RTR-2400",
+      "batch_number": "Numéro de lot",
+      "batch_numberPlaceholder": "p. ex. 2026-W23",
+      "serial_number": "Numéro / plage de série",
+      "serial_numberPlaceholder": "p. ex. SN-0001…9999",
+      "notifiedBodyCertificate": "Numéro de certificat de l'organisme notifié",
+      "notifiedBodyCertificatePlaceholder": "N° de certificat, si un organisme notifié est intervenu",
+      "notifiedBodyCertificateNote": "Uniquement pour les produits dont la voie de conformité a requis un organisme notifié.",
+      "manufacturer": "Fabricant",
+      "manufacturerNote": "Repris de votre entité organisationnelle — modifiez-le dans Paramètres → Entité."
+    },
+    "ce": {
+      "heading": "Marquage CE",
+      "description": "Enregistrez où et quand le marquage CE est apposé (Art. 30).",
+      "locations": "Où le marquage CE est apposé",
+      "location": {
+        "product": "Sur le produit",
+        "packaging": "Sur l'emballage",
+        "documentation": "Dans la documentation",
+        "website": "Sur le site web"
+      },
+      "affixedAt": "Apposé le",
+      "notes": "Notes",
+      "notesPlaceholder": "Détails sur la manière dont le marquage est apposé…",
+      "help": {
+        "title": "Marquage CE",
+        "body": "Le marquage CE est apposé de façon visible, lisible et indélébile sur le produit avant sa mise sur le marché ; lorsque cela n'est pas possible, il figure sur l'emballage et dans les documents d'accompagnement. Il atteste la conformité au CRA (et à toute autre législation de l'Union applicable).",
+        "ref": "Article 30 du CRA + règlement (CE) n° 765/2008 — principes généraux du marquage CE."
+      }
+    },
+    "simplified": {
+      "heading": "Déclaration de conformité simplifiée (annexe VI)",
+      "description": "Publiez une DoC en version courte à une URL publique — l'adresse que vous pouvez imprimer sur le produit ou l'emballage pour que chacun atteigne la déclaration.",
+      "publish": "Publier",
+      "unpublish": "Dépublier",
+      "published": "Déclaration de conformité simplifiée publiée.",
+      "unpublished": "Déclaration de conformité simplifiée dépubliée.",
+      "needsPublicPages": "Activez les pages publiques de votre organisation (Paramètres → définir un slug public + activer la page de sécurité publique) pour publier une DoC simplifiée.",
+      "notPublished": "Non publiée. Publiez pour exposer l'URL publique.",
+      "copied": "URL copiée.",
+      "copy": "Copier",
+      "open": "Ouvrir",
+      "help": {
+        "title": "DoC simplifiée",
+        "body": "L'annexe VI permet de fournir une déclaration de conformité simplifiée — le produit, le fabricant et une mention indiquant que la déclaration UE de conformité complète est disponible à une adresse internet donnée. Cette page est celle vers laquelle pointe cette adresse.",
+        "ref": "Annexe VI du CRA — déclaration UE de conformité simplifiée."
+      }
+    },
+    "annexII": {
+      "heading": "Informations à l'utilisateur final (annexe II)",
+      "description": "La fiche d'information de cybersécurité destinée à l'acheteur qui doit accompagner le produit — couvrant les points 1 à 9 de l'annexe II.",
+      "knownRisks": "Risques de cybersécurité connus & prévisibles",
+      "knownRisksPlaceholder": "Risques dont un utilisateur doit être conscient et comment les atténuer (annexe II point 5)…",
+      "supportEnd": "Fin de la période de support (côté acheteur — Art. 13(19))",
+      "supportEndUnset": "Définissez la période de support dans l'aperçu du produit.",
+      "generate": "Générer le PDF",
+      "generating": "Génération…",
+      "generateFailed": "Impossible de générer les informations à l'utilisateur final."
+    },
+    "feedback": {
+      "saved": "Enregistré."
+    },
+    "errors": {
+      "generic": "Une erreur est survenue. Veuillez réessayer."
+    },
+    "public": {
+      "eyebrow": "Déclaration UE de conformité simplifiée",
+      "title": "Déclaration de conformité",
+      "statement": "{manufacturer} déclare sous sa seule responsabilité que le produit « {product} » est conforme au règlement (UE) 2024/2847 (Cyber Resilience Act) et aux autres législations de l'Union qui lui sont applicables.",
+      "product": "Produit",
+      "type": "Type",
+      "identification": "Identification",
+      "docVersion": "Version de la déclaration",
+      "supportEnd": "Support de sécurité jusqu'au",
+      "manufacturer": "Fabricant",
+      "contact": "Contact",
+      "fullDocNote": "La déclaration UE de conformité complète et la documentation technique sont disponibles auprès du fabricant sur demande au contact ci-dessus.",
+      "footer": "Publié via Seentrix · déclaration de conformité simplifiée (CRA annexe VI)."
+    }
+  }
+}

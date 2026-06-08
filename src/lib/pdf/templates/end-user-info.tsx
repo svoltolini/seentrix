@@ -30,7 +30,7 @@ export function EndUserInfoPdf({ data, messages: m, generatedAt }: Props) {
         <Text style={baseStyles.body}>{m.subtitle}</Text>
         <View style={baseStyles.divider} />
 
-        {/* Section 1: Product */}
+        {/* Section 1: Product, intended use & foreseeable risks (Annex II 3–5) */}
         <View style={baseStyles.section}>
           <Text style={baseStyles.h2}>{m.section1}</Text>
           <PdfField label={m.productName} value={data.productName} />
@@ -38,6 +38,11 @@ export function EndUserInfoPdf({ data, messages: m, generatedAt }: Props) {
           <PdfField
             label={m.productIdentification}
             value={data.productIdentification}
+          />
+          <PdfField label={m.intendedUse} value={data.intendedUse} />
+          <PdfField
+            label={m.knownRisks}
+            value={data.knownRisks || m.knownRisksNone}
           />
         </View>
 
@@ -89,14 +94,17 @@ export function EndUserInfoPdf({ data, messages: m, generatedAt }: Props) {
           </Text>
         </View>
 
-        {/* Section 6: DoC reference */}
-        {data.declarationVersion && (
+        {/* Section 6: DoC reference + where it can be accessed (Annex II 6/9) */}
+        {(data.declarationVersion || data.docUrl) && (
           <View style={baseStyles.section}>
             <Text style={baseStyles.h2}>{m.section6}</Text>
-            <PdfField label={m.docVersion} value={data.declarationVersion} />
+            {data.declarationVersion && (
+              <PdfField label={m.docVersion} value={data.declarationVersion} />
+            )}
             {data.declarationIssuedAt && (
               <PdfField label={m.docIssued} value={data.declarationIssuedAt} />
             )}
+            {data.docUrl && <PdfField label={m.docUrl} value={data.docUrl} />}
           </View>
         )}
       </Page>

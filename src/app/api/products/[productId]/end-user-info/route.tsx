@@ -33,7 +33,7 @@ export async function GET(
     supabase
       .from("products")
       .select(
-        "name, type, description, support_period_start, support_period_end, update_channel, declaration_version, declaration_issued_at",
+        "name, type, description, intended_use, known_risks, support_period_start, support_period_end, update_channel, declaration_version, declaration_issued_at, public_doc_enabled",
       )
       .eq("id", productId)
       .eq("org_id", orgId)
@@ -77,11 +77,19 @@ export async function GET(
   );
   const disclosureUrl =
     securityPublicEnabled && o.slug ? `${origin}/security/${o.slug}` : "";
+  // Where the EU DoC can be accessed (Annex II 6/9) — the public simplified DoC
+  // when the product is published and the org has public pages enabled.
+  const docUrl =
+    p.public_doc_enabled && securityPublicEnabled && o.slug
+      ? `${origin}/doc/${o.slug}/${productId}`
+      : "";
 
   const data: Record<string, string> = {
     productName: p.name ?? "",
     productType: p.type ?? "",
     productIdentification: p.description ?? "",
+    intendedUse: p.intended_use ?? "",
+    knownRisks: p.known_risks ?? "",
     manufacturerName,
     manufacturerAddress: addressParts.join(", "),
     cybersecurityContact: o.contact_email ?? "",
@@ -90,6 +98,7 @@ export async function GET(
     supportEnd: fmt(p.support_period_end),
     updateChannel: p.update_channel ?? "",
     disclosureUrl,
+    docUrl,
     secureUseInstructions: "",
     declarationVersion: p.declaration_version ?? "",
     declarationIssuedAt: fmt(p.declaration_issued_at),

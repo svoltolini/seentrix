@@ -1,0 +1,93 @@
+{
+  "identity": {
+    "title": "Identity & CE",
+    "subtitle": "Product identification, CE marking, the public simplified Declaration of Conformity, and the buyer-facing end-user information.",
+    "actions": {
+      "save": "Save",
+      "saving": "Saving…"
+    },
+    "identity": {
+      "heading": "Product identification",
+      "description": "The type, batch and serial that uniquely identify the product (CRA Art 13(15)–(16)).",
+      "model_number": "Type / model number",
+      "model_numberPlaceholder": "e.g. RTR-2400",
+      "batch_number": "Batch number",
+      "batch_numberPlaceholder": "e.g. 2026-W23",
+      "serial_number": "Serial number / range",
+      "serial_numberPlaceholder": "e.g. SN-0001…9999",
+      "notifiedBodyCertificate": "Notified-body certificate number",
+      "notifiedBodyCertificatePlaceholder": "Certificate no., if a notified body was involved",
+      "notifiedBodyCertificateNote": "Only for products whose conformity route required a notified body.",
+      "manufacturer": "Manufacturer",
+      "manufacturerNote": "Drawn from your organisation entity — edit it in Settings → Entity."
+    },
+    "ce": {
+      "heading": "CE marking",
+      "description": "Record where and when the CE marking is affixed (Art 30).",
+      "locations": "Where the CE marking is affixed",
+      "location": {
+        "product": "On the product",
+        "packaging": "On the packaging",
+        "documentation": "In the documentation",
+        "website": "On the website"
+      },
+      "affixedAt": "Affixed on",
+      "notes": "Notes",
+      "notesPlaceholder": "Any detail about how the marking is applied…",
+      "help": {
+        "title": "CE marking",
+        "body": "The CE marking is affixed visibly, legibly and indelibly to the product before it is placed on the market; where that is not possible it goes on the packaging and in the accompanying documents. It signifies conformity with the CRA (and any other applicable Union legislation).",
+        "ref": "CRA Article 30 + Regulation (EC) No 765/2008 — general principles of the CE marking."
+      }
+    },
+    "simplified": {
+      "heading": "Simplified Declaration of Conformity (Annex VI)",
+      "description": "Publish a short-form DoC at a public URL — the address you can print on the product or packaging so anyone can reach the declaration.",
+      "publish": "Publish",
+      "unpublish": "Unpublish",
+      "published": "Simplified DoC published.",
+      "unpublished": "Simplified DoC unpublished.",
+      "needsPublicPages": "Enable public pages for your organisation (Settings → set a public slug + turn on the public security page) to publish a simplified DoC.",
+      "notPublished": "Not published. Publish to expose the public URL.",
+      "copied": "URL copied.",
+      "copy": "Copy",
+      "open": "Open",
+      "help": {
+        "title": "Simplified DoC",
+        "body": "Annex VI lets you provide a simplified declaration of conformity — the product, the manufacturer, and a statement that the full EU declaration of conformity is available at a given internet address. This is the page that address points to.",
+        "ref": "CRA Annex VI — simplified EU declaration of conformity."
+      }
+    },
+    "annexII": {
+      "heading": "End-user information (Annex II)",
+      "description": "The buyer-facing cybersecurity information sheet that must accompany the product — covering Annex II items 1–9.",
+      "knownRisks": "Known & foreseeable cybersecurity risks",
+      "knownRisksPlaceholder": "Risks a user should be aware of and how to mitigate them (Annex II item 5)…",
+      "supportEnd": "Support period ends (buyer-facing — Art 13(19))",
+      "supportEndUnset": "Set the support period on the product overview.",
+      "generate": "Generate PDF",
+      "generating": "Generating…",
+      "generateFailed": "Couldn't generate the end-user information."
+    },
+    "feedback": {
+      "saved": "Saved."
+    },
+    "errors": {
+      "generic": "Something went wrong. Please try again."
+    },
+    "public": {
+      "eyebrow": "Simplified EU Declaration of Conformity",
+      "title": "Declaration of Conformity",
+      "statement": "{manufacturer} declares under its sole responsibility that the product “{product}” is in conformity with Regulation (EU) 2024/2847 (the Cyber Resilience Act) and the other Union legislation applicable to it.",
+      "product": "Product",
+      "type": "Type",
+      "identification": "Identification",
+      "docVersion": "Declaration version",
+      "supportEnd": "Security support until",
+      "manufacturer": "Manufacturer",
+      "contact": "Contact",
+      "fullDocNote": "The full EU Declaration of Conformity and the technical documentation are available from the manufacturer on request at the contact above.",
+      "footer": "Published via Seentrix · CRA Annex VI simplified declaration of conformity."
+    }
+  }
+}
