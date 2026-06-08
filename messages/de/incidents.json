@@ -149,6 +149,46 @@
         "update": "Benachrichtigung aktualisieren",
         "sent": "Gesendet am {date}"
       }
+    },
+    "srp": {
+      "title": "ENISA Single Reporting Platform",
+      "description": "Bereiten Sie jede Phase für die EU-Single-Reporting-Plattform auf: eine strukturierte Einreichung herunterladen, die von der SRP zurückgegebene Referenznummer erfassen und die wichtigsten Felder kopieren.",
+      "copySummary": "Zusammenfassung kopieren",
+      "openSrp": "ENISA SRP öffnen",
+      "submittedOn": "Eingereicht am {date}",
+      "refPlaceholder": "SRP-Referenznr.",
+      "saveRef": "Speichern",
+      "package": "Paket (PDF)",
+      "pending": "Noch nicht eingereicht",
+      "copied": "Zusammenfassung der Einreichung kopiert",
+      "copyFailed": "Konnte nicht in die Zwischenablage kopieren",
+      "refSaved": "Referenznummer gespeichert",
+      "refFailed": "Referenznummer konnte nicht gespeichert werden",
+      "pdfFailed": "Einreichungspaket konnte nicht erstellt werden",
+      "copy": {
+        "type": "Typ",
+        "severity": "Schweregrad",
+        "title": "Titel",
+        "awareAt": "Kenntnisnahme",
+        "products": "Betroffene Produkte",
+        "description": "Beschreibung"
+      },
+      "pdf": {
+        "title": "Einreichungspaket nach Artikel 14",
+        "deadline": "Meldefrist für diese Phase",
+        "identification": "Identifikation",
+        "organisation": "Organisation",
+        "contact": "Sicherheitskontakt",
+        "reportType": "Meldungstyp",
+        "severity": "Schweregrad",
+        "awareAt": "Kenntnisnahme",
+        "affectedProducts": "Betroffene Produkte",
+        "cve": "CVE",
+        "summary": "Zusammenfassung",
+        "description": "Beschreibung",
+        "stage": "Phasenbericht",
+        "userNotification": "Nutzerbenachrichtigung"
+      }
     }
   }
 }

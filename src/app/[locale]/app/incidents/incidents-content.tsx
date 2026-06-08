@@ -30,6 +30,7 @@ import {
   type IncidentSummary,
   type IncidentType,
 } from "./actions";
+import { nextPhaseDeadline } from "@/lib/constants/incident-deadlines";
 
 const SEVERITY_COLOR: Record<IncidentSeverity, string> = {
   critical: "var(--destructive)",
@@ -62,32 +63,15 @@ function nextDeadline(inc: IncidentSummary): {
   phase: IncidentPhase;
   at: Date;
 } | null {
-  const base = new Date(inc.aware_at).getTime();
-  const phases: {
-    phase: IncidentPhase;
-    at: number;
-    done: boolean;
-  }[] = [
-    {
-      phase: "early_warning",
-      at: base + 24 * 3600 * 1000,
-      done: !!inc.early_warning_submitted_at,
-    },
-    {
-      phase: "incident_report",
-      at: base + 72 * 3600 * 1000,
-      done: !!inc.incident_report_submitted_at,
-    },
-    {
-      phase: "final_report",
-      at: base + 14 * 24 * 3600 * 1000,
-      done: !!inc.final_report_submitted_at,
-    },
-  ];
-  for (const p of phases) {
-    if (!p.done) return { phase: p.phase, at: new Date(p.at) };
-  }
-  return null;
+  // Trigger-aware: the final-report window is 14 days for an exploited
+  // vulnerability and 1 month for a severe incident.
+  return nextPhaseDeadline({
+    awareAt: inc.aware_at,
+    type: inc.type,
+    earlySubmitted: !!inc.early_warning_submitted_at,
+    notificationSubmitted: !!inc.incident_report_submitted_at,
+    finalSubmitted: !!inc.final_report_submitted_at,
+  });
 }
 
 function formatTimeLeft(

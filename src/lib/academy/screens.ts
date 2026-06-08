@@ -89,7 +89,11 @@ export const SCREEN_LESSONS = {
     key: "incidents",
     href: "/app/incidents",
     icon: "alert-02",
-    lessons: ["article-14-reporting", "vulnerability-handling-101"],
+    lessons: [
+      "article-14-reporting",
+      "enisa-single-reporting-platform",
+      "vulnerability-handling-101",
+    ],
   },
   reports: {
     key: "reports",

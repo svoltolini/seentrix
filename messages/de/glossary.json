@@ -226,6 +226,11 @@
       "title": "Aufbewahrungsfrist",
       "body": "Wie lange der CRA verlangt, Compliance-Unterlagen für Behörden bereitzuhalten. Die technische Dokumentation und die EU-Konformitätserklärung sind mindestens zehn Jahre nach dem Inverkehrbringen aufzubewahren, oder für den Supportzeitraum, falls dieser länger ist. Seentrix stempelt diese Frist auf jede freigegebene technische Dokumentation und bewahrt freigegebene Dateien (archiviert) auf, statt sie zu löschen.",
       "ref": "CRA Artikel 13(13): technische Dokumentation und Konformitätserklärung mindestens 10 Jahre (oder den Supportzeitraum) für Marktüberwachungsbehörden bereithalten."
+    },
+    "single_reporting_platform": {
+      "title": "Single Reporting Platform (SRP)",
+      "body": "Der von der ENISA eingerichtete einheitliche elektronische Zugangspunkt für Meldungen nach CRA Artikel 14. Der Hersteller reicht darüber die 24-Stunden-Frühwarnung, den 72-Stunden-Zwischenbericht und den Abschlussbericht ein; die Plattform leitet sie an das koordinierende CSIRT und die zuständigen Behörden weiter und gibt pro Einreichung eine Referenznummer zurück. In Seentrix exportiert jeder Vorfall pro Phase ein strukturiertes Einreichungspaket und erfasst die zurückgegebene SRP-Referenznummer.",
+      "ref": "CRA Artikel 14: schwere Vorfälle und aktiv ausgenutzte Schwachstellen werden über die von der ENISA eingerichtete Single Reporting Platform gemeldet."
     }
   },
   "help": {

@@ -8,6 +8,10 @@ import {
   TEST_REPORT_CATEGORIES,
   type ManifestInput,
 } from "@/lib/constants/annex-vii";
+import {
+  nextPhaseDeadline,
+  type IncidentReportType,
+} from "@/lib/constants/incident-deadlines";
 
 /**
  * Agentic lookup tools — Phase 2 Pillar 3.
@@ -422,6 +426,67 @@ export function buildCopilotTools({ supabase, orgId, plan }: Ctx) {
             coverage: e.coverage,
           })),
         };
+      },
+    }),
+
+    // -------------------------------------------------------------------
+    // getOpenReportingDeadlines — open Article 14 clocks across the org.
+    // -------------------------------------------------------------------
+    getOpenReportingDeadlines: tool({
+      description:
+        "List the organisation's open Article 14 reporting deadlines. For each incident that isn't closed, returns the next unsubmitted phase and when it is due: early warning (24h), intermediate report (72h), and final report (14 days for an actively-exploited vulnerability, 1 month for a severe security incident). Use this when the user asks 'what reporting deadlines are open?', 'what Article 14 reports are due and when?', or similar.",
+      inputSchema: z.object({}),
+      execute: async () => {
+        const { data } = await supabase
+          .from("incidents")
+          .select(
+            "id, title, type, aware_at, status, early_warning_submitted_at, incident_report_submitted_at, final_report_submitted_at",
+          )
+          .eq("org_id", orgId)
+          .not("status", "eq", "closed");
+        const rows =
+          (data as {
+            id: string;
+            title: string;
+            type: IncidentReportType;
+            aware_at: string;
+            early_warning_submitted_at: string | null;
+            incident_report_submitted_at: string | null;
+            final_report_submitted_at: string | null;
+          }[] | null) ?? [];
+
+        const now = Date.now();
+        const openDeadlines: {
+          incidentId: string;
+          title: string;
+          type: IncidentReportType;
+          nextPhase: string;
+          dueAt: string;
+          hoursRemaining: number;
+          overdue: boolean;
+        }[] = [];
+        for (const r of rows) {
+          const next = nextPhaseDeadline({
+            awareAt: r.aware_at,
+            type: r.type,
+            earlySubmitted: !!r.early_warning_submitted_at,
+            notificationSubmitted: !!r.incident_report_submitted_at,
+            finalSubmitted: !!r.final_report_submitted_at,
+          });
+          if (!next) continue;
+          const dueMs = next.at.getTime() - now;
+          openDeadlines.push({
+            incidentId: r.id,
+            title: r.title,
+            type: r.type,
+            nextPhase: next.phase,
+            dueAt: next.at.toISOString(),
+            hoursRemaining: Math.round(dueMs / 3_600_000),
+            overdue: dueMs < 0,
+          });
+        }
+        openDeadlines.sort((a, b) => (a.dueAt < b.dueAt ? -1 : 1));
+        return { count: openDeadlines.length, openDeadlines };
       },
     }),
 

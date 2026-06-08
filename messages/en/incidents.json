@@ -149,6 +149,46 @@
         "update": "Update notification",
         "sent": "Sent {date}"
       }
+    },
+    "srp": {
+      "title": "ENISA Single Reporting Platform",
+      "description": "Package each stage for the EU Single Reporting Platform: download a structured submission, record the reference number the SRP returns, and copy the key fields.",
+      "copySummary": "Copy summary",
+      "openSrp": "Open ENISA SRP",
+      "submittedOn": "Submitted {date}",
+      "refPlaceholder": "SRP reference no.",
+      "saveRef": "Save",
+      "package": "Package (PDF)",
+      "pending": "Not submitted yet",
+      "copied": "Submission summary copied",
+      "copyFailed": "Couldn't copy to clipboard",
+      "refSaved": "Reference number saved",
+      "refFailed": "Couldn't save the reference number",
+      "pdfFailed": "Couldn't generate the submission package",
+      "copy": {
+        "type": "Type",
+        "severity": "Severity",
+        "title": "Title",
+        "awareAt": "Became aware",
+        "products": "Affected products",
+        "description": "Description"
+      },
+      "pdf": {
+        "title": "Article 14 Submission Package",
+        "deadline": "Reporting deadline for this stage",
+        "identification": "Identification",
+        "organisation": "Organisation",
+        "contact": "Security contact",
+        "reportType": "Report type",
+        "severity": "Severity",
+        "awareAt": "Became aware",
+        "affectedProducts": "Affected products",
+        "cve": "CVE",
+        "summary": "Summary",
+        "description": "Description",
+        "stage": "Stage report",
+        "userNotification": "User notification"
+      }
     }
   }
 }

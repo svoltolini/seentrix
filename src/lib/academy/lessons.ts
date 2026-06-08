@@ -12,6 +12,7 @@ import cvdAndPsirt from "@/content/academy/cvd-and-psirt";
 import threatModellingAndDiagrams from "@/content/academy/threat-modelling-and-diagrams";
 import riskAssessmentFundamentals from "@/content/academy/risk-assessment-fundamentals";
 import annexViiTechnicalFile from "@/content/academy/annex-vii-technical-file";
+import enisaSingleReportingPlatform from "@/content/academy/enisa-single-reporting-platform";
 import type { Lesson, LocaleId, RoleId } from "@/lib/academy/types";
 
 /**
@@ -38,6 +39,7 @@ export const LESSONS: Record<string, Lesson> = {
   [threatModellingAndDiagrams.id]: threatModellingAndDiagrams,
   [riskAssessmentFundamentals.id]: riskAssessmentFundamentals,
   [annexViiTechnicalFile.id]: annexViiTechnicalFile,
+  [enisaSingleReportingPlatform.id]: enisaSingleReportingPlatform,
 };
 
 export function getLesson(id: string): Lesson | null {

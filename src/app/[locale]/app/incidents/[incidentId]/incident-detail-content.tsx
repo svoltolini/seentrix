@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Icon } from "@/components/icon";
 import { StaggerReveal } from "@/components/stagger-reveal";
@@ -12,24 +13,24 @@ import { useToast } from "@/components/ui/toast";
 import { useLocaleDate } from "@/lib/locale-date";
 import {
   closeIncident,
+  generateSrpPackage,
+  recordSubmissionReference,
   recordUserNotification,
   submitIncidentPhase,
   updateIncident,
   type IncidentDetail,
   type IncidentPhase,
 } from "../actions";
+import {
+  phaseWindowHours,
+  formatRemaining,
+} from "@/lib/constants/incident-deadlines";
 
 const SEVERITY_COLOR: Record<string, string> = {
   critical: "var(--destructive)",
   high: "var(--warning)",
   medium: "var(--primary)",
   low: "var(--muted-foreground)",
-};
-
-const PHASE_HOURS: Record<IncidentPhase, number> = {
-  early_warning: 24,
-  incident_report: 72,
-  final_report: 14 * 24,
 };
 
 const PHASE_COLOR: Record<IncidentPhase, string> = {
@@ -52,16 +53,22 @@ const ROLES_CAN_SUBMIT = new Set(["admin", "compliance_officer"]);
 
 function PhaseRing({
   phase,
+  type,
   awareAt,
   submittedAt,
   label,
-  subLabel,
+  submittedLabel,
+  overdueLabel,
+  remainingLabel,
 }: {
   phase: IncidentPhase;
+  type: IncidentDetail["type"];
   awareAt: string;
   submittedAt: string | null;
   label: string;
-  subLabel: string;
+  submittedLabel: string;
+  overdueLabel: string;
+  remainingLabel: string;
 }) {
   const [now, setNow] = useState(() => Date.now());
   useEffect(() => {
@@ -70,7 +77,8 @@ function PhaseRing({
   }, []);
 
   const base = new Date(awareAt).getTime();
-  const windowMs = PHASE_HOURS[phase] * 3600_000;
+  const windowHours = phaseWindowHours(phase, type);
+  const windowMs = windowHours * 3600_000;
   const deadline = base + windowMs;
   const submitted = !!submittedAt;
 
@@ -80,6 +88,11 @@ function PhaseRing({
   const remaining = deadline - (submitted ? new Date(submittedAt).getTime() : now);
   const progress = Math.min(1, Math.max(0, elapsed / windowMs));
   const overdue = !submitted && remaining < 0;
+  const subLabel = submitted
+    ? submittedLabel
+    : overdue
+      ? overdueLabel
+      : remainingLabel;
 
   // SVG ring math
   const SIZE = 140;
@@ -144,7 +157,7 @@ function PhaseRing({
                 {formatRemaining(remaining)}
               </span>
               <span className="mt-1 text-l6-plus uppercase tracking-wide text-muted-foreground">
-                {overdue ? subLabel : subLabel}
+                {subLabel}
               </span>
             </>
           )}
@@ -154,22 +167,12 @@ function PhaseRing({
         {label}
       </p>
       <p className="text-p4 text-muted-foreground">
-        {PHASE_HOURS[phase] >= 24
-          ? `${PHASE_HOURS[phase] / 24}d window`
-          : `${PHASE_HOURS[phase]}h window`}
+        {windowHours >= 24
+          ? `${Math.round(windowHours / 24)}d window`
+          : `${windowHours}h window`}
       </p>
     </div>
   );
-}
-
-function formatRemaining(ms: number): string {
-  const overdue = ms < 0;
-  const abs = Math.abs(ms);
-  const h = Math.floor(abs / 3600_000);
-  const d = Math.floor(h / 24);
-  const m = Math.floor((abs / 60_000) % 60);
-  if (d >= 1) return `${overdue ? "-" : ""}${d}d ${h % 24}h`;
-  return `${overdue ? "-" : ""}${h}h ${m}m`;
 }
 
 // ---------------------------------------------------------------------------
@@ -278,6 +281,174 @@ function PhaseSection({
           )}
         </div>
       )}
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// ENISA Single Reporting Platform — submission log + reference numbers + export
+// ---------------------------------------------------------------------------
+
+const ENISA_SRP_URL =
+  "https://digital-strategy.ec.europa.eu/en/policies/cyber-resilience-act";
+
+function SrpSection({
+  incident,
+  canEdit,
+}: {
+  incident: IncidentDetail;
+  canEdit: boolean;
+}) {
+  const t = useTranslations("incidents");
+  const tType = useTranslations("incidents.type");
+  const tSev = useTranslations("incidents.severity");
+  const { formatDate } = useLocaleDate();
+  const { toast } = useToast();
+  const [, startTransition] = useTransition();
+  const [refs, setRefs] = useState<Record<string, string>>(() => {
+    const m: Record<string, string> = {};
+    for (const sub of incident.submissions) m[sub.stage] = sub.reference_no ?? "";
+    return m;
+  });
+  const [busyPdf, setBusyPdf] = useState<string | null>(null);
+
+  const stages: { phase: IncidentPhase; submittedAt: string | null }[] = [
+    { phase: "early_warning", submittedAt: incident.early_warning_submitted_at },
+    {
+      phase: "incident_report",
+      submittedAt: incident.incident_report_submitted_at,
+    },
+    { phase: "final_report", submittedAt: incident.final_report_submitted_at },
+  ];
+
+  async function copySummary() {
+    const text = [
+      `${t("srp.copy.type")}: ${tType(incident.type)}`,
+      `${t("srp.copy.severity")}: ${tSev(incident.severity)}`,
+      `${t("srp.copy.title")}: ${incident.title}`,
+      `${t("srp.copy.awareAt")}: ${incident.aware_at}`,
+      `${t("srp.copy.products")}: ${incident.affected_product_names.join(", ") || "—"}`,
+      incident.linked_cve_id ? `CVE: ${incident.linked_cve_id}` : "",
+      "",
+      `${t("srp.copy.description")}:`,
+      incident.description ?? "",
+    ]
+      .filter((l) => l.length > 0 || l === "")
+      .join("\n");
+    try {
+      await navigator.clipboard.writeText(text);
+      toast({ type: "success", message: t("srp.copied") });
+    } catch {
+      toast({ type: "error", message: t("srp.copyFailed") });
+    }
+  }
+
+  function handleSaveRef(phase: IncidentPhase) {
+    startTransition(async () => {
+      const res = await recordSubmissionReference(
+        incident.id,
+        phase,
+        refs[phase] ?? "",
+      );
+      toast(
+        res.error
+          ? { type: "error", message: t("srp.refFailed") }
+          : { type: "success", message: t("srp.refSaved") },
+      );
+    });
+  }
+
+  async function handlePdf(phase: IncidentPhase) {
+    setBusyPdf(phase);
+    try {
+      const res = await generateSrpPackage(incident.id, phase);
+      if (res.url) window.open(res.url, "_blank", "noopener,noreferrer");
+      else toast({ type: "error", message: t("srp.pdfFailed") });
+    } finally {
+      setBusyPdf(null);
+    }
+  }
+
+  return (
+    <div data-reveal className="rounded-md bg-muted p-5">
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div className="min-w-0">
+          <h3 className="text-h5 text-foreground">{t("srp.title")}</h3>
+          <p className="mt-1 max-w-2xl text-p3 text-muted-foreground">
+            {t("srp.description")}
+          </p>
+        </div>
+        <div className="flex shrink-0 flex-wrap gap-2">
+          <Button variant="outline" size="sm" onClick={copySummary}>
+            {t("srp.copySummary")}
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            render={
+              <a
+                href={ENISA_SRP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+              />
+            }
+          >
+            {t("srp.openSrp")}
+            <Icon name="arrow-right-01-stroke-rounded" size={14} />
+          </Button>
+        </div>
+      </div>
+
+      <div className="mt-4 space-y-2">
+        {stages.map(({ phase, submittedAt }) => (
+          <div
+            key={phase}
+            className="flex flex-wrap items-center gap-3 rounded-md bg-card px-4 py-3"
+          >
+            <span className="min-w-0 flex-1 text-p3 text-foreground">
+              {t(`phase.${phase}`)}
+            </span>
+            {submittedAt ? (
+              <>
+                <span className="text-p4 text-muted-foreground">
+                  {t("srp.submittedOn", { date: formatDate(submittedAt) })}
+                </span>
+                <Input
+                  value={refs[phase] ?? ""}
+                  onChange={(e) =>
+                    setRefs((p) => ({ ...p, [phase]: e.target.value }))
+                  }
+                  placeholder={t("srp.refPlaceholder")}
+                  disabled={!canEdit}
+                  className="h-9 w-44"
+                />
+                {canEdit && (
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => handleSaveRef(phase)}
+                  >
+                    {t("srp.saveRef")}
+                  </Button>
+                )}
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  disabled={busyPdf === phase}
+                  onClick={() => handlePdf(phase)}
+                >
+                  <Icon name="pdf-01-stroke-rounded" size={14} />
+                  {t("srp.package")}
+                </Button>
+              </>
+            ) : (
+              <span className="text-p4 text-muted-foreground">
+                {t("srp.pending")}
+              </span>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -469,57 +640,32 @@ export function IncidentDetailContent({
           </div>
         </div>
 
-        {/* Timer rings */}
+        {/* Timer rings — windows are trigger-aware (final = 14d for an
+            exploited vulnerability, 1 month for a severe incident). */}
         {!isClosed && (
           <div
             data-reveal
             className="grid grid-cols-1 gap-4 rounded-md bg-muted p-6 sm:grid-cols-3"
           >
-            <PhaseRing
-              phase="early_warning"
-              awareAt={incident.aware_at}
-              submittedAt={incident.early_warning_submitted_at}
-              label={t("phase.early_warning")}
-              subLabel={
-                incident.early_warning_submitted_at
-                  ? t("phase.submitted")
-                  : new Date(incident.aware_at).getTime() +
-                        24 * 3600_000 <
-                      Date.now()
-                    ? t("phase.overdue")
-                    : t("phase.remaining")
-              }
-            />
-            <PhaseRing
-              phase="incident_report"
-              awareAt={incident.aware_at}
-              submittedAt={incident.incident_report_submitted_at}
-              label={t("phase.incident_report")}
-              subLabel={
-                incident.incident_report_submitted_at
-                  ? t("phase.submitted")
-                  : new Date(incident.aware_at).getTime() +
-                        72 * 3600_000 <
-                      Date.now()
-                    ? t("phase.overdue")
-                    : t("phase.remaining")
-              }
-            />
-            <PhaseRing
-              phase="final_report"
-              awareAt={incident.aware_at}
-              submittedAt={incident.final_report_submitted_at}
-              label={t("phase.final_report")}
-              subLabel={
-                incident.final_report_submitted_at
-                  ? t("phase.submitted")
-                  : new Date(incident.aware_at).getTime() +
-                        14 * 24 * 3600_000 <
-                      Date.now()
-                    ? t("phase.overdue")
-                    : t("phase.remaining")
-              }
-            />
+            {(
+              [
+                ["early_warning", incident.early_warning_submitted_at],
+                ["incident_report", incident.incident_report_submitted_at],
+                ["final_report", incident.final_report_submitted_at],
+              ] as const
+            ).map(([phase, submittedAt]) => (
+              <PhaseRing
+                key={phase}
+                phase={phase}
+                type={incident.type}
+                awareAt={incident.aware_at}
+                submittedAt={submittedAt}
+                label={t(`phase.${phase}`)}
+                submittedLabel={t("phase.submitted")}
+                overdueLabel={t("phase.overdue")}
+                remainingLabel={t("phase.remaining")}
+              />
+            ))}
           </div>
         )}
 
@@ -618,6 +764,9 @@ export function IncidentDetailContent({
             </div>
           )}
         </div>
+
+        {/* ENISA Single Reporting Platform — submission log + export */}
+        <SrpSection incident={incident} canEdit={canSubmit && !isClosed} />
       </StaggerReveal>
     </div>
   );

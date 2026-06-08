@@ -77,6 +77,9 @@ export const GLOSSARY_TERMS = [
   // Documentation & retention
   "technical_documentation",
   "retention_period",
+
+  // Reporting
+  "single_reporting_platform",
 ] as const;
 
 export type GlossaryTermId = (typeof GLOSSARY_TERMS)[number];
@@ -144,6 +147,8 @@ export const GLOSSARY_RELATED: Partial<Record<GlossaryTermId, GlossaryTermId[]>>
 
   technical_documentation: ["annex_vii", "retention_period", "doc"],
   retention_period: ["technical_documentation", "annex_vii"],
+
+  single_reporting_platform: ["article_14", "enisa", "csirt"],
 };
 
 /**
@@ -204,6 +209,8 @@ export const GLOSSARY_LESSONS: Partial<Record<GlossaryTermId, string>> = {
 
   technical_documentation: "annex-vii-technical-file",
   retention_period: "annex-vii-technical-file",
+
+  single_reporting_platform: "enisa-single-reporting-platform",
 };
 
 /**
@@ -263,6 +270,10 @@ export const ACADEMY_LESSONS = {
   "annex-vii-technical-file": {
     title: "The Annex VII technical file & retention",
     duration: "8 min",
+  },
+  "enisa-single-reporting-platform": {
+    title: "The ENISA Single Reporting Platform",
+    duration: "7 min",
   },
 } satisfies Record<string, { title: string; duration: string }>;
 

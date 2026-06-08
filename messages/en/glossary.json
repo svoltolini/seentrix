@@ -226,6 +226,11 @@
       "title": "Retention period",
       "body": "How long the CRA requires compliance records to be kept available to authorities. The technical documentation and the EU Declaration of Conformity must be retained for at least ten years after the product is placed on the market, or for the support period if that is longer. Seentrix stamps this deadline on each released technical file and keeps released files (soft-archived) rather than deleting them.",
       "ref": "CRA Article 13(13): keep the technical documentation and DoC available to market-surveillance authorities for at least 10 years, or the support period if longer."
+    },
+    "single_reporting_platform": {
+      "title": "Single Reporting Platform (SRP)",
+      "body": "The single electronic entry point established by ENISA for filing CRA Article 14 notifications. The manufacturer submits the 24-hour early warning, the 72-hour intermediate report and the final report through it; the platform routes them to the coordinating CSIRT and the relevant authorities and returns a reference number per submission. In Seentrix each incident exports a structured submission package per stage and records the SRP reference number it returns.",
+      "ref": "CRA Article 14: severe incidents and actively-exploited vulnerabilities are notified via the single reporting platform established by ENISA."
     }
   },
   "help": {

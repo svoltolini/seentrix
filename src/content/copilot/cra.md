@@ -127,6 +127,25 @@ without undue delay and provide mitigations.
 have a coordinated vulnerability disclosure policy publicly available
 and maintain a single point of contact for vulnerability reports.
 
+**The Single Reporting Platform (SRP)**. Article 14 notifications are
+filed through a single reporting platform established by ENISA: one
+electronic entry point that routes the early warning, the intermediate
+report and the final report to the CSIRT designated as coordinator and
+onward to the relevant authorities. The clock starts the moment the
+manufacturer becomes aware. Practically, each stage is a structured
+submission (organisation + contact, the report type and severity, the
+affected products, when you became aware, and the stage narrative), and
+the platform returns a reference number you should retain with the case.
+
+In Seentrix this lives on each incident's detail page. The three phase
+countdowns are trigger-aware — the final-report window is 14 days for an
+actively-exploited vulnerability and one month for a severe incident.
+Each submitted stage can be exported as a structured submission package
+(PDF + copyable fields) to file into the SRP, and you record the SRP
+reference number back against the stage so the submission log is complete.
+Use the `getOpenReportingDeadlines` tool to tell the user which reporting
+clocks are open and when each is due.
+
 ---
 
 ## Article 18 — CE marking

@@ -226,6 +226,11 @@
       "title": "Période de conservation",
       "body": "Durée pendant laquelle le CRA impose de tenir les documents de conformité à la disposition des autorités. La documentation technique et la déclaration UE de conformité doivent être conservées au moins dix ans après la mise sur le marché, ou pendant la période de support si elle est plus longue. Seentrix horodate cette échéance sur chaque dossier technique publié et conserve les fichiers publiés (archivés) au lieu de les supprimer.",
       "ref": "Article 13(13) du CRA : tenir la documentation technique et la DoC à la disposition des autorités de surveillance du marché pendant au moins 10 ans (ou la période de support)."
+    },
+    "single_reporting_platform": {
+      "title": "Plateforme de signalement unique (SRP)",
+      "body": "Le point d'entrée électronique unique établi par l'ENISA pour déposer les notifications de l'Article 14 du CRA. Le fabricant y soumet l'alerte précoce à 24 heures, le rapport intermédiaire à 72 heures et le rapport final ; la plateforme les achemine vers le CSIRT coordinateur et les autorités compétentes et renvoie un numéro de référence par soumission. Dans Seentrix, chaque incident exporte un dossier de soumission structuré par étape et enregistre le numéro de référence SRP renvoyé.",
+      "ref": "Article 14 du CRA : les incidents graves et les vulnérabilités activement exploitées sont notifiés via la plateforme de signalement unique établie par l'ENISA."
     }
   },
   "help": {

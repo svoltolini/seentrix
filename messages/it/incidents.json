@@ -149,6 +149,46 @@
         "update": "Aggiorna notifica",
         "sent": "Inviata il {date}"
       }
+    },
+    "srp": {
+      "title": "Piattaforma di segnalazione unica dell'ENISA",
+      "description": "Prepara ogni fase per la piattaforma di segnalazione unica dell'UE: scarica una submission strutturata, registra il numero di riferimento restituito dalla SRP e copia i campi chiave.",
+      "copySummary": "Copia riepilogo",
+      "openSrp": "Apri la SRP dell'ENISA",
+      "submittedOn": "Inviata il {date}",
+      "refPlaceholder": "N. riferimento SRP",
+      "saveRef": "Salva",
+      "package": "Pacchetto (PDF)",
+      "pending": "Non ancora inviata",
+      "copied": "Riepilogo della submission copiato",
+      "copyFailed": "Impossibile copiare negli appunti",
+      "refSaved": "Numero di riferimento salvato",
+      "refFailed": "Impossibile salvare il numero di riferimento",
+      "pdfFailed": "Impossibile generare il pacchetto di submission",
+      "copy": {
+        "type": "Tipo",
+        "severity": "Gravità",
+        "title": "Titolo",
+        "awareAt": "Presa di conoscenza",
+        "products": "Prodotti interessati",
+        "description": "Descrizione"
+      },
+      "pdf": {
+        "title": "Pacchetto di submission (Articolo 14)",
+        "deadline": "Scadenza di segnalazione per questa fase",
+        "identification": "Identificazione",
+        "organisation": "Organizzazione",
+        "contact": "Contatto di sicurezza",
+        "reportType": "Tipo di segnalazione",
+        "severity": "Gravità",
+        "awareAt": "Presa di conoscenza",
+        "affectedProducts": "Prodotti interessati",
+        "cve": "CVE",
+        "summary": "Riepilogo",
+        "description": "Descrizione",
+        "stage": "Rapporto di fase",
+        "userNotification": "Notifica agli utenti"
+      }
     }
   }
 }

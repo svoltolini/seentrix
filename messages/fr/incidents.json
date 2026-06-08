@@ -149,6 +149,46 @@
         "update": "Mettre à jour la notification",
         "sent": "Envoyée le {date}"
       }
+    },
+    "srp": {
+      "title": "Plateforme de signalement unique de l'ENISA",
+      "description": "Préparez chaque étape pour la plateforme de signalement unique de l'UE : téléchargez une soumission structurée, enregistrez le numéro de référence renvoyé par la SRP et copiez les champs clés.",
+      "copySummary": "Copier le résumé",
+      "openSrp": "Ouvrir la SRP de l'ENISA",
+      "submittedOn": "Soumis le {date}",
+      "refPlaceholder": "N° de référence SRP",
+      "saveRef": "Enregistrer",
+      "package": "Dossier (PDF)",
+      "pending": "Pas encore soumis",
+      "copied": "Résumé de la soumission copié",
+      "copyFailed": "Impossible de copier dans le presse-papiers",
+      "refSaved": "Numéro de référence enregistré",
+      "refFailed": "Impossible d'enregistrer le numéro de référence",
+      "pdfFailed": "Impossible de générer le dossier de soumission",
+      "copy": {
+        "type": "Type",
+        "severity": "Gravité",
+        "title": "Titre",
+        "awareAt": "Prise de connaissance",
+        "products": "Produits concernés",
+        "description": "Description"
+      },
+      "pdf": {
+        "title": "Dossier de soumission (Article 14)",
+        "deadline": "Échéance de signalement pour cette étape",
+        "identification": "Identification",
+        "organisation": "Organisation",
+        "contact": "Contact sécurité",
+        "reportType": "Type de signalement",
+        "severity": "Gravité",
+        "awareAt": "Prise de connaissance",
+        "affectedProducts": "Produits concernés",
+        "cve": "CVE",
+        "summary": "Résumé",
+        "description": "Description",
+        "stage": "Rapport d'étape",
+        "userNotification": "Notification des utilisateurs"
+      }
     }
   }
 }

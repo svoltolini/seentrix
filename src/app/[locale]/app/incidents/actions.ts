@@ -3,6 +3,10 @@
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { logActivity } from "@/lib/activity";
+import {
+  nextPhaseDeadline,
+  phaseDeadline,
+} from "@/lib/constants/incident-deadlines";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -21,6 +25,12 @@ export type IncidentPhase =
   | "early_warning"
   | "incident_report"
   | "final_report";
+
+export interface IncidentSubmissionRow {
+  stage: IncidentPhase;
+  reference_no: string | null;
+  submitted_at: string;
+}
 
 export interface IncidentSummary {
   id: string;
@@ -50,6 +60,7 @@ export interface IncidentDetail extends IncidentSummary {
   closed_at: string | null;
   created_by: string | null;
   updated_at: string;
+  submissions: IncidentSubmissionRow[];
 }
 
 // ---------------------------------------------------------------------------
@@ -162,7 +173,13 @@ export async function getIncident(
   if (error || !data) return { incident: null, error: "notFound" };
 
   const row = data as unknown as IncidentDetail;
-  const nameMap = await loadProductNames(row.affected_product_ids ?? []);
+  const [nameMap, { data: subs }] = await Promise.all([
+    loadProductNames(row.affected_product_ids ?? []),
+    supabase
+      .from("incident_submissions")
+      .select("stage, reference_no, submitted_at")
+      .eq("incident_id", id),
+  ]);
   return {
     incident: {
       ...row,
@@ -170,6 +187,7 @@ export async function getIncident(
       affected_product_names: (row.affected_product_ids ?? [])
         .map((pid) => nameMap[pid])
         .filter(Boolean),
+      submissions: (subs as IncidentSubmissionRow[] | null) ?? [],
     },
   };
 }
@@ -276,8 +294,8 @@ export async function submitIncidentPhase(
   phase: IncidentPhase,
   notes: string,
 ): Promise<{ error?: string }> {
-  const { supabase, user, role } = await getAuthContext();
-  if (!user) return { error: "notAuthenticated" };
+  const { supabase, user, orgId, role } = await getAuthContext();
+  if (!user || !orgId) return { error: "notAuthenticated" };
   if (!canSubmit(role)) return { error: "notAuthorized" };
   if (!notes.trim()) return { error: "notesRequired" };
 
@@ -312,6 +330,20 @@ export async function submitIncidentPhase(
     .update(update)
     .eq("id", id);
   if (error) return { error: "generic" };
+
+  // Record the per-stage submission (snapshot of the content sent). One row per
+  // (incident, stage); re-submitting updates it in place.
+  await supabase.from("incident_submissions").upsert(
+    {
+      incident_id: id,
+      org_id: orgId,
+      stage: phase,
+      content: { notes: notes.trim() },
+      submitted_at: now,
+      submitted_by: user.id,
+    },
+    { onConflict: "incident_id,stage" },
+  );
 
   await logActivity({
     action,
@@ -428,13 +460,14 @@ export async function getIncidentWidget(): Promise<IncidentWidgetData> {
   const { data } = await supabase
     .from("incidents")
     .select(
-      "id, aware_at, status, early_warning_submitted_at, incident_report_submitted_at, final_report_submitted_at",
+      "id, type, aware_at, status, early_warning_submitted_at, incident_report_submitted_at, final_report_submitted_at",
     )
     .eq("org_id", orgId)
     .not("status", "eq", "closed");
 
   const rows = (data ?? []) as {
     id: string;
+    type: IncidentType;
     aware_at: string;
     status: IncidentStatus;
     early_warning_submitted_at: string | null;
@@ -446,31 +479,19 @@ export async function getIncidentWidget(): Promise<IncidentWidgetData> {
   let nextPhase: IncidentPhase | null = null;
   let nextId: string | null = null;
   for (const r of rows) {
-    const base = new Date(r.aware_at).getTime();
-    const deadlines: { phase: IncidentPhase; at: number; done: boolean }[] = [
-      {
-        phase: "early_warning",
-        at: base + 24 * 3600 * 1000,
-        done: !!r.early_warning_submitted_at,
-      },
-      {
-        phase: "incident_report",
-        at: base + 72 * 3600 * 1000,
-        done: !!r.incident_report_submitted_at,
-      },
-      {
-        phase: "final_report",
-        at: base + 14 * 24 * 3600 * 1000,
-        done: !!r.final_report_submitted_at,
-      },
-    ];
-    for (const d of deadlines) {
-      if (d.done) continue;
-      if (nextAt === null || d.at < nextAt) {
-        nextAt = d.at;
-        nextPhase = d.phase;
-        nextId = r.id;
-      }
+    const next = nextPhaseDeadline({
+      awareAt: r.aware_at,
+      type: r.type,
+      earlySubmitted: !!r.early_warning_submitted_at,
+      notificationSubmitted: !!r.incident_report_submitted_at,
+      finalSubmitted: !!r.final_report_submitted_at,
+    });
+    if (!next) continue;
+    const at = next.at.getTime();
+    if (nextAt === null || at < nextAt) {
+      nextAt = at;
+      nextPhase = next.phase;
+      nextId = r.id;
     }
   }
 
@@ -480,4 +501,156 @@ export async function getIncidentWidget(): Promise<IncidentWidgetData> {
     nextDeadlinePhase: nextPhase,
     nextIncidentId: nextId,
   };
+}
+
+// ---------------------------------------------------------------------------
+// ENISA Single Reporting Platform — record the reference number returned by the
+// SRP for a submitted stage, and export a structured submission package PDF.
+// ---------------------------------------------------------------------------
+
+export async function recordSubmissionReference(
+  incidentId: string,
+  stage: IncidentPhase,
+  referenceNo: string,
+): Promise<{ error?: string }> {
+  const { supabase, user, role } = await getAuthContext();
+  if (!user) return { error: "notAuthenticated" };
+  if (!canSubmit(role)) return { error: "notAuthorized" };
+
+  const { error } = await supabase
+    .from("incident_submissions")
+    .update({ reference_no: referenceNo.trim() || null })
+    .eq("incident_id", incidentId)
+    .eq("stage", stage);
+  if (error) return { error: "generic" };
+
+  await logActivity({
+    action: "incident.srp_reference_recorded",
+    targetType: "incident",
+    targetId: incidentId,
+    metadata: { stage },
+  });
+  revalidatePath(`/app/incidents/${incidentId}`);
+  return {};
+}
+
+export async function generateSrpPackage(
+  incidentId: string,
+  stage: IncidentPhase,
+): Promise<{ url?: string; error?: string }> {
+  const { supabase, user, orgId } = await getAuthContext();
+  if (!user || !orgId) return { error: "notAuthenticated" };
+
+  const { data: incident } = await supabase
+    .from("incidents")
+    .select("*")
+    .eq("id", incidentId)
+    .eq("org_id", orgId)
+    .single();
+  if (!incident) return { error: "notFound" };
+  const inc = incident as Record<string, unknown>;
+
+  const [{ data: org }, names] = await Promise.all([
+    supabase
+      .from("organizations")
+      .select("legal_name, name, security_contact_email, contact_email")
+      .eq("id", orgId)
+      .maybeSingle(),
+    loadProductNames((inc.affected_product_ids as string[] | null) ?? []),
+  ]);
+  const o = (org as Record<string, string | null>) ?? {};
+
+  const { getLocale, getTranslations } = await import("next-intl/server");
+  const { isLocale } = await import("@/i18n/locales");
+  const { generateIncidentSubmissionPdf } = await import(
+    "@/lib/pdf/generate-incident-submission"
+  );
+  const resolved = await getLocale();
+  const locale = isLocale(resolved) ? resolved : "en";
+  const t = await getTranslations({ locale, namespace: "incidents" });
+
+  const type = inc.type as IncidentType;
+  const awareAt = inc.aware_at as string;
+  const narrativeByStage: Record<IncidentPhase, string> = {
+    early_warning: (inc.early_warning_notes as string) ?? "",
+    incident_report: (inc.incident_report_notes as string) ?? "",
+    final_report: (inc.final_report_notes as string) ?? "",
+  };
+  const dateLocaleTag: Record<string, string> = {
+    en: "en-US",
+    de: "de-DE",
+    fr: "fr-FR",
+    it: "it-IT",
+  };
+  const fmt = (iso: string) =>
+    new Date(iso).toLocaleString(dateLocaleTag[locale] ?? "en-US");
+
+  const data = {
+    stageLabel: t(`phase.${stage}`),
+    reportType: t(`type.${type}`),
+    severity: t(`severity.${inc.severity as string}`),
+    incidentTitle: (inc.title as string) ?? "",
+    organisation: o.legal_name || o.name || "",
+    contact: o.security_contact_email || o.contact_email || "",
+    awareAt: fmt(awareAt),
+    deadline: fmt(phaseDeadline(awareAt, stage, type).toISOString()),
+    affectedProducts:
+      ((inc.affected_product_ids as string[] | null) ?? [])
+        .map((id) => names[id])
+        .filter(Boolean)
+        .join(", ") || "—",
+    cve: (inc.linked_cve_id as string) ?? "—",
+    description: (inc.description as string) ?? "",
+    narrative: narrativeByStage[stage],
+    userNotification: (inc.user_notification_content as string) ?? "",
+  };
+
+  const messages: Record<string, string> = {
+    title: t("srp.pdf.title"),
+    deadlineLabel: t("srp.pdf.deadline"),
+    identification: t("srp.pdf.identification"),
+    organisation: t("srp.pdf.organisation"),
+    contact: t("srp.pdf.contact"),
+    reportType: t("srp.pdf.reportType"),
+    severity: t("srp.pdf.severity"),
+    awareAt: t("srp.pdf.awareAt"),
+    affectedProducts: t("srp.pdf.affectedProducts"),
+    cve: t("srp.pdf.cve"),
+    summary: t("srp.pdf.summary"),
+    description: t("srp.pdf.description"),
+    stageLabel: t("srp.pdf.stage"),
+    userNotification: t("srp.pdf.userNotification"),
+  };
+
+  const generatedAt = new Date().toLocaleDateString(
+    dateLocaleTag[locale] ?? "en-US",
+    { year: "numeric", month: "long", day: "numeric" },
+  );
+
+  const buffer = await generateIncidentSubmissionPdf({
+    data,
+    messages,
+    generatedAt,
+  });
+  const storagePath = `${orgId}/incidents/${incidentId}/srp_${stage}.pdf`;
+  await supabase.storage.from("document-pdfs").remove([storagePath]);
+  const { error: uploadError } = await supabase.storage
+    .from("document-pdfs")
+    .upload(storagePath, buffer, {
+      contentType: "application/pdf",
+      upsert: true,
+    });
+  if (uploadError) return { error: "generic" };
+  const { data: signed } = await supabase.storage
+    .from("document-pdfs")
+    .createSignedUrl(storagePath, 3600);
+  if (!signed?.signedUrl) return { error: "generic" };
+
+  await logActivity({
+    action: "incident.srp_package_generated",
+    targetType: "incident",
+    targetId: incidentId,
+    metadata: { stage },
+  });
+  return { url: signed.signedUrl };
 }
