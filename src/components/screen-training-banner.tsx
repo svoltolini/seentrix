@@ -3,7 +3,8 @@ import { Link } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { SCREEN_LESSONS, type ScreenKey } from "@/lib/academy/screens";
 import { ACADEMY_LESSONS } from "@/lib/glossary";
-import { Icon } from "@/components/icon";
+import { IconBadge } from "@/components/ui/icon-badge";
+import { buttonVariants } from "@/components/ui/button";
 import { BannerDismiss } from "./screen-training-banner.client";
 
 /**
@@ -62,11 +63,13 @@ export async function ScreenTrainingBanner({
     <div
       data-screen-training-banner={screenKey}
       data-storage-key={storageKey}
-      className="mb-5 flex flex-wrap items-center gap-3 rounded-md border border-warning/25 bg-warning/5 p-4"
+      className="mb-5 flex flex-wrap items-center gap-4 rounded-md border border-accent/20 bg-accent/5 p-4"
     >
-      <div className="flex size-9 shrink-0 items-center justify-center rounded-md bg-warning/15 text-warning">
-        <Icon name="elearning-exchange-stroke-rounded" size={16} variant="Bold" />
-      </div>
+      <IconBadge
+        name="elearning-exchange-stroke-rounded"
+        tone="accent"
+        size="md"
+      />
       <div className="min-w-0 flex-1">
         <p className="text-l5 text-foreground">{t("title")}</p>
         <p className="mt-0.5 text-p3 text-muted-foreground">
@@ -75,7 +78,7 @@ export async function ScreenTrainingBanner({
       </div>
       <Link
         href={href}
-        className="inline-flex shrink-0 items-center gap-1.5 rounded-sm bg-warning px-3.5 py-2 text-l6 text-white transition-transform hover:-translate-y-0.5"
+        className={buttonVariants({ variant: "accent", size: "sm" })}
       >
         {t("cta")}
       </Link>
