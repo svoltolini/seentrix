@@ -1,5 +1,5 @@
 -- =============================================================================
--- 00041: Product diagrams (Excalidraw) + evidence vault
+-- 00042: Product diagrams (Excalidraw) + evidence vault
 --
 -- Phase 1 of the CRA toolkit build-out. Two artifact stores that feed the
 -- Annex VII technical file:
