@@ -6,7 +6,11 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 # Branching & deployment
 
-- **Develop on a feature branch and open every PR into `develop`** — never push or PR directly to `main`. Merging into `develop` is what deploys to **staging** (the staging Vercel deployment + the staging Supabase project), so all work and review happen there first.
-- When a change includes a **database migration**, apply it to the **staging** Supabase project after the PR is up, and record it for the eventual production run (see the deployment-checklist issue).
-- **Production** (`main` + the production Supabase project) is updated only as a **separate, explicit promotion step**, performed on request — typically a batched promotion that merges `develop` → `main` and then runs the accumulated migrations (in filename order) and any content re-ingests against production. Do not promote to production without being asked.
+Vercel maps the branches like this: **`develop` → Preview**, **`main` → Production**.
+
+- **Develop on a feature branch and open every PR into `develop`** — never push or PR directly to `main`.
+- **`develop` → Preview.** Commits on `develop` produce Vercel **Preview** deployments and use the **staging** Supabase project. This is the pre-production environment where all work and review happen first.
+- **`main` → Production.** `main` is the Vercel **Production** deployment, backed by the **production** Supabase project.
+- When a change includes a **database migration**, apply it to the **staging** Supabase project once the PR is up, and record it for the eventual production run (see the deployment-checklist issue).
+- **Production is updated only as a separate, explicit promotion step, performed on request** — typically a batched `develop` → `main` merge followed by running the accumulated migrations (in filename order) and any content re-ingests against production. Do not promote to `main` / production without being asked.
 
