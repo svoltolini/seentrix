@@ -16,6 +16,7 @@ import { cn } from "@/lib/utils";
  */
 type Tone = "primary" | "success" | "accent" | "warning" | "destructive" | "muted";
 
+// Soft (default): tinted chip + solid-colour icon. Used everywhere.
 const TONE: Record<Tone, string> = {
   primary: "bg-primary/10 text-primary",
   success: "bg-success/10 text-success",
@@ -23,6 +24,17 @@ const TONE: Record<Tone, string> = {
   warning: "bg-warning/10 text-warning",
   destructive: "bg-destructive/10 text-destructive",
   muted: "bg-muted text-muted-foreground",
+};
+
+// Solid: filled chip in the tone colour with the foreground icon — matches the
+// Help-Centre widget's solid orange icon. Use for a more prominent affordance.
+const TONE_SOLID: Record<Tone, string> = {
+  primary: "bg-primary text-primary-foreground",
+  success: "bg-success text-success-foreground",
+  accent: "bg-accent text-accent-foreground",
+  warning: "bg-warning text-warning-foreground",
+  destructive: "bg-destructive text-destructive-foreground",
+  muted: "bg-muted-foreground text-card",
 };
 
 // Chip size → (box class, icon px). Keeps the icon proportional to the chip.
@@ -38,6 +50,7 @@ export function IconBadge({
   tone = "primary",
   size = "md",
   shape = "rounded",
+  fill = "soft",
   iconSize,
   className,
   iconClassName,
@@ -47,6 +60,8 @@ export function IconBadge({
   size?: keyof typeof SIZES;
   /** `rounded` = rounded-md (default), `circle` = fully round. */
   shape?: "rounded" | "circle";
+  /** `soft` = tinted chip (default), `solid` = filled tone chip. */
+  fill?: "soft" | "solid";
   /** Override the icon's pixel size (defaults to the size preset's icon px). */
   iconSize?: number;
   className?: string;
@@ -59,7 +74,7 @@ export function IconBadge({
         "flex shrink-0 items-center justify-center",
         shape === "circle" ? "rounded-full" : "rounded-md",
         s.box,
-        TONE[tone],
+        fill === "solid" ? TONE_SOLID[tone] : TONE[tone],
         className,
       )}
     >

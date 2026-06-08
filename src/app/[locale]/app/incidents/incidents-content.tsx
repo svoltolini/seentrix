@@ -296,7 +296,7 @@ export function IncidentsContent({
             data-reveal
             className="overflow-hidden rounded-md bg-card shadow-card-md px-6 py-20 text-center"
           >
-            <div className="mx-auto">
+            <div className="flex justify-center">
               <IconBadge name="alert-02" tone="warning" size="xl" />
             </div>
             <h2 className="mt-5 text-h4 text-foreground">

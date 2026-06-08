@@ -68,6 +68,7 @@ export async function ScreenTrainingBanner({
       <IconBadge
         name="elearning-exchange-stroke-rounded"
         tone="accent"
+        fill="solid"
         size="md"
       />
       <div className="min-w-0 flex-1">

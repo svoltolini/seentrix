@@ -125,11 +125,13 @@
   --success: #4CD964;             /* Green/01 */
   --success-2: #88E698;           /* Green/02 */
   --success-3: #C3F2CB;           /* Green/03 */
+  --success-foreground: #FFFFFF;
   --destructive: #E60019;         /* Red/01 */
   --destructive-2: #EE5566;       /* Red/02 */
   --destructive-3: #F7AAB2;       /* Red/03 */
   --destructive-foreground: #FFFFFF;
   --warning: #FF6D00;             /* alias of --accent for consistency */
+  --warning-foreground: #FFFFFF;
   --info: #066DE6;                /* alias of --primary */
 
   /* === Borders + inputs === */
