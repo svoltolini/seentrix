@@ -5,7 +5,7 @@ import { TeamProgress } from "./team-progress";
 import type { LocaleId, RoleId } from "@/lib/academy/types";
 import { requiredLessonsForRole, allLessonIds } from "@/lib/academy/lessons";
 import { Icon } from "@/components/icon";
-import { ReferenceCard } from "@/components/reference-card";
+import { ReferenceCard, ReferenceBadge } from "@/components/reference-card";
 
 /**
  * Academy hub — Layer 2 landing.
@@ -78,47 +78,47 @@ export default async function AcademyPage({
           : "lessons";
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8 md:py-12">
+    <div className="mx-auto max-w-[1600px] pb-12">
       {mustCompleteTraining ? (
         <ReferenceCard className="mb-8 p-6 md:mb-10 md:p-10">
           <div className="flex flex-wrap items-start justify-between gap-5">
             <div className="min-w-0 flex-1">
-              <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-l6-plus uppercase tracking-wider text-white backdrop-blur-sm">
+              <ReferenceBadge className="mb-3">
                 <span className="size-1.5 animate-pulse rounded-full bg-accent" />
                 {t("hero.title")}
-              </div>
-              <h1 className="text-h2 leading-tight text-white md:text-3xl">
+              </ReferenceBadge>
+              <h1 className="text-h2 leading-tight text-primary-foreground md:text-h1">
                 {tGate("title")}
               </h1>
-              <p className="mt-2 max-w-xl text-p3 text-white/80 md:text-p2">
+              <p className="mt-2 max-w-xl text-p3 text-primary-foreground/80 md:text-p2">
                 {tGate("subtitle")}
               </p>
-              <p className="mt-3 text-p3 text-white">
+              <p className="mt-3 text-p3 text-primary-foreground">
                 {tGate("progress", {
                   done: requiredDone,
                   total: requiredIds.length,
                 })}
               </p>
             </div>
-            <div className="flex size-16 shrink-0 items-center justify-center rounded-full bg-white/10 backdrop-blur-sm">
+            <div className="flex size-16 shrink-0 items-center justify-center rounded-md bg-primary-foreground/10 backdrop-blur-sm">
               <Icon
                 name="lock-password-stroke-rounded"
                 size={24}
-                className="text-white"
+                className="text-primary-foreground"
               />
             </div>
           </div>
         </ReferenceCard>
       ) : (
         <ReferenceCard className="mb-8 p-6 md:mb-10 md:p-8">
-          <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-l6-plus uppercase tracking-wider text-white backdrop-blur-sm">
+          <ReferenceBadge className="mb-3">
             <Icon name="elearning-exchange-stroke-rounded" size={12} />
             {t("hero.eyebrow")}
-          </div>
-          <h1 className="text-h2 leading-tight text-white md:text-3xl">
+          </ReferenceBadge>
+          <h1 className="text-h2 leading-tight text-primary-foreground md:text-h1">
             {t("hero.title")}
           </h1>
-          <p className="mt-2 text-p3 text-white/80 md:text-p2">
+          <p className="mt-2 text-p3 text-primary-foreground/80 md:text-p2">
             {t("hero.description")}
           </p>
           {/* Compact horizontal progress — a slim full-width bar with a small
@@ -149,15 +149,15 @@ export default async function AcademyPage({
 function HeroProgress({ pct, label }: { pct: number; label: string }) {
   return (
     <div className="mt-5 w-full">
-      <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/20">
+      <div className="h-1.5 w-full overflow-hidden rounded-full bg-primary-foreground/20">
         <div
-          className="h-full rounded-full bg-white transition-all"
+          className="h-full rounded-full bg-primary-foreground transition-all"
           style={{ width: `${pct}%` }}
         />
       </div>
       <div className="mt-1.5 flex items-center justify-between">
-        <span className="text-p4 text-white/70">{label}</span>
-        <span className="text-p4 tabular-nums text-white/70">{pct}%</span>
+        <span className="text-p4 text-primary-foreground/70">{label}</span>
+        <span className="text-p4 tabular-nums text-primary-foreground/70">{pct}%</span>
       </div>
     </div>
   );

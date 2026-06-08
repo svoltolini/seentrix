@@ -1,0 +1,169 @@
+{
+  "conformity": {
+    "header": {
+      "routeLabel": "Percorso di conformità",
+      "progressLabel": "Avanzamento"
+    },
+    "route": {
+      "module_a": {
+        "title": "Modulo A — Controllo interno",
+        "description": "Percorso di autovalutazione. Il fabbricante predispone la documentazione tecnica, dichiara la conformità e appone la marcatura CE. Non è coinvolto alcun organismo notificato."
+      },
+      "module_b_c": {
+        "title": "Modulo B+C — Esame UE del tipo",
+        "description": "Un organismo notificato esamina un campione rappresentativo del prodotto (Modulo B), quindi il fabbricante dichiara la conformità a quel tipo (Modulo C)."
+      },
+      "module_h": {
+        "title": "Modulo H — Garanzia qualità totale",
+        "description": "Un organismo notificato verifica e approva un sistema di qualità completo che copre progettazione, produzione e ispezione finale. Le verifiche di sorveglianza sono ricorrenti."
+      },
+      "european_certification": {
+        "title": "Certificazione europea di cibersicurezza",
+        "description": "La conformità è dimostrata mediante il certificato di un prodotto rilasciato nell'ambito di uno schema di certificazione europea di cibersicurezza (CSA)."
+      }
+    },
+    "gate": {
+      "checklist": "Lista di controllo CRA",
+      "sbom": "Scansione SBOM attiva",
+      "ready": "Pronto",
+      "pending": "Non pronto"
+    },
+    "notifiedBody": {
+      "title": "Organismo notificato",
+      "description": "Registra l'organismo notificato che esegue la valutazione della conformità. L'ID e l'ambito vengono riportati direttamente sulla dichiarazione di conformità.",
+      "name": "Nome",
+      "id": "Numero dell'organismo notificato",
+      "scope": "Ambito",
+      "tooltips": {
+        "name": {
+          "title": "Nome dell'organismo notificato",
+          "body": "Ragione sociale completa dell'organismo notificato (es. \"TÜV Rheinland LGA Products GmbH\", \"BSI Assurance UK Ltd\"). Deve corrispondere al nome pubblicato nel database NANDO — con distinzione tra maiuscole/minuscole e punteggiatura.",
+          "ref": "CRA Allegato V(4) — quando è coinvolto un organismo notificato (Modulo B+C o Modulo H), la dichiarazione di conformità deve riportare il suo nome insieme al numero di identificazione a quattro cifre."
+        },
+        "id": {
+          "title": "Numero dell'organismo notificato",
+          "body": "Il numero di identificazione a quattro cifre assegnato dalla Commissione europea all'organismo notificato (es. 0197 per TÜV Rheinland). Trovalo cercando l'organismo nel database NANDO: ec.europa.eu/growth/tools-databases/nando.",
+          "ref": "CRA Allegato V(4) — il numero dell'organismo notificato fa parte della marcatura CE sui prodotti che richiedono una valutazione di terze parti e deve essere stampato sulla dichiarazione di conformità."
+        },
+        "scope": {
+          "title": "Ambito dell'attività dell'organismo notificato",
+          "body": "Una frase che descrive l'attività svolta dall'organismo notificato — es. \"Esame UE del tipo del prodotto ai sensi del Modulo B\" o \"Verifica del sistema di qualità ai sensi del Modulo H\". Riportato testualmente dal certificato dell'organismo notificato.",
+          "ref": "CRA Allegato V(4) — la dichiarazione deve indicare l'attività specifica di valutazione della conformità svolta, non solo il nome dell'organismo. Le autorità doganali e di vigilanza del mercato lo usano per verificare che sia stato utilizzato il modulo corretto."
+        }
+      }
+    },
+    "steps": {
+      "title": "Flusso di lavoro",
+      "eyebrow": "Fase del flusso di lavoro",
+      "current": "Stato attuale",
+      "notesLabel": "Note",
+      "notesPlaceholder": "Aggiungi note interne, link alle prove o riferimento di audit."
+    },
+    "status": {
+      "pending": "In attesa",
+      "in_progress": "In corso",
+      "complete": "Completato",
+      "not_applicable": "N/A"
+    },
+    "step": {
+      "checklist_complete": {
+        "title": "Lista di controllo CRA al 100%",
+        "description": "Tutti gli elementi applicabili dell'Allegato I nella lista di controllo sono contrassegnati come completati."
+      },
+      "sbom_active": {
+        "title": "SBOM attivo scansionato",
+        "description": "L'SBOM attivo è stato scansionato e i risultati CVE sono stati revisionati."
+      },
+      "technical_documentation_prepared": {
+        "title": "Documentazione tecnica predisposta",
+        "description": "Il fascicolo tecnico dell'Allegato II è compilato: descrizione, progettazione, rischio, test, DoC."
+      },
+      "risk_assessment_complete": {
+        "title": "Valutazione del rischio completata",
+        "description": "Il rischio di cibersicurezza del prodotto è stato valutato e documentato."
+      },
+      "notified_body_selected": {
+        "title": "Organismo notificato selezionato",
+        "description": "È stato coinvolto un organismo notificato con l'ambito richiesto."
+      },
+      "eu_type_examination_passed": {
+        "title": "Esame UE del tipo superato",
+        "description": "L'organismo notificato ha esaminato un campione rappresentativo e ha rilasciato il certificato."
+      },
+      "conformity_to_type_verified": {
+        "title": "Conformità al tipo verificata",
+        "description": "La produzione è verificata come conforme al tipo esaminato."
+      },
+      "quality_system_documented": {
+        "title": "Sistema di qualità documentato",
+        "description": "Le procedure di progettazione, produzione e ispezione finale sono documentate."
+      },
+      "quality_system_approved": {
+        "title": "Sistema di qualità approvato",
+        "description": "L'organismo notificato ha approvato il sistema di qualità."
+      },
+      "surveillance_audit_scheduled": {
+        "title": "Verifica di sorveglianza pianificata",
+        "description": "Verifica di sorveglianza ricorrente pianificata con l'organismo notificato."
+      },
+      "eu_certification_obtained": {
+        "title": "Certificato UE ottenuto",
+        "description": "Il prodotto è in possesso di un certificato valido nell'ambito di uno schema di certificazione europea di cibersicurezza."
+      },
+      "declaration_prepared": {
+        "title": "Dichiarazione predisposta",
+        "description": "Il testo della DoC, i dettagli del fabbricante e le norme di riferimento sono pronti."
+      },
+      "ce_marking_affixed": {
+        "title": "Marcatura CE apposta",
+        "description": "La marcatura CE (con il numero dell'organismo notificato ove applicabile) è apposta sul prodotto."
+      }
+    },
+    "doc": {
+      "eyebrow": "Dichiarazione di conformità",
+      "title": "Emetti la dichiarazione di conformità",
+      "description": "Genera la dichiarazione di conformità UE, compilata automaticamente con i dati del prodotto, dell'organizzazione e dell'organismo notificato indicati sopra.",
+      "issue": "Emetti la dichiarazione",
+      "reissue": "Riedita",
+      "download": "Scarica PDF",
+      "issued": "Dichiarazione emessa",
+      "issuedOn": "Emessa il {date}",
+      "stepsIncomplete": "Tutte le fasi del flusso di lavoro devono essere completate o contrassegnate come N/A prima che la dichiarazione possa essere emessa.",
+      "profileIncomplete": "Il profilo aziendale presenta campi obbligatori mancanti. Apri Impostazioni → Organizzazione per completarlo.",
+      "downloadFailed": "Impossibile scaricare la dichiarazione"
+    },
+    "toast": {
+      "saved": "Salvato",
+      "saveFailed": "Impossibile salvare",
+      "commentRequired": "Aggiungi una nota prima di modificare lo stato — ogni modifica di stato viene registrata nel log di audit.",
+      "fileTooLarge": "Il file supera il limite di caricamento di 2 MB.",
+      "unsupportedMime": "Tipo di file non supportato. Sono accettati immagini, PDF, documenti Office e testo normale.",
+      "uploadFailed": "Impossibile caricare il file. Riprova.",
+      "fileUploaded": "File caricato."
+    },
+    "attachments": {
+      "title": "Allegati",
+      "attach": "Allega un file",
+      "hint": "Allega un file (≤ 2 MB)",
+      "download": "Scarica",
+      "discard": "Elimina file in attesa"
+    },
+    "meta": {
+      "commentCount": "{count, plural, one {# commento} other {# commenti}}",
+      "attachmentCount": "{count, plural, one {# allegato} other {# allegati}}"
+    },
+    "conversation": {
+      "empty": "Nessun commento ancora. Avvia il thread con la prima nota.",
+      "placeholder": "Aggiungi una nota che spieghi cosa è cambiato e perché…",
+      "changeStatus": "Imposta stato su",
+      "noteRequired": "I commenti vengono salvati nel log di audit e non possono essere modificati o eliminati.",
+      "pendingChange": "Modifica in attesa: {from} → {to}. Fai clic su Salva per confermare.",
+      "save": "Salva commento",
+      "saveStatus": "Salva modifica stato",
+      "saveStatusAndUpload": "Salva stato e carica",
+      "upload": "Carica file",
+      "send": "Aggiungi commento",
+      "unknownUser": "Utente sconosciuto"
+    }
+  }
+}

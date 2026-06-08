@@ -234,6 +234,240 @@ export const lesson: Lesson = {
         },
       ],
     },
+    fr: {
+      title: "Scoring des vulnérabilités (CVSS, EPSS, KEV)",
+      summary:
+        "Trois signaux complémentaires pour décider quoi corriger en premier. Aucun ne remplace le jugement contextuel.",
+      sections: [
+        {
+          heading: "CVSS — sévérité, pas urgence",
+          body: (
+            <p>
+              <Term id="cvss">CVSS</Term> évalue la sévérité intrinsèque
+              d'une vulnérabilité sur une échelle de 0,0 à 10,0. C'est la
+              lingua franca des flux de vulnérabilités, mais c'est une
+              propriété statique : un CVSS-9,8 « critique » dans un
+              composant que nous avons désactivé reste un <em>risque</em>{" "}
+              faible. CVSS v4 (2023) est la spécification actuelle ;
+              de nombreux flux publient encore des scores v3. Utilisez
+              CVSS comme hypothèse de sévérité initiale, pas comme réponse
+              définitive.
+            </p>
+          ),
+        },
+        {
+          heading: "EPSS — probabilité d'exploitation",
+          body: (
+            <p>
+              <Term id="epss">EPSS</Term> est une estimation quotidienne
+              (0,0–1,0) indiquant la probabilité qu'un CVE donné soit
+              exploité dans les 30 prochains jours. La plupart des CVEs
+              sont en dessous de 0,01 — ils ne seront jamais exploités.
+              Un EPSS supérieur à 0,5 combiné à un CVSS élevé signifie
+              généralement « corriger cette semaine ». EPSS complète CVSS :
+              l'un indique la gravité, l'autre la probabilité.
+            </p>
+          ),
+        },
+        {
+          heading: "KEV — exploitation confirmée",
+          body: (
+            <p>
+              Le catalogue CISA <Term id="kev">KEV</Term> est une liste
+              curatée de CVEs activement exploités dans la nature. Une
+              inscription au KEV est le signal le plus fort disponible et
+              fait remonter le problème en tête de notre file de triage
+              indépendamment du CVSS ou de l'EPSS. Dans Seentrix, les
+              vulnérabilités inscrites au KEV affichent un point rouge dans
+              le tableau des vulnérabilités et font s'allumer le KPI KEV
+              dans l'en-tête de l'onglet.
+            </p>
+          ),
+        },
+      ],
+      quiz: [
+        {
+          question:
+            "Une vulnérabilité a un CVSS de 9,8, un EPSS de 0,001, et n'est pas dans le KEV. Comment la traiter ?",
+          options: [
+            "Urgence — CVSS 9,8 est critique",
+            "Corriger dans le sprint normal — sévérité intrinsèque élevée mais probabilité d'exploitation faible",
+            "Ignorer — un EPSS faible signifie que c'est sûr",
+            "Toujours supprimer le composant",
+          ],
+          correctIndex: 1,
+          explanation:
+            "CVSS élevé + EPSS faible + absent du KEV = traiter avec attention mais sans panique. Sévérité intrinsèque élevée avec faible probabilité d'exploitation : correction dans le cycle de sprint normal, pas une urgence.",
+        },
+        {
+          question: "Qu'est-ce que le catalogue KEV ?",
+          options: [
+            "Un répertoire de composants firmware approuvés",
+            "La liste CISA des CVEs activement exploités dans la nature",
+            "Un remplacement d'EPSS maintenu par ENISA",
+            "Un jeu de règles interne à un scanner",
+          ],
+          correctIndex: 1,
+          explanation:
+            "KEV = catalogue Known Exploited Vulnerabilities, maintenu par la CISA. ~5 à 10 CVEs sont ajoutés par semaine. La présence dans le KEV est le signal d'exploitation le plus fort dont nous disposons, hormis nos propres logs.",
+        },
+        {
+          question:
+            "Un score EPSS de 0,85 signifie approximativement quoi ?",
+          options: [
+            "Le CVE est exploité dans 85 % des cas lors du premier scan",
+            "Il y a environ 85 % de probabilité que ce CVE soit exploité dans les 30 prochains jours",
+            "Le CVE est sévère à 85 %",
+            "85 % des scanners détectent ce CVE",
+          ],
+          correctIndex: 1,
+          explanation:
+            "EPSS est une estimation de probabilité d'exploitation sur 30 jours. 0,85 est très élevé — l'écrasante majorité des CVEs n'atteint jamais 0,1.",
+        },
+        {
+          question:
+            "Quel signal seul justifie le flag « vulnérabilité activement exploitée » au titre de l'Article 14 du CRA ?",
+          options: [
+            "CVSS \u226510",
+            "EPSS \u22650,5",
+            "Inscription au KEV (ou preuves équivalentes comme nos propres logs de production)",
+            "Toute vulnérabilité de plus de 90 jours",
+          ],
+          correctIndex: 2,
+          explanation:
+            "Activement exploitée est un constat factuel. L'inscription au KEV est la preuve la plus claire ; un renseignement sur les menaces comparable ou nos propres logs conviennent également. Le CVSS et l'EPSS seuls prédisent la sévérité / la probabilité mais n'établissent pas l'exploitation.",
+        },
+        {
+          question:
+            "Un CVE affecte un composant intégré à notre produit mais désactivé à la compilation. Quelle est la bonne triage ?",
+          options: [
+            "Appliquer le CVSS tel quel ; traiter comme élevé",
+            "Marquer comme Non applicable / Accepté avec la preuve que le composant est désactivé",
+            "Supprimer le composant — toujours",
+            "Enregistrer comme Résolu sans action",
+          ],
+          correctIndex: 1,
+          explanation:
+            "Le contexte est tout. Un composant désactivé n'est pas exploitable dans notre configuration livrée. Accepter avec une documentation (flags de compilation, couverture de tests prouvant qu'il est désactivé). Le CVSS n'est pas faux — il ne décrit simplement pas notre risque.",
+        },
+      ],
+    },
+    it: {
+      title: "Scoring delle vulnerabilità (CVSS, EPSS, KEV)",
+      summary:
+        "Tre segnali complementari per decidere cosa correggere per primo. Nessuno sostituisce il giudizio contestuale.",
+      sections: [
+        {
+          heading: "CVSS — gravità, non urgenza",
+          body: (
+            <p>
+              <Term id="cvss">CVSS</Term> valuta la gravità intrinseca
+              di una vulnerabilità su una scala da 0,0 a 10,0. È la lingua
+              franca dei feed di vulnerabilità, ma è una proprietà statica:
+              un CVSS-9,8 «critico» in un componente che abbiamo disabilitato
+              è comunque un <em>rischio</em> basso. CVSS v4 (2023) è la
+              specifica attuale; molti feed pubblicano ancora punteggi v3.
+              Usare CVSS come ipotesi di gravità iniziale, non come risposta
+              definitiva.
+            </p>
+          ),
+        },
+        {
+          heading: "EPSS — probabilità di sfruttamento",
+          body: (
+            <p>
+              <Term id="epss">EPSS</Term> è una stima giornaliera (0,0–1,0)
+              della probabilità che un dato CVE venga sfruttato nei prossimi
+              30 giorni. La maggior parte dei CVE è al di sotto di 0,01 —
+              non verranno mai sfruttati. Un EPSS superiore a 0,5 combinato
+              con un CVSS elevato significa generalmente «correggere questa
+              settimana». EPSS integra CVSS: uno indica la gravità, l'altro
+              la probabilità.
+            </p>
+          ),
+        },
+        {
+          heading: "KEV — sfruttamento confermato",
+          body: (
+            <p>
+              Il catalogo CISA <Term id="kev">KEV</Term> è un elenco curato
+              di CVE sfruttati attivamente in the wild. La presenza nel KEV
+              è il segnale più forte disponibile e fa salire il problema
+              in cima alla nostra coda di triage indipendentemente da CVSS
+              o EPSS. In Seentrix, le vulnerabilità incluse nel KEV mostrano
+              un punto rosso nella tabella delle vulnerabilità e accendono
+              il KPI KEV nell'intestazione della scheda.
+            </p>
+          ),
+        },
+      ],
+      quiz: [
+        {
+          question:
+            "Una vulnerabilità ha CVSS 9,8, EPSS 0,001, non è nel KEV. Come trattarla?",
+          options: [
+            "Emergenza — CVSS 9,8 è critico",
+            "Correggere nel normale ciclo di sprint — gravità intrinseca elevata ma bassa probabilità di sfruttamento",
+            "Ignorare — EPSS basso significa sicuro",
+            "Rimuovere sempre il componente",
+          ],
+          correctIndex: 1,
+          explanation:
+            "CVSS alto + EPSS basso + assente dal KEV = trattare con attenzione ma senza panico. Gravità intrinseca elevata con bassa probabilità di sfruttamento è una correzione nel normale ciclo di sprint, non un'emergenza.",
+        },
+        {
+          question: "Cos'è il catalogo KEV?",
+          options: [
+            "Un elenco di componenti firmware affidabili",
+            "La lista CISA dei CVE sfruttati attivamente in the wild",
+            "Un sostituto di EPSS gestito da ENISA",
+            "Un set di regole interno a uno scanner",
+          ],
+          correctIndex: 1,
+          explanation:
+            "KEV = catalogo Known Exploited Vulnerabilities, gestito dalla CISA. ~5–10 CVE vengono aggiunti a settimana. La presenza nel KEV è il segnale di sfruttamento più forte di cui disponiamo al di fuori dei nostri log.",
+        },
+        {
+          question:
+            "Un punteggio EPSS di 0,85 significa approssimativamente cosa?",
+          options: [
+            "Il CVE viene sfruttato nell'85% dei casi al primo scan",
+            "C'è circa l'85% di probabilità che questo CVE venga sfruttato nei prossimi 30 giorni",
+            "Il CVE è grave all'85%",
+            "L'85% degli scanner rileva questo CVE",
+          ],
+          correctIndex: 1,
+          explanation:
+            "EPSS è una stima di probabilità di sfruttamento su 30 giorni. 0,85 è molto alto — la stragrande maggioranza dei CVE non raggiunge mai 0,1.",
+        },
+        {
+          question:
+            "Quale segnale da solo giustifica il flag «vulnerabilità sfruttata attivamente» ai sensi dell'Articolo 14 del CRA?",
+          options: [
+            "CVSS \u226510",
+            "EPSS \u22650,5",
+            "Iscrizione al KEV (o prove equivalenti come i nostri log di produzione)",
+            "Qualsiasi vulnerabilità più vecchia di 90 giorni",
+          ],
+          correctIndex: 2,
+          explanation:
+            "Sfruttata attivamente è un accertamento fattuale. L'iscrizione al KEV è la prova più chiara; un threat intelligence comparabile o i nostri log sono ugualmente validi. CVSS e EPSS da soli predicono gravità / probabilità ma non dimostrano lo sfruttamento.",
+        },
+        {
+          question:
+            "Un CVE riguarda un componente incluso nel nostro prodotto ma disabilitato in fase di compilazione. Qual è il triage corretto?",
+          options: [
+            "Applicare il CVSS così com'è; trattare come alto",
+            "Contrassegnare come Non applicabile / Accettato con la prova che il componente è disabilitato",
+            "Rimuovere sempre il componente",
+            "Registrare come Risolto senza azione",
+          ],
+          correctIndex: 1,
+          explanation:
+            "Il contesto è tutto. Un componente disabilitato non è sfruttabile nella nostra configurazione rilasciata. Accettare con documentazione (flag di compilazione, copertura dei test che prova che è disattivato). Il CVSS non è errato — semplicemente non descrive il nostro rischio.",
+        },
+      ],
+    },
   },
 };
 

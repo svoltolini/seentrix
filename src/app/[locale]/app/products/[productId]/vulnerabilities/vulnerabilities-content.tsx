@@ -19,6 +19,7 @@ import { useCallback, useMemo, useRef, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import { Icon } from "@/components/icon";
+import { IconBadge } from "@/components/ui/icon-badge";
 import { StaggerReveal } from "@/components/stagger-reveal";
 import { StatCard } from "@/components/stat-card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -357,13 +358,7 @@ export function VulnerabilitiesContent({
       <div
         className="overflow-hidden rounded-md bg-card shadow-card-md px-6 py-20 text-center"
       >
-        <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-success/10">
-          <Icon
-            name="shield-check"
-            size={28}
-            className="text-success"
-          />
-        </div>
+        <IconBadge name="shield-check" tone="success" size="xl" className="mx-auto" />
         <h2 className="mt-5 text-h4 text-foreground">
           {t("empty.title")}
         </h2>

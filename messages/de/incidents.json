@@ -1,0 +1,154 @@
+{
+  "incidents": {
+    "breadcrumb": "Sicherheitsvorfälle",
+    "banner": {
+      "headline": "{count, plural, one {# aktiver Sicherheitsvorfall} other {# aktive Sicherheitsvorfälle}}"
+    },
+    "title": "Sicherheitsvorfall-Meldung gemäß Artikel 14",
+    "subtitle": "Verfolgen und melden Sie Sicherheitsvorfälle und aktiv ausgenutzte Schwachstellen innerhalb der CRA-Meldefristen an ENISA.",
+    "type": {
+      "security_incident": "Sicherheitsvorfall",
+      "exploited_vulnerability": "Ausgenutzte Schwachstelle"
+    },
+    "severity": {
+      "critical": "Kritisch",
+      "high": "Hoch",
+      "medium": "Mittel",
+      "low": "Niedrig"
+    },
+    "status": {
+      "detected": "Erkannt",
+      "early_warning_submitted": "Frühwarnung gesendet",
+      "incident_report_submitted": "Sicherheitsvorfall-Bericht gesendet",
+      "final_report_submitted": "Abschlussbericht gesendet",
+      "closed": "Geschlossen"
+    },
+    "phase": {
+      "early_warning": "Frühwarnung",
+      "incident_report": "Sicherheitsvorfall-Bericht",
+      "final_report": "Abschlussbericht",
+      "submitted": "Eingereicht",
+      "overdue": "Überfällig",
+      "remaining": "Verbleibend"
+    },
+    "kpi": {
+      "active": "Aktiv",
+      "overdue": "Überfällig",
+      "critical": "Kritisch",
+      "closed": "Geschlossen"
+    },
+    "filter": {
+      "active": "Aktiv",
+      "all": "Alle",
+      "closed": "Geschlossen",
+      "severity": "Schweregrad"
+    },
+    "table": {
+      "incident": "Sicherheitsvorfall",
+      "type": "Typ",
+      "aware_at": "Bekanntwerden",
+      "status": "Status",
+      "deadline": "Nächste Frist"
+    },
+    "deadline": {
+      "in": "In {time}",
+      "overdueBy": "Überfällig um {time}",
+      "none": "Alle Fristen abgelaufen"
+    },
+    "empty": {
+      "title": "Noch keine Sicherheitsvorfälle",
+      "description": "Wenn ein Sicherheitsvorfall oder eine aktiv ausgenutzte Schwachstelle erkannt wird, reichen Sie ihn hier ein, um die 24h/72h/14-Tage-Meldeuhr zu starten.",
+      "filtered": "Keine Sicherheitsvorfälle entsprechen Ihren Filtern",
+      "filteredDescription": "Passen Sie die obigen Filter an.",
+      "noProductTitle": "Zuerst ein Produkt hinzufügen",
+      "noProductDescription": "Sicherheitsvorfälle werden einem bestimmten Produkt zugeordnet. Fügen Sie Ihr erstes Produkt hinzu, um Sicherheitsvorfälle und die CRA-24h/72h/14-Tage-Meldeuhr zu verfolgen.",
+      "noProductCta": "Erstes Produkt hinzufügen"
+    },
+    "new": {
+      "cta": "Neuer Sicherheitsvorfall",
+      "title": "Neuen Sicherheitsvorfall melden",
+      "description": "Das Melden eines Sicherheitsvorfalls startet die Meldeuhr gemäß Artikel 14. Sie haben 24 Stunden für die Frühwarnung, 72 Stunden für den Sicherheitsvorfall-Bericht und 14 Tage für den Abschlussbericht.",
+      "titleLabel": "Titel",
+      "titlePlaceholder": "Kurzer, konkreter Vorfallname",
+      "typeLabel": "Typ",
+      "severityLabel": "Schweregrad",
+      "affectedProductsLabel": "Betroffene Produkte",
+      "descriptionLabel": "Beschreibung",
+      "descriptionPlaceholder": "Was geschehen ist, wann Sie davon erfahren haben und wer untersucht.",
+      "cancel": "Abbrechen",
+      "create": "Meldeuhr starten",
+      "created": "Sicherheitsvorfall erstellt",
+      "error": "Sicherheitsvorfall konnte nicht erstellt werden",
+      "tooltips": {
+        "title": {
+          "title": "Titel des Sicherheitsvorfalls",
+          "body": "Kurzer, erkennbarer Name für den Sicherheitsvorfall – etwas, das ein Teammitglied auf einen Blick in einer Liste identifizieren kann (z. B. \"CVE-2024-XXXX in Firmware v2.3 ausgenutzt\", \"Vom Kunden gemeldete Privilegienerweiterung\"). Wird in der PDF-Einreichung an ENISA verwendet.",
+          "ref": "CRA Artikel 14(1) – Die innerhalb von 24 Stunden eingereichte Frühwarnung muss mindestens den Sicherheitsvorfall benennen; ein klarer Titel ist das erste Feld, nach dem das ENISA-Eingangsformular fragt."
+        },
+        "type": {
+          "title": "Typ des Sicherheitsvorfalls",
+          "body": "Wählen Sie \"Sicherheitsvorfall\" für einen Kompromiss, der bereits ein Produkt oder seine Nutzer betroffen hat (Datenverlust, Ransomware, Kontoübernahme). Wählen Sie \"Ausgenutzte Schwachstelle\", wenn Sie Belege haben, dass eine bekannte CVE in Ihrem Produkt aktiv in freier Wildbahn ausgenutzt wird.",
+          "ref": "CRA Artikel 14(1) – Beide Kategorien lösen die Meldeuhr aus, aber das von ENISA verwendete Eingangsformular unterscheidet zwischen ihnen und leitet sie an verschiedene nachgelagerte Teams weiter."
+        },
+        "severity": {
+          "title": "Schweregrad",
+          "body": "Subjektive Beurteilung der Nutzerauswirkung. Kritisch = weitverbreiteter Schaden oder unmittelbares Sicherheitsrisiko. Hoch = erhebliche Auswirkung auf betroffene Nutzer. Mittel = begrenzte Auswirkung, Workaround vorhanden. Niedrig = minimale Auswirkung. Prüfer erwarten, dass Ihre Beurteilung mit den Nachweisen übereinstimmt.",
+          "ref": "CRA Artikel 14(2)(a) – Die Schweregradklassifizierung ist Teil jedes Phasenberichts. Sie bestimmt, ob und wie Sie betroffene Nutzer gemäß Artikel 14(6) informieren müssen."
+        },
+        "affectedProducts": {
+          "title": "Betroffene Produkte",
+          "body": "Wählen Sie jedes Produkt in Ihrem Katalog aus, das betroffen ist oder betroffen sein könnte. Die Liste wird verwendet, um den Abschnitt \"Betroffene Produkte\" der 24h/72h/14-Tage-Berichte zu erstellen. Lieber zu viele als zu wenige auswählen.",
+          "ref": "CRA Artikel 14(2)(b) – Jeder Phasenbericht muss die betroffenen Produkte identifizieren. Unvollständige Produktlisten sind der häufigste Grund, weshalb Berichte von ENISA zurückgewiesen werden."
+        },
+        "description": {
+          "title": "Beschreibung",
+          "body": "Zusammenfassung in verständlicher Sprache, was geschehen ist, wann Sie davon erfahren haben, wer untersucht und was Sie bisher wissen. Wird wortwörtlich in das Frühwarnungs-PDF kopiert, also lassen Sie vertrauliche Details weg und beschränken Sie sich auf Fakten, die Sie veröffentlichen können.",
+          "ref": "CRA Artikel 14(1)(a) – Die 24-Stunden-Frühwarnung muss mindestens eine allgemeine Beschreibung des Sicherheitsvorfalls enthalten; Sie können ihn im 72-Stunden-Bericht verfeinern, sobald Sie mehr wissen."
+        }
+      }
+    },
+    "detail": {
+      "awareAt": "Bekanntgeworden am {date}",
+      "affecting": "Betrifft",
+      "downloadPdf": "PDF herunterladen",
+      "close": "Sicherheitsvorfall schließen",
+      "saveDraft": "Entwurf speichern",
+      "saved": "Entwurf gespeichert",
+      "saveFailed": "Entwurf konnte nicht gespeichert werden",
+      "submitted": "Phase eingereicht",
+      "submitFailed": "Einreichen fehlgeschlagen",
+      "closed": "Sicherheitsvorfall geschlossen",
+      "closeFailed": "Sicherheitsvorfall konnte nicht geschlossen werden",
+      "confirmClose": "Diesen Sicherheitsvorfall schließen? Der Zeitplan wird gestoppt, aber der Datensatz bleibt erhalten.",
+      "notified": "Benutzerbenachrichtigung erfasst",
+      "notifyFailed": "Benachrichtigung konnte nicht gespeichert werden",
+      "pdfFailed": "PDF konnte nicht erstellt werden",
+      "phaseA": {
+        "title": "24-Stunden-Frühwarnung",
+        "description": "Erste Meldung an ENISA und Ihr CSIRT. Bekanntwerden bestätigen, erste Auswirkung und ob Sie böswillige Aktivitäten vermuten.",
+        "placeholder": "Beschreiben Sie die ersten Anzeichen, den Umfang des Bekanntwerdens und etwaige sofortige Eindämmungsmaßnahmen.",
+        "submit": "24h-Warnung einreichen"
+      },
+      "phaseB": {
+        "title": "72-Stunden-Sicherheitsvorfall-Bericht",
+        "description": "Vollständige Meldung mit Auswirkungsbeurteilung, bisheriger Ursachenanalyse und kompromittierten Datenkategorien.",
+        "placeholder": "Ursache, Auswirkung, betroffene Komponenten und Nutzer, laufende Behebung.",
+        "submit": "72h-Bericht einreichen"
+      },
+      "phaseC": {
+        "title": "14-Tage-Abschlussbericht",
+        "description": "Abschlussbericht mit Ursache, Schweregrad, Behebung und Mitigationsmaßnahmen des Sicherheitsvorfalls.",
+        "placeholder": "Abschließende Ursachenanalyse, ergriffene Behebungsmaßnahmen, Restrisiko, gelernte Lektionen.",
+        "submit": "Abschlussbericht einreichen"
+      },
+      "userNotify": {
+        "title": "Betroffene Nutzer benachrichtigen",
+        "description": "Artikel 14 verpflichtet Hersteller, betroffene Nutzer unverzüglich zu informieren und Mitigationsleitlinien bereitzustellen. Wird wortwörtlich im Audit-Trail erfasst.",
+        "placeholder": "Was geschehen ist, was Nutzer tun sollen und wo Updates erhältlich sind.",
+        "send": "Benachrichtigung erfassen",
+        "update": "Benachrichtigung aktualisieren",
+        "sent": "Gesendet am {date}"
+      }
+    }
+  }
+}

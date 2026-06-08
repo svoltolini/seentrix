@@ -1,4 +1,4 @@
-import { setRequestLocale } from "next-intl/server";
+
 import { getTranslations } from "next-intl/server";
 import { HeroSection } from "./_components/hero-section";
 import { ProblemSection } from "./_components/problem-section";
@@ -17,8 +17,8 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: string }>;
 }) {
-  const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "landing" });
+  await params;
+  const t = await getTranslations("landing");
 
   return {
     // `absolute` skips the root-level "%s — Seentrix" template so the
@@ -34,8 +34,7 @@ export default async function LandingPage({
 }: {
   params: Promise<{ locale: string }>;
 }) {
-  const { locale } = await params;
-  setRequestLocale(locale);
+  await params;
 
   return (
     <>

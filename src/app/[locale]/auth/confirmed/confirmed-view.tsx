@@ -16,7 +16,7 @@ export function ConfirmedView() {
   return (
     <div className="flex flex-col items-center text-center">
       {/* Success badge — soft primary-tinted circle with a tick. */}
-      <div className="mb-5 flex size-14 items-center justify-center rounded-full bg-primary/10">
+      <div className="mb-5 flex size-14 items-center justify-center rounded-md bg-primary/10">
         <Icon
           name="checkmark-circle-01-stroke-rounded"
           className="size-7 text-primary"

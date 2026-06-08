@@ -1,0 +1,100 @@
+{
+  "copilot": {
+    "triggerLabel": "Chiedi a Seentrix AI",
+    "triggerAria": "Apri Seentrix AI",
+    "title": "Seentrix AI",
+    "close": "Chiudi",
+    "send": "Invia",
+    "stop": "Interrompi",
+    "clearHistory": "Cancella cronologia",
+    "clearHistoryConfirm": "Eliminare tutte le conversazioni di Seentrix AI dalla cronologia? Questa operazione non può essere annullata.",
+    "clearHistoryDone": "Cronologia di Seentrix AI cancellata.",
+    "clearHistoryFailed": "Impossibile cancellare la cronologia. Riprova.",
+    "history": {
+      "open": "Conversazioni passate",
+      "eyebrow": "Cronologia",
+      "title": "Conversazioni passate",
+      "untitled": "Nuova conversazione",
+      "empty": "Nessuna conversazione passata ancora.",
+      "loadError": "Impossibile caricare le conversazioni.",
+      "retry": "Riprova",
+      "delete": "Elimina"
+    },
+    "feedback": {
+      "helpful": "Utile",
+      "notHelpful": "Non utile",
+      "whatWentWrong": "Cosa è andato storto? (facoltativo)",
+      "submit": "Invia"
+    },
+    "placeholder": "Chiedi informazioni sul CRA o su Seentrix",
+    "error": "Qualcosa è andato storto. Riprova.",
+    "emptyEyebrow": "Il tuo assistente CRA",
+    "emptyTitle": "Chiedimi qualsiasi cosa sul Cyber Resilience Act.",
+    "emptyBody": "Posso spiegare gli articoli, guidarti nei flussi di lavoro di Seentrix e indirizzarti alla schermata giusta. Ogni risposta cita il regolamento o la documentazione del prodotto di riferimento.",
+    "tryAsking": "Prova a chiedere",
+    "examples": {
+      "art13": "Cosa richiede l'Articolo 13 del CRA?",
+      "sbom": "Spiega il mio SBOM — cosa devo fare con esso?",
+      "incident": "Come funzionano le scadenze per gli incidenti di 24h / 72h / 14g?"
+    },
+    "marketing": {
+      "eyebrow": "Seentrix AI",
+      "title": "Un assistente CRA costruito interamente su tecnologie europee.",
+      "lede": "Un assistente specializzato in CRA integrato in Seentrix. Poni domande in linguaggio semplice e ottieni risposte basate direttamente sul regolamento — su infrastrutture gestite interamente da aziende europee.",
+      "bullets": {
+        "sovereign": {
+          "title": "Europeo per progettazione",
+          "body": "Alimentato da Mistral AI a Parigi. Ogni fase della pipeline opera su infrastruttura europea."
+        },
+        "grounded": {
+          "title": "Basato sul regolamento",
+          "body": "Ogni risposta cita l'articolo, l'allegato o la pagina di Seentrix da cui è tratta."
+        },
+        "context": {
+          "title": "Consapevole del contesto",
+          "body": "Sa quale schermata, prodotto e organizzazione stai visualizzando. Sostituisce il \"dov'è di nuovo quella funzione?\"."
+        },
+        "actionable": {
+          "title": "Operativo",
+          "body": "Crea deep link alla pagina giusta, redige su richiesta le narrative degli incidenti e spiega cosa manca prima di emettere una DoC."
+        }
+      },
+      "ctaPrimary": "Inizia gratuitamente",
+      "ctaSecondary": "Guarda come funziona",
+      "learnMore": "Scopri di più →",
+      "startChatting": "Inizia a chattare",
+      "disclosure": "Alimentato da Mistral AI · ospitato nell'UE · non è una consulenza legale"
+    },
+    "learnMore": {
+      "title": "Seentrix AI",
+      "subtitle": "Il tuo esperto CRA ospitato nell'UE — integrato nel prodotto.",
+      "section1": {
+        "heading": "Perché un assistente AI",
+        "body": "Il CRA è un regolamento di oltre 120 pagine. La maggior parte dei fabbricanti non dispone di un avvocato specializzato in conformità. Seentrix AI legge il regolamento per te, risponde alle domande in linguaggio semplice e ti indica la schermata giusta di Seentrix quando c'è qualcosa da fare."
+      },
+      "section2": {
+        "heading": "Cosa conosce effettivamente",
+        "body": "Il testo CRA curato (articoli e allegati), le linee guida ENISA, le lezioni dell'Academy di Seentrix e ogni stringa di aiuto nel prodotto. Ogni risposta cita la fonte in modo che tu possa verificarla."
+      },
+      "section3": {
+        "heading": "Dove risiedono i tuoi dati",
+        "body": "Ogni fase della pipeline opera su infrastruttura europea. L'inferenza viene eseguita da Mistral AI a Parigi. Il recupero avviene nel nostro Supabase a Londra. L'applicazione web viene servita da Vercel a Francoforte. I tuoi prompt e le trascrizioni rimangono nella regione europea dall'inizio alla fine."
+      },
+      "section4": {
+        "heading": "Privacy e conservazione",
+        "body": "Le conversazioni vengono archiviate in modo crittografato nella riga del database UE della tua organizzazione ed eliminate secondo una pianificazione per livello di piano (Free 7 giorni / Pro 90 / Business 180 / Enterprise 365). Gli utenti possono cancellare la cronologia in qualsiasi momento. Mistral AI non addestra i propri modelli con i tuoi dati (accordo a conservazione zero)."
+      },
+      "section5": {
+        "heading": "Quando dice \"Non lo so\"",
+        "body": "Se i passaggi recuperati non supportano chiaramente una risposta, Seentrix AI lo dichiara invece di fare supposizioni. Vedrai anche \"non è una consulenza legale — conferma con un consulente qualificato\" su ogni risposta di natura normativa. È uno strumento, non un avvocato."
+      },
+      "quota": {
+        "title": "Cosa ottieni",
+        "free": "10 messaggi/mese",
+        "professional": "200 messaggi/mese",
+        "business": "1.000 messaggi/mese",
+        "enterprise": "10.000 messaggi/mese"
+      }
+    }
+  }
+}

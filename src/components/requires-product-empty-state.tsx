@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { Icon, type IconName } from "@/components/icon";
-import { AskSeentrixAI } from "@/components/copilot/ask-seentrix-ai";
+import { IconBadge } from "@/components/ui/icon-badge";
 import { Button } from "@/components/ui/button";
 import { useCreateProduct } from "@/components/products/create-product-context";
 
@@ -10,8 +10,11 @@ import { useCreateProduct } from "@/components/products/create-product-context";
  * RequiresProductEmptyState — the shared "you need a product first" empty
  * state used by every screen that has no meaning until the org has at least
  * one product (Products, Incidents, Vulnerability Reports). One component keeps
- * the icon + heading + body + CTA + "Ask Seentrix AI" chip identical across all
- * three screens.
+ * the icon + heading + body + CTA identical across all three screens.
+ *
+ * No "Ask Seentrix AI" chip is shown here: asking the copilot about products,
+ * incidents, or vulnerability reports is pointless before the org has a single
+ * product, so the only affordance is the create-product CTA.
  *
  * The CTA opens the global create-product side sheet over the current page
  * instantly via `useCreateProduct().open()` (React state, no route nav)
@@ -30,10 +33,6 @@ interface Props {
   namespace: string;
   /** Icon shown in the badge. */
   icon?: IconName | (string & {});
-  /** Pre-seeded question for the "Ask Seentrix AI" chip. */
-  askSeed?: string;
-  /** Label for the "Ask Seentrix AI" chip. */
-  askLabel?: string;
 }
 
 export function RequiresProductEmptyState({
@@ -42,17 +41,18 @@ export function RequiresProductEmptyState({
   ctaLabel,
   namespace,
   icon = "package-open-stroke-rounded",
-  askSeed,
-  askLabel,
 }: Props) {
   const t = useTranslations(namespace);
   const { open } = useCreateProduct();
 
   return (
     <div className="flex flex-col items-center justify-center py-24 text-center">
-      <div className="mb-6 flex size-14 items-center justify-center rounded-full bg-primary/10">
-        <Icon name={icon} size={28} className="text-primary" />
-      </div>
+      <IconBadge
+        name={icon}
+        tone="primary"
+        iconSize={28}
+        className="mb-6 size-14"
+      />
       <h3 className="text-h4 text-foreground">{t(title)}</h3>
       <p className="mt-2 max-w-md text-p3 text-muted-foreground">
         {t(description)}
@@ -62,9 +62,6 @@ export function RequiresProductEmptyState({
         <Icon name="add-01" size={16} />
         {t(ctaLabel)}
       </Button>
-      {askSeed && askLabel && (
-        <AskSeentrixAI className="mt-4" seed={askSeed} label={askLabel} />
-      )}
     </div>
   );
 }

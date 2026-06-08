@@ -1,0 +1,216 @@
+{
+ "pricing": {
+  "title": "Prezzi semplici e trasparenti",
+  "subtitle": "Scegli il piano adatto alle tue esigenze di conformità CRA. Ogni piano include la residenza dei dati nell'UE e l'Academy completa.",
+  "billingInterval": "Intervallo di fatturazione",
+  "monthly": "Mensile",
+  "annual": "Annuale",
+  "savePercent": "2 mesi gratuiti",
+  "perMonth": "mese",
+  "billedAnnually": "€{total} fatturati annualmente",
+  "mostPopular": "Più popolare",
+  "getStarted": "Inizia",
+  "subscribe": "Abbonati",
+  "contactSales": "Contatta le vendite",
+  "comingSoon": "Disponibile a breve",
+  "redirecting": "Reindirizzamento in corso…",
+  "plans": {
+   "free": {
+    "name": "Free",
+    "description": "Esplora i requisiti CRA per un prodotto.",
+    "features": {
+     "f1": "1 prodotto · 1 utente",
+     "f2": "Valutazione dell'ambito CRA + classificazione del prodotto",
+     "f3": "Lista di controllo della conformità completa (Allegato I)",
+     "f4": "Academy + glossario (accesso completo)",
+     "f5": "Log di attività a 30 giorni",
+     "f6": "Supporto della community"
+    }
+   },
+   "professional": {
+    "name": "Professional",
+    "description": "Per fondatori individuali e fabbricanti con 1–3 prodotti.",
+    "features": {
+     "f1": "3 prodotti · 3 utenti",
+     "f2": "Tutto di Free, più:",
+     "f3": "Caricamenti SBOM illimitati + scansione vulnerabilità",
+     "f4": "Dichiarazione di conformità + PDF info utente finale",
+     "f5": "Segnalazione incidenti (24h / 72h / 14g)",
+     "f6": "Log di attività a 90 giorni",
+     "f7": "Supporto email (risposta in 48h)"
+    }
+   },
+   "business": {
+    "name": "Business",
+    "description": "Per fabbricanti con più linee di prodotto e un team di conformità attivo.",
+    "features": {
+     "f1": "15 prodotti · 10 utenti",
+     "f2": "Tutto di Professional, più:",
+     "f3": "Monitoraggio continuo delle vulnerabilità quotidiano",
+     "f4": "Pagina PSIRT pubblica + security.txt",
+     "f5": "Libreria completa di modelli di documenti",
+     "f6": "Accesso API (1000 richieste/giorno)",
+     "f7": "Supporto prioritario (8h) + onboarding guidato",
+     "f8": "SLA al 99,5%"
+    }
+   },
+   "enterprise": {
+    "name": "Enterprise",
+    "description": "Per grandi organizzazioni, settori regolamentati e gruppi padre-figlio.",
+    "features": {
+     "f1": "Prodotti illimitati · utenti illimitati",
+     "f2": "Tutto di Business, più:",
+     "f3": "Avvisi di vulnerabilità in tempo reale",
+     "f4": "SSO / SAML · collegamento organizzazioni padre-figlio",
+     "f5": "API completa · integrazioni personalizzate",
+     "f6": "CSM dedicato + supporto telefonico",
+     "f7": "Onboarding guidato di 2 settimane · MSA personalizzato",
+     "f8": "SLA al 99,9% + residenza dei dati personalizzata"
+    }
+   }
+  },
+  "comparison": {
+   "title": "Confronta i piani",
+   "subtitle": "Ogni funzionalità, per ogni livello.",
+   "comingSoon": "Disponibile a breve",
+   "yes": "Incluso",
+   "no": "Non incluso",
+   "unlimited": "Illimitato",
+   "featuresLabel": "Funzionalità",
+   "categories": {
+    "limits": {
+     "title": "Limiti",
+     "rows": {
+      "products": "Prodotti",
+      "users": "Membri del team",
+      "sbomUploads": "Caricamenti SBOM",
+      "activityLogRetention": "Conservazione log di attività"
+     }
+    },
+    "craCompliance": {
+     "title": "Conformità CRA",
+     "rows": {
+      "scopeAssessment": "Procedura guidata di valutazione dell'ambito CRA",
+      "productClassification": "Classificazione del prodotto (predefinito / importante / critico)",
+      "complianceChecklist": "Lista di controllo della conformità Allegato I",
+      "conformityAssessment": "Valutazione della conformità (Modulo A / B+C / H)",
+      "entityRoleObligations": "Obblighi per ruolo entità (fabbricante / importatore / distributore / AR)",
+      "notifiedBodyTracking": "Tracciamento organismo notificato"
+     }
+    },
+    "sbomVulns": {
+     "title": "SBOM + vulnerabilità",
+     "rows": {
+      "sbomUpload": "Caricamento SBOM (CycloneDX + SPDX)",
+      "componentCatalog": "Catalogo dei componenti",
+      "vulnScanning": "Scansione delle vulnerabilità (OSV.dev)",
+      "kevFlagging": "Segnalazione CISA KEV",
+      "cvssBucketing": "Classificazione per gravità CVSS",
+      "triageMttr": "Flusso di triage + tracciamento MTTR",
+      "activelyExploited": "Flag sfruttata attivamente",
+      "monitoringFrequency": "Frequenza del monitoraggio continuo",
+      "vexCsafExport": "Esportazione VEX / CSAF"
+     }
+    },
+    "documents": {
+     "title": "Documenti + PDF",
+     "rows": {
+      "docPdf": "PDF dichiarazione di conformità",
+      "endUserInfoPdf": "PDF scheda informativa utente finale (Allegato II(3))",
+      "docTemplates": "Libreria di modelli di documenti",
+      "technicalFileBuilder": "Costruttore del fascicolo tecnico",
+      "customBranding": "Branding personalizzato sui PDF"
+     }
+    },
+    "incidents": {
+     "title": "Gestione degli incidenti",
+     "rows": {
+      "incidentReporting": "Segnalazione degli incidenti (Articolo 14)",
+      "deadlineTracking": "Tracciamento scadenze 24h / 72h / 14g",
+      "incidentPdf": "Esportazioni PDF del rapporto sull'incidente",
+      "enisaFilingAssist": "Assistenza per la presentazione a ENISA",
+      "cveLinkage": "Collegamento CVE dagli incidenti"
+     }
+    },
+    "psirt": {
+     "title": "Sicurezza pubblica (PSIRT)",
+     "rows": {
+      "publicPsirtPage": "Pagina PSIRT pubblica (/security/<slug>)",
+      "securityTxt": "security.txt (RFC 9116)",
+      "publicVulnIntake": "Intake pubblico di segnalazioni di vulnerabilità",
+      "psirtTriageWorkflow": "Flusso di triage PSIRT"
+     }
+    },
+    "lifecycle": {
+     "title": "Ciclo di vita del prodotto",
+     "rows": {
+      "releasesTracking": "Tracciamento release + mappatura CVE corretti",
+      "supportPeriodTracking": "Tracciamento del periodo di supporto",
+      "updateChannelTracking": "Tracciamento del canale di aggiornamento"
+     }
+    },
+    "training": {
+     "title": "Formazione + assistenza",
+     "rows": {
+      "academyLessons": "Academy (10 lezioni CRA)",
+      "quizzesCertificates": "Quiz + certificati PDF",
+      "teamProgressTracking": "Tracciamento dei progressi del team",
+      "csvExport": "Esportazione CSV dei progressi del team",
+      "byScreenRecommendations": "Raccomandazioni di lezioni per schermata",
+      "glossary": "Glossario CRA (50+ termini)"
+     }
+    },
+    "dataExports": {
+     "title": "Dati + esportazioni",
+     "rows": {
+      "gdprExport": "Esportazione dati GDPR (Art. 20)",
+      "gdprDelete": "Diritti di cancellazione GDPR (Art. 17)",
+      "activityCsv": "Esportazione CSV del log di attività",
+      "siemLogExport": "Esportazione log SIEM",
+      "dataResidency": "Residenza dei dati",
+      "currencyBilling": "Valuta di fatturazione"
+     }
+    },
+    "integrations": {
+     "title": "Integrazioni",
+     "rows": {
+      "apiAccess": "Accesso API REST",
+      "webhooks": "Webhook",
+      "ssoSaml": "SSO / SAML",
+      "parentChildOrgs": "Collegamento organizzazioni padre-figlio",
+      "marketSurveillanceBundle": "Pacchetto prove per vigilanza del mercato"
+     }
+    },
+    "security": {
+     "title": "Sicurezza",
+     "rows": {
+      "twoFactor": "Autenticazione a due fattori (TOTP)",
+      "roleBasedAccess": "Accesso basato sui ruoli (5 ruoli)",
+      "multiAdminDeletion": "Conferma di eliminazione multi-amministratore",
+      "auditLog": "Log di audit",
+      "rowLevelSecurity": "Sicurezza a livello di riga (isolamento organizzazione)",
+      "rateLimiting": "Limitazione della frequenza degli abusi sugli endpoint pubblici"
+     }
+    },
+    "support": {
+     "title": "Supporto",
+     "rows": {
+      "supportChannel": "Canale di supporto",
+      "onboarding": "Onboarding",
+      "customMsa": "MSA / termini legali personalizzati"
+     }
+    }
+   }
+  },
+  "enterpriseBand": {
+   "title": "Hai bisogno di più del Business?",
+   "subtitle": "Per portafogli estesi, settori regolamentati, SSO, gruppi padre-figlio o uno SLA personalizzato, costruiamo un piano e un prezzo intorno alle tue esigenze.",
+   "bullets": {
+    "b1": "Prodotti e membri del team illimitati",
+    "b2": "SSO / SAML · collegamento organizzazioni padre-figlio · avvisi in tempo reale",
+    "b3": "CSM dedicato, onboarding guidato e MSA personalizzato"
+   },
+   "cta": "Contattaci"
+  }
+ }
+}

@@ -52,6 +52,8 @@ const buttonVariants = cva(
           "bg-dark-cta text-dark-cta-foreground hover:bg-dark-cta/90",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        accent:
+          "bg-accent text-accent-foreground hover:bg-accent/90",
         outline:
           "bg-card text-foreground border-[1.5px] border-border-outline hover:bg-muted",
         ghost:

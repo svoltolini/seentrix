@@ -78,7 +78,7 @@ export function GetStartedGuide({ state, firstName }: Props) {
 
       {/* Step checklist — strictly sequential */}
       <ol className="flex flex-col gap-3">
-        {state.steps.map((step, idx) => {
+        {state.steps.map((step) => {
           const isNext = !step.done && step.id === next?.id;
           // A step is "locked" when it's neither done nor the current step.
           const locked = !step.done && !isNext;
@@ -88,7 +88,6 @@ export function GetStartedGuide({ state, firstName }: Props) {
               step={step}
               href={step.href}
               onClick={onClickFor(step)}
-              index={idx + 1}
               isNext={isNext}
               locked={locked}
               t={t}
@@ -113,7 +112,6 @@ function StepRow({
   step,
   href,
   onClick,
-  index,
   isNext,
   locked,
   t,
@@ -121,7 +119,6 @@ function StepRow({
   step: OnboardingStep;
   href: string;
   onClick?: () => void;
-  index: number;
   isNext: boolean;
   locked: boolean;
   t: ReturnType<typeof useTranslations>;
@@ -132,16 +129,20 @@ function StepRow({
   const content = (
     <div
       className={cn(
+        // Structure mirrors the "Ask Seentrix AI" banner on this same screen:
+        // items-center, gap-4, a size-11 rounded-md icon badge, then a
+        // flex-col gap-0.5 with a text-h6 title + text-p3 body.
         "flex items-center gap-4 rounded-md bg-card px-5 py-4 shadow-card-sm transition-colors",
         isNext && "ring-2 ring-primary/40",
         isNext && "hover:bg-muted/40",
         locked && "opacity-55",
       )}
     >
-      {/* Status badge */}
+      {/* Status badge — same size-11 rounded-md filled-icon chip as the
+          "Ask Seentrix AI" banner. */}
       <span
         className={cn(
-          "flex size-10 shrink-0 items-center justify-center rounded-full",
+          "flex size-11 shrink-0 items-center justify-center rounded-md",
           step.done
             ? "bg-success/10 text-success"
             : isNext
@@ -153,26 +154,24 @@ function StepRow({
         {step.done ? (
           <Icon name="TickCircle" size={20} variant="Bold" />
         ) : locked ? (
-          <Icon name="lock-password-stroke-rounded" size={18} />
+          <Icon name="lock-password-stroke-rounded" size={20} variant="Bold" />
         ) : (
-          <Icon name={step.icon} size={20} />
+          <Icon name={step.icon} size={20} variant="Bold" />
         )}
       </span>
 
-      <div className="flex min-w-0 flex-1 flex-col">
-        <div className="flex items-center gap-2">
-          <span className="text-p4 font-semibold uppercase tracking-wider text-muted-foreground">
-            {index}
-          </span>
-          <p
-            className={cn(
-              "truncate text-h6",
-              step.done || locked ? "text-muted-foreground" : "text-foreground",
-            )}
-          >
-            {title}
-          </p>
-        </div>
+      {/* Title + body block — identical classes to the "Ask Seentrix AI"
+          banner that sits on this same screen: text-h6 title, text-p3 body,
+          gap-0.5. */}
+      <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+        <p
+          className={cn(
+            "text-h6",
+            step.done || locked ? "text-muted-foreground" : "text-foreground",
+          )}
+        >
+          {title}
+        </p>
         <p className="text-p3 text-muted-foreground">{description}</p>
       </div>
 

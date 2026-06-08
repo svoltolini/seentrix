@@ -1,0 +1,21 @@
+{
+  "upgrade": {
+    "upgradeCta": "Mettre à niveau le forfait",
+    "sbom": {
+      "title": "La gestion des SBOM nécessite un forfait payant",
+      "description": "Téléversez et gérez des nomenclatures logicielles, analysez les vulnérabilités et suivez les risques liés aux composants avec un forfait Professional ou supérieur."
+    },
+    "pdf": {
+      "title": "L'export PDF nécessite un forfait payant",
+      "description": "Générez des documents PDF professionnels et conformes à la réglementation avec un forfait Professional ou supérieur."
+    },
+    "documents": {
+      "title": "Les modèles de documents nécessitent un forfait payant",
+      "description": "Accédez aux modèles de documents de conformité CRA et générez des PDF avec un forfait Professional ou supérieur."
+    },
+    "monitoring": {
+      "title": "La surveillance continue nécessite un forfait Business",
+      "description": "Bénéficiez d'une surveillance automatisée des vulnérabilités et d'alertes pour vos produits avec un forfait Business ou supérieur."
+    }
+  }
+}

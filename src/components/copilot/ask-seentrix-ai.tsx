@@ -1,6 +1,7 @@
 "use client";
 
 import { Icon } from "@/components/icon";
+import { IconBadge } from "@/components/ui/icon-badge";
 import { cn } from "@/lib/utils";
 import { useCopilot } from "./copilot-context";
 
@@ -42,9 +43,12 @@ export function AskSeentrixAI({
         )}
       >
         {/* Icon badge */}
-        <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary transition group-hover:bg-primary/15">
-          <Icon name="ai-magic-stroke-rounded" size={20} />
-        </span>
+        <IconBadge
+          name="ai-magic-stroke-rounded"
+          tone="primary"
+          size="lg"
+          className="transition group-hover:bg-primary/15"
+        />
         {/* Copy */}
         <span className="flex min-w-0 flex-1 flex-col gap-0.5">
           <span className="text-l6-plus uppercase tracking-wider text-primary">

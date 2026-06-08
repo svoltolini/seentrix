@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ProgressPill } from "@/components/ui/progress-pill";
 import { Icon } from "@/components/icon";
+import { IconBadge } from "@/components/ui/icon-badge";
 import { cn } from "@/lib/utils";
 import type { CraCategory, ConformityRoute } from "@/lib/constants/cra-classification";
 import { CATEGORY_COLORS } from "../../[productId]/constants";
@@ -53,8 +54,8 @@ export function AssessmentResult({
       {/* Hero classification card */}
       <Card>
         <CardContent className="flex flex-col items-center gap-4 py-8 text-center">
-          <div className={cn("flex size-14 items-center justify-center rounded-full", colors?.bg)}>
-            <Icon name="shield-check" size={28} className={colors?.icon} />
+          <div className={cn("flex size-14 items-center justify-center rounded-md", colors?.bg)}>
+            <Icon name="shield-check" size={28} variant="Bold" className={colors?.icon} />
           </div>
           <div className="flex flex-col gap-1">
             <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
@@ -75,9 +76,7 @@ export function AssessmentResult({
         <CardContent>
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-0">
             <div className="flex flex-1 items-center gap-3">
-              <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary/10">
-                <Icon name="route-01" size={18} className="text-primary" />
-              </div>
+              <IconBadge name="route-01" tone="primary" size="md" />
               <div>
                 <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
                   {t("result.conformityRoute")}
@@ -92,9 +91,7 @@ export function AssessmentResult({
             <div className="h-px w-full bg-border sm:hidden" />
 
             <div className="flex flex-1 items-center gap-3">
-              <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-muted">
-                <Icon name="building-06" size={18} className="text-muted-foreground" />
-              </div>
+              <IconBadge name="building-06" tone="muted" size="md" />
               <div>
                 <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
                   {t("result.notifiedBody")}

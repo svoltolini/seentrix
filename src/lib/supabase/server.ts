@@ -1,5 +1,25 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import { cache } from "react";
+
+/**
+ * Request-scoped, de-duplicated current user.
+ *
+ * `supabase.auth.getUser()` makes a network round-trip to the Supabase Auth
+ * server to validate the token. Several server components in a single render
+ * (layout, page, nested widgets) each used to call it independently, paying
+ * that round-trip multiple times per navigation. Wrapping it in React
+ * `cache()` collapses all calls within one render pass to a single network
+ * call, which directly speeds up every page load. Cache is per-request, so
+ * there's no cross-request staleness risk.
+ */
+export const getAuthUser = cache(async () => {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  return user;
+});
 
 export async function createClient() {
   const cookieStore = await cookies();

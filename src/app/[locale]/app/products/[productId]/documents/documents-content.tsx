@@ -425,7 +425,7 @@ export function DocumentsContent({
                       config.tone.fg,
                     )}
                   >
-                    <Icon name={config.iconName} size={18} />
+                    <Icon name={config.iconName} size={18} variant="Bold" />
                   </span>
                   <div className="min-w-0 flex-1">
                     <h3 className="text-h6 text-foreground transition-colors group-hover/doc-card:text-primary">

@@ -280,6 +280,290 @@ export const lesson: Lesson = {
         },
       ],
     },
+    fr: {
+      title: "Divulgation coordonnée des vulnérabilités et PSIRT",
+      summary:
+        "Gérer l'intake public, définir les attentes avec les chercheurs et publier des avis — la perspective de l'opérateur face à l'annexe I partie II du CRA.",
+      sections: [
+        {
+          heading: "Pourquoi nous avons besoin d'une politique CVD",
+          body: (
+            <p>
+              <Term id="cvd">Coordinated Vulnerability Disclosure</Term> est
+              un engagement public qui signifie : « si vous découvrez un
+              problème de sécurité, voici comment le signaler, voici ce que
+              nous ferons, voici la protection juridique dont vous
+              bénéficiez. » Le CRA l'impose en vertu de l'annexe I partie
+              II(1). Au-delà de la conformité, une politique CVD claire
+              influe également sur la qualité des rapports que nous
+              recevons — une politique vague ou absente dissuade tout
+              chercheur responsable de nous contacter.
+            </p>
+          ),
+        },
+        {
+          heading: "Ce que contient une bonne politique",
+          body: (
+            <>
+              <ul className="space-y-1.5 pl-5 [list-style:disc]">
+                <li>
+                  <strong>Périmètre.</strong> Les produits / versions /
+                  domaines couverts par la politique.
+                </li>
+                <li>
+                  <strong>Canal d'intake.</strong> Où soumettre (pour nous,
+                  la page de sécurité publique / URL PSIRT), adresse e-mail
+                  secondaire.
+                </li>
+                <li>
+                  <strong>SLA de réponse.</strong> Premier accusé de
+                  réception, verdict de triage, délai de correction.
+                  Valeurs habituelles dans le secteur : 5 jours ouvrés
+                  pour accuser réception, 30 jours pour le verdict, 90
+                  jours pour la correction.
+                </li>
+                <li>
+                  <strong>Clause de protection juridique.</strong> Nous
+                  nous engageons à ne pas engager de poursuites civiles ou
+                  pénales contre les chercheurs qui respectent la politique
+                  de bonne foi.
+                </li>
+                <li>
+                  <strong>Crédit &amp; divulgation coordonnée.</strong>{" "}
+                  Nous mentionnerons les chercheurs dans l'avis et nous
+                  conviendrons ensemble du calendrier de divulgation
+                  publique.
+                </li>
+              </ul>
+            </>
+          ),
+        },
+        {
+          heading: "Faire fonctionner le PSIRT",
+          body: (
+            <p>
+              Le <Term id="psirt">PSIRT</Term> est l'équipe qui met en
+              œuvre la politique : traite l'intake, effectue le triage,
+              coordonne avec l'équipe d'ingénierie, publie les avis,
+              crédite les chercheurs. Dans les petites entreprises, le
+              PSIRT est souvent une seule personne portant un second
+              rôle — c'est acceptable, mais la <em>fonction</em>{" "}
+              doit exister et répondre de manière prévisible. L'onglet
+              Rapports de Seentrix est la surface opérationnelle : file
+              d'attente d'intake, flux de triage, brouillon d'avis,
+              publication sur la page de sécurité publique.
+            </p>
+          ),
+        },
+      ],
+      quiz: [
+        {
+          question:
+            "Que signifie concrètement la protection juridique CVD ?",
+          options: [
+            "Le chercheur reçoit une prime en espèces",
+            "Nous nous engageons à ne pas engager de poursuites civiles ou pénales contre les chercheurs qui respectent la politique de bonne foi",
+            "Nous gardons le rapport secret indéfiniment",
+            "Le chercheur devient un employé",
+          ],
+          correctIndex: 1,
+          explanation:
+            "La protection juridique est un engagement légal : respectez notre politique, signalez de bonne foi, et nous ne vous poursuivrons pas en vertu du CFAA (États-Unis), du UK Computer Misuse Act, du §202c StGB allemand, etc. Sans cela, les chercheurs sérieux ne signaleront pas.",
+        },
+        {
+          question: "Où dans Seentrix publions-nous notre politique CVD ?",
+          options: [
+            "Paramètres → Organisation",
+            "Rapports → Page de sécurité publique",
+            "Produits → Page de détail de chaque produit",
+            "Elle est auto-générée à partir du nom de notre entreprise",
+          ],
+          correctIndex: 1,
+          explanation:
+            "L'onglet Rapports (rapports de vulnérabilité) héberge la page de sécurité publique. Le texte de la politique se trouve dans les paramètres de cet onglet et apparaît verbatim sur /security/<slug>.",
+        },
+        {
+          question:
+            "Un chercheur signale une vulnérabilité critique et menace de la divulguer publiquement dans 48 heures si nous ne répondons pas. Quelle est la bonne démarche ?",
+          options: [
+            "L'ignorer",
+            "Accuser réception immédiatement, effectuer le triage à la gravité correspondant aux preuves, et négocier un calendrier de divulgation coordonnée réaliste",
+            "Déposer un rapport d'incident au titre de l'article 14",
+            "Bloquer le signalant",
+          ],
+          correctIndex: 1,
+          explanation:
+            "Accuser réception dans les délais de notre SLA, effectuer le triage rapidement et négocier. Les menaces sont généralement une escalade face au silence ; un accusé de réception rapide désamorce souvent la situation. L'article 14 concerne les vulnérabilités activement exploitées, pas chaque rapport de chercheur.",
+        },
+        {
+          question:
+            "Un signalant soumet via notre formulaire public avec une adresse e-mail mais signe le rapport « anonyme ». Comment gérer le crédit ?",
+          options: [
+            "Toujours publier son adresse e-mail",
+            "Demander au signalant quel nom (le cas échéant) il souhaite mentionner avant de publier l'avis",
+            "Le créditer automatiquement par son adresse e-mail",
+            "Ne créditer personne",
+          ],
+          correctIndex: 1,
+          explanation:
+            "Toujours demander. Certains chercheurs veulent être crédités avec leur vrai nom, d'autres avec un pseudonyme, d'autres pas du tout. Publier une adresse e-mail associée à un rapport de sécurité constitue une fuite d'informations de notre propre fait.",
+        },
+        {
+          question:
+            "Notre PSIRT a reçu 30 rapports en un mois ; 20 étaient clairement des faux positifs / hors périmètre. Dans quel statut Seentrix doivent-ils se terminer ?",
+          options: [
+            "Accepté",
+            "Résolu",
+            "Doublon ou Spam, selon le cas",
+            "Triage (ne jamais les fermer)",
+          ],
+          correctIndex: 2,
+          explanation:
+            "Clôturer les rapports légitimes hors périmètre ou sans problème réel en tant que Doublon / Spam. Une brève note maintient la piste d'audit sans encombrer la file active.",
+        },
+      ],
+    },
+    it: {
+      title: "Divulgazione coordinata delle vulnerabilità e PSIRT",
+      summary:
+        "Gestire l'intake pubblico, definire le aspettative con i ricercatori e pubblicare gli avvisi — la prospettiva dell'operatore rispetto all'allegato I parte II del CRA.",
+      sections: [
+        {
+          heading: "Perché abbiamo bisogno di una politica CVD",
+          body: (
+            <p>
+              <Term id="cvd">Coordinated Vulnerability Disclosure</Term> è
+              un impegno pubblico che significa: «se trovate un problema di
+              sicurezza, ecco come segnalarlo, ecco cosa faremo, ecco la
+              protezione legale di cui godrete.» Il CRA lo impone ai sensi
+              dell'allegato I parte II(1). Al di là della conformità, una
+              politica CVD chiara influisce anche sulla qualità delle
+              segnalazioni che riceviamo — politiche vaghe o assenti
+              dissuadono qualsiasi ricercatore responsabile dal contattarci.
+            </p>
+          ),
+        },
+        {
+          heading: "Cosa contiene una buona politica",
+          body: (
+            <>
+              <ul className="space-y-1.5 pl-5 [list-style:disc]">
+                <li>
+                  <strong>Perimetro.</strong> Quali prodotti / versioni /
+                  domini sono coperti dalla politica.
+                </li>
+                <li>
+                  <strong>Canale di intake.</strong> Dove inviare la
+                  segnalazione (per noi, la pagina di sicurezza pubblica /
+                  URL PSIRT), e-mail secondaria.
+                </li>
+                <li>
+                  <strong>SLA di risposta.</strong> Prima conferma di
+                  ricezione, verdetto di triage, tempistica di correzione.
+                  Valori tipici del settore: 5 giorni lavorativi per la
+                  conferma, 30 giorni per il verdetto, 90 giorni per la
+                  correzione.
+                </li>
+                <li>
+                  <strong>Clausola di protezione legale.</strong> Ci
+                  impegniamo a non intraprendere azioni civili o penali
+                  contro i ricercatori che seguono la politica in buona
+                  fede.
+                </li>
+                <li>
+                  <strong>Credito &amp; divulgazione coordinata.</strong>{" "}
+                  Menzioneremo i ricercatori nell'avviso e concorderemo
+                  insieme i tempi della divulgazione pubblica.
+                </li>
+              </ul>
+            </>
+          ),
+        },
+        {
+          heading: "Gestire il PSIRT",
+          body: (
+            <p>
+              Il <Term id="psirt">PSIRT</Term> è il team che esegue la
+              politica: gestisce l'intake, effettua il triage, si coordina
+              con il team di ingegneria, pubblica gli avvisi, accredita i
+              ricercatori. Nelle piccole aziende il PSIRT è spesso una
+              sola persona con un secondo ruolo — va bene, ma la{" "}
+              <em>funzione</em>{" "}
+              deve esistere e rispondere in modo prevedibile. La scheda
+              Segnalazioni di Seentrix è la superficie operativa: coda di
+              intake, flusso di triage, bozza di avviso, pubblicazione
+              sulla pagina di sicurezza pubblica.
+            </p>
+          ),
+        },
+      ],
+      quiz: [
+        {
+          question:
+            "Cosa significa in pratica la protezione legale CVD?",
+          options: [
+            "Il ricercatore riceve un premio in denaro",
+            "Ci impegniamo a non intraprendere azioni civili o penali contro i ricercatori che seguono la politica in buona fede",
+            "Manteniamo il rapporto segreto per sempre",
+            "Il ricercatore diventa un dipendente",
+          ],
+          correctIndex: 1,
+          explanation:
+            "La protezione legale è un impegno giuridico: seguite la nostra politica, segnalate in buona fede, e non vi perseguiremo ai sensi del CFAA (USA), UK Computer Misuse Act, §202c StGB tedesco, ecc. Senza di essa i ricercatori seri non segnaleranno.",
+        },
+        {
+          question: "Dove in Seentrix pubblichiamo la nostra politica CVD?",
+          options: [
+            "Impostazioni → Organizzazione",
+            "Segnalazioni → Pagina di sicurezza pubblica",
+            "Prodotti → Pagina di dettaglio di ciascun prodotto",
+            "Viene generata automaticamente dal nome della nostra azienda",
+          ],
+          correctIndex: 1,
+          explanation:
+            "La scheda Segnalazioni (segnalazioni di vulnerabilità) ospita la pagina di sicurezza pubblica. Il testo della politica si trova nelle impostazioni di quella scheda e appare verbatim su /security/<slug>.",
+        },
+        {
+          question:
+            "Un ricercatore segnala una vulnerabilità critica e minaccia di divulgarla pubblicamente entro 48 ore se non riceviamo risposta. Qual è la mossa giusta?",
+          options: [
+            "Ignorarlo",
+            "Confermare immediatamente la ricezione, effettuare il triage a una gravità commisurata alle sue prove e negoziare una tempistica di divulgazione coordinata realistica",
+            "Presentare un rapporto di incidente ai sensi dell'articolo 14",
+            "Bloccare il segnalante",
+          ],
+          correctIndex: 1,
+          explanation:
+            "Confermare la ricezione entro i termini del nostro SLA, effettuare il triage rapidamente e negoziare. Le minacce sono solitamente un'escalation in risposta al silenzio; una conferma rapida spesso de-escalation. L'articolo 14 riguarda le vulnerabilità sfruttate attivamente, non ogni segnalazione di ricercatore.",
+        },
+        {
+          question:
+            "Un segnalante invia tramite il nostro modulo pubblico con un indirizzo e-mail ma firma il rapporto come «anonimo». Come gestiamo il credito?",
+          options: [
+            "Pubblicare sempre il suo indirizzo e-mail",
+            "Chiedere al segnalante quale nome (se presente) desidera sia menzionato prima di pubblicare l'avviso",
+            "Accreditarlo automaticamente tramite il suo indirizzo e-mail",
+            "Non accreditare nessuno",
+          ],
+          correctIndex: 1,
+          explanation:
+            "Chiedere sempre. Alcuni ricercatori vogliono essere accreditati con il vero nome, altri con uno pseudonimo, altri con nessun credito. Pubblicare un indirizzo e-mail abbinato a un rapporto di sicurezza è una perdita di informazioni di nostra stessa creazione.",
+        },
+        {
+          question:
+            "Il nostro PSIRT ha ricevuto 30 segnalazioni in un mese; 20 erano chiaramente falsi positivi / fuori perimetro. In quale stato Seentrix devono finire?",
+          options: [
+            "Accettato",
+            "Risolto",
+            "Duplicato o Spam, a seconda del caso",
+            "Triage (non chiuderli mai)",
+          ],
+          correctIndex: 2,
+          explanation:
+            "Chiudere le segnalazioni legittime fuori perimetro o che non costituiscono un problema reale come Duplicato / Spam. Una breve nota mantiene la pista di audit senza intasare la coda attiva.",
+        },
+      ],
+    },
   },
 };
 

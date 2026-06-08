@@ -19,11 +19,17 @@ import {
 
 type BillingInterval = "monthly" | "annual";
 
+// Only three self-serve tiers are shown as cards now. Enterprise is no longer
+// a fourth card/column — organisations with larger or bespoke requirements are
+// routed to the "Need more than Business?" contact band below, where pricing is
+// scoped to their needs. Giving each tier its own third of the row (instead of
+// a quarter) leaves real room for feature copy and a more legible comparison
+// table. `enterprise` still exists in OrgPlan for internal gating; it is simply
+// not presented as a buyable card.
 const TIERS: { plan: OrgPlan; highlighted?: boolean }[] = [
   { plan: "free" },
   { plan: "professional", highlighted: true },
   { plan: "business" },
-  { plan: "enterprise" },
 ];
 
 export function PricingContent() {
@@ -99,8 +105,9 @@ export function PricingContent() {
         </button>
       </div>
 
-      {/* Pricing cards */}
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {/* Pricing cards — three tiers across three columns on desktop so each
+          card has room to breathe (was four narrow columns). */}
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {TIERS.map((tier) => {
           const isPro = tier.highlighted;
           const isFree = tier.plan === "free";
@@ -250,9 +257,70 @@ export function PricingContent() {
         })}
       </div>
 
+      {/* Enterprise / custom-requirements contact band — replaces the old
+          fourth "Enterprise" card. Organisations that have outgrown Business
+          (large portfolios, SSO, parent-child groups, custom SLA) are priced
+          per requirement, so we route them to a conversation rather than a
+          fixed public number. */}
+      <EnterpriseBand />
+
       {/* Comparison matrix */}
       <ComparisonTable />
     </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Enterprise band — full-width "Need more than Business?" CTA that replaces
+// the old fourth pricing card. Routes custom-requirement buyers to /contact,
+// where pricing is scoped to their portfolio/SSO/SLA needs rather than fixed
+// to a public number.
+// ---------------------------------------------------------------------------
+
+function EnterpriseBand() {
+  const t = useTranslations("pricing.enterpriseBand");
+  const bullets = ["b1", "b2", "b3"] as const;
+
+  return (
+    <section className="mt-12">
+      <div className="flex flex-col gap-6 rounded-md bg-dark-cta p-8 shadow-card-md sm:p-10 lg:flex-row lg:items-center lg:justify-between">
+        <div className="max-w-2xl">
+          <h2 className="text-h3 text-primary-foreground">{t("title")}</h2>
+          <p className="mt-2 text-p2-r text-primary-foreground/80">
+            {t("subtitle")}
+          </p>
+          <ul className="mt-5 flex flex-col gap-2.5">
+            {bullets.map((b) => (
+              <li
+                key={b}
+                className="flex items-start gap-2.5 text-p3 text-primary-foreground/90"
+              >
+                <Icon
+                  name="TickCircle"
+                  size={16}
+                  variant="Bold"
+                  aria-hidden="true"
+                  className="mt-0.5 shrink-0 text-primary-foreground"
+                />
+                {t(`bullets.${b}`)}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="shrink-0">
+          <Link href="/contact" className="block">
+            <Button
+              variant="secondary"
+              size="lg"
+              className="w-full lg:w-auto"
+            >
+              {t("cta")}
+              <Icon name="ArrowRight2" size={16} aria-hidden="true" />
+            </Button>
+          </Link>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -266,7 +334,10 @@ function ComparisonTable() {
   const t = useTranslations("pricing");
   const tc = useTranslations("pricing.comparison");
 
-  const plans: OrgPlan[] = ["free", "professional", "business", "enterprise"];
+  // Three columns only — Enterprise is handled by the contact band, so the
+  // matrix compares the self-serve tiers a buyer can actually pick. Each
+  // column gets ~33% more width than the old four-column layout.
+  const plans: OrgPlan[] = ["free", "professional", "business"];
 
   return (
     <section id="compare" className="mt-24 scroll-mt-20">
@@ -283,7 +354,7 @@ function ComparisonTable() {
         {/* Sticky header with plan-name TIER CHIPS — visually mirrors the
             pricing cards above. Highlighted tier (Professional) gets a solid
             primary chip; the rest get an outlined chip on the white card. */}
-        <div className="sticky top-0 z-10 grid grid-cols-[minmax(0,2fr)_repeat(4,minmax(0,1fr))] border-b border-border bg-card/95 px-4 py-4 backdrop-blur-md sm:px-6">
+        <div className="sticky top-0 z-10 grid grid-cols-[minmax(0,2fr)_repeat(3,minmax(0,1fr))] border-b border-border bg-card/95 px-4 py-4 backdrop-blur-md sm:px-6">
           <div className="flex items-center text-p4-r text-muted-foreground">
             {tc("featuresLabel") ?? "Feature"}
           </div>
@@ -309,8 +380,8 @@ function ComparisonTable() {
         {/* Category blocks */}
         {FEATURE_CATEGORIES.map((category) => (
           <div key={category.key}>
-            <div className="grid grid-cols-[minmax(0,2fr)_repeat(4,minmax(0,1fr))] border-y border-border bg-muted px-4 py-3 sm:px-6">
-              <div className="col-span-5 text-l6-plus uppercase tracking-wider text-foreground">
+            <div className="grid grid-cols-[minmax(0,2fr)_repeat(3,minmax(0,1fr))] border-y border-border bg-muted px-4 py-3 sm:px-6">
+              <div className="col-span-4 text-l6-plus uppercase tracking-wider text-foreground">
                 {tc(`categories.${category.key}.title`)}
               </div>
             </div>
@@ -345,7 +416,7 @@ function ComparisonRow({
   return (
     <div
       className={cn(
-        "grid grid-cols-[minmax(0,2fr)_repeat(4,minmax(0,1fr))] items-center border-b border-border px-4 py-3 text-p3 sm:px-6",
+        "grid grid-cols-[minmax(0,2fr)_repeat(3,minmax(0,1fr))] items-center border-b border-border px-4 py-3 text-p3 sm:px-6",
         striped && "bg-muted",
       )}
     >

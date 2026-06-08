@@ -1,15 +1,23 @@
 import type { DocumentType } from "@/app/[locale]/app/products/[productId]/documents/actions";
 
 /**
- * The product is English-only. This module used to switch labels by
- * `Locale`; we keep the export as a thin facade so existing call-sites
- * (`getPdfMessages(locale, type)`) compile without per-route rewrites.
+ * Localised labels for generated CRA compliance PDFs (EN/DE/FR/IT).
+ *
+ * The CRA effectively requires customer-facing compliance outputs (the EU
+ * Declaration of Conformity, information & instructions to the user) to be in
+ * the language of the market where the product is sold. We therefore generate
+ * these documents in the user's chosen language. Field VALUES filled by the
+ * user are passed through verbatim; only the static labels live here.
+ *
+ * CRA terminology follows the project glossary. Brand/technical tokens
+ * (Seentrix, SBOM, ENISA, CE, CVSS, …) and CRA article/annex numbers stay as-is.
  */
-export type Locale = "en";
+
+export type Locale = "en" | "de" | "fr" | "it";
 
 type PdfMessages = Record<string, string>;
 
-const messages: Record<DocumentType, PdfMessages> = {
+const en: Record<DocumentType, PdfMessages> = {
   declaration_of_conformity: {
     title: "EU Declaration of Conformity",
     subtitle: "In accordance with Cyber Resilience Act — Annex V",
@@ -105,9 +113,304 @@ const messages: Record<DocumentType, PdfMessages> = {
   },
 };
 
+const de: Record<DocumentType, PdfMessages> = {
+  declaration_of_conformity: {
+    title: "EU-Konformitätserklärung",
+    subtitle: "Gemäß Cyber Resilience Act — Anhang V",
+    section1: "1. Hersteller",
+    manufacturerName: "Name",
+    manufacturerAddress: "Anschrift",
+    section2: "2. Produkt mit digitalen Elementen",
+    productName: "Produktname",
+    productIdentification: "Produktidentifikation",
+    section3: "3. Konformitätserklärung",
+    conformityStatement: "Erklärung",
+    section4: "4. Harmonisierte Normen und Spezifikationen",
+    standardsApplied: "Angewandte Normen",
+    section5: "5. Notifizierte Stelle (falls zutreffend)",
+    notifiedBodyName: "Name der notifizierten Stelle",
+    notifiedBodyNumber: "Nummer der notifizierten Stelle",
+    section6: "6. Unterzeichnet",
+    place: "Ort",
+    date: "Datum",
+    signatoryName: "Name",
+    signatoryPosition: "Funktion",
+    signatureLine: "Unterschrift: ____________________________",
+  },
+  vulnerability_disclosure_policy: {
+    title: "Richtlinie zur Offenlegung von Schwachstellen",
+    subtitle: "Gemäß Cyber Resilience Act — Artikel 11",
+    section1: "1. Geltungsbereich der Richtlinie",
+    policyScope: "Geltungsbereich",
+    section2: "2. Meldekanäle",
+    reportingChannels: "Kanäle",
+    section3: "3. Reaktionszeitplan",
+    responseTimeline: "Zeitplan",
+    section4: "4. Offenlegungszeitplan",
+    disclosureTimeline: "Zeitplan",
+    section5: "5. Safe-Harbor-Erklärung",
+    safeHarborStatement: "Erklärung",
+  },
+  incident_report: {
+    title: "Bericht über Sicherheitsvorfall",
+    subtitle: "Gemäß Cyber Resilience Act — Artikel 14",
+    phaseA: "Phase A — Frühwarnung (innerhalb von 24 Stunden)",
+    phaseACallout:
+      "Muss innerhalb von 24 Stunden nach Kenntniserlangung des Vorfalls an ENISA übermittelt werden.",
+    incidentTitle: "Titel des Vorfalls",
+    incidentDate: "Datum des Vorfalls",
+    incidentDescription: "Erstbeschreibung",
+    phaseB: "Phase B — Vollständige Meldung (innerhalb von 72 Stunden)",
+    phaseBCallout:
+      "Muss innerhalb von 72 Stunden nach Kenntniserlangung des Vorfalls an ENISA übermittelt werden.",
+    fullDescription: "Detaillierte Beschreibung",
+    impactAssessment: "Auswirkungsbewertung",
+    phaseC: "Phase C — Abschlussbericht (innerhalb von 14 Tagen)",
+    phaseCCallout:
+      "Muss innerhalb von 14 Tagen nach Kenntniserlangung des Vorfalls an ENISA übermittelt werden.",
+    mitigationActions: "Abhilfemaßnahmen",
+    notificationDate: "Meldedatum an ENISA",
+  },
+  risk_assessment: {
+    title: "Cybersicherheits-Risikobewertung",
+    subtitle: "Risikobewertungsmatrix — CRA-Compliance",
+    section1: "1. Überblick über die Bewertung",
+    riskTitle: "Titel der Bewertung",
+    section2: "2. Bedrohungsbeschreibung",
+    threatDescription: "Bedrohungen",
+    section3: "3. Identifizierte Schwachstellen",
+    vulnerabilitiesIdentified: "Schwachstellen",
+    section4: "4. Risikoniveau",
+    riskLevel: "Gesamtrisikoniveau",
+    section5: "5. Maßnahmenplan",
+    mitigationPlan: "Abhilfemaßnahmen",
+    section6: "6. Restrisiko",
+    residualRisk: "Verbleibendes Risiko",
+    riskLevelLow: "Niedrig",
+    riskLevelMedium: "Mittel",
+    riskLevelHigh: "Hoch",
+    riskLevelCritical: "Kritisch",
+  },
+  technical_documentation: {
+    title: "Technische Dokumentation",
+    subtitle: "Gemäß Cyber Resilience Act — Anhang VII",
+    section1: "1. Geltungsbereich",
+    techDocScope: "Geltungsbereich",
+    section2: "2. Entwurfsbeschreibung",
+    designDescription: "Entwurf",
+    section3: "3. Entwicklungsprozess",
+    developmentProcess: "Prozess",
+    section4: "4. Prüfung und Verifizierung",
+    testingResults: "Ergebnisse",
+    section5: "5. Aktualisierungsmechanismus",
+    updateMechanism: "Mechanismus",
+    section6: "6. Unterstützungszeitraum",
+    supportPeriod: "Zeitraum",
+  },
+};
+
+const fr: Record<DocumentType, PdfMessages> = {
+  declaration_of_conformity: {
+    title: "Déclaration UE de conformité",
+    subtitle: "Conformément au Cyber Resilience Act — Annexe V",
+    section1: "1. Fabricant",
+    manufacturerName: "Nom",
+    manufacturerAddress: "Adresse",
+    section2: "2. Produit comportant des éléments numériques",
+    productName: "Nom du produit",
+    productIdentification: "Identification du produit",
+    section3: "3. Déclaration de conformité",
+    conformityStatement: "Déclaration",
+    section4: "4. Normes harmonisées et spécifications",
+    standardsApplied: "Normes appliquées",
+    section5: "5. Organisme notifié (le cas échéant)",
+    notifiedBodyName: "Nom de l’organisme notifié",
+    notifiedBodyNumber: "Numéro de l’organisme notifié",
+    section6: "6. Signature",
+    place: "Lieu",
+    date: "Date",
+    signatoryName: "Nom",
+    signatoryPosition: "Fonction",
+    signatureLine: "Signature : ____________________________",
+  },
+  vulnerability_disclosure_policy: {
+    title: "Politique de divulgation des vulnérabilités",
+    subtitle: "Conformément au Cyber Resilience Act — Article 11",
+    section1: "1. Champ d’application de la politique",
+    policyScope: "Champ d’application",
+    section2: "2. Canaux de signalement",
+    reportingChannels: "Canaux",
+    section3: "3. Délais de réponse",
+    responseTimeline: "Délais",
+    section4: "4. Délais de divulgation",
+    disclosureTimeline: "Délais",
+    section5: "5. Déclaration de protection (safe harbor)",
+    safeHarborStatement: "Déclaration",
+  },
+  incident_report: {
+    title: "Rapport d’incident de sécurité",
+    subtitle: "Conformément au Cyber Resilience Act — Article 14",
+    phaseA: "Phase A — Alerte précoce (sous 24 heures)",
+    phaseACallout:
+      "Doit être soumis à l’ENISA dans les 24 heures suivant la prise de connaissance de l’incident.",
+    incidentTitle: "Titre de l’incident",
+    incidentDate: "Date de l’incident",
+    incidentDescription: "Description initiale",
+    phaseB: "Phase B — Notification complète (sous 72 heures)",
+    phaseBCallout:
+      "Doit être soumis à l’ENISA dans les 72 heures suivant la prise de connaissance de l’incident.",
+    fullDescription: "Description détaillée",
+    impactAssessment: "Évaluation de l’impact",
+    phaseC: "Phase C — Rapport final (sous 14 jours)",
+    phaseCCallout:
+      "Doit être soumis à l’ENISA dans les 14 jours suivant la prise de connaissance de l’incident.",
+    mitigationActions: "Mesures d’atténuation",
+    notificationDate: "Date de notification à l’ENISA",
+  },
+  risk_assessment: {
+    title: "Évaluation des risques de cybersécurité",
+    subtitle: "Matrice d’évaluation des risques — Conformité CRA",
+    section1: "1. Vue d’ensemble de l’évaluation",
+    riskTitle: "Titre de l’évaluation",
+    section2: "2. Description des menaces",
+    threatDescription: "Menaces",
+    section3: "3. Vulnérabilités identifiées",
+    vulnerabilitiesIdentified: "Vulnérabilités",
+    section4: "4. Niveau de risque",
+    riskLevel: "Niveau de risque global",
+    section5: "5. Plan d’atténuation",
+    mitigationPlan: "Mesures d’atténuation",
+    section6: "6. Risque résiduel",
+    residualRisk: "Risque restant",
+    riskLevelLow: "Faible",
+    riskLevelMedium: "Moyen",
+    riskLevelHigh: "Élevé",
+    riskLevelCritical: "Critique",
+  },
+  technical_documentation: {
+    title: "Documentation technique",
+    subtitle: "Conformément au Cyber Resilience Act — Annexe VII",
+    section1: "1. Champ d’application",
+    techDocScope: "Champ d’application",
+    section2: "2. Description de la conception",
+    designDescription: "Conception",
+    section3: "3. Processus de développement",
+    developmentProcess: "Processus",
+    section4: "4. Tests et vérification",
+    testingResults: "Résultats",
+    section5: "5. Mécanisme de mise à jour",
+    updateMechanism: "Mécanisme",
+    section6: "6. Période de support",
+    supportPeriod: "Période",
+  },
+};
+
+const it: Record<DocumentType, PdfMessages> = {
+  declaration_of_conformity: {
+    title: "Dichiarazione di conformità UE",
+    subtitle: "Ai sensi del Cyber Resilience Act — Allegato V",
+    section1: "1. Fabbricante",
+    manufacturerName: "Nome",
+    manufacturerAddress: "Indirizzo",
+    section2: "2. Prodotto con elementi digitali",
+    productName: "Nome del prodotto",
+    productIdentification: "Identificazione del prodotto",
+    section3: "3. Dichiarazione di conformità",
+    conformityStatement: "Dichiarazione",
+    section4: "4. Norme armonizzate e specifiche",
+    standardsApplied: "Norme applicate",
+    section5: "5. Organismo notificato (ove applicabile)",
+    notifiedBodyName: "Nome dell’organismo notificato",
+    notifiedBodyNumber: "Numero dell’organismo notificato",
+    section6: "6. Firma",
+    place: "Luogo",
+    date: "Data",
+    signatoryName: "Nome",
+    signatoryPosition: "Funzione",
+    signatureLine: "Firma: ____________________________",
+  },
+  vulnerability_disclosure_policy: {
+    title: "Politica di divulgazione delle vulnerabilità",
+    subtitle: "Ai sensi del Cyber Resilience Act — Articolo 11",
+    section1: "1. Ambito della politica",
+    policyScope: "Ambito",
+    section2: "2. Canali di segnalazione",
+    reportingChannels: "Canali",
+    section3: "3. Tempi di risposta",
+    responseTimeline: "Tempi",
+    section4: "4. Tempi di divulgazione",
+    disclosureTimeline: "Tempi",
+    section5: "5. Dichiarazione di safe harbor",
+    safeHarborStatement: "Dichiarazione",
+  },
+  incident_report: {
+    title: "Rapporto su incidente di sicurezza",
+    subtitle: "Ai sensi del Cyber Resilience Act — Articolo 14",
+    phaseA: "Fase A — Preallarme (entro 24 ore)",
+    phaseACallout:
+      "Deve essere trasmesso all’ENISA entro 24 ore dalla conoscenza dell’incidente.",
+    incidentTitle: "Titolo dell’incidente",
+    incidentDate: "Data dell’incidente",
+    incidentDescription: "Descrizione iniziale",
+    phaseB: "Fase B — Notifica completa (entro 72 ore)",
+    phaseBCallout:
+      "Deve essere trasmesso all’ENISA entro 72 ore dalla conoscenza dell’incidente.",
+    fullDescription: "Descrizione dettagliata",
+    impactAssessment: "Valutazione dell’impatto",
+    phaseC: "Fase C — Relazione finale (entro 14 giorni)",
+    phaseCCallout:
+      "Deve essere trasmesso all’ENISA entro 14 giorni dalla conoscenza dell’incidente.",
+    mitigationActions: "Azioni di mitigazione",
+    notificationDate: "Data di notifica all’ENISA",
+  },
+  risk_assessment: {
+    title: "Valutazione del rischio di cibersicurezza",
+    subtitle: "Matrice di valutazione del rischio — Conformità CRA",
+    section1: "1. Panoramica della valutazione",
+    riskTitle: "Titolo della valutazione",
+    section2: "2. Descrizione delle minacce",
+    threatDescription: "Minacce",
+    section3: "3. Vulnerabilità identificate",
+    vulnerabilitiesIdentified: "Vulnerabilità",
+    section4: "4. Livello di rischio",
+    riskLevel: "Livello di rischio complessivo",
+    section5: "5. Piano di mitigazione",
+    mitigationPlan: "Misure di mitigazione",
+    section6: "6. Rischio residuo",
+    residualRisk: "Rischio rimanente",
+    riskLevelLow: "Basso",
+    riskLevelMedium: "Medio",
+    riskLevelHigh: "Alto",
+    riskLevelCritical: "Critico",
+  },
+  technical_documentation: {
+    title: "Documentazione tecnica",
+    subtitle: "Ai sensi del Cyber Resilience Act — Allegato VII",
+    section1: "1. Ambito",
+    techDocScope: "Ambito",
+    section2: "2. Descrizione della progettazione",
+    designDescription: "Progettazione",
+    section3: "3. Processo di sviluppo",
+    developmentProcess: "Processo",
+    section4: "4. Test e verifica",
+    testingResults: "Risultati",
+    section5: "5. Meccanismo di aggiornamento",
+    updateMechanism: "Meccanismo",
+    section6: "6. Periodo di supporto",
+    supportPeriod: "Periodo",
+  },
+};
+
+const MESSAGES: Record<Locale, Record<DocumentType, PdfMessages>> = {
+  en,
+  de,
+  fr,
+  it,
+};
+
 export function getPdfMessages(
-  _locale: Locale,
+  locale: Locale,
   documentType: DocumentType,
 ): PdfMessages {
-  return messages[documentType];
+  return (MESSAGES[locale] ?? MESSAGES.en)[documentType];
 }

@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { updateOrganization, type OrgSettings, type TeamMember } from "../actions";
@@ -22,7 +22,7 @@ const ROLE_HIERARCHY: { key: string; color: string; bg: string; icon: string }[]
   { key: "admin", color: "text-primary", bg: "bg-primary", icon: "crown-stroke-rounded" },
   { key: "cto", color: "text-accent", bg: "bg-accent", icon: "terminal-stroke-rounded" },
   { key: "compliance_officer", color: "text-accent", bg: "bg-accent", icon: "task-done-02-stroke-rounded" },
-  { key: "editor", color: "text-[#FF9E55]", bg: "bg-[#FF9E55]", icon: "pencil-edit-02-stroke-rounded" },
+  { key: "editor", color: "text-accent", bg: "bg-accent", icon: "pencil-edit-02-stroke-rounded" },
   { key: "viewer", color: "text-muted-foreground", bg: "bg-muted-foreground", icon: "glasses-stroke-rounded" },
 ];
 
@@ -473,14 +473,6 @@ function OrganizationChart({
   const used = members.length;
   const limit = PLAN_USER_LIMITS[plan];
   const unlimited = !Number.isFinite(limit);
-  const pct = unlimited ? 0 : Math.min(100, (used / limit) * 100);
-  const nearCap = !unlimited && used / limit >= 0.8;
-  const atCap = !unlimited && used >= limit;
-  const capacityColor = atCap
-    ? "var(--destructive)"
-    : nearCap
-      ? "var(--warning)"
-      : "var(--primary)";
 
   const tiers = ROLE_HIERARCHY.map((tier) => ({
     ...tier,
@@ -510,35 +502,22 @@ function OrganizationChart({
           </div>
         </div>
 
-        {/* Capacity meter */}
-        <div className="mt-4">
-          <div className="flex items-center justify-between">
-            <span className="text-l6-plus uppercase tracking-wide text-muted-foreground">
-              {t("orgChartCapacity")}
-            </span>
-            <div className="flex items-center gap-3">
-              <span className="text-p4 tabular-nums text-muted-foreground">
-                {unlimited
-                  ? t("seatsUsedUnlimited", { count: used })
-                  : t("seatsUsed", { count: used, limit })}
-              </span>
-              {isAdmin && !unlimited && nearCap && (
-                <Link
-                  href="/app/settings/billing"
-                  className="text-l6 text-primary hover:underline"
-                >
-                  {t("upgrade")}
-                </Link>
-              )}
-            </div>
-          </div>
-          {!unlimited && (
-            <div className="mt-2 h-1.5 overflow-hidden rounded-sm bg-border">
-              <div
-                className="h-full rounded-sm transition-all duration-500"
-                style={{ width: `${pct}%`, backgroundColor: capacityColor }}
-              />
-            </div>
+        {/* Seat usage — a plain "used vs available" line plus an upgrade
+            button. (The progress bar was removed; the count is enough.) */}
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+          <span className="text-p3 text-muted-foreground">
+            {unlimited
+              ? t("seatsUsedUnlimited", { count: used })
+              : t("seatsUsed", { count: used, limit })}
+          </span>
+          {isAdmin && !unlimited && (
+            <Link
+              href="/app/settings/billing"
+              className={buttonVariants({ variant: "outline", size: "sm" })}
+            >
+              <Icon name="crown-stroke-rounded" size={14} />
+              {t("upgrade")}
+            </Link>
           )}
         </div>
       </div>

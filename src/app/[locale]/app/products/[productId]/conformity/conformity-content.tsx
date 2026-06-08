@@ -1336,7 +1336,7 @@ function StepDetailSheet({
                 {pendingFile && (
                   <div className="flex items-center gap-2 rounded-md border-[1.5px] border-dashed border-primary/30 bg-primary/5 px-3 py-2">
                     <span className="flex size-8 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary">
-                      <Icon name="Attachment" size={14} />
+                      <Icon name="Attachment" size={14} variant="Bold" />
                     </span>
                     <Input
                       ref={renameInputRef}
@@ -1599,7 +1599,7 @@ function AttachmentRow({
           fg,
         )}
       >
-        <Icon name={icon} size={18} />
+        <Icon name={icon} size={18} variant="Bold" />
       </span>
       <button
         type="button"
@@ -1626,7 +1626,7 @@ function AttachmentRow({
         aria-label={
           t.has("attachments.download") ? t("attachments.download") : "Download"
         }
-        className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground transition-colors hover:bg-primary/90"
+        className="flex size-8 shrink-0 items-center justify-center rounded-md bg-primary text-primary-foreground transition-colors hover:bg-primary/90"
       >
         <Icon name="ArrowDown2" size={14} />
       </button>

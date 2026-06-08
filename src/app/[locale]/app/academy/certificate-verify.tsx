@@ -4,7 +4,7 @@ import { useState, useTransition } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Icon } from "@/components/icon";
+import { IconBadge } from "@/components/ui/icon-badge";
 import { cn } from "@/lib/utils";
 import { verifyCertificate, type CertificateVerification } from "./actions";
 import type { LocaleId } from "@/lib/academy/types";
@@ -40,9 +40,11 @@ export function CertificateVerify() {
     <div className="w-full">
       <div className="rounded-md bg-card p-6 shadow-card-md">
         <div className="flex items-start gap-3">
-          <span className="flex size-10 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary">
-            <Icon name="checkmark-badge-01-stroke-rounded" size={20} />
-          </span>
+          <IconBadge
+            name="checkmark-badge-01-stroke-rounded"
+            tone="primary"
+            size="lg"
+          />
           <div className="min-w-0">
             <h3 className="text-h5 text-foreground">{t("title")}</h3>
             <p className="mt-1 text-p3 text-muted-foreground">
@@ -103,9 +105,11 @@ function ResultCard({
     return (
       <div className="w-full overflow-hidden rounded-md bg-card shadow-card-md">
         <div className="flex items-center gap-2.5 border-b border-border px-5 py-4">
-          <span className="flex size-8 items-center justify-center rounded-full bg-success/10 text-success">
-            <Icon name="checkmark-circle-01-stroke-rounded" size={16} />
-          </span>
+          <IconBadge
+            name="checkmark-circle-01-stroke-rounded"
+            tone="success"
+            size="sm"
+          />
           <p className="text-h6 text-foreground">{t("validTitle")}</p>
         </div>
         <dl className="divide-y divide-border">
@@ -142,9 +146,7 @@ function ResultCard({
 
   return (
     <div className="flex w-full items-start gap-3 rounded-md bg-card px-5 py-4 shadow-card-md">
-      <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-destructive/10 text-destructive">
-        <Icon name="alert-02" size={16} />
-      </span>
+      <IconBadge name="alert-02" tone="destructive" size="sm" />
       <p className="text-p3 text-foreground">{message}</p>
     </div>
   );

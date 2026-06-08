@@ -1,0 +1,392 @@
+{
+ "settings": {
+  "title": "Paramètres",
+  "subtitle": "Gérez votre organisation, votre équipe et votre compte.",
+  "nav": {
+   "organization": "Organisation",
+   "entity": "Rôle d'opérateur",
+   "team": "Équipe",
+   "billing": "Facturation",
+   "activity": "Activité",
+   "account": "Compte",
+   "security": "Sécurité"
+  },
+  "organization": {
+   "title": "Organisation",
+   "subtitle": "Gérez les informations et les préférences de votre organisation.",
+   "nameLabel": "Nom de l'organisation",
+   "namePlaceholder": "Acme Inc.",
+   "legalTitle": "Identité juridique",
+   "legalDescription": "Requise sur chaque déclaration de conformité et dossier technique. Saisissez-la exactement telle qu'elle figure dans vos documents de constitution.",
+   "legalName": "Dénomination sociale",
+   "legalNameHint": "Raison sociale enregistrée — peut différer du nom commercial ou d'affichage ci-dessus.",
+   "legalNamePlaceholder": "Acme GmbH",
+   "registrationNumber": "Numéro d'immatriculation ou TVA",
+   "registrationNumberHint": "Numéro au registre du commerce, numéro de TVA ou immatriculation nationale équivalente.",
+   "registrationNumberPlaceholder": "DE123456789 ou HRB 12345",
+   "signatoryTitle": "Signataire et contact",
+   "signatoryDescription": "Le signataire est la personne physique qui signe la déclaration de conformité. L'e-mail de contact est le point de contact public visible par les clients, imprimé sur les étiquettes des produits.",
+   "signatoryName": "Nom du signataire",
+   "signatoryNamePlaceholder": "Jane Doe",
+   "signatoryPosition": "Poste du signataire",
+   "signatoryPositionPlaceholder": "Directeur général",
+   "contactEmail": "E-mail de contact public",
+   "website": "Site web",
+   "addressTitle": "Adresse du siège social",
+   "addressDescription": "Utilisée dans la déclaration de conformité et les autres documents de conformité.",
+   "addressLine1": "Ligne d'adresse 1",
+   "addressLine1Placeholder": "123 rue de la Paix",
+   "addressLine2": "Ligne d'adresse 2",
+   "addressLine2Placeholder": "Bâtiment A",
+   "postalCode": "Code postal",
+   "postalCodePlaceholder": "75001",
+   "city": "Ville",
+   "cityPlaceholder": "Paris",
+   "country": "Pays",
+   "countryPlaceholder": "France",
+   "save": "Enregistrer les modifications",
+   "saving": "Enregistrement…",
+   "saved": "Paramètres de l'organisation enregistrés.",
+   "error": "Échec de l'enregistrement des paramètres. Veuillez réessayer.",
+   "readOnly": "Seuls les administrateurs peuvent modifier les paramètres de l'organisation.",
+   "orgChart": "Organigramme",
+   "orgChartDescription": "Votre équipe regroupée par rôle CRA. Cliquez sur une personne pour la gérer.",
+   "seatsUsed": "{count} poste(s) utilisé(s) sur {limit}",
+   "seatsUsedUnlimited": "{count, plural, one {# poste utilisé} other {# postes utilisés}} · Illimité",
+   "upgrade": "Mettre à niveau",
+   "inviteToRole": "Inviter un(e) {role}",
+   "noOneYet": "Aucun membre pour l'instant",
+   "docReady": {
+    "eyebrow": "Configuration de la conformité",
+    "title": "La déclaration de conformité n'est pas encore prête à être émise",
+    "description": "{count, plural, one {# champ obligatoire est manquant} other {# champs obligatoires sont manquants}} pour la génération des documents CRA. Renseignez-les ci-dessous — le processus de conformité refusera d'émettre la DoC tant que cette page n'est pas complète.",
+    "cta": "Compléter maintenant"
+   },
+   "dangerZone": {
+    "title": "Zone de danger",
+    "subtitle": "Actions irréversibles. Vérifiez avant de continuer.",
+    "exportTitle": "Exporter toutes les données de l'organisation",
+    "exportDescription": "Téléchargez chaque enregistrement lié à cette organisation sous la forme d'un fichier JSON unique. Satisfait l'art. 20 du RGPD (portabilité).",
+    "exportCta": "Exporter les données",
+    "exportInProgress": "Préparation de l'export…",
+    "exportReady": "Export téléchargé.",
+    "exportError": "Impossible de générer l'export. Veuillez réessayer.",
+    "deleteTitle": "Supprimer l'organisation",
+    "deleteDescription": "Planifie la suppression définitive de l'organisation et de chaque enregistrement qui lui est lié. Vous disposez de 30 jours pour annuler.",
+    "deleteCta": "Supprimer l'organisation",
+    "deleteScheduled": "Suppression planifiée. Vous disposez de 30 jours pour annuler.",
+    "deleteError": "Impossible de demander la suppression. Veuillez réessayer.",
+    "cancelDeletion": "Annuler la suppression",
+    "cancellingDeletion": "Annulation…",
+    "cancelSuccess": "Suppression annulée.",
+    "cancelError": "Impossible d'annuler la suppression. Veuillez réessayer.",
+    "pendingTitle": "Suppression planifiée dans {days} jour(s).",
+    "pendingSubtitle": "Toutes les données seront purgées le {date}. Annulez à tout moment avant cette date.",
+    "dialogTitle": "Supprimer cette organisation ?",
+    "dialogDescription": "Cette action supprimera chaque produit, SBOM, déclaration, rapport d'incident, enregistrement de formation et membre d'équipe dans un délai de grâce de 30 jours. Passé ce délai, les données seront définitivement détruites.",
+    "dialogPromptLabel": "Saisissez \"{name}\" pour confirmer",
+    "dialogConfirm": "Planifier la suppression",
+    "dialogCancel": "Annuler",
+    "deleting": "Planification…",
+    "confirmationMismatch": "Le nom saisi ne correspond pas. La suppression n'a pas été planifiée."
+   },
+   "tooltips": {
+    "name": {
+     "title": "Nom de l'organisation",
+     "body": "Le nom commercial ou d'affichage visible par les utilisateurs et les membres de l'équipe dans Seentrix. Il s'agit du nom convivial — il n'est pas nécessaire qu'il corresponde à votre entité juridique enregistrée.",
+     "ref": "Usage interne uniquement. Le nom juridiquement contraignant figurant sur les documents de conformité est le champ Dénomination sociale ci-dessous."
+    },
+    "legalName": {
+     "title": "Dénomination sociale",
+     "body": "Raison sociale enregistrée exactement telle qu'elle figure dans vos documents de constitution (ex. : Acme GmbH, Acme S.A.S.). Peut différer du nom commercial — incluez le suffixe de la forme juridique. Imprimée verbatim sur la <g-doc>déclaration de conformité</g-doc> et chaque étiquette de produit portant le <g-ce_marking>marquage CE</g-ce_marking>.",
+     "ref": "CRA <g-annex_v>Annexe V(1)</g-annex_v> — la déclaration de conformité doit identifier la personne morale qui l'émet. Une erreur dans ce champ invalide la déclaration."
+    },
+    "registrationNumber": {
+     "title": "Numéro d'immatriculation ou TVA",
+     "body": "Numéro au registre du commerce (ex. : HRB 12345 en Allemagne), numéro de TVA (DE123456789) ou immatriculation nationale équivalente. Saisissez-en un seul — choisissez l'identifiant utilisé par votre autorité nationale pour vous retrouver.",
+     "ref": "CRA Annexe V(1)(b) — la déclaration de conformité doit inclure un identifiant qui identifie sans ambiguïté le fabricant. Les autorités de surveillance du marché l'utilisent pour remonter jusqu'à vous à partir de produits non conformes."
+    },
+    "signatoryName": {
+     "title": "Nom du signataire",
+     "body": "La personne physique qui signe la déclaration de conformité. Il doit s'agir d'une personne légalement habilitée à engager l'organisation — généralement le PDG, le directeur général ou un responsable disposant d'une délégation de signature.",
+     "ref": "CRA Annexe V(5) — la déclaration est signée par une personne agissant au nom du fabricant. Une signature non autorisée peut invalider la DoC."
+    },
+    "signatoryPosition": {
+     "title": "Poste du signataire",
+     "body": "Titre du poste de la personne signataire (ex. : Directeur général, Directeur de la conformité). Imprimé sous la signature sur la déclaration de conformité.",
+     "ref": "CRA Annexe V(5) — avec le nom du signataire, cela identifie qui au sein de l'organisation assume la responsabilité juridique de la déclaration."
+    },
+    "contactEmail": {
+     "title": "E-mail de contact public",
+     "body": "E-mail visible par les clients, imprimé sur les étiquettes de produits, les emballages et la déclaration de conformité. Doit être surveillé — les autorités de surveillance du marché et les utilisateurs finaux l'utiliseront pour vous joindre.",
+     "ref": "CRA Article 13(4) — les fabricants doivent fournir un point de contact unique pour les questions de cybersécurité sur le produit, l'emballage ou la documentation d'accompagnement."
+    },
+    "website": {
+     "title": "Site web",
+     "body": "URL du site web de l'entreprise. Facultatif mais fortement recommandé — il apparaît sur la DoC et offre aux régulateurs et aux utilisateurs finaux un second canal pour vérifier votre identité.",
+     "ref": "CRA Article 13(4) — non obligatoire mais constitue une information de contact acceptable aux côtés de l'e-mail public."
+    },
+    "addressLine1": {
+     "title": "Ligne d'adresse 1 du siège social",
+     "body": "Rue et numéro de votre adresse d'entreprise enregistrée — l'adresse figurant dans vos documents de constitution, pas une boîte postale ou un entrepôt.",
+     "ref": "CRA Annexe V(1)(a) — adresse postale du fabricant, imprimée sur la déclaration de conformité."
+    },
+    "addressLine2": {
+     "title": "Ligne d'adresse 2",
+     "body": "Deuxième ligne facultative pour le numéro d'appartement, l'étage, le nom du bâtiment ou autre. Laissez vide si votre adresse tient sur une seule ligne.",
+     "ref": "Ajoutée à la ligne d'adresse 1 sur la déclaration de conformité lorsqu'elle est renseignée."
+    },
+    "postalCode": {
+     "title": "Code postal",
+     "body": "Code postal ou code ZIP de votre adresse enregistrée. Le format doit respecter la convention de votre pays (ex. : 5 chiffres pour l'Allemagne, alphanumérique pour le Royaume-Uni).",
+     "ref": "CRA Annexe V(1)(a) — fait partie du bloc d'adresse postale sur la déclaration de conformité."
+    },
+    "city": {
+     "title": "Ville",
+     "body": "Ville ou localité de votre adresse enregistrée. Utilisée également comme champ « lieu » sur la déclaration de conformité signée (« Signé à {city}, le {date} »).",
+     "ref": "CRA Annexe V(6) — la déclaration indique le lieu où elle a été émise, qui doit pouvoir être rattaché à votre adresse."
+    },
+    "country": {
+     "title": "Pays",
+     "body": "Pays de votre siège social enregistré. Si celui-ci est en dehors de l'UE, vous devez également désigner un mandataire dans l'Union — configurez-le dans l'onglet Rôle d'opérateur.",
+     "ref": "CRA Article 18 — les fabricants établis en dehors de l'Union doivent désigner un mandataire dans l'UE avant de mettre des produits sur le marché."
+    }
+   },
+   "readOnlyBadge": "Verrouillé",
+   "editDetails": "Modifier les informations",
+   "cancel": "Annuler",
+   "orgChartTotalMembers": "{count, plural, one {# membre} other {# membres}}",
+   "orgChartCapacity": "Capacité en postes",
+   "inviteShort": "Inviter"
+  },
+  "team": {
+   "title": "Équipe",
+   "subtitle": "Gérez les personnes ayant accès à votre organisation.",
+   "members": "Membres",
+   "memberCount": "{count} membre",
+   "memberCountPlural": "{count} membres",
+   "createTitle": "Ajouter un membre",
+   "createDescription": "Créez un compte pour un nouveau membre de l'équipe. Il devra changer son mot de passe lors de sa première connexion.",
+   "createEmail": "E-mail",
+   "createEmailPlaceholder": "collegue@entreprise.com",
+   "createName": "Nom complet",
+   "createNamePlaceholder": "Jane Doe",
+   "createRoleLabel": "Rôle",
+   "createPassword": "Mot de passe temporaire",
+   "createPasswordPlaceholder": "8 caractères minimum",
+   "tooltips": {
+    "email": {
+     "title": "E-mail du membre",
+     "body": "L'adresse e-mail que le nouveau membre utilisera pour se connecter. Elle doit être unique sur toute la plateforme Seentrix — si elle est déjà utilisée ailleurs, l'invitation échoue. Elle devient également l'identité dans le journal d'audit pour chaque action effectuée.",
+     "ref": "Les entrées du journal d'activité sont stockées avec l'ID d'authentification immuable de l'utilisateur, mais l'e-mail est ce que les régulateurs voient dans les pistes d'audit exportées."
+    },
+    "fullName": {
+     "title": "Nom complet",
+     "body": "Nom légal ou d'affichage visible dans Seentrix. Également imprimé sur les exports du journal d'activité et apparaît comme créateur/responsable sur les vulnérabilités, incidents et éléments de liste de contrôle.",
+     "ref": "NIS2 Article 20 (le cas échéant) — les registres du personnel prêts pour l'audit nécessitent des noms identifiables, pas seulement des e-mails."
+    },
+    "role": {
+     "title": "Rôle",
+     "body": "Détermine ce que ce membre peut faire. Admin : tout. Responsable conformité : modifications critiques pour la conformité (rôle d'entité, émission de DoC, rapports d'incident). CTO : même que Responsable conformité sans la facturation. Éditeur : produits, vulnérabilités, éléments de liste de contrôle ; ne peut pas émettre de DoC. Lecteur : lecture seule.",
+     "ref": "Le CRA n'impose pas de rôles spécifiques, mais la séparation des tâches entre la personne qui signe la DoC et celle qui gère le produit est attendue lors des audits. Choisissez un rôle correspondant à la responsabilité réelle de la personne."
+    },
+    "password": {
+     "title": "Mot de passe temporaire",
+     "body": "Mot de passe de première connexion que vous partagez avec le membre. Il doit le changer lors de sa première connexion — l'indicateur must_change_password est défini automatiquement. Utilisez un générateur de mot de passe à usage unique ; ne réutilisez pas de mots de passe existants.",
+     "ref": "Défense en profondeur — le mot de passe temporaire n'est valide que jusqu'à la première connexion. Si un membre ne se connecte jamais, faites-le tourner ou supprimez-le via la liste de l'équipe."
+    }
+   },
+   "createMember": "Créer un membre",
+   "creatingMember": "Création…",
+   "memberCreated": "Membre de l'équipe créé avec succès.",
+   "createError": "Échec de la création du membre.",
+   "createErrors": {
+    "notAdmin": "Seuls les administrateurs peuvent ajouter des membres.",
+    "emailInUse": "Cet e-mail est déjà enregistré.",
+    "limitReached": "La limite de membres de votre abonnement a été atteinte.",
+    "passwordTooShort": "Le mot de passe doit comporter au moins 8 caractères.",
+    "invalidRole": "Rôle sélectionné invalide."
+   },
+   "credentialsTitle": "Compte créé",
+   "credentialsHint": "Partagez ces identifiants avec le nouveau membre. Il sera invité à définir un nouveau mot de passe lors de sa première connexion.",
+   "credentialsCopied": "Identifiants copiés dans le presse-papiers.",
+   "pendingPassword": "En attente",
+   "removeMember": "Retirer",
+   "removeMemberConfirm": "Retirer le membre ?",
+   "removeMemberDescription": "Êtes-vous sûr de vouloir retirer {name} de votre organisation ? Il perdra immédiatement son accès.",
+   "removeMemberCancel": "Annuler",
+   "removeMemberSubmit": "Retirer",
+   "removed": "Membre retiré.",
+   "removeError": "Échec du retrait du membre.",
+   "changeRole": "Changer le rôle",
+   "changeRoleConfirm": "Changer le rôle ?",
+   "changeRoleDescription": "Changer le rôle de {name} de {oldRole} à {newRole} ?",
+   "changeRoleCancel": "Annuler",
+   "changeRoleSubmit": "Changer le rôle",
+   "roleChanged": "Rôle mis à jour.",
+   "roleChangeError": "Échec du changement de rôle.",
+   "lastAdminError": "Impossible de changer le rôle du dernier administrateur.",
+   "you": "Vous",
+   "adminOnly": "Seuls les administrateurs peuvent gérer l'équipe.",
+   "roles": {
+    "admin": "Admin",
+    "compliance_officer": "Responsable conformité",
+    "cto": "CTO",
+    "editor": "Éditeur",
+    "viewer": "Lecteur"
+   },
+   "limits": {
+    "reached": "Limite de membres atteinte",
+    "reachedDescription": "Votre abonnement {plan} autorise jusqu'à {limit} membre.",
+    "reachedDescriptionPlural": "Votre abonnement {plan} autorise jusqu'à {limit} membres.",
+    "upgrade": "Mettre à niveau l'abonnement"
+   }
+  },
+  "activity": {
+   "title": "Journal d'activité",
+   "subtitle": "Suivez toutes les modifications effectuées au sein de votre organisation.",
+   "download": "Télécharger",
+   "empty": "Aucune activité pour l'instant.",
+   "exportPeriod": {
+    "1": "Dernier mois",
+    "6": "6 derniers mois",
+    "12": "12 derniers mois"
+   },
+   "relative": {
+    "justNow": "à l'instant",
+    "minutesAgo": "{count, plural, one {il y a # minute} other {il y a # minutes}}",
+    "hoursAgo": "{count, plural, one {il y a # heure} other {il y a # heures}}",
+    "daysAgo": "{count, plural, one {il y a # jour} other {il y a # jours}}"
+   },
+   "actions": {
+    "organization": {
+     "created": "a créé l'organisation",
+     "updated": "a mis à jour les informations de l'organisation",
+     "security_updated": "a mis à jour la page de sécurité publique",
+     "entity_type_changed": "a modifié le rôle d'opérateur de l'organisation"
+    },
+    "member": {
+     "created": "a ajouté un nouveau membre",
+     "removed": "a retiré un membre",
+     "role_changed": "a modifié le rôle d'un membre"
+    },
+    "profile": {
+     "updated": "a mis à jour son profil"
+    },
+    "password": {
+     "changed": "a changé son mot de passe"
+    },
+    "product": {
+     "created": "a ajouté un nouveau produit",
+     "updated": "a mis à jour les informations du produit",
+     "deleted": "a supprimé un produit",
+     "assessed": "a complété l'évaluation CRA pour",
+     "support_updated": "a mis à jour la période de support pour"
+    },
+    "document": {
+     "saved": "a enregistré des modifications de document pour",
+     "status_changed": "a modifié le statut d'un document",
+     "pdf_generated": "a généré un PDF pour"
+    },
+    "sbom": {
+     "uploaded": "a téléversé un nouveau SBOM",
+     "deleted": "a supprimé un SBOM",
+     "scanned": "a analysé un SBOM à la recherche de vulnérabilités",
+     "activated": "a activé le SBOM",
+     "archived": "a archivé un SBOM"
+    },
+    "checklist": {
+     "item_status_changed": "a mis à jour un élément de la liste de contrôle CRA",
+     "item_description_changed": "a modifié des notes sur un élément de la liste de contrôle",
+     "evidence_uploaded": "a téléversé une preuve",
+     "evidence_removed": "a supprimé une preuve",
+     "item_assigned": "a assigné un élément de la liste de contrôle"
+    },
+    "vulnerability": {
+     "open": "a rouvert une vulnérabilité",
+     "in_progress": "a commencé à traiter une vulnérabilité",
+     "resolved": "a résolu une vulnérabilité",
+     "accepted": "a accepté le risque d'une vulnérabilité",
+     "assigned": "a assigné une vulnérabilité",
+     "note_added": "a ajouté des notes à une vulnérabilité",
+     "marked_exploited": "a signalé une vulnérabilité comme activement exploitée",
+     "unmarked_exploited": "a supprimé le marquage d'exploitation active d'une vulnérabilité"
+    },
+    "vulnerability_report": {
+     "triage": "a remis en file d'attente un rapport de vulnérabilité pour triage",
+     "accepted": "a accepté un rapport de vulnérabilité",
+     "investigating": "a commencé à enquêter sur un rapport de vulnérabilité",
+     "resolved": "a résolu un rapport de vulnérabilité",
+     "duplicate": "a marqué un rapport de vulnérabilité comme doublon",
+     "spam": "a marqué un rapport de vulnérabilité comme spam"
+    },
+    "incident": {
+     "detected": "a ouvert un nouvel incident",
+     "updated": "a mis à jour un incident",
+     "early_warning_submitted": "a soumis la notification d'alerte précoce de 24 heures",
+     "incident_report_submitted": "a soumis le rapport d'incident de 72 heures",
+     "final_report_submitted": "a soumis le rapport final de 14 jours",
+     "user_notified": "a notifié les utilisateurs affectés d'un incident",
+     "closed": "a clôturé un incident"
+    },
+    "release": {
+     "published": "a publié une nouvelle version",
+     "deleted": "a supprimé une version"
+    },
+    "conformity": {
+     "step_completed": "a complété une étape d'évaluation de la conformité",
+     "step_reopened": "a rouvert une étape d'évaluation de la conformité",
+     "notified_body_updated": "a mis à jour l'enregistrement de l'organisme notifié",
+     "declaration_issued": "a émis une déclaration de conformité pour"
+    },
+    "entity_obligation": {
+     "updated": "a mis à jour une obligation de conformité"
+    },
+    "billing": {
+     "checkout_created": "a démarré un processus de paiement"
+    },
+    "academy": {
+     "lesson_completed": "a complété une leçon Academy"
+    }
+   }
+  },
+  "account": {
+   "title": "Compte",
+   "subtitle": "Gérez les paramètres de votre compte personnel.",
+   "profileTitle": "Profil",
+   "avatarLabel": "Photo de profil",
+   "avatarHint": "Cliquez pour téléverser (JPG, PNG, WebP, max 2 Mo)",
+   "avatarUploading": "Téléversement…",
+   "nameLabel": "Nom complet",
+   "namePlaceholder": "John Doe",
+   "emailLabel": "E-mail",
+   "emailDescription": "Votre e-mail est géré par votre fournisseur d'authentification.",
+   "saveProfile": "Enregistrer le profil",
+   "savingProfile": "Enregistrement…",
+   "profileSaved": "Profil mis à jour.",
+   "profileError": "Échec de la mise à jour du profil.",
+   "avatarError": "Impossible de téléverser votre photo. Veuillez essayer un fichier JPG ou PNG plus petit et réessayer.",
+   "passwordTitle": "Changer le mot de passe",
+   "currentPassword": "Mot de passe actuel",
+   "newPassword": "Nouveau mot de passe",
+   "newPasswordPlaceholder": "8 caractères minimum",
+   "changePassword": "Changer le mot de passe",
+   "changingPassword": "Modification…",
+   "passwordChanged": "Mot de passe modifié avec succès.",
+   "passwordError": "Échec du changement de mot de passe. Vérifiez votre mot de passe actuel.",
+   "dangerTitle": "Zone de danger",
+   "logoutButton": "Se déconnecter",
+   "logoutDescription": "Déconnectez-vous de votre compte Seentrix sur cet appareil."
+  },
+  "language": {
+   "title": "Langue",
+   "label": "Langue",
+   "description": "Choisissez la langue pour toute l'application — interface, Academy, l'assistant IA Copilot et les documents que vous générez.",
+   "saved": "Langue mise à jour"
+  },
+  "toast": {
+   "success": "Succès",
+   "error": "Erreur"
+  }
+ }
+}

@@ -76,7 +76,7 @@ export function SignupForm() {
   if (state?.success) {
     return (
       <div className="flex flex-col items-center text-center">
-        <div className="flex size-12 items-center justify-center rounded-full bg-primary/10">
+        <div className="flex size-12 items-center justify-center rounded-md bg-primary/10">
           <Icon name="Sms" className="size-6 text-primary" aria-hidden="true" />
         </div>
         <h1 className="mt-5 text-h3 text-foreground">

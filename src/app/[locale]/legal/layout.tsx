@@ -16,11 +16,11 @@ export default function LegalLayout({
         <div className="mx-auto flex max-w-4xl items-center justify-between px-4 py-4">
           <Link
             href="/"
-            className="text-lg font-bold tracking-tight text-foreground"
+            className="text-h3 tracking-tight text-foreground"
           >
             Seentrix
           </Link>
-          <nav className="flex gap-6 text-sm text-muted-foreground">
+          <nav className="flex gap-6 text-p2-r text-muted-foreground">
             <Link
               href="/legal/impressum"
               className="transition-colors hover:text-foreground"

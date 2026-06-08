@@ -94,8 +94,8 @@ export function DangerZone({
           tint on the container. The destructive affordance lives on the
           "Delete" button itself, not on the whole card. */}
       <div className="border-b border-border px-6 py-4">
-        <h2 className="text-sm font-semibold">{t("title")}</h2>
-        <p className="mt-0.5 text-xs text-muted-foreground">
+        <h2 className="text-h5">{t("title")}</h2>
+        <p className="mt-0.5 text-p4-r text-muted-foreground">
           {t("subtitle")}
         </p>
       </div>
@@ -104,10 +104,10 @@ export function DangerZone({
         {/* Export — GDPR Art. 20 */}
         <div className="flex flex-col gap-3 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
           <div className="pr-4">
-            <p className="text-sm font-medium text-foreground">
+            <p className="text-p2 text-foreground">
               {t("exportTitle")}
             </p>
-            <p className="mt-0.5 text-xs text-muted-foreground">
+            <p className="mt-0.5 text-p4-r text-muted-foreground">
               {t("exportDescription")}
             </p>
           </div>
@@ -125,7 +125,7 @@ export function DangerZone({
         {/* Delete — GDPR Art. 17 */}
         <div className="flex flex-col gap-3 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
           <div className="pr-4">
-            <p className="flex items-center gap-2 text-sm font-medium text-foreground">
+            <p className="flex items-center gap-2 text-p2 text-foreground">
               <span
                 aria-hidden
                 className="flex size-5 shrink-0 items-center justify-center rounded-md bg-destructive/15 text-destructive"
@@ -134,7 +134,7 @@ export function DangerZone({
               </span>
               {t("deleteTitle")}
             </p>
-            <p className="mt-1 text-xs text-muted-foreground">
+            <p className="mt-1 text-p4-r text-muted-foreground">
               {t("deleteDescription")}
             </p>
           </div>
@@ -173,12 +173,12 @@ export function DangerZone({
               <Icon name="alert-02" size={11} />
             </span>
             <div className="min-w-0">
-              <p className="text-xs font-medium text-destructive">
+              <p className="text-p4 text-destructive">
                 {t("pendingTitle", {
                   days: deletion?.daysRemaining ?? 0,
                 })}
               </p>
-              <p className="mt-1 text-[11px] text-muted-foreground">
+              <p className="mt-1 text-p4-r text-muted-foreground">
                 {t("pendingSubtitle", {
                   date: new Date(deletion!.purgeAt!).toLocaleDateString(),
                 })}
@@ -203,7 +203,7 @@ export function DangerZone({
         disabled={isPending || confirmName.trim() !== orgName}
       >
         <div className="space-y-2">
-          <Label htmlFor="confirm-org-name" className="text-xs">
+          <Label htmlFor="confirm-org-name" className="text-p4-r">
             {t("dialogPromptLabel", { name: orgName })}
           </Label>
           <Input

@@ -9,6 +9,7 @@ import { createClient } from "@/lib/supabase/server";
 import { mistral, MISTRAL_CHAT_MODEL } from "@/lib/copilot/mistral";
 import { retrieveChunks } from "@/lib/copilot/retrieval";
 import { buildSystemPrompt } from "@/lib/copilot/prompt";
+import { LOCALE_COOKIE, isLocale, type Locale } from "@/i18n/locales";
 import { enrichPageContext } from "@/lib/copilot/context-enrichment";
 import { buildCopilotTools } from "@/lib/copilot/tools";
 import { checkQuota } from "@/lib/copilot/quota";
@@ -125,6 +126,12 @@ export async function POST(req: Request) {
     });
   }
 
+  // Resolve the user's UI language from the NEXT_LOCALE cookie so the Copilot
+  // answers in the same language the rest of the app renders in. This route
+  // lives under /api (not the localized [locale] tree), so we parse the cookie
+  // off the request directly rather than relying on next-intl's request scope.
+  const locale = localeFromCookieHeader(req.headers.get("cookie"));
+
   // --- 7. Build system prompt ----------------------------------------------
   // Server enriches page + product context from the current path so the
   // client only has to send the URL it's on. Any failure is swallowed and
@@ -135,7 +142,7 @@ export async function POST(req: Request) {
       supabase,
       orgId,
       plan,
-      locale: "en",
+      locale,
       pagePath: payload.page?.path,
       orgName: (org?.name as string | undefined) ?? undefined,
       orgCountry: (org?.country as string | undefined) ?? undefined,
@@ -143,7 +150,7 @@ export async function POST(req: Request) {
   } catch (err) {
     console.error("[copilot] context enrichment failed", err);
     context = {
-      locale: "en" as const,
+      locale,
       plan,
       orgName: (org?.name as string | undefined) ?? undefined,
       orgCountry: (org?.country as string | undefined) ?? undefined,
@@ -342,4 +349,21 @@ async function ensureSession({
     throw new Error(`failed to create chat_session: ${error?.message}`);
   }
   return data.id as string;
+}
+
+/**
+ * Parse the active UI locale from the request's Cookie header. The Copilot API
+ * route is not under the localized tree, so we read NEXT_LOCALE ourselves.
+ * Falls back to English when absent or unsupported.
+ */
+function localeFromCookieHeader(cookieHeader: string | null): Locale {
+  if (!cookieHeader) return "en";
+  for (const part of cookieHeader.split(";")) {
+    const [name, ...rest] = part.trim().split("=");
+    if (name === LOCALE_COOKIE) {
+      const value = decodeURIComponent(rest.join("="));
+      if (isLocale(value)) return value;
+    }
+  }
+  return "en";
 }

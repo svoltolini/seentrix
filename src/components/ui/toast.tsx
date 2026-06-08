@@ -108,7 +108,7 @@ function ToastItem({
           : "border-destructive/20 text-destructive"
       )}
     >
-      <span className="text-base leading-none">
+      <span className="text-p1 leading-none">
         {toast.type === "success" ? "✓" : "✕"}
       </span>
       <span className="flex-1 text-foreground">{toast.message}</span>

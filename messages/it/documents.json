@@ -1,0 +1,307 @@
+{
+  "documents": {
+    "title": "Documenti",
+    "subtitle": "Gestisci la documentazione di conformità CRA per questo prodotto.",
+    "grid": {
+      "statusNotStarted": "Non avviato",
+      "statusDraft": "Bozza",
+      "statusFinal": "Definitivo",
+      "lastUpdated": "Aggiornato il {date}",
+      "neverEdited": "Non ancora avviato"
+    },
+    "types": {
+      "declaration_of_conformity": {
+        "title": "Dichiarazione di conformità",
+        "description": "Dichiarazione di conformità UE ai sensi dell'Allegato V del CRA. Obbligatoria per immettere il prodotto sul mercato UE."
+      },
+      "vulnerability_disclosure_policy": {
+        "title": "Politica di divulgazione delle vulnerabilità",
+        "description": "Processo di divulgazione coordinata delle vulnerabilità. Obbligatorio ai sensi dell'Articolo 11 del CRA."
+      },
+      "incident_report": {
+        "title": "Modello di rapporto sugli incidenti",
+        "description": "Modello di notifica degli incidenti di sicurezza ai sensi dell'Articolo 14 del CRA. Per la segnalazione a ENISA."
+      },
+      "risk_assessment": {
+        "title": "Matrice di valutazione del rischio",
+        "description": "Valutazione del rischio di cibersicurezza. Identifica minacce, vulnerabilità e misure di mitigazione."
+      },
+      "technical_documentation": {
+        "title": "Documentazione tecnica",
+        "description": "Schema della documentazione tecnica ai sensi dell'Allegato VII del CRA. Copre progettazione, sviluppo e test."
+      }
+    },
+    "editor": {
+      "back": "Torna ai documenti",
+      "save": "Salva documento",
+      "saving": "Salvataggio…",
+      "saved": "Documento salvato con successo.",
+      "generatePdf": "Genera PDF",
+      "generatingPdf": "Generazione in corso…",
+      "downloadPdf": "Scarica PDF",
+      "pdfGenerated": "PDF generato con successo.",
+      "markFinal": "Contrassegna come definitivo",
+      "markDraft": "Ripristina come bozza",
+      "errors": {
+        "notAuthenticated": "Devi effettuare l'accesso.",
+        "generic": "Qualcosa è andato storto. Riprova.",
+        "saveFailed": "Salvataggio non riuscito. Riprova.",
+        "documentNotFound": "Documento non trovato.",
+        "noContent": "Salva il documento prima di generare un PDF.",
+        "uploadFailed": "Caricamento PDF non riuscito. Riprova.",
+        "noPdf": "Nessun PDF disponibile. Generane uno prima.",
+        "planRequired": "L'esportazione PDF richiede un piano Professional o superiore."
+      }
+    },
+    "fields": {
+      "manufacturerName": "Nome del fabbricante",
+      "manufacturerNamePlaceholder": "es. Acme GmbH",
+      "manufacturerAddress": "Indirizzo del fabbricante",
+      "manufacturerAddressPlaceholder": "Indirizzo postale completo…",
+      "productName": "Nome del prodotto",
+      "productNamePlaceholder": "es. Smart Thermostat Pro",
+      "productIdentification": "Identificazione del prodotto",
+      "productIdentificationPlaceholder": "Numero di modello, numero di serie o identificatore univoco…",
+      "conformityStatement": "Dichiarazione di conformità",
+      "conformityStatementPlaceholder": "Il prodotto di cui sopra è conforme ai requisiti stabiliti nel Cyber Resilience Act…",
+      "standardsApplied": "Norme applicate",
+      "standardsAppliedPlaceholder": "es. IEC 62443, ETSI EN 303 645",
+      "standardsAppliedHint": "Elenco separato da virgole di norme armonizzate o specifiche.",
+      "notifiedBodyName": "Nome dell'organismo notificato",
+      "notifiedBodyNamePlaceholder": "es. TÜV Rheinland",
+      "notifiedBodyNumber": "Numero dell'organismo notificato",
+      "notifiedBodyNumberPlaceholder": "es. 0035",
+      "place": "Luogo",
+      "placePlaceholder": "es. Milano, Italia",
+      "date": "Data",
+      "signatoryName": "Nome del firmatario",
+      "signatoryNamePlaceholder": "Nome completo della persona autorizzata",
+      "signatoryPosition": "Qualifica del firmatario",
+      "signatoryPositionPlaceholder": "es. Chief Technology Officer",
+      "policyScope": "Ambito della politica",
+      "policyScopePlaceholder": "Descrivi quali sistemi e prodotti copre questa politica…",
+      "reportingChannels": "Canali di segnalazione",
+      "reportingChannelsPlaceholder": "es. security@esempio.com, https://esempio.com/security",
+      "responseTimeline": "Tempistica di risposta",
+      "responseTimelinePlaceholder": "es. Conferma di ricezione iniziale entro 24 ore, triage entro 72 ore…",
+      "disclosureTimeline": "Tempistica di divulgazione",
+      "disclosureTimelinePlaceholder": "es. Divulgazione pubblica coordinata dopo 90 giorni…",
+      "safeHarborStatement": "Dichiarazione di porto sicuro",
+      "safeHarborStatementPlaceholder": "Garanzia che i ricercatori in buona fede non subiranno azioni legali…",
+      "incidentTitle": "Titolo dell'incidente",
+      "incidentTitlePlaceholder": "Titolo breve per l'incidente…",
+      "incidentDate": "Data dell'incidente",
+      "incidentDescription": "Descrizione dell'incidente",
+      "incidentDescriptionPlaceholder": "Descrizione dettagliata di quanto accaduto…",
+      "impactAssessment": "Valutazione dell'impatto",
+      "impactAssessmentPlaceholder": "Sistemi, utenti e dati interessati…",
+      "mitigationActions": "Azioni di mitigazione",
+      "mitigationActionsPlaceholder": "Azioni intraprese per contenere e rimediare…",
+      "notificationDate": "Data di notifica a ENISA",
+      "riskTitle": "Titolo della valutazione",
+      "riskTitlePlaceholder": "es. Valutazione del rischio di cibersicurezza T1 2026",
+      "threatDescription": "Descrizione della minaccia",
+      "threatDescriptionPlaceholder": "Descrivi il panorama delle minacce e gli attori delle minacce…",
+      "vulnerabilitiesIdentified": "Vulnerabilità identificate",
+      "vulnerabilitiesIdentifiedPlaceholder": "Elenca le vulnerabilità e i punti deboli noti…",
+      "riskLevel": "Livello di rischio complessivo",
+      "riskLevelLow": "Basso",
+      "riskLevelMedium": "Medio",
+      "riskLevelHigh": "Alto",
+      "riskLevelCritical": "Critico",
+      "mitigationPlan": "Piano di mitigazione",
+      "mitigationPlanPlaceholder": "Azioni pianificate per ridurre i rischi identificati…",
+      "residualRisk": "Rischio residuo",
+      "residualRiskPlaceholder": "Rischio rimanente dopo le misure di mitigazione…",
+      "techDocScope": "Ambito",
+      "techDocScopePlaceholder": "Prodotti e sistemi coperti da questa documentazione…",
+      "designDescription": "Descrizione della progettazione",
+      "designDescriptionPlaceholder": "Architettura, componenti e scelte progettuali…",
+      "developmentProcess": "Processo di sviluppo",
+      "developmentProcessPlaceholder": "Metodologia di sviluppo, strumenti e pratiche di codifica sicura…",
+      "testingResults": "Test e verifica",
+      "testingResultsPlaceholder": "Piani di test, risultati e attività di verifica…",
+      "updateMechanism": "Meccanismo di aggiornamento",
+      "updateMechanismPlaceholder": "Come gli aggiornamenti di sicurezza vengono distribuiti agli utenti…",
+      "supportPeriod": "Periodo di supporto",
+      "supportPeriodPlaceholder": "es. 5 anni dalla data di vendita",
+      "tooltips": {
+        "manufacturerName": {
+          "title": "Nome del fabbricante",
+          "body": "La persona giuridica che immette il prodotto sul mercato UE. Deve corrispondere esattamente alla denominazione di registrazione aziendale — acquirenti e organismi notificati la verificano rispetto alle iscrizioni nel registro delle imprese.",
+          "ref": "CRA Allegato IV, punto 1(a)"
+        },
+        "manufacturerAddress": {
+          "title": "Indirizzo del fabbricante",
+          "body": "Il tuo indirizzo aziendale registrato, incluso il codice postale e il paese. Usa l'indirizzo depositato presso la tua autorità fiscale — non un indirizzo di spedizione o di marketing.",
+          "ref": "CRA Allegato IV, punto 1(a)"
+        },
+        "productName": {
+          "title": "Nome del prodotto",
+          "body": "Il nome commerciale che i consumatori vedono — quello stampato sulla confezione e nel listino prodotti. Deve corrispondere esattamente al nome utilizzato nel materiale di marketing.",
+          "ref": "CRA Allegato IV, punto 2"
+        },
+        "productIdentification": {
+          "title": "Identificazione del prodotto",
+          "body": "Un identificatore univoco che distingue questo prodotto dagli altri modelli che distribuisci. Può essere un numero di modello, uno SKU, un GTIN o un intervallo di numeri seriali hardware. I consumatori devono poter risalire da qualsiasi unità specifica a questa dichiarazione.",
+          "ref": "CRA Allegato IV, punto 2"
+        },
+        "conformityStatement": {
+          "title": "Dichiarazione di conformità",
+          "body": "La frase legale che attesta che il prodotto soddisfa i requisiti essenziali di cibersicurezza del CRA. Il testo standard predefinito è la formulazione raccomandata nell'Allegato IV — non modificarla a meno che il consulente legale non abbia approvato una variante.",
+          "ref": "CRA Allegato IV, punto 3"
+        },
+        "standardsApplied": {
+          "title": "Norme applicate",
+          "body": "Elenco separato da virgole delle norme armonizzate o specifiche tecniche utilizzate per dimostrare la conformità. Esempi comuni: IEC 62443-4-2 per l'IoT industriale, ETSI EN 303 645 per l'IoT consumer, ISO/IEC 27034 per la sicurezza delle applicazioni.",
+          "ref": "CRA Allegato IV, punto 4"
+        },
+        "notifiedBodyName": {
+          "title": "Nome dell'organismo notificato",
+          "body": "Obbligatorio solo quando la procedura di conformità prevede un organismo notificato (Modulo B+C, H o certificazione europea di cibersicurezza). Lascia vuoto se hai eseguito l'autovalutazione ai sensi del Modulo A.",
+          "ref": "CRA Allegato IV, punto 5"
+        },
+        "notifiedBodyNumber": {
+          "title": "Numero dell'organismo notificato",
+          "body": "Il numero a quattro cifre assegnato all'organismo notificato dalla Commissione europea (es. 0035 per TÜV Rheinland LGA). Obbligatorio quando è compilato il nome dell'organismo notificato.",
+          "ref": "CRA Allegato IV, punto 5"
+        },
+        "place": {
+          "title": "Luogo di emissione",
+          "body": "La città e il paese in cui viene firmata la dichiarazione. Di solito la sede principale dell'azienda.",
+          "ref": "CRA Allegato IV, punto 6"
+        },
+        "date": {
+          "title": "Data di emissione",
+          "body": "La data in cui si firma la dichiarazione. Deve essere uguale o precedente alla data in cui il prodotto viene immesso per la prima volta sul mercato UE.",
+          "ref": "CRA Allegato IV, punto 6"
+        },
+        "signatoryName": {
+          "title": "Nome del firmatario",
+          "body": "Nome completo della persona legalmente autorizzata dal fabbricante a firmare la dichiarazione. In genere un direttore, CTO o responsabile conformità con autorità formale.",
+          "ref": "CRA Allegato IV, punto 7"
+        },
+        "signatoryPosition": {
+          "title": "Qualifica del firmatario",
+          "body": "Il titolo professionale del firmatario all'interno della persona giuridica del fabbricante (es. Chief Technology Officer, Direttore Conformità). Conferma che ha l'autorità per vincolare l'azienda.",
+          "ref": "CRA Allegato IV, punto 7"
+        },
+        "policyScope": {
+          "title": "Ambito della politica",
+          "body": "I prodotti, le versioni e i servizi coperti da questa politica. Sii specifico — acquirenti e ricercatori devono poter capire a colpo d'occhio se il loro riscontro rientra nella politica.",
+          "ref": "CRA Articolo 13, punto 2"
+        },
+        "reportingChannels": {
+          "title": "Canali di segnalazione",
+          "body": "Dove i ricercatori devono inviare le segnalazioni di vulnerabilità. Indica almeno un canale sicuro (email + chiave PGP, modulo crittografato o piattaforma VDP). RFC 9116 (security.txt) è il formato di scoperta raccomandato.",
+          "ref": "CRA Articolo 11"
+        },
+        "responseTimeline": {
+          "title": "Tempistica di risposta",
+          "body": "Il tempo massimo tra la ricezione di una segnalazione e il riscontro al ricercatore. La base del settore è 24-72 ore per la conferma iniziale, 5-10 giorni lavorativi per il triage e la valutazione della gravità.",
+          "ref": "CRA Articolo 11"
+        },
+        "disclosureTimeline": {
+          "title": "Tempistica di divulgazione",
+          "body": "Quando e come pubblicherai un CVE o un avviso una volta rilasciata una correzione. Il CRA promuove la divulgazione coordinata allineata al rilascio della patch; la prassi del settore è di 90 giorni dalla segnalazione iniziale.",
+          "ref": "CRA Articolo 11"
+        },
+        "safeHarborStatement": {
+          "title": "Dichiarazione di porto sicuro",
+          "body": "Garanzia che i ricercatori di sicurezza in buona fede non subiranno azioni legali o penali contrattuali per aver trovato e segnalato vulnerabilità nell'ambito della politica. La prassi standard fa riferimento al linguaggio di porto sicuro del CFAA / Computer Misuse Act.",
+          "ref": "CRA Articolo 11"
+        },
+        "incidentTitle": {
+          "title": "Titolo dell'incidente",
+          "body": "Identificatore breve per l'incidente — quello che userai nelle comunicazioni interne e nelle comunicazioni a ENISA. Es. 'INC-2026-007 — Auth bypass nel firmware 2.1.4'.",
+          "ref": "CRA Articolo 14"
+        },
+        "incidentDate": {
+          "title": "Data dell'incidente",
+          "body": "Quando l'incidente si è effettivamente verificato, non quando è stato scoperto. Se sconosciuta, usa la tua migliore stima e annotalo nella descrizione.",
+          "ref": "CRA Articolo 14, punto 1"
+        },
+        "incidentDescription": {
+          "title": "Descrizione dell'incidente",
+          "body": "Riepilogo in linguaggio semplice di cosa è successo, quale risorsa è stata interessata e come è stato rilevato. Punta a 3-5 frasi — i dettagli vanno nella valutazione dell'impatto.",
+          "ref": "CRA Articolo 14, punto 2(a)"
+        },
+        "impactAssessment": {
+          "title": "Valutazione dell'impatto",
+          "body": "Le conseguenze effettive o attese. Includi il numero di utenti/dispositivi interessati, i dati esposti, i tempi di inattività e le eventuali implicazioni per la sicurezza. ENISA si aspetta che la gravità determini i tempi di segnalazione.",
+          "ref": "CRA Articolo 14, punto 2(b)"
+        },
+        "mitigationActions": {
+          "title": "Azioni di mitigazione",
+          "body": "Cosa hai fatto e cosa prevedi di fare — contenimento a breve termine, rimedio a lungo termine e guida per i clienti. Il rapporto intermedio di 72 ore del CRA si aspetta un piano di mitigazione credibile.",
+          "ref": "CRA Articolo 14, punto 4"
+        },
+        "notificationDate": {
+          "title": "Data di notifica",
+          "body": "Quando hai notificato il CSIRT / ENISA. Il CRA richiede un preallarme entro 24 ore dalla scoperta, un rapporto intermedio entro 72 ore e un rapporto finale entro un mese.",
+          "ref": "CRA Articolo 14, punto 3"
+        },
+        "riskTitle": {
+          "title": "Titolo del rischio",
+          "body": "Etichetta breve per questo rischio — come lo chiameresti in un rapporto di stato. Es. 'RA-04 — Aggiramento dell'integrità del firmware tramite canale OTA'.",
+          "ref": "CRA Allegato I, Parte I.1"
+        },
+        "threatDescription": {
+          "title": "Descrizione della minaccia",
+          "body": "Cosa sta cercando di ottenere un attaccante e quale capacità gli serve. Copri l'attore della minaccia, il vettore di attacco e l'obiettivo. Fai riferimento alle categorie STRIDE o LINDDUN se hai adottato un framework di modellazione delle minacce.",
+          "ref": "CRA Allegato I, Parte I.1"
+        },
+        "vulnerabilitiesIdentified": {
+          "title": "Vulnerabilità identificate",
+          "body": "I punti deboli nel tuo prodotto che la minaccia potrebbe sfruttare. Sii concreto — fai riferimento a specifici percorsi di codice, difetti di progettazione, impostazioni predefinite di configurazione o componenti di terze parti.",
+          "ref": "CRA Allegato I, Parte I.2"
+        },
+        "riskLevel": {
+          "title": "Livello di rischio",
+          "body": "Valutazione combinata probabilità × impatto tenendo conto dei controlli esistenti. La maggior parte dei framework allineati al CRA usa le bande Basso / Medio / Alto / Critico; allineati alla politica di gestione del rischio della tua azienda, se esiste.",
+          "ref": "CRA Allegato I, Parte I.3"
+        },
+        "mitigationPlan": {
+          "title": "Piano di mitigazione",
+          "body": "I controlli che stai aggiungendo o rafforzando per ridurre il rischio a un livello accettabile. Includi chi è responsabile di ciascuna azione, come appare \"fatto\" e la data di completamento prevista.",
+          "ref": "CRA Allegato I, Parte I.4"
+        },
+        "residualRisk": {
+          "title": "Rischio residuo",
+          "body": "Il rischio che rimane dopo l'applicazione delle mitigazioni. Documenta perché questo livello è accettabile e quale dirigente lo ha accettato — i revisori chiederanno entrambi.",
+          "ref": "CRA Allegato I, Parte I.4"
+        },
+        "techDocScope": {
+          "title": "Ambito della documentazione",
+          "body": "Cosa copre questo fascicolo tecnico — di solito una singola famiglia di prodotti o piattaforma hardware. Indicalo esplicitamente affinché un organismo notificato possa definire l'ambito della propria valutazione.",
+          "ref": "CRA Allegato VII, punto 1"
+        },
+        "designDescription": {
+          "title": "Descrizione della progettazione",
+          "body": "Architettura di alto livello: componenti, flussi di dati, confini di fiducia e scelte progettuali rilevanti per la sicurezza. I diagrammi sono preferibili al testo — incollali o collega a una presentazione dell'architettura.",
+          "ref": "CRA Allegato VII, punto 2"
+        },
+        "developmentProcess": {
+          "title": "Processo di sviluppo",
+          "body": "Come distribuisci codice sicuro: fasi del ciclo SDLC, politica di revisione del codice, strumenti di analisi statica/dinamica, scansione delle dipendenze e gate di sicurezza ad ogni milestone. Fai riferimento al documento di policy interno, se ne hai uno.",
+          "ref": "CRA Allegato VII, punto 3"
+        },
+        "testingResults": {
+          "title": "Test e verifica",
+          "body": "Riepilogo dei penetration test, delle campagne di fuzzing, delle valutazioni di conformità e delle scansioni delle vulnerabilità. Collega o allega i rapporti completi; questa sezione è il riepilogo esecutivo.",
+          "ref": "CRA Allegato VII, punto 4"
+        },
+        "updateMechanism": {
+          "title": "Meccanismo di aggiornamento",
+          "body": "Come distribuisci gli aggiornamenti di sicurezza ai prodotti già distribuiti: OTA, app store, download manuale, ecc. Il CRA impone che gli aggiornamenti siano disponibili per tutto il periodo di supporto del prodotto.",
+          "ref": "CRA Allegato VII, punto 5"
+        },
+        "supportPeriod": {
+          "title": "Periodo di supporto",
+          "body": "La finestra temporale durante la quale fornirai aggiornamenti di sicurezza gratuiti. L'Articolo 13 del CRA richiede un minimo di 5 anni, o la durata prevista del prodotto se più lunga.",
+          "ref": "CRA Articolo 13"
+        }
+      }
+    }
+  }
+}

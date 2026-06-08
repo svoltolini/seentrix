@@ -33,7 +33,7 @@ export default async function BlogPage() {
         <h1 className="font-heading text-h1 tracking-tight">
           {t("heading")}
         </h1>
-        <p className="mt-4 text-lg text-muted-foreground">
+        <p className="mt-4 text-p1 text-muted-foreground">
           {t("subheading")}
         </p>
       </div>

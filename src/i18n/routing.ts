@@ -1,15 +1,24 @@
 import { defineRouting } from "next-intl/routing";
+import { LOCALES, DEFAULT_LOCALE } from "./locales";
 
 /**
- * Single-locale routing.
+ * Multi-locale routing (English, German, French, Italian).
  *
- * Seentrix ships in English only. We keep next-intl wired up because every
- * `t("...")` call in the codebase still uses it as a string-key registry —
- * but the locale list is fixed to `["en"]` and `localePrefix: "never"`
- * means URLs never carry a `/en/` segment.
+ * `localePrefix: "never"` means URLs never carry a `/de/` segment — the
+ * active locale is resolved per-request from the `NEXT_LOCALE` cookie (set
+ * from the user's saved `preferred_locale`, falling back to Accept-Language,
+ * then `en`). This keeps every existing link stable while still letting the
+ * whole app render in any of the four languages.
+ *
+ * `localeDetection` stays ENABLED (default). With `localePrefix: "never"`
+ * there is no URL segment to read the locale from, so next-intl resolves it
+ * from the `NEXT_LOCALE` cookie — which is exactly what the language picker
+ * and the middleware write. Setting `localeDetection: false` would pin every
+ * request to the default locale and ignore the cookie (it's documented as
+ * "the locale can't be negotiated on the server"), so we must NOT set it.
  */
 export const routing = defineRouting({
-  locales: ["en"],
-  defaultLocale: "en",
+  locales: LOCALES,
+  defaultLocale: DEFAULT_LOCALE,
   localePrefix: "never",
 });

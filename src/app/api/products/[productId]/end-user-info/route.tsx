@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { renderToBuffer } from "@react-pdf/renderer";
 import { createClient } from "@/lib/supabase/server";
 import { EndUserInfoPdf } from "@/lib/pdf/templates/end-user-info";
+import { getEndUserInfoMessages } from "@/lib/pdf/i18n/end-user-info-messages";
+import { LOCALE_COOKIE, isLocale, type Locale } from "@/i18n/locales";
 
 /**
  * Stream the End-User Cybersecurity Information Sheet — the document
@@ -93,39 +95,18 @@ export async function GET(
     declarationIssuedAt: fmt(p.declaration_issued_at),
   };
 
-  const messages = {
-    title: "End-User Cybersecurity Information",
-    subtitle:
-      "Document required by CRA Article 13 and Annex II(3). Accompanies the product when placed on the EU market.",
-    section1: "1. Product identification",
-    productName: "Product name",
-    productType: "Type",
-    productIdentification: "Identification",
-    section2: "2. Manufacturer and cybersecurity contact",
-    manufacturer: "Manufacturer",
-    manufacturerAddress: "Address",
-    cybersecurityContact: "Cybersecurity contact",
-    website: "Website",
-    section3: "3. Support period and update channel",
-    supportStart: "Support starts",
-    supportEnd: "Support ends",
-    updateChannel: "Update channel",
-    updateChannelTbd: "Communicated to users at product rollout",
-    supportNote:
-      "Security updates are provided free of charge and without undue delay throughout the support period (CRA Article 13(8)).",
-    section4: "4. Reporting vulnerabilities",
-    disclosureIntro:
-      "We operate a coordinated vulnerability disclosure policy. Please report security issues through the channel below — we acknowledge within 5 business days.",
-    disclosureUrl: "Reporting URL",
-    section5: "5. Secure-use guidance",
-    secureUseDefault:
-      "Use the product according to the accompanying user manual. Keep the product current with security updates. Replace any factory-default credentials before deployment.",
-    section6: "6. Declaration of Conformity reference",
-    docVersion: "DoC version",
-    docIssued: "Issued on",
-  };
+  // Generate in the user's UI language (CRA: user-facing docs follow the market
+  // language). Resolve from the NEXT_LOCALE cookie on this download request.
+  const locale = localeFromCookieHeader(req.headers.get("cookie"));
+  const messages = getEndUserInfoMessages(locale);
 
-  const generatedAt = new Date().toLocaleDateString("en-US", {
+  const dateLocaleTag: Record<Locale, string> = {
+    en: "en-US",
+    de: "de-DE",
+    fr: "fr-FR",
+    it: "it-IT",
+  };
+  const generatedAt = new Date().toLocaleDateString(dateLocaleTag[locale], {
     year: "numeric",
     month: "long",
     day: "numeric",
@@ -143,4 +124,20 @@ export async function GET(
       "Cache-Control": "no-store",
     },
   });
+}
+
+/**
+ * Resolve the active UI locale from the request's Cookie header (NEXT_LOCALE).
+ * Falls back to English when absent or unsupported.
+ */
+function localeFromCookieHeader(cookieHeader: string | null): Locale {
+  if (!cookieHeader) return "en";
+  for (const part of cookieHeader.split(";")) {
+    const [name, ...rest] = part.trim().split("=");
+    if (name === LOCALE_COOKIE) {
+      const value = decodeURIComponent(rest.join("="));
+      if (isLocale(value)) return value;
+    }
+  }
+  return "en";
 }

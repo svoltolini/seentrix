@@ -1,0 +1,269 @@
+{
+  "entity": {
+    "title": "Rôle d'opérateur économique",
+    "subtitle": "Le CRA assigne des obligations différentes aux fabricants, mandataires, importateurs et distributeurs. Sélectionnez le rôle que joue votre organisation — la liste de contrôle des obligations s'adapte en conséquence.",
+    "progressLabel": "Progression",
+    "type": {
+      "title": "Votre rôle",
+      "description": "Seuls les administrateurs et les responsables conformité peuvent modifier le rôle. Le changement réinitialise la liste des obligations.",
+      "current": "Actuel",
+      "manufacturer": {
+        "title": "Fabricant",
+        "description": "Vous mettez des produits comportant des éléments numériques sur le marché de l'UE sous votre propre nom ou marque."
+      },
+      "authorised_representative": {
+        "title": "Mandataire",
+        "description": "Une personne mandatée dans l'UE qui agit au nom d'un fabricant non-UE."
+      },
+      "importer": {
+        "title": "Importateur",
+        "description": "Vous mettez sur le marché de l'UE un produit provenant d'un fabricant non-UE."
+      },
+      "distributor": {
+        "title": "Distributeur",
+        "description": "Vous mettez des produits à disposition sur le marché de l'UE sans en être le fabricant ni l'importateur."
+      }
+    },
+    "status": {
+      "pending": "En attente",
+      "in_progress": "En cours",
+      "complete": "Complet",
+      "not_applicable": "N/A"
+    },
+    "obligations": {
+      "title": "Obligations du {entity}",
+      "notesLabel": "Notes sur les preuves",
+      "notesPlaceholder": "Où se trouvent les preuves, qui les a validées, lien vers le document."
+    },
+    "obligation": {
+      "manufacturer": {
+        "essential_requirements_met": {
+          "title": "Exigences essentielles satisfaites",
+          "description": "Toutes les exigences de l'Annexe I Parties I + II sont traitées et attestées dans la liste de contrôle.",
+          "help": {
+            "title": "Satisfaire aux exigences essentielles de cybersécurité",
+            "body": "Votre produit doit être conçu, développé et produit de sorte qu'il soit livré sans vulnérabilités exploitables connues et avec une configuration sécurisée par défaut. Parcourez l'Annexe I Partie I : protégez la confidentialité et l'intégrité des données, minimisez la surface d'attaque, permettez les mises à jour de sécurité (idéalement automatiques) et limitez la collecte de données au strict nécessaire. Documentez la façon dont chaque exigence est satisfaite — ces preuves alimentent votre documentation technique et votre DoC.",
+            "ref": "CRA Article 13 & Annexe I, Partie I — Exigences essentielles de cybersécurité"
+          }
+        },
+        "vulnerability_handling_operational": {
+          "title": "Traitement des vulnérabilités opérationnel",
+          "description": "Un processus documenté pour recevoir, trier et corriger les vulnérabilités tout au long de la période de support est en place.",
+          "help": {
+            "title": "Opérer un processus de traitement des vulnérabilités",
+            "body": "Tout au long de la période de support, vous devez identifier et documenter les vulnérabilités (notamment en maintenant un SBOM), les corriger sans délai via des mises à jour de sécurité gratuites, appliquer une politique de divulgation coordonnée des vulnérabilités et fournir une adresse de contact pour les signalements. Confirmez que vous disposez d'un canal d'intake fonctionnel, d'un processus de triage/correction et d'un moyen de notifier les utilisateurs lorsque des mises à jour sont disponibles.",
+            "ref": "CRA Article 13 & Annexe I, Partie II — Exigences de traitement des vulnérabilités"
+          }
+        },
+        "technical_documentation_ready": {
+          "title": "Documentation technique prête",
+          "description": "Le dossier technique de l'Annexe II est constitué et conservé pendant 10 ans après la mise sur le marché.",
+          "help": {
+            "title": "Préparer la documentation technique",
+            "body": "Constituez le dossier qui démontre la conformité avant de mettre le produit sur le marché : une description générale, les informations sur la conception/le développement et le traitement des vulnérabilités, l'évaluation des risques de cybersécurité, le SBOM, la période de support et la liste des normes appliquées. Maintenez-le à jour tout au long de la durée de vie du produit et mettez-le à jour à mesure que le produit évolue.",
+            "ref": "CRA Article 31 & Annexe VII — Documentation technique"
+          }
+        },
+        "doc_issued": {
+          "title": "Déclaration de conformité émise",
+          "description": "La déclaration UE de conformité est émise, signée et conservée avec le dossier technique.",
+          "help": {
+            "title": "Émettre la déclaration UE de conformité",
+            "body": "Rédigez une DoC UE unique déclarant que les exigences essentielles ont été satisfaites. Elle doit inclure l'identification du produit, votre nom et adresse, une déclaration selon laquelle vous assumez l'entière responsabilité, les références aux normes utilisées et la date d'émission. En la signant, vous assumez la responsabilité juridique de la conformité du produit.",
+            "ref": "CRA Article 28 & Annexe V — Déclaration UE de conformité"
+          }
+        },
+        "ce_marking_affixed": {
+          "title": "Marquage CE apposé",
+          "description": "Le marquage CE (avec le numéro de l'organisme notifié le cas échéant) est apposé de manière visible et durable.",
+          "help": {
+            "title": "Apposer le marquage CE",
+            "body": "Le marquage CE est apposé sur le produit (ou sur son emballage/documentation si la taille ne le permet pas) de manière visible, lisible et indélébile avant sa mise sur le marché. Il signale la conformité au CRA et à toute autre législation européenne applicable. Ne l'apposez qu'une fois la DoC en place et l'évaluation de la conformité complète.",
+            "ref": "CRA Articles 29–30 — Règles et conditions du marquage CE"
+          }
+        },
+        "ten_year_records_retained": {
+          "title": "Documents conservés pendant 10 ans",
+          "description": "La documentation technique, la DoC et les artefacts CVD sont conservés pendant 10 ans ou la période de support, selon la durée la plus longue.",
+          "help": {
+            "title": "Conserver les dossiers pendant dix ans",
+            "body": "Gardez la documentation technique et la déclaration UE de conformité à disposition des autorités de surveillance du marché pendant au moins 10 ans après la mise sur le marché du produit, ou pendant la période de support — selon la durée la plus longue. Stockez-les de sorte à pouvoir les produire sur demande même après l'arrêt du produit.",
+            "ref": "CRA Article 13(13) — Conservation des dossiers"
+          }
+        }
+      },
+      "authorised_representative": {
+        "written_mandate": {
+          "title": "Mandat écrit en dossier",
+          "description": "Mandat signé du fabricant non-UE accordant la représentation dans l'UE.",
+          "help": {
+            "title": "Obtenir un mandat écrit",
+            "body": "Un fabricant non-UE doit vous désigner par écrit avant que son produit soit mis sur le marché de l'UE. Le mandat doit vous permettre de (1) tenir la DoC et la documentation technique à disposition des autorités, (2) fournir aux autorités les informations et documents nécessaires pour démontrer la conformité, et (3) coopérer aux mesures correctives. Conservez le mandat signé en dossier et assurez-vous qu'il nomme les produits spécifiques couverts.",
+            "ref": "CRA Article 18 — Mandataire"
+          }
+        },
+        "technical_documentation_on_hand": {
+          "title": "Documentation technique disponible",
+          "description": "Peut mettre la documentation technique à disposition des autorités sur demande.",
+          "help": {
+            "title": "Tenir la documentation technique à disposition",
+            "body": "Vous devez être en mesure de remettre la documentation technique du produit à une autorité de surveillance du marché sur demande. Vous n'avez pas à la rédiger, mais vous devez en détenir une copie à jour (ou avoir un accès garanti auprès du fabricant) pendant toute la période de conservation requise. Confirmez que vous détenez ou pouvez immédiatement récupérer la dernière version.",
+            "ref": "CRA Article 18(2) & Article 31 — Documentation à disposition"
+          }
+        },
+        "doc_on_hand": {
+          "title": "Déclaration de conformité disponible",
+          "description": "Détient une copie de la DoC pour chaque produit représenté.",
+          "help": {
+            "title": "Tenir la déclaration de conformité à disposition",
+            "body": "Détenez une copie de la déclaration UE de conformité du fabricant et tenez-la prête pour les autorités pendant toute la période de conservation. Vérifiez que la DoC que vous détenez correspond à la version du produit sur le marché et est signée par le fabricant.",
+            "ref": "CRA Article 18(2) & Article 28 — DoC à disposition"
+          }
+        },
+        "cooperate_with_authorities": {
+          "title": "Coopérer avec les autorités",
+          "description": "S'engage à fournir des informations et à coopérer avec les demandes de surveillance du marché.",
+          "help": {
+            "title": "Coopérer avec les autorités de surveillance du marché",
+            "body": "Sur demande motivée, vous devez fournir aux autorités toutes les informations et la documentation (dans une langue facilement compréhensible) pour démontrer la conformité du produit, et coopérer à toute mesure visant à éliminer les risques de cybersécurité des produits que vous couvrez. Désignez un contact et mettez en place un processus pour répondre rapidement.",
+            "ref": "CRA Article 18(2) — Obligations de coopération"
+          }
+        },
+        "terminate_if_noncompliant": {
+          "title": "Résilier le mandat en cas de non-conformité",
+          "description": "Processus en place pour résilier le mandat si le fabricant agit contrairement aux obligations du CRA, et pour notifier le fabricant et les autorités.",
+          "help": {
+            "title": "Résilier le mandat si nécessaire",
+            "body": "Si le fabricant agit contrairement à ses obligations CRA, vous devez résilier le mandat et informer l'autorité de surveillance du marché compétente et ENISA. Assurez-vous que votre accord de mandat permet la résiliation et que vous savez qui notifier si cela se produit.",
+            "ref": "CRA Article 18 — Obligations du mandataire"
+          }
+        }
+      },
+      "importer": {
+        "verify_manufacturer_doc": {
+          "title": "DoC du fabricant vérifiée",
+          "description": "Avant la mise sur le marché, a vérifié que le fabricant a émis une déclaration de conformité valide.",
+          "help": {
+            "title": "Vérifier la déclaration de conformité du fabricant",
+            "body": "Avant de mettre un produit sur le marché de l'UE, confirmez que le fabricant a établi la déclaration UE de conformité et effectué l'évaluation de la conformité appropriée. Demandez la DoC et vérifiez qu'elle couvre la version exacte du produit que vous importez.",
+            "ref": "CRA Article 19 — Obligations des importateurs"
+          }
+        },
+        "verify_ce_marking": {
+          "title": "Marquage CE vérifié",
+          "description": "A vérifié que le marquage CE (avec le numéro de l'organisme notifié le cas échéant) est apposé.",
+          "help": {
+            "title": "Vérifier le marquage CE",
+            "body": "Vérifiez que le marquage CE est correctement apposé sur le produit avant l'importation. Un marquage absent ou incorrect indique que le produit n'est peut-être pas conforme — ne le mettez pas sur le marché tant que ce point n'est pas résolu.",
+            "ref": "CRA Article 19(2) — Vérification par l'importateur"
+          }
+        },
+        "verify_technical_documentation": {
+          "title": "Documentation technique vérifiée",
+          "description": "A confirmé que le fabricant a établi la documentation technique.",
+          "help": {
+            "title": "Confirmer l'existence de la documentation technique",
+            "body": "Assurez-vous que le fabricant a préparé la documentation technique et que le produit porte les informations et instructions à l'utilisateur. Vous ne conservez pas le dossier complet, mais vous devez vous assurer qu'il existe et est disponible pour les autorités.",
+            "ref": "CRA Article 19(2) & Annexe VII — Documentation technique"
+          }
+        },
+        "add_importer_details_to_product": {
+          "title": "Coordonnées de l'importateur sur le produit",
+          "description": "Nom, raison sociale / marque enregistrée et adresse postale indiqués sur le produit ou, si impossible, sur son emballage ou dans les documents d'accompagnement.",
+          "help": {
+            "title": "Ajouter vos coordonnées d'importateur",
+            "body": "Indiquez votre nom, raison sociale ou marque enregistrée, adresse postale, e-mail et un point de contact unique sur le produit, son emballage ou un document d'accompagnement. Cela permet aux utilisateurs et aux autorités de vous joindre.",
+            "ref": "CRA Article 19(3) — Identification de l'importateur"
+          }
+        },
+        "store_transport_without_impact": {
+          "title": "Stockage / transport préserve la conformité",
+          "description": "Les conditions de stockage et de transport ne compromettent pas la conformité du produit aux exigences essentielles.",
+          "help": {
+            "title": "Stocker et transporter sans affecter la conformité",
+            "body": "Tant que le produit est sous votre responsabilité, assurez-vous que les conditions de stockage ou de transport ne dégradent pas sa conformité aux exigences essentielles de cybersécurité (par exemple, ne laissez pas le firmware être périmé ou les protections anti-falsification défaillir).",
+            "ref": "CRA Article 19(4) — Conditions pendant la responsabilité"
+          }
+        },
+        "report_exploited_vulnerabilities_to_manufacturer": {
+          "title": "Signaler les vulnérabilités au fabricant",
+          "description": "Processus en place pour informer le fabricant (et les autorités si requis) des vulnérabilités activement exploitées.",
+          "help": {
+            "title": "Signaler les vulnérabilités au fabricant",
+            "body": "Si vous apprenez qu'un produit que vous avez importé présente une vulnérabilité, informez le fabricant sans délai. Si elle présente un risque de cybersécurité significatif, informez également les autorités de surveillance du marché compétentes. Conservez un enregistrement de ce que vous avez signalé et quand.",
+            "ref": "CRA Article 19(6) — Obligations de déclaration de l'importateur"
+          }
+        },
+        "cooperate_with_authorities": {
+          "title": "Coopérer avec les autorités",
+          "description": "Fournir aux autorités de surveillance du marché toutes les informations et coopérer aux mesures correctives.",
+          "help": {
+            "title": "Coopérer avec les autorités",
+            "body": "Sur demande motivée, fournissez aux autorités les informations et la documentation nécessaires pour démontrer la conformité et coopérez à toute mesure corrective ou d'élimination des risques pour les produits que vous avez importés.",
+            "ref": "CRA Article 19(9) — Obligations de coopération"
+          }
+        }
+      },
+      "distributor": {
+        "verify_ce_marking": {
+          "title": "Marquage CE vérifié",
+          "description": "A vérifié que le marquage CE est apposé et accompagné de la documentation requise.",
+          "help": {
+            "title": "Vérifier le marquage CE",
+            "body": "Avant de mettre un produit à disposition, agissez avec diligence et vérifiez que le marquage CE est présent. S'il est absent ou si vous pensez que le produit n'est pas conforme, ne le distribuez pas avant que la conformité soit établie.",
+            "ref": "CRA Article 20 — Obligations des distributeurs"
+          }
+        },
+        "verify_importer_details": {
+          "title": "Coordonnées de l'importateur présentes",
+          "description": "A vérifié que l'identification de l'importateur ou du fabricant figure sur le produit / l'emballage / les documents d'accompagnement.",
+          "help": {
+            "title": "Vérifier les coordonnées de l'importateur / fabricant",
+            "body": "Confirmez que le fabricant et, le cas échéant, l'importateur ont rempli leurs obligations d'identification — que leur nom et coordonnées figurent sur le produit, l'emballage ou les documents d'accompagnement.",
+            "ref": "CRA Article 20(2) — Vérification par le distributeur"
+          }
+        },
+        "verify_instructions_user_info": {
+          "title": "Instructions utilisateur présentes",
+          "description": "Les instructions et informations d'utilisation sont fournies dans une langue facilement compréhensible par les utilisateurs.",
+          "help": {
+            "title": "Vérifier les instructions et informations destinées aux utilisateurs",
+            "body": "Vérifiez que le produit est accompagné des instructions et informations à l'utilisateur requises par le CRA (notamment la période de support et la façon de recevoir les mises à jour de sécurité), dans une langue facilement compréhensible par les utilisateurs.",
+            "ref": "CRA Article 20(2) & Annexe II — Informations et instructions à l'utilisateur"
+          }
+        },
+        "store_transport_without_impact": {
+          "title": "Stockage / transport préserve la conformité",
+          "description": "Les conditions de stockage et de transport ne compromettent pas la conformité.",
+          "help": {
+            "title": "Stocker et transporter sans affecter la conformité",
+            "body": "Tant que le produit est sous votre responsabilité, assurez-vous que les conditions de stockage ou de transport ne compromettent pas sa conformité aux exigences essentielles de cybersécurité.",
+            "ref": "CRA Article 20(3) — Conditions pendant la responsabilité"
+          }
+        },
+        "report_exploited_vulnerabilities": {
+          "title": "Escalader les vulnérabilités exploitées",
+          "description": "Processus pour informer le fabricant / importateur et les autorités lorsqu'une vulnérabilité activement exploitée est portée à votre attention.",
+          "help": {
+            "title": "Escalader les vulnérabilités exploitées",
+            "body": "Si vous apprenez l'existence d'une vulnérabilité dans un produit que vous distribuez, informez le fabricant sans délai. Lorsque le produit présente un risque de cybersécurité significatif, notifiez également les autorités de surveillance du marché compétentes.",
+            "ref": "CRA Article 20(5) — Obligations de déclaration du distributeur"
+          }
+        },
+        "cooperate_with_authorities": {
+          "title": "Coopérer avec les autorités",
+          "description": "Fournir aux autorités de surveillance du marché des informations et contribuer aux mesures correctives.",
+          "help": {
+            "title": "Coopérer avec les autorités",
+            "body": "Sur demande motivée, fournissez aux autorités les informations et la documentation nécessaires pour démontrer la conformité et coopérez à toute mesure visant à éliminer les risques de cybersécurité des produits que vous avez mis à disposition.",
+            "ref": "CRA Article 20(8) — Obligations de coopération"
+          }
+        }
+      }
+    },
+    "toast": {
+      "saved": "Enregistré",
+      "saveFailed": "Impossible d'enregistrer"
+    }
+  }
+}

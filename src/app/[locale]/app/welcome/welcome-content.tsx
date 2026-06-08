@@ -38,7 +38,7 @@ export function WelcomeContent() {
       {/* Brand mark — uses the real Seentrix logo from /public/logo.svg.
           The SVG ships with a near-black fill, so brightness-0 + invert
           flips it to white against the dark background. */}
-      <div className="mb-6 flex size-16 items-center justify-center rounded-full bg-primary/10">
+      <div className="mb-6 flex size-16 items-center justify-center rounded-md bg-primary/10">
         <Logo size={26} className="text-primary" />
       </div>
 
@@ -58,6 +58,7 @@ export function WelcomeContent() {
                 <Icon
                   name={bullet.icon}
                   size={20}
+                  variant="Bold"
                   className="text-primary"
                 />
               </div>

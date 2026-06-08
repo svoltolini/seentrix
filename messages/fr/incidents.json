@@ -1,0 +1,154 @@
+{
+  "incidents": {
+    "breadcrumb": "Incidents",
+    "banner": {
+      "headline": "{count, plural, one {# incident actif} other {# incidents actifs}}"
+    },
+    "title": "Déclaration d'incidents — Article 14",
+    "subtitle": "Suivez et déclarez les incidents de sécurité et les vulnérabilités activement exploitées à ENISA dans les fenêtres de déclaration du CRA.",
+    "type": {
+      "security_incident": "Incident de sécurité",
+      "exploited_vulnerability": "Vulnérabilité exploitée"
+    },
+    "severity": {
+      "critical": "Critique",
+      "high": "Élevée",
+      "medium": "Moyenne",
+      "low": "Faible"
+    },
+    "status": {
+      "detected": "Détecté",
+      "early_warning_submitted": "Alerte précoce envoyée",
+      "incident_report_submitted": "Rapport d'incident envoyé",
+      "final_report_submitted": "Rapport final envoyé",
+      "closed": "Clôturé"
+    },
+    "phase": {
+      "early_warning": "Alerte précoce",
+      "incident_report": "Rapport d'incident",
+      "final_report": "Rapport final",
+      "submitted": "Soumis",
+      "overdue": "En retard",
+      "remaining": "Restant"
+    },
+    "kpi": {
+      "active": "Actifs",
+      "overdue": "En retard",
+      "critical": "Critiques",
+      "closed": "Clôturés"
+    },
+    "filter": {
+      "active": "Actifs",
+      "all": "Tous",
+      "closed": "Clôturés",
+      "severity": "Sévérité"
+    },
+    "table": {
+      "incident": "Incident",
+      "type": "Type",
+      "aware_at": "Prise de connaissance",
+      "status": "Statut",
+      "deadline": "Prochaine échéance"
+    },
+    "deadline": {
+      "in": "Dans {time}",
+      "overdueBy": "En retard de {time}",
+      "none": "Toutes les fenêtres closes"
+    },
+    "empty": {
+      "title": "Aucun incident pour l'instant",
+      "description": "Lorsqu'un incident de sécurité ou une vulnérabilité activement exploitée est détecté, déclarez-le ici pour démarrer l'horloge de déclaration 24h / 72h / 14j.",
+      "filtered": "Aucun incident ne correspond à vos filtres",
+      "filteredDescription": "Essayez d'ajuster les filtres ci-dessus.",
+      "noProductTitle": "Ajoutez d'abord un produit",
+      "noProductDescription": "Les incidents sont déclarés pour un produit spécifique. Ajoutez votre premier produit pour commencer à suivre les incidents et l'horloge de déclaration CRA 24h / 72h / 14j.",
+      "noProductCta": "Ajoutez votre premier produit"
+    },
+    "new": {
+      "cta": "Nouvel incident",
+      "title": "Déclarer un nouvel incident",
+      "description": "La déclaration d'un incident démarre l'horloge de l'Article 14. Vous disposez de 24h pour l'alerte précoce, 72h pour le rapport d'incident et 14 jours pour le rapport final.",
+      "titleLabel": "Titre",
+      "titlePlaceholder": "Nom d'incident court et précis",
+      "typeLabel": "Type",
+      "severityLabel": "Sévérité",
+      "affectedProductsLabel": "Produits affectés",
+      "descriptionLabel": "Description",
+      "descriptionPlaceholder": "Ce qui s'est passé, quand vous en avez eu connaissance et qui fait l'investigation.",
+      "cancel": "Annuler",
+      "create": "Démarrer l'horloge de déclaration",
+      "created": "Incident créé",
+      "error": "Impossible de créer l'incident",
+      "tooltips": {
+        "title": {
+          "title": "Titre de l'incident",
+          "body": "Nom court et reconnaissable pour l'incident — quelque chose qu'un collègue peut identifier d'un coup d'œil dans une liste (ex. : « CVE-2024-XXXX exploitée dans le firmware v2.3 », « Escalade de privilèges signalée par un client »). Utilisé dans le PDF de déclaration à ENISA.",
+          "ref": "CRA Article 14(1) — l'alerte précoce soumise dans les 24 heures doit au minimum nommer l'incident ; un titre clair est le premier champ demandé par le formulaire d'intake ENISA."
+        },
+        "type": {
+          "title": "Type d'incident",
+          "body": "Choisissez « Incident de sécurité » pour une compromission ayant déjà affecté un produit ou ses utilisateurs (fuite de données, ransomware, prise de contrôle de compte). Choisissez « Vulnérabilité exploitée » lorsque vous avez la preuve qu'un CVE connu dans votre produit est activement exploité dans la nature.",
+          "ref": "CRA Article 14(1) — les deux catégories déclenchent l'horloge de déclaration, mais le formulaire utilisé par ENISA les distingue et les route vers différentes équipes."
+        },
+        "severity": {
+          "title": "Sévérité",
+          "body": "Évaluation subjective de l'impact sur les utilisateurs. Critique = préjudice généralisé ou risque immédiat pour la sécurité. Élevée = impact significatif sur les utilisateurs affectés. Moyenne = impact limité, contournement possible. Faible = impact minimal. Les auditeurs s'attendent à ce que votre évaluation corresponde aux preuves.",
+          "ref": "CRA Article 14(2)(a) — la classification de sévérité fait partie du rapport de chaque phase. Elle détermine si et comment vous devez également notifier les utilisateurs affectés en vertu de l'Article 14(6)."
+        },
+        "affectedProducts": {
+          "title": "Produits affectés",
+          "body": "Sélectionnez chaque produit de votre catalogue qui est ou pourrait être affecté. La liste est utilisée pour générer la section « Produits affectés » des rapports 24h / 72h / 14j. Sélectionner plus que strictement nécessaire est préférable à en manquer un.",
+          "ref": "CRA Article 14(2)(b) — le rapport de chaque phase doit identifier les produits affectés. Des listes de produits incomplètes sont la cause la plus fréquente de renvoi de rapports par ENISA."
+        },
+        "description": {
+          "title": "Description",
+          "body": "Résumé clair de ce qui s'est passé, quand vous en avez eu connaissance, qui fait l'investigation et ce que vous savez jusqu'à présent. Copié verbatim dans le PDF d'alerte précoce, évitez donc les détails confidentiels et tenez-vous-en aux faits publiables.",
+          "ref": "CRA Article 14(1)(a) — l'alerte précoce de 24 heures doit au minimum inclure une description générale de l'incident ; vous pourrez la préciser dans le rapport de 72 heures une fois que vous en saurez plus."
+        }
+      }
+    },
+    "detail": {
+      "awareAt": "Prise de connaissance le {date}",
+      "affecting": "Affectant",
+      "downloadPdf": "Télécharger le PDF",
+      "close": "Clôturer l'incident",
+      "saveDraft": "Enregistrer le brouillon",
+      "saved": "Brouillon enregistré",
+      "saveFailed": "Impossible d'enregistrer le brouillon",
+      "submitted": "Phase soumise",
+      "submitFailed": "Impossible de soumettre",
+      "closed": "Incident clôturé",
+      "closeFailed": "Impossible de clôturer l'incident",
+      "confirmClose": "Clôturer cet incident ? La chronologie s'arrêtera, mais le dossier est conservé.",
+      "notified": "Notification aux utilisateurs enregistrée",
+      "notifyFailed": "Impossible d'enregistrer la notification",
+      "pdfFailed": "Impossible de générer le PDF",
+      "phaseA": {
+        "title": "Alerte précoce de 24 heures",
+        "description": "Première notification à ENISA et à votre CSIRT. Confirmez la prise de connaissance, l'impact initial et si vous suspectez une activité malveillante.",
+        "placeholder": "Décrivez les indicateurs initiaux, le périmètre de la prise de connaissance et toute mesure de confinement immédiate.",
+        "submit": "Soumettre l'alerte de 24h"
+      },
+      "phaseB": {
+        "title": "Rapport d'incident de 72 heures",
+        "description": "Notification complète avec évaluation de l'impact, cause probable et catégories de données compromises.",
+        "placeholder": "Cause, impact, composants et utilisateurs affectés, remédiation en cours.",
+        "submit": "Soumettre le rapport de 72h"
+      },
+      "phaseC": {
+        "title": "Rapport final de 14 jours",
+        "description": "Rapport final avec la cause de l'incident, sa sévérité, la remédiation et les mesures d'atténuation.",
+        "placeholder": "Analyse finale des causes, remédiation effectuée, risque résiduel, enseignements tirés.",
+        "submit": "Soumettre le rapport final"
+      },
+      "userNotify": {
+        "title": "Notifier les utilisateurs affectés",
+        "description": "L'Article 14 exige que les fabricants informent les utilisateurs affectés sans retard indu et leur fournissent des conseils d'atténuation. Capturé verbatim dans la piste d'audit.",
+        "placeholder": "Ce qui s'est passé, ce que les utilisateurs doivent faire et où obtenir des mises à jour.",
+        "send": "Enregistrer la notification",
+        "update": "Mettre à jour la notification",
+        "sent": "Envoyée le {date}"
+      }
+    }
+  }
+}

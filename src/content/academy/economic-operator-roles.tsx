@@ -292,6 +292,305 @@ export const lesson: Lesson = {
         },
       ],
     },
+    fr: {
+      title: "Rôles des opérateurs économiques",
+      summary:
+        "Fabricant, mandataire, importateur, distributeur — les quatre rôles CRA et les obligations que chacun implique.",
+      sections: [
+        {
+          heading: "Pourquoi le rôle est important",
+          body: (
+            <p>
+              Le CRA calibre les obligations en fonction du rôle. Un fabricant
+              est responsable de l’évaluation de la conformité et de la
+              déclaration de conformité. Un importateur vérifie le travail du
+              fabricant. Un distributeur vérifie simplement que le marquage CE
+              est présent. Choisir le bon rôle pour notre organisation dans{" "}
+              <strong>Paramètres → Rôle de l’entité</strong> remodèle notre
+              liste de contrôle des obligations — mauvais rôle = mauvaise
+              liste = mauvaises preuves pour un audit.
+            </p>
+          ),
+        },
+        {
+          heading: "Les quatre rôles",
+          body: (
+            <>
+              <ul className="space-y-1.5 pl-5 [list-style:disc]">
+                <li>
+                  <strong>Fabricant.</strong> Nous mettons le produit sur
+                  le marché de l’UE sous notre propre nom ou marque. Nous
+                  sommes responsables de l’Annexe I, de l’Annexe V, de
+                  l’Article 13, de l’Article 14 — l’ensemble complet.
+                  La plupart des clients Seentrix sont dans ce cas.
+                </li>
+                <li>
+                  <strong>
+                    <Term id="authorised_representative">Mandataire</Term>
+                    .
+                  </strong>{" "}
+                  Établi dans l’UE, mandaté par écrit par un fabricant
+                  hors UE. Détient la documentation technique et assure la
+                  liaison avec la surveillance du marché au nom du fabricant.
+                  Requis en vertu de{" "}
+                  <strong>l’Article 18</strong> dès que le fabricant est
+                  établi hors de l’UE.
+                </li>
+                <li>
+                  <strong>Importateur.</strong> Met sur le marché de l’UE
+                  un produit fabriqué hors UE. Vérifie que la déclaration de
+                  conformité existe, que le marquage CE est présent et que le
+                  fabricant dispose d’un mandataire valide. Non responsable
+                  de la production de la déclaration de conformité, mais{" "}
+                  <em>est</em> tenu responsable s’il met un produit non
+                  conforme sur le marché.
+                </li>
+                <li>
+                  <strong>Distributeur.</strong> Vend un produit sans être
+                  le fabricant ni l’importateur. Vérifie le marquage CE,
+                  la disponibilité de la déclaration de conformité et les
+                  informations utilisateur. Ensemble d’obligations le plus
+                  léger, mais obligation de refuser de vendre des produits
+                  manifestement non conformes.
+                </li>
+              </ul>
+            </>
+          ),
+        },
+        {
+          heading: "La règle de la « modification substantielle »",
+          body: (
+            <p>
+              Un distributeur ou un importateur qui <em>modifie substantiellement</em>{" "}
+              un produit — ajout d’un nouveau firmware, rebranding, modification
+              de sa posture de cybersécurité — devient le fabricant aux yeux
+              du CRA, avec l’ensemble complet des obligations. Apposer notre
+              marque sur un produit OEM et flasher notre propre firmware
+              constitue une modification substantielle ; le conditionner dans
+              une boîte avec un dépliant ne l’est pas.
+            </p>
+          ),
+        },
+      ],
+      quiz: [
+        {
+          question:
+            "Nous achetons un appareil IoT à un fabricant américain et le vendons dans l’UE sans modification. Quel rôle avons-nous au titre du CRA ?",
+          options: [
+            "Fabricant",
+            "Mandataire",
+            "Importateur",
+            "Distributeur",
+          ],
+          correctIndex: 2,
+          explanation:
+            "Mettre sur le marché de l’UE un produit fabriqué hors UE nous rend importateurs. Nous sommes responsables de la vérification de la déclaration de conformité, du marquage CE et du mandataire, mais le fabricant reste responsable du travail Annexe I.",
+        },
+        {
+          question:
+            "Nous achetons un appareil OEM, flashons notre propre firmware et le vendons sous notre marque. Quel rôle ?",
+          options: [
+            "Distributeur — nous n’avons pas fabriqué le matériel",
+            "Fabricant — flasher un firmware sous notre marque est une modification substantielle",
+            "Importateur, car quelqu’un d’autre a fabriqué le matériel",
+            "Mandataire de l’OEM",
+          ],
+          correctIndex: 1,
+          explanation:
+            "La modification substantielle (notre firmware, notre marque) fait de nous le fabricant au titre du CRA. Nous héritons de l’ensemble complet des obligations, y compris l’Annexe I et la déclaration de conformité.",
+        },
+        {
+          question:
+            "Un fabricant hors UE souhaite vendre directement dans l’UE sans nommer de mandataire. Est-ce possible ?",
+          options: [
+            "Oui, si le produit porte le marquage CE",
+            "Oui, si l’importateur accepte la documentation technique",
+            "Non — l’Article 18 impose un mandataire établi dans l’UE",
+            "Uniquement pour les produits importants de classe II",
+          ],
+          correctIndex: 2,
+          explanation:
+            "L’Article 18 est inconditionnel : les fabricants hors UE doivent nommer un mandataire établi dans l’Union avant de mettre des produits sur le marché de l’UE. Aucune dérogation n’est prévue.",
+        },
+        {
+          question:
+            "Quel opérateur est principalement responsable de la conformité à l’Annexe I ?",
+          options: [
+            "Fabricant",
+            "Mandataire",
+            "Importateur",
+            "Distributeur",
+          ],
+          correctIndex: 0,
+          explanation:
+            "Le fabricant est l’opérateur qui doit satisfaire l’Annexe I, préparer la documentation technique et émettre la déclaration de conformité. Les autres opérateurs vérifient ou soutiennent, mais ne sont pas responsables de la conformité.",
+        },
+        {
+          question:
+            "Notre paramètre d’organisation dans Seentrix est défini sur Fabricant, mais nous sommes en réalité simplement un distributeur UE. Quelle est l’incidence ?",
+          options: [
+            "Aucune — le paramètre est cosmétique",
+            "La liste de contrôle pousse des tâches Annexe I + déclaration de conformité dont nous ne sommes pas responsables — perturbant mais pas risqué",
+            "Nous revendiquons ainsi une responsabilité de fabricant sans en avoir les preuves — exactement ce qu’il ne faut pas afficher lors d’un audit",
+            "Les tâches de distributeur sont automatiquement ajoutées en plus",
+          ],
+          correctIndex: 2,
+          explanation:
+            "La liste de contrôle de Seentrix est déterminée par le rôle. Revendiquer le statut de fabricant alors que nous sommes distributeur expose à une responsabilité de fabricant pour laquelle nous n’avons pas les preuves. Corriger le rôle dans Paramètres → Rôle de l’entité pour correspondre à la réalité.",
+        },
+      ],
+    },
+    it: {
+      title: "Ruoli degli operatori economici",
+      summary:
+        "Fabbricante, rappresentante autorizzato, importatore, distributore — i quattro ruoli CRA e gli obblighi che ciascuno comporta.",
+      sections: [
+        {
+          heading: "Perché il ruolo è importante",
+          body: (
+            <p>
+              Il CRA calibra gli obblighi in base al ruolo. Un fabbricante è
+              responsabile della valutazione della conformità e della
+              dichiarazione di conformità. Un importatore verifica il lavoro
+              del fabbricante. Un distributore verifica semplicemente che la
+              marcatura CE sia presente. Scegliere il ruolo corretto per la
+              nostra organizzazione in{" "}
+              <strong>Impostazioni → Ruolo dell’entità</strong> ridisegna la
+              nostra lista di controllo degli obblighi — ruolo sbagliato =
+              lista sbagliata = prove sbagliate per un audit.
+            </p>
+          ),
+        },
+        {
+          heading: "I quattro ruoli",
+          body: (
+            <>
+              <ul className="space-y-1.5 pl-5 [list-style:disc]">
+                <li>
+                  <strong>Fabbricante.</strong> Immettiamo il prodotto sul
+                  mercato dell’UE con il nostro nome o marchio. Siamo
+                  responsabili dell’Allegato I, dell’Allegato V,
+                  dell’Articolo 13, dell’Articolo 14 — l’insieme completo.
+                  La maggior parte dei clienti Seentrix rientra in questa
+                  categoria.
+                </li>
+                <li>
+                  <strong>
+                    <Term id="authorised_representative">Rappresentante autorizzato</Term>
+                    .
+                  </strong>{" "}
+                  Stabilito nell’UE, incaricato per iscritto da un fabbricante
+                  extra-UE. Detiene la documentazione tecnica e funge da
+                  interlocutore con la vigilanza del mercato per conto del
+                  fabbricante. Obbligatorio ai sensi dell’
+                  <strong>Articolo 18</strong> ogni volta che il fabbricante
+                  è stabilito fuori dall’UE.
+                </li>
+                <li>
+                  <strong>Importatore.</strong> Immette sul mercato dell’UE
+                  un prodotto fabbricato fuori dall’UE. Verifica che la
+                  dichiarazione di conformità esista, che la marcatura CE sia
+                  presente e che il fabbricante abbia un rappresentante
+                  autorizzato valido. Non è responsabile della produzione
+                  della dichiarazione di conformità, ma <em>è</em> responsabile
+                  se immette un prodotto non conforme.
+                </li>
+                <li>
+                  <strong>Distributore.</strong> Vende un prodotto senza
+                  essere il fabbricante né l’importatore. Verifica la
+                  marcatura CE, la disponibilità della dichiarazione di
+                  conformità e le istruzioni per l’utente. Insieme di
+                  obblighi più leggero, ma ha comunque il dovere di rifiutarsi
+                  di vendere prodotti che manifestamente non sono conformi.
+                </li>
+              </ul>
+            </>
+          ),
+        },
+        {
+          heading: "La regola della «modifica sostanziale»",
+          body: (
+            <p>
+              Un distributore o un importatore che <em>modifica sostanzialmente</em>{" "}
+              un prodotto — aggiungendo nuovo firmware, ribrandizzandolo,
+              modificandone la postura di cibersicurezza — diventa il
+              fabbricante agli occhi del CRA, con l’insieme completo degli
+              obblighi. Apporre il proprio marchio su un prodotto OEM e
+              installare il proprio firmware è una modifica sostanziale;
+              confezionarlo in una scatola con un foglietto illustrativo
+              non lo è.
+            </p>
+          ),
+        },
+      ],
+      quiz: [
+        {
+          question:
+            "Acquistiamo un dispositivo IoT da un fabbricante statunitense e lo vendiamo nell’UE senza modifiche. Qual è il nostro ruolo ai sensi del CRA?",
+          options: [
+            "Fabbricante",
+            "Rappresentante autorizzato",
+            "Importatore",
+            "Distributore",
+          ],
+          correctIndex: 2,
+          explanation:
+            "Immettere sul mercato dell’UE un prodotto fabbricato fuori dall’UE ci rende importatori. Siamo responsabili della verifica della dichiarazione di conformità, della marcatura CE e del rappresentante autorizzato, ma il fabbricante rimane responsabile del lavoro Allegato I.",
+        },
+        {
+          question:
+            "Acquistiamo un dispositivo OEM, installiamo il nostro firmware e lo vendiamo con il nostro marchio. Qual è il ruolo?",
+          options: [
+            "Distributore — non abbiamo costruito l’hardware",
+            "Fabbricante — installare firmware con il proprio marchio è una modifica sostanziale",
+            "Importatore, perché qualcun altro ha prodotto l’hardware",
+            "Rappresentante autorizzato dell’OEM",
+          ],
+          correctIndex: 1,
+          explanation:
+            "La modifica sostanziale (nostro firmware, nostro marchio) ci rende fabbricanti ai sensi del CRA. Ereditiamo l’insieme completo degli obblighi, inclusi Allegato I e dichiarazione di conformità.",
+        },
+        {
+          question:
+            "Un fabbricante extra-UE vuole vendere direttamente nell’UE senza nominare un rappresentante. È possibile?",
+          options: [
+            "Sì, se il prodotto reca la marcatura CE",
+            "Sì, se l’importatore accetta la documentazione tecnica",
+            "No — l’Articolo 18 richiede un rappresentante autorizzato nell’UE",
+            "Solo per i prodotti importanti di classe II",
+          ],
+          correctIndex: 2,
+          explanation:
+            "L’Articolo 18 è incondizionato: i fabbricanti extra-UE devono nominare un rappresentante autorizzato stabilito nell’Unione prima di immettere prodotti sul mercato dell’UE. Non esistono deroghe.",
+        },
+        {
+          question:
+            "Quale operatore è il principale responsabile della conformità all’Allegato I?",
+          options: [
+            "Fabbricante",
+            "Rappresentante autorizzato",
+            "Importatore",
+            "Distributore",
+          ],
+          correctIndex: 0,
+          explanation:
+            "Il fabbricante è l’operatore che deve soddisfare l’Allegato I, preparare la documentazione tecnica ed emettere la dichiarazione di conformità. Gli altri operatori verificano o supportano, ma non sono responsabili della conformità.",
+        },
+        {
+          question:
+            "La nostra impostazione di organizzazione in Seentrix è impostata come Fabbricante, ma siamo in realtà solo un distributore UE. Qual è l’impatto?",
+          options: [
+            "Nessuno — l’impostazione è cosmetica",
+            "La lista di controllo propone attività Allegato I + dichiarazione di conformità di cui non siamo responsabili — disturbante ma non pericoloso",
+            "Rivendichiamo così una responsabilità da fabbricante senza averne le prove — esattamente ciò che non vogliamo sostenere in un audit",
+            "Le attività da distributore vengono aggiunte automaticamente in cima",
+          ],
+          correctIndex: 2,
+          explanation:
+            "La lista di controllo di Seentrix è determinata dal ruolo. Rivendicare lo stato di fabbricante quando siamo distributori espone a una responsabilità da fabbricante per la quale mancano le prove. Correggere il ruolo in Impostazioni → Ruolo dell’entità per rispecchiare la realtà.",
+        },
+      ],
+    },
   },
 };
 

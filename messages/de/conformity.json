@@ -1,0 +1,169 @@
+{
+  "conformity": {
+    "header": {
+      "routeLabel": "Konformitätsbewertungsverfahren",
+      "progressLabel": "Fortschritt"
+    },
+    "route": {
+      "module_a": {
+        "title": "Modul A – Interne Kontrolle",
+        "description": "Selbstbewertungspfad. Der Hersteller erstellt die technische Dokumentation, erklärt die Konformität und bringt die CE-Kennzeichnung an. Es ist keine notifizierte Stelle beteiligt."
+      },
+      "module_b_c": {
+        "title": "Modul B+C – EU-Baumusterprüfung",
+        "description": "Eine notifizierte Stelle prüft ein repräsentatives Exemplar des Produkts (Modul B), anschließend erklärt der Hersteller die Konformität mit diesem Baumuster (Modul C)."
+      },
+      "module_h": {
+        "title": "Modul H – Umfassende Qualitätssicherung",
+        "description": "Eine notifizierte Stelle prüft und genehmigt ein vollständiges Qualitätssystem, das Entwurf, Fertigung und Abschlussprüfung umfasst. Überwachungsaudits erfolgen regelmäßig."
+      },
+      "european_certification": {
+        "title": "Europäische Cybersicherheitszertifizierung",
+        "description": "Die Konformität wird durch ein Produktzertifikat nachgewiesen, das im Rahmen eines EU-Cybersicherheitszertifizierungssystems (CSA) ausgestellt wird."
+      }
+    },
+    "gate": {
+      "checklist": "CRA-Checkliste",
+      "sbom": "Aktiver SBOM-Scan",
+      "ready": "Bereit",
+      "pending": "Nicht bereit"
+    },
+    "notifiedBody": {
+      "title": "Notifizierte Stelle",
+      "description": "Erfassen Sie die notifizierte Stelle, die die Konformitätsbewertung durchführt. Die ID und der Geltungsbereich erscheinen direkt auf der Konformitätserklärung.",
+      "name": "Name",
+      "id": "Kennnummer der notifizierten Stelle",
+      "scope": "Geltungsbereich",
+      "tooltips": {
+        "name": {
+          "title": "Name der notifizierten Stelle",
+          "body": "Vollständiger Rechtsname der notifizierten Stelle (z. B. \"TÜV Rheinland LGA Products GmbH\", \"BSI Assurance UK Ltd\"). Muss mit dem in der NANDO-Datenbank veröffentlichten Namen übereinstimmen – Groß-/Kleinschreibung und Zeichensetzung beachten.",
+          "ref": "CRA Anhang V(4) – Wenn eine notifizierte Stelle beteiligt ist (Modul B+C oder Modul H), muss die Konformitätserklärung deren Namen zusammen mit der vierstelligen Kennnummer angeben."
+        },
+        "id": {
+          "title": "Kennnummer der notifizierten Stelle",
+          "body": "Die vierstellige Kennnummer, die die Europäische Kommission der notifizierten Stelle zugewiesen hat (z. B. 0197 für TÜV Rheinland). Diese finden Sie in der NANDO-Datenbank: ec.europa.eu/growth/tools-databases/nando.",
+          "ref": "CRA Anhang V(4) – Die Kennnummer der notifizierten Stelle ist Teil der CE-Kennzeichnung auf Produkten, die eine Drittpartei-Bewertung erfordern, und muss auf der Konformitätserklärung angegeben werden."
+        },
+        "scope": {
+          "title": "Geltungsbereich der Tätigkeit der notifizierten Stelle",
+          "body": "Ein Satz, der beschreibt, was die notifizierte Stelle getan hat – z. B. \"EU-Baumusterprüfung des Produkts gemäß Modul B\" oder \"Qualitätssystemaudit unter Modul H\". Wortwörtlich aus dem Zertifikat der notifizierten Stelle übernommen.",
+          "ref": "CRA Anhang V(4) – Die Erklärung muss die durchgeführte spezifische Konformitätsbewertungstätigkeit angeben, nicht nur den Namen der Stelle. Zoll und Marktüberwachungsbehörden nutzen dies, um zu überprüfen, ob das richtige Modul verwendet wurde."
+        }
+      }
+    },
+    "steps": {
+      "title": "Arbeitsablauf",
+      "eyebrow": "Arbeitsschritt",
+      "current": "Aktueller Status",
+      "notesLabel": "Notizen",
+      "notesPlaceholder": "Interne Notizen, Links zu Nachweisen oder Audit-Referenz hinzufügen."
+    },
+    "status": {
+      "pending": "Ausstehend",
+      "in_progress": "In Bearbeitung",
+      "complete": "Abgeschlossen",
+      "not_applicable": "Nicht zutreffend"
+    },
+    "step": {
+      "checklist_complete": {
+        "title": "CRA-Checkliste zu 100 % abgeschlossen",
+        "description": "Alle zutreffenden Annex-I-Punkte der Checkliste sind als abgeschlossen markiert."
+      },
+      "sbom_active": {
+        "title": "Aktive SBOM gescannt",
+        "description": "Die aktive SBOM wurde gescannt und die CVE-Ergebnisse sind überprüft."
+      },
+      "technical_documentation_prepared": {
+        "title": "Technische Dokumentation erstellt",
+        "description": "Technische Dokumentation gemäß Anhang II ist zusammengestellt: Beschreibung, Entwurf, Risiko, Tests, Konformitätserklärung."
+      },
+      "risk_assessment_complete": {
+        "title": "Risikobewertung abgeschlossen",
+        "description": "Das Cybersicherheitsrisiko des Produkts wurde bewertet und dokumentiert."
+      },
+      "notified_body_selected": {
+        "title": "Notifizierte Stelle ausgewählt",
+        "description": "Eine notifizierte Stelle mit dem erforderlichen Geltungsbereich wurde beauftragt."
+      },
+      "eu_type_examination_passed": {
+        "title": "EU-Baumusterprüfung bestanden",
+        "description": "Die notifizierte Stelle hat ein repräsentatives Muster geprüft und das Zertifikat ausgestellt."
+      },
+      "conformity_to_type_verified": {
+        "title": "Konformität mit dem Baumuster verifiziert",
+        "description": "Die Produktion entspricht nachweislich dem geprüften Baumuster."
+      },
+      "quality_system_documented": {
+        "title": "Qualitätssystem dokumentiert",
+        "description": "Entwurfs-, Fertigungs- und Abschlussprüfungsverfahren sind dokumentiert."
+      },
+      "quality_system_approved": {
+        "title": "Qualitätssystem genehmigt",
+        "description": "Die notifizierte Stelle hat das Qualitätssystem genehmigt."
+      },
+      "surveillance_audit_scheduled": {
+        "title": "Überwachungsaudit geplant",
+        "description": "Regelmäßiges Überwachungsaudit mit der notifizierten Stelle geplant."
+      },
+      "eu_certification_obtained": {
+        "title": "EU-Zertifikat erhalten",
+        "description": "Das Produkt verfügt über ein gültiges Zertifikat im Rahmen eines EU-Cybersicherheitszertifizierungssystems."
+      },
+      "declaration_prepared": {
+        "title": "Erklärung erstellt",
+        "description": "Text der Konformitätserklärung, Herstellerangaben und referenzierte Normen sind bereit."
+      },
+      "ce_marking_affixed": {
+        "title": "CE-Kennzeichnung angebracht",
+        "description": "Die CE-Kennzeichnung (mit Kennnummer der notifizierten Stelle, falls zutreffend) ist am Produkt angebracht."
+      }
+    },
+    "doc": {
+      "eyebrow": "Konformitätserklärung",
+      "title": "Konformitätserklärung ausstellen",
+      "description": "Erstellen Sie die EU-Konformitätserklärung, automatisch ausgefüllt mit den Angaben zu Produkt, Organisation und notifizierter Stelle.",
+      "issue": "Erklärung ausstellen",
+      "reissue": "Erneut ausstellen",
+      "download": "PDF herunterladen",
+      "issued": "Erklärung ausgestellt",
+      "issuedOn": "Ausgestellt am {date}",
+      "stepsIncomplete": "Alle Arbeitsschritte müssen abgeschlossen oder als nicht zutreffend markiert sein, bevor die Erklärung ausgestellt werden kann.",
+      "profileIncomplete": "Ihrem Unternehmensprofil fehlen erforderliche Felder. Öffnen Sie Einstellungen → Organisation, um es zu vervollständigen.",
+      "downloadFailed": "Erklärung konnte nicht heruntergeladen werden"
+    },
+    "toast": {
+      "saved": "Gespeichert",
+      "saveFailed": "Speichern fehlgeschlagen",
+      "commentRequired": "Fügen Sie eine Notiz hinzu, bevor Sie den Status ändern – jede Statusänderung wird im Audit-Protokoll erfasst.",
+      "fileTooLarge": "Datei überschreitet das Upload-Limit von 2 MB.",
+      "unsupportedMime": "Dieser Dateityp wird nicht unterstützt. Bilder, PDFs, Office-Dokumente und Nur-Text-Dateien werden akzeptiert.",
+      "uploadFailed": "Datei konnte nicht hochgeladen werden. Bitte versuchen Sie es erneut.",
+      "fileUploaded": "Datei hochgeladen."
+    },
+    "attachments": {
+      "title": "Anhänge",
+      "attach": "Datei anhängen",
+      "hint": "Datei anhängen (≤ 2 MB)",
+      "download": "Herunterladen",
+      "discard": "Ausstehende Datei verwerfen"
+    },
+    "meta": {
+      "commentCount": "{count, plural, one {# Kommentar} other {# Kommentare}}",
+      "attachmentCount": "{count, plural, one {# Anhang} other {# Anhänge}}"
+    },
+    "conversation": {
+      "empty": "Noch keine Kommentare. Starten Sie den Thread mit der ersten Notiz.",
+      "placeholder": "Fügen Sie eine Notiz hinzu, die erklärt, was sich geändert hat und warum…",
+      "changeStatus": "Status setzen auf",
+      "noteRequired": "Kommentare werden im Audit-Protokoll gespeichert und können nicht bearbeitet oder gelöscht werden.",
+      "pendingChange": "Ausstehende Änderung: {from} → {to}. Speichern Sie, um zu bestätigen.",
+      "save": "Kommentar speichern",
+      "saveStatus": "Statusänderung speichern",
+      "saveStatusAndUpload": "Status speichern & hochladen",
+      "upload": "Datei hochladen",
+      "send": "Kommentar hinzufügen",
+      "unknownUser": "Unbekannter Benutzer"
+    }
+  }
+}

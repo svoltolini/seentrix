@@ -71,7 +71,7 @@ export function FeaturesSection() {
             >
               <div className="flex items-start gap-5">
                 <span
-                  className="shrink-0 text-3xl font-extrabold leading-none"
+                  className="shrink-0 text-h1 leading-none"
                   style={{ color: mod.accent }}
                 >
                   {String(i + 1).padStart(2, "0")}

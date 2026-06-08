@@ -1,0 +1,79 @@
+{
+  "reports": {
+    "breadcrumb": "Segnalazioni di vulnerabilità",
+    "title": "Inbox di divulgazione coordinata",
+    "subtitle": "Segnalazioni di vulnerabilità in arrivo dalla pagina di sicurezza pubblica. Esegui il triage, indaga e rispondi senza perdere l'audit trail.",
+    "status": {
+      "triage": "Da triageare",
+      "accepted": "Accettata",
+      "investigating": "In indagine",
+      "resolved": "Risolta",
+      "duplicate": "Duplicato",
+      "spam": "Spam"
+    },
+    "kpi": {
+      "triage": "Da triageare",
+      "investigating": "In indagine",
+      "resolved": "Risolte",
+      "total": "Totale"
+    },
+    "settings": {
+      "title": "Pagina di sicurezza pubblica",
+      "description": "Pubblica un URL pubblico dove i ricercatori possono raggiungere il tuo team di sicurezza e inviare segnalazioni. Funziona out-of-the-box con le convenzioni security.txt.",
+      "enablePublic": "Pubblica pubblicamente",
+      "slugLabel": "Slug URL",
+      "contactLabel": "Email di contatto per la sicurezza",
+      "policyLabel": "Politica di divulgazione",
+      "policyPlaceholder": "Come gestisci le segnalazioni, il tuo impegno per la divulgazione coordinata, la dichiarazione di porto sicuro, ecc.",
+      "openPublic": "Apri pagina pubblica ↗",
+      "downloadSecurityTxt": "security.txt ↓",
+      "saved": "Salvato",
+      "saveFailed": "Impossibile salvare",
+      "slugTaken": "Questo slug è già in uso",
+      "tooltips": {
+        "slug": {
+          "title": "Slug URL",
+          "body": "Identificatore breve per l'URL della tua pagina di sicurezza pubblica (lettere minuscole, numeri, trattini). La pagina si troverà a /security/<slug>. Scegli qualcosa di breve e facile da indovinare — i ricercatori spesso provano /security/acme prima di cercare un security.txt.",
+          "ref": "CRA Articolo 13(4) — i fabbricanti devono fornire un punto di contatto per le questioni di cibersicurezza. Un URL stabile e facilmente trovabile soddisfa questo obbligo e funge anche da link Policy nel security.txt (RFC 9116)."
+        },
+        "contact": {
+          "title": "Email di contatto per la sicurezza",
+          "body": "Casella di posta o alias dedicato per le segnalazioni di vulnerabilità (es. security@acme.com). Deve essere monitorato durante l'orario di lavoro come minimo. Pubblicato sulla tua pagina di sicurezza e inserito nel campo Contact del security.txt scaricabile.",
+          "ref": "CRA Articolo 13(4) — il punto di contatto deve essere disponibile per tutto il periodo di supporto del prodotto ed essere in grado di ricevere segnalazioni di vulnerabilità."
+        },
+        "policy": {
+          "title": "Politica di divulgazione",
+          "body": "Dichiarazione in linguaggio semplice che descrive come gestisci le segnalazioni in arrivo: tempi di risposta, ambito, porto sicuro legale per i ricercatori in buona fede e come coordini la divulgazione. Pubblicata testualmente sulla pagina pubblica — stabilisci le aspettative prima che un ricercatore faccia clic su invio.",
+          "ref": "CRA Allegato I Parte II(1) — i fabbricanti devono avere una politica di divulgazione coordinata delle vulnerabilità. Questo campo è dove la pubblichi."
+        },
+        "enablePublic": {
+          "title": "Pubblica pubblicamente",
+          "body": "Interruttore principale — quando attivo, la pagina /security/<slug> è raggiungibile da chiunque su Internet e accetta invii anonimi. Quando disattivo, la pagina risponde 404 e l'intake è chiuso. Disattiva durante la configurazione, attiva una volta che il tuo processo di triage è pronto.",
+          "ref": "CRA Allegato I Parte II(1) + Articolo 11 — la politica CVD e l'intake devono essere operativi prima che il prodotto venga immesso sul mercato. Lasciarlo disattivo dopo il lancio non è conforme."
+        }
+      }
+    },
+    "list": {
+      "title": "Segnalazioni in arrivo"
+    },
+    "empty": {
+      "title": "Nessuna segnalazione ancora",
+      "description": "Quando qualcuno invia una vulnerabilità tramite la tua pagina pubblica, apparirà qui per il triage.",
+      "noProductTitle": "Aggiungi prima un prodotto",
+      "noProductDescription": "Le segnalazioni di vulnerabilità sono collegate ai tuoi prodotti. Aggiungi il tuo primo prodotto affinché ricercatori e team abbiano qualcosa su cui segnalare.",
+      "noProductCta": "Aggiungi il tuo primo prodotto"
+    },
+    "row": {
+      "anonymous": "Anonimo",
+      "productLabel": "Prodotto interessato",
+      "triageNotes": "Note di triage",
+      "setStatus": "Imposta stato",
+      "notesLabel": "Note interne",
+      "notesPlaceholder": "Cosa hai verificato, cosa hai trovato, passi successivi. Non visibile al segnalante."
+    },
+    "toast": {
+      "updated": "Segnalazione aggiornata",
+      "updateFailed": "Impossibile aggiornare la segnalazione"
+    }
+  }
+}

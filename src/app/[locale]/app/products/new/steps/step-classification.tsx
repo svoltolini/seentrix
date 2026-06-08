@@ -35,10 +35,10 @@ export function StepClassification({
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h2 className="text-base font-semibold text-foreground">
+        <h2 className="text-h4 text-foreground">
           {t("step5.title")}
         </h2>
-        <p className="mt-1 text-sm text-muted-foreground">
+        <p className="mt-1 text-p2-r text-muted-foreground">
           {t("step5.description")}
         </p>
       </div>
@@ -54,7 +54,7 @@ export function StepClassification({
         {grouped.map(({ group, label, items }) => (
           <div key={group} className="flex flex-col gap-2">
             <div className="flex items-center gap-2">
-              <h3 className="text-sm font-semibold text-foreground">
+              <h3 className="text-h5 text-foreground">
                 {label}
               </h3>
               {items[0] && (

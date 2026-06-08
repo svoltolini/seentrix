@@ -20,7 +20,15 @@ export async function generatePdfBuffer({
 }: GenerateOptions): Promise<Buffer> {
   const data = JSON.parse(content) as Record<string, string>;
   const messages = getPdfMessages(locale, documentType);
-  const generatedAt = new Date().toLocaleDateString("en-US", {
+  // Format the "generated on" date in the document's locale (de-DE, fr-FR,
+  // it-IT, en-US) so the date reads naturally in the chosen language.
+  const dateLocaleTag: Record<Locale, string> = {
+    en: "en-US",
+    de: "de-DE",
+    fr: "fr-FR",
+    it: "it-IT",
+  };
+  const generatedAt = new Date().toLocaleDateString(dateLocaleTag[locale], {
     year: "numeric",
     month: "long",
     day: "numeric",

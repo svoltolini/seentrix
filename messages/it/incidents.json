@@ -1,0 +1,154 @@
+{
+  "incidents": {
+    "breadcrumb": "Incidenti",
+    "banner": {
+      "headline": "{count, plural, one {# incidente attivo} other {# incidenti attivi}}"
+    },
+    "title": "Segnalazione degli incidenti ai sensi dell'Articolo 14",
+    "subtitle": "Traccia e segnala gli incidenti di sicurezza e le vulnerabilità sfruttate attivamente a ENISA entro le finestre di segnalazione del CRA.",
+    "type": {
+      "security_incident": "Incidente di sicurezza",
+      "exploited_vulnerability": "Vulnerabilità sfruttata"
+    },
+    "severity": {
+      "critical": "Critica",
+      "high": "Alta",
+      "medium": "Media",
+      "low": "Bassa"
+    },
+    "status": {
+      "detected": "Rilevato",
+      "early_warning_submitted": "Preallarme inviato",
+      "incident_report_submitted": "Rapporto sull'incidente inviato",
+      "final_report_submitted": "Rapporto finale inviato",
+      "closed": "Chiuso"
+    },
+    "phase": {
+      "early_warning": "Preallarme",
+      "incident_report": "Rapporto sull'incidente",
+      "final_report": "Rapporto finale",
+      "submitted": "Inviato",
+      "overdue": "In ritardo",
+      "remaining": "Rimanente"
+    },
+    "kpi": {
+      "active": "Attivi",
+      "overdue": "In ritardo",
+      "critical": "Critici",
+      "closed": "Chiusi"
+    },
+    "filter": {
+      "active": "Attivi",
+      "all": "Tutti",
+      "closed": "Chiusi",
+      "severity": "Gravità"
+    },
+    "table": {
+      "incident": "Incidente",
+      "type": "Tipo",
+      "aware_at": "Scoperto il",
+      "status": "Stato",
+      "deadline": "Prossima scadenza"
+    },
+    "deadline": {
+      "in": "Tra {time}",
+      "overdueBy": "In ritardo di {time}",
+      "none": "Tutte le finestre chiuse"
+    },
+    "empty": {
+      "title": "Nessun incidente ancora",
+      "description": "Quando viene rilevato un incidente di sicurezza o una vulnerabilità sfruttata attivamente, registralo qui per avviare il clock di segnalazione 24h / 72h / 14g.",
+      "filtered": "Nessun incidente corrisponde ai tuoi filtri",
+      "filteredDescription": "Prova a modificare i filtri sopra.",
+      "noProductTitle": "Aggiungi prima un prodotto",
+      "noProductDescription": "Gli incidenti vengono segnalati in riferimento a un prodotto specifico. Aggiungi il tuo primo prodotto per iniziare a monitorare gli incidenti e il clock di segnalazione CRA 24h / 72h / 14g.",
+      "noProductCta": "Aggiungi il tuo primo prodotto"
+    },
+    "new": {
+      "cta": "Nuovo incidente",
+      "title": "Segnala un nuovo incidente",
+      "description": "La registrazione di un incidente avvia il clock di segnalazione dell'Articolo 14. Hai 24h per il preallarme, 72h per il rapporto sull'incidente e 14 giorni per il rapporto finale.",
+      "titleLabel": "Titolo",
+      "titlePlaceholder": "Nome dell'incidente breve e specifico",
+      "typeLabel": "Tipo",
+      "severityLabel": "Gravità",
+      "affectedProductsLabel": "Prodotti interessati",
+      "descriptionLabel": "Descrizione",
+      "descriptionPlaceholder": "Cosa è successo, quando ne sei venuto a conoscenza e chi sta indagando.",
+      "cancel": "Annulla",
+      "create": "Avvia clock di segnalazione",
+      "created": "Incidente creato",
+      "error": "Impossibile creare l'incidente",
+      "tooltips": {
+        "title": {
+          "title": "Titolo dell'incidente",
+          "body": "Nome breve e riconoscibile per l'incidente — qualcosa che un collega possa identificare a colpo d'occhio in un elenco (es. \"CVE-2024-XXXX sfruttato nel firmware v2.3\", \"Escalation di privilegi segnalata da un cliente\"). Utilizzato nella documentazione PDF da presentare a ENISA.",
+          "ref": "CRA Articolo 14(1) — il preallarme presentato entro 24 ore deve includere come minimo il nome dell'incidente; un titolo chiaro è il primo campo che richiede il modulo di intake di ENISA."
+        },
+        "type": {
+          "title": "Tipo di incidente",
+          "body": "Scegli \"Incidente di sicurezza\" per una compromissione che ha già interessato un prodotto o i suoi utenti (furto di dati, ransomware, account takeover). Scegli \"Vulnerabilità sfruttata\" quando hai prove che un CVE noto nel tuo prodotto viene sfruttato attivamente.",
+          "ref": "CRA Articolo 14(1) — entrambe le categorie avviano il clock di segnalazione, ma il modulo di intake di ENISA le distingue e le instrada a team diversi."
+        },
+        "severity": {
+          "title": "Gravità",
+          "body": "Valutazione soggettiva dell'impatto sugli utenti. Critica = danno diffuso o rischio per la sicurezza imminente. Alta = impatto significativo sugli utenti interessati. Media = impatto limitato, esiste una soluzione alternativa. Bassa = impatto minimo. I revisori si aspettano che la tua valutazione corrisponda alle prove.",
+          "ref": "CRA Articolo 14(2)(a) — la classificazione della gravità fa parte del rapporto di ogni fase. Determina se e come devi notificare gli utenti interessati ai sensi dell'Articolo 14(6)."
+        },
+        "affectedProducts": {
+          "title": "Prodotti interessati",
+          "body": "Seleziona ogni prodotto nel tuo catalogo che è o potrebbe essere interessato. L'elenco viene utilizzato per generare la sezione \"Prodotti interessati\" dei rapporti 24h / 72h / 14g. Selezionare più del necessario è meglio che perderne uno.",
+          "ref": "CRA Articolo 14(2)(b) — ogni rapporto di fase deve identificare i prodotti interessati. Gli elenchi di prodotti incompleti sono il motivo più comune per cui i rapporti vengono rimandati indietro da ENISA."
+        },
+        "description": {
+          "title": "Descrizione",
+          "body": "Riepilogo in linguaggio semplice di cosa è successo, quando ne sei venuto a conoscenza, chi sta indagando e cosa sai finora. Copiato testualmente nel PDF del preallarme, quindi ometti i dettagli riservati e attieniti ai fatti che puoi pubblicare.",
+          "ref": "CRA Articolo 14(1)(a) — il preallarme di 24 ore deve includere come minimo una descrizione generale dell'incidente; puoi perfezionarla nel rapporto di 72 ore quando sai di più."
+        }
+      }
+    },
+    "detail": {
+      "awareAt": "Scoperto il {date}",
+      "affecting": "Interessante",
+      "downloadPdf": "Scarica PDF",
+      "close": "Chiudi incidente",
+      "saveDraft": "Salva bozza",
+      "saved": "Bozza salvata",
+      "saveFailed": "Impossibile salvare la bozza",
+      "submitted": "Fase inviata",
+      "submitFailed": "Impossibile inviare",
+      "closed": "Incidente chiuso",
+      "closeFailed": "Impossibile chiudere l'incidente",
+      "confirmClose": "Chiudere questo incidente? La cronologia si fermerà, ma il record viene conservato.",
+      "notified": "Notifica utenti registrata",
+      "notifyFailed": "Impossibile salvare la notifica",
+      "pdfFailed": "Impossibile generare il PDF",
+      "phaseA": {
+        "title": "Preallarme di 24 ore",
+        "description": "Prima notifica a ENISA e al tuo CSIRT. Conferma la scoperta, l'impatto iniziale e se si sospetta attività dolosa.",
+        "placeholder": "Descrivi gli indicatori iniziali, l'ambito della scoperta e le azioni di contenimento immediate.",
+        "submit": "Invia preallarme 24h"
+      },
+      "phaseB": {
+        "title": "Rapporto sull'incidente di 72 ore",
+        "description": "Notifica completa con valutazione dell'impatto, causa principale finora e categorie di dati compromessi.",
+        "placeholder": "Causa principale, impatto, componenti e utenti interessati, rimedio in corso.",
+        "submit": "Invia rapporto 72h"
+      },
+      "phaseC": {
+        "title": "Rapporto finale di 14 giorni",
+        "description": "Rapporto finale con la causa dell'incidente, la gravità, il rimedio e le misure di mitigazione.",
+        "placeholder": "Analisi finale della causa, rimedio adottato, rischio residuo, lezioni apprese.",
+        "submit": "Invia rapporto finale"
+      },
+      "userNotify": {
+        "title": "Notifica agli utenti interessati",
+        "description": "L'Articolo 14 richiede ai fabbricanti di informare gli utenti interessati senza indebito ritardo e di fornire indicazioni per la mitigazione. Registrato testualmente nell'audit trail.",
+        "placeholder": "Cosa è successo, cosa devono fare gli utenti e dove trovare aggiornamenti.",
+        "send": "Registra notifica",
+        "update": "Aggiorna notifica",
+        "sent": "Inviata il {date}"
+      }
+    }
+  }
+}

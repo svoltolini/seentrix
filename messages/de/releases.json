@@ -1,0 +1,117 @@
+{
+  "releases": {
+    "type": {
+      "security": "Sicherheit",
+      "bugfix": "Fehlerbehebung",
+      "feature": "Funktion",
+      "maintenance": "Wartung"
+    },
+    "support": {
+      "title": "Unterstützungszeitraum",
+      "description": "CRA Anhang I Teil II verpflichtet Sie, während des Unterstützungszeitraums des Produkts – mindestens 5 Jahre – Sicherheitsupdates bereitzustellen.",
+      "startLabel": "Unterstützung beginnt",
+      "endLabel": "Unterstützung endet",
+      "updateChannelLabel": "Update-Kanal",
+      "updateChannelPlaceholder": "z. B. OTA, Paketmanager, Download-Portal",
+      "inSupport": "In Unterstützung · noch {days} T.",
+      "expiringSoon": "Läuft in {days} T. ab",
+      "outOfSupport": "Außerhalb des Unterstützungszeitraums · vor {days} T.",
+      "tooltips": {
+        "start": {
+          "title": "Beginn des Unterstützungszeitraums",
+          "body": "Das Datum, ab dem Sie sich zur Bereitstellung von Sicherheitsupdates verpflichten. Normalerweise identisch mit dem Startdatum des Produkts oder dem ersten Inverkehrbringen.",
+          "ref": "CRA Anhang I Teil II(8) – Hersteller müssen Sicherheitsupdates \"während eines Zeitraums proportional zur erwarteten Nutzung des Produkts\" bereitstellen, mindestens jedoch 5 Jahre ab dem Inverkehrbringen (Artikel 13)."
+        },
+        "end": {
+          "title": "Ende des Unterstützungszeitraums",
+          "body": "Das letzte Datum, an dem Sie Sicherheitsupdates für dieses Produkt liefern werden. Muss mindestens 5 Jahre nach dem Startdatum liegen; länger ist akzeptabel (und oft für Industrie-/Medizingeräte erwartet).",
+          "ref": "CRA Artikel 13 – Der Unterstützungszeitraum ist eine verbindliche Verpflichtung, die gegenüber Endnutzern bekanntgegeben und auf dem Endnutzer-Cybersicherheits-Informationsblatt gedruckt wird. Eine vorzeitige Beendigung stellt einen Verstoß gegen den CRA dar."
+        },
+        "updateChannel": {
+          "title": "Update-Kanal",
+          "body": "Wie Sicherheitsupdates Endnutzer erreichen – Over-The-Air (OTA), Paketmanager (apt/npm), Portal-Download, manuelle Bereitstellung usw. Endnutzer müssen dies wissen, um geschützt zu bleiben.",
+          "ref": "CRA Anhang II(3) des Endnutzer-Informationsblatts – Der deklarierte Unterstützungszeitraum ist bedeutungslos, wenn Nutzer nicht wissen, wie Updates bereitgestellt werden. Erforderlich auf dem Endnutzer-Cybersicherheits-Informationsblatt."
+        }
+      }
+    },
+    "kpi": {
+      "total": "Releases",
+      "security": "Sicherheit",
+      "cvesFixed": "CVEs behoben",
+      "latest": "Neuestes"
+    },
+    "list": {
+      "title": "Release-Verlauf",
+      "cvesFixed": "CVEs behoben",
+      "signedDigest": "Signatur",
+      "delete": "Release löschen",
+      "confirmDelete": "Dieses Release löschen? Diese Aktion kann nicht rückgängig gemacht werden."
+    },
+    "empty": {
+      "title": "Keine Releases erfasst",
+      "description": "Veröffentlichen Sie ein Release, um Sicherheitsupdates, behobene CVEs und signierte Digests in Ihrem CRA-Audit-Trail zu erfassen."
+    },
+    "new": {
+      "cta": "Release veröffentlichen",
+      "title": "Neues Release veröffentlichen",
+      "description": "Erfassen Sie Version, Datum und behobene CVEs, damit Ihr Audit-Trail belegt, dass die Unterstützungsverpflichtung eingehalten wird.",
+      "versionLabel": "Version",
+      "releasedAtLabel": "Veröffentlichungsdatum",
+      "typeLabel": "Typ",
+      "cvesLabel": "Behobene CVEs (komma- oder leerzeichen-getrennt)",
+      "cvesPlaceholder": "CVE-2024-0001, CVE-2024-0002",
+      "notesLabel": "Release-Hinweise",
+      "notesPlaceholder": "Was in diesem Release enthalten ist…",
+      "digestLabel": "Signierter Digest",
+      "digestPlaceholder": "SHA-256 oder Signierungsidentität",
+      "cancel": "Abbrechen",
+      "create": "Veröffentlichen",
+      "tooltips": {
+        "version": {
+          "title": "Version",
+          "body": "Semver oder interne Versionskennung (z. B. 1.2.3, 2024-04-17-build42). Muss diesen spezifischen Build eindeutig identifizieren – Nutzer und Prüfer verwenden sie, um festzustellen, ob ein bestimmtes Gerät gepatcht ist.",
+          "ref": "CRA Anhang II(2) – Die technische Dokumentation muss Versionskennungen enthalten, die vom Produkt auf diesen Datensatz zurückführbar sind."
+        },
+        "releasedAt": {
+          "title": "Veröffentlichungsdatum",
+          "body": "Das Datum, an dem Sie diese Version allgemein für Endnutzer verfügbar gemacht haben – nicht wann sie in main gemergt oder wann der Build abgeschlossen wurde. Wird zur Messung der CRA-Anforderung \"ohne ungebührliche Verzögerung\" für Sicherheitsupdates verwendet.",
+          "ref": "CRA Artikel 13(8) – Sicherheitsupdates müssen \"ohne ungebührliche Verzögerung und kostenlos\" bereitgestellt werden. Dieses Datum ist der auditierbare Zeitstempel."
+        },
+        "type": {
+          "title": "Release-Typ",
+          "body": "Sicherheit = mindestens eine behobene Schwachstelle. Fehlerbehebung = nicht sicherheitsrelevante Bugs. Funktion = neue Funktionalität. Wartung = internes Bereinigen, keine für Nutzer sichtbaren Änderungen. \"Sicherheit\" kennzeichnet das Release automatisch als Sicherheitsupdate im CRA-Nachweisregister.",
+          "ref": "CRA Artikel 13(8) – Sicherheitsupdates haben besondere Pflichten (kostenlos, ohne ungebührliche Verzögerung, Kommunikation an Nutzer). Korrektes Tagging hier macht diese Pflichten messbar."
+        },
+        "cves": {
+          "title": "Behobene CVEs",
+          "body": "Listen Sie alle CVEs auf, die dieses Release behebt – komma- oder leerzeichen-getrennt. Verknüpft mit dem Schwachstellenregister und schließt den Kreislauf von Erkennung → Priorisierung → Fix. Leer lassen ist für Nicht-Sicherheits-Releases in Ordnung.",
+          "ref": "CRA Artikel 13(8) – Sicherheitsupdates müssen bekannte ausnutzbare Schwachstellen beheben. Dieses Feld korrekt zu pflegen ist der Nachweis, den ein Prüfer anfordern wird."
+        },
+        "notes": {
+          "title": "Release-Hinweise",
+          "body": "Kundenseitige Zusammenfassung. Verständliche Sprache, Upgrade-Anweisungen und etwaige Breaking Changes angeben. Auf dem Download-Portal veröffentlicht und dem Endnutzer-Cybersicherheits-Informationsblatt beigefügt.",
+          "ref": "CRA Anhang II(3) des Endnutzer-Informationsblatts – Nutzer benötigen ausreichend Informationen, um zu entscheiden, ob sie das Update anwenden sollen."
+        },
+        "digest": {
+          "title": "Signierter Digest",
+          "body": "SHA-256-Hash des signierten Artefakts oder die Identität des Signierers (z. B. GPG-Schlüssel-Fingerabdruck, Sigstore-Identität). Integritätsnachweis, der es einem Kunden ermöglicht zu überprüfen, dass das heruntergeladene Binary das von Ihnen ausgelieferte ist.",
+          "ref": "CRA Anhang I Teil I(3)(h) – Produkte müssen den \"Integritätsschutz für gespeicherte, übertragene und verarbeitete Daten\" umfassen. Ein signierter Release-Digest ist die übliche Methode, dies für Software zu belegen."
+        }
+      }
+    },
+    "toast": {
+      "saved": "Gespeichert",
+      "saveFailed": "Speichern fehlgeschlagen",
+      "created": "Release veröffentlicht",
+      "createFailed": "Release konnte nicht veröffentlicht werden",
+      "deleted": "Release gelöscht",
+      "deleteFailed": "Release konnte nicht gelöscht werden"
+    },
+    "dashboard": {
+      "title": "Unterstützungsfenster",
+      "expiringSoon": "laufen innerhalb von 90 T. ab",
+      "outOfSupport": "außerhalb des Unterstützungszeitraums",
+      "missing": "keine Unterstützungsdaten"
+    }
+  }
+}

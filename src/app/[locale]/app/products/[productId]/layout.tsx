@@ -14,10 +14,10 @@ export default async function ProductDetailLayout({
   if (!product) {
     return (
       <div className="flex flex-col items-center justify-center py-24 text-center">
-        <h1 className="text-lg font-medium text-foreground">
+        <h1 className="text-h3 text-foreground">
           Product not found
         </h1>
-        <p className="mt-1 text-sm text-muted-foreground">
+        <p className="mt-1 text-p2-r text-muted-foreground">
           The product you are looking for does not exist or you do not have
           access.
         </p>

@@ -212,12 +212,19 @@ export async function generateDocumentPdf(
   if (fetchError || !doc) return { error: "documentNotFound" };
   if (!doc.content) return { error: "noContent" };
 
-  // 2. Generate PDF buffer
+  // 2. Generate PDF buffer in the user's UI language. Per the CRA, the
+  // customer-facing compliance documents (DoC, user instructions) should be in
+  // the language of the market where the product is sold; we default that to
+  // the user's chosen UI locale (resolved from the NEXT_LOCALE cookie).
+  const { getLocale } = await import("next-intl/server");
+  const { isLocale } = await import("@/i18n/locales");
+  const resolved = await getLocale();
+  const docLocale = isLocale(resolved) ? resolved : "en";
   const { generatePdfBuffer } = await import("@/lib/pdf/generate");
   const buffer = await generatePdfBuffer({
     documentType: doc.document_type as DocumentType,
     content: doc.content,
-    locale: "en",
+    locale: docLocale,
   });
 
   // 3. Delete old PDF if exists

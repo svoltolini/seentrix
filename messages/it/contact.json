@@ -1,0 +1,36 @@
+{
+ "contact": {
+  "title": "Personalizziamo Seentrix per la tua organizzazione",
+  "subtitle": "Portafogli di prodotti estesi, settori regolamentati, gruppi padre-figlio, SSO o un SLA personalizzato — dicci di cosa hai bisogno e progetteremo un piano e un prezzo su misura per te.",
+  "form": {
+   "nameLabel": "Il tuo nome",
+   "namePlaceholder": "Anna Bianchi",
+   "emailLabel": "Email di lavoro",
+   "emailPlaceholder": "anna@azienda.com",
+   "companyLabel": "Azienda",
+   "companyPlaceholder": "Acme Manufacturing GmbH",
+   "productsLabel": "Numero approssimativo di prodotti",
+   "productsPlaceholder": "es. 40",
+   "messageLabel": "Di cosa hai bisogno?",
+   "messagePlaceholder": "Parlaci del tuo portafoglio, delle dimensioni del team, della tempistica di conformità e di eventuali requisiti come SSO, residenza dei dati o un MSA personalizzato.",
+   "submit": "Invia richiesta",
+   "submitting": "Invio in corso…",
+   "success": "Grazie — abbiamo ricevuto la tua richiesta e ti risponderemo entro un giorno lavorativo.",
+   "error": "Qualcosa è andato storto. Riprova o scrivici direttamente a support@seentrix.com.",
+   "rateLimited": "Troppe richieste da questa rete. Attendi qualche minuto e riprova.",
+   "captchaFailed": "Impossibile verificare che tu sia umano. Ricarica la pagina e riprova.",
+   "validation": "Compila il tuo nome, un'email di lavoro valida e un breve messaggio.",
+   "privacy": "Utilizzeremo i tuoi dati solo per rispondere a questa richiesta. Consulta la nostra informativa sulla privacy."
+  },
+  "highlights": {
+   "title": "Progettato per le organizzazioni che hanno superato il self-service",
+   "items": {
+    "scale": "Prodotti e membri del team illimitati",
+    "sso": "SSO / SAML e collegamento organizzazioni padre-figlio",
+    "monitoring": "Avvisi di vulnerabilità in tempo reale",
+    "support": "CSM dedicato, onboarding guidato e MSA personalizzato",
+    "residency": "Impegni personalizzati su residenza dei dati e SLA"
+   }
+  }
+ }
+}

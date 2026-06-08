@@ -1,4 +1,3 @@
-import { setRequestLocale } from "next-intl/server";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
@@ -8,8 +7,7 @@ export default async function AiPage({
 }: {
   params: Promise<{ locale: string }>;
 }) {
-  const { locale } = await params;
-  setRequestLocale(locale);
+  await params;
   return <AiContent />;
 }
 

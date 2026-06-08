@@ -9,7 +9,7 @@ export default async function SettingsLayout({
   const t = await getTranslations("settings");
 
   return (
-    <div className="mx-auto max-w-[1120px] space-y-8 pb-12">
+    <div className="mx-auto max-w-[1600px] space-y-8 pb-12">
       <div className="flex items-end justify-between gap-4">
         <div>
           <h1 className="text-h1">

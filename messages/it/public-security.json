@@ -1,0 +1,37 @@
+{
+  "publicSecurity": {
+    "eyebrow": "Divulgazione di sicurezza",
+    "title": "Segnala una vulnerabilità a {org}",
+    "subtitle": "Se hai trovato una vulnerabilità di sicurezza in uno dei nostri prodotti, vogliamo saperlo. Seguiamo la divulgazione coordinata e ci impegniamo a riconoscere le segnalazioni valide entro 72 ore.",
+    "emailCta": "Email {email}",
+    "policyTitle": "Politica di divulgazione",
+    "severity": {
+      "critical": "Critica",
+      "high": "Alta",
+      "medium": "Media",
+      "low": "Bassa"
+    },
+    "form": {
+      "title": "Invia una segnalazione",
+      "description": "Tutti i campi contrassegnati con * sono obbligatori. Puoi inviare in modo anonimo; indagheremo comunque, ma non potremo risponderti.",
+      "titleLabel": "Titolo",
+      "titlePlaceholder": "Breve riassunto",
+      "descriptionLabel": "Descrizione",
+      "descriptionPlaceholder": "Cosa hai trovato, come riprodurlo, impatto potenziale.",
+      "affectedProductLabel": "Prodotto interessato",
+      "affectedProductPlaceholder": "Nome del prodotto / versione / modello",
+      "severityLabel": "Gravità suggerita",
+      "reporterNameLabel": "Il tuo nome",
+      "reporterEmailLabel": "La tua email",
+      "reporterHandleLabel": "Handle (facoltativo)",
+      "reporterHandlePlaceholder": "@tu",
+      "anonymousNote": "Inviare in modo anonimo va bene — non possiamo solo risponderti.",
+      "submit": "Invia segnalazione",
+      "submitting": "Invio in corso…",
+      "submitFailed": "Impossibile inviare la segnalazione. Inviaci un'email.",
+      "captchaFailed": "Impossibile confermare che sei umano. Ricarica la pagina e riprova.",
+      "successTitle": "Segnalazione ricevuta",
+      "successDescription": "Grazie per la divulgazione responsabile. Se hai lasciato un'email, ti contatteremo entro 72 ore."
+    }
+  }
+}

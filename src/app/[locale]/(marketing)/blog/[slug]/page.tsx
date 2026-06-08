@@ -1,6 +1,5 @@
-import { setRequestLocale } from "next-intl/server";
 import { Icon } from "@/components/icon";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { Link } from "@/i18n/navigation";
@@ -18,10 +17,11 @@ import { BlogCard } from "../_components/blog-card";
 import type { Metadata } from "next";
 
 export function generateStaticParams() {
-  const slugs = getAllSlugs();
-  return routing.locales.flatMap((locale) =>
-    slugs.map((slug) => ({ locale, slug }))
-  );
+  // Enumerate slugs against the default locale only. The active language is
+  // negotiated at request time from the NEXT_LOCALE cookie (localePrefix:
+  // "never"), so we don't pre-render a static page per locale — doing so would
+  // pin each page to a build-time language and defeat cookie-based switching.
+  return getAllSlugs().map((slug) => ({ locale: routing.defaultLocale, slug }));
 }
 
 export async function generateMetadata({
@@ -29,7 +29,8 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
-  const { locale, slug } = await params;
+  const { slug } = await params;
+  const locale = await getLocale();
   const post = getPostBySlug(locale, slug);
   if (!post) return {};
 
@@ -59,13 +60,13 @@ export default async function BlogPostPage({
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }) {
-  const { locale, slug } = await params;
-  setRequestLocale(locale);
+  const { slug } = await params;
+  const locale = await getLocale();
 
   const post = getPostBySlug(locale, slug);
   if (!post) notFound();
 
-  const t = await getTranslations({ locale, namespace: "blog" });
+  const t = await getTranslations("blog");
   const headings = extractHeadings(post.content);
   const related = getRelatedPosts(locale, slug, 2);
 
@@ -115,7 +116,7 @@ export default async function BlogPostPage({
       {/* Back link */}
       <Link
         href="/blog"
-        className="mb-8 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+        className="mb-8 inline-flex items-center gap-1.5 text-p2-r text-muted-foreground transition-colors hover:text-foreground"
       >
         <Icon name="ArrowLeft" className="size-4" />
         {t("backToBlog")}
@@ -129,7 +130,7 @@ export default async function BlogPostPage({
         <h1 className="text-h1 tracking-tight">
           {post.title}
         </h1>
-        <div className="mt-4 flex items-center gap-4 text-sm text-muted-foreground">
+        <div className="mt-4 flex items-center gap-4 text-p2-r text-muted-foreground">
           <span className="flex items-center gap-1.5">
             <Icon name="Calendar" className="size-4" />
             {new Date(post.date).toLocaleDateString("en-US", {

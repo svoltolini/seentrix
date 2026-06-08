@@ -1,0 +1,21 @@
+{
+  "upgrade": {
+    "upgradeCta": "Esegui l'upgrade del piano",
+    "sbom": {
+      "title": "La gestione SBOM richiede un piano a pagamento",
+      "description": "Carica e gestisci distinte base del software, analizza le vulnerabilità e monitora i rischi dei componenti con un piano Professional o superiore."
+    },
+    "pdf": {
+      "title": "L'esportazione PDF richiede un piano a pagamento",
+      "description": "Genera documenti PDF professionali e conformi alle normative con un piano Professional o superiore."
+    },
+    "documents": {
+      "title": "I modelli di documenti richiedono un piano a pagamento",
+      "description": "Accedi ai modelli di documenti di conformità CRA e genera PDF con un piano Professional o superiore."
+    },
+    "monitoring": {
+      "title": "Il monitoraggio continuo richiede un piano Business",
+      "description": "Ottieni il monitoraggio automatizzato delle vulnerabilità e gli avvisi per i tuoi prodotti con un piano Business o superiore."
+    }
+  }
+}

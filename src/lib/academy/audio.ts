@@ -60,6 +60,24 @@ export const LESSON_AUDIO: Record<string, LessonAudio> = {
   },
 };
 
-export function getLessonAudio(lessonId: string): LessonAudio | null {
-  return LESSON_AUDIO[lessonId] ?? null;
+/**
+ * Resolve the audio briefing for a lesson in the given locale.
+ *
+ * English briefings live at `/academy/<id>-briefing.mp3`; localized ones at
+ * `/academy/<id>-briefing.<locale>.mp3` (distinct native voice per language).
+ * For a non-English locale we point `src` at the localized file. The duration
+ * label is reused from the English entry as a close approximation (the spoken
+ * length varies slightly by language; the label is informational only).
+ */
+export function getLessonAudio(
+  lessonId: string,
+  locale: "en" | "de" | "fr" | "it" = "en",
+): LessonAudio | null {
+  const base = LESSON_AUDIO[lessonId];
+  if (!base) return null;
+  if (locale === "en") return base;
+  return {
+    ...base,
+    src: base.src.replace(/\.mp3$/, `.${locale}.mp3`),
+  };
 }

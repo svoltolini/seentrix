@@ -5,7 +5,8 @@ import { usePathname, Link } from "@/i18n/navigation";
 
 import { Button } from "@/components/ui/button";
 import { useCreateProduct } from "@/components/products/create-product-context";
-import { SearchInput } from "@/components/ui/search-input";
+import { TopbarSearch } from "./topbar-search";
+import { LanguagePicker } from "@/components/language-picker";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -92,15 +93,11 @@ export function AppTopbar({ user, orgName }: AppTopbarProps) {
         </h1>
       </div>
 
-      {/* CENTRE — search. Hidden on small viewports; truly centred at md+
-          because the column is `1fr` and the search has `max-w` capped
-          plus `justify-center` on the wrapper. */}
+      {/* CENTRE — live product quick-search. Hidden on small viewports;
+          truly centred at md+ because the column is `1fr` and the search
+          has `max-w` capped plus `justify-center` on the wrapper. */}
       <div className="hidden justify-center md:flex">
-        <SearchInput
-          placeholder={t("topbar.searchPlaceholder") ?? "Search products, incidents, reports…"}
-          aria-label={t("topbar.searchPlaceholder") ?? "Search"}
-          className="w-full max-w-[480px]"
-        />
+        <TopbarSearch className="max-w-[480px]" />
       </div>
 
       {/* RIGHT — actions */}
@@ -113,6 +110,11 @@ export function AppTopbar({ user, orgName }: AppTopbarProps) {
             URL so e.g. dashboard filter state doesn't get nuked when
             the user pops the sheet open. */}
         <NewProductButton label={t("topbar.newProduct") ?? "New Product"} />
+
+        {/* Quick language switch — compact EN/DE/FR/IT toggle. Persists to
+            the user profile + cookie and re-renders the whole app. Full
+            labelled control also lives in Settings → Account. */}
+        <LanguagePicker variant="menu" align="end" />
 
         {/* Notification bell — `NotificationsMenu` owns the bell + the
             popover that opens on click. Lazily fetches the last 10

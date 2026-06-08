@@ -1,0 +1,93 @@
+{
+  "vulnerabilities": {
+    "title": "Vulnerabilità",
+    "status": {
+      "open": "Aperta",
+      "in_progress": "In corso",
+      "resolved": "Risolta",
+      "accepted": "Accettata"
+    },
+    "severity": {
+      "critical": "Critica",
+      "high": "Alta",
+      "medium": "Media",
+      "low": "Bassa"
+    },
+    "resolution": {
+      "fix": "Correzione",
+      "mitigation": "Mitigazione",
+      "false_positive": "Falso positivo",
+      "wont_fix": "Non verrà corretta"
+    },
+    "kpi": {
+      "total": "Totale",
+      "open": "Aperte",
+      "critical": "Critiche aperte",
+      "kev": "KEV",
+      "exploited": "Sfruttate attivamente"
+    },
+    "filter": {
+      "searchPlaceholder": "Cerca CVE o componente",
+      "status": "Stato",
+      "severity": "Gravità",
+      "kevOnly": "Solo KEV",
+      "exploitedOnly": "Sfruttate",
+      "anyAssignee": "Qualsiasi assegnatario",
+      "unassigned": "Non assegnato",
+      "byMember": "Per membro",
+      "assignee": "Assegnatario",
+      "clearAll": "Cancella tutto",
+      "activeFilters": "{count, plural, one {# filtro} other {# filtri}}"
+    },
+    "bulk": {
+      "selected": "{count, plural, one {# selezionata} other {# selezionate}}",
+      "changeStatus": "Cambia stato",
+      "assign": "Assegna",
+      "unassign": "Rimuovi assegnazione",
+      "clear": "Cancella"
+    },
+    "table": {
+      "cve": "CVE",
+      "component": "Componente",
+      "age": "Età",
+      "assignee": "Assegnatario",
+      "status": "Stato",
+      "selectAll": "Seleziona tutto",
+      "selectRow": "Seleziona {cve}"
+    },
+    "empty": {
+      "title": "Nessuna vulnerabilità ancora",
+      "description": "Carica e analizza un SBOM per rilevare i CVE. I riscontri appariranno qui per il triage.",
+      "filtered": "Nessuna vulnerabilità corrisponde a questi filtri.",
+      "clearFilters": "Cancella filtri"
+    },
+    "row": {
+      "actively_exploited": "Sfruttata",
+      "daysOld": "{days}g",
+      "unassign": "Rimuovi assegnazione",
+      "assign": "Assegna",
+      "unassigned": "Non assegnato",
+      "more": "Altre azioni",
+      "markExploited": "Contrassegna come sfruttata attivamente",
+      "unmarkExploited": "Rimuovi flag di sfruttata"
+    },
+    "modal": {
+      "resolveTitle": "{count, plural, one {Risolvi vulnerabilità} other {Risolvi # vulnerabilità}}",
+      "acceptTitle": "{count, plural, one {Accetta vulnerabilità} other {Accetta # vulnerabilità}}",
+      "resolveDescription": "Documenta come è stata risolta. Viene registrato nell'audit trail per i tuoi record CRA.",
+      "acceptDescription": "Registra perché accetti questo rischio invece di correggerlo. Viene registrato nell'audit trail per i tuoi record CRA.",
+      "cancel": "Annulla",
+      "resolutionTypeLabel": "Tipo di risoluzione",
+      "notesLabel": "Note",
+      "notesPlaceholder": "Descrivi la correzione, la mitigazione o la motivazione per l'accettazione del rischio."
+    },
+    "toast": {
+      "updateFailed": "Impossibile applicare la modifica",
+      "statusUpdated": "Stato aggiornato",
+      "bulkUpdated": "{count} vulnerabilità aggiornate",
+      "assignmentUpdated": "Assegnazione aggiornata",
+      "markedExploited": "Contrassegnata come sfruttata attivamente",
+      "unmarkedExploited": "Flag di sfruttata rimosso"
+    }
+  }
+}

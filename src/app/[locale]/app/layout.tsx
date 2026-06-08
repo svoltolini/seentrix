@@ -6,7 +6,7 @@ import { GsapProvider } from "@/components/gsap-provider";
 import { NavigationProgress } from "@/components/navigation-progress";
 import { CopilotProvider } from "@/components/copilot/copilot-provider";
 import { CreateProductSheet } from "@/components/products/create-product-sheet";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getAuthUser } from "@/lib/supabase/server";
 
 /**
  * Pull a usable display name out of whatever sources we have. The
@@ -43,9 +43,9 @@ function resolveDisplayName(opts: {
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  // Request-deduped via React cache() so the layout + page + widgets share a
+  // single getUser() network round-trip per navigation.
+  const user = await getAuthUser();
 
   let avatarUrl: string | null = null;
   let displayName: string | null = null;
@@ -110,8 +110,13 @@ export default async function AppLayout({ children }: { children: React.ReactNod
               query param is still honoured for deep-links. */}
           <Suspense fallback={null}>
             <CreateProductSheet>
-              {/* Nask shell: 310px sidebar + flex-1 main column with slim topbar. */}
-              <div className="flex h-screen overflow-hidden">
+              {/* Nask shell: 310px sidebar + flex-1 main column with slim
+                  topbar. Pinned to the viewport with `fixed inset-0` (not just
+                  `h-screen`) so the shell can never push the document/body
+                  taller than the viewport — that was producing a second,
+                  outer scrollbar on top of the intended <main> scroll. Only
+                  <main> scrolls. */}
+              <div className="fixed inset-0 flex overflow-hidden">
                 <AppSidebar user={userProfile} orgName={orgName} />
                 <div className="flex flex-1 flex-col overflow-hidden">
                   <AppTopbar user={userProfile} orgName={orgName} />

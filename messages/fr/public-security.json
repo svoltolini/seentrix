@@ -1,0 +1,37 @@
+{
+  "publicSecurity": {
+    "eyebrow": "Divulgation de sécurité",
+    "title": "Signaler une vulnérabilité à {org}",
+    "subtitle": "Si vous avez découvert une vulnérabilité de sécurité dans l'un de nos produits, nous souhaitons en être informés. Nous pratiquons la divulgation coordonnée et nous engageons à accuser réception des rapports valides dans les 72 heures.",
+    "emailCta": "Envoyer un e-mail à {email}",
+    "policyTitle": "Politique de divulgation",
+    "severity": {
+      "critical": "Critique",
+      "high": "Élevée",
+      "medium": "Moyenne",
+      "low": "Faible"
+    },
+    "form": {
+      "title": "Soumettre un rapport",
+      "description": "Tous les champs marqués * sont obligatoires. Vous pouvez soumettre anonymement ; nous enquêterons tout de même, mais ne pourrons pas vous répondre.",
+      "titleLabel": "Titre",
+      "titlePlaceholder": "Résumé succinct",
+      "descriptionLabel": "Description",
+      "descriptionPlaceholder": "Ce que vous avez trouvé, comment le reproduire, impact potentiel.",
+      "affectedProductLabel": "Produit concerné",
+      "affectedProductPlaceholder": "Nom du produit / version / modèle",
+      "severityLabel": "Sévérité suggérée",
+      "reporterNameLabel": "Votre nom",
+      "reporterEmailLabel": "Votre adresse e-mail",
+      "reporterHandleLabel": "Pseudo (optionnel)",
+      "reporterHandlePlaceholder": "@vous",
+      "anonymousNote": "La soumission anonyme est acceptée — nous ne pourrons simplement pas vous donner suite.",
+      "submit": "Soumettre le rapport",
+      "submitting": "Soumission en cours…",
+      "submitFailed": "Impossible de soumettre le rapport. Veuillez nous envoyer un e-mail à la place.",
+      "captchaFailed": "Impossible de confirmer que vous êtes humain. Rechargez la page et réessayez.",
+      "successTitle": "Rapport reçu",
+      "successDescription": "Merci pour cette divulgation responsable. Si vous avez laissé une adresse e-mail, nous vous répondrons dans les 72 heures."
+    }
+  }
+}

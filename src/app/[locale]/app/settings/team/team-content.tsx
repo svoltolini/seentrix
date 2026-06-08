@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Icon } from "@/components/icon";
+import { IconBadge } from "@/components/ui/icon-badge";
 import { FieldHelp } from "@/components/field-help";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import {
@@ -26,7 +27,7 @@ const ROLE_STYLE: Record<string, string> = {
   admin: "bg-primary/15 text-primary",
   compliance_officer: "bg-accent/15 text-accent",
   cto: "bg-accent/15 text-accent",
-  editor: "bg-[#FF9E55]/15 text-[#FF9E55]",
+  editor: "bg-accent/15 text-accent",
   viewer: "bg-muted text-muted-foreground",
 };
 
@@ -195,7 +196,7 @@ export function TeamContent({
                 className="flex items-center gap-4 px-6 py-3.5"
               >
                 {/* Avatar */}
-                <div className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-primary/15 text-l6-plus text-primary">
+                <div className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-md bg-primary/15 text-l6-plus text-primary">
                   {member.avatar_url ? (
                     // Tiny remote avatar from Supabase storage — next/image
                     // optimization not worth the remote-domain config here.
@@ -551,13 +552,7 @@ function TeamUpgradePrompt() {
 
   return (
     <div className="flex flex-col items-center justify-center rounded-md border border-dashed border-border-outline bg-card py-20 text-center">
-      <div className="mb-5 flex size-14 items-center justify-center rounded-full bg-primary/10">
-        <Icon
-          name="lock-password-stroke-rounded"
-          size={28}
-          className="text-primary"
-        />
-      </div>
+      <IconBadge name="lock-password-stroke-rounded" tone="primary" size="xl" className="mb-5" />
       <h3 className="text-h4 text-foreground">
         {t("title")}
       </h3>

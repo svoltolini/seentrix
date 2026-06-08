@@ -1,6 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import createIntlMiddleware from "next-intl/middleware";
 import { routing } from "./i18n/routing";
+import { LOCALE_COOKIE, isLocale } from "./i18n/locales";
 import { createClient } from "./lib/supabase/middleware";
 
 /**
@@ -61,6 +62,28 @@ export default async function middleware(request: NextRequest) {
 
   const orgId = user?.app_metadata?.org_id;
   const mustChangePassword = user?.app_metadata?.must_change_password === true;
+
+  // Locale cookie sync. With `localePrefix: "never"`, next-intl resolves the
+  // active language from the NEXT_LOCALE cookie. If an authed user has no such
+  // cookie yet (e.g. just logged in, or set their language on another device),
+  // hydrate it ONCE from their saved `preferred_locale`. The cookie's presence
+  // means this DB read happens at most once per session — every later request
+  // already has the cookie, so this stays cheap (mirrors the 2fa_enrolled
+  // pattern). The user can override anytime via the language picker, which
+  // writes both the row and the cookie.
+  let localeCookieToSet: string | null = null;
+  if (user && !request.cookies.get(LOCALE_COOKIE)) {
+    const { data: profile } = await supabase
+      .from("users")
+      .select("preferred_locale")
+      .eq("id", user.id)
+      .maybeSingle();
+    const pref = (profile as { preferred_locale?: string } | null)
+      ?.preferred_locale;
+    if (isLocale(pref) && pref !== "en") {
+      localeCookieToSet = pref;
+    }
+  }
   const mustCompleteTraining =
     user?.app_metadata?.must_complete_training === true;
 
@@ -78,20 +101,41 @@ export default async function middleware(request: NextRequest) {
   // at a time, so it can't lock anyone out.
   let needsMfaEnrolment = false;
   const hasGrace = request.cookies.get("2fa_grace")?.value === "1";
+  // Perf: remember "this user has a verified TOTP factor" in a cookie so we
+  // don't pay a `listFactors()` network round-trip to Supabase Auth on EVERY
+  // navigation. Once enrolled, a user stays enrolled, so the cached flag is
+  // safe; it's cleared on sign-out with the rest of the session cookies.
+  const mfaEnrolledCookie = request.cookies.get("2fa_enrolled")?.value === "1";
+  let setMfaEnrolledCookie = false;
   if (user && orgId) {
+    // getAuthenticatorAssuranceLevel() reads the JWT claims — no network call,
+    // so this stays cheap on every request.
     const { data: aalData } =
       await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
     needsMfaChallenge =
       aalData?.nextLevel === "aal2" && aalData.currentLevel === "aal1";
 
-    // If the user is already at/heading to AAL2 they clearly have a factor.
-    // Otherwise list factors to see whether a verified TOTP factor exists.
-    if (aalData?.nextLevel === "aal1" && aalData.currentLevel === "aal1") {
-      const { data: factors } = await supabase.auth.mfa.listFactors();
-      const hasVerifiedTotp = (factors?.totp ?? []).some(
-        (f) => f.status === "verified",
-      );
-      needsMfaEnrolment = !hasVerifiedTotp;
+    // A user at AAL2 (or heading there) clearly has a verified factor.
+    if (aalData?.nextLevel === "aal2") {
+      if (!mfaEnrolledCookie) setMfaEnrolledCookie = true;
+    } else if (
+      aalData?.nextLevel === "aal1" &&
+      aalData.currentLevel === "aal1"
+    ) {
+      // Only hit listFactors() when we DON'T already know they're enrolled
+      // (no cached flag) and they haven't snoozed the gate. This collapses the
+      // common case (already enrolled, or grace cookie set) to zero network
+      // calls here.
+      if (mfaEnrolledCookie || hasGrace) {
+        needsMfaEnrolment = false;
+      } else {
+        const { data: factors } = await supabase.auth.mfa.listFactors();
+        const hasVerifiedTotp = (factors?.totp ?? []).some(
+          (f) => f.status === "verified",
+        );
+        needsMfaEnrolment = !hasVerifiedTotp;
+        if (hasVerifiedTotp) setMfaEnrolledCookie = true;
+      }
     }
   }
 
@@ -184,13 +228,42 @@ export default async function middleware(request: NextRequest) {
     return redirectTo("/app/academy");
   }
 
+  // 3b. If we resolved a preferred locale for this user, set the NEXT_LOCALE
+  // cookie on the *request* so next-intl's middleware (run next) renders in
+  // that language on this very request, not just subsequent ones.
+  if (localeCookieToSet) {
+    request.cookies.set(LOCALE_COOKIE, localeCookieToSet);
+  }
+
   // 4. Run next-intl middleware (sets the locale + locale cookie)
   const intlResponse = intlMiddleware(request);
+
+  // 4b. Persist the resolved locale cookie on the response too.
+  if (localeCookieToSet) {
+    intlResponse.cookies.set(LOCALE_COOKIE, localeCookieToSet, {
+      path: "/",
+      maxAge: 60 * 60 * 24 * 365,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+    });
+  }
 
   // 5. Merge Supabase session cookies onto the intl response
   supabaseResponse.cookies.getAll().forEach((cookie) => {
     intlResponse.cookies.set(cookie.name, cookie.value, cookie);
   });
+
+  // 5b. Persist the "MFA enrolled" hint so subsequent navigations skip the
+  // listFactors() network call. Session cookie (no maxAge) so it clears on
+  // browser/session end alongside the auth cookies.
+  if (setMfaEnrolledCookie) {
+    intlResponse.cookies.set("2fa_enrolled", "1", {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      path: "/",
+    });
+  }
 
   return intlResponse;
 }

@@ -7,11 +7,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Icon } from "@/components/icon";
+import { IconBadge } from "@/components/ui/icon-badge";
 import { useToast } from "@/components/ui/toast";
 import {
   snoozeMfaEnrolment,
   clearMfaGrace,
   clearUnverifiedMfaFactors,
+  clearMfaEnrolledCookie,
 } from "./actions";
 
 type EnrolState =
@@ -145,6 +147,9 @@ export function SecurityContent({
         toast({ type: "error", message: error.message });
         return;
       }
+      // Clear the cached enrolment hint so the middleware re-checks (and the
+      // mandatory-2FA gate re-engages) on the next navigation.
+      await clearMfaEnrolledCookie();
       toast({ type: "success", message: "2FA removed" });
       router.refresh();
     });
@@ -158,8 +163,8 @@ export function SecurityContent({
       {enrollRequired && !hasTotp && (
         <div className="rounded-md border-[1.5px] border-warning/40 bg-warning/5 p-5">
           <div className="flex items-start gap-3">
-            <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-warning/15 text-warning">
-              <Icon name="alert-02" size={18} />
+            <div className="flex size-9 shrink-0 items-center justify-center rounded-md bg-warning/15 text-warning">
+              <Icon name="alert-02" size={18} variant="Bold" />
             </div>
             <div className="min-w-0 flex-1">
               <p className="text-h6 text-foreground">
@@ -200,19 +205,16 @@ export function SecurityContent({
 
         <div className="px-6 py-5">
           {hasTotp ? (
-            <div className="flex flex-wrap items-center justify-between gap-3 rounded-md border border-success/30 bg-success/5 p-4">
-              <div className="flex items-start gap-3">
-                <div className="flex size-8 items-center justify-center rounded-full bg-success/20 text-success">
-                  <Icon
-                    name="checkmark-circle-01-stroke-rounded"
-                    size={16}
-                  />
-                </div>
-                <div>
-                  <p className="text-l6 text-foreground">
-                    2FA is enabled
-                  </p>
-                  <p className="mt-0.5 text-p4 text-muted-foreground">
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div className="flex items-start gap-3.5">
+                <IconBadge
+                  name="checkmark-circle-01-stroke-rounded"
+                  tone="success"
+                  size="md"
+                />
+                <div className="min-w-0">
+                  <p className="text-h5 text-foreground">2FA is enabled</p>
+                  <p className="mt-1 text-p3-r text-muted-foreground">
                     {friendlyName ?? "TOTP authenticator"}
                   </p>
                 </div>

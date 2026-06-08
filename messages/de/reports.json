@@ -1,0 +1,79 @@
+{
+  "reports": {
+    "breadcrumb": "Schwachstellenmeldungen",
+    "title": "Koordinierter Offenlegungs-Eingang",
+    "subtitle": "Eingehende Schwachstellenmeldungen von der öffentlichen Sicherheitsseite. Priorisieren, untersuchen und reagieren Sie, ohne den Audit-Trail zu verlieren.",
+    "status": {
+      "triage": "Priorisierung erforderlich",
+      "accepted": "Akzeptiert",
+      "investigating": "In Untersuchung",
+      "resolved": "Behoben",
+      "duplicate": "Duplikat",
+      "spam": "Spam"
+    },
+    "kpi": {
+      "triage": "Priorisierung erforderlich",
+      "investigating": "In Untersuchung",
+      "resolved": "Behoben",
+      "total": "Gesamt"
+    },
+    "settings": {
+      "title": "Öffentliche Sicherheitsseite",
+      "description": "Veröffentlichen Sie eine öffentliche URL, über die Forscher Ihr Sicherheitsteam erreichen und Meldungen einreichen können. Funktioniert sofort mit security.txt-Konventionen.",
+      "enablePublic": "Öffentlich veröffentlichen",
+      "slugLabel": "URL-Slug",
+      "contactLabel": "Sicherheits-Kontakt-E-Mail",
+      "policyLabel": "Offenlegungsrichtlinie",
+      "policyPlaceholder": "Wie Sie mit Meldungen umgehen, Ihre Verpflichtung zur koordinierten Offenlegung, Safe-Harbour-Erklärung usw.",
+      "openPublic": "Öffentliche Seite öffnen ↗",
+      "downloadSecurityTxt": "security.txt ↓",
+      "saved": "Gespeichert",
+      "saveFailed": "Speichern fehlgeschlagen",
+      "slugTaken": "Dieser Slug ist bereits vergeben",
+      "tooltips": {
+        "slug": {
+          "title": "URL-Slug",
+          "body": "Kurze Kennung für die URL Ihrer öffentlichen Sicherheitsseite (Kleinbuchstaben, Zahlen, Bindestriche). Die Seite wird unter /security/<slug> erreichbar sein. Wählen Sie etwas Kurzes und Erratbares – Forscher versuchen oft /security/muster, bevor sie nach einer security.txt suchen.",
+          "ref": "CRA Artikel 13(4) – Hersteller müssen eine Kontaktstelle für Cybersicherheitsfragen bereitstellen. Eine stabile, auffindbare URL erfüllt diese Pflicht und dient als Policy-Link in security.txt (RFC 9116)."
+        },
+        "contact": {
+          "title": "Sicherheits-Kontakt-E-Mail",
+          "body": "Dediziertes Postfach oder Alias für Schwachstellenmeldungen (z. B. security@muster.de). Muss mindestens während der Geschäftszeiten überwacht werden. Auf Ihrer Sicherheitsseite veröffentlicht und im herunterladbaren security.txt-Contact-Feld hinterlegt.",
+          "ref": "CRA Artikel 13(4) – Die Kontaktstelle muss während des gesamten Unterstützungszeitraums des Produkts verfügbar sein und Schwachstellenmeldungen empfangen können."
+        },
+        "policy": {
+          "title": "Offenlegungsrichtlinie",
+          "body": "Erklärung in verständlicher Sprache, wie Sie mit eingehenden Meldungen umgehen: Reaktionszeiten, Geltungsbereich, rechtliche Safe-Harbour-Regelung für gutgläubige Forscher und wie Sie die Offenlegung koordinieren. Wird wortwörtlich auf der öffentlichen Seite veröffentlicht – setzen Sie Erwartungen, bevor ein Forscher auf \"Einreichen\" klickt.",
+          "ref": "CRA Anhang I Teil II(1) – Hersteller müssen eine Richtlinie zur koordinierten Offenlegung von Schwachstellen haben. Dieses Feld ist der Ort, an dem Sie sie veröffentlichen."
+        },
+        "enablePublic": {
+          "title": "Öffentlich veröffentlichen",
+          "body": "Hauptschalter – wenn aktiviert, ist die /security/<slug>-Seite von jedem im Internet erreichbar und akzeptiert anonyme Einreichungen. Wenn deaktiviert, gibt die Seite einen 404-Fehler zurück und der Eingang ist geschlossen. Während der Einrichtung deaktiviert lassen, nach Bereitschaft Ihres Triage-Prozesses aktivieren.",
+          "ref": "CRA Anhang I Teil II(1) + Artikel 11 – Die CVD-Richtlinie und der Eingang müssen betriebsbereit sein, bevor das Produkt auf den Markt gebracht wird. Diesen Schalter nach dem Start deaktiviert zu lassen ist nicht konform."
+        }
+      }
+    },
+    "list": {
+      "title": "Eingehende Meldungen"
+    },
+    "empty": {
+      "title": "Noch keine Meldungen",
+      "description": "Wenn jemand eine Schwachstelle über Ihre öffentliche Seite einreicht, erscheint sie hier zur Priorisierung.",
+      "noProductTitle": "Zuerst ein Produkt hinzufügen",
+      "noProductDescription": "Schwachstellenmeldungen sind mit Ihren Produkten verknüpft. Fügen Sie Ihr erstes Produkt hinzu, damit Forscher und Ihr Team etwas zum Melden haben.",
+      "noProductCta": "Erstes Produkt hinzufügen"
+    },
+    "row": {
+      "anonymous": "Anonym",
+      "productLabel": "Betroffenes Produkt",
+      "triageNotes": "Priorisierungsnotizen",
+      "setStatus": "Status setzen",
+      "notesLabel": "Interne Notizen",
+      "notesPlaceholder": "Was Sie geprüft haben, was Sie gefunden haben, nächste Schritte. Für den Melder nicht sichtbar."
+    },
+    "toast": {
+      "updated": "Meldung aktualisiert",
+      "updateFailed": "Meldung konnte nicht aktualisiert werden"
+    }
+  }
+}

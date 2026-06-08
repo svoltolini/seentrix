@@ -22,10 +22,10 @@ export function StepEuDistribution({
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h2 className="text-base font-semibold text-foreground">
+        <h2 className="text-h4 text-foreground">
           {t("step3.title")}
         </h2>
-        <p className="mt-1 text-sm text-muted-foreground">
+        <p className="mt-1 text-p2-r text-muted-foreground">
           {t("step3.description")}
         </p>
       </div>

@@ -102,10 +102,10 @@ export function AssessmentWizard({ locale }: { locale: string }) {
     return (
       <div className="mx-auto w-full max-w-2xl space-y-8">
         <div className="text-center">
-          <h1 className="text-2xl font-bold tracking-tight text-foreground">
+          <h1 className="text-h1 tracking-tight text-foreground">
             {t("pageTitle")}
           </h1>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <p className="mt-1 text-p2-r text-muted-foreground">
             {t("pageDescription")}
           </p>
         </div>
@@ -124,10 +124,10 @@ export function AssessmentWizard({ locale }: { locale: string }) {
   return (
     <div className="mx-auto w-full max-w-2xl space-y-8">
       <div className="text-center">
-        <h1 className="text-2xl font-bold tracking-tight text-foreground">
+        <h1 className="text-h1 tracking-tight text-foreground">
           {t("pageTitle")}
         </h1>
-        <p className="mt-1 text-sm text-muted-foreground">
+        <p className="mt-1 text-p2-r text-muted-foreground">
           {t("pageDescription")}
         </p>
       </div>
@@ -137,7 +137,7 @@ export function AssessmentWizard({ locale }: { locale: string }) {
       <Card>
         <CardContent>
           {errorMessage && (
-            <p className="mb-4 text-sm text-destructive">{errorMessage}</p>
+            <p className="mb-4 text-p2-r text-destructive">{errorMessage}</p>
           )}
 
           {step === 1 && (

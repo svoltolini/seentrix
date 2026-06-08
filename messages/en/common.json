@@ -1,40 +1,45 @@
 {
-  "app": {
-    "name": "Seentrix",
-    "tagline": "CRA Compliance Platform for Manufacturers"
-  },
-  "nav": {
-    "dashboard": "Dashboard",
-    "products": "Products",
-    "incidents": "Incidents",
-    "reports": "Reports",
-    "settings": "Settings",
-    "logout": "Log out",
-    "myAccount": "My Account",
-    "help": "Help",
-    "glossary": "Glossary",
-    "academy": "Academy",
-    "error": "Something went wrong",
-    "errorDescription": "An unexpected error occurred. Please try again.",
-    "tryAgain": "Try again"
-  },
-  "sidebar": {
-    "overview": "Workspace",
-    "compliance": "Compliance",
-    "management": "Management",
-    "helpTitle": "Help Centre",
-    "helpBody": "Stuck on CRA compliance? Ask the Seentrix AI Copilot.",
-    "helpCta": "Consult Now"
-  },
-  "topbar": {
-    "searchPlaceholder": "Search products, incidents, reports…",
-    "newProduct": "New Product",
-    "notifications": "Notifications",
-    "notificationsTitle": "Notifications",
-    "notificationsEmpty": "You're all caught up.",
-    "notificationsLoading": "Loading…",
-    "notificationsViewAll": "View all activity",
-    "addProfilePicture": "Add a profile picture",
-    "language": "Language"
-  }
+ "app": {
+  "name": "Seentrix",
+  "tagline": "CRA Compliance Platform for Manufacturers"
+ },
+ "nav": {
+  "dashboard": "Dashboard",
+  "products": "Products",
+  "incidents": "Incidents",
+  "reports": "Reports",
+  "settings": "Settings",
+  "logout": "Log out",
+  "myAccount": "My Account",
+  "help": "Help",
+  "glossary": "Glossary",
+  "academy": "Academy",
+  "error": "Something went wrong",
+  "errorDescription": "An unexpected error occurred. Please try again.",
+  "tryAgain": "Try again"
+ },
+ "sidebar": {
+  "overview": "Workspace",
+  "compliance": "Compliance",
+  "management": "Management",
+  "helpTitle": "Help Centre",
+  "helpBody": "Stuck on CRA compliance? Ask the Seentrix AI Copilot.",
+  "helpCta": "Consult Now"
+ },
+ "topbar": {
+  "searchPlaceholder": "Search products…",
+  "searching": "Searching…",
+  "noResults": "No products match your search.",
+  "newProduct": "New Product",
+  "notifications": "Notifications",
+  "notificationsTitle": "Notifications",
+  "notificationsEmpty": "You're all caught up.",
+  "notificationsLoading": "Loading…",
+  "notificationsViewAll": "View all activity",
+  "addProfilePicture": "Add a profile picture",
+  "language": "Language"
+ },
+ "common": {
+  "securityCheck": "Security check"
+ }
 }

@@ -1,0 +1,205 @@
+{
+  "assessment": {
+    "pageTitle": "Évaluation du périmètre CRA",
+    "pageDescription": "Déterminez si votre produit relève du règlement (UE) sur la cyber-résilience (CRA) et sa classification.",
+    "steps": {
+      "productInfo": "Informations produit",
+      "digitalElements": "Éléments numériques",
+      "euDistribution": "Marché UE",
+      "excludedSectors": "Secteurs exclus",
+      "classification": "Classification"
+    },
+    "navigation": {
+      "continue": "Continuer",
+      "back": "Retour",
+      "submit": "Soumettre l'évaluation",
+      "submitting": "Envoi…",
+      "startOver": "Recommencer"
+    },
+    "step1": {
+      "title": "Parlez-nous de votre produit",
+      "description": "Informations de base sur le produit que vous souhaitez évaluer.",
+      "nameLabel": "Nom du produit",
+      "namePlaceholder": "Ex. : Smart Thermostat Pro",
+      "typeLabel": "Type de produit",
+      "descriptionLabel": "Description",
+      "descriptionPlaceholder": "Brève description des fonctionnalités de votre produit…",
+      "types": {
+        "hardware": "Matériel",
+        "hardwareDescription": "Appareils et composants physiques",
+        "software": "Logiciel",
+        "softwareDescription": "Applications et programmes",
+        "firmware": "Firmware",
+        "firmwareDescription": "Logiciels embarqués",
+        "iot": "Appareil IoT",
+        "iotDescription": "Appareils connectés intelligents"
+      }
+    },
+    "step2": {
+      "title": "Votre produit contient-il des éléments numériques ?",
+      "description": "Le CRA s'applique aux produits comportant des éléments numériques — tout produit logiciel ou matériel disposant d'une connexion de données, y compris le traitement de données à distance.",
+      "yes": "Oui, il contient des éléments numériques",
+      "yesDescription": "Le produit inclut des logiciels, un firmware ou une connectivité réseau.",
+      "no": "Aucun élément numérique",
+      "noDescription": "Le produit est purement mécanique ou analogique, sans composant numérique."
+    },
+    "step3": {
+      "title": "Ce produit sera-t-il distribué sur le marché de l'UE ?",
+      "description": "Le CRA s'applique uniquement aux produits mis sur le marché de l'UE ou rendus disponibles au sein de l'Union européenne.",
+      "yes": "Oui, distribué dans l'UE",
+      "yesDescription": "Le produit sera vendu, distribué ou rendu disponible dans les États membres de l'UE.",
+      "no": "Non, pas pour le marché de l'UE",
+      "noDescription": "Le produit est exclusivement destiné aux marchés en dehors de l'Union européenne."
+    },
+    "step4": {
+      "title": "Votre produit est-il couvert par des réglementations sectorielles spécifiques ?",
+      "description": "Les produits déjà couverts par certaines réglementations sectorielles spécifiques de l'UE sont exclus du périmètre du CRA.",
+      "or": "ou",
+      "noneApply": "Aucune des options ci-dessus ne s'applique",
+      "noneApplyDescription": "Mon produit n'est couvert par aucune de ces réglementations sectorielles spécifiques.",
+      "sectors": {
+        "medical_devices": "Dispositifs médicaux",
+        "medical_devicesDescription": "Produits réglementés par le règlement relatif aux dispositifs médicaux (UE) 2017/745.",
+        "motor_vehicles": "Véhicules à moteur",
+        "motor_vehiclesDescription": "Véhicules et composants couverts par le règlement de réception par type (UE) 2019/2144.",
+        "marine_equipment": "Équipements marins",
+        "marine_equipmentDescription": "Équipements couverts par la directive sur les équipements marins 2014/90/UE.",
+        "aviation": "Aviation",
+        "aviationDescription": "Produits certifiés selon les réglementations de l'aviation civile (UE) 2018/1139.",
+        "military_defense": "Militaire & Défense",
+        "military_defenseDescription": "Produits développés exclusivement à des fins militaires ou de défense.",
+        "national_security": "Sécurité nationale",
+        "national_securityDescription": "Produits développés exclusivement à des fins de sécurité nationale."
+      }
+    },
+    "step5": {
+      "title": "Sélectionnez la sous-catégorie qui correspond le mieux à votre produit",
+      "description": "Les Annexes III et IV du CRA définissent des sous-catégories de produits spécifiques soumises à des exigences de sécurité plus élevées. Sélectionnez la sous-catégorie la plus applicable, ou choisissez « Aucune » si votre produit ne correspond à aucune sous-catégorie listée.",
+      "noneMatch": "Aucune ne correspond",
+      "noneMatchDescription": "Mon produit ne relève d'aucune des sous-catégories listées. Il sera classifié par défaut.",
+      "groups": {
+        "identity_security": "Gestion des identités et des accès",
+        "security_tools": "Outils de sécurité",
+        "system_software": "Logiciels système",
+        "network_devices": "Appareils réseau",
+        "connected_devices": "Appareils connectés",
+        "virtualization": "Virtualisation & Conteneurs",
+        "network_security": "Sécurité réseau",
+        "hardware_security": "Matériel résistant à la falsification",
+        "cryptography": "Cryptographie & PKI",
+        "industrial": "Automatisation industrielle & Contrôle",
+        "cryptographic_hardware": "Matériel cryptographique",
+        "infrastructure": "Infrastructures critiques"
+      },
+      "categoryLabels": {
+        "important_class_i": "Important I",
+        "important_class_ii": "Important II",
+        "critical": "Critique"
+      },
+      "subcategories": {
+        "identity_management": "Systèmes de gestion des identités",
+        "browsers": "Navigateurs web",
+        "password_managers": "Gestionnaires de mots de passe",
+        "malware_detection": "Logiciels de détection de maliciels",
+        "vpn": "Produits VPN",
+        "siem": "Systèmes SIEM",
+        "boot_managers": "Gestionnaires de démarrage",
+        "bios_uefi": "Firmware BIOS/UEFI",
+        "routers_modems": "Routeurs & Modems",
+        "switches": "Commutateurs réseau",
+        "iot_general": "Appareils IoT généralistes",
+        "smart_home_assistants": "Assistants domotiques",
+        "smart_home_cameras": "Caméras domotiques",
+        "smart_home_locks": "Serrures connectées & Contrôle d'accès",
+        "wearables": "Appareils portables",
+        "connected_toys": "Jouets connectés",
+        "personal_health_devices": "Appareils de santé personnelle",
+        "network_management": "Systèmes de gestion réseau",
+        "hypervisors_container_runtime": "Hyperviseurs & Environnements d'exécution de conteneurs",
+        "firewalls": "Pare-feux",
+        "intrusion_detection": "Systèmes de détection/prévention d'intrusion",
+        "microprocessors_tamper_resistant": "Microprocesseurs résistants à la falsification",
+        "microcontrollers_tamper_resistant": "Microcontrôleurs résistants à la falsification",
+        "asics_tamper_resistant": "ASIC/FPGA résistants à la falsification",
+        "operating_systems": "Systèmes d'exploitation",
+        "pki_digital_certificates": "Gestion PKI & Certificats numériques",
+        "industrial_automation_plc": "Automates programmables industriels (API)",
+        "industrial_automation_scada": "Systèmes SCADA",
+        "cpads": "Dispositifs centraux d'automatisation des processus",
+        "hardware_security_modules": "Modules de sécurité matériels (HSM)",
+        "smart_cards": "Cartes à puce",
+        "smart_card_readers": "Lecteurs de cartes à puce",
+        "smart_meter_gateways": "Passerelles de compteurs intelligents",
+        "secure_crypto_processing_units": "Unités de traitement cryptographique sécurisé"
+      }
+    },
+    "outOfScope": {
+      "title": "Le produit est hors périmètre CRA",
+      "reasons": {
+        "noDigitalElements": "Votre produit ne contient pas d'éléments numériques et tombe donc en dehors du périmètre du Cyber Resilience Act.",
+        "noEuDistribution": "Votre produit n'est pas destiné au marché de l'UE et tombe donc en dehors du périmètre du Cyber Resilience Act.",
+        "excludedSector": "Votre produit est déjà couvert par des réglementations sectorielles spécifiques de l'UE et est exclu du périmètre du CRA."
+      }
+    },
+    "result": {
+      "title": "Évaluation complète",
+      "subtitle": "Votre produit a été évalué et classifié selon le CRA.",
+      "classification": "Classification CRA",
+      "conformityRoute": "Procédure d'évaluation de la conformité",
+      "notifiedBody": "Organisme notifié requis",
+      "yes": "Oui",
+      "no": "Non",
+      "deadlines": "Échéances clés",
+      "reportingDeadline": "Obligations de déclaration",
+      "reportingDate": "11 sept. 2026",
+      "fullCompliance": "Exigences complètes des produits",
+      "fullComplianceDate": "11 déc. 2027",
+      "roadmap": "Feuille de route de conformité",
+      "viewProduct": "Voir le produit",
+      "addAnother": "Ajouter un autre produit",
+      "categories": {
+        "default": "Par défaut",
+        "defaultDescription": "Exigences de sécurité standard applicables. L'auto-évaluation est suffisante.",
+        "important_class_i": "Important Classe I",
+        "important_class_iDescription": "Exigences de sécurité renforcées. Auto-évaluation autorisée avec normes harmonisées.",
+        "important_class_ii": "Important Classe II",
+        "important_class_iiDescription": "Exigences de sécurité élevées. Évaluation par un organisme notifié tiers requise.",
+        "critical": "Critique",
+        "criticalDescription": "Exigences de sécurité les plus strictes. Certification européenne de cybersécurité requise."
+      },
+      "routes": {
+        "module_a": "Module A — Auto-évaluation",
+        "module_aDescription": "Contrôle interne de la production. Vous pouvez évaluer vous-même la conformité aux exigences essentielles.",
+        "module_b_c": "Module B+C — Examen UE de type",
+        "module_b_cDescription": "Examen UE de type (Module B) suivi de la conformité au type (Module C) par un organisme notifié.",
+        "module_h": "Module H — Assurance qualité totale",
+        "module_hDescription": "Évaluation complète de l'assurance qualité par un organisme notifié, couvrant la conception, la production et les contrôles produit.",
+        "european_certification": "Certification européenne de cybersécurité",
+        "european_certificationDescription": "Schéma de certification européenne de cybersécurité tel que défini par ENISA en vertu de la loi sur la cybersécurité de l'UE."
+      },
+      "roadmapSteps": {
+        "step1": "Analyse des écarts",
+        "step1Description": "Évaluer la posture de sécurité actuelle par rapport aux exigences essentielles du CRA.",
+        "step2": "Évaluation des risques",
+        "step2Description": "Réaliser une évaluation des risques de cybersécurité pour le cycle de vie du produit.",
+        "step3": "Sécurité dès la conception",
+        "step3Description": "Intégrer les exigences de sécurité dans la conception et le développement du produit.",
+        "step4": "Traitement des vulnérabilités",
+        "step4Description": "Mettre en place des processus de traitement et de divulgation des vulnérabilités.",
+        "step5": "Création du SBOM",
+        "step5Description": "Générer et maintenir une nomenclature logicielle (Annexe II).",
+        "step6": "Documentation technique",
+        "step6Description": "Préparer la documentation technique conformément aux exigences de l'Annexe V.",
+        "step7": "Évaluation de la conformité",
+        "step7Description": "Compléter la procédure d'évaluation de la conformité requise.",
+        "step8": "Déclaration & Marquage CE",
+        "step8Description": "Émettre la déclaration UE de conformité et apposer le marquage CE."
+      }
+    },
+    "errors": {
+      "notAuthenticated": "Vous devez être connecté pour continuer.",
+      "noOrganization": "Vous devez appartenir à une organisation.",
+      "generic": "Une erreur s'est produite. Veuillez réessayer."
+    }
+  }
+}

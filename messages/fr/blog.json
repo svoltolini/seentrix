@@ -1,0 +1,16 @@
+{
+  "blog": {
+    "meta": {
+      "title": "Blog",
+      "description": "Analyses sur la conformité au règlement (UE) sur la cyber-résilience, la gestion des SBOM et la sécurité des produits pour les fabricants."
+    },
+    "heading": "Blog",
+    "subheading": "Analyses sur la conformité CRA, la gestion des SBOM et la sécurité des produits.",
+    "noPosts": "Aucun article pour l'instant. Revenez bientôt !",
+    "readMore": "Lire la suite",
+    "minRead": "min de lecture",
+    "backToBlog": "Retour au blog",
+    "toc": "Table des matières",
+    "relatedPosts": "Articles connexes"
+  }
+}

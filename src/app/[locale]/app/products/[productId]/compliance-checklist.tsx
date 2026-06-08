@@ -4,6 +4,7 @@ import { useState, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import { Icon } from "@/components/icon";
+import { IconBadge } from "@/components/ui/icon-badge";
 import { ChecklistItemCard } from "./components/checklist-item-card";
 import { ChecklistKanban } from "./components/checklist-kanban";
 import {
@@ -121,13 +122,7 @@ export function ComplianceChecklist({
       {/* Encouragement banner */}
       {allPending && (
         <div className="flex items-start gap-4 rounded-md border border-primary/20 bg-primary/5 p-[18px]">
-          <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary/10">
-            <Icon
-              name="sparkles-stroke-rounded"
-              size={20}
-              className="text-primary"
-            />
-          </div>
+          <IconBadge name="sparkles-stroke-rounded" tone="primary" size="md" />
           <div>
             <p className="text-h5 text-foreground">
               {t("getStarted")}
@@ -169,7 +164,7 @@ export function ComplianceChecklist({
                   : "bg-destructive/10 text-destructive",
             )}
           >
-            <Icon name="shield-check" size={24} />
+            <Icon name="shield-check" size={24} variant="Bold" />
           </div>
           <div className="min-w-0 flex-1">
             <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">

@@ -1,0 +1,20 @@
+{
+  "billing": {
+    "title": "Facturation",
+    "subtitle": "Gérez votre abonnement et vos informations de facturation.",
+    "currentPlan": "Forfait actuel",
+    "nextBillingDate": "Prochaine date de facturation : {date}",
+    "manageSubscription": "Gérer l'abonnement",
+    "upgradePlan": "Mettre à niveau le forfait",
+    "redirecting": "Redirection en cours…",
+    "readOnly": "Seuls les administrateurs peuvent gérer la facturation et les abonnements.",
+    "perMonth": "par mois",
+    "upgradeDescription": "Passez à Professional pour accéder à la gestion des SBOM, aux modèles de documents, à l'export PDF, et plus encore.",
+    "plans": {
+      "free": "Free",
+      "professional": "Professional",
+      "business": "Business",
+      "enterprise": "Enterprise"
+    }
+  }
+}
