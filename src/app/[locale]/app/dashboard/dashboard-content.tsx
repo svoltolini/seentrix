@@ -415,7 +415,7 @@ export function DashboardContent(
   }
 
   return (
-    <div className="mx-auto flex w-full max-w-[1600px] flex-col gap-6">
+    <div className="flex w-full flex-col gap-6">
       <div>
         <h1 className="text-h1 text-foreground">
           {firstName ? t("greeting", { name: firstName }) : t("title")}
