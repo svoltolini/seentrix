@@ -60,7 +60,7 @@ export function BannerDismiss({
     <button
       type="button"
       onClick={handleDismiss}
-      className="shrink-0 rounded-md px-2 py-1 text-l6-plus text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+      className="shrink-0 rounded-md px-2 py-1 text-l6-plus text-primary-foreground/60 transition-colors hover:bg-primary-foreground/10 hover:text-primary-foreground"
     >
       {children}
     </button>

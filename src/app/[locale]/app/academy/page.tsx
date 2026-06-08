@@ -78,7 +78,7 @@ export default async function AcademyPage({
           : "lessons";
 
   return (
-    <div className="mx-auto max-w-[1600px] pb-12">
+    <div className="pb-12">
       {mustCompleteTraining ? (
         <ReferenceCard className="mb-8 p-6 md:mb-10 md:p-10">
           <div className="flex flex-wrap items-start justify-between gap-5">

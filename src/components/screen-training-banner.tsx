@@ -3,7 +3,7 @@ import { Link } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { SCREEN_LESSONS, type ScreenKey } from "@/lib/academy/screens";
 import { ACADEMY_LESSONS } from "@/lib/glossary";
-import { IconBadge } from "@/components/ui/icon-badge";
+import { Icon } from "@/components/icon";
 import { buttonVariants } from "@/components/ui/button";
 import { BannerDismiss } from "./screen-training-banner.client";
 
@@ -63,23 +63,20 @@ export async function ScreenTrainingBanner({
     <div
       data-screen-training-banner={screenKey}
       data-storage-key={storageKey}
-      className="mb-5 flex flex-wrap items-center gap-4 rounded-md border border-accent/20 bg-accent/5 p-4"
+      className="mb-5 flex flex-wrap items-center gap-4 rounded-md bg-dark-cta p-4"
     >
-      <IconBadge
-        name="elearning-exchange-stroke-rounded"
-        tone="accent"
-        fill="solid"
-        size="md"
-      />
+      <span className="flex size-10 shrink-0 items-center justify-center rounded-md bg-primary-foreground/10 text-primary-foreground">
+        <Icon name="elearning-exchange-stroke-rounded" size={20} />
+      </span>
       <div className="min-w-0 flex-1">
-        <p className="text-l5 text-foreground">{t("title")}</p>
-        <p className="mt-0.5 text-p3 text-muted-foreground">
+        <p className="text-l5 text-primary-foreground">{t("title")}</p>
+        <p className="mt-0.5 text-p3 text-primary-foreground/70">
           {t("body", { count: pending.length, minutes: totalMinutes })}
         </p>
       </div>
       <Link
         href={href}
-        className={buttonVariants({ variant: "accent", size: "sm" })}
+        className={buttonVariants({ variant: "default", size: "sm" })}
       >
         {t("cta")}
       </Link>

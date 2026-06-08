@@ -399,7 +399,7 @@ export function DashboardContent(
   // ---- Empty-state guidance for brand-new orgs ---------------------------
   if (onboardingState.isEmpty) {
     return (
-      <div className="mx-auto flex w-full max-w-[1600px] flex-col gap-6">
+      <div className="flex w-full flex-col gap-6">
         {profileStatus && !profileStatus.complete && (
           <ProfileIncompleteBanner
             eyebrow={t("profileIncomplete.eyebrow")}

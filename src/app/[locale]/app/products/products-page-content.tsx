@@ -79,7 +79,7 @@ export function ProductsPageContent({
   }
 
   return (
-    <div className="mx-auto max-w-[1600px] space-y-8 pb-12">
+    <div className="space-y-8 pb-12">
       {/* Page header — h1 + p2 muted matches the dashboard greeting.
           The "+ Add Product" CTA used to live on the right side of
           this row, but the topbar already carries a globally-visible

@@ -55,10 +55,10 @@ export function ProductDetailShell({
   }
 
   return (
-    // Container width matched to /app/dashboard + /app/products
-    // (max-w-[1600px]) so every signed-in surface sits on the same
-    // horizontal rhythm.
-    <div className="mx-auto max-w-[1600px] space-y-6 pb-12">
+    // Full-width container — every signed-in surface uses the whole
+    // horizontal space of the <main> column (no max-width cap), matching
+    // /app/dashboard + /app/products and the screen-training banner.
+    <div className="space-y-6 pb-12">
       {/* Hero — solid bg-primary + radial dot-grid overlay. Verbatim
           recipe from the landing TrustSection / FieldHelp reference
           callout / dashboard hero card so all four surfaces read
