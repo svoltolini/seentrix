@@ -206,6 +206,16 @@
       "title": "Diagramma di flusso di dati",
       "body": "Un disegno che mostra come i dati si muovono attraverso un prodotto — i processi, gli archivi di dati, le entità esterne e i confini di fiducia tra di essi. È la base su cui si esegue la modellazione delle minacce ed è uno dei diagrammi che l'allegato VII 2(a) del CRA si aspetta nel fascicolo tecnico, accanto alla descrizione dell'architettura di sistema.",
       "ref": "Allegato VII 2(a) del CRA — la documentazione tecnica deve includere una descrizione della progettazione e dello sviluppo, compresi i diagrammi di flusso di dati."
+    },
+    "risk_assessment": {
+      "title": "Valutazione dei rischi di cibersicurezza",
+      "body": "L'analisi strutturata richiesta dall'Articolo 13(2)-(3) del CRA prima e durante l'intera vita del prodotto. Documenta la destinazione d'uso, l'ambiente operativo, gli asset che il prodotto protegge e la durata di vita prevista, quindi associa ogni requisito dell'allegato I a «applicabile» (con l'implementazione di mitigazione e il rischio residuo) o «non applicabile» (con una giustificazione scritta). Deve essere tenuta aggiornata e datata per tutto il periodo di supporto e costituisce il punto 3 del fascicolo tecnico dell'allegato VII.",
+      "ref": "Articolo 13(2)-(3) del CRA e allegato VII punto 3 — la valutazione dei rischi deve essere effettuata, documentata, presa in considerazione nella progettazione e nello sviluppo e tenuta aggiornata."
+    },
+    "residual_risk": {
+      "title": "Rischio residuo",
+      "body": "Il livello di rischio che permane per una determinata minaccia dopo l'applicazione delle misure di mitigazione — in contrapposizione al rischio inerente prima della mitigazione. Nella valutazione dei rischi di Seentrix ogni requisito applicabile dell'allegato I registra un rischio inerente (derivato da una matrice probabilità × impatto in Basso/Medio/Alto) e il rischio residuo che rimane dopo l'implementazione descritta.",
+      "ref": "Supporta l'Articolo 13(3) del CRA: la valutazione dei rischi deve dimostrare che i rischi identificati sono mitigati a un livello accettabile."
     }
   },
   "help": {

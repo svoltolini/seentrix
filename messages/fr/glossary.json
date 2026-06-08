@@ -206,6 +206,16 @@
       "title": "Diagramme de flux de données",
       "body": "Un schéma qui montre comment les données circulent dans un produit — les processus, les magasins de données, les entités externes et les frontières de confiance entre eux. C'est le support sur lequel se fait la modélisation des menaces, et l'un des schémas que l'annexe VII 2(a) du CRA attend dans le dossier technique, aux côtés de la description de l'architecture système.",
       "ref": "Annexe VII 2(a) du CRA — la documentation technique doit inclure une description de la conception et du développement, y compris des diagrammes de flux de données."
+    },
+    "risk_assessment": {
+      "title": "Évaluation des risques de cybersécurité",
+      "body": "L'analyse structurée exigée par l'Article 13(2)-(3) du CRA avant et tout au long de la vie du produit. Elle documente la destination prévue, l'environnement d'exploitation, les actifs que le produit protège et la durée de vie attendue, puis associe chaque exigence de l'annexe I à « applicable » (avec la mise en œuvre d'atténuation et le risque résiduel) ou « non applicable » (avec une justification écrite). Elle doit être tenue à jour et datée pendant toute la période de support et constitue le point 3 du dossier technique de l'annexe VII.",
+      "ref": "Article 13(2)-(3) du CRA et annexe VII point 3 — l'évaluation des risques doit être réalisée, documentée, prise en compte lors de la conception et du développement, et tenue à jour."
+    },
+    "residual_risk": {
+      "title": "Risque résiduel",
+      "body": "Le niveau de risque qui subsiste pour une menace donnée une fois les mesures d'atténuation en place — par opposition au risque inhérent avant atténuation. Dans l'évaluation des risques de Seentrix, chaque exigence applicable de l'annexe I enregistre un risque inhérent (dérivé d'une matrice probabilité × impact en Faible/Moyen/Élevé) et le risque résiduel restant après application de la mise en œuvre décrite.",
+      "ref": "Soutient l'Article 13(3) du CRA : l'évaluation des risques doit démontrer que les risques identifiés sont atténués à un niveau acceptable."
     }
   },
   "help": {

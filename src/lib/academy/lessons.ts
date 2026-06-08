@@ -10,6 +10,7 @@ import scoringVulnerabilities from "@/content/academy/scoring-vulnerabilities";
 import sbomFundamentals from "@/content/academy/sbom-fundamentals";
 import cvdAndPsirt from "@/content/academy/cvd-and-psirt";
 import threatModellingAndDiagrams from "@/content/academy/threat-modelling-and-diagrams";
+import riskAssessmentFundamentals from "@/content/academy/risk-assessment-fundamentals";
 import type { Lesson, LocaleId, RoleId } from "@/lib/academy/types";
 
 /**
@@ -34,6 +35,7 @@ export const LESSONS: Record<string, Lesson> = {
   [article14Reporting.id]: article14Reporting,
   [cvdAndPsirt.id]: cvdAndPsirt,
   [threatModellingAndDiagrams.id]: threatModellingAndDiagrams,
+  [riskAssessmentFundamentals.id]: riskAssessmentFundamentals,
 };
 
 export function getLesson(id: string): Lesson | null {

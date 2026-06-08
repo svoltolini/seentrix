@@ -49,11 +49,6 @@ const DOCUMENT_TYPES: {
     tone: { bg: "bg-destructive/10", fg: "text-destructive" },
   },
   {
-    type: "risk_assessment",
-    iconName: "alert-02",
-    tone: { bg: "bg-warning/10", fg: "text-warning" },
-  },
-  {
     type: "technical_documentation",
     iconName: "package-open-stroke-rounded",
     tone: { bg: "bg-success/10", fg: "text-success" },

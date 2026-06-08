@@ -324,3 +324,37 @@ analysis output, and third-party security assessments. This evidence,
 retained for at least 10 years (or the support period if longer) alongside
 the rest of the technical file, is what turns a claim of "we tested this"
 into proof an auditor can follow.
+
+## The cybersecurity risk assessment (Article 13(3) and Annex VII point 3)
+
+Article 13(2)-(3) requires the manufacturer to carry out a cybersecurity
+risk assessment and to take it into account during planning, design,
+development, production, delivery and maintenance. The assessment must
+document the intended purpose and reasonably foreseeable use of the
+product, the conditions of use (the operational environment), the assets
+the product protects, and the expected product lifetime. It is part of the
+technical documentation (Annex VII point 3) and must be kept up to date
+and dated across the support period.
+
+Crucially, the assessment is the bridge to Annex I: the manufacturer must
+determine which of the Annex I Part I essential requirements (and the Part
+II vulnerability-handling requirements) apply to the product, and document
+how each applicable requirement is met. Where a requirement is judged not
+to apply, Article 13(3) requires a written justification — a bare "not
+applicable" is not enough; the reasoning must be recorded so a
+market-surveillance authority can follow it.
+
+A credible assessment scores each applicable requirement for risk: how
+likely is the threat, how severe is the impact, what mitigating control is
+in place, and what risk remains after that control (the residual risk). A
+simple qualitative Low/Medium/High likelihood-by-impact matrix is enough
+for most products with digital elements; the point is that the reasoning is
+explicit, consistent and revisited when the threat landscape or the product
+changes. The assessment must be re-evaluated and re-dated over the support
+period — it is a living document, not a one-off.
+
+In Seentrix this lives on each product's **Risk Assessment** tab. It maps
+all 21 Annex I requirements, enforces a justification on every
+not-applicable item before a version can be released, derives the inherent
+risk band from the likelihood and impact, and snapshots dated, versioned
+PDFs that feed Annex VII point 3 of the technical file.

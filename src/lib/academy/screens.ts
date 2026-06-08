@@ -59,6 +59,16 @@ export const SCREEN_LESSONS = {
       "annex-i-essential-requirements",
     ],
   },
+  "risk-assessment": {
+    key: "risk-assessment",
+    href: "/app/products",
+    icon: "ShieldTick",
+    lessons: [
+      "risk-assessment-fundamentals",
+      "annex-i-essential-requirements",
+      "threat-modelling-and-diagrams",
+    ],
+  },
   releases: {
     key: "releases",
     href: "/app/products",
