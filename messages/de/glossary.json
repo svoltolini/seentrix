@@ -191,6 +191,21 @@
     "security_update": {
       "title": "Sicherheitsupdate",
       "body": "Ein Release, dessen primärer Zweck das Patchen einer oder mehrerer Schwachstellen ist. Gemäß CRA Artikel 13(8) müssen Sicherheitsupdates \"ohne ungebührliche Verzögerung und kostenlos\" bereitgestellt werden. Das Kennzeichnen eines Releases als Sicherheitsupdate in Seentrix markiert es automatisch im Compliance-Nachweisregister."
+    },
+    "annex_vii": {
+      "title": "Anhang VII (technische Dokumentation)",
+      "body": "Die CRA-Checkliste dessen, was die technische Dokumentation eines Produkts enthalten muss: eine allgemeine Beschreibung und den Verwendungszweck; Informationen zu Design, Entwicklung und Produktion — einschließlich Architektur- und Datenflussdiagrammen (2(a)), der SBOM, der Richtlinie zur koordinierten Schwachstellenoffenlegung und der Beschreibung sicherer Updates (2(b)); die Cybersicherheits-Risikobewertung; die Begründung des Supportzeitraums; die angewandten Normen; Berichte über die durchgeführten Sicherheitstests; und die Konformitätserklärung. Der Tab „Diagramme & Nachweise“ von Seentrix bedient die Punkte 1.3, 2(a) und 6.",
+      "ref": "CRA Anhang VII — die technische Dokumentation, die ein Hersteller vor dem Inverkehrbringen eines Produkts erstellen und 10 Jahre (oder den Supportzeitraum, falls länger) aufbewahren muss."
+    },
+    "threat_model": {
+      "title": "Bedrohungsmodell",
+      "body": "Eine strukturierte Analyse, wie ein Produkt angegriffen werden könnte: welche Werte es schützt, welche Vertrauensgrenzen Daten überschreiten, welche Eintrittspunkte ein Angreifer erreichen könnte und welche Gegenmaßnahmen für jede plausible Bedrohung bestehen. Bedrohungsmodellierung (z. B. STRIDE über ein Datenflussdiagramm) ist die erwartete Security-by-Design-Praxis hinter einer glaubwürdigen CRA-Risikobewertung — sie macht aus „wir haben an Sicherheit gedacht“ ein dokumentiertes Artefakt, dem ein Prüfer folgen kann.",
+      "ref": "Bedrohungsmodellierung wird im CRA nicht wörtlich genannt, aber Anhang I Teil I(1) (Security by Design) und die Risikobewertung nach Artikel 13 setzen sie faktisch voraus."
+    },
+    "data_flow_diagram": {
+      "title": "Datenflussdiagramm",
+      "body": "Eine Zeichnung, die zeigt, wie Daten durch ein Produkt fließen — die Prozesse, Datenspeicher, externen Entitäten und die Vertrauensgrenzen zwischen ihnen. Es ist die Grundlage, auf der die Bedrohungsmodellierung erfolgt, und eines der Diagramme, die CRA Anhang VII 2(a) in der technischen Dokumentation neben der Beschreibung der Systemarchitektur erwartet.",
+      "ref": "CRA Anhang VII 2(a) — die technische Dokumentation muss eine Beschreibung des Designs und der Entwicklung einschließlich Datenflussdiagrammen enthalten."
     }
   },
   "help": {

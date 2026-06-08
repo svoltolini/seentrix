@@ -191,6 +191,21 @@
     "security_update": {
       "title": "Security update",
       "body": "A release whose primary purpose is patching one or more vulnerabilities. Under CRA Article 13(8) security updates must be made available \"without undue delay and free of charge.\" Tagging a release as a security update in Seentrix auto-flags it in the compliance evidence ledger."
+    },
+    "annex_vii": {
+      "title": "Annex VII (technical documentation)",
+      "body": "The CRA's checklist of what a product's technical file must contain: a general description and intended purpose; the design, development and production information — including architecture and data-flow diagrams (2(a)), the SBOM, coordinated-vulnerability-disclosure policy and secure-update description (2(b)); the cybersecurity risk assessment; the support-period justification; the standards applied; reports of the security tests carried out; and the Declaration of Conformity. Seentrix's Diagrams & Evidence tab feeds points 1.3, 2(a) and 6.",
+      "ref": "CRA Annex VII — the technical documentation a manufacturer must draw up before placing a product on the market and keep for 10 years (or the support period, if longer)."
+    },
+    "threat_model": {
+      "title": "Threat model",
+      "body": "A structured analysis of how a product could be attacked: what assets it protects, the trust boundaries data crosses, the entry points an attacker could reach, and the mitigations in place for each plausible threat. Threat modelling (e.g. STRIDE over a data-flow diagram) is the expected secure-by-design practice behind a credible CRA risk assessment — it turns 'we thought about security' into a documented artifact an auditor can follow.",
+      "ref": "Threat modelling is not named verbatim in the CRA, but Annex I Part I(1) (secure-by-design) and the Article 13 risk assessment effectively require it."
+    },
+    "data_flow_diagram": {
+      "title": "Data-flow diagram",
+      "body": "A drawing that shows how data moves through a product — the processes, data stores, external entities, and the trust boundaries between them. It is the canvas threat modelling is done on, and one of the diagrams CRA Annex VII 2(a) expects in the technical file alongside the system-architecture description.",
+      "ref": "CRA Annex VII 2(a) — the technical documentation must include a description of the design and development, including data-flow diagrams."
     }
   },
   "help": {

@@ -43,6 +43,7 @@ const PRODUCT_TAB_TITLES: Record<string, string> = {
   sbom: "SBOM",
   vulnerabilities: "Vulnerabilities",
   documents: "Documents",
+  diagrams: "Diagrams & Evidence",
   "technical-documentation": "Technical documentation",
   incidents: "Incidents",
   academy: "Team training",

@@ -507,3 +507,24 @@ inventing plausible-sounding features that do not exist:
 - **No Jira / GitHub / Jenkins / Slack / Okta / SCIM integrations.**
 - **No tenant-owned AI model** — Seentrix AI uses our Mistral account;
   customers cannot swap it for their own key or their own model.
+
+## Diagrams & Evidence tab
+
+Every product has a **Diagrams & Evidence** tab at
+`/app/products/<id>/diagrams`. It has two halves:
+
+- **Diagrams** — an in-app Excalidraw editor for drawing architecture,
+  data-flow, environment, threat-model and hardware-layout diagrams. Each
+  diagram is saved (scene + a PNG preview), versioned, and can be renamed
+  or deleted. Seentrix does NOT auto-generate diagrams from code; the user
+  draws them. These feed Annex VII point 2(a) (architecture / data flow)
+  and point 1.3 (hardware photos/illustrations).
+- **Evidence** — an upload vault for test reports, penetration tests, code
+  analysis, fuzzing output, third-party tests, due-diligence records and
+  hardware photos (PDF, image, document, CSV, zip; 25 MB max per file).
+  Each evidence file is tagged with a category and the Annex VII point it
+  supports, so the technical-file assembler can slot it into the right
+  section. This is where Annex VII point 6 test-report evidence lives.
+
+Creating, editing and deleting diagrams or evidence requires an editor,
+CTO, compliance-officer or admin role; viewers have read-only access.

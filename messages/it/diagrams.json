@@ -1,0 +1,104 @@
+{
+  "diagrams": {
+    "seed": {
+      "label": "Novità su diagrammi e prove?",
+      "sublabel": "Chiedi a Seentrix AI quali diagrammi di architettura e flusso di dati il CRA si aspetta nel tuo fascicolo tecnico dell'allegato VII — e cosa vale come prova del rapporto di test."
+    },
+    "types": {
+      "architecture": "Architettura",
+      "data_flow": "Flusso di dati",
+      "environment": "Ambiente",
+      "threat_model": "Modello di minaccia",
+      "hardware_layout": "Layout hardware"
+    },
+    "diagrams": {
+      "title": "Diagrammi",
+      "subtitle": "Diagrammi di architettura, flusso di dati, ambiente, modello di minaccia e layout hardware per il tuo fascicolo tecnico dell'allegato VII.",
+      "new": "Nuovo diagramma",
+      "empty": "Ancora nessun diagramma",
+      "emptyDescription": "Crea il tuo primo diagramma di architettura o di flusso di dati. L'allegato VII 2(a) richiede una descrizione della progettazione, dello sviluppo e dei flussi di dati del prodotto.",
+      "deleteTitle": "Elimina diagramma",
+      "deleteDescription": "Questa operazione elimina definitivamente il diagramma e il disegno salvato. L'azione non può essere annullata.",
+      "deleteConfirm": "Elimina diagramma",
+      "deleteCancel": "Annulla",
+      "deleting": "Eliminazione…"
+    },
+    "card": {
+      "open": "Apri",
+      "actions": "Azioni diagramma",
+      "rename": "Rinomina",
+      "delete": "Elimina",
+      "renameTitle": "Rinomina diagramma",
+      "renameCancel": "Annulla",
+      "renameConfirm": "Salva",
+      "renaming": "Salvataggio…"
+    },
+    "editor": {
+      "titleLabel": "Titolo del diagramma",
+      "titlePlaceholder": "es. Panoramica dell'architettura di sistema",
+      "titleRequired": "Inserisci un titolo prima di salvare.",
+      "close": "Chiudi",
+      "save": "Salva",
+      "saving": "Salvataggio…",
+      "errors": {
+        "invalidType": "Scegli un tipo di diagramma valido.",
+        "titleRequired": "Il titolo è obbligatorio.",
+        "noScene": "Non c'è ancora nulla da salvare.",
+        "sceneTooLarge": "Questo disegno è troppo grande per essere salvato (max 10 MB).",
+        "previewTooLarge": "L'immagine di anteprima è troppo grande.",
+        "uploadFailed": "Il salvataggio del disegno non è riuscito. Riprova.",
+        "notAuthorized": "Non hai i permessi per modificare i diagrammi.",
+        "notAuthenticated": "Devi aver effettuato l'accesso.",
+        "generic": "Qualcosa è andato storto. Riprova."
+      }
+    },
+    "evidence": {
+      "title": "Prove",
+      "subtitle": "Rapporti di test, test di penetrazione, analisi del codice e altre prove a supporto del tuo fascicolo tecnico dell'allegato VII.",
+      "add": "Aggiungi prova",
+      "empty": "Ancora nessuna prova",
+      "emptyDescription": "Carica rapporti di test, risultati di test di penetrazione o output di analisi del codice. Il punto 6 dell'allegato VII richiede i rapporti sui test di sicurezza effettuati.",
+      "addTitle": "Aggiungi prova",
+      "addDescription": "Carica un file, assegnagli un titolo e associalo a una categoria e al punto dell'allegato VII che supporta.",
+      "dropzone": "Trascina un file qui, oppure sfoglia",
+      "dropzoneHint": "PDF, immagine, documento, CSV o zip. Max 25 MB.",
+      "titleLabel": "Titolo",
+      "titlePlaceholder": "es. Rapporto del test di penetrazione T2 2026",
+      "categoryLabel": "Categoria",
+      "annexLabel": "Punto dell'allegato VII",
+      "annexNone": "Non associato",
+      "annexPoint": "Punto {point}",
+      "annexShort": "VII · {point}",
+      "cancel": "Annulla",
+      "uploading": "Caricamento…",
+      "submit": "Carica prova",
+      "download": "Scarica",
+      "delete": "Elimina",
+      "deleteTitle": "Elimina prova",
+      "deleteDescription": "Questa operazione elimina definitivamente il file di prova. L'azione non può essere annullata.",
+      "deleteConfirm": "Elimina prova",
+      "deleteCancel": "Annulla",
+      "deleting": "Eliminazione…",
+      "categories": {
+        "test_report": "Rapporto di test",
+        "penetration_test": "Test di penetrazione",
+        "code_analysis": "Analisi del codice",
+        "fuzzing": "Fuzzing",
+        "third_party_test": "Test di terze parti",
+        "due_diligence": "Due diligence",
+        "hardware_photo": "Foto hardware",
+        "other": "Altro"
+      },
+      "errors": {
+        "noFile": "Scegli un file da caricare.",
+        "fileTooLarge": "Questo file è troppo grande (max 25 MB).",
+        "unsupportedMime": "Questo tipo di file non è supportato.",
+        "invalidCategory": "Scegli una categoria valida.",
+        "uploadFailed": "Il caricamento non è riuscito. Riprova.",
+        "notAuthorized": "Non hai i permessi per aggiungere prove.",
+        "notAuthenticated": "Devi aver effettuato l'accesso.",
+        "generic": "Qualcosa è andato storto. Riprova."
+      }
+    }
+  }
+}
