@@ -206,6 +206,16 @@
       "title": "Data-flow diagram",
       "body": "A drawing that shows how data moves through a product — the processes, data stores, external entities, and the trust boundaries between them. It is the canvas threat modelling is done on, and one of the diagrams CRA Annex VII 2(a) expects in the technical file alongside the system-architecture description.",
       "ref": "CRA Annex VII 2(a) — the technical documentation must include a description of the design and development, including data-flow diagrams."
+    },
+    "risk_assessment": {
+      "title": "Cybersecurity risk assessment",
+      "body": "The structured analysis CRA Article 13(2)-(3) requires before and throughout a product's life. It documents the intended purpose, operational environment, the assets the product protects and the expected lifetime, then maps every Annex I requirement to 'applies' (with the mitigating implementation and the residual risk) or 'not applicable' (with a written justification). It must be kept up to date and dated across the support period and forms point 3 of the Annex VII technical file.",
+      "ref": "CRA Article 13(2)-(3) and Annex VII point 3 — the risk assessment must be carried out, documented, taken into account during design and development, and kept up to date."
+    },
+    "residual_risk": {
+      "title": "Residual risk",
+      "body": "The level of risk that remains for a given threat once the mitigating controls are in place — as opposed to the inherent risk before mitigation. In the Seentrix risk assessment each applicable Annex I requirement records an inherent risk (derived from a Low/Medium/High likelihood × impact matrix) and the residual risk left after the implementation described is applied.",
+      "ref": "Supports CRA Article 13(3): the risk assessment must show that identified risks are mitigated to an acceptable level."
     }
   },
   "help": {

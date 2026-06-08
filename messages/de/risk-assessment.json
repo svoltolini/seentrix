@@ -1,0 +1,111 @@
+{
+  "risk-assessment": {
+    "title": "Risikobewertung",
+    "subtitle": "Ordnen Sie jede Anforderung des Anhangs I einer Risikoentscheidung zu — die strukturierte, versionierte Cybersicherheits-Risikobewertung gemäß CRA Artikel 13(3) und Anhang VII Punkt 3.",
+    "status": {
+      "draft": "Entwurf",
+      "released": "Freigegeben",
+      "version": "Version {n}"
+    },
+    "actions": {
+      "save": "Entwurf speichern",
+      "saving": "Wird gespeichert…",
+      "release": "Version freigeben",
+      "releasing": "Wird freigegeben…",
+      "revise": "Neue Version",
+      "downloadPdf": "PDF",
+      "generatePdf": "PDF erstellen",
+      "generatingPdf": "Wird erstellt…"
+    },
+    "readOnlyNote": "Diese Version ist freigegeben und schreibgeschützt. Erstellen Sie eine neue Version, um Änderungen vorzunehmen.",
+    "progress": "{done} von {total} Anforderungen zugeordnet",
+    "context": {
+      "heading": "Bewertungskontext",
+      "intendedPurpose": "Verwendungszweck",
+      "operationalEnvironment": "Betriebsumgebung",
+      "assetsToProtect": "Zu schützende Werte",
+      "expectedLifetime": "Erwartete Lebensdauer",
+      "placeholders": {
+        "intendedPurpose": "Wofür das Produkt bestimmt ist und seine vernünftigerweise vorhersehbare Verwendung…",
+        "operationalEnvironment": "Wo und wie das Produkt eingesetzt wird, mit welchen Netzwerken es in Kontakt kommt, wer es betreibt…",
+        "assetsToProtect": "Die Daten, Funktionen und sonstigen Werte, die das Produkt schützen muss…",
+        "expectedLifetime": "z. B. 5 Jahre ab dem Inverkehrbringen"
+      },
+      "tooltips": {
+        "intendedPurpose": {
+          "title": "Verwendungszweck",
+          "body": "Beschreiben Sie, wofür das Produkt entwickelt wurde und seine vernünftigerweise vorhersehbare Verwendung. Dies bildet den Rahmen für die gesamte Bewertung — jede Anhang-I-Entscheidung wird an diesem Verwendungszweck gemessen.",
+          "ref": "CRA Artikel 13(3) — die Risikobewertung muss auf dem Verwendungszweck und der vernünftigerweise vorhersehbaren Verwendung beruhen."
+        },
+        "operationalEnvironment": {
+          "title": "Betriebsumgebung",
+          "body": "Die Bedingungen, unter denen das Produkt betrieben wird: die Netzwerke, mit denen es sich verbindet, die Systeme, in die es integriert ist, sein physisches Umfeld und wer es nutzt. Dasselbe Produkt birgt in einem isolierten Netzwerk andere Risiken als im offenen Internet.",
+          "ref": "CRA Artikel 13(3) — die Nutzungsbedingungen müssen in der Bewertung berücksichtigt werden."
+        },
+        "assetsToProtect": {
+          "title": "Zu schützende Werte",
+          "body": "Was das Produkt schützen muss: Benutzer- und Konfigurationsdaten, kryptografische Schlüssel, die Integrität des eigenen Codes und der Updates, die Verfügbarkeit seiner Funktion. Das Benennen der Werte macht die Anforderungen an Vertraulichkeit / Integrität / Verfügbarkeit konkret.",
+          "ref": "CRA Anhang I Teil I (3)(c)-(d) — Schutz der Vertraulichkeit und Integrität von Daten und Funktionen."
+        },
+        "expectedLifetime": {
+          "title": "Erwartete Lebensdauer",
+          "body": "Wie lange das Produkt voraussichtlich genutzt wird. Dies bestimmt den Supportzeitraum, in dem Sie Sicherheitsupdates bereitstellen müssen, sowie die Aufbewahrungsfrist für diese Dokumentation.",
+          "ref": "CRA Artikel 13(8) und Anhang VII — die erwartete Produktlebensdauer beeinflusst den Supportzeitraum und die Aufbewahrungspflichten."
+        }
+      }
+    },
+    "parts": {
+      "part_i": "Teil I — Grundlegende Cybersicherheitsanforderungen",
+      "part_iDescription": "Die 13 Anforderungen des Anhangs I Teil I, die jedes Produkt mit digitalen Elementen berücksichtigen muss.",
+      "part_ii": "Teil II — Anforderungen an die Schwachstellenbehandlung",
+      "part_iiDescription": "Die 8 Anforderungen des Anhangs I Teil II zur Behandlung von Schwachstellen über den Supportzeitraum."
+    },
+    "applicability": {
+      "applies": "Anwendbar",
+      "not_applicable": "Nicht anwendbar"
+    },
+    "item": {
+      "threat": "Bedrohung",
+      "threatPlaceholder": "Was schiefgehen könnte, wenn diese Anforderung nicht erfüllt wird — die Bedrohung und wie sie ausgenutzt werden könnte…",
+      "likelihood": "Eintrittswahrscheinlichkeit",
+      "impact": "Auswirkung",
+      "inherentRisk": "Inhärentes Risiko",
+      "implementation": "Wie es umgesetzt wird",
+      "implementationPlaceholder": "Die Maßnahmen und Designentscheidungen, die diese Anforderung erfüllen und die Bedrohung mindern…",
+      "residualRisk": "Restrisiko",
+      "justification": "Begründung",
+      "justificationPlaceholder": "Warum diese Anforderung nicht auf das Produkt zutrifft — gemäß CRA Artikel 13(3) erforderlich…"
+    },
+    "levels": {
+      "low": "Niedrig",
+      "medium": "Mittel",
+      "high": "Hoch",
+      "critical": "Kritisch"
+    },
+    "history": {
+      "heading": "Versionsverlauf",
+      "released": "Freigegeben am {date}"
+    },
+    "feedback": {
+      "saved": "Entwurf gespeichert.",
+      "releaseIncomplete": "{count} Anforderung(en) benötigen noch eine Entscheidung und die erforderliche Umsetzung oder Begründung, bevor Sie freigeben können."
+    },
+    "errors": {
+      "generic": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.",
+      "notAuthenticated": "Bitte melden Sie sich erneut an.",
+      "notAuthorized": "Sie haben keine Berechtigung, die Risikobewertung zu bearbeiten.",
+      "released": "Diese Bewertung ist bereits freigegeben. Erstellen Sie eine neue Version zum Bearbeiten.",
+      "noDraft": "Es gibt keinen Entwurf zum Freigeben.",
+      "draftExists": "Es existiert bereits ein Entwurf.",
+      "noVersions": "Es gibt noch keine Bewertung zum Überarbeiten.",
+      "incomplete": "Die Bewertung ist unvollständig.",
+      "noPdf": "Für diese Version ist noch kein PDF verfügbar."
+    },
+    "pdf": {
+      "title": "Cybersicherheits-Risikobewertung",
+      "version": "Version",
+      "contextHeading": "Bewertungskontext",
+      "notAssessed": "Noch nicht bewertet"
+    }
+  }
+}

@@ -44,6 +44,7 @@ const PRODUCT_TAB_TITLES: Record<string, string> = {
   vulnerabilities: "Vulnerabilities",
   documents: "Documents",
   diagrams: "Diagrams & Evidence",
+  "risk-assessment": "Risk Assessment",
   "technical-documentation": "Technical documentation",
   incidents: "Incidents",
   academy: "Team training",

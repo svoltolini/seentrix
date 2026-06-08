@@ -206,6 +206,16 @@
       "title": "Datenflussdiagramm",
       "body": "Eine Zeichnung, die zeigt, wie Daten durch ein Produkt fließen — die Prozesse, Datenspeicher, externen Entitäten und die Vertrauensgrenzen zwischen ihnen. Es ist die Grundlage, auf der die Bedrohungsmodellierung erfolgt, und eines der Diagramme, die CRA Anhang VII 2(a) in der technischen Dokumentation neben der Beschreibung der Systemarchitektur erwartet.",
       "ref": "CRA Anhang VII 2(a) — die technische Dokumentation muss eine Beschreibung des Designs und der Entwicklung einschließlich Datenflussdiagrammen enthalten."
+    },
+    "risk_assessment": {
+      "title": "Cybersicherheits-Risikobewertung",
+      "body": "Die strukturierte Analyse, die CRA Artikel 13(2)-(3) vor und während der gesamten Produktlebensdauer verlangt. Sie dokumentiert den Verwendungszweck, die Betriebsumgebung, die vom Produkt geschützten Werte und die erwartete Lebensdauer und ordnet anschließend jede Anforderung des Anhangs I als „anwendbar“ (mit der mindernden Umsetzung und dem Restrisiko) oder „nicht anwendbar“ (mit schriftlicher Begründung) zu. Sie muss über den Supportzeitraum aktuell gehalten und datiert werden und bildet Punkt 3 der technischen Dokumentation nach Anhang VII.",
+      "ref": "CRA Artikel 13(2)-(3) und Anhang VII Punkt 3 — die Risikobewertung muss durchgeführt, dokumentiert, bei Design und Entwicklung berücksichtigt und aktuell gehalten werden."
+    },
+    "residual_risk": {
+      "title": "Restrisiko",
+      "body": "Das Risiko, das für eine bestimmte Bedrohung nach Umsetzung der mindernden Maßnahmen verbleibt — im Gegensatz zum inhärenten Risiko vor der Minderung. In der Seentrix-Risikobewertung erfasst jede anwendbare Anhang-I-Anforderung ein inhärentes Risiko (abgeleitet aus einer Matrix aus Eintrittswahrscheinlichkeit × Auswirkung in Niedrig/Mittel/Hoch) und das Restrisiko, das nach der beschriebenen Umsetzung verbleibt.",
+      "ref": "Unterstützt CRA Artikel 13(3): die Risikobewertung muss zeigen, dass identifizierte Risiken auf ein akzeptables Maß gemindert werden."
     }
   },
   "help": {

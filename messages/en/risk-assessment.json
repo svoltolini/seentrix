@@ -1,0 +1,111 @@
+{
+  "risk-assessment": {
+    "title": "Risk Assessment",
+    "subtitle": "Map every Annex I requirement to a risk decision — the structured, versioned cybersecurity risk assessment required by CRA Article 13(3) and Annex VII point 3.",
+    "status": {
+      "draft": "Draft",
+      "released": "Released",
+      "version": "Version {n}"
+    },
+    "actions": {
+      "save": "Save draft",
+      "saving": "Saving…",
+      "release": "Release version",
+      "releasing": "Releasing…",
+      "revise": "New version",
+      "downloadPdf": "PDF",
+      "generatePdf": "Generate PDF",
+      "generatingPdf": "Generating…"
+    },
+    "readOnlyNote": "This version is released and read-only. Create a new version to make changes.",
+    "progress": "{done} of {total} requirements mapped",
+    "context": {
+      "heading": "Assessment context",
+      "intendedPurpose": "Intended purpose",
+      "operationalEnvironment": "Operational environment",
+      "assetsToProtect": "Assets to protect",
+      "expectedLifetime": "Expected lifetime",
+      "placeholders": {
+        "intendedPurpose": "What the product is for and its reasonably foreseeable use…",
+        "operationalEnvironment": "Where and how the product is deployed, the networks it touches, who operates it…",
+        "assetsToProtect": "The data, functions and other assets the product must protect…",
+        "expectedLifetime": "e.g. 5 years from placing on the market"
+      },
+      "tooltips": {
+        "intendedPurpose": {
+          "title": "Intended purpose",
+          "body": "Describe what the product is designed to do and its reasonably foreseeable use. This frames the whole assessment — every Annex I decision is judged against this intended use.",
+          "ref": "CRA Article 13(3) — the risk assessment shall be based on the intended purpose and reasonably foreseeable use."
+        },
+        "operationalEnvironment": {
+          "title": "Operational environment",
+          "body": "The conditions under which the product operates: the networks it connects to, the systems it integrates with, its physical setting and who uses it. The same product carries different risks on an isolated network than on the open internet.",
+          "ref": "CRA Article 13(3) — the conditions of use must be taken into account in the assessment."
+        },
+        "assetsToProtect": {
+          "title": "Assets to protect",
+          "body": "What the product must keep safe: user and configuration data, cryptographic keys, the integrity of its own code and updates, the availability of its function. Naming the assets makes the confidentiality / integrity / availability requirements concrete.",
+          "ref": "CRA Annex I Part I (3)(c)-(d) — protection of the confidentiality and integrity of data and functions."
+        },
+        "expectedLifetime": {
+          "title": "Expected lifetime",
+          "body": "How long the product is expected to be in use. This drives the support period during which you must provide security updates, and the retention period for this documentation.",
+          "ref": "CRA Article 13(8) and Annex VII — the expected product lifetime informs the support period and retention obligations."
+        }
+      }
+    },
+    "parts": {
+      "part_i": "Part I — Essential cybersecurity requirements",
+      "part_iDescription": "The 13 Annex I Part I requirements every product with digital elements must consider.",
+      "part_ii": "Part II — Vulnerability-handling requirements",
+      "part_iiDescription": "The 8 Annex I Part II requirements for handling vulnerabilities across the support period."
+    },
+    "applicability": {
+      "applies": "Applies",
+      "not_applicable": "Not applicable"
+    },
+    "item": {
+      "threat": "Threat",
+      "threatPlaceholder": "What could go wrong if this requirement is not met — the threat and how it could be exploited…",
+      "likelihood": "Likelihood",
+      "impact": "Impact",
+      "inherentRisk": "Inherent risk",
+      "implementation": "How it's implemented",
+      "implementationPlaceholder": "The controls and design decisions that meet this requirement and mitigate the threat…",
+      "residualRisk": "Residual risk",
+      "justification": "Justification",
+      "justificationPlaceholder": "Why this requirement does not apply to the product — required by CRA Article 13(3)…"
+    },
+    "levels": {
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High",
+      "critical": "Critical"
+    },
+    "history": {
+      "heading": "Version history",
+      "released": "Released {date}"
+    },
+    "feedback": {
+      "saved": "Draft saved.",
+      "releaseIncomplete": "{count} requirement(s) still need a decision and the required implementation or justification before you can release."
+    },
+    "errors": {
+      "generic": "Something went wrong. Please try again.",
+      "notAuthenticated": "Please sign in again.",
+      "notAuthorized": "You don't have permission to edit the risk assessment.",
+      "released": "This assessment is already released. Create a new version to edit.",
+      "noDraft": "There is no draft to release.",
+      "draftExists": "A draft already exists.",
+      "noVersions": "There is no assessment to revise yet.",
+      "incomplete": "The assessment is incomplete.",
+      "noPdf": "No PDF is available for this version yet."
+    },
+    "pdf": {
+      "title": "Cybersecurity Risk Assessment",
+      "version": "Version",
+      "contextHeading": "Assessment context",
+      "notAssessed": "Not yet assessed"
+    }
+  }
+}

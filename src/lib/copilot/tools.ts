@@ -1,6 +1,7 @@
 import { tool } from "ai";
 import { z } from "zod";
 import type { createClient } from "@/lib/supabase/server";
+import { CRA_REQUIREMENTS } from "@/lib/constants/cra-requirements";
 
 /**
  * Agentic lookup tools — Phase 2 Pillar 3.
@@ -205,6 +206,85 @@ export function buildCopilotTools({ supabase, orgId, plan }: Ctx) {
           highRiskProducts: rows.filter(
             (r) => r.criticalOnSbom > 0 || r.highOnSbom > 0,
           ),
+        };
+      },
+    }),
+
+    // -------------------------------------------------------------------
+    // getRiskAssessmentStatus — Annex I mapping coverage for one product.
+    // -------------------------------------------------------------------
+    getRiskAssessmentStatus: tool({
+      description:
+        "Report the CRA risk-assessment status for a single product: whether an assessment exists, its version + draft/released state, and how many of the 21 Annex I requirements are still unmapped, how many apply, how many are marked not-applicable, and how many are missing the required implementation or justification text. Use this when the user asks 'is my risk assessment done?', 'which Annex I items are still unmapped?', or 'what's left on the risk assessment for <product>?'.",
+      inputSchema: z.object({
+        productId: z
+          .string()
+          .uuid()
+          .describe("Product id (UUID) returned by searchProducts."),
+      }),
+      execute: async ({ productId }) => {
+        const { data: rows } = await supabase
+          .from("risk_assessments")
+          .select("id, status, version, released_at")
+          .eq("product_id", productId)
+          .eq("org_id", orgId)
+          .order("version", { ascending: false });
+        const all =
+          (rows as {
+            id: string;
+            status: string;
+            version: number;
+            released_at: string | null;
+          }[] | null) ?? [];
+        if (all.length === 0) {
+          return { exists: false, totalRequirements: CRA_REQUIREMENTS.length };
+        }
+        const current = all.find((r) => r.status === "draft") ?? all[0];
+        const { data: itemRows } = await supabase
+          .from("risk_assessment_items")
+          .select("requirement_id, applicability, implementation, justification")
+          .eq("risk_assessment_id", current.id);
+        const byId = new Map(
+          ((itemRows as {
+            requirement_id: string;
+            applicability: string | null;
+            implementation: string | null;
+            justification: string | null;
+          }[] | null) ?? []).map((i) => [i.requirement_id, i]),
+        );
+
+        let applies = 0;
+        let notApplicable = 0;
+        const unmapped: string[] = [];
+        let missingImplementation = 0;
+        let missingJustification = 0;
+        for (const req of CRA_REQUIREMENTS) {
+          const it = byId.get(req.id);
+          if (!it || !it.applicability) {
+            unmapped.push(req.id);
+            continue;
+          }
+          if (it.applicability === "applies") {
+            applies++;
+            if (!it.implementation?.trim()) missingImplementation++;
+          } else {
+            notApplicable++;
+            if (!it.justification?.trim()) missingJustification++;
+          }
+        }
+
+        return {
+          exists: true,
+          status: current.status,
+          version: current.version,
+          releasedAt: current.released_at,
+          totalRequirements: CRA_REQUIREMENTS.length,
+          applies,
+          notApplicable,
+          unmappedCount: unmapped.length,
+          unmapped,
+          missingImplementation,
+          missingJustification,
         };
       },
     }),

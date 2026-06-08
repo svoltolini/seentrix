@@ -1,0 +1,111 @@
+{
+  "risk-assessment": {
+    "title": "Valutazione dei rischi",
+    "subtitle": "Associa ogni requisito dell'allegato I a una decisione di rischio — la valutazione dei rischi di cibersicurezza strutturata e versionata richiesta dall'Articolo 13(3) del CRA e dall'allegato VII punto 3.",
+    "status": {
+      "draft": "Bozza",
+      "released": "Rilasciata",
+      "version": "Versione {n}"
+    },
+    "actions": {
+      "save": "Salva bozza",
+      "saving": "Salvataggio…",
+      "release": "Rilascia versione",
+      "releasing": "Rilascio…",
+      "revise": "Nuova versione",
+      "downloadPdf": "PDF",
+      "generatePdf": "Genera PDF",
+      "generatingPdf": "Generazione…"
+    },
+    "readOnlyNote": "Questa versione è rilasciata e di sola lettura. Crea una nuova versione per apportare modifiche.",
+    "progress": "{done} di {total} requisiti mappati",
+    "context": {
+      "heading": "Contesto della valutazione",
+      "intendedPurpose": "Destinazione d'uso",
+      "operationalEnvironment": "Ambiente operativo",
+      "assetsToProtect": "Asset da proteggere",
+      "expectedLifetime": "Durata di vita prevista",
+      "placeholders": {
+        "intendedPurpose": "A cosa serve il prodotto e il suo uso ragionevolmente prevedibile…",
+        "operationalEnvironment": "Dove e come il prodotto è impiegato, le reti con cui interagisce, chi lo gestisce…",
+        "assetsToProtect": "I dati, le funzioni e gli altri asset che il prodotto deve proteggere…",
+        "expectedLifetime": "es. 5 anni dall'immissione sul mercato"
+      },
+      "tooltips": {
+        "intendedPurpose": {
+          "title": "Destinazione d'uso",
+          "body": "Descrivi a cosa è destinato il prodotto e il suo uso ragionevolmente prevedibile. Questo inquadra l'intera valutazione — ogni decisione sull'allegato I viene giudicata rispetto a questa destinazione d'uso.",
+          "ref": "Articolo 13(3) del CRA — la valutazione dei rischi deve basarsi sulla destinazione d'uso e sull'uso ragionevolmente prevedibile."
+        },
+        "operationalEnvironment": {
+          "title": "Ambiente operativo",
+          "body": "Le condizioni in cui il prodotto opera: le reti a cui si connette, i sistemi con cui si integra, il suo contesto fisico e chi lo utilizza. Lo stesso prodotto comporta rischi diversi su una rete isolata rispetto a internet aperto.",
+          "ref": "Articolo 13(3) del CRA — le condizioni d'uso devono essere prese in considerazione nella valutazione."
+        },
+        "assetsToProtect": {
+          "title": "Asset da proteggere",
+          "body": "Ciò che il prodotto deve tutelare: dati utente e di configurazione, chiavi crittografiche, l'integrità del proprio codice e degli aggiornamenti, la disponibilità della sua funzione. Nominare gli asset rende concreti i requisiti di riservatezza / integrità / disponibilità.",
+          "ref": "CRA allegato I parte I (3)(c)-(d) — protezione della riservatezza e dell'integrità dei dati e delle funzioni."
+        },
+        "expectedLifetime": {
+          "title": "Durata di vita prevista",
+          "body": "Per quanto tempo si prevede che il prodotto sia in uso. Questo determina il periodo di supporto durante il quale devi fornire aggiornamenti di sicurezza e il periodo di conservazione di questa documentazione.",
+          "ref": "Articolo 13(8) del CRA e allegato VII — la durata di vita prevista del prodotto incide sul periodo di supporto e sugli obblighi di conservazione."
+        }
+      }
+    },
+    "parts": {
+      "part_i": "Parte I — Requisiti essenziali di cibersicurezza",
+      "part_iDescription": "I 13 requisiti dell'allegato I parte I che ogni prodotto con elementi digitali deve considerare.",
+      "part_ii": "Parte II — Requisiti di gestione delle vulnerabilità",
+      "part_iiDescription": "Gli 8 requisiti dell'allegato I parte II per la gestione delle vulnerabilità durante il periodo di supporto."
+    },
+    "applicability": {
+      "applies": "Applicabile",
+      "not_applicable": "Non applicabile"
+    },
+    "item": {
+      "threat": "Minaccia",
+      "threatPlaceholder": "Cosa potrebbe andare storto se questo requisito non viene soddisfatto — la minaccia e come potrebbe essere sfruttata…",
+      "likelihood": "Probabilità",
+      "impact": "Impatto",
+      "inherentRisk": "Rischio inerente",
+      "implementation": "Come viene implementato",
+      "implementationPlaceholder": "I controlli e le scelte di progettazione che soddisfano questo requisito e mitigano la minaccia…",
+      "residualRisk": "Rischio residuo",
+      "justification": "Giustificazione",
+      "justificationPlaceholder": "Perché questo requisito non si applica al prodotto — richiesto dall'Articolo 13(3) del CRA…"
+    },
+    "levels": {
+      "low": "Basso",
+      "medium": "Medio",
+      "high": "Alto",
+      "critical": "Critico"
+    },
+    "history": {
+      "heading": "Cronologia delle versioni",
+      "released": "Rilasciata il {date}"
+    },
+    "feedback": {
+      "saved": "Bozza salvata.",
+      "releaseIncomplete": "{count} requisito/i necessitano ancora di una decisione e dell'implementazione o giustificazione richiesta prima di poter rilasciare."
+    },
+    "errors": {
+      "generic": "Qualcosa è andato storto. Riprova.",
+      "notAuthenticated": "Effettua nuovamente l'accesso.",
+      "notAuthorized": "Non hai i permessi per modificare la valutazione dei rischi.",
+      "released": "Questa valutazione è già stata rilasciata. Crea una nuova versione per modificarla.",
+      "noDraft": "Non c'è alcuna bozza da rilasciare.",
+      "draftExists": "Esiste già una bozza.",
+      "noVersions": "Non c'è ancora alcuna valutazione da revisionare.",
+      "incomplete": "La valutazione è incompleta.",
+      "noPdf": "Per questa versione non è ancora disponibile alcun PDF."
+    },
+    "pdf": {
+      "title": "Valutazione dei rischi di cibersicurezza",
+      "version": "Versione",
+      "contextHeading": "Contesto della valutazione",
+      "notAssessed": "Non ancora valutato"
+    }
+  }
+}

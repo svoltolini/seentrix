@@ -69,6 +69,10 @@ export const GLOSSARY_TERMS = [
   // Secure-by-design & technical documentation
   "threat_model",
   "data_flow_diagram",
+
+  // Risk assessment
+  "risk_assessment",
+  "residual_risk",
 ] as const;
 
 export type GlossaryTermId = (typeof GLOSSARY_TERMS)[number];
@@ -130,6 +134,9 @@ export const GLOSSARY_RELATED: Partial<Record<GlossaryTermId, GlossaryTermId[]>>
 
   threat_model: ["data_flow_diagram", "annex_vii", "annex_i"],
   data_flow_diagram: ["threat_model", "annex_vii"],
+
+  risk_assessment: ["article_13", "annex_i", "threat_model", "residual_risk"],
+  residual_risk: ["risk_assessment", "threat_model"],
 };
 
 /**
@@ -184,6 +191,9 @@ export const GLOSSARY_LESSONS: Partial<Record<GlossaryTermId, string>> = {
   annex_vii: "threat-modelling-and-diagrams",
   threat_model: "threat-modelling-and-diagrams",
   data_flow_diagram: "threat-modelling-and-diagrams",
+
+  risk_assessment: "risk-assessment-fundamentals",
+  residual_risk: "risk-assessment-fundamentals",
 };
 
 /**
@@ -235,6 +245,10 @@ export const ACADEMY_LESSONS = {
   "threat-modelling-and-diagrams": {
     title: "Threat modelling, diagrams and Annex VII evidence",
     duration: "8 min",
+  },
+  "risk-assessment-fundamentals": {
+    title: "How to do the CRA risk assessment",
+    duration: "9 min",
   },
 } satisfies Record<string, { title: string; duration: string }>;
 

@@ -1,0 +1,111 @@
+{
+  "risk-assessment": {
+    "title": "Évaluation des risques",
+    "subtitle": "Associez chaque exigence de l'annexe I à une décision de risque — l'évaluation des risques de cybersécurité structurée et versionnée exigée par l'Article 13(3) du CRA et l'annexe VII point 3.",
+    "status": {
+      "draft": "Brouillon",
+      "released": "Publiée",
+      "version": "Version {n}"
+    },
+    "actions": {
+      "save": "Enregistrer le brouillon",
+      "saving": "Enregistrement…",
+      "release": "Publier la version",
+      "releasing": "Publication…",
+      "revise": "Nouvelle version",
+      "downloadPdf": "PDF",
+      "generatePdf": "Générer le PDF",
+      "generatingPdf": "Génération…"
+    },
+    "readOnlyNote": "Cette version est publiée et en lecture seule. Créez une nouvelle version pour apporter des modifications.",
+    "progress": "{done} exigences sur {total} renseignées",
+    "context": {
+      "heading": "Contexte de l'évaluation",
+      "intendedPurpose": "Destination prévue",
+      "operationalEnvironment": "Environnement d'exploitation",
+      "assetsToProtect": "Actifs à protéger",
+      "expectedLifetime": "Durée de vie attendue",
+      "placeholders": {
+        "intendedPurpose": "À quoi sert le produit et son utilisation raisonnablement prévisible…",
+        "operationalEnvironment": "Où et comment le produit est déployé, les réseaux auxquels il accède, qui l'exploite…",
+        "assetsToProtect": "Les données, fonctions et autres actifs que le produit doit protéger…",
+        "expectedLifetime": "p. ex. 5 ans à compter de la mise sur le marché"
+      },
+      "tooltips": {
+        "intendedPurpose": {
+          "title": "Destination prévue",
+          "body": "Décrivez ce à quoi le produit est destiné et son utilisation raisonnablement prévisible. Cela encadre toute l'évaluation — chaque décision relative à l'annexe I est jugée au regard de cette destination.",
+          "ref": "Article 13(3) du CRA — l'évaluation des risques doit reposer sur la destination prévue et l'utilisation raisonnablement prévisible."
+        },
+        "operationalEnvironment": {
+          "title": "Environnement d'exploitation",
+          "body": "Les conditions dans lesquelles le produit fonctionne : les réseaux auxquels il se connecte, les systèmes auxquels il s'intègre, son cadre physique et ses utilisateurs. Un même produit présente des risques différents sur un réseau isolé et sur l'internet ouvert.",
+          "ref": "Article 13(3) du CRA — les conditions d'utilisation doivent être prises en compte dans l'évaluation."
+        },
+        "assetsToProtect": {
+          "title": "Actifs à protéger",
+          "body": "Ce que le produit doit préserver : les données utilisateur et de configuration, les clés cryptographiques, l'intégrité de son propre code et de ses mises à jour, la disponibilité de sa fonction. Nommer les actifs rend concrètes les exigences de confidentialité / intégrité / disponibilité.",
+          "ref": "CRA annexe I partie I (3)(c)-(d) — protection de la confidentialité et de l'intégrité des données et des fonctions."
+        },
+        "expectedLifetime": {
+          "title": "Durée de vie attendue",
+          "body": "Combien de temps le produit est censé être utilisé. Cela détermine la période de support pendant laquelle vous devez fournir des mises à jour de sécurité, ainsi que la durée de conservation de cette documentation.",
+          "ref": "Article 13(8) du CRA et annexe VII — la durée de vie attendue du produit conditionne la période de support et les obligations de conservation."
+        }
+      }
+    },
+    "parts": {
+      "part_i": "Partie I — Exigences essentielles de cybersécurité",
+      "part_iDescription": "Les 13 exigences de l'annexe I partie I que tout produit comportant des éléments numériques doit prendre en compte.",
+      "part_ii": "Partie II — Exigences de gestion des vulnérabilités",
+      "part_iiDescription": "Les 8 exigences de l'annexe I partie II pour la gestion des vulnérabilités pendant la période de support."
+    },
+    "applicability": {
+      "applies": "Applicable",
+      "not_applicable": "Non applicable"
+    },
+    "item": {
+      "threat": "Menace",
+      "threatPlaceholder": "Ce qui pourrait mal tourner si cette exigence n'est pas respectée — la menace et la façon dont elle pourrait être exploitée…",
+      "likelihood": "Probabilité",
+      "impact": "Impact",
+      "inherentRisk": "Risque inhérent",
+      "implementation": "Comment c'est mis en œuvre",
+      "implementationPlaceholder": "Les contrôles et choix de conception qui satisfont cette exigence et atténuent la menace…",
+      "residualRisk": "Risque résiduel",
+      "justification": "Justification",
+      "justificationPlaceholder": "Pourquoi cette exigence ne s'applique pas au produit — exigé par l'Article 13(3) du CRA…"
+    },
+    "levels": {
+      "low": "Faible",
+      "medium": "Moyen",
+      "high": "Élevé",
+      "critical": "Critique"
+    },
+    "history": {
+      "heading": "Historique des versions",
+      "released": "Publiée le {date}"
+    },
+    "feedback": {
+      "saved": "Brouillon enregistré.",
+      "releaseIncomplete": "{count} exigence(s) nécessitent encore une décision et la mise en œuvre ou la justification requise avant de pouvoir publier."
+    },
+    "errors": {
+      "generic": "Une erreur est survenue. Veuillez réessayer.",
+      "notAuthenticated": "Veuillez vous reconnecter.",
+      "notAuthorized": "Vous n'êtes pas autorisé à modifier l'évaluation des risques.",
+      "released": "Cette évaluation est déjà publiée. Créez une nouvelle version pour la modifier.",
+      "noDraft": "Il n'y a aucun brouillon à publier.",
+      "draftExists": "Un brouillon existe déjà.",
+      "noVersions": "Il n'y a pas encore d'évaluation à réviser.",
+      "incomplete": "L'évaluation est incomplète.",
+      "noPdf": "Aucun PDF n'est encore disponible pour cette version."
+    },
+    "pdf": {
+      "title": "Évaluation des risques de cybersécurité",
+      "version": "Version",
+      "contextHeading": "Contexte de l'évaluation",
+      "notAssessed": "Pas encore évalué"
+    }
+  }
+}
