@@ -10,6 +10,14 @@ staging + get sign-off before starting the next. Companion docs:
 > supports real-time collaboration via a self-hosted room server). All six phases
 > will be built over time. **Article 14** reporting is its own phase. The
 > **CRA readiness dashboard** is built **last** (capstone).
+>
+> **AI Copilot + Academy are first-class scope in EVERY phase, not an
+> afterthought.** Each new screen/feature/artifact MUST also: (a) be understood
+> by the AI Copilot (screen context + knowledge + actions), and (b) be covered by
+> Academy training. The Academy lesson catalogue will be **restructured** as part
+> of this work (see Z.3). No phase is "done" until its Copilot and Academy updates
+> ship too — enforced in every phase's acceptance criteria and the Definition of
+> Done (Y).
 
 ---
 
@@ -159,10 +167,21 @@ product_evidence(
   access. Defer to after the single-user editor works end-to-end. Document the
   room-server URL as an env var (`NEXT_PUBLIC_EXCALIDRAW_ROOM_URL`).
 
-### 1.6 Acceptance criteria
+### 1.6 AI + Academy (required — see Z)
+- Copilot: add `pagePath` context for `/app/products/[id]/diagrams`; KB chunks on
+  architecture/data-flow/environment diagrams, threat modelling, and Annex VII
+  evidence/test reports; prompt guidance pointing to the Diagrams & Evidence tab;
+  a seeded question on the screen.
+- Academy: `screens.ts` entry for the diagrams screen; add Track B lesson(s)
+  "Threat modelling & diagrams" (+ evidence/test reports) with full en/de/fr/it
+  content, quiz, and 4-language audio; glossary terms added.
+
+### 1.7 Acceptance criteria
 - Can create, name, edit, save, reopen, and delete a diagram of each type;
   preview PNG renders in the card; scene reloads exactly on reopen.
 - Can upload/download/delete evidence with category + Annex VII point.
+- Copilot explains diagrams/threat-modelling/evidence on-screen and cites the
+  right Annex VII points; Academy banner + lesson + audio live (all 4 locales).
 - All four locales render; design-token compliant; gates green; deployed +
   visually verified on staging.
 
@@ -210,11 +229,19 @@ Seed items from `src/lib/constants/cra-requirements.ts` (Part I ×13 + Part II �
 - Generated PDF: render the full structured assessment (reuse the pdf pipeline,
   add a richer `risk-assessment` template) — feeds Annex VII point 3.
 
-### 2.3 Acceptance criteria
+### 2.3 AI + Academy (required — see Z)
+- Copilot: context for the risk-assessment screen; KB chunks on Art 13 risk
+  assessment, Annex I applicability mapping, and N/A justifications; a read tool to
+  answer "which Annex I items are still unmapped for this product?".
+- Academy: screen mapping; Track B lesson "How to do the CRA risk assessment"
+  (en/de/fr/it + quiz + audio); glossary terms.
+
+### 2.4 Acceptance criteria
 - All 21 Annex I items present, each markable applies/N/A with required
   implementation/justification; validation enforces justification on N/A.
-- Versions snapshot + history; PDF generates in the user's locale; gates green;
-  staging-verified.
+- Versions snapshot + history; PDF generates in the user's locale.
+- Copilot explains the risk assessment + Annex I mapping and can report unmapped
+  items; Academy lesson + audio live (4 locales); gates green; staging-verified.
 
 ---
 
@@ -242,9 +269,18 @@ Art 13(13) requires retention 10 years (or support period).
   if later) to released technical files & DoCs; surface a "Retained until …"
   badge; block hard-delete of released versions (soft-archive only).
 
-### 3.3 Acceptance criteria
+### 3.3 AI + Academy (required — see Z)
+- Copilot: context for the technical-file screen; KB chunks on Annex VII contents
+  and Art 13(13) retention; a read tool over the coverage manifest to answer
+  "what's missing from my technical file?".
+- Academy: screen mapping; Track C lesson "The Annex VII technical file &
+  retention" (en/de/fr/it + quiz + audio); glossary terms.
+
+### 3.4 Acceptance criteria
 - One-click assembled Annex VII PDF with all available sections in order + a
-  manifest of present/missing; retention dates shown; gates green; staging-verified.
+  manifest of present/missing; retention dates shown.
+- Copilot can report technical-file completeness; Academy lesson + audio live
+  (4 locales); gates green; staging-verified.
 
 ---
 
@@ -280,10 +316,21 @@ report_submissions(
   fields); link out to the SRP. (No official public API assumed — produce the
   submission package + record it.)
 
-### 4.3 Acceptance criteria
+### 4.3 AI + Academy (required — see Z)
+- Copilot: context for the reporting screen; KB chunks on Art 14 triggers, the
+  24h/72h/14d/1-month deadlines, and the ENISA Single Reporting Platform; a read
+  tool over open report cases ("what reporting deadlines are open and when?");
+  refresh the deadline "Explain" seed prompts.
+- Academy: screen mapping; refresh the existing `article-14-reporting` lesson +
+  add a Track D lesson on the reporting workflow/SRP (en/de/fr/it + quiz + audio);
+  glossary terms.
+
+### 4.4 Acceptance criteria
 - Create a case from an incident/vuln; clocks compute correct due times from
   `detected_at`; each stage has a template + records a submission; user-notification
-  step present; localized; gates green; staging-verified.
+  step present; localized.
+- Copilot can list open reporting deadlines and explain each stage; Academy
+  lesson(s) + audio live (4 locales); gates green; staging-verified.
 
 ---
 
@@ -302,10 +349,20 @@ report_submissions(
 - **Product identification (Art 13(15),(16)):** add type/batch/serial fields +
   manufacturer contact, shown on the product and in generated docs.
 
-### 5.2 Acceptance criteria
+### 5.3 AI + Academy (required — see Z)
+- Copilot: context for the DoC/CE/Annex II/identity screens; KB chunks on Annex V
+  DoC fields, Annex VI simplified DoC, Art 30 CE marking, Annex II items, and Art
+  13(15)–(19) identity/support-period; guidance pointing to each generator.
+- Academy: screen mappings; Track C lessons "Declaration of Conformity & CE
+  marking" and "Annex II user information" (en/de/fr/it + quiz + audio); refresh
+  the existing DoC lesson; glossary terms.
+
+### 5.4 Acceptance criteria
 - DoC has all Annex V fields; simplified DoC + URL works; CE record captured; Annex
   II generator covers 1–9; product identity fields present + flow into docs;
-  localized; gates green; staging-verified.
+  localized.
+- Copilot explains DoC/CE/Annex II/identity and points to the generators; Academy
+  lessons + audio live (4 locales); gates green; staging-verified.
 
 ---
 
@@ -325,9 +382,19 @@ report_submissions(
 - **End-of-support notification (Art 13(19)) + corrective-action/recall procedure
   (Art 13(21)).**
 
-### 6.2 Acceptance criteria
-- Each record type creatable/exportable; retention surfaced; localized; gates
-  green; staging-verified.
+### 6.3 AI + Academy (required — see Z)
+- Copilot: context for the conformity-module, supply-chain, monitoring, advisory,
+  and end-of-support screens; KB chunks on Art 32/Annex VIII modules, Art 23
+  supply-chain records, Art 13(7) monitoring, Annex I II.3/II.4, and Art
+  13(19),(21); read tools where useful (e.g. supply-chain completeness).
+- Academy: screen mappings; Track E lessons "Conformity modules", "Post-market
+  monitoring & supply chain", "End-of-support & corrective action" (en/de/fr/it +
+  quiz + audio); glossary terms.
+
+### 6.4 Acceptance criteria
+- Each record type creatable/exportable; retention surfaced; localized.
+- Copilot explains each lifecycle/supply-chain obligation; Academy lessons + audio
+  live (4 locales); gates green; staging-verified.
 
 ---
 
@@ -343,8 +410,95 @@ report_submissions(
 - A top **readiness % ring** per product + an org-level rollup on the main
   dashboard. Use `text-success`/`warning`/`destructive` for status; IconBadge
   rounded-square; `shadow-card-*` cards; full-width `max-w-[1600px]`.
+- **AI + Academy (see Z):** Copilot gets context for the readiness dashboard + a
+  read tool over the readiness data so it can answer "what's left for this product
+  to be CRA-ready?" and route the user to each gap; Academy gets a capstone
+  "Putting it all together: your CRA readiness" lesson (en/de/fr/it + quiz +
+  audio) and the hub is presented as the restructured tracks (Z.3).
 - Acceptance: status reflects real data; clicking an item routes to the right
-  tool; localized; gates green; staging-verified.
+  tool; Copilot can summarize remaining gaps; Academy capstone lesson live;
+  localized; gates green; staging-verified.
+
+---
+
+## Z. AI Copilot + Academy — cross-cutting scope (applies to EVERY phase)
+
+The assistant and the training MUST grow with the product. For **each** new
+screen, feature, or artifact a phase introduces, the implementer MUST do all of
+the following before that phase is considered done.
+
+### Z.1 AI Copilot awareness
+The Copilot (Mistral) is grounded by four things — update all that apply:
+1. **Screen context** (`src/lib/copilot/context-enrichment.ts`): add the new
+   `pagePath` → page-title/section mapping so the Copilot knows what screen the
+   user is on (e.g. `/app/products/[id]/diagrams`, `.../risk-assessment`, the
+   reporting workflow, the readiness dashboard). Mirror existing path matching.
+2. **Knowledge base (RAG)**: add knowledge chunks for each new topic so the
+   Copilot can explain it and cite the right CRA article. Chunks live in the
+   `kb_chunks` table (has a `language` column) and are retrieved by
+   `src/lib/copilot/retrieval.ts`. Add EN chunks at minimum; the answer-time
+   directive already makes it reply in the user's locale. Source content from
+   `cra-obligations-research.md`.
+3. **System prompt** (`src/lib/copilot/prompt.ts`): when a phase adds a major
+   capability area, extend the "what Seentrix can do / where things live" guidance
+   so the Copilot directs users to the right tool (e.g. "To add an architecture
+   diagram, open the product's Diagrams & Evidence tab").
+4. **Tools** (`src/lib/copilot/tools.ts`): where it adds real value, give the
+   Copilot a READ tool to ground answers in the user's actual data (e.g. "which
+   Annex VII points are still missing for this product?" → Phase-3 manifest;
+   "what reporting deadlines are open?" → Phase-4 cases). Follow the existing tool
+   pattern; keep tools read-only unless explicitly scoped otherwise.
+5. **Seeded questions**: where a screen has an "Ask Seentrix AI" affordance or the
+   deadline "Explain" pattern, add locale-aware seed prompts for the new screen.
+
+**Copilot acceptance (every phase):** on each new screen the Copilot opens with
+relevant context, correctly explains the new topic (citing the right CRA
+article), and points the user to the new tool. Verify on staging in EN + one of
+DE/FR/IT.
+
+### Z.2 Academy training updates
+The Academy is screen-aware (`src/lib/academy/screens.ts` maps screen → lessons,
+powering the "By Screen" tab + the "New to this screen?" banners) and holds the
+lesson catalogue (`src/content/academy/*.tsx`, `src/lib/academy/lessons.ts`) with
+per-lesson `i18n` (en/de/fr/it), quizzes, and audio briefings
+(`src/lib/academy/audio.ts`, `/public/academy/<id>-briefing[.locale].mp3`).
+
+For each phase:
+1. **Screen mapping** (`screens.ts`): add a `SCREEN_LESSONS` entry for every new
+   screen so the banner + "By Screen" tab point at the right lessons.
+2. **New / updated lessons**: add or revise lessons covering the phase's topic
+   (see Z.3). Each lesson needs full `en`+`de`+`fr`+`it` content (title, summary,
+   sections, a **5-question quiz** with stable `correctIndex`), registration in
+   `lessons.ts`, glossary-consistent terminology, and a screen mapping.
+3. **Audio briefings**: generate a ~2-minute narration per new lesson in all four
+   languages (distinct native voice per language: de=charon, fr=aoede,
+   it=rasalgethi; en uses the existing voice), saved as
+   `/public/academy/<id>-briefing[.locale].mp3`, wired into `audio.ts`. Audit each
+   file's duration (~90–150s; regenerate any anomalous/looping output).
+4. **Glossary**: add new CRA terms to the in-app glossary and `i18n-glossary.md`.
+
+**Academy acceptance (every phase):** the new screen shows a contextual training
+banner; the "By Screen" tab lists the right lessons; new lessons render + quiz +
+play audio in all four languages; completeness test green.
+
+### Z.3 Academy curriculum RESTRUCTURE (planned, executed across phases)
+The catalogue grows from 11 flat lessons into a structured, track-based
+curriculum. Build a lesson when its phase ships (don't front-load empty lessons):
+- **Track A — CRA Foundations** (existing, refreshed): what the CRA is, scope &
+  timeline, economic-operator roles, Annex I essential requirements.
+- **Track B — Risk & Secure-by-Design** (P1–P2): threat modelling & diagrams; how
+  to do the cybersecurity risk assessment; mapping Annex I; secure-by-design.
+- **Track C — Documentation & Conformity** (P3, P5): the Annex VII technical file;
+  Declaration of Conformity & CE marking; conformity assessment routes/modules;
+  Annex II user information; retention obligations.
+- **Track D — Vulnerability Handling & Reporting** (P4, existing + new): SBOM; CVD;
+  scoring vulnerabilities; Article 14 reporting deadlines & the ENISA SRP; security
+  updates & support period.
+- **Track E — Lifecycle & Supply Chain** (P6): post-market monitoring; supply-chain
+  records; end-of-support & corrective action.
+Update the Academy hub UI to present **tracks** (grouping) rather than a flat
+list, keeping the existing lesson card / progress / certificate mechanics. Keep
+the lesson lists in `screens.ts` short (2–4 most-relevant entries per screen).
 
 ---
 
@@ -367,9 +521,14 @@ report_submissions(
 
 ## Y. Definition of done (per phase)
 1. Feature works end-to-end for all stated acceptance criteria.
-2. EN/DE/FR/IT complete; completeness test green.
-3. Design-token compliant (no raw hex/palette/font-size; IconBadge for icon chips).
-4. `lint` + `tsc` + `vitest` + CI-env `build` all green; new logic has tests.
-5. Migration applied to staging DB; committed to `develop`; deployed to
+2. **AI Copilot updated (Z.1)** for every new screen/topic: screen context, KB
+   chunks, prompt/tool/seeds as applicable — verified answering correctly on the
+   new screens.
+3. **Academy updated (Z.2–Z.3)**: screen mappings + new/updated lessons (4
+   languages) + quizzes + audio briefings; curriculum tracks reflected.
+4. EN/DE/FR/IT complete; completeness test green.
+5. Design-token compliant (no raw hex/palette/font-size; IconBadge for icon chips).
+6. `lint` + `tsc` + `vitest` + CI-env `build` all green; new logic has tests.
+7. Migration applied to staging DB; committed to `develop`; deployed to
    staging.seentrix.com; visually verified in the user's browser.
-6. NOT promoted to production — await explicit user go-ahead.
+8. NOT promoted to production — await explicit user go-ahead.
