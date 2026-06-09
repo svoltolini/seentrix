@@ -83,7 +83,7 @@ export default async function AdminOverviewPage() {
         <div className="flex items-baseline justify-between">
           <h2 className="font-heading text-h4 text-foreground">Recent signups</h2>
           <Link
-            href="/app/admin/companies"
+            href="/admin/companies"
             className="text-p4 text-primary hover:underline"
           >
             View all companies →

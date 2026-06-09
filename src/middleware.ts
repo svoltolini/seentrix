@@ -60,6 +60,23 @@ export default async function middleware(request: NextRequest) {
   // would loop). The logout action lives under /auth too.
   const isSecurityRoute = pathname.startsWith("/app/settings/security");
 
+  // The internal admin console is a standalone surface (outside /app). It must
+  // be auth- and MFA-gated like the app; the platform_staff check itself lives
+  // in the /admin layout.
+  const isAdminRoute = pathname.startsWith("/admin");
+
+  // Admin-host split. When ADMIN_HOST is configured (e.g. admin.seentrix.com)
+  // the console gets its own subdomain: that host serves ONLY the console
+  // (+ auth flows), and the customer host refuses /admin and 301s callers to
+  // the subdomain. When ADMIN_HOST is unset (local / preview without a
+  // dedicated subdomain) the console simply stays reachable at /admin on the
+  // current host, so nothing changes there.
+  const adminHost = process.env.ADMIN_HOST?.trim().toLowerCase();
+  const reqHost = (request.headers.get("host") ?? "")
+    .split(":")[0]
+    .toLowerCase();
+  const onAdminHost = !!adminHost && reqHost === adminHost;
+
   const orgId = user?.app_metadata?.org_id;
   const mustChangePassword = user?.app_metadata?.must_change_password === true;
 
@@ -144,8 +161,28 @@ export default async function middleware(request: NextRequest) {
 
   // 3. Redirect rules
 
+  // 3a. Admin-host split (only active when ADMIN_HOST is set).
+  if (adminHost) {
+    if (onAdminHost) {
+      // The admin subdomain serves only the console + auth flows. Anything
+      // else gets sent to the console root (stays on this host).
+      if (!isAdminRoute && !pathname.startsWith("/auth")) {
+        return redirectTo("/admin");
+      }
+    } else if (isAdminRoute) {
+      // The console is not available on the customer host — bounce to the
+      // subdomain, preserving the path + query.
+      return NextResponse.redirect(
+        new URL(pathname + request.nextUrl.search, `https://${adminHost}`),
+      );
+    }
+  }
+
   // Unauthed trying to access protected areas → login
-  if (!user && (isAppRoute || isOnboardingRoute || isChangePasswordRoute)) {
+  if (
+    !user &&
+    (isAppRoute || isAdminRoute || isOnboardingRoute || isChangePasswordRoute)
+  ) {
     return redirectTo("/auth/login");
   }
 
@@ -163,7 +200,7 @@ export default async function middleware(request: NextRequest) {
     orgId &&
     needsMfaChallenge &&
     !isMfaChallengeRoute &&
-    (isAppRoute || isLoginOrSignup)
+    (isAppRoute || isAdminRoute || isLoginOrSignup)
   ) {
     return redirectTo("/auth/mfa");
   }

@@ -7,7 +7,7 @@ import { getServiceClient } from "./service";
 /**
  * Platform-staff gate for the internal admin console.
  *
- * Membership in `platform_staff` is the ONLY thing that unlocks /app/admin.
+ * Membership in `platform_staff` is the ONLY thing that unlocks /admin.
  * It is intentionally unrelated to the org-level `users.role` — an org admin
  * runs their own company and must never reach a cross-tenant tool.
  *

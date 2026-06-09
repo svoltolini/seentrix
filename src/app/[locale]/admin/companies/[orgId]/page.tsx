@@ -125,7 +125,7 @@ export default async function CompanyDetailPage({
   return (
     <div className="flex flex-col gap-8">
       <Link
-        href="/app/admin/companies"
+        href="/admin/companies"
         className="text-p4 text-muted-foreground hover:text-foreground"
       >
         ← All companies

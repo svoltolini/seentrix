@@ -13,11 +13,12 @@ interface NavItem {
 }
 
 const ITEMS: NavItem[] = [
-  { href: "/app/admin", label: "Overview", icon: "Chart", exact: true },
-  { href: "/app/admin/revenue", label: "Revenue", icon: "DollarCircle" },
-  { href: "/app/admin/companies", label: "Companies", icon: "Building" },
-  { href: "/app/admin/usage", label: "Usage & AI", icon: "Flash" },
-  { href: "/app/admin/issues", label: "Issues", icon: "Warning2" },
+  { href: "/admin", label: "Overview", icon: "Chart", exact: true },
+  { href: "/admin/revenue", label: "Revenue", icon: "DollarCircle" },
+  { href: "/admin/companies", label: "Companies", icon: "Building" },
+  { href: "/admin/usage", label: "Usage & AI", icon: "Flash" },
+  { href: "/admin/issues", label: "Issues", icon: "Warning2" },
+  { href: "/admin/copilot", label: "Copilot", icon: "MessageQuestion" },
 ];
 
 export function AdminNav() {

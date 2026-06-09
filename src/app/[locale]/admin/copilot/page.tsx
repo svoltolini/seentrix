@@ -1,7 +1,3 @@
-import { notFound } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
-import { isCopilotAdmin } from "@/lib/copilot/admin-access";
-
 /**
  * Staff-only review page for Copilot quality.
  *
@@ -14,8 +10,8 @@ import { isCopilotAdmin } from "@/lib/copilot/admin-access";
  *   3. KB-gap candidates — assistant turns where retrieval returned
  *      zero passages. Signals missing corpus content.
  *
- * Gated by the COPILOT_ADMIN_EMAILS env var allowlist. Anyone else sees
- * a 404 (not a redirect — we don't want to leak that the page exists).
+ * Staff-gated by the /admin layout (platform_staff) — non-staff never reach
+ * it. Reads cross-org data via the service role.
  */
 
 export const runtime = "nodejs";
@@ -24,13 +20,6 @@ export const runtime = "nodejs";
 import { createClient as createServiceClient } from "@supabase/supabase-js";
 
 export default async function CopilotAdminPage() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) notFound();
-  if (!isCopilotAdmin(user.email ?? null)) notFound();
-
   const serviceUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!serviceUrl || !serviceKey) {

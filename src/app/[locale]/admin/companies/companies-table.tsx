@@ -122,7 +122,7 @@ export function CompaniesTable({ rows }: { rows: CompanyRow[] }) {
                 <tr key={r.id} className="text-p3 transition-colors hover:bg-muted/40">
                   <td className="px-4 py-3">
                     <Link
-                      href={`/app/admin/companies/${r.id}`}
+                      href={`/admin/companies/${r.id}`}
                       className="font-medium text-foreground hover:text-primary hover:underline"
                     >
                       {r.name}

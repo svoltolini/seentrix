@@ -120,7 +120,7 @@ export default async function AdminRevenuePage() {
                       </span>
                       {org && (
                         <Link
-                          href={`/app/admin/companies/${org.id}`}
+                          href={`/admin/companies/${org.id}`}
                           className="text-p4 text-primary hover:underline"
                         >
                           View →
