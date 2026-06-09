@@ -13,6 +13,7 @@ import {
   OSV_QUERYBATCH_URL,
 } from "@/lib/sbom/osv";
 import { logActivity } from "@/lib/activity";
+import { canUploadSbom, type OrgPlan } from "@/lib/constants/plans";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -87,6 +88,16 @@ export async function uploadSbom(
   const { supabase, user, orgId } = await getAuthContext();
 
   if (!user || !orgId) return { error: "notAuthenticated" };
+
+  // Plan gate: SBOM upload is a paid feature (Free has a 0 SBOM limit).
+  // Enforced server-side here, not just in the UI.
+  const { data: planRow } = await supabase
+    .from("organizations")
+    .select("plan")
+    .eq("id", orgId)
+    .single();
+  const plan = ((planRow as { plan?: string } | null)?.plan ?? "free") as OrgPlan;
+  if (!canUploadSbom(plan, 0)) return { error: "planRequired" };
 
   const file = formData.get("file") as File | null;
   if (!file) return { error: "noFile" };

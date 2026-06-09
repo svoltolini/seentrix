@@ -465,6 +465,14 @@ export async function generateVersionPdf(
   const { supabase, user, orgId } = await getAuthContext();
   if (!user || !orgId) return { error: "notAuthenticated" };
 
+  // Plan gate: PDF generation is a paid feature.
+  {
+    const { canGeneratePdf } = await import("@/lib/constants/plans");
+    const { getOrgPlan } = await import("@/lib/entitlements");
+    if (!canGeneratePdf(await getOrgPlan(supabase, orgId)))
+      return { error: "planRequired" };
+  }
+
   const path = await buildAndUploadPdf(supabase, orgId, productId, assessmentId);
   if (!path) return { error: "generic" };
 

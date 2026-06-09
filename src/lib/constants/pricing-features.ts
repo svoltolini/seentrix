@@ -70,7 +70,7 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
       { key: "cvssBucketing", free: false, professional: true, business: true, enterprise: true },
       { key: "triageMttr", free: false, professional: true, business: true, enterprise: true },
       { key: "activelyExploited", free: false, professional: true, business: true, enterprise: true },
-      { key: "monitoringFrequency", free: "On-demand", professional: "Weekly", business: "Daily", enterprise: "Real-time" },
+      { key: "monitoringFrequency", free: "On-demand", professional: "coming-soon", business: "coming-soon", enterprise: "coming-soon" },
       { key: "vexCsafExport", free: false, professional: false, business: "coming-soon", enterprise: "coming-soon" },
     ],
   },
@@ -140,7 +140,7 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
   {
     key: "integrations",
     rows: [
-      { key: "apiAccess", free: false, professional: false, business: "1000 req/day", enterprise: "Unlimited" },
+      { key: "apiAccess", free: false, professional: false, business: "coming-soon", enterprise: "coming-soon" },
       { key: "webhooks", free: false, professional: false, business: "coming-soon", enterprise: "coming-soon" },
     ],
   },

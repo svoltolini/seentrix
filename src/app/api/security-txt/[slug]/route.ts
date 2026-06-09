@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { rateLimit, clientIpFromHeaders } from "@/lib/rate-limit";
+import { canUsePsirt, type OrgPlan } from "@/lib/constants/plans";
 
 /**
  * Generates a security.txt file (RFC 9116) for an org that has enabled its
@@ -36,13 +37,20 @@ export async function GET(
   const { data } = await supabase
     .from("organizations")
     .select(
-      "name, slug, security_contact_email, security_policy, security_public_enabled",
+      "name, slug, security_contact_email, security_policy, security_public_enabled, plan",
     )
     .eq("slug", slug)
     .eq("security_public_enabled", true)
     .single();
 
   if (!data) {
+    return new NextResponse("Not found", { status: 404 });
+  }
+
+  // Plan gate: the PSIRT page is Business+. Hide it if the org isn't (e.g.
+  // they enabled it then downgraded).
+  const plan = ((data as { plan?: string }).plan ?? "free") as OrgPlan;
+  if (!canUsePsirt(plan)) {
     return new NextResponse("Not found", { status: 404 });
   }
 

@@ -4,6 +4,8 @@ import { createClient } from "@/lib/supabase/server";
 import { EndUserInfoPdf } from "@/lib/pdf/templates/end-user-info";
 import { getEndUserInfoMessages } from "@/lib/pdf/i18n/end-user-info-messages";
 import { LOCALE_COOKIE, isLocale, type Locale } from "@/i18n/locales";
+import { getOrgPlan } from "@/lib/entitlements";
+import { canGeneratePdf } from "@/lib/constants/plans";
 
 /**
  * Stream the End-User Cybersecurity Information Sheet — the document
@@ -27,6 +29,11 @@ export async function GET(
   const orgId = (user.app_metadata?.org_id as string | undefined) ?? "";
   if (!orgId) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+  }
+
+  // Plan gate: PDF generation is a paid feature.
+  if (!canGeneratePdf(await getOrgPlan(supabase, orgId))) {
+    return NextResponse.json({ error: "plan_required" }, { status: 403 });
   }
 
   const [{ data: product }, { data: org }] = await Promise.all([

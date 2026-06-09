@@ -20,8 +20,8 @@ import { Redis } from "@upstash/redis";
 
 export const PLAN_MONTHLY_MESSAGES: Record<string, number> = {
   free: 10,
-  professional: 200,
-  business: 1000,
+  professional: 100,
+  business: 500,
   enterprise: 10_000,
 };
 

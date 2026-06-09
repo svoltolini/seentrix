@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { generatePdfBuffer } from "@/lib/pdf/generate";
+import { getOrgPlan } from "@/lib/entitlements";
+import { canGeneratePdf } from "@/lib/constants/plans";
 
 /**
  * Stream an incident-report PDF built from the live incident record.
@@ -23,6 +25,11 @@ export async function GET(
   const orgId = user.app_metadata?.org_id as string | undefined;
   if (!orgId) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+  }
+
+  // Plan gate: PDF generation is a paid feature.
+  if (!canGeneratePdf(await getOrgPlan(supabase, orgId))) {
+    return NextResponse.json({ error: "plan_required" }, { status: 403 });
   }
 
   const { data: incident } = await supabase

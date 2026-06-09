@@ -344,6 +344,14 @@ export async function assembleTechnicalFile(
   if (!user || !orgId) return { error: "notAuthenticated" };
   if (!canWrite(role)) return { error: "notAuthorized" };
 
+  // Plan gate: PDF generation is a paid feature.
+  {
+    const { canGeneratePdf } = await import("@/lib/constants/plans");
+    const { getOrgPlan } = await import("@/lib/entitlements");
+    if (!canGeneratePdf(await getOrgPlan(supabase, orgId)))
+      return { error: "planRequired" };
+  }
+
   const draft = await getOrCreateDraft(supabase, productId, orgId, user.id);
   if (draft.error || !draft.id) return { error: draft.error ?? "generic" };
 
@@ -377,6 +385,14 @@ export async function releaseTechnicalFile(
   const { supabase, user, orgId, role } = await getAuthContext();
   if (!user || !orgId) return { error: "notAuthenticated" };
   if (!canWrite(role)) return { error: "notAuthorized" };
+
+  // Plan gate: releasing produces a PDF, a paid feature.
+  {
+    const { canGeneratePdf } = await import("@/lib/constants/plans");
+    const { getOrgPlan } = await import("@/lib/entitlements");
+    if (!canGeneratePdf(await getOrgPlan(supabase, orgId)))
+      return { error: "planRequired" };
+  }
 
   const draft = await getOrCreateDraft(supabase, productId, orgId, user.id);
   if (draft.error || !draft.id) return { error: draft.error ?? "generic" };
