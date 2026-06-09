@@ -3,15 +3,61 @@
     "title": "Fatturazione",
     "subtitle": "Gestisci il tuo abbonamento e i dati di fatturazione.",
     "currentPlan": "Piano attuale",
-    "nextBillingDate": "Prossima data di fatturazione: {date}",
-    "manageSubscription": "Gestisci abbonamento",
-    "upgradePlan": "Esegui l'upgrade del piano",
-    "redirecting": "Reindirizzamento in corso…",
-    "readOnly": "Solo gli amministratori possono gestire la fatturazione e gli abbonamenti.",
+    "currentPlanBadge": "Attuale",
     "perMonth": "al mese",
-    "upgradeDescription": "Esegui l'upgrade a Professional per accedere alla gestione SBOM, ai modelli di documenti, all'esportazione PDF e altro ancora.",
+    "nextBillingDate": "Prossima data di fatturazione: {date}",
+    "billedAnnually": "€{total} fatturati annualmente",
+    "readOnly": "Solo gli amministratori possono gestire la fatturazione e gli abbonamenti.",
+    "redirecting": "Reindirizzamento in corso…",
+    "intervalLabel": "Intervallo di fatturazione",
+    "resyncHint": "Rileggi il tuo abbonamento da Stripe se sembra non aggiornato.",
+    "status": {
+      "active": "Attivo",
+      "free": "Stai usando il piano gratuito.",
+      "cancels": "Termina il {date}"
+    },
+    "interval": {
+      "monthly": "Mensile",
+      "annual": "Annuale",
+      "save": "Risparmia ~17%"
+    },
+    "actions": {
+      "upgrade": "Esegui l'upgrade",
+      "downgrade": "Esegui il downgrade",
+      "switchToAnnual": "Passa ad annuale",
+      "switchToMonthly": "Passa a mensile",
+      "cancel": "Annulla abbonamento",
+      "resume": "Riprendi abbonamento",
+      "manage": "Gestisci fatturazione & fatture",
+      "resync": "Aggiorna da Stripe",
+      "contactEnterprise": "Ti serve Enterprise? Contattaci"
+    },
+    "cancelBanner": {
+      "body": "Il tuo piano {plan} verrà annullato il {date}. Conservi le sue funzionalità fino ad allora."
+    },
+    "confirm": {
+      "cancelTitle": "Annullare l'abbonamento?",
+      "cancelBody": "Conservi il tuo piano {plan} fino al {date}, poi passi automaticamente al piano gratuito. Puoi riprendere in qualsiasi momento prima di allora.",
+      "cancelBodyNoDate": "Conservi il tuo piano {plan} fino alla fine del periodo corrente, poi passi al piano gratuito.",
+      "cancelConfirm": "Annulla abbonamento",
+      "keep": "Mantieni abbonamento",
+      "changeTitle": "Passare a {plan}?",
+      "upgradeBody": "Passi a {plan} ({interval}) ora. Addebiteremo la differenza proporzionale per il resto di questo periodo di fatturazione.",
+      "downgradeBody": "Passi a {plan} ({interval}) ora. Applicheremo un credito proporzionale alla tua prossima fattura.",
+      "confirm": "Conferma modifica",
+      "cancelAction": "Annulla"
+    },
+    "feedback": {
+      "changed": "Abbonamento aggiornato.",
+      "canceled": "Il tuo abbonamento verrà annullato alla fine del periodo.",
+      "resumed": "Abbonamento ripreso.",
+      "synced": "Sincronizzato con Stripe.",
+      "samePlan": "È già il tuo piano attuale.",
+      "notAdmin": "Solo gli amministratori possono gestire la fatturazione.",
+      "error": "Qualcosa è andato storto. Riprovare."
+    },
     "plans": {
-      "free": "Free",
+      "free": "Gratuito",
       "professional": "Professional",
       "business": "Business",
       "enterprise": "Enterprise"

@@ -2,14 +2,60 @@
   "billing": {
     "title": "Billing",
     "subtitle": "Manage your subscription and billing details.",
-    "currentPlan": "Current Plan",
-    "nextBillingDate": "Next billing date: {date}",
-    "manageSubscription": "Manage Subscription",
-    "upgradePlan": "Upgrade Plan",
-    "redirecting": "Redirecting…",
-    "readOnly": "Only administrators can manage billing and subscriptions.",
+    "currentPlan": "Current plan",
+    "currentPlanBadge": "Current",
     "perMonth": "per month",
-    "upgradeDescription": "Upgrade to Professional to access SBOM management, document templates, PDF export, and more.",
+    "nextBillingDate": "Next billing date: {date}",
+    "billedAnnually": "€{total} billed annually",
+    "readOnly": "Only administrators can manage billing and subscriptions.",
+    "redirecting": "Redirecting…",
+    "intervalLabel": "Billing interval",
+    "resyncHint": "Re-read your subscription from Stripe if it looks out of date.",
+    "status": {
+      "active": "Active",
+      "free": "You're on the Free plan.",
+      "cancels": "Cancels on {date}"
+    },
+    "interval": {
+      "monthly": "Monthly",
+      "annual": "Annual",
+      "save": "Save ~17%"
+    },
+    "actions": {
+      "upgrade": "Upgrade",
+      "downgrade": "Downgrade",
+      "switchToAnnual": "Switch to annual",
+      "switchToMonthly": "Switch to monthly",
+      "cancel": "Cancel subscription",
+      "resume": "Resume subscription",
+      "manage": "Manage billing & invoices",
+      "resync": "Refresh from Stripe",
+      "contactEnterprise": "Need Enterprise? Talk to us"
+    },
+    "cancelBanner": {
+      "body": "Your {plan} plan will cancel on {date}. You'll keep its features until then."
+    },
+    "confirm": {
+      "cancelTitle": "Cancel subscription?",
+      "cancelBody": "You'll keep your {plan} plan until {date}, then automatically move to the Free plan. You can resume any time before then.",
+      "cancelBodyNoDate": "You'll keep your {plan} plan until the end of the current period, then move to the Free plan.",
+      "cancelConfirm": "Cancel subscription",
+      "keep": "Keep subscription",
+      "changeTitle": "Switch to {plan}?",
+      "upgradeBody": "You'll move to {plan} ({interval}) now. We'll charge the prorated difference for the rest of this billing period.",
+      "downgradeBody": "You'll move to {plan} ({interval}) now. We'll apply a prorated credit to your next invoice.",
+      "confirm": "Confirm change",
+      "cancelAction": "Never mind"
+    },
+    "feedback": {
+      "changed": "Subscription updated.",
+      "canceled": "Your subscription will cancel at the end of the period.",
+      "resumed": "Subscription resumed.",
+      "synced": "Synced with Stripe.",
+      "samePlan": "That's already your current plan.",
+      "notAdmin": "Only administrators can manage billing.",
+      "error": "Something went wrong. Please try again."
+    },
     "plans": {
       "free": "Free",
       "professional": "Professional",

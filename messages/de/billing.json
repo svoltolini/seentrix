@@ -2,16 +2,62 @@
   "billing": {
     "title": "Abrechnung",
     "subtitle": "Verwalten Sie Ihr Abonnement und Ihre Abrechnungsdaten.",
-    "currentPlan": "Aktueller Plan",
-    "nextBillingDate": "Nächstes Abrechnungsdatum: {date}",
-    "manageSubscription": "Abonnement verwalten",
-    "upgradePlan": "Plan upgraden",
-    "redirecting": "Weiterleitung…",
-    "readOnly": "Nur Administratoren können Abrechnung und Abonnements verwalten.",
+    "currentPlan": "Aktueller Tarif",
+    "currentPlanBadge": "Aktuell",
     "perMonth": "pro Monat",
-    "upgradeDescription": "Führen Sie ein Upgrade auf Professional durch, um Zugang zu SBOM-Management, Dokumentvorlagen, PDF-Export und vielem mehr zu erhalten.",
+    "nextBillingDate": "Nächstes Abrechnungsdatum: {date}",
+    "billedAnnually": "€{total} jährlich abgerechnet",
+    "readOnly": "Nur Administratoren können Abrechnung und Abonnements verwalten.",
+    "redirecting": "Weiterleitung…",
+    "intervalLabel": "Abrechnungsintervall",
+    "resyncHint": "Abonnement erneut aus Stripe lesen, falls es veraltet erscheint.",
+    "status": {
+      "active": "Aktiv",
+      "free": "Sie nutzen den kostenlosen Tarif.",
+      "cancels": "Endet am {date}"
+    },
+    "interval": {
+      "monthly": "Monatlich",
+      "annual": "Jährlich",
+      "save": "Spare ~17%"
+    },
+    "actions": {
+      "upgrade": "Upgrade",
+      "downgrade": "Downgrade",
+      "switchToAnnual": "Auf jährlich wechseln",
+      "switchToMonthly": "Auf monatlich wechseln",
+      "cancel": "Abonnement kündigen",
+      "resume": "Abonnement fortsetzen",
+      "manage": "Abrechnung & Rechnungen verwalten",
+      "resync": "Aus Stripe aktualisieren",
+      "contactEnterprise": "Enterprise benötigt? Sprechen Sie mit uns"
+    },
+    "cancelBanner": {
+      "body": "Ihr Tarif {plan} endet am {date}. Bis dahin behalten Sie alle Funktionen."
+    },
+    "confirm": {
+      "cancelTitle": "Abonnement kündigen?",
+      "cancelBody": "Sie behalten Ihren Tarif {plan} bis zum {date} und wechseln dann automatisch zum kostenlosen Tarif. Sie können bis dahin jederzeit fortsetzen.",
+      "cancelBodyNoDate": "Sie behalten Ihren Tarif {plan} bis zum Ende des aktuellen Zeitraums und wechseln dann zum kostenlosen Tarif.",
+      "cancelConfirm": "Abonnement kündigen",
+      "keep": "Abonnement behalten",
+      "changeTitle": "Zu {plan} wechseln?",
+      "upgradeBody": "Sie wechseln jetzt zu {plan} ({interval}). Wir berechnen die anteilige Differenz für den Rest dieses Abrechnungszeitraums.",
+      "downgradeBody": "Sie wechseln jetzt zu {plan} ({interval}). Wir schreiben Ihrer nächsten Rechnung ein anteiliges Guthaben gut.",
+      "confirm": "Änderung bestätigen",
+      "cancelAction": "Abbrechen"
+    },
+    "feedback": {
+      "changed": "Abonnement aktualisiert.",
+      "canceled": "Ihr Abonnement endet zum Ende des Zeitraums.",
+      "resumed": "Abonnement fortgesetzt.",
+      "synced": "Mit Stripe synchronisiert.",
+      "samePlan": "Das ist bereits Ihr aktueller Tarif.",
+      "notAdmin": "Nur Administratoren können die Abrechnung verwalten.",
+      "error": "Etwas ist schiefgelaufen. Bitte erneut versuchen."
+    },
     "plans": {
-      "free": "Free",
+      "free": "Kostenlos",
       "professional": "Professional",
       "business": "Business",
       "enterprise": "Enterprise"

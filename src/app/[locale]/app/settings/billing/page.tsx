@@ -12,7 +12,10 @@ export default async function BillingPage() {
     <BillingContent
       plan={billing?.plan ?? "free"}
       billingPeriodEnd={billing?.billingPeriodEnd ?? null}
+      billingInterval={billing?.billingInterval ?? null}
+      cancelAtPeriodEnd={billing?.cancelAtPeriodEnd ?? false}
       hasSubscription={!!billing?.stripeSubscriptionId}
+      hasCustomer={!!billing?.stripeCustomerId}
       isAdmin={currentUserRole === "admin"}
     />
   );
