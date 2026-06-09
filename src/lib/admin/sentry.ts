@@ -50,10 +50,15 @@ interface RawIssue {
 }
 
 export async function fetchTopIssues(limit = 25): Promise<SentryFeed> {
-  const token = process.env.SENTRY_AUTH_TOKEN;
-  const org = process.env.SENTRY_ADMIN_ORG;
-  const project = process.env.SENTRY_ADMIN_PROJECT;
-  const base = process.env.SENTRY_API_BASE || "https://sentry.io";
+  // Trim every value: pasting an env var into a dashboard very often picks up
+  // a trailing newline or surrounding quotes, which silently breaks the
+  // Authorization header (401/403) or the URL.
+  const token = process.env.SENTRY_AUTH_TOKEN?.trim().replace(/^["']|["']$/g, "");
+  const org = process.env.SENTRY_ADMIN_ORG?.trim();
+  const project = process.env.SENTRY_ADMIN_PROJECT?.trim();
+  const base = (process.env.SENTRY_API_BASE || "https://de.sentry.io")
+    .trim()
+    .replace(/\/+$/, "");
 
   if (!token || !org || !project) return { configured: false };
 
@@ -67,9 +72,19 @@ export async function fetchTopIssues(limit = 25): Promise<SentryFeed> {
       cache: "no-store",
     });
     if (!res.ok) {
+      // Surface what we actually used (org/project/base are not secrets) plus a
+      // cause hint, so a misconfigured value is self-diagnosable from the UI.
+      const hint =
+        res.status === 403
+          ? "token is missing scopes (need event:read, project:read, org:read) or points at the wrong org/project"
+          : res.status === 401
+            ? "token is invalid or malformed"
+            : res.status === 404
+              ? "org/project slug or region base is wrong"
+              : "unexpected response";
       return {
         configured: true,
-        error: `Sentry API ${res.status}`,
+        error: `Sentry API ${res.status} — ${hint} (org=${org}, project=${project}, base=${base})`,
         issues: [],
       };
     }
