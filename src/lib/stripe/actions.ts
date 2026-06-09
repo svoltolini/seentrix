@@ -4,14 +4,36 @@ import type Stripe from "stripe";
 import { createClient } from "@/lib/supabase/server";
 import { getStripe } from "./client";
 import {
-  STRIPE_PRICE_IDS,
   isPurchasable,
+  canBuyAiBoost,
   getPlanFromPriceId,
+  getPlanPriceId,
+  getAiBoostPriceId,
+  isAiBoostPriceId,
+  resolveCurrency,
   type OrgPlan,
+  type BillingCurrency,
 } from "@/lib/constants/plans";
 import { logActivity } from "@/lib/activity";
 
 type BillingInterval = "monthly" | "annual";
+
+/** Stripe stores currency lowercase; coerce to our union (default eur). */
+function asCurrency(c: string | null | undefined): BillingCurrency {
+  return c === "chf" || c === "gbp" ? c : "eur";
+}
+
+/** The non-add-on subscription item (the base plan). */
+function baseItem(subscription: Stripe.Subscription): Stripe.SubscriptionItem | undefined {
+  return (
+    subscription.items.data.find((it) => !isAiBoostPriceId(it.price?.id)) ??
+    subscription.items.data[0]
+  );
+}
+
+function hasAiBoostItem(subscription: Stripe.Subscription): boolean {
+  return subscription.items.data.some((it) => isAiBoostPriceId(it.price?.id));
+}
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -52,7 +74,7 @@ async function requireAdmin() {
 }
 
 function periodEndFromSubscription(subscription: Stripe.Subscription): string | null {
-  const item = subscription.items.data[0];
+  const item = baseItem(subscription);
   const ts =
     item?.current_period_end ??
     (subscription as unknown as { current_period_end?: number })
@@ -63,7 +85,7 @@ function periodEndFromSubscription(subscription: Stripe.Subscription): string | 
 function intervalFromSubscription(
   subscription: Stripe.Subscription,
 ): BillingInterval | null {
-  const i = subscription.items.data[0]?.price?.recurring?.interval;
+  const i = baseItem(subscription)?.price?.recurring?.interval;
   if (i === "year") return "annual";
   if (i === "month") return "monthly";
   return null;
@@ -88,17 +110,18 @@ export async function createCheckoutSession(
   const { supabase, user, orgId } = await getAuthContext();
   if (!user || !orgId) return { error: "notAuthenticated" };
 
-  const priceId = STRIPE_PRICE_IDS[plan]?.[interval];
-  if (!priceId) return { error: "invalidPlan" };
-
   // Get or create Stripe customer
   let stripeCustomerId: string | null = null;
   const { data: org } = await supabase
     .from("organizations")
-    .select("stripe_customer_id, name")
+    .select("stripe_customer_id, name, country")
     .eq("id", orgId)
     .single();
   const orgRecord = org as Record<string, unknown> | null;
+
+  // Currency follows the company country: CH→CHF, GB→GBP, else EUR.
+  const currency = resolveCurrency(orgRecord?.country as string | null);
+  const priceId = getPlanPriceId(plan, interval, currency);
 
   try {
     if (orgRecord?.stripe_customer_id) {
@@ -156,9 +179,6 @@ export async function changePlan(
   const { supabase, orgId, error } = await requireAdmin();
   if (error) return { error };
 
-  const newPriceId = STRIPE_PRICE_IDS[plan]?.[interval];
-  if (!newPriceId) return { error: "invalidPlan" };
-
   const { data: org } = await supabase
     .from("organizations")
     .select("stripe_subscription_id")
@@ -174,11 +194,15 @@ export async function changePlan(
     return createCheckoutSession(plan, interval);
   }
 
-  // Existing subscription → swap the price in place with proration.
+  // Existing subscription → swap the base price in place with proration,
+  // keeping the subscription's locked currency.
   try {
     const subscription = await getStripe().subscriptions.retrieve(subId);
-    const item = subscription.items.data[0];
+    const item = baseItem(subscription);
     if (!item) return { error: "noSubscription" };
+
+    const currency = asCurrency(subscription.currency);
+    const newPriceId = getPlanPriceId(plan, interval, currency);
 
     if (item.price?.id === newPriceId && !subscription.cancel_at_period_end) {
       return { error: "samePlan" };
@@ -355,12 +379,13 @@ export async function resyncSubscription(): Promise<{
         billing_period_end: null,
         billing_interval: null,
         billing_cancel_at_period_end: false,
+        ai_boost: false,
       })
       .eq("id", orgId!);
     return { ok: true, plan: "free" };
   }
 
-  const priceId = subscription.items.data[0]?.price?.id;
+  const priceId = baseItem(subscription)?.price?.id;
   const mapped = priceId ? getPlanFromPriceId(priceId) : "free";
   const inactive = ["canceled", "unpaid", "incomplete_expired"].includes(
     subscription.status,
@@ -380,6 +405,8 @@ export async function resyncSubscription(): Promise<{
       billing_cancel_at_period_end: inactive
         ? false
         : (subscription.cancel_at_period_end ?? false),
+      billing_currency: inactive ? null : asCurrency(subscription.currency),
+      ai_boost: inactive ? false : hasAiBoostItem(subscription),
     })
     .eq("id", orgId!);
 
@@ -389,6 +416,97 @@ export async function resyncSubscription(): Promise<{
     metadata: { plan },
   });
   return { ok: true, plan };
+}
+
+// ---------------------------------------------------------------------------
+// AI Boost add-on — add/remove a second subscription line item that raises the
+// Copilot allowance. The add-on price must match the subscription's interval
+// and currency (Stripe requires all items share the interval).
+// ---------------------------------------------------------------------------
+
+export async function addAiBoost(): Promise<{ ok?: boolean; error?: string }> {
+  const { supabase, orgId, error } = await requireAdmin();
+  if (error) return { error };
+
+  const { data: org } = await supabase
+    .from("organizations")
+    .select("plan, stripe_subscription_id")
+    .eq("id", orgId!)
+    .single();
+  const rec = org as {
+    plan: string | null;
+    stripe_subscription_id: string | null;
+  } | null;
+  if (!canBuyAiBoost((rec?.plan ?? "free") as OrgPlan)) {
+    return { error: "planRequired" };
+  }
+  const subId = rec?.stripe_subscription_id ?? null;
+  if (!subId) return { error: "noSubscription" };
+
+  try {
+    const subscription = await getStripe().subscriptions.retrieve(subId);
+    if (hasAiBoostItem(subscription)) return { ok: true }; // already on
+
+    const interval = intervalFromSubscription(subscription) ?? "monthly";
+    const currency = asCurrency(subscription.currency);
+    const boostPrice = getAiBoostPriceId(interval, currency);
+
+    await getStripe().subscriptions.update(subId, {
+      items: [{ price: boostPrice, quantity: 1 }],
+      proration_behavior: "create_prorations",
+      metadata: { ...subscription.metadata, org_id: orgId! },
+    });
+
+    await supabase
+      .from("organizations")
+      .update({ ai_boost: true })
+      .eq("id", orgId!);
+    await logActivity({ action: "billing.aiboost_added", targetType: "billing" });
+    return { ok: true };
+  } catch (e) {
+    console.error("[billing] addAiBoost failed:", e);
+    return { error: "stripe" };
+  }
+}
+
+export async function removeAiBoost(): Promise<{ ok?: boolean; error?: string }> {
+  const { supabase, orgId, error } = await requireAdmin();
+  if (error) return { error };
+
+  const { data: org } = await supabase
+    .from("organizations")
+    .select("stripe_subscription_id")
+    .eq("id", orgId!)
+    .single();
+  const subId =
+    (org as { stripe_subscription_id: string | null } | null)
+      ?.stripe_subscription_id ?? null;
+  if (!subId) return { error: "noSubscription" };
+
+  try {
+    const subscription = await getStripe().subscriptions.retrieve(subId);
+    const boostItem = subscription.items.data.find((it) =>
+      isAiBoostPriceId(it.price?.id),
+    );
+    if (boostItem) {
+      await getStripe().subscriptions.update(subId, {
+        items: [{ id: boostItem.id, deleted: true }],
+        proration_behavior: "create_prorations",
+      });
+    }
+    await supabase
+      .from("organizations")
+      .update({ ai_boost: false })
+      .eq("id", orgId!);
+    await logActivity({
+      action: "billing.aiboost_removed",
+      targetType: "billing",
+    });
+    return { ok: true };
+  } catch (e) {
+    console.error("[billing] removeAiBoost failed:", e);
+    return { error: "stripe" };
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -435,6 +553,8 @@ export interface BillingInfo {
   billingPeriodEnd: string | null;
   billingInterval: BillingInterval | null;
   cancelAtPeriodEnd: boolean;
+  currency: BillingCurrency;
+  aiBoost: boolean;
 }
 
 export async function getBillingInfo(): Promise<{
@@ -462,6 +582,12 @@ export async function getBillingInfo(): Promise<{
         | BillingInterval
         | null,
       cancelAtPeriodEnd: !!r.billing_cancel_at_period_end,
+      // Prefer the currency locked on the subscription; fall back to the one
+      // resolved from the company country (for orgs without a subscription yet).
+      currency:
+        ((r.billing_currency as string) ||
+          resolveCurrency(r.country as string | null)) as BillingCurrency,
+      aiBoost: !!r.ai_boost,
     },
   };
 }

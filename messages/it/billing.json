@@ -6,7 +6,7 @@
     "currentPlanBadge": "Attuale",
     "perMonth": "al mese",
     "nextBillingDate": "Prossima data di fatturazione: {date}",
-    "billedAnnually": "€{total} fatturati annualmente",
+    "billedAnnually": "{total} fatturati annualmente",
     "readOnly": "Solo gli amministratori possono gestire la fatturazione e gli abbonamenti.",
     "redirecting": "Reindirizzamento in corso…",
     "intervalLabel": "Intervallo di fatturazione",
@@ -54,7 +54,18 @@
       "synced": "Sincronizzato con Stripe.",
       "samePlan": "È già il tuo piano attuale.",
       "notAdmin": "Solo gli amministratori possono gestire la fatturazione.",
+      "boostAdded": "AI Boost aggiunto al tuo abbonamento.",
+      "boostRemoved": "AI Boost rimosso dal tuo abbonamento.",
       "error": "Qualcosa è andato storto. Riprovare."
+    },
+    "aiBoost": {
+      "title": "AI Boost",
+      "activeBadge": "Attivo",
+      "description": "Aggiungi {messages} messaggi Copilot extra ogni mese, basati sullo stesso modello Mistral Large.",
+      "price": "{price}/mese",
+      "annualNote": "({total}/anno con fatturazione annuale)",
+      "add": "Aggiungi AI Boost",
+      "remove": "Rimuovi AI Boost"
     },
     "plans": {
       "free": "Gratuito",

@@ -148,60 +148,24 @@ export function hasFeature(
 }
 
 // ---------------------------------------------------------------------------
-// Stripe price mapping
-// ---------------------------------------------------------------------------
-
-export const STRIPE_PRICE_IDS: Record<
-  Exclude<OrgPlan, "free">,
-  { monthly: string; annual: string }
-> = {
-  professional: {
-    monthly: process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_MONTHLY ?? "",
-    annual: process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_ANNUAL ?? "",
-  },
-  business: {
-    monthly: process.env.NEXT_PUBLIC_STRIPE_PRICE_BIZ_MONTHLY ?? "",
-    annual: process.env.NEXT_PUBLIC_STRIPE_PRICE_BIZ_ANNUAL ?? "",
-  },
-  enterprise: {
-    monthly: process.env.NEXT_PUBLIC_STRIPE_PRICE_ENT_MONTHLY ?? "",
-    annual: process.env.NEXT_PUBLIC_STRIPE_PRICE_ENT_ANNUAL ?? "",
-  },
-};
-
-export function getPlanFromPriceId(priceId: string): OrgPlan {
-  // Guard against an empty/missing price id matching an unconfigured plan:
-  // when a Stripe price-id env var is unset it defaults to "", so a blank
-  // input must never resolve to a paid plan.
-  if (!priceId) return "free";
-  for (const [plan, ids] of Object.entries(STRIPE_PRICE_IDS)) {
-    if (ids.monthly === priceId || ids.annual === priceId) {
-      return plan as OrgPlan;
-    }
-  }
-  return "free";
-}
-
-// ---------------------------------------------------------------------------
-// Displayed prices (EUR). Driven by the value-metric bands we set — change
-// here when the pricing page needs to update, and create matching price IDs
-// in Stripe separately.
+// Plan amounts. The SAME figure is charged in every currency (€59 = CHF 59 =
+// £59) — only the symbol changes. PLAN_PRICES_EUR keeps its name for callers
+// but the numbers are currency-agnostic; formatPrice() applies the symbol.
 // ---------------------------------------------------------------------------
 export const PLAN_PRICES_EUR = {
   free: { monthly: 0, annual: 0 },
-  professional: { monthly: 49, annual: 490 }, // 2 months free
-  business: { monthly: 179, annual: 1790 }, // 2 months free
+  professional: { monthly: 59, annual: 590 }, // 2 months free
+  business: { monthly: 219, annual: 2190 }, // 2 months free
   // Enterprise is not yet purchasable — shown as "coming soon" in the UI.
-  // Prices are placeholders and never charged while PURCHASABLE_PLANS omits it.
   enterprise: { monthly: 749, annual: 7490 },
 } as const;
 
+// Optional AI Boost add-on (extra Copilot allowance), same figure per currency.
+export const AI_BOOST_PRICE = { monthly: 49, annual: 490 } as const;
+export const AI_BOOST_BONUS_MESSAGES = 300;
+
 // ---------------------------------------------------------------------------
-// Purchasable plans — the single source of truth for which paid tiers can be
-// checked out today. Enterprise is intentionally excluded ("coming soon");
-// the pricing UI still renders an Enterprise card/column but without a
-// checkout CTA. When Enterprise launches, add it here and create its Stripe
-// prices + env vars.
+// Purchasable plans + the AI Boost add-on eligibility.
 // ---------------------------------------------------------------------------
 export const PURCHASABLE_PLANS = ["professional", "business"] as const;
 export type PurchasablePlan = (typeof PURCHASABLE_PLANS)[number];
@@ -210,5 +174,133 @@ export function isPurchasable(plan: OrgPlan): plan is PurchasablePlan {
   return (PURCHASABLE_PLANS as readonly string[]).includes(plan);
 }
 
+/** The AI Boost add-on can be bought on top of any paid (purchasable) plan. */
+export function canBuyAiBoost(plan: OrgPlan): boolean {
+  return isPurchasable(plan);
+}
+
 // Enterprise is presented as a forthcoming tier rather than a buyable one.
 export const COMING_SOON_PLANS: OrgPlan[] = ["enterprise"];
+
+// ---------------------------------------------------------------------------
+// Currency — resolved from the organisation's country. CH (and Liechtenstein)
+// → CHF, UK → GBP, everyone else → EUR. The amount is identical; only the
+// Stripe price object and the displayed symbol differ.
+// ---------------------------------------------------------------------------
+export type BillingCurrency = "eur" | "chf" | "gbp";
+export type BillingInterval = "monthly" | "annual";
+export const SUPPORTED_CURRENCIES: readonly BillingCurrency[] = ["eur", "chf", "gbp"];
+
+const CURRENCY_SYMBOL: Record<BillingCurrency, string> = {
+  eur: "€",
+  chf: "CHF ",
+  gbp: "£",
+};
+
+export function resolveCurrency(
+  country: string | null | undefined,
+): BillingCurrency {
+  const c = (country ?? "").trim().toUpperCase();
+  if (["CH", "SWITZERLAND", "LI", "LIECHTENSTEIN"].includes(c)) return "chf";
+  if (["GB", "UK", "UNITED KINGDOM", "GREAT BRITAIN"].includes(c)) return "gbp";
+  return "eur";
+}
+
+/** "€59", "CHF 59", "£59". */
+export function formatPrice(amount: number, currency: BillingCurrency): string {
+  return `${CURRENCY_SYMBOL[currency]}${amount}`;
+}
+
+// ---------------------------------------------------------------------------
+// Stripe price IDs — one single-currency price per (plan × interval × currency)
+// and per (add-on × interval × currency). Live-mode IDs created in the Seentrix
+// Stripe account; price IDs are public (sent to the client) so they live in
+// code rather than env. The secret key + webhook secret stay in env.
+// ---------------------------------------------------------------------------
+export const STRIPE_PRICE_IDS: Record<
+  PurchasablePlan,
+  Record<BillingInterval, Record<BillingCurrency, string>>
+> = {
+  professional: {
+    monthly: {
+      eur: "price_1TgP4sERTTk1fRmMNdJ2O7MB",
+      chf: "price_1TgP4tERTTk1fRmM8ZpBw9MY",
+      gbp: "price_1TgP4tERTTk1fRmMhGF5nw6D",
+    },
+    annual: {
+      eur: "price_1TgP4uERTTk1fRmMlYIielcr",
+      chf: "price_1TgP4uERTTk1fRmMazvRHa89",
+      gbp: "price_1TgP4uERTTk1fRmMdejG3wzr",
+    },
+  },
+  business: {
+    monthly: {
+      eur: "price_1TgP57ERTTk1fRmM2rwPaYUj",
+      chf: "price_1TgP57ERTTk1fRmM1L7D3wDp",
+      gbp: "price_1TgP57ERTTk1fRmM0YowEhR5",
+    },
+    annual: {
+      eur: "price_1TgP58ERTTk1fRmM1jjHAxbp",
+      chf: "price_1TgP58ERTTk1fRmMEfaid4K4",
+      gbp: "price_1TgP59ERTTk1fRmMtqN3Mxqn",
+    },
+  },
+};
+
+export const STRIPE_AIBOOST_PRICE_IDS: Record<
+  BillingInterval,
+  Record<BillingCurrency, string>
+> = {
+  monthly: {
+    eur: "price_1TgP5KERTTk1fRmMczLYVEyi",
+    chf: "price_1TgP5KERTTk1fRmMDbRKKxQS",
+    gbp: "price_1TgP5LERTTk1fRmMn8CppTi9",
+  },
+  annual: {
+    eur: "price_1TgP5LERTTk1fRmMhc2XYqdp",
+    chf: "price_1TgP5MERTTk1fRmMy8xXggbO",
+    gbp: "price_1TgP5MERTTk1fRmM5gVUFew7",
+  },
+};
+
+export function getPlanPriceId(
+  plan: PurchasablePlan,
+  interval: BillingInterval,
+  currency: BillingCurrency,
+): string {
+  return STRIPE_PRICE_IDS[plan][interval][currency];
+}
+
+export function getAiBoostPriceId(
+  interval: BillingInterval,
+  currency: BillingCurrency,
+): string {
+  return STRIPE_AIBOOST_PRICE_IDS[interval][currency];
+}
+
+// Reverse lookup: any base price id → its plan (across all intervals/currencies).
+const PRICE_ID_TO_PLAN = new Map<string, PurchasablePlan>();
+for (const plan of PURCHASABLE_PLANS) {
+  for (const interval of ["monthly", "annual"] as BillingInterval[]) {
+    for (const currency of SUPPORTED_CURRENCIES) {
+      PRICE_ID_TO_PLAN.set(STRIPE_PRICE_IDS[plan][interval][currency], plan);
+    }
+  }
+}
+
+const AIBOOST_PRICE_ID_SET = new Set<string>();
+for (const interval of ["monthly", "annual"] as BillingInterval[]) {
+  for (const currency of SUPPORTED_CURRENCIES) {
+    AIBOOST_PRICE_ID_SET.add(STRIPE_AIBOOST_PRICE_IDS[interval][currency]);
+  }
+}
+
+export function getPlanFromPriceId(priceId: string): OrgPlan {
+  if (!priceId) return "free";
+  return PRICE_ID_TO_PLAN.get(priceId) ?? "free";
+}
+
+/** True if a price id is one of the AI Boost add-on prices. */
+export function isAiBoostPriceId(priceId: string | null | undefined): boolean {
+  return !!priceId && AIBOOST_PRICE_ID_SET.has(priceId);
+}

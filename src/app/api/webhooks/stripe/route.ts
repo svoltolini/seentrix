@@ -3,7 +3,13 @@ import type Stripe from "stripe";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { getStripe } from "@/lib/stripe/client";
 import { createClient } from "@supabase/supabase-js";
-import { getPlanFromPriceId, type OrgPlan } from "@/lib/constants/plans";
+import {
+  getPlanFromPriceId,
+  isAiBoostPriceId,
+  SUPPORTED_CURRENCIES,
+  type BillingCurrency,
+  type OrgPlan,
+} from "@/lib/constants/plans";
 
 // Use service-role key for webhook — bypasses RLS
 function getAdminSupabase(): SupabaseClient {
@@ -21,11 +27,28 @@ function getAdminSupabase(): SupabaseClient {
 // of the subscription and write it onto the org; running it twice is a no-op.
 // ---------------------------------------------------------------------------
 
+/**
+ * The "base" plan line item — the one whose price is NOT the AI Boost add-on.
+ * A subscription can carry two items (plan + AI Boost); plan/period/interval
+ * must always be read from the plan item, never the add-on.
+ */
+function baseItem(
+  subscription: Stripe.Subscription,
+): Stripe.SubscriptionItem | undefined {
+  const items = subscription.items.data;
+  return items.find((i) => !isAiBoostPriceId(i.price?.id)) ?? items[0];
+}
+
+/** True if the subscription carries an active AI Boost add-on line item. */
+function hasAiBoostItem(subscription: Stripe.Subscription): boolean {
+  return subscription.items.data.some((i) => isAiBoostPriceId(i.price?.id));
+}
+
 function getPeriodEnd(subscription: Stripe.Subscription): string | null {
   // Stripe moved current_period_end onto the subscription item (flexible
-  // billing). Read it from the item; fall back to the legacy top-level field
-  // if a future/older shape ever surfaces.
-  const item = subscription.items.data[0];
+  // billing). Read it from the base item; fall back to the legacy top-level
+  // field if a future/older shape ever surfaces.
+  const item = baseItem(subscription);
   const ts =
     item?.current_period_end ??
     (subscription as unknown as { current_period_end?: number })
@@ -34,10 +57,20 @@ function getPeriodEnd(subscription: Stripe.Subscription): string | null {
 }
 
 function getInterval(subscription: Stripe.Subscription): "monthly" | "annual" | null {
-  const interval = subscription.items.data[0]?.price?.recurring?.interval;
+  const interval = baseItem(subscription)?.price?.recurring?.interval;
   if (interval === "year") return "annual";
   if (interval === "month") return "monthly";
   return null;
+}
+
+/** Coerce Stripe's lowercase currency string to a supported billing currency. */
+function getBillingCurrency(
+  subscription: Stripe.Subscription,
+): BillingCurrency | null {
+  const c = (subscription.currency ?? "").toLowerCase();
+  return (SUPPORTED_CURRENCIES as readonly string[]).includes(c)
+    ? (c as BillingCurrency)
+    : null;
 }
 
 // Subscription statuses where the org should NOT have a paid plan.
@@ -91,17 +124,21 @@ async function syncSubscriptionToOrg(
     typeof subscription.customer === "string"
       ? subscription.customer
       : (subscription.customer?.id ?? null);
-  const priceId = subscription.items.data[0]?.price?.id;
+  const priceId = baseItem(subscription)?.price?.id;
+  const active = !INACTIVE_STATUSES.has(subscription.status);
 
   const update: Record<string, unknown> = {
     stripe_customer_id: customerId,
     stripe_subscription_id: subscription.id,
     billing_period_end: getPeriodEnd(subscription),
     billing_interval: getInterval(subscription),
+    billing_currency: getBillingCurrency(subscription),
     billing_cancel_at_period_end: subscription.cancel_at_period_end ?? false,
+    // The AI Boost add-on only counts while the subscription is live.
+    ai_boost: active && hasAiBoostItem(subscription),
   };
 
-  if (INACTIVE_STATUSES.has(subscription.status)) {
+  if (!active) {
     // Terminal/unpaid state surfacing as an update — drop to free.
     update.plan = "free";
     update.billing_cancel_at_period_end = false;
@@ -136,6 +173,7 @@ async function downgradeToFree(
       billing_period_end: null,
       billing_interval: null,
       billing_cancel_at_period_end: false,
+      ai_boost: false,
     })
     .eq("id", orgId);
   if (error) return { error: error.message };

@@ -1,5 +1,6 @@
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
+import { AI_BOOST_BONUS_MESSAGES } from "@/lib/constants/plans";
 
 /**
  * Per-plan monthly message quota and per-user burst limit for the Copilot.
@@ -90,12 +91,15 @@ export interface QuotaCheck {
 export async function checkQuota({
   userId,
   plan,
+  aiBoost = false,
 }: {
   userId: string;
   plan: string;
+  aiBoost?: boolean;
 }): Promise<QuotaCheck> {
   const monthlyLimit =
-    PLAN_MONTHLY_MESSAGES[plan] ?? PLAN_MONTHLY_MESSAGES.free;
+    (PLAN_MONTHLY_MESSAGES[plan] ?? PLAN_MONTHLY_MESSAGES.free) +
+    (aiBoost ? AI_BOOST_BONUS_MESSAGES : 0);
 
   const [burst, monthly] = await Promise.all([
     burstLimiter().limit(`user:${userId}`),
@@ -136,12 +140,15 @@ export async function checkQuota({
 export async function peekMonthlyUsage({
   userId,
   plan,
+  aiBoost = false,
 }: {
   userId: string;
   plan: string;
+  aiBoost?: boolean;
 }): Promise<{ remaining: number; limit: number; resetAt: number }> {
   const monthlyLimit =
-    PLAN_MONTHLY_MESSAGES[plan] ?? PLAN_MONTHLY_MESSAGES.free;
+    (PLAN_MONTHLY_MESSAGES[plan] ?? PLAN_MONTHLY_MESSAGES.free) +
+    (aiBoost ? AI_BOOST_BONUS_MESSAGES : 0);
   const res = await monthlyLimiter(monthlyLimit).getRemaining(`user:${userId}`);
   return {
     remaining: res.remaining,

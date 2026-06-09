@@ -15,9 +15,17 @@ import {
   resumeSubscription,
   resyncSubscription,
   createPortalSession,
+  addAiBoost,
+  removeAiBoost,
 } from "@/lib/stripe/actions";
-import type { OrgPlan } from "@/lib/constants/plans";
-import { PLAN_PRICES_EUR } from "@/lib/constants/plans";
+import type { OrgPlan, BillingCurrency } from "@/lib/constants/plans";
+import {
+  PLAN_PRICES_EUR,
+  AI_BOOST_PRICE,
+  AI_BOOST_BONUS_MESSAGES,
+  canBuyAiBoost,
+  formatPrice,
+} from "@/lib/constants/plans";
 
 type Interval = "monthly" | "annual";
 type PaidPlan = "professional" | "business";
@@ -35,6 +43,8 @@ export function BillingContent({
   billingPeriodEnd,
   billingInterval,
   cancelAtPeriodEnd,
+  currency,
+  aiBoost,
   hasSubscription,
   hasCustomer,
   isAdmin,
@@ -43,6 +53,8 @@ export function BillingContent({
   billingPeriodEnd: string | null;
   billingInterval: Interval | null;
   cancelAtPeriodEnd: boolean;
+  currency: BillingCurrency;
+  aiBoost: boolean;
   hasSubscription: boolean;
   hasCustomer: boolean;
   isAdmin: boolean;
@@ -113,6 +125,20 @@ export function BillingContent({
     startTransition(async () => {
       const res = await resyncSubscription();
       notifyResult(res, t("feedback.synced"));
+    });
+  }
+
+  function runAddBoost() {
+    startTransition(async () => {
+      const res = await addAiBoost();
+      notifyResult(res, t("feedback.boostAdded"));
+    });
+  }
+
+  function runRemoveBoost() {
+    startTransition(async () => {
+      const res = await removeAiBoost();
+      notifyResult(res, t("feedback.boostRemoved"));
     });
   }
 
@@ -378,7 +404,7 @@ export function BillingContent({
                     isPro ? "text-primary" : "text-foreground",
                   )}
                 >
-                  €{monthlyEquivalent}
+                  {formatPrice(monthlyEquivalent, currency)}
                 </span>
                 <span className="text-p4 text-muted-foreground">
                   /{t("perMonth")}
@@ -386,7 +412,9 @@ export function BillingContent({
               </div>
               {interval === "annual" && annualTotal > 0 ? (
                 <p className="mt-0.5 text-p4-r text-muted-foreground">
-                  {t("billedAnnually", { total: annualTotal })}
+                  {t("billedAnnually", {
+                    total: formatPrice(annualTotal, currency),
+                  })}
                 </p>
               ) : (
                 <p className="mt-0.5 text-p4-r text-transparent">.</p>
@@ -430,6 +458,65 @@ export function BillingContent({
           );
         })}
       </div>
+
+      {/* AI Boost add-on — only for purchasable plans with a live subscription */}
+      {canBuyAiBoost(plan) && hasSubscription && (
+        <div
+          className={cn(
+            "flex flex-col gap-4 rounded-md p-5 sm:flex-row sm:items-center sm:justify-between",
+            aiBoost
+              ? "border-2 border-primary bg-primary/5"
+              : "border border-border bg-card",
+          )}
+        >
+          <div className="flex items-start gap-3">
+            <Icon
+              name="Flash"
+              size={20}
+              variant="Bold"
+              className="mt-0.5 shrink-0 text-primary"
+              aria-hidden="true"
+            />
+            <div>
+              <div className="flex items-center gap-2">
+                <h3 className="text-h4 text-foreground">{t("aiBoost.title")}</h3>
+                {aiBoost && (
+                  <span className="rounded-full bg-primary/10 px-2.5 py-0.5 text-l6-plus uppercase tracking-wide text-primary">
+                    {t("aiBoost.activeBadge")}
+                  </span>
+                )}
+              </div>
+              <p className="mt-1 max-w-prose text-p4 text-muted-foreground">
+                {t("aiBoost.description", { messages: AI_BOOST_BONUS_MESSAGES })}
+              </p>
+              <p className="mt-1.5 text-p4 text-foreground">
+                {t("aiBoost.price", {
+                  price: formatPrice(AI_BOOST_PRICE.monthly, currency),
+                })}
+                {currentInterval === "annual" && (
+                  <span className="text-muted-foreground">
+                    {" "}
+                    {t("aiBoost.annualNote", {
+                      total: formatPrice(AI_BOOST_PRICE.annual, currency),
+                    })}
+                  </span>
+                )}
+              </p>
+            </div>
+          </div>
+          {isAdmin && (
+            <Button
+              variant={aiBoost ? "outline" : "default"}
+              size="sm"
+              className="shrink-0"
+              onClick={aiBoost ? runRemoveBoost : runAddBoost}
+              disabled={isPending || redirecting}
+            >
+              {aiBoost ? t("aiBoost.remove") : t("aiBoost.add")}
+            </Button>
+          )}
+        </div>
+      )}
 
       {/* Footer actions */}
       {isAdmin && (

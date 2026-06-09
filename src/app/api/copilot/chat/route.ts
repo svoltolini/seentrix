@@ -77,13 +77,14 @@ export async function POST(req: Request) {
   // --- 3. Resolve org + plan for quota + context ----------------------------
   const { data: org } = await supabase
     .from("organizations")
-    .select("name, country, plan")
+    .select("name, country, plan, ai_boost")
     .eq("id", orgId)
     .single();
   const plan = (org?.plan as string | undefined) ?? "free";
+  const aiBoost = !!(org as { ai_boost?: boolean } | null)?.ai_boost;
 
   // --- 4. Rate limit --------------------------------------------------------
-  const quota = await checkQuota({ userId: user.id, plan });
+  const quota = await checkQuota({ userId: user.id, plan, aiBoost });
   if (!quota.allowed) {
     return NextResponse.json(
       {

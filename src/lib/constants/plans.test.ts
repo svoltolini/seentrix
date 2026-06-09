@@ -141,8 +141,8 @@ describe("displayed prices", () => {
   });
 
   it("reflects the current Professional and Business prices", () => {
-    expect(PLAN_PRICES_EUR.professional).toEqual({ monthly: 49, annual: 490 });
-    expect(PLAN_PRICES_EUR.business).toEqual({ monthly: 179, annual: 1790 });
+    expect(PLAN_PRICES_EUR.professional).toEqual({ monthly: 59, annual: 590 });
+    expect(PLAN_PRICES_EUR.business).toEqual({ monthly: 219, annual: 2190 });
   });
 
   it("keeps the free plan at zero", () => {

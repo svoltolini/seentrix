@@ -6,7 +6,7 @@
     "currentPlanBadge": "Aktuell",
     "perMonth": "pro Monat",
     "nextBillingDate": "Nächstes Abrechnungsdatum: {date}",
-    "billedAnnually": "€{total} jährlich abgerechnet",
+    "billedAnnually": "{total} jährlich abgerechnet",
     "readOnly": "Nur Administratoren können Abrechnung und Abonnements verwalten.",
     "redirecting": "Weiterleitung…",
     "intervalLabel": "Abrechnungsintervall",
@@ -54,7 +54,18 @@
       "synced": "Mit Stripe synchronisiert.",
       "samePlan": "Das ist bereits Ihr aktueller Tarif.",
       "notAdmin": "Nur Administratoren können die Abrechnung verwalten.",
+      "boostAdded": "AI Boost zu Ihrem Abonnement hinzugefügt.",
+      "boostRemoved": "AI Boost aus Ihrem Abonnement entfernt.",
       "error": "Etwas ist schiefgelaufen. Bitte erneut versuchen."
+    },
+    "aiBoost": {
+      "title": "AI Boost",
+      "activeBadge": "Aktiv",
+      "description": "Fügen Sie jeden Monat {messages} zusätzliche Copilot-Nachrichten hinzu, betrieben mit demselben Mistral-Large-Modell.",
+      "price": "{price}/Monat",
+      "annualNote": "({total}/Jahr bei jährlicher Abrechnung)",
+      "add": "AI Boost hinzufügen",
+      "remove": "AI Boost entfernen"
     },
     "plans": {
       "free": "Kostenlos",

@@ -14,6 +14,8 @@ export default async function BillingPage() {
       billingPeriodEnd={billing?.billingPeriodEnd ?? null}
       billingInterval={billing?.billingInterval ?? null}
       cancelAtPeriodEnd={billing?.cancelAtPeriodEnd ?? false}
+      currency={billing?.currency ?? "eur"}
+      aiBoost={billing?.aiBoost ?? false}
       hasSubscription={!!billing?.stripeSubscriptionId}
       hasCustomer={!!billing?.stripeCustomerId}
       isAdmin={currentUserRole === "admin"}
