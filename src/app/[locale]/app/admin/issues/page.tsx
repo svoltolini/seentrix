@@ -114,12 +114,14 @@ function SetupHint() {
       </p>
       <div className="mt-1 rounded-md bg-muted px-4 py-3 text-left font-mono text-p4 text-foreground">
         <div>SENTRY_AUTH_TOKEN=<span className="text-muted-foreground">…read-scope token</span></div>
-        <div>SENTRY_ADMIN_ORG=<span className="text-muted-foreground">your-org-slug</span></div>
-        <div>SENTRY_ADMIN_PROJECT=<span className="text-muted-foreground">your-project-slug</span></div>
+        <div>SENTRY_ADMIN_ORG=seentrix</div>
+        <div>SENTRY_ADMIN_PROJECT=javascript-nextjs</div>
+        <div>SENTRY_API_BASE=https://de.sentry.io</div>
       </div>
       <p className="max-w-md text-p4 text-muted-foreground">
-        Until then, Sentry’s own dashboard and mobile app already alert you in
-        real time.
+        The org is in Sentry’s EU region, so <code>SENTRY_API_BASE</code> must
+        point at <code>de.sentry.io</code>. Until these are set, Sentry’s own
+        dashboard and mobile app already alert you in real time.
       </p>
     </div>
   );
