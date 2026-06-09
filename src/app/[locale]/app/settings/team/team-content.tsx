@@ -65,13 +65,17 @@ export function TeamContent({
 
   const isAdmin = currentUserRole === "admin";
 
-  // Only Business/Enterprise can manage teams
-  if (plan === "free" || plan === "professional") {
+  const count = members.length;
+  const limit = PLAN_USER_LIMITS[plan];
+
+  // The owner-only plans (Free, limit of 1) can't add anyone — show the
+  // upgrade prompt. Every paid plan manages its team within its seat limit
+  // (Professional 3, Business 10, Enterprise unlimited). Gate on the limit
+  // itself so this can never drift out of sync with PLAN_USER_LIMITS again.
+  if (limit <= 1) {
     return <TeamUpgradePrompt />;
   }
 
-  const count = members.length;
-  const limit = PLAN_USER_LIMITS[plan];
   const canAdd = count < limit;
 
   function handleRemove() {
