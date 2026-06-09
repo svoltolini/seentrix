@@ -100,38 +100,43 @@ export async function createCheckoutSession(
     .single();
   const orgRecord = org as Record<string, unknown> | null;
 
-  if (orgRecord?.stripe_customer_id) {
-    stripeCustomerId = orgRecord.stripe_customer_id as string;
-  } else {
-    const customer = await getStripe().customers.create({
-      email: user.email,
-      metadata: { org_id: orgId, user_id: user.id },
-      name: (orgRecord?.name as string) || undefined,
+  try {
+    if (orgRecord?.stripe_customer_id) {
+      stripeCustomerId = orgRecord.stripe_customer_id as string;
+    } else {
+      const customer = await getStripe().customers.create({
+        email: user.email,
+        metadata: { org_id: orgId, user_id: user.id },
+        name: (orgRecord?.name as string) || undefined,
+      });
+      stripeCustomerId = customer.id;
+      await supabase
+        .from("organizations")
+        .update({ stripe_customer_id: customer.id })
+        .eq("id", orgId);
+    }
+
+    const session = await getStripe().checkout.sessions.create({
+      customer: stripeCustomerId,
+      mode: "subscription",
+      line_items: [{ price: priceId, quantity: 1 }],
+      success_url: `${baseUrl()}/app/settings/billing?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${baseUrl()}/app/settings/billing`,
+      metadata: { org_id: orgId },
+      subscription_data: { metadata: { org_id: orgId } },
     });
-    stripeCustomerId = customer.id;
-    await supabase
-      .from("organizations")
-      .update({ stripe_customer_id: customer.id })
-      .eq("id", orgId);
+
+    await logActivity({
+      action: "billing.checkout_created",
+      targetType: "billing",
+      metadata: { plan, interval },
+    });
+
+    return { url: session.url ?? undefined };
+  } catch (e) {
+    console.error("[billing] createCheckoutSession failed:", e);
+    return { error: "stripe" };
   }
-
-  const session = await getStripe().checkout.sessions.create({
-    customer: stripeCustomerId,
-    mode: "subscription",
-    line_items: [{ price: priceId, quantity: 1 }],
-    success_url: `${baseUrl()}/app/settings/billing?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${baseUrl()}/app/settings/billing`,
-    metadata: { org_id: orgId },
-    subscription_data: { metadata: { org_id: orgId } },
-  });
-
-  await logActivity({
-    action: "billing.checkout_created",
-    targetType: "billing",
-    metadata: { plan, interval },
-  });
-
-  return { url: session.url ?? undefined };
 }
 
 // ---------------------------------------------------------------------------
@@ -170,40 +175,45 @@ export async function changePlan(
   }
 
   // Existing subscription → swap the price in place with proration.
-  const subscription = await getStripe().subscriptions.retrieve(subId);
-  const item = subscription.items.data[0];
-  if (!item) return { error: "noSubscription" };
+  try {
+    const subscription = await getStripe().subscriptions.retrieve(subId);
+    const item = subscription.items.data[0];
+    if (!item) return { error: "noSubscription" };
 
-  if (item.price?.id === newPriceId && !subscription.cancel_at_period_end) {
-    return { error: "samePlan" };
+    if (item.price?.id === newPriceId && !subscription.cancel_at_period_end) {
+      return { error: "samePlan" };
+    }
+
+    const updated = await getStripe().subscriptions.update(subId, {
+      items: [{ id: item.id, price: newPriceId }],
+      proration_behavior: "create_prorations",
+      cancel_at_period_end: false,
+      metadata: { ...subscription.metadata, org_id: orgId! },
+    });
+
+    // Optimistic write so the UI reflects the change immediately; the webhook
+    // reconciles authoritatively right after.
+    await supabase
+      .from("organizations")
+      .update({
+        plan,
+        billing_interval: interval,
+        billing_cancel_at_period_end: false,
+        billing_period_end: periodEndFromSubscription(updated),
+      })
+      .eq("id", orgId!);
+
+    await logActivity({
+      action: "billing.plan_changed",
+      targetType: "billing",
+      metadata: { plan, interval },
+    });
+
+    return { ok: true };
+  } catch (e) {
+    console.error("[billing] changePlan failed:", e);
+    return { error: "stripe" };
   }
-
-  const updated = await getStripe().subscriptions.update(subId, {
-    items: [{ id: item.id, price: newPriceId }],
-    proration_behavior: "create_prorations",
-    cancel_at_period_end: false,
-    metadata: { ...subscription.metadata, org_id: orgId! },
-  });
-
-  // Optimistic write so the UI reflects the change immediately; the webhook
-  // reconciles authoritatively right after.
-  await supabase
-    .from("organizations")
-    .update({
-      plan,
-      billing_interval: interval,
-      billing_cancel_at_period_end: false,
-      billing_period_end: periodEndFromSubscription(updated),
-    })
-    .eq("id", orgId!);
-
-  await logActivity({
-    action: "billing.plan_changed",
-    targetType: "billing",
-    metadata: { plan, interval },
-  });
-
-  return { ok: true };
 }
 
 // ---------------------------------------------------------------------------
@@ -227,17 +237,25 @@ export async function cancelSubscription(): Promise<{
       ?.stripe_subscription_id ?? null;
   if (!subId) return { error: "noSubscription" };
 
-  await getStripe().subscriptions.update(subId, {
-    cancel_at_period_end: true,
-  });
+  try {
+    await getStripe().subscriptions.update(subId, {
+      cancel_at_period_end: true,
+    });
 
-  await supabase
-    .from("organizations")
-    .update({ billing_cancel_at_period_end: true })
-    .eq("id", orgId!);
+    await supabase
+      .from("organizations")
+      .update({ billing_cancel_at_period_end: true })
+      .eq("id", orgId!);
 
-  await logActivity({ action: "billing.cancel_scheduled", targetType: "billing" });
-  return { ok: true };
+    await logActivity({
+      action: "billing.cancel_scheduled",
+      targetType: "billing",
+    });
+    return { ok: true };
+  } catch (e) {
+    console.error("[billing] cancelSubscription failed:", e);
+    return { error: "stripe" };
+  }
 }
 
 export async function resumeSubscription(): Promise<{
@@ -257,17 +275,22 @@ export async function resumeSubscription(): Promise<{
       ?.stripe_subscription_id ?? null;
   if (!subId) return { error: "noSubscription" };
 
-  await getStripe().subscriptions.update(subId, {
-    cancel_at_period_end: false,
-  });
+  try {
+    await getStripe().subscriptions.update(subId, {
+      cancel_at_period_end: false,
+    });
 
-  await supabase
-    .from("organizations")
-    .update({ billing_cancel_at_period_end: false })
-    .eq("id", orgId!);
+    await supabase
+      .from("organizations")
+      .update({ billing_cancel_at_period_end: false })
+      .eq("id", orgId!);
 
-  await logActivity({ action: "billing.resumed", targetType: "billing" });
-  return { ok: true };
+    await logActivity({ action: "billing.resumed", targetType: "billing" });
+    return { ok: true };
+  } catch (e) {
+    console.error("[billing] resumeSubscription failed:", e);
+    return { error: "stripe" };
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -307,15 +330,20 @@ export async function resyncSubscription(): Promise<{
     }
   }
   if (!subscription) {
-    const list = await getStripe().subscriptions.list({
-      customer: customerId,
-      status: "all",
-      limit: 10,
-    });
-    subscription =
-      list.data.find((s) =>
-        ["active", "trialing", "past_due"].includes(s.status),
-      ) ?? null;
+    try {
+      const list = await getStripe().subscriptions.list({
+        customer: customerId,
+        status: "all",
+        limit: 10,
+      });
+      subscription =
+        list.data.find((s) =>
+          ["active", "trialing", "past_due"].includes(s.status),
+        ) ?? null;
+    } catch (e) {
+      console.error("[billing] resyncSubscription list failed:", e);
+      return { error: "stripe" };
+    }
   }
 
   if (!subscription) {
@@ -384,12 +412,16 @@ export async function createPortalSession(): Promise<{
     null;
   if (!stripeCustomerId) return { error: "noSubscription" };
 
-  const session = await getStripe().billingPortal.sessions.create({
-    customer: stripeCustomerId,
-    return_url: `${baseUrl()}/app/settings/billing`,
-  });
-
-  return { url: session.url };
+  try {
+    const session = await getStripe().billingPortal.sessions.create({
+      customer: stripeCustomerId,
+      return_url: `${baseUrl()}/app/settings/billing`,
+    });
+    return { url: session.url };
+  } catch (e) {
+    console.error("[billing] createPortalSession failed:", e);
+    return { error: "stripe" };
+  }
 }
 
 // ---------------------------------------------------------------------------
