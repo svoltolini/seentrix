@@ -170,6 +170,13 @@ const NAME_MAP = {
   "Verify": "Verify",
   "VideoCircle": "VideoCircle",
   "Warning2": "Warning2",
+  // --- admin console ---
+  "Chart": "Chart",
+  "DollarCircle": "DollarCircle",
+  "Flash": "Flash",
+  "Profile2User": "Profile2User",
+  "MoneyRecive": "MoneyRecive",
+  "MessageText1": "MessageText1",
 } as const satisfies Record<string, keyof typeof Iconsax>;
 
 export type IconName = keyof typeof NAME_MAP;
