@@ -70,6 +70,12 @@ export const SCREEN_LESSONS = {
       "conformity-modules",
     ],
   },
+  readiness: {
+    key: "readiness",
+    href: "/app/products",
+    icon: "Grid2",
+    lessons: ["cra-readiness-overview", "annex-vii-technical-file", "cra-101"],
+  },
   diagrams: {
     key: "diagrams",
     href: "/app/products",

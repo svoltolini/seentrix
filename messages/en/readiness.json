@@ -1,0 +1,43 @@
+{
+  "readiness": {
+    "title": "CRA readiness",
+    "subtitle": "One consolidated view of where this product stands against the CRA — every obligation from Phases 1 to 6, graded from your real data, with a link to the tab that closes each gap.",
+    "ring": {
+      "heading": "Overall readiness",
+      "summary": "{complete} of {total} obligations complete.",
+      "breakdown": "{partial} partial · {missing} missing"
+    },
+    "groups": {
+      "pre_market": "Before placing on the market",
+      "ongoing": "Ongoing obligations",
+      "retention": "Documentation & retention",
+      "lifecycle": "Lifecycle"
+    },
+    "items": {
+      "annex_i": "Annex I essential-requirements checklist",
+      "sbom": "Software bill of materials (SBOM)",
+      "risk_assessment": "Cybersecurity risk assessment",
+      "diagrams": "Architecture & data-flow diagrams",
+      "technical_file": "Annex VII technical file",
+      "declaration": "EU Declaration of Conformity",
+      "ce_marking": "CE marking recorded",
+      "product_identity": "Product identification (model/batch/serial)",
+      "user_information": "End-user information (Annex II)",
+      "monitoring": "Post-market monitoring log",
+      "security_tests": "Security testing records",
+      "incident_readiness": "Incident-reporting readiness (VDP + contact)",
+      "advisories": "Vulnerability advisories",
+      "technical_file_retention": "Technical-file retention (released & dated)",
+      "supply_chain": "Supply-chain records",
+      "support_period": "Support period defined",
+      "end_of_support": "End-of-support plan"
+    },
+    "status": {
+      "complete": "Complete",
+      "partial": "Partial",
+      "missing": "Missing",
+      "not_applicable": "N/A"
+    },
+    "fix": "Fix →"
+  }
+}

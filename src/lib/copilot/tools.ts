@@ -12,6 +12,11 @@ import {
   nextPhaseDeadline,
   type IncidentReportType,
 } from "@/lib/constants/incident-deadlines";
+import {
+  computeReadiness,
+  readinessScore,
+} from "@/lib/constants/cra-readiness";
+import { gatherReadinessInputs } from "@/lib/readiness/gather";
 
 /**
  * Agentic lookup tools — Phase 2 Pillar 3.
@@ -548,6 +553,53 @@ export function buildCopilotTools({ supabase, orgId, plan }: Ctx) {
             usersNotified: !!p.eos_notified_at,
             correctiveActionDocumented: !!p.corrective_action_procedure?.trim(),
           },
+        };
+      },
+    }),
+
+    // -------------------------------------------------------------------
+    // getReadiness — consolidated CRA readiness for a product.
+    // -------------------------------------------------------------------
+    getReadiness: tool({
+      description:
+        "Report a product's overall CRA readiness: an overall percentage plus each checklist item graded complete / partial / missing / not-applicable, grouped pre-market / ongoing / retention / lifecycle. This consolidates the signals from every tab (Annex I checklist, SBOM, risk assessment, diagrams, technical file, DoC, CE & identity, user information, monitoring, security tests, incident readiness, advisories, retention, supply chain, support period, end of support). Use this when the user asks 'how CRA-ready is this product?', 'what's my readiness score?', or 'what's still missing overall?'.",
+      inputSchema: z.object({
+        productId: z
+          .string()
+          .uuid()
+          .describe("Product id (UUID) returned by searchProducts."),
+      }),
+      execute: async ({ productId }) => {
+        const { data: product } = await supabase
+          .from("products")
+          .select("name")
+          .eq("id", productId)
+          .eq("org_id", orgId)
+          .maybeSingle();
+        if (!product) return { error: "product_not_found" };
+
+        const inputs = await gatherReadinessInputs(supabase, orgId, [productId]);
+        const input = inputs.get(productId);
+        if (!input) {
+          return {
+            product: (product as { name: string }).name ?? "",
+            percent: 0,
+            items: [],
+          };
+        }
+        const items = computeReadiness(input);
+        const score = readinessScore(items);
+        return {
+          product: (product as { name: string }).name ?? "",
+          percent: score.percent,
+          complete: score.complete,
+          partial: score.partial,
+          missing: score.missing,
+          items: items.map((it) => ({
+            key: it.key,
+            group: it.group,
+            status: it.status,
+          })),
         };
       },
     }),

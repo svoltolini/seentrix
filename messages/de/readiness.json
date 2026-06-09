@@ -1,0 +1,43 @@
+{
+  "readiness": {
+    "title": "CRA-Reife",
+    "subtitle": "Eine konsolidierte Sicht darauf, wo dieses Produkt im Hinblick auf den CRA steht — jede Pflicht aus den Phasen 1 bis 6, anhand Ihrer echten Daten bewertet, mit einem Link zum Tab, der jede Lücke schließt.",
+    "ring": {
+      "heading": "Gesamtreife",
+      "summary": "{complete} von {total} Pflichten erfüllt.",
+      "breakdown": "{partial} teilweise · {missing} fehlend"
+    },
+    "groups": {
+      "pre_market": "Vor dem Inverkehrbringen",
+      "ongoing": "Laufende Pflichten",
+      "retention": "Dokumentation & Aufbewahrung",
+      "lifecycle": "Lebenszyklus"
+    },
+    "items": {
+      "annex_i": "Checkliste der grundlegenden Anforderungen (Anhang I)",
+      "sbom": "Software-Stückliste (SBOM)",
+      "risk_assessment": "Cybersicherheits-Risikobewertung",
+      "diagrams": "Architektur- & Datenflussdiagramme",
+      "technical_file": "Technische Dokumentation (Anhang VII)",
+      "declaration": "EU-Konformitätserklärung",
+      "ce_marking": "CE-Kennzeichnung erfasst",
+      "product_identity": "Produktidentifikation (Modell/Charge/Serie)",
+      "user_information": "Endnutzer-Informationen (Anhang II)",
+      "monitoring": "Monitoring-Protokoll nach Inverkehrbringen",
+      "security_tests": "Aufzeichnungen von Sicherheitstests",
+      "incident_readiness": "Bereitschaft zur Vorfallmeldung (VDP + Kontakt)",
+      "advisories": "Schwachstellen-Advisories",
+      "technical_file_retention": "Aufbewahrung der technischen Dokumentation (freigegeben & datiert)",
+      "supply_chain": "Lieferkettenaufzeichnungen",
+      "support_period": "Support-Zeitraum festgelegt",
+      "end_of_support": "Support-Ende-Plan"
+    },
+    "status": {
+      "complete": "Vollständig",
+      "partial": "Teilweise",
+      "missing": "Fehlend",
+      "not_applicable": "N/V"
+    },
+    "fix": "Beheben →"
+  }
+}

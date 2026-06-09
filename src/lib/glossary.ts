@@ -318,6 +318,10 @@ export const ACADEMY_LESSONS = {
     title: "End-of-support & corrective action",
     duration: "7 min",
   },
+  "cra-readiness-overview": {
+    title: "CRA readiness: bringing it all together",
+    duration: "6 min",
+  },
 } satisfies Record<string, { title: string; duration: string }>;
 
 export type AcademyLessonId = keyof typeof ACADEMY_LESSONS;

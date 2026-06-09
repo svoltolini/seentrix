@@ -18,6 +18,7 @@ import annexIiUserInformation from "@/content/academy/annex-ii-user-information"
 import conformityModules from "@/content/academy/conformity-modules";
 import postMarketMonitoringSupplyChain from "@/content/academy/post-market-monitoring-supply-chain";
 import endOfSupportCorrectiveAction from "@/content/academy/end-of-support-corrective-action";
+import craReadinessOverview from "@/content/academy/cra-readiness-overview";
 import type { Lesson, LocaleId, RoleId } from "@/lib/academy/types";
 
 /**
@@ -50,6 +51,7 @@ export const LESSONS: Record<string, Lesson> = {
   [conformityModules.id]: conformityModules,
   [postMarketMonitoringSupplyChain.id]: postMarketMonitoringSupplyChain,
   [endOfSupportCorrectiveAction.id]: endOfSupportCorrectiveAction,
+  [craReadinessOverview.id]: craReadinessOverview,
 };
 
 export function getLesson(id: string): Lesson | null {

@@ -54,6 +54,10 @@ import {
 import { TeamChatStrip, type TeamChatItem } from "./widgets/team-chat-strip";
 import { GetStartedGuide } from "./widgets/get-started-guide";
 import { KpiStrip, type Kpi } from "./widgets/kpi-strip";
+import {
+  ReadinessRollupWidget,
+  type ReadinessRollupItem,
+} from "./widgets/readiness-rollup-widget";
 import { useCopilot } from "@/components/copilot/copilot-context";
 
 // ---------------------------------------------------------------------------
@@ -185,6 +189,7 @@ export function DashboardContent(
     incidentWidget?: IncidentWidgetData;
     supportWidget?: SupportWidgetData;
     profileStatus?: CompanyProfileStatus;
+    readinessRollup?: ReadinessRollupItem[];
   },
 ) {
   const t = useTranslations("dashboard");
@@ -204,6 +209,7 @@ export function DashboardContent(
     criticalCount,
     totalVulnerabilities,
     profileStatus,
+    readinessRollup,
   } = stats;
 
   const firstName = currentUser?.full_name?.split(" ")[0] ?? null;
@@ -507,6 +513,17 @@ export function DashboardContent(
             <h3 className="text-h3 text-foreground">{t("calendar.title")}</h3>
             <CraCalendarTracker events={calendarEvents} />
           </section>
+
+          {/* CRA readiness roll-up */}
+          {totalProducts > 0 && (
+            <section className="flex flex-col gap-4 rounded-md bg-card p-5 shadow-card-md">
+              <h3 className="text-h3 text-foreground">{t("readiness.title")}</h3>
+              <ReadinessRollupWidget
+                items={readinessRollup ?? []}
+                emptyLabel={t("readiness.empty")}
+              />
+            </section>
+          )}
 
           {/* Upcoming CRA deadlines */}
           <section className="flex flex-col gap-4 rounded-md bg-card p-5 shadow-card-md">

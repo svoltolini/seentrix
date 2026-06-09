@@ -1,0 +1,43 @@
+{
+  "readiness": {
+    "title": "Maturité CRA",
+    "subtitle": "Une vue consolidée de la situation de ce produit au regard du CRA — chaque obligation des phases 1 à 6, évaluée à partir de vos données réelles, avec un lien vers l'onglet qui comble chaque lacune.",
+    "ring": {
+      "heading": "Maturité globale",
+      "summary": "{complete} obligations sur {total} satisfaites.",
+      "breakdown": "{partial} partielles · {missing} manquantes"
+    },
+    "groups": {
+      "pre_market": "Avant la mise sur le marché",
+      "ongoing": "Obligations continues",
+      "retention": "Documentation & conservation",
+      "lifecycle": "Cycle de vie"
+    },
+    "items": {
+      "annex_i": "Liste des exigences essentielles (annexe I)",
+      "sbom": "Nomenclature logicielle (SBOM)",
+      "risk_assessment": "Évaluation des risques de cybersécurité",
+      "diagrams": "Schémas d'architecture & de flux de données",
+      "technical_file": "Dossier technique (annexe VII)",
+      "declaration": "Déclaration UE de conformité",
+      "ce_marking": "Marquage CE consigné",
+      "product_identity": "Identification du produit (modèle/lot/série)",
+      "user_information": "Informations pour l'utilisateur final (annexe II)",
+      "monitoring": "Journal de surveillance après commercialisation",
+      "security_tests": "Enregistrements des tests de sécurité",
+      "incident_readiness": "Préparation au signalement d'incident (PDV + contact)",
+      "advisories": "Avis de vulnérabilité",
+      "technical_file_retention": "Conservation du dossier technique (publié & daté)",
+      "supply_chain": "Registres de la chaîne d'approvisionnement",
+      "support_period": "Période de support définie",
+      "end_of_support": "Plan de fin de support"
+    },
+    "status": {
+      "complete": "Complet",
+      "partial": "Partiel",
+      "missing": "Manquant",
+      "not_applicable": "N/A"
+    },
+    "fix": "Corriger →"
+  }
+}

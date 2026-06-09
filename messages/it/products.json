@@ -116,7 +116,8 @@
         "documents": "Documenti",
         "technicalFile": "Fascicolo tecnico",
         "identity": "Identità & CE",
-        "lifecycle": "Ciclo di vita & catena di fornitura"
+        "lifecycle": "Ciclo di vita & catena di fornitura",
+        "readiness": "Maturità CRA"
       },
       "overview": {
         "title": "Panoramica del prodotto",

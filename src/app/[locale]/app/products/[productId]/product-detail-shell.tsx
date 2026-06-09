@@ -9,6 +9,7 @@ import type { ProductDetail } from "../actions";
 
 const TABS = [
   { key: "overview", segment: "" },
+  { key: "readiness", segment: "/readiness" },
   { key: "checklist", segment: "/checklist" },
   { key: "sbom", segment: "/sbom" },
   { key: "vulnerabilities", segment: "/vulnerabilities" },

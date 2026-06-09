@@ -67,6 +67,10 @@
   "todayTasks": "Tâches du jour",
   "seeAll": "Voir tout",
   "noOverdue": "Aucune tâche en retard. Excellent travail.",
+  "readiness": {
+    "title": "Maturité CRA",
+    "empty": "Ajoutez un produit pour voir sa maturité CRA."
+  },
   "chat": "Équipe",
   "upcomingDeadlines": {
    "title": "À venir"

@@ -67,6 +67,10 @@
   "todayTasks": "Attività di oggi",
   "seeAll": "Vedi tutto",
   "noOverdue": "Nessuna attività in ritardo. Ottimo lavoro.",
+  "readiness": {
+    "title": "Maturità CRA",
+    "empty": "Aggiungi un prodotto per vederne la maturità CRA."
+  },
   "chat": "Team",
   "upcomingDeadlines": {
    "title": "In arrivo"

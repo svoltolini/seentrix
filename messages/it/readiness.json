@@ -1,0 +1,43 @@
+{
+  "readiness": {
+    "title": "Maturità CRA",
+    "subtitle": "Una vista consolidata di dove si trova questo prodotto rispetto al CRA — ogni obbligo dalle fasi 1 a 6, valutato dai tuoi dati reali, con un link alla scheda che colma ciascuna lacuna.",
+    "ring": {
+      "heading": "Maturità complessiva",
+      "summary": "{complete} obblighi su {total} completati.",
+      "breakdown": "{partial} parziali · {missing} mancanti"
+    },
+    "groups": {
+      "pre_market": "Prima dell'immissione sul mercato",
+      "ongoing": "Obblighi continui",
+      "retention": "Documentazione & conservazione",
+      "lifecycle": "Ciclo di vita"
+    },
+    "items": {
+      "annex_i": "Lista dei requisiti essenziali (allegato I)",
+      "sbom": "Distinta base del software (SBOM)",
+      "risk_assessment": "Valutazione dei rischi di cibersicurezza",
+      "diagrams": "Diagrammi di architettura & flusso dati",
+      "technical_file": "Fascicolo tecnico (allegato VII)",
+      "declaration": "Dichiarazione di conformità UE",
+      "ce_marking": "Marcatura CE registrata",
+      "product_identity": "Identificazione del prodotto (modello/lotto/serie)",
+      "user_information": "Informazioni per l'utente finale (allegato II)",
+      "monitoring": "Registro di monitoraggio post-commercializzazione",
+      "security_tests": "Registrazioni dei test di sicurezza",
+      "incident_readiness": "Prontezza alla segnalazione di incidenti (PDV + contatto)",
+      "advisories": "Avvisi di vulnerabilità",
+      "technical_file_retention": "Conservazione del fascicolo tecnico (rilasciato & datato)",
+      "supply_chain": "Registri della catena di fornitura",
+      "support_period": "Periodo di supporto definito",
+      "end_of_support": "Piano di fine supporto"
+    },
+    "status": {
+      "complete": "Completo",
+      "partial": "Parziale",
+      "missing": "Mancante",
+      "not_applicable": "N/D"
+    },
+    "fix": "Correggi →"
+  }
+}

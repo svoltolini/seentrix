@@ -116,7 +116,8 @@
         "documents": "Dokumente",
         "technicalFile": "Technische Dokumentation",
         "identity": "Identität & CE",
-        "lifecycle": "Lebenszyklus & Lieferkette"
+        "lifecycle": "Lebenszyklus & Lieferkette",
+        "readiness": "CRA-Reife"
       },
       "overview": {
         "title": "Produktübersicht",
