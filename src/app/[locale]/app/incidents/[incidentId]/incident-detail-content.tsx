@@ -403,7 +403,7 @@ function SrpSection({
         {stages.map(({ phase, submittedAt }) => (
           <div
             key={phase}
-            className="flex flex-wrap items-center gap-3 rounded-md bg-card px-4 py-3"
+            className="flex flex-wrap items-center gap-3 rounded-lg bg-card px-4 py-3"
           >
             <span className="min-w-0 flex-1 text-p3 text-foreground">
               {t(`phase.${phase}`)}

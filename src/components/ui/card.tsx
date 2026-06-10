@@ -24,7 +24,7 @@ function Card({
       data-size={size}
       data-shadow={shadow}
       className={cn(
-        "group/card flex flex-col gap-6 overflow-hidden rounded-md bg-card text-card-foreground py-[18px]",
+        "group/card flex flex-col gap-6 overflow-hidden rounded-lg bg-card text-card-foreground py-[18px]",
         "data-[shadow=lg]:shadow-card-lg data-[shadow=md]:shadow-card-md data-[shadow=sm]:shadow-card-sm",
         "has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0",
         "data-[size=sm]:gap-4 data-[size=sm]:py-4 data-[size=sm]:has-data-[slot=card-footer]:pb-0",

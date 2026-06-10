@@ -7,9 +7,9 @@ import { useTranslations } from "next-intl";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 const steps = [
-  { key: "s1", accent: "#066DE6" },
-  { key: "s2", accent: "#FF6D00" },
-  { key: "s3", accent: "#FF6D00" },
+  { key: "s1", accent: "#1f8a5b" },
+  { key: "s2", accent: "#c0892e" },
+  { key: "s3", accent: "#c0892e" },
 ] as const;
 
 export function HowItWorksSection() {

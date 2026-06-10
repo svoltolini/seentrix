@@ -83,7 +83,7 @@ export function AccountContent({ account }: { account: AccountInfo | null }) {
   return (
     <div className="space-y-6">
       {/* Profile */}
-      <div className="rounded-md bg-card shadow-card-lg">
+      <div className="rounded-lg bg-card shadow-card-lg">
         <div className="border-b border-border px-6 py-4">
           <h2 className="text-h4 text-foreground">{t("profileTitle")}</h2>
         </div>
@@ -160,7 +160,7 @@ export function AccountContent({ account }: { account: AccountInfo | null }) {
       <LanguageCard />
 
       {/* Password */}
-      <div className="rounded-md bg-card shadow-card-lg">
+      <div className="rounded-lg bg-card shadow-card-lg">
         <div className="border-b border-border px-6 py-4">
           <h2 className="text-h4 text-foreground">{t("passwordTitle")}</h2>
         </div>
@@ -194,7 +194,7 @@ export function AccountContent({ account }: { account: AccountInfo | null }) {
 function LanguageCard() {
   const tl = useTranslations("settings.language");
   return (
-    <div className="rounded-md bg-card shadow-card-lg">
+    <div className="rounded-lg bg-card shadow-card-lg">
       <div className="border-b border-border px-6 py-4">
         <h2 className="text-h4 text-foreground">{tl("title")}</h2>
       </div>

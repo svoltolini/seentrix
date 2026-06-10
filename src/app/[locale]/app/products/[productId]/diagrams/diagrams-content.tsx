@@ -176,7 +176,7 @@ export function DiagramsContent({
         </div>
 
         {diagrams.length === 0 ? (
-          <div className="flex flex-col items-center justify-center rounded-md bg-card py-14 text-center shadow-card-sm">
+          <div className="flex flex-col items-center justify-center rounded-lg bg-card py-14 text-center shadow-card-sm">
             <IconBadge name="Category" tone="primary" size="xl" className="mb-4" />
             <p className="text-h4 text-foreground">{t("diagrams.empty")}</p>
             <p className="mt-1 max-w-sm text-p3 text-muted-foreground">
@@ -221,7 +221,7 @@ export function DiagramsContent({
         </div>
 
         {evidence.length === 0 ? (
-          <div className="flex flex-col items-center justify-center rounded-md bg-card py-14 text-center shadow-card-sm">
+          <div className="flex flex-col items-center justify-center rounded-lg bg-card py-14 text-center shadow-card-sm">
             <IconBadge name="DocumentText" tone="primary" size="xl" className="mb-4" />
             <p className="text-h4 text-foreground">{t("evidence.empty")}</p>
             <p className="mt-1 max-w-sm text-p3 text-muted-foreground">
@@ -233,7 +233,7 @@ export function DiagramsContent({
             {evidence.map((e) => (
               <div
                 key={e.id}
-                className="flex items-center gap-3 rounded-md bg-card px-4 py-3 shadow-card-sm"
+                className="flex items-center gap-3 rounded-lg bg-card px-4 py-3 shadow-card-sm"
               >
                 <IconBadge
                   name={EVIDENCE_CATEGORY_ICON[e.category]}
@@ -361,7 +361,7 @@ function DiagramCard({
   const t = useTranslations("diagrams");
 
   return (
-    <div className="group overflow-hidden rounded-md bg-card shadow-card-sm transition-shadow hover:shadow-card-md">
+    <div className="group overflow-hidden rounded-lg bg-card shadow-card-sm transition-shadow hover:shadow-card-md">
       <button
         type="button"
         onClick={onOpen}
@@ -476,7 +476,7 @@ function RenameDialog({
         />
         <DialogPrimitive.Popup
           className={cn(
-            "fixed top-1/2 left-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-md bg-card p-[18px] shadow-card-md transition duration-200",
+            "fixed top-1/2 left-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-lg bg-card p-[18px] shadow-card-md transition duration-200",
             "data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0",
           )}
         >

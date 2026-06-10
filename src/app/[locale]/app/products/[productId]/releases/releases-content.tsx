@@ -107,7 +107,7 @@ export function ReleasesContent({
         {/* Support period block */}
         <div
           data-reveal
-          className="overflow-hidden rounded-md bg-card p-6 shadow-card-md"
+          className="overflow-hidden rounded-lg bg-card p-6 shadow-card-md"
         >
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
@@ -221,7 +221,7 @@ export function ReleasesContent({
             )}
           </div>
           {releases.length === 0 ? (
-            <div className="overflow-hidden rounded-md bg-card shadow-card-md px-6 py-20 text-center">
+            <div className="overflow-hidden rounded-lg bg-card shadow-card-md px-6 py-20 text-center">
               <IconBadge name="package" tone="primary" size="xl" className="mx-auto" />
               <h2 className="mt-5 text-h4 text-foreground">
                 {t("empty.title")}
@@ -231,7 +231,7 @@ export function ReleasesContent({
               </p>
             </div>
           ) : (
-            <div className="overflow-hidden rounded-md bg-card shadow-card-md">
+            <div className="overflow-hidden rounded-lg bg-card shadow-card-md">
               <div className="divide-y divide-border">
                 {releases.map((r) => (
                   <ReleaseRow

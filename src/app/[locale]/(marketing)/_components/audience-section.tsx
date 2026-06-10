@@ -9,9 +9,9 @@ import { buttonVariants } from "@/components/ui/button";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 const segments = [
-  { key: "industrial", accent: "#066DE6" },
-  { key: "iot", accent: "#FF6D00" },
-  { key: "software", accent: "#FF6D00" },
+  { key: "industrial", accent: "#1f8a5b" },
+  { key: "iot", accent: "#c0892e" },
+  { key: "software", accent: "#c0892e" },
 ] as const;
 
 export function AudienceSection() {
@@ -65,7 +65,7 @@ export function AudienceSection() {
             <div
               key={seg.key}
               data-audience-row
-              className="flex items-start gap-6 rounded-md bg-card p-8 shadow-card-md lg:gap-8"
+              className="flex items-start gap-6 rounded-lg bg-card p-8 shadow-card-md lg:gap-8"
             >
               <span
                 className="shrink-0 text-4xl font-extrabold leading-none lg:text-5xl"

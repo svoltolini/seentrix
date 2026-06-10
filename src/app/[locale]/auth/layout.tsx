@@ -43,7 +43,7 @@ export default function AuthLayout({
           <Logo size={28} className="shrink-0 text-primary" />
           <span className="text-h2 text-foreground">Seentrix</span>
         </Link>
-        <div className="rounded-md bg-card p-8 shadow-card-md">
+        <div className="rounded-lg bg-card p-8 shadow-card-md">
           {children}
         </div>
       </div>

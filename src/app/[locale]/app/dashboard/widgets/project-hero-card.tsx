@@ -79,7 +79,7 @@ export function ProjectHeroCard({
       // height matches Figma. Outer card has the soft shadow +
       // rounded-md + overflow-clip so the banner can't bleed past
       // the corners.
-      className="group/hero-card relative flex h-[249px] w-full flex-col overflow-clip rounded-md bg-card shadow-card-md transition-shadow hover:shadow-card-lg"
+      className="group/hero-card relative flex h-[249px] w-full flex-col overflow-clip rounded-lg bg-card shadow-card-md transition-shadow hover:shadow-card-lg"
     >
       {/* TOP — 140 px banner with the wavy blue Nask cover SVG. */}
       <div

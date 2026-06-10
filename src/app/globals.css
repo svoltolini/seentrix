@@ -62,112 +62,124 @@
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
 
-  /* Fonts */
-  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
-  --font-heading: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono);
+  /* Fonts — Clay: Hanken Grotesk sans, Source Serif 4 display, IBM Plex Mono */
+  --font-sans: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-source-serif), Georgia, serif;
+  --font-serif: var(--font-source-serif), Georgia, serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
 
-  /* Geometry — Nask is consistent: 8 / 10 / 15 / full */
-  --radius-sm: 0.5rem;        /* 8  — chips, in-card CTAs */
-  --radius-md: 0.625rem;      /* 10 — cards, sidebar items, inputs */
-  --radius-lg: 0.625rem;      /* 10 */
-  --radius-xl: 0.9375rem;     /* 15 — progress pills */
-  --radius-2xl: 1rem;         /* 16 — message bubbles */
+  /* Geometry — Clay: chips/tabs 9–10, buttons/inputs 12, cards 18, hero 22 */
+  --radius-sm: 0.625rem;      /* 10 — chips, small buttons, nav tabs */
+  --radius-md: 0.75rem;       /* 12 — buttons, inputs */
+  --radius-lg: 1.125rem;      /* 18 — cards, tables */
+  --radius-xl: 1.125rem;      /* 18 */
+  --radius-2xl: 1.375rem;     /* 22 — hero cards, message bubbles */
 
-  /* Shadows */
-  --shadow-card-lg: 0px 4px 120px 0px rgba(169, 173, 180, 0.15);
-  --shadow-card-md: 0px 4px 90px 0px rgba(169, 173, 180, 0.15);
-  --shadow-card-sm: 0px 4px 60px 0px rgba(169, 173, 180, 0.15);
+  /* Shadows — soft, warm-tinted (Clay) */
+  --shadow-card-lg: 0px 16px 48px 0px rgba(60, 40, 20, 0.10);
+  --shadow-card-md: 0px 8px 24px 0px rgba(60, 40, 20, 0.07);
+  --shadow-card-sm: 0px 1px 3px 0px rgba(80, 60, 40, 0.04);
 }
 
 :root {
+  /* ==========================================================================
+     CLAY theme, green accent lock (design_handoff_seentrix_app).
+     Warm off-white surfaces, ink text, brand green #1f8a5b.
+     ========================================================================== */
+
   /* === Surfaces === */
-  --background: #F6F7FA;          /* White/Screen Color */
-  --foreground: #2C3659;          /* Black/01 — body text (dark navy) */
-  --card: #FFFFFF;                /* White/General */
-  --card-foreground: #2C3659;
-  --popover: #FFFFFF;
-  --popover-foreground: #2C3659;
+  --background: #faf9f5;          /* warm off-white app bg */
+  --foreground: #2b2a26;          /* ink — primary text */
+  --card: #ffffff;                /* surface — cards, nav, inputs */
+  --card-foreground: #2b2a26;
+  --popover: #ffffff;
+  --popover-foreground: #2b2a26;
 
-  /* === Primary (Blue ramp) === */
-  --primary: #066DE6;             /* Blue/01 */
-  --primary-2: #599EEE;           /* Blue/02 */
-  --primary-3: #ACCEF7;           /* Blue/03 */
-  --primary-foreground: #FFFFFF;
+  /* === Primary (brand green ramp) === */
+  --primary: #1f8a5b;             /* accent green — buttons, links, active */
+  --primary-2: #2fa56f;           /* lighter green (gradients) */
+  --primary-3: #dbece5;           /* ring track */
+  --primary-foreground: #ffffff;
 
-  /* === Accent (Orange ramp) — progress, callouts, "Help Centre" === */
-  --accent: #FF6D00;              /* Orange/01 */
-  --accent-2: #FF9E55;            /* Orange/02 */
-  --accent-3: #FFCEAA;            /* Orange/03 */
-  --accent-foreground: #FFFFFF;
-  --accent-soft: #FF9E55;         /* legacy alias */
+  /* === Accent (warm amber ramp) — warnings, callouts === */
+  --accent: #c0892e;              /* warn amber */
+  --accent-2: #d9a64a;            /* lighter amber (gradients) */
+  --accent-3: #ecd9b3;
+  --accent-foreground: #ffffff;
+  --accent-soft: #e2f0ea;         /* accent-tint (avatars, pills, soft cards) */
 
-  /* === Greys (full ramp) === */
-  --grey-1: #A7AEC1;              /* Grey/01 — muted-foreground */
-  --grey-2: #C4C9D6;              /* Grey/02 */
-  --grey-3: #E2E4EA;              /* Grey/03 — secondary button bg */
-  --lgrey-1: #F5F5F5;             /* Lgrey/01 — borders, sidebar bg */
-  --lgrey-2: #F9F9F9;             /* Lgrey/02 — chips */
-  --lgrey-3: #F6F8FB;             /* Lgrey/03 — page accent bg */
+  /* === Greys (warm ramp) === */
+  --grey-1: #8c887d;              /* muted — secondary text, captions */
+  --grey-2: #b8b3a6;
+  --grey-3: #e2ddd1;              /* line-strong */
+  --lgrey-1: #ece8df;             /* line — hairline borders */
+  --lgrey-2: #f3f1ea;             /* hover fills, chips */
+  --lgrey-3: #f7f5ef;
 
   /* === Black ramp (text + dividers) === */
-  --black-1: #2C3659;             /* Black/01 — same as --foreground */
-  --black-2: #E5E6E7;             /* Black/02 — chip outline */
-  --black-3: #EFF2F3;             /* Black/03 — input fill, light divider */
+  --black-1: #2b2a26;             /* ink — same as --foreground */
+  --black-2: #e2ddd1;             /* chip outline */
+  --black-3: #f3f1ea;             /* input fill, light divider */
 
   /* === Mapped tokens (used by shadcn classes) === */
-  --secondary: #E2E4EA;           /* Grey/03 */
-  --secondary-foreground: #2C3659;
-  --muted: #F9F9F9;               /* Lgrey/02 */
-  --muted-foreground: #A7AEC1;    /* Grey/01 */
+  --secondary: #f3f1ea;           /* hover fill — secondary button bg */
+  --secondary-foreground: #2b2a26;
+  --muted: #f3f1ea;
+  --muted-foreground: #8c887d;
 
   /* === Status === */
-  --success: #4CD964;             /* Green/01 */
-  --success-2: #88E698;           /* Green/02 */
-  --success-3: #C3F2CB;           /* Green/03 */
-  --success-foreground: #FFFFFF;
-  --destructive: #E60019;         /* Red/01 */
-  --destructive-2: #EE5566;       /* Red/02 */
-  --destructive-3: #F7AAB2;       /* Red/03 */
-  --destructive-foreground: #FFFFFF;
-  --warning: #FF6D00;             /* alias of --accent for consistency */
-  --warning-foreground: #FFFFFF;
-  --info: #066DE6;                /* alias of --primary */
+  --success: #1f8a5b;             /* brand green doubles as success */
+  --success-2: #5b7a52;           /* ok — positive deltas */
+  --success-3: #cfe5da;
+  --success-foreground: #ffffff;
+  --destructive: #c0453a;         /* danger — critical, overdue, missing */
+  --destructive-2: #d3766d;
+  --destructive-3: #ecc3bf;
+  --destructive-foreground: #ffffff;
+  --warning: #c0892e;             /* alias of --accent for consistency */
+  --warning-foreground: #ffffff;
+  --info: #3d6470;                /* teal — important_i / informational */
 
   /* === Borders + inputs === */
-  --border: #F5F5F5;              /* Lgrey/01 — card / sidebar / topbar borders */
-  --border-strong: #EFF2F3;       /* Black/03 */
-  --border-outline: #E5E6E7;      /* Black/02 — chip outlines */
-  --input: #EFF2F3;               /* filled-input bg */
-  --ring: #066DE6;
+  --border: #ece8df;              /* line — hairline borders, dividers */
+  --border-strong: #e2ddd1;       /* line-strong */
+  --border-outline: #e2ddd1;      /* chip + ghost-button outlines */
+  --input: #f3f1ea;               /* filled-input bg */
+  --ring: #1f8a5b;
 
-  /* Dark CTA (top-bar "+ New Project") */
-  --dark-cta: #2C3659;
-  --dark-cta-foreground: #FFFFFF;
+  /* Dark CTA (ink panels / buttons-on-dark) */
+  --dark-cta: #2b2a26;
+  --dark-cta-foreground: #ffffff;
 
-  /* Avatar fallback */
-  --avatar-fallback: #FFB257;
+  /* Avatar fallback — solid brand green with white initials */
+  --avatar-fallback: #1f8a5b;
 
   /* Sidebar */
-  --sidebar: #FFFFFF;
-  --sidebar-foreground: #A7AEC1;
-  --sidebar-primary: #066DE6;
-  --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #F5F5F5;
-  --sidebar-accent-foreground: #2C3659;
-  --sidebar-border: #F5F5F5;
-  --sidebar-ring: #066DE6;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #8c887d;
+  --sidebar-primary: #1f8a5b;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f3f1ea;
+  --sidebar-accent-foreground: #2b2a26;
+  --sidebar-border: #ece8df;
+  --sidebar-ring: #1f8a5b;
 
   /* Charts */
-  --chart-1: #066DE6;
-  --chart-2: #FF6D00;
-  --chart-3: #4CD964;
-  --chart-4: #2C3659;
-  --chart-5: #A7AEC1;
+  --chart-1: #1f8a5b;
+  --chart-2: #c0892e;
+  --chart-3: #3d6470;
+  --chart-4: #2b2a26;
+  --chart-5: #8c887d;
+
+  /* Severity ramp (incident/vuln bars): critical → low */
+  --sev-critical: #c0453a;
+  --sev-high: #c0892e;
+  --sev-medium: #c7a93f;
+  --sev-low: #8c887d;
 
   /* Geometry root (Tailwind v4 picks up the radius-* tokens above; this is for
      anything still reading var(--radius) directly). */
-  --radius: 0.625rem;
+  --radius: 0.75rem;
 }
 
 @layer base {
@@ -179,6 +191,11 @@
   }
   html {
     @apply font-sans;
+  }
+
+  /* Clay: brand-green text selection */
+  ::selection {
+    background: color-mix(in srgb, var(--primary) 22%, transparent);
   }
 
   /* Override browser autofill — keep input fill on the filled-input bg */
@@ -220,11 +237,13 @@
  *                                              text-p4-r 12 → 12 (unchanged)
  */
 @layer utilities {
-  /* Headings (700, line-height 1.3) */
-  .text-h1      { font-size: 24px; font-weight: 700; line-height: 1.3; letter-spacing: 0; }
-  .text-h2      { font-size: 20px; font-weight: 700; line-height: 1.3; letter-spacing: 0; }
-  .text-h3      { font-size: 18px; font-weight: 700; line-height: 1.3; letter-spacing: 0; }
-  .text-h4      { font-size: 16px; font-weight: 700; line-height: 1.3; letter-spacing: 0; }
+  /* Headings — Clay editorial serif (Source Serif 4, 500–600, negative
+     letter-spacing). h1 = page title 32/500; h4 = card title 19/600. The
+     small tiers (h5/h6) stay sans so dense labels don't turn mannered. */
+  .text-h1      { font-family: var(--font-serif); font-size: 32px; font-weight: 500; line-height: 1.15; letter-spacing: -0.8px; }
+  .text-h2      { font-family: var(--font-serif); font-size: 26px; font-weight: 500; line-height: 1.18; letter-spacing: -0.6px; }
+  .text-h3      { font-family: var(--font-serif); font-size: 21px; font-weight: 600; line-height: 1.25; letter-spacing: -0.35px; }
+  .text-h4      { font-family: var(--font-serif); font-size: 19px; font-weight: 600; line-height: 1.3; letter-spacing: -0.3px; }
   .text-h5      { font-size: 14px; font-weight: 700; line-height: 1.3; letter-spacing: 0; }
   .text-h6      { font-size: 13px; font-weight: 700; line-height: 1.3; letter-spacing: 0; }
   .text-h6-plus { font-size: 11px; font-weight: 700; line-height: 1.3; letter-spacing: 0; }

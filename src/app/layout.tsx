@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
-import { Geist_Mono } from "next/font/google";
+import { Hanken_Grotesk, Source_Serif_4, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import {
   SITE_DESCRIPTION,
@@ -10,15 +9,25 @@ import {
   SITE_URL,
 } from "@/lib/site";
 
-const jakarta = Plus_Jakarta_Sans({
-  variable: "--font-jakarta",
+// Clay design language: Hanken Grotesk for UI sans, Source Serif 4 for
+// display/editorial headings, IBM Plex Mono for codes, CVE ids, dates and
+// deadline countdowns (see design_handoff_seentrix_app/README.md).
+const hanken = Hanken_Grotesk({
+  variable: "--font-hanken",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+});
+
+const sourceSerif = Source_Serif_4({
+  variable: "--font-source-serif",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const plexMono = IBM_Plex_Mono({
+  variable: "--font-plex-mono",
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
 });
 
 // Root-level metadata — acts as the default for every page that doesn't
@@ -90,7 +99,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      className={`${jakarta.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${hanken.variable} ${sourceSerif.variable} ${plexMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <body className="h-full">{children}</body>

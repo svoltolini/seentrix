@@ -210,8 +210,8 @@ export function IncidentsContent({
         >
           <StatCard
             label={t("kpi.active")}
-            from="#FF9E55"
-            to="#FF6D00"
+            from="#d9a64a"
+            to="#c0892e"
             accentDot
             pulse={kpis.active > 0}
           >
@@ -221,8 +221,8 @@ export function IncidentsContent({
           </StatCard>
           <StatCard
             label={t("kpi.overdue")}
-            from="#E60019"
-            to="#2C3659"
+            from="#c0453a"
+            to="#2b2a26"
             accentDot
             pulse={kpis.overdue > 0}
           >
@@ -230,12 +230,12 @@ export function IncidentsContent({
               {kpis.overdue}
             </p>
           </StatCard>
-          <StatCard label={t("kpi.critical")} from="#E60019" to="#FF6D00">
+          <StatCard label={t("kpi.critical")} from="#c0453a" to="#c0892e">
             <p className="mt-2 text-h2 tabular-nums tracking-tight text-white">
               {kpis.critical}
             </p>
           </StatCard>
-          <StatCard label={t("kpi.closed")} from="#4CD964" to="#16A34A">
+          <StatCard label={t("kpi.closed")} from="#1f8a5b" to="#2fa56f">
             <p className="mt-2 text-h2 tabular-nums tracking-tight text-white">
               {kpis.closed}
             </p>
@@ -278,7 +278,7 @@ export function IncidentsContent({
         {filtered.length === 0 ? (
           <div
             data-reveal
-            className="overflow-hidden rounded-md bg-card shadow-card-md px-6 py-20 text-center"
+            className="overflow-hidden rounded-lg bg-card shadow-card-md px-6 py-20 text-center"
           >
             <div className="flex justify-center">
               <IconBadge name="alert-02" tone="warning" size="xl" />

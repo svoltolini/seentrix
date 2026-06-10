@@ -51,7 +51,7 @@ export function WelcomeContent() {
         {BULLETS.map((bullet) => (
           <div
             key={bullet.titleKey}
-            className="rounded-md bg-card px-4 py-4 shadow-card-sm"
+            className="rounded-lg bg-card px-4 py-4 shadow-card-sm"
           >
             <div className="flex items-start gap-4 text-left">
               <div className="flex size-10 shrink-0 items-center justify-center rounded-md bg-primary/10">

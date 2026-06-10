@@ -122,7 +122,7 @@ export function ProductCardList({ products }: Props) {
   }, [products, sortField, sortDir]);
 
   return (
-    <div className="overflow-hidden rounded-md bg-card shadow-card-sm">
+    <div className="overflow-hidden rounded-lg bg-card shadow-card-sm">
       <Table>
         <TableHeader>
           <TableRow>

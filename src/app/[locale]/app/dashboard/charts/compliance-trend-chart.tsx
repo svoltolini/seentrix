@@ -128,7 +128,7 @@ export function ComplianceTrendChart({ data, className }: Props) {
             content={({ payload, label }) => {
               if (!payload?.length || !label) return null;
               return (
-                <div className="rounded-md bg-card px-3 py-1.5 text-p4 shadow-card-sm">
+                <div className="rounded-lg bg-card px-3 py-1.5 text-p4 shadow-card-sm">
                   <p className="mb-1 text-p4 text-foreground">{formatDate(String(label))}</p>
                   {payload.map((entry) => (
                     <div

@@ -134,7 +134,7 @@ function LessonCard({
   return (
     <Link
       href={`/app/academy/${id}`}
-      className="group flex items-start gap-4 rounded-md bg-card p-5 shadow-card-sm transition-shadow duration-300 hover:shadow-card-md"
+      className="group flex items-start gap-4 rounded-lg bg-card p-5 shadow-card-sm transition-shadow duration-300 hover:shadow-card-md"
     >
       {/* Status / index badge */}
       <span
@@ -229,7 +229,7 @@ function ScreenCard({
   const doneCount = screen.lessons.filter((id) => completed.has(id)).length;
 
   return (
-    <div className="rounded-md bg-card shadow-card-sm p-6 transition-colors duration-300 hover:bg-muted/30">
+    <div className="rounded-lg bg-card shadow-card-sm p-6 transition-colors duration-300 hover:bg-muted/30">
       <div className="flex items-center gap-3">
         <div className="min-w-0 flex-1">
           <p className="text-h5 text-foreground">

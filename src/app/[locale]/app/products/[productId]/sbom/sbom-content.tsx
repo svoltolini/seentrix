@@ -231,7 +231,7 @@ export function SbomContent({
             {SEVERITY_CARDS.map((s, i) => (
               <div
                 key={s.key}
-                className="relative overflow-hidden rounded-md bg-card px-4 py-3 opacity-0 shadow-card-sm"
+                className="relative overflow-hidden rounded-lg bg-card px-4 py-3 opacity-0 shadow-card-sm"
                 style={{
                   animation: `fade-in-up 0.5s ease-out ${i * 100}ms forwards`,
                 }}
@@ -273,7 +273,7 @@ export function SbomContent({
       {/* SBOM list */}
       {sboms.length === 0 ? (
         <div
-          className="flex flex-col items-center justify-center overflow-hidden rounded-md bg-card shadow-card-md py-16 text-center"
+          className="flex flex-col items-center justify-center overflow-hidden rounded-lg bg-card shadow-card-md py-16 text-center"
         >
           <IconBadge name="chip-stroke-rounded" tone="primary" size="xl" className="mb-5" />
           <p className="text-h4 text-foreground">

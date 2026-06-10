@@ -191,7 +191,7 @@ export function ChecklistItemCard({
           </p>
 
           {/* Guidance */}
-          <div className="rounded-md bg-card px-4 py-3">
+          <div className="rounded-lg bg-card px-4 py-3">
             <p className="mb-1 text-l6-plus uppercase tracking-[1.5px] text-muted-foreground">
               {t("guidanceLabel")}
             </p>

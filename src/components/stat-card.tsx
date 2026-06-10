@@ -42,7 +42,7 @@ export function StatCard({
   return (
     <div
       className={cn(
-        "relative flex flex-col gap-2 overflow-hidden rounded-md bg-card p-[18px] shadow-card-sm",
+        "relative flex flex-col gap-2 overflow-hidden rounded-lg bg-card p-[18px] shadow-card-sm",
         className,
       )}
     >

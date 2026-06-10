@@ -200,7 +200,7 @@ export default async function CompanyDetailPage({
         <h3 className="font-heading text-h4 text-foreground">
           Members ({members.length})
         </h3>
-        <div className="overflow-hidden rounded-md bg-card shadow-card-sm">
+        <div className="overflow-hidden rounded-lg bg-card shadow-card-sm">
           <ul className="divide-y divide-border">
             {members.map((m) => (
               <li
@@ -227,7 +227,7 @@ export default async function CompanyDetailPage({
       {/* Billing history */}
       <section className="flex flex-col gap-3">
         <h3 className="font-heading text-h4 text-foreground">Billing history</h3>
-        <div className="overflow-hidden rounded-md bg-card shadow-card-sm">
+        <div className="overflow-hidden rounded-lg bg-card shadow-card-sm">
           {invoices.length === 0 ? (
             <p className="p-6 text-center text-p3 text-muted-foreground">
               No invoices.
@@ -270,7 +270,7 @@ export default async function CompanyDetailPage({
       {/* Recent activity */}
       <section className="flex flex-col gap-3">
         <h3 className="font-heading text-h4 text-foreground">Recent activity</h3>
-        <div className="overflow-hidden rounded-md bg-card shadow-card-sm">
+        <div className="overflow-hidden rounded-lg bg-card shadow-card-sm">
           {activities.length === 0 ? (
             <p className="p-6 text-center text-p3 text-muted-foreground">
               No recorded activity.
@@ -312,7 +312,7 @@ function Stat({
   tone?: "neutral" | "positive" | "negative";
 }) {
   return (
-    <div className="rounded-md bg-card p-4 shadow-card-sm">
+    <div className="rounded-lg bg-card p-4 shadow-card-sm">
       <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
         {label}
       </p>

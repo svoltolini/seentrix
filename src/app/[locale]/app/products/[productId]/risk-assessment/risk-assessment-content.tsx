@@ -229,7 +229,7 @@ export function RiskAssessmentContent({
       )}
 
       {/* Context (Art 13(3)) */}
-      <section className="space-y-4 rounded-md bg-card p-6 shadow-card-sm">
+      <section className="space-y-4 rounded-lg bg-card p-6 shadow-card-sm">
         <h3 className="text-h4 text-foreground">{t("context.heading")}</h3>
         <div className="grid gap-5 md:grid-cols-2">
           {(
@@ -301,7 +301,7 @@ export function RiskAssessmentContent({
             {initial.history.map((v) => (
               <div
                 key={v.id}
-                className="flex items-center gap-3 rounded-md bg-card px-4 py-3 shadow-card-sm"
+                className="flex items-center gap-3 rounded-lg bg-card px-4 py-3 shadow-card-sm"
               >
                 <span className="inline-flex items-center rounded-full bg-success/10 px-2.5 py-0.5 text-l6-plus uppercase tracking-wide text-success">
                   {t("status.version", { n: v.version })}
@@ -443,7 +443,7 @@ function RequirementRow({
       : null;
 
   return (
-    <div className="rounded-md bg-card p-5 shadow-card-sm">
+    <div className="rounded-lg bg-card p-5 shadow-card-sm">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="min-w-0 flex-1">
           <p className="text-l5 text-foreground">

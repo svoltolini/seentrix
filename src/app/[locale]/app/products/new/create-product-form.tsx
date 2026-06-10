@@ -137,7 +137,7 @@ export function CreateProductForm({
           </div>
 
           <div className="grid w-full gap-3 sm:grid-cols-2">
-            <div className="rounded-md bg-card border border-border-outline p-4">
+            <div className="rounded-lg bg-card border border-border-outline p-4">
               <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
                 {t("limits.currentPlan")}
               </p>

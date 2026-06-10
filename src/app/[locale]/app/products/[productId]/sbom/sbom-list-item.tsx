@@ -57,7 +57,7 @@ export function SbomListItem({
   return (
     <div
       className={cn(
-        "overflow-hidden rounded-md bg-card shadow-card-sm transition-opacity",
+        "overflow-hidden rounded-lg bg-card shadow-card-sm transition-opacity",
         isArchived && "opacity-50"
       )}
     >

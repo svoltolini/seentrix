@@ -188,7 +188,7 @@ export function ProjectStatisticsCard({ points, title, legendLabel }: Props) {
   };
 
   return (
-    <div className="flex min-h-[346px] w-full flex-col rounded-md bg-card p-[18px] shadow-card-lg">
+    <div className="flex min-h-[346px] w-full flex-col rounded-lg bg-card p-[18px] shadow-card-lg">
       {/* Header */}
       <div className="flex items-center justify-between">
         <p className="text-h4 text-foreground">{resolvedTitle}</p>
@@ -342,7 +342,7 @@ function Bar({
   return (
     <div
       className={cn(
-        "overflow-hidden rounded-tl-md rounded-tr-md bg-[linear-gradient(180deg,#066DE6_0%,#6DA9F0_120%)] transition-all",
+        "overflow-hidden rounded-tl-md rounded-tr-md bg-[linear-gradient(180deg,#1f8a5b_0%,#2fa56f_120%)] transition-all",
         wide ? "w-6" : "w-full max-w-[14px]",
       )}
       style={{ height: `${clamped}%`, minHeight: clamped > 0 ? 4 : 0 }}

@@ -509,14 +509,14 @@ export function DashboardContent(
         {/* RIGHT RAIL */}
         <aside className="flex min-w-0 flex-col gap-4 lg:max-w-[370px]">
           {/* CRA calendar tracker */}
-          <section className="flex flex-col gap-4 rounded-md bg-card p-5 shadow-card-md">
+          <section className="flex flex-col gap-4 rounded-lg bg-card p-5 shadow-card-md">
             <h3 className="text-h3 text-foreground">{t("calendar.title")}</h3>
             <CraCalendarTracker events={calendarEvents} />
           </section>
 
           {/* CRA readiness roll-up */}
           {totalProducts > 0 && (
-            <section className="flex flex-col gap-4 rounded-md bg-card p-5 shadow-card-md">
+            <section className="flex flex-col gap-4 rounded-lg bg-card p-5 shadow-card-md">
               <h3 className="text-h3 text-foreground">{t("readiness.title")}</h3>
               <ReadinessRollupWidget
                 items={readinessRollup ?? []}
@@ -526,7 +526,7 @@ export function DashboardContent(
           )}
 
           {/* Upcoming CRA deadlines */}
-          <section className="flex flex-col gap-4 rounded-md bg-card p-5 shadow-card-md">
+          <section className="flex flex-col gap-4 rounded-lg bg-card p-5 shadow-card-md">
             <h3 className="text-h3 text-foreground">
               {t("upcomingDeadlines.title")}
             </h3>
@@ -535,14 +535,14 @@ export function DashboardContent(
 
           {/* Team */}
           {teamMembers.length > 0 && (
-            <section className="flex flex-col gap-4 rounded-md bg-card p-5 shadow-card-md">
+            <section className="flex flex-col gap-4 rounded-lg bg-card p-5 shadow-card-md">
               <h3 className="text-h3 text-foreground">{t("team")}</h3>
               <TeamChatStrip members={teamMembers} />
             </section>
           )}
 
           {/* Activity feed */}
-          <section className="flex flex-col gap-4 rounded-md bg-card p-5 shadow-card-md">
+          <section className="flex flex-col gap-4 rounded-lg bg-card p-5 shadow-card-md">
             <h3 className="text-h3 text-foreground">{t("activity")}</h3>
             <ActivityFeedWidget items={activityItems} />
           </section>

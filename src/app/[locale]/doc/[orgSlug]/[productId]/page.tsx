@@ -58,7 +58,7 @@ export default async function SimplifiedDocPage({
 
   return (
     <main className="mx-auto max-w-3xl px-4 py-12">
-      <div className="overflow-hidden rounded-md bg-card shadow-card-md">
+      <div className="overflow-hidden rounded-lg bg-card shadow-card-md">
         <div className="bg-primary px-8 py-6 text-primary-foreground">
           <p className="text-l6-plus uppercase tracking-wider text-primary-foreground/80">
             {t("public.eyebrow")}

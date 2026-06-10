@@ -25,7 +25,7 @@ function EmptyState({
     <div
       data-slot="empty-state"
       className={cn(
-        "flex flex-col items-center justify-center gap-4 rounded-md bg-card px-6 py-16 text-center",
+        "flex flex-col items-center justify-center gap-4 rounded-lg bg-card px-6 py-16 text-center",
         className
       )}
       {...props}

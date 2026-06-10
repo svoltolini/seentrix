@@ -60,7 +60,7 @@ function StatCard({
   footer?: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col justify-between gap-3 rounded-md bg-card p-5 shadow-card-md">
+    <div className="flex flex-col justify-between gap-3 rounded-lg bg-card p-5 shadow-card-md">
       <div className="flex flex-col gap-2">
         <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
           {eyebrow}

@@ -156,7 +156,7 @@ export function OrgSettingsContent({
 
       {/* General */}
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="rounded-md bg-card shadow-card-lg">
+        <div className="rounded-lg bg-card shadow-card-lg">
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-6 py-4">
             <div className="flex items-center gap-2.5">
               <h2 className="text-h4 text-foreground">{t("title")}</h2>
@@ -214,7 +214,7 @@ export function OrgSettingsContent({
         )}
 
         {/* Legal entity (CRA-mandatory) */}
-        <div className="rounded-md bg-card shadow-card-lg">
+        <div className="rounded-lg bg-card shadow-card-lg">
           <div className="border-b border-border px-6 py-4">
             <h2 className="text-h4 text-foreground">{t("legalTitle")}</h2>
             <p className="mt-0.5 text-p3 text-muted-foreground">
@@ -258,7 +258,7 @@ export function OrgSettingsContent({
         </div>
 
         {/* Signatory + public contact */}
-        <div className="rounded-md bg-card shadow-card-lg">
+        <div className="rounded-lg bg-card shadow-card-lg">
           <div className="border-b border-border px-6 py-4">
             <h2 className="text-h4 text-foreground">{t("signatoryTitle")}</h2>
             <p className="mt-0.5 text-p3 text-muted-foreground">
@@ -328,7 +328,7 @@ export function OrgSettingsContent({
         </div>
 
         {/* Address */}
-        <div className="rounded-md bg-card shadow-card-lg">
+        <div className="rounded-lg bg-card shadow-card-lg">
           <div className="border-b border-border px-6 py-4">
             <h2 className="text-h4 text-foreground">{t("addressTitle")}</h2>
             <p className="mt-0.5 text-p3 text-muted-foreground">
@@ -480,7 +480,7 @@ function OrganizationChart({
   }));
 
   return (
-    <div className="overflow-hidden rounded-md bg-card shadow-card-lg">
+    <div className="overflow-hidden rounded-lg bg-card shadow-card-lg">
       {/* Header — title + total head-count + capacity meter */}
       <div className="border-b border-border px-6 py-5">
         <div className="flex flex-wrap items-start justify-between gap-4">

@@ -51,7 +51,7 @@ export function KpiStrip({ kpis }: Props) {
           <Link
             key={kpi.id}
             href={kpi.href}
-            className="group flex flex-col gap-3 rounded-md bg-card p-4 shadow-card-sm transition-shadow hover:shadow-card-md"
+            className="group flex flex-col gap-3 rounded-lg bg-card p-4 shadow-card-sm transition-shadow hover:shadow-card-md"
           >
             <span
               className={cn(

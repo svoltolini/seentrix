@@ -125,7 +125,7 @@ export function ProductsPageContent({
 
       {/* Plan limit banner */}
       {products.length > 0 && !canCreate && (
-        <div className="flex items-center gap-4 overflow-hidden rounded-md bg-card p-[18px] shadow-card-lg">
+        <div className="flex items-center gap-4 overflow-hidden rounded-lg bg-card p-[18px] shadow-card-lg">
           <div className="relative flex size-10 shrink-0 items-center justify-center">
             <svg viewBox="0 0 36 36" className="size-10 -rotate-90">
               <circle

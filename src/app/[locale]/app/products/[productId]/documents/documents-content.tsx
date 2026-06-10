@@ -276,7 +276,7 @@ export function DocumentsContent({
         </div>
 
         {/* Form */}
-        <div className="overflow-hidden rounded-md bg-card shadow-card-lg">
+        <div className="overflow-hidden rounded-lg bg-card shadow-card-lg">
           <div className="p-6">
             <DocumentForm
               documentType={editingType}
@@ -289,7 +289,7 @@ export function DocumentsContent({
 
         {/* Actions */}
         {doc && (
-          <div className="flex flex-wrap items-center gap-3 rounded-md bg-card shadow-card-sm px-5 py-4">
+          <div className="flex flex-wrap items-center gap-3 rounded-lg bg-card shadow-card-sm px-5 py-4">
             {doc.retention_until && status === "final" && (
               <span className="inline-flex items-center rounded-sm bg-primary/10 px-2.5 py-1 text-l6-plus uppercase tracking-wider text-primary">
                 {t.has("editor.retainedUntil")
@@ -419,7 +419,7 @@ export function DocumentsContent({
               onClick={() => setEditingType(config.type)}
               className="group/doc-card text-left"
             >
-              <div className="flex h-full flex-col overflow-hidden rounded-md bg-card shadow-card-sm transition-shadow hover:shadow-card-md">
+              <div className="flex h-full flex-col overflow-hidden rounded-lg bg-card shadow-card-sm transition-shadow hover:shadow-card-md">
                 {/* Header: tinted icon + title + status */}
                 <div className="flex items-start gap-3 px-5 pt-5 pb-4">
                   <span

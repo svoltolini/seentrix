@@ -318,7 +318,7 @@ function DraftBlock({ title, draft }: { title: string; draft: string }) {
     }
   }
   return (
-    <div className="flex flex-col gap-2 rounded-md bg-card p-3 border border-border">
+    <div className="flex flex-col gap-2 rounded-lg bg-card p-3 border border-border">
       <header className="flex items-center justify-between gap-2">
         <span className="flex items-center gap-1.5 text-l6-plus uppercase tracking-[0.16em] text-primary">
           <Icon name="ai-magic-stroke-rounded" size={12} />

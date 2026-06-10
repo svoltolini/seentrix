@@ -81,7 +81,7 @@ export const STATUS_CHART_COLORS: Record<string, string> = {
 /** Per-product line colors for trend charts — Nask palette */
 export const PRODUCT_LINE_COLORS = [
   "var(--primary)",
-  "#FF6D00",
+  "#c0892e",
   "#FF9E55",
   "var(--accent)",
   "var(--success)",
