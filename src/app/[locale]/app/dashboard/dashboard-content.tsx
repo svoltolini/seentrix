@@ -53,6 +53,7 @@ import {
 } from "./widgets/activity-feed-widget";
 import { TeamChatStrip, type TeamChatItem } from "./widgets/team-chat-strip";
 import { GetStartedGuide } from "./widgets/get-started-guide";
+import { DashboardHero } from "./widgets/dashboard-hero";
 import { KpiStrip, type Kpi } from "./widgets/kpi-strip";
 import {
   ReadinessRollupWidget,
@@ -420,16 +421,23 @@ export function DashboardContent(
     );
   }
 
+  const heroDeadline = nextCraDeadline();
+
   return (
     <div className="flex w-full flex-col gap-6">
-      <div>
-        <h1 className="text-h1 text-foreground">
-          {firstName ? t("greeting", { name: firstName }) : t("title")}
-        </h1>
-        <p className="mt-2 text-p2 text-muted-foreground">
-          {firstName ? t("greetingSubtitle") : t("subtitle")}
-        </p>
-      </div>
+      <DashboardHero
+        firstName={firstName}
+        percent={avgCompliance}
+        criticalCount={criticalCount}
+        overdueCount={overdueCount}
+        nextDeadlineLabel={
+          heroDeadline ? t(`deadline.${heroDeadline.labelKey}`) : null
+        }
+        nextDeadlineDays={
+          heroDeadline ? Math.max(0, daysUntil(heroDeadline.date)) : null
+        }
+        onOpenCopilot={() => openCopilot()}
+      />
 
       {profileStatus && !profileStatus.complete && (
         <ProfileIncompleteBanner

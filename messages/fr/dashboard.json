@@ -1,341 +1,353 @@
 {
- "dashboard": {
-  "title": "Tableau de bord de conformité",
-  "subtitle": "Vue d'ensemble de l'état de conformité CRA de tous vos produits.",
-  "totalProducts": "Total des produits",
-  "assessed": "Évalués",
-  "assessedOf": "{assessed} / {total}",
-  "avgCompliance": "Conformité moy.",
-  "totalVulnerabilities": "Vulnérabilités",
-  "critical": "Critique",
-  "high": "Élevée",
-  "medium": "Moyenne",
-  "low": "Faible",
-  "vulnChart": "Répartition des vulnérabilités",
-  "vulnChartEyebrow": "Sévérité",
-  "vulnChartSubtitle": "Sur l'ensemble de vos produits, classées par sévérité",
-  "noVulnerabilities": "Aucune vulnérabilité trouvée",
-  "actionNeeded": {
-   "eyebrow": "Action requise",
-   "headline": "Mettez {product} en conformité avant le {deadline}",
-   "daysLeft": "jours restants",
-   "compliance": "conformité",
-   "cta": "Ouvrir la liste de contrôle"
-  },
-  "daysRemaining": "{days}j",
-  "passed": "Réussi",
-  "timeAgo": {
-   "justNow": "à l'instant",
-   "minutesAgo": "il y a {count}min",
-   "hoursAgo": "il y a {count}h",
-   "daysAgo": "il y a {count}j"
-  },
-  "daysLeft": "{days} jours restants",
-  "upcomingDeadline": "Prochaine échéance",
-  "vulnerabilities": "Vulnérabilités ouvertes",
-  "noProducts": "Aucun produit pour l'instant",
-  "noProductsDescription": "Ajoutez votre premier produit pour démarrer votre parcours de conformité CRA. Nous vous guiderons à chaque étape.",
-  "addProduct": "Ajouter un produit",
-  "compliance": "Conformité",
-  "notAssessed": "Non évalué",
-  "productTable": {
-   "eyebrow": "Produits",
-   "title": "Conformité des produits",
-   "subtitle": "Progression de la liste de contrôle et charge de vulnérabilités par produit.",
-   "name": "Produit",
-   "category": "Catégorie",
-   "compliance": "Conformité",
-   "vulnerabilities": "Vuln",
-   "sbom": "SBOM",
-   "action": "Action",
-   "view": "Voir"
-  },
-  "productType": {
-   "hardware": "Matériel",
-   "software": "Logiciel",
-   "firmware": "Firmware",
-   "iot": "IoT"
-  },
-  "sbomUploaded": "Téléversé",
-  "sbomMissing": "Manquant",
-  "recentActivity": "Activité récente",
-  "activityEyebrow": "Piste d'audit",
-  "activitySubtitle": "Les 10 dernières actions de votre organisation, extraites du journal d'audit.",
-  "activity": "Activité",
-  "activityEmpty": "L'activité de votre équipe apparaîtra ici au fil de votre travail sur la conformité.",
-  "myProducts": "Mes produits",
-  "todayTasks": "Tâches du jour",
-  "seeAll": "Voir tout",
-  "noOverdue": "Aucune tâche en retard. Excellent travail.",
-  "readiness": {
-    "title": "Maturité CRA",
-    "empty": "Ajoutez un produit pour voir sa maturité CRA."
-  },
-  "chat": "Équipe",
-  "upcomingDeadlines": {
-   "title": "À venir"
-  },
-  "actionLabels": {
-   "billing": {
-    "checkout_created": "Processus de paiement démarré"
-   },
-   "checklist": {
-    "evidence_removed": "Preuve supprimée",
-    "evidence_uploaded": "Preuve téléversée — {target}",
-    "item_description_changed": "Description de liste de contrôle modifiée",
-    "item_status_changed": "Élément de liste de contrôle mis à jour",
-    "item_assigned": "Élément de liste de contrôle assigné"
-   },
-   "document": {
-    "pdf_generated": "PDF de document généré",
-    "saved": "{target} enregistré",
-    "status_changed": "Statut de document modifié"
-   },
-   "member": {
-    "created": "{target} ajouté à l'équipe",
-    "removed": "Membre retiré de l'équipe",
-    "role_changed": "Rôle d'un membre mis à jour"
-   },
-   "organization": {
-    "updated": "Paramètres de l'organisation mis à jour",
-    "created": "Organisation créée",
-    "entity_type_changed": "Type d'entité de l'organisation modifié",
-    "security_updated": "Paramètres de sécurité mis à jour"
-   },
-   "password": {
-    "changed": "Mot de passe modifié"
-   },
-   "product": {
-    "assessed": "Produit évalué",
-    "created": "Produit {target} créé",
-    "deleted": "Produit supprimé",
-    "updated": "{target} mis à jour",
-    "support_updated": "Période de support du produit mise à jour"
-   },
-   "profile": {
-    "updated": "Profil mis à jour"
-   },
-   "sbom": {
-    "deleted": "SBOM supprimé",
-    "scanned": "SBOM analysé",
-    "uploaded": "SBOM téléversé — {target}"
-   },
-   "fallback": "{action}",
-   "academy": {
-    "lesson_completed": "Leçon Academy complétée"
-   },
-   "conformity": {
-    "attachment_added": "Pièce jointe de conformité ajoutée",
-    "declaration_issued": "Déclaration de conformité émise",
-    "notified_body_updated": "Informations sur l'organisme notifié mises à jour"
-   },
-   "entity_obligation": {
-    "updated": "Obligations d'entité mises à jour"
-   },
-   "gdpr": {
-    "deletion_cancelled": "Demande de suppression de compte annulée",
-    "deletion_requested": "Suppression de compte demandée",
-    "export_generated": "Export de données généré"
-   },
-   "incident": {
-    "closed": "Incident clôturé",
-    "detected": "Incident signalé",
-    "updated": "Incident mis à jour",
-    "user_notified": "Utilisateurs notifiés d'un incident"
-   },
-   "release": {
-    "deleted": "Version supprimée",
-    "published": "Version publiée"
-   },
-   "vulnerability": {
-    "assigned": "Vulnérabilité assignée",
-    "note_added": "Note de vulnérabilité ajoutée"
-   }
-  },
-  "activityType": {
-   "assessment": "Évaluation",
-   "checklist": "Liste de contrôle",
-   "sbom": "SBOM",
-   "document": "Document"
-  },
-  "noActivity": "Aucune activité récente",
-  "activityLogEmpty": "L'activité de votre équipe apparaîtra ici au fil de votre travail sur la conformité.",
-  "greeting": "Bienvenue, {name}",
-  "greetingSubtitle": "Voici votre vue d'ensemble de la conformité pour aujourd'hui.",
-  "deadlines": "Prochaines échéances",
-  "deadlinesEyebrow": "Règlement",
-  "deadlinesSubtitle": "Jalons CRA clés dans le calendrier d'application.",
-  "deadlineDescription": "Jalons réglementaires CRA clés",
-  "timeElapsed": "Temps écoulé",
-  "deadline": {
-   "notifiedBodies": "Organismes notifiés",
-   "notifiedBodiesDate": "11 juin 2026",
-   "reporting": "Obligations de déclaration",
-   "reportingDate": "11 sept. 2026",
-   "fullCompliance": "Conformité totale",
-   "fullComplianceDate": "11 déc. 2027",
-   "explain": "Expliquer"
-  },
-  "viewAll": "Voir tout",
-  "recentProducts": "Produits récents",
-  "reportingDeadline": "Obligations de déclaration",
-  "reportingDate": "11 sept. 2026",
-  "fullCompliance": "Exigences complètes des produits",
-  "fullComplianceDate": "11 déc. 2027",
-  "categoryDefault": "Par défaut",
-  "categoryImportantI": "Important I",
-  "categoryImportantII": "Important II",
-  "categoryCritical": "Critique",
-  "role": {
-   "admin": "Admin",
-   "compliance_officer": "Responsable conformité",
-   "cto": "CTO",
-   "viewer": "Lecteur",
-   "editor": "Éditeur"
-  },
-  "complianceTrend": {
-   "eyebrow": "Tendance",
-   "title": "Tendance de conformité",
-   "subtitle": "Score de liste de contrôle sur les 12 dernières semaines, par produit et moyenne de l'organisation.",
-   "orgAverage": "Moyenne organisation",
-   "score": "Score",
-   "noData": "Aucun historique de conformité pour l'instant. Les scores sont suivis à mesure que vous mettez à jour les listes de contrôle."
-  },
-  "vulnAging": {
-   "eyebrow": "Risque",
-   "title": "Ancienneté des vulnérabilités",
-   "openVulns": "Vulnérabilités ouvertes",
-   "mttr": "MTTR",
-   "mttrDays": "{days}j moy.",
-   "mttrNoData": "Aucune donnée",
-   "noData": "Aucune vulnérabilité ouverte à afficher."
-  },
-  "checklistProgress": {
-   "eyebrow": "Progression",
-   "title": "Progression de la liste de contrôle",
-   "summary": "{pct}% de complétion moy. · {count, plural, one {# produit} other {# produits}}",
-   "pending": "En attente",
-   "inProgress": "En cours",
-   "completed": "Terminé",
-   "notApplicable": "N/A",
-   "noData": "Aucune donnée de liste de contrôle disponible."
-  },
-  "overdueTasks": {
-   "eyebrow": "Attention",
-   "title": "Tâches en retard",
-   "allOnTrack": "Toutes les tâches sont à jour",
-   "allOnTrackDescription": "Aucun élément de liste de contrôle en retard.",
-   "daysOverdue": "{days}j de retard"
-  },
-  "activityVelocity": {
-   "eyebrow": "Vélocité",
-   "title": "Activité de l'équipe",
-   "actions": "{count} actions",
-   "totalLast30d": "actions · 30 derniers jours",
-   "peak": "Pic journalier",
-   "noData": "Aucune activité d'équipe dans les 30 derniers jours."
-  },
-  "team": "Équipe",
-  "kpi": {
-   "heading": "Indicateurs clés",
-   "products": "Produits",
-   "productsAssessed": "{count} évalué(s)",
-   "avgCompliance": "Conformité moy.",
-   "openVulns": "Vulnérabilités ouvertes",
-   "criticalCount": "{count} critique(s)",
-   "overdue": "Tâches en retard",
-   "daysValue": "{days}j"
-  },
-  "statistics": {
-   "title": "Statistiques du projet",
-   "activity": "Activité",
-   "weekFilter": "Cette semaine",
-   "monthFilter": "Ce mois",
-   "yearFilter": "Cette année",
-   "empty": "Aucune activité cette semaine. À mesure que vous et votre équipe travaillez sur les produits, SBOM et listes de contrôle, votre activité hebdomadaire apparaîtra ici.",
-   "day": {
-    "monday": "Lun",
-    "tuesday": "Mar",
-    "wednesday": "Mer",
-    "thursday": "Jeu",
-    "friday": "Ven",
-    "saturday": "Sam",
-    "sunday": "Dim"
-   },
-   "month": {
-    "jan": "Janv",
-    "feb": "Févr",
-    "mar": "Mars",
-    "apr": "Avr",
-    "may": "Mai",
-    "jun": "Juin",
-    "jul": "Juil",
-    "aug": "Août",
-    "sep": "Sept",
-    "oct": "Oct",
-    "nov": "Nov",
-    "dec": "Déc"
-   }
-  },
-  "calendar": {
-   "title": "Calendrier de conformité",
-   "prev": "Mois précédent",
-   "next": "Mois suivant",
-   "legendDeadline": "Échéance CRA",
-   "legendTask": "Votre tâche",
-   "upcoming": "À venir",
-   "empty": "Rien de planifié.",
-   "dueToday": "À rendre aujourd'hui",
-   "inDays": "Dans {days} jours",
-   "day": {
-    "mon": "Lun",
-    "tue": "Mar",
-    "wed": "Mer",
-    "thu": "Jeu",
-    "fri": "Ven",
-    "sat": "Sam",
-    "sun": "Dim"
-   }
-  },
-  "getStarted": {
-   "title": "Bienvenue sur Seentrix",
-   "greeting": "Bienvenue, {name}",
-   "subtitle": "Préparez votre organisation pour le règlement (UE) sur la cyber-résilience (CRA). Suivez ces étapes et nous vous guiderons tout au long du parcours.",
-   "progressLabel": "{done} étapes sur {total} complétées",
-   "askTitle": "Vous ne savez pas par où commencer ?",
-   "askDescription": "Ouvrez Seentrix AI depuis la barre supérieure et demandez « Que dois-je faire ensuite ? » — il sait exactement où en est votre organisation."
-  },
-  "steps": {
-   "company-profile": {
-    "title": "Complétez votre profil d'entreprise",
-    "description": "Ajoutez vos informations juridiques afin que Seentrix puisse générer une déclaration de conformité.",
-    "cta": "Compléter le profil"
-   },
-   "first-product": {
-    "title": "Ajoutez votre premier produit",
-    "description": "Enregistrez un produit pour commencer à suivre son parcours de conformité CRA.",
-    "cta": "Ajouter un produit"
-   },
-   "classify-product": {
-    "title": "Classifiez votre produit selon le CRA",
-    "description": "Effectuez l'évaluation guidée pour déterminer la catégorie CRA et la procédure d'évaluation de la conformité du produit.",
-    "cta": "Classifier le produit"
-   },
-   "upload-sbom": {
-    "title": "Téléversez une nomenclature logicielle",
-    "description": "Téléversez un SBOM CycloneDX ou SPDX afin que Seentrix puisse détecter les vulnérabilités connues.",
-    "cta": "Téléverser le SBOM"
-   },
-   "triage-vulnerabilities": {
-    "title": "Triez vos vulnérabilités",
-    "description": "Examinez les vulnérabilités ouvertes et marquez chacune comme résolue ou acceptée.",
-    "cta": "Examiner les vulnérabilités"
-   },
-   "complete-checklist": {
-    "title": "Parcourez la liste de contrôle de conformité",
-    "description": "Complétez la liste de contrôle des exigences essentielles pour chaque produit afin d'atteindre la conformité totale.",
-    "cta": "Ouvrir la liste de contrôle"
-   }
+  "dashboard": {
+    "title": "Tableau de bord de conformité",
+    "subtitle": "Vue d'ensemble de l'état de conformité CRA de tous vos produits.",
+    "totalProducts": "Total des produits",
+    "assessed": "Évalués",
+    "assessedOf": "{assessed} / {total}",
+    "avgCompliance": "Conformité moy.",
+    "totalVulnerabilities": "Vulnérabilités",
+    "critical": "Critique",
+    "high": "Élevée",
+    "medium": "Moyenne",
+    "low": "Faible",
+    "vulnChart": "Répartition des vulnérabilités",
+    "vulnChartEyebrow": "Sévérité",
+    "vulnChartSubtitle": "Sur l'ensemble de vos produits, classées par sévérité",
+    "noVulnerabilities": "Aucune vulnérabilité trouvée",
+    "actionNeeded": {
+      "eyebrow": "Action requise",
+      "headline": "Mettez {product} en conformité avant le {deadline}",
+      "daysLeft": "jours restants",
+      "compliance": "conformité",
+      "cta": "Ouvrir la liste de contrôle"
+    },
+    "daysRemaining": "{days}j",
+    "passed": "Réussi",
+    "timeAgo": {
+      "justNow": "à l'instant",
+      "minutesAgo": "il y a {count}min",
+      "hoursAgo": "il y a {count}h",
+      "daysAgo": "il y a {count}j"
+    },
+    "daysLeft": "{days} jours restants",
+    "upcomingDeadline": "Prochaine échéance",
+    "vulnerabilities": "Vulnérabilités ouvertes",
+    "noProducts": "Aucun produit pour l'instant",
+    "noProductsDescription": "Ajoutez votre premier produit pour démarrer votre parcours de conformité CRA. Nous vous guiderons à chaque étape.",
+    "addProduct": "Ajouter un produit",
+    "compliance": "Conformité",
+    "notAssessed": "Non évalué",
+    "productTable": {
+      "eyebrow": "Produits",
+      "title": "Conformité des produits",
+      "subtitle": "Progression de la liste de contrôle et charge de vulnérabilités par produit.",
+      "name": "Produit",
+      "category": "Catégorie",
+      "compliance": "Conformité",
+      "vulnerabilities": "Vuln",
+      "sbom": "SBOM",
+      "action": "Action",
+      "view": "Voir"
+    },
+    "productType": {
+      "hardware": "Matériel",
+      "software": "Logiciel",
+      "firmware": "Firmware",
+      "iot": "IoT"
+    },
+    "sbomUploaded": "Téléversé",
+    "sbomMissing": "Manquant",
+    "recentActivity": "Activité récente",
+    "activityEyebrow": "Piste d'audit",
+    "activitySubtitle": "Les 10 dernières actions de votre organisation, extraites du journal d'audit.",
+    "activity": "Activité",
+    "activityEmpty": "L'activité de votre équipe apparaîtra ici au fil de votre travail sur la conformité.",
+    "myProducts": "Mes produits",
+    "todayTasks": "Tâches du jour",
+    "seeAll": "Voir tout",
+    "noOverdue": "Aucune tâche en retard. Excellent travail.",
+    "readiness": {
+      "title": "Maturité CRA",
+      "empty": "Ajoutez un produit pour voir sa maturité CRA."
+    },
+    "chat": "Équipe",
+    "upcomingDeadlines": {
+      "title": "À venir"
+    },
+    "actionLabels": {
+      "billing": {
+        "checkout_created": "Processus de paiement démarré"
+      },
+      "checklist": {
+        "evidence_removed": "Preuve supprimée",
+        "evidence_uploaded": "Preuve téléversée — {target}",
+        "item_description_changed": "Description de liste de contrôle modifiée",
+        "item_status_changed": "Élément de liste de contrôle mis à jour",
+        "item_assigned": "Élément de liste de contrôle assigné"
+      },
+      "document": {
+        "pdf_generated": "PDF de document généré",
+        "saved": "{target} enregistré",
+        "status_changed": "Statut de document modifié"
+      },
+      "member": {
+        "created": "{target} ajouté à l'équipe",
+        "removed": "Membre retiré de l'équipe",
+        "role_changed": "Rôle d'un membre mis à jour"
+      },
+      "organization": {
+        "updated": "Paramètres de l'organisation mis à jour",
+        "created": "Organisation créée",
+        "entity_type_changed": "Type d'entité de l'organisation modifié",
+        "security_updated": "Paramètres de sécurité mis à jour"
+      },
+      "password": {
+        "changed": "Mot de passe modifié"
+      },
+      "product": {
+        "assessed": "Produit évalué",
+        "created": "Produit {target} créé",
+        "deleted": "Produit supprimé",
+        "updated": "{target} mis à jour",
+        "support_updated": "Période de support du produit mise à jour"
+      },
+      "profile": {
+        "updated": "Profil mis à jour"
+      },
+      "sbom": {
+        "deleted": "SBOM supprimé",
+        "scanned": "SBOM analysé",
+        "uploaded": "SBOM téléversé — {target}"
+      },
+      "fallback": "{action}",
+      "academy": {
+        "lesson_completed": "Leçon Academy complétée"
+      },
+      "conformity": {
+        "attachment_added": "Pièce jointe de conformité ajoutée",
+        "declaration_issued": "Déclaration de conformité émise",
+        "notified_body_updated": "Informations sur l'organisme notifié mises à jour"
+      },
+      "entity_obligation": {
+        "updated": "Obligations d'entité mises à jour"
+      },
+      "gdpr": {
+        "deletion_cancelled": "Demande de suppression de compte annulée",
+        "deletion_requested": "Suppression de compte demandée",
+        "export_generated": "Export de données généré"
+      },
+      "incident": {
+        "closed": "Incident clôturé",
+        "detected": "Incident signalé",
+        "updated": "Incident mis à jour",
+        "user_notified": "Utilisateurs notifiés d'un incident"
+      },
+      "release": {
+        "deleted": "Version supprimée",
+        "published": "Version publiée"
+      },
+      "vulnerability": {
+        "assigned": "Vulnérabilité assignée",
+        "note_added": "Note de vulnérabilité ajoutée"
+      }
+    },
+    "activityType": {
+      "assessment": "Évaluation",
+      "checklist": "Liste de contrôle",
+      "sbom": "SBOM",
+      "document": "Document"
+    },
+    "noActivity": "Aucune activité récente",
+    "activityLogEmpty": "L'activité de votre équipe apparaîtra ici au fil de votre travail sur la conformité.",
+    "greeting": "Bienvenue, {name}",
+    "greetingSubtitle": "Voici votre vue d'ensemble de la conformité pour aujourd'hui.",
+    "deadlines": "Prochaines échéances",
+    "deadlinesEyebrow": "Règlement",
+    "deadlinesSubtitle": "Jalons CRA clés dans le calendrier d'application.",
+    "deadlineDescription": "Jalons réglementaires CRA clés",
+    "timeElapsed": "Temps écoulé",
+    "deadline": {
+      "notifiedBodies": "Organismes notifiés",
+      "notifiedBodiesDate": "11 juin 2026",
+      "reporting": "Obligations de déclaration",
+      "reportingDate": "11 sept. 2026",
+      "fullCompliance": "Conformité totale",
+      "fullComplianceDate": "11 déc. 2027",
+      "explain": "Expliquer"
+    },
+    "viewAll": "Voir tout",
+    "recentProducts": "Produits récents",
+    "reportingDeadline": "Obligations de déclaration",
+    "reportingDate": "11 sept. 2026",
+    "fullCompliance": "Exigences complètes des produits",
+    "fullComplianceDate": "11 déc. 2027",
+    "categoryDefault": "Par défaut",
+    "categoryImportantI": "Important I",
+    "categoryImportantII": "Important II",
+    "categoryCritical": "Critique",
+    "role": {
+      "admin": "Admin",
+      "compliance_officer": "Responsable conformité",
+      "cto": "CTO",
+      "viewer": "Lecteur",
+      "editor": "Éditeur"
+    },
+    "complianceTrend": {
+      "eyebrow": "Tendance",
+      "title": "Tendance de conformité",
+      "subtitle": "Score de liste de contrôle sur les 12 dernières semaines, par produit et moyenne de l'organisation.",
+      "orgAverage": "Moyenne organisation",
+      "score": "Score",
+      "noData": "Aucun historique de conformité pour l'instant. Les scores sont suivis à mesure que vous mettez à jour les listes de contrôle."
+    },
+    "vulnAging": {
+      "eyebrow": "Risque",
+      "title": "Ancienneté des vulnérabilités",
+      "openVulns": "Vulnérabilités ouvertes",
+      "mttr": "MTTR",
+      "mttrDays": "{days}j moy.",
+      "mttrNoData": "Aucune donnée",
+      "noData": "Aucune vulnérabilité ouverte à afficher."
+    },
+    "checklistProgress": {
+      "eyebrow": "Progression",
+      "title": "Progression de la liste de contrôle",
+      "summary": "{pct}% de complétion moy. · {count, plural, one {# produit} other {# produits}}",
+      "pending": "En attente",
+      "inProgress": "En cours",
+      "completed": "Terminé",
+      "notApplicable": "N/A",
+      "noData": "Aucune donnée de liste de contrôle disponible."
+    },
+    "overdueTasks": {
+      "eyebrow": "Attention",
+      "title": "Tâches en retard",
+      "allOnTrack": "Toutes les tâches sont à jour",
+      "allOnTrackDescription": "Aucun élément de liste de contrôle en retard.",
+      "daysOverdue": "{days}j de retard"
+    },
+    "activityVelocity": {
+      "eyebrow": "Vélocité",
+      "title": "Activité de l'équipe",
+      "actions": "{count} actions",
+      "totalLast30d": "actions · 30 derniers jours",
+      "peak": "Pic journalier",
+      "noData": "Aucune activité d'équipe dans les 30 derniers jours."
+    },
+    "team": "Équipe",
+    "kpi": {
+      "heading": "Indicateurs clés",
+      "products": "Produits",
+      "productsAssessed": "{count} évalué(s)",
+      "avgCompliance": "Conformité moy.",
+      "openVulns": "Vulnérabilités ouvertes",
+      "criticalCount": "{count} critique(s)",
+      "overdue": "Tâches en retard",
+      "daysValue": "{days}j"
+    },
+    "statistics": {
+      "title": "Statistiques du projet",
+      "activity": "Activité",
+      "weekFilter": "Cette semaine",
+      "monthFilter": "Ce mois",
+      "yearFilter": "Cette année",
+      "empty": "Aucune activité cette semaine. À mesure que vous et votre équipe travaillez sur les produits, SBOM et listes de contrôle, votre activité hebdomadaire apparaîtra ici.",
+      "day": {
+        "monday": "Lun",
+        "tuesday": "Mar",
+        "wednesday": "Mer",
+        "thursday": "Jeu",
+        "friday": "Ven",
+        "saturday": "Sam",
+        "sunday": "Dim"
+      },
+      "month": {
+        "jan": "Janv",
+        "feb": "Févr",
+        "mar": "Mars",
+        "apr": "Avr",
+        "may": "Mai",
+        "jun": "Juin",
+        "jul": "Juil",
+        "aug": "Août",
+        "sep": "Sept",
+        "oct": "Oct",
+        "nov": "Nov",
+        "dec": "Déc"
+      }
+    },
+    "calendar": {
+      "title": "Calendrier de conformité",
+      "prev": "Mois précédent",
+      "next": "Mois suivant",
+      "legendDeadline": "Échéance CRA",
+      "legendTask": "Votre tâche",
+      "upcoming": "À venir",
+      "empty": "Rien de planifié.",
+      "dueToday": "À rendre aujourd'hui",
+      "inDays": "Dans {days} jours",
+      "day": {
+        "mon": "Lun",
+        "tue": "Mar",
+        "wed": "Mer",
+        "thu": "Jeu",
+        "fri": "Ven",
+        "sat": "Sam",
+        "sun": "Dim"
+      }
+    },
+    "getStarted": {
+      "title": "Bienvenue sur Seentrix",
+      "greeting": "Bienvenue, {name}",
+      "subtitle": "Préparez votre organisation pour le règlement (UE) sur la cyber-résilience (CRA). Suivez ces étapes et nous vous guiderons tout au long du parcours.",
+      "progressLabel": "{done} étapes sur {total} complétées",
+      "askTitle": "Vous ne savez pas par où commencer ?",
+      "askDescription": "Ouvrez Seentrix AI depuis la barre supérieure et demandez « Que dois-je faire ensuite ? » — il sait exactement où en est votre organisation."
+    },
+    "steps": {
+      "company-profile": {
+        "title": "Complétez votre profil d'entreprise",
+        "description": "Ajoutez vos informations juridiques afin que Seentrix puisse générer une déclaration de conformité.",
+        "cta": "Compléter le profil"
+      },
+      "first-product": {
+        "title": "Ajoutez votre premier produit",
+        "description": "Enregistrez un produit pour commencer à suivre son parcours de conformité CRA.",
+        "cta": "Ajouter un produit"
+      },
+      "classify-product": {
+        "title": "Classifiez votre produit selon le CRA",
+        "description": "Effectuez l'évaluation guidée pour déterminer la catégorie CRA et la procédure d'évaluation de la conformité du produit.",
+        "cta": "Classifier le produit"
+      },
+      "upload-sbom": {
+        "title": "Téléversez une nomenclature logicielle",
+        "description": "Téléversez un SBOM CycloneDX ou SPDX afin que Seentrix puisse détecter les vulnérabilités connues.",
+        "cta": "Téléverser le SBOM"
+      },
+      "triage-vulnerabilities": {
+        "title": "Triez vos vulnérabilités",
+        "description": "Examinez les vulnérabilités ouvertes et marquez chacune comme résolue ou acceptée.",
+        "cta": "Examiner les vulnérabilités"
+      },
+      "complete-checklist": {
+        "title": "Parcourez la liste de contrôle de conformité",
+        "description": "Complétez la liste de contrôle des exigences essentielles pour chaque produit afin d'atteindre la conformité totale.",
+        "cta": "Ouvrir la liste de contrôle"
+      }
+    },
+    "hero": {
+      "eyebrow": "Préparation CRA",
+      "headline": "Ravi de vous revoir, {name}. Vous êtes à <em>{percent}</em> du chemin vers la conformité.",
+      "headlineNoName": "Vous êtes à <em>{percent}</em> du chemin vers la conformité.",
+      "body": "<strong>{critical, plural, =0 {Aucune vulnérabilité critique} one {1 vulnérabilité critique} other {# vulnérabilités critiques}}</strong> et <strong>{overdue, plural, =0 {aucune tâche en retard} one {1 tâche en retard} other {# tâches en retard}}</strong> sur l'ensemble de vos produits.",
+      "nextDeadline": "Votre prochaine échéance, <strong>{deadline}</strong>, est dans {days, plural, one {1 jour} other {# jours}}.",
+      "reviewCta": "Examiner les points critiques",
+      "copilotCta": "Ouvrir Copilot",
+      "ringCaption": "Préparation CRA",
+      "legendAchieved": "Atteint · {percent}%",
+      "legendRemaining": "Restant · {percent}%"
+    }
   }
- }
 }

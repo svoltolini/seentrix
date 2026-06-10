@@ -1,341 +1,353 @@
 {
- "dashboard": {
-  "title": "Compliance Dashboard",
-  "subtitle": "Overview of your CRA compliance status across all products.",
-  "totalProducts": "Total Products",
-  "assessed": "Assessed",
-  "assessedOf": "{assessed} / {total}",
-  "avgCompliance": "Avg. Compliance",
-  "totalVulnerabilities": "Vulnerabilities",
-  "critical": "Critical",
-  "high": "High",
-  "medium": "Medium",
-  "low": "Low",
-  "vulnChart": "Vulnerability Breakdown",
-  "vulnChartEyebrow": "Severity",
-  "vulnChartSubtitle": "Across all your products, ranked by severity",
-  "noVulnerabilities": "No vulnerabilities found",
-  "actionNeeded": {
-   "eyebrow": "Action Needed",
-   "headline": "Get {product} on track before {deadline}",
-   "daysLeft": "days left",
-   "compliance": "compliance",
-   "cta": "Open checklist"
-  },
-  "daysRemaining": "{days}d",
-  "passed": "Passed",
-  "timeAgo": {
-   "justNow": "just now",
-   "minutesAgo": "{count}m ago",
-   "hoursAgo": "{count}h ago",
-   "daysAgo": "{count}d ago"
-  },
-  "daysLeft": "{days} days left",
-  "upcomingDeadline": "Next Deadline",
-  "vulnerabilities": "Open Vulnerabilities",
-  "noProducts": "No products yet",
-  "noProductsDescription": "Add your first product to start your CRA compliance journey. We'll guide you through every step.",
-  "addProduct": "Add Product",
-  "compliance": "Compliance",
-  "notAssessed": "Not assessed",
-  "productTable": {
-   "eyebrow": "Products",
-   "title": "Product Compliance",
-   "subtitle": "Checklist progress and vulnerability load per product.",
-   "name": "Product",
-   "category": "Category",
-   "compliance": "Compliance",
-   "vulnerabilities": "Vuln",
-   "sbom": "SBOM",
-   "action": "Action",
-   "view": "View"
-  },
-  "productType": {
-   "hardware": "Hardware",
-   "software": "Software",
-   "firmware": "Firmware",
-   "iot": "IoT"
-  },
-  "sbomUploaded": "Uploaded",
-  "sbomMissing": "Missing",
-  "recentActivity": "Recent Activity",
-  "activityEyebrow": "Audit trail",
-  "activitySubtitle": "The last 10 actions across your organisation, pulled from the audit log.",
-  "activity": "Activity",
-  "activityEmpty": "Activity from your team will appear here as you work on compliance.",
-  "myProducts": "My Products",
-  "todayTasks": "Today's Tasks",
-  "seeAll": "See all",
-  "noOverdue": "No overdue tasks. Nice work.",
-  "readiness": {
-    "title": "CRA readiness",
-    "empty": "Add a product to see its CRA readiness."
-  },
-  "chat": "Team",
-  "upcomingDeadlines": {
-   "title": "Upcoming"
-  },
-  "actionLabels": {
-   "billing": {
-    "checkout_created": "Started a billing checkout"
-   },
-   "checklist": {
-    "evidence_removed": "Removed a piece of evidence",
-    "evidence_uploaded": "Uploaded evidence — {target}",
-    "item_description_changed": "Edited a checklist description",
-    "item_status_changed": "Updated a checklist item",
-    "item_assigned": "Assigned a checklist item"
-   },
-   "document": {
-    "pdf_generated": "Generated a document PDF",
-    "saved": "Saved {target}",
-    "status_changed": "Changed a document status"
-   },
-   "member": {
-    "created": "Added {target} to the team",
-    "removed": "Removed a team member",
-    "role_changed": "Updated a team member's role"
-   },
-   "organization": {
-    "updated": "Updated organisation settings",
-    "created": "Created the organisation",
-    "entity_type_changed": "Changed the organisation entity type",
-    "security_updated": "Updated security settings"
-   },
-   "password": {
-    "changed": "Changed their password"
-   },
-   "product": {
-    "assessed": "Assessed a product",
-    "created": "Created the product {target}",
-    "deleted": "Deleted a product",
-    "updated": "Updated {target}",
-    "support_updated": "Updated a product support period"
-   },
-   "profile": {
-    "updated": "Updated their profile"
-   },
-   "sbom": {
-    "deleted": "Removed an SBOM",
-    "scanned": "Scanned an SBOM",
-    "uploaded": "Uploaded an SBOM — {target}"
-   },
-   "fallback": "{action}",
-   "academy": {
-    "lesson_completed": "Completed an Academy lesson"
-   },
-   "conformity": {
-    "attachment_added": "Added a conformity attachment",
-    "declaration_issued": "Issued a Declaration of Conformity",
-    "notified_body_updated": "Updated notified-body details"
-   },
-   "entity_obligation": {
-    "updated": "Updated entity obligations"
-   },
-   "gdpr": {
-    "deletion_cancelled": "Cancelled an account-deletion request",
-    "deletion_requested": "Requested account deletion",
-    "export_generated": "Generated a data export"
-   },
-   "incident": {
-    "closed": "Closed an incident",
-    "detected": "Reported an incident",
-    "updated": "Updated an incident",
-    "user_notified": "Notified users about an incident"
-   },
-   "release": {
-    "deleted": "Deleted a release",
-    "published": "Published a release"
-   },
-   "vulnerability": {
-    "assigned": "Assigned a vulnerability",
-    "note_added": "Added a vulnerability note"
-   }
-  },
-  "activityType": {
-   "assessment": "Assessment",
-   "checklist": "Checklist",
-   "sbom": "SBOM",
-   "document": "Document"
-  },
-  "noActivity": "No recent activity",
-  "activityLogEmpty": "Activity from your team will appear here as you work on compliance.",
-  "greeting": "Welcome back, {name}",
-  "greetingSubtitle": "Here's your compliance overview for today.",
-  "deadlines": "Upcoming Deadlines",
-  "deadlinesEyebrow": "Regulation",
-  "deadlinesSubtitle": "Key CRA milestones on the enforcement calendar.",
-  "deadlineDescription": "Key CRA regulatory milestones",
-  "timeElapsed": "Time elapsed",
-  "deadline": {
-   "notifiedBodies": "Notified Bodies",
-   "notifiedBodiesDate": "Jun 11, 2026",
-   "reporting": "Reporting Obligations",
-   "reportingDate": "Sep 11, 2026",
-   "fullCompliance": "Full Compliance",
-   "fullComplianceDate": "Dec 11, 2027",
-   "explain": "Explain"
-  },
-  "viewAll": "View all",
-  "recentProducts": "Recent Products",
-  "reportingDeadline": "Reporting Obligations",
-  "reportingDate": "Sep 11, 2026",
-  "fullCompliance": "Full Product Requirements",
-  "fullComplianceDate": "Dec 11, 2027",
-  "categoryDefault": "Default",
-  "categoryImportantI": "Important I",
-  "categoryImportantII": "Important II",
-  "categoryCritical": "Critical",
-  "role": {
-   "admin": "Admin",
-   "compliance_officer": "Compliance Officer",
-   "cto": "CTO",
-   "viewer": "Viewer",
-   "editor": "Editor"
-  },
-  "complianceTrend": {
-   "eyebrow": "Trend",
-   "title": "Compliance Trend",
-   "subtitle": "Checklist score over the last 12 weeks, per product and org average.",
-   "orgAverage": "Org Average",
-   "score": "Score",
-   "noData": "No compliance history yet. Scores are tracked as you update checklists."
-  },
-  "vulnAging": {
-   "eyebrow": "Risk",
-   "title": "Vulnerability Aging",
-   "openVulns": "Open Vulnerabilities",
-   "mttr": "MTTR",
-   "mttrDays": "{days}d avg",
-   "mttrNoData": "No data",
-   "noData": "No open vulnerabilities to display."
-  },
-  "checklistProgress": {
-   "eyebrow": "Progress",
-   "title": "Checklist Progress",
-   "summary": "{pct}% avg completion · {count, plural, one {# product} other {# products}}",
-   "pending": "Pending",
-   "inProgress": "In Progress",
-   "completed": "Completed",
-   "notApplicable": "N/A",
-   "noData": "No checklist data available."
-  },
-  "overdueTasks": {
-   "eyebrow": "Attention",
-   "title": "Overdue Tasks",
-   "allOnTrack": "All tasks on track",
-   "allOnTrackDescription": "No overdue checklist items.",
-   "daysOverdue": "{days}d overdue"
-  },
-  "activityVelocity": {
-   "eyebrow": "Velocity",
-   "title": "Team Activity",
-   "actions": "{count} actions",
-   "totalLast30d": "actions · last 30 days",
-   "peak": "Peak day",
-   "noData": "No team activity in the last 30 days."
-  },
-  "team": "Team",
-  "kpi": {
-   "heading": "Key metrics",
-   "products": "Products",
-   "productsAssessed": "{count} assessed",
-   "avgCompliance": "Avg. compliance",
-   "openVulns": "Open vulnerabilities",
-   "criticalCount": "{count} critical",
-   "overdue": "Overdue tasks",
-   "daysValue": "{days}d"
-  },
-  "statistics": {
-   "title": "Project Statistics",
-   "activity": "Activity",
-   "weekFilter": "This week",
-   "monthFilter": "This month",
-   "yearFilter": "This year",
-   "empty": "No activity yet this week. As you and your team work through products, SBOMs and checklists, your weekly activity will show up here.",
-   "day": {
-    "monday": "Mon",
-    "tuesday": "Tue",
-    "wednesday": "Wed",
-    "thursday": "Thu",
-    "friday": "Fri",
-    "saturday": "Sat",
-    "sunday": "Sun"
-   },
-   "month": {
-    "jan": "Jan",
-    "feb": "Feb",
-    "mar": "Mar",
-    "apr": "Apr",
-    "may": "May",
-    "jun": "Jun",
-    "jul": "Jul",
-    "aug": "Aug",
-    "sep": "Sep",
-    "oct": "Oct",
-    "nov": "Nov",
-    "dec": "Dec"
-   }
-  },
-  "calendar": {
-   "title": "Compliance Calendar",
-   "prev": "Previous month",
-   "next": "Next month",
-   "legendDeadline": "CRA deadline",
-   "legendTask": "Your task",
-   "upcoming": "Upcoming",
-   "empty": "Nothing scheduled.",
-   "dueToday": "Due today",
-   "inDays": "In {days} days",
-   "day": {
-    "mon": "Mon",
-    "tue": "Tue",
-    "wed": "Wed",
-    "thu": "Thu",
-    "fri": "Fri",
-    "sat": "Sat",
-    "sun": "Sun"
-   }
-  },
-  "getStarted": {
-   "title": "Welcome to Seentrix",
-   "greeting": "Welcome, {name}",
-   "subtitle": "Let’s get your organisation ready for the EU Cyber Resilience Act. Work through these steps and we’ll guide you the whole way.",
-   "progressLabel": "{done} of {total} steps complete",
-   "askTitle": "Not sure where to start?",
-   "askDescription": "Open Seentrix AI from the top bar and ask “What do I need to do next?” — it knows exactly where your organisation stands."
-  },
-  "steps": {
-   "company-profile": {
-    "title": "Complete your company profile",
-    "description": "Add your legal entity details so Seentrix can generate a Declaration of Conformity.",
-    "cta": "Complete profile"
-   },
-   "first-product": {
-    "title": "Add your first product",
-    "description": "Register a product to start tracking its CRA compliance journey.",
-    "cta": "Add product"
-   },
-   "classify-product": {
-    "title": "Classify your product under the CRA",
-    "description": "Run the guided assessment to determine the product’s CRA category and conformity route.",
-    "cta": "Classify product"
-   },
-   "upload-sbom": {
-    "title": "Upload a Software Bill of Materials",
-    "description": "Upload a CycloneDX or SPDX SBOM so Seentrix can surface known vulnerabilities.",
-    "cta": "Upload SBOM"
-   },
-   "triage-vulnerabilities": {
-    "title": "Triage your vulnerabilities",
-    "description": "Review open vulnerabilities and mark each resolved or accepted.",
-    "cta": "Review vulnerabilities"
-   },
-   "complete-checklist": {
-    "title": "Work through the conformity checklist",
-    "description": "Complete the essential-requirement checklist for each product to reach full conformity.",
-    "cta": "Open checklist"
-   }
+  "dashboard": {
+    "title": "Compliance Dashboard",
+    "subtitle": "Overview of your CRA compliance status across all products.",
+    "totalProducts": "Total Products",
+    "assessed": "Assessed",
+    "assessedOf": "{assessed} / {total}",
+    "avgCompliance": "Avg. Compliance",
+    "totalVulnerabilities": "Vulnerabilities",
+    "critical": "Critical",
+    "high": "High",
+    "medium": "Medium",
+    "low": "Low",
+    "vulnChart": "Vulnerability Breakdown",
+    "vulnChartEyebrow": "Severity",
+    "vulnChartSubtitle": "Across all your products, ranked by severity",
+    "noVulnerabilities": "No vulnerabilities found",
+    "actionNeeded": {
+      "eyebrow": "Action Needed",
+      "headline": "Get {product} on track before {deadline}",
+      "daysLeft": "days left",
+      "compliance": "compliance",
+      "cta": "Open checklist"
+    },
+    "daysRemaining": "{days}d",
+    "passed": "Passed",
+    "timeAgo": {
+      "justNow": "just now",
+      "minutesAgo": "{count}m ago",
+      "hoursAgo": "{count}h ago",
+      "daysAgo": "{count}d ago"
+    },
+    "daysLeft": "{days} days left",
+    "upcomingDeadline": "Next Deadline",
+    "vulnerabilities": "Open Vulnerabilities",
+    "noProducts": "No products yet",
+    "noProductsDescription": "Add your first product to start your CRA compliance journey. We'll guide you through every step.",
+    "addProduct": "Add Product",
+    "compliance": "Compliance",
+    "notAssessed": "Not assessed",
+    "productTable": {
+      "eyebrow": "Products",
+      "title": "Product Compliance",
+      "subtitle": "Checklist progress and vulnerability load per product.",
+      "name": "Product",
+      "category": "Category",
+      "compliance": "Compliance",
+      "vulnerabilities": "Vuln",
+      "sbom": "SBOM",
+      "action": "Action",
+      "view": "View"
+    },
+    "productType": {
+      "hardware": "Hardware",
+      "software": "Software",
+      "firmware": "Firmware",
+      "iot": "IoT"
+    },
+    "sbomUploaded": "Uploaded",
+    "sbomMissing": "Missing",
+    "recentActivity": "Recent Activity",
+    "activityEyebrow": "Audit trail",
+    "activitySubtitle": "The last 10 actions across your organisation, pulled from the audit log.",
+    "activity": "Activity",
+    "activityEmpty": "Activity from your team will appear here as you work on compliance.",
+    "myProducts": "My Products",
+    "todayTasks": "Today's Tasks",
+    "seeAll": "See all",
+    "noOverdue": "No overdue tasks. Nice work.",
+    "readiness": {
+      "title": "CRA readiness",
+      "empty": "Add a product to see its CRA readiness."
+    },
+    "chat": "Team",
+    "upcomingDeadlines": {
+      "title": "Upcoming"
+    },
+    "actionLabels": {
+      "billing": {
+        "checkout_created": "Started a billing checkout"
+      },
+      "checklist": {
+        "evidence_removed": "Removed a piece of evidence",
+        "evidence_uploaded": "Uploaded evidence — {target}",
+        "item_description_changed": "Edited a checklist description",
+        "item_status_changed": "Updated a checklist item",
+        "item_assigned": "Assigned a checklist item"
+      },
+      "document": {
+        "pdf_generated": "Generated a document PDF",
+        "saved": "Saved {target}",
+        "status_changed": "Changed a document status"
+      },
+      "member": {
+        "created": "Added {target} to the team",
+        "removed": "Removed a team member",
+        "role_changed": "Updated a team member's role"
+      },
+      "organization": {
+        "updated": "Updated organisation settings",
+        "created": "Created the organisation",
+        "entity_type_changed": "Changed the organisation entity type",
+        "security_updated": "Updated security settings"
+      },
+      "password": {
+        "changed": "Changed their password"
+      },
+      "product": {
+        "assessed": "Assessed a product",
+        "created": "Created the product {target}",
+        "deleted": "Deleted a product",
+        "updated": "Updated {target}",
+        "support_updated": "Updated a product support period"
+      },
+      "profile": {
+        "updated": "Updated their profile"
+      },
+      "sbom": {
+        "deleted": "Removed an SBOM",
+        "scanned": "Scanned an SBOM",
+        "uploaded": "Uploaded an SBOM — {target}"
+      },
+      "fallback": "{action}",
+      "academy": {
+        "lesson_completed": "Completed an Academy lesson"
+      },
+      "conformity": {
+        "attachment_added": "Added a conformity attachment",
+        "declaration_issued": "Issued a Declaration of Conformity",
+        "notified_body_updated": "Updated notified-body details"
+      },
+      "entity_obligation": {
+        "updated": "Updated entity obligations"
+      },
+      "gdpr": {
+        "deletion_cancelled": "Cancelled an account-deletion request",
+        "deletion_requested": "Requested account deletion",
+        "export_generated": "Generated a data export"
+      },
+      "incident": {
+        "closed": "Closed an incident",
+        "detected": "Reported an incident",
+        "updated": "Updated an incident",
+        "user_notified": "Notified users about an incident"
+      },
+      "release": {
+        "deleted": "Deleted a release",
+        "published": "Published a release"
+      },
+      "vulnerability": {
+        "assigned": "Assigned a vulnerability",
+        "note_added": "Added a vulnerability note"
+      }
+    },
+    "activityType": {
+      "assessment": "Assessment",
+      "checklist": "Checklist",
+      "sbom": "SBOM",
+      "document": "Document"
+    },
+    "noActivity": "No recent activity",
+    "activityLogEmpty": "Activity from your team will appear here as you work on compliance.",
+    "greeting": "Welcome back, {name}",
+    "greetingSubtitle": "Here's your compliance overview for today.",
+    "deadlines": "Upcoming Deadlines",
+    "deadlinesEyebrow": "Regulation",
+    "deadlinesSubtitle": "Key CRA milestones on the enforcement calendar.",
+    "deadlineDescription": "Key CRA regulatory milestones",
+    "timeElapsed": "Time elapsed",
+    "deadline": {
+      "notifiedBodies": "Notified Bodies",
+      "notifiedBodiesDate": "Jun 11, 2026",
+      "reporting": "Reporting Obligations",
+      "reportingDate": "Sep 11, 2026",
+      "fullCompliance": "Full Compliance",
+      "fullComplianceDate": "Dec 11, 2027",
+      "explain": "Explain"
+    },
+    "viewAll": "View all",
+    "recentProducts": "Recent Products",
+    "reportingDeadline": "Reporting Obligations",
+    "reportingDate": "Sep 11, 2026",
+    "fullCompliance": "Full Product Requirements",
+    "fullComplianceDate": "Dec 11, 2027",
+    "categoryDefault": "Default",
+    "categoryImportantI": "Important I",
+    "categoryImportantII": "Important II",
+    "categoryCritical": "Critical",
+    "role": {
+      "admin": "Admin",
+      "compliance_officer": "Compliance Officer",
+      "cto": "CTO",
+      "viewer": "Viewer",
+      "editor": "Editor"
+    },
+    "complianceTrend": {
+      "eyebrow": "Trend",
+      "title": "Compliance Trend",
+      "subtitle": "Checklist score over the last 12 weeks, per product and org average.",
+      "orgAverage": "Org Average",
+      "score": "Score",
+      "noData": "No compliance history yet. Scores are tracked as you update checklists."
+    },
+    "vulnAging": {
+      "eyebrow": "Risk",
+      "title": "Vulnerability Aging",
+      "openVulns": "Open Vulnerabilities",
+      "mttr": "MTTR",
+      "mttrDays": "{days}d avg",
+      "mttrNoData": "No data",
+      "noData": "No open vulnerabilities to display."
+    },
+    "checklistProgress": {
+      "eyebrow": "Progress",
+      "title": "Checklist Progress",
+      "summary": "{pct}% avg completion · {count, plural, one {# product} other {# products}}",
+      "pending": "Pending",
+      "inProgress": "In Progress",
+      "completed": "Completed",
+      "notApplicable": "N/A",
+      "noData": "No checklist data available."
+    },
+    "overdueTasks": {
+      "eyebrow": "Attention",
+      "title": "Overdue Tasks",
+      "allOnTrack": "All tasks on track",
+      "allOnTrackDescription": "No overdue checklist items.",
+      "daysOverdue": "{days}d overdue"
+    },
+    "activityVelocity": {
+      "eyebrow": "Velocity",
+      "title": "Team Activity",
+      "actions": "{count} actions",
+      "totalLast30d": "actions · last 30 days",
+      "peak": "Peak day",
+      "noData": "No team activity in the last 30 days."
+    },
+    "team": "Team",
+    "kpi": {
+      "heading": "Key metrics",
+      "products": "Products",
+      "productsAssessed": "{count} assessed",
+      "avgCompliance": "Avg. compliance",
+      "openVulns": "Open vulnerabilities",
+      "criticalCount": "{count} critical",
+      "overdue": "Overdue tasks",
+      "daysValue": "{days}d"
+    },
+    "statistics": {
+      "title": "Project Statistics",
+      "activity": "Activity",
+      "weekFilter": "This week",
+      "monthFilter": "This month",
+      "yearFilter": "This year",
+      "empty": "No activity yet this week. As you and your team work through products, SBOMs and checklists, your weekly activity will show up here.",
+      "day": {
+        "monday": "Mon",
+        "tuesday": "Tue",
+        "wednesday": "Wed",
+        "thursday": "Thu",
+        "friday": "Fri",
+        "saturday": "Sat",
+        "sunday": "Sun"
+      },
+      "month": {
+        "jan": "Jan",
+        "feb": "Feb",
+        "mar": "Mar",
+        "apr": "Apr",
+        "may": "May",
+        "jun": "Jun",
+        "jul": "Jul",
+        "aug": "Aug",
+        "sep": "Sep",
+        "oct": "Oct",
+        "nov": "Nov",
+        "dec": "Dec"
+      }
+    },
+    "calendar": {
+      "title": "Compliance Calendar",
+      "prev": "Previous month",
+      "next": "Next month",
+      "legendDeadline": "CRA deadline",
+      "legendTask": "Your task",
+      "upcoming": "Upcoming",
+      "empty": "Nothing scheduled.",
+      "dueToday": "Due today",
+      "inDays": "In {days} days",
+      "day": {
+        "mon": "Mon",
+        "tue": "Tue",
+        "wed": "Wed",
+        "thu": "Thu",
+        "fri": "Fri",
+        "sat": "Sat",
+        "sun": "Sun"
+      }
+    },
+    "getStarted": {
+      "title": "Welcome to Seentrix",
+      "greeting": "Welcome, {name}",
+      "subtitle": "Let’s get your organisation ready for the EU Cyber Resilience Act. Work through these steps and we’ll guide you the whole way.",
+      "progressLabel": "{done} of {total} steps complete",
+      "askTitle": "Not sure where to start?",
+      "askDescription": "Open Seentrix AI from the top bar and ask “What do I need to do next?” — it knows exactly where your organisation stands."
+    },
+    "steps": {
+      "company-profile": {
+        "title": "Complete your company profile",
+        "description": "Add your legal entity details so Seentrix can generate a Declaration of Conformity.",
+        "cta": "Complete profile"
+      },
+      "first-product": {
+        "title": "Add your first product",
+        "description": "Register a product to start tracking its CRA compliance journey.",
+        "cta": "Add product"
+      },
+      "classify-product": {
+        "title": "Classify your product under the CRA",
+        "description": "Run the guided assessment to determine the product’s CRA category and conformity route.",
+        "cta": "Classify product"
+      },
+      "upload-sbom": {
+        "title": "Upload a Software Bill of Materials",
+        "description": "Upload a CycloneDX or SPDX SBOM so Seentrix can surface known vulnerabilities.",
+        "cta": "Upload SBOM"
+      },
+      "triage-vulnerabilities": {
+        "title": "Triage your vulnerabilities",
+        "description": "Review open vulnerabilities and mark each resolved or accepted.",
+        "cta": "Review vulnerabilities"
+      },
+      "complete-checklist": {
+        "title": "Work through the conformity checklist",
+        "description": "Complete the essential-requirement checklist for each product to reach full conformity.",
+        "cta": "Open checklist"
+      }
+    },
+    "hero": {
+      "eyebrow": "CRA readiness",
+      "headline": "Good to see you, {name}. You're <em>{percent}</em> of the way to conformity.",
+      "headlineNoName": "You're <em>{percent}</em> of the way to conformity.",
+      "body": "<strong>{critical, plural, =0 {No critical vulnerabilities} one {1 critical vulnerability} other {# critical vulnerabilities}}</strong> and <strong>{overdue, plural, =0 {no overdue tasks} one {1 overdue task} other {# overdue tasks}}</strong> across your products.",
+      "nextDeadline": "Your next deadline, <strong>{deadline}</strong>, is {days, plural, one {1 day} other {# days}} away.",
+      "reviewCta": "Review critical items",
+      "copilotCta": "Open Copilot",
+      "ringCaption": "CRA readiness",
+      "legendAchieved": "Achieved · {percent}%",
+      "legendRemaining": "Remaining to target · {percent}%"
+    }
   }
- }
 }
