@@ -9,6 +9,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Icon } from "@/components/icon";
 import { cn } from "@/lib/utils";
+import { PLAN_PRICES_EUR, formatPrice } from "@/lib/constants/plans";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 // Three self-serve tiers only. Enterprise is no longer a card here — it's the
@@ -109,13 +110,18 @@ export function PricingPreview() {
                   </div>
 
                   <div className="mt-4 flex items-baseline gap-1">
+                    {/* Single source of truth — PLAN_PRICES_EUR — so the
+                        landing band can never drift from billing / /pricing. */}
                     <span
                       className={cn(
-                        "text-5xl font-extrabold",
+                        "font-heading text-[44px] font-semibold tracking-[-1px]",
                         isPro ? "text-primary" : "text-foreground",
                       )}
                     >
-                      {t(`${tier}.price`)}
+                      {formatPrice(
+                        tier === "free" ? 0 : PLAN_PRICES_EUR[tier].monthly,
+                        "eur",
+                      )}
                     </span>
                     {tier !== "free" && (
                       <span className="text-p3 text-muted-foreground">

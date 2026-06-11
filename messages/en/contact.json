@@ -1,36 +1,37 @@
 {
- "contact": {
-  "title": "Let's tailor Seentrix to your organisation",
-  "subtitle": "Large product portfolios, regulated verticals, parent-child groups, SSO, or a custom SLA — tell us what you need and we'll design a plan and price around it.",
-  "form": {
-   "nameLabel": "Your name",
-   "namePlaceholder": "Jane Doe",
-   "emailLabel": "Work email",
-   "emailPlaceholder": "jane@company.com",
-   "companyLabel": "Company",
-   "companyPlaceholder": "Acme Manufacturing GmbH",
-   "productsLabel": "Approximate number of products",
-   "productsPlaceholder": "e.g. 40",
-   "messageLabel": "What do you need?",
-   "messagePlaceholder": "Tell us about your portfolio, team size, compliance timeline, and any requirements like SSO, data residency, or a custom MSA.",
-   "submit": "Send enquiry",
-   "submitting": "Sending…",
-   "success": "Thanks — we've received your enquiry and will get back to you within one business day.",
-   "error": "Something went wrong. Please try again, or email us directly at support@seentrix.com.",
-   "rateLimited": "Too many enquiries from this network. Please wait a few minutes and try again.",
-   "captchaFailed": "Couldn't verify you're human. Please reload the page and try again.",
-   "validation": "Please fill in your name, a valid work email, and a short message.",
-   "privacy": "We'll only use your details to respond to this enquiry. See our privacy policy."
-  },
-  "highlights": {
-   "title": "Built for organisations that have outgrown self-serve",
-   "items": {
-    "scale": "Unlimited products and team members",
-    "sso": "SSO / SAML and parent-child org linking",
-    "monitoring": "Real-time vulnerability alerts",
-    "support": "Dedicated CSM, guided onboarding, and a custom MSA",
-    "residency": "Custom data-residency and SLA commitments"
-   }
+  "contact": {
+    "title": "Let's tailor Seentrix to your organisation",
+    "subtitle": "Large product portfolios, regulated verticals, parent-child groups, SSO, or a custom SLA — tell us what you need and we'll design a plan and price around it.",
+    "form": {
+      "nameLabel": "Your name",
+      "namePlaceholder": "Jane Doe",
+      "emailLabel": "Work email",
+      "emailPlaceholder": "jane@company.com",
+      "companyLabel": "Company",
+      "companyPlaceholder": "Acme Manufacturing GmbH",
+      "productsLabel": "Approximate number of products",
+      "productsPlaceholder": "e.g. 40",
+      "messageLabel": "What do you need?",
+      "messagePlaceholder": "Tell us about your portfolio, team size, compliance timeline, and any requirements like SSO, data residency, or a custom MSA.",
+      "submit": "Send enquiry",
+      "submitting": "Sending…",
+      "success": "Thanks — we've received your enquiry and will get back to you within one business day.",
+      "error": "Something went wrong. Please try again, or email us directly at support@seentrix.com.",
+      "rateLimited": "Too many enquiries from this network. Please wait a few minutes and try again.",
+      "captchaFailed": "Couldn't verify you're human. Please reload the page and try again.",
+      "validation": "Please fill in your name, a valid work email, and a short message.",
+      "privacy": "We'll only use your details to respond to this enquiry. See our privacy policy."
+    },
+    "highlights": {
+      "title": "Built for organisations that have outgrown self-serve",
+      "items": {
+        "scale": "Unlimited products and team members",
+        "sso": "SSO / SAML and parent-child org linking",
+        "monitoring": "Real-time vulnerability alerts",
+        "support": "Dedicated CSM, guided onboarding, and a custom MSA",
+        "residency": "Custom data-residency and SLA commitments"
+      }
+    },
+    "eyebrow": "Enterprise"
   }
- }
 }

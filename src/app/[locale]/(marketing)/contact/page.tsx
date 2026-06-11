@@ -27,10 +27,15 @@ export default async function ContactPage({
   return (
     <div className="mx-auto max-w-6xl px-6 py-16 lg:py-24">
       <div className="mx-auto mb-12 max-w-2xl text-center">
-        <h1 className="text-h1 tracking-tight text-foreground">
+        <p className="text-[12px] font-semibold uppercase tracking-[1px] text-primary">
+          {t.has("eyebrow") ? t("eyebrow") : "Enterprise"}
+        </p>
+        <h1 className="mt-3 font-heading text-[40px] font-medium tracking-[-0.8px] text-foreground">
           {t("title")}
         </h1>
-        <p className="mt-6 text-p1 text-muted-foreground">{t("subtitle")}</p>
+        <p className="mt-3 text-[16px] leading-relaxed text-muted-foreground">
+          {t("subtitle")}
+        </p>
       </div>
 
       <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:items-start">

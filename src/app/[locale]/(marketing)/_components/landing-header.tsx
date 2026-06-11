@@ -50,62 +50,62 @@ export function LandingHeader({ isAuthed = false }: { isAuthed?: boolean }) {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 border-b border-transparent bg-card/95 backdrop-blur-sm transition-[border,box-shadow]",
-        scrolled && "border-border shadow-card-sm"
+        "sticky top-0 z-50 border-b border-transparent bg-background transition-[border]",
+        scrolled && "border-border",
       )}
     >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-        {/* Left: Logo */}
-        <Link href="/" className="flex items-center gap-2">
-          <Logo size={20} className="shrink-0" />
-          <span className="text-h4 text-foreground">Seentrix</span>
+      {/* Clay top bar (design `.mk-top`): logo left, links + Sign-in pushed
+          right; 72px tall on a warm background. */}
+      <div className="mx-auto flex h-[72px] max-w-[1200px] items-center gap-6 px-6 sm:px-10">
+        {/* Logo — serif wordmark */}
+        <Link href="/" className="flex shrink-0 items-center gap-2.5">
+          <Logo size={22} className="shrink-0 text-primary" />
+          <span className="font-heading text-[21px] font-semibold tracking-[-0.3px] text-foreground">
+            Seentrix
+          </span>
         </Link>
 
-        {/* Center: Nav (desktop) */}
-        <nav className="hidden items-center gap-1 lg:flex">
-          {anchors.map((a) => (
-            <button
-              key={a.key}
-              onClick={() => scrollTo(a.href)}
-              className="cursor-pointer rounded-sm px-3 py-2 text-l6 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-            >
-              {t(a.key)}
-            </button>
-          ))}
-          {pageLinks.map((p) => (
+        {/* Right cluster: nav links + Sign in */}
+        <div className="ml-auto hidden items-center gap-7 lg:flex">
+          <nav className="flex items-center gap-6">
+            {anchors.map((a) => (
+              <button
+                key={a.key}
+                onClick={() => scrollTo(a.href)}
+                className="cursor-pointer text-[14px] font-medium text-muted-foreground transition-colors hover:text-foreground"
+              >
+                {t(a.key)}
+              </button>
+            ))}
+            {pageLinks.map((p) => (
+              <Link
+                key={p.key}
+                href={p.href}
+                className="text-[14px] font-medium text-muted-foreground transition-colors hover:text-foreground"
+              >
+                {t(p.key)}
+              </Link>
+            ))}
+          </nav>
+          {isAuthed ? (
             <Link
-              key={p.key}
-              href={p.href}
-              className="rounded-sm px-3 py-2 text-l6 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+              href="/app/dashboard"
+              className={buttonVariants({ variant: "default", size: "sm" })}
             >
-              {t(p.key)}
+              {t("dashboard")}
             </Link>
-          ))}
-        </nav>
+          ) : (
+            <Link
+              href="/auth/login"
+              className={buttonVariants({ variant: "outline", size: "sm" })}
+            >
+              {t("login")}
+            </Link>
+          )}
+        </div>
 
-        {/* Right */}
-        <div className="flex items-center gap-2">
-          {/* Desktop auth buttons — swap in 'Dashboard' if the visitor is
-              already signed in. Keeps the header honest: logged-in users
-              were previously shown 'Log in' and had to click it to find
-              out they were already authed, which is dissonant. */}
-          <div className="hidden items-center gap-2 lg:flex">
-            {isAuthed ? (
-              <Link
-                href="/app/dashboard"
-                className={buttonVariants({ variant: "default", size: "sm" })}
-              >
-                {t("dashboard")}
-              </Link>
-            ) : (
-              <Link
-                href="/auth/login"
-                className={buttonVariants({ variant: "ghost", size: "sm" })}
-              >
-                {t("login")}
-              </Link>
-            )}
-          </div>
+        {/* Mobile cluster */}
+        <div className="ml-auto flex items-center gap-2 lg:hidden">
 
           {/* Mobile hamburger */}
           <Sheet>

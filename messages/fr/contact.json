@@ -1,36 +1,37 @@
 {
- "contact": {
-  "title": "Adaptons Seentrix à votre organisation",
-  "subtitle": "Grands portefeuilles de produits, secteurs réglementés, groupes parent-filiale, SSO ou SLA personnalisé — dites-nous ce dont vous avez besoin et nous concevrons un abonnement et un tarif adaptés.",
-  "form": {
-   "nameLabel": "Votre nom",
-   "namePlaceholder": "Jane Doe",
-   "emailLabel": "E-mail professionnel",
-   "emailPlaceholder": "jane@entreprise.com",
-   "companyLabel": "Entreprise",
-   "companyPlaceholder": "Acme Manufacturing GmbH",
-   "productsLabel": "Nombre approximatif de produits",
-   "productsPlaceholder": "Ex. : 40",
-   "messageLabel": "De quoi avez-vous besoin ?",
-   "messagePlaceholder": "Parlez-nous de votre portefeuille, de la taille de votre équipe, de votre calendrier de conformité et de toute exigence spécifique comme le SSO, la résidence des données ou un MSA personnalisé.",
-   "submit": "Envoyer la demande",
-   "submitting": "Envoi…",
-   "success": "Merci — nous avons bien reçu votre demande et vous répondrons dans un délai d'un jour ouvrable.",
-   "error": "Une erreur s'est produite. Veuillez réessayer ou nous contacter directement à support@seentrix.com.",
-   "rateLimited": "Trop de demandes depuis ce réseau. Veuillez patienter quelques minutes et réessayer.",
-   "captchaFailed": "Impossible de vérifier que vous êtes humain. Rechargez la page et réessayez.",
-   "validation": "Veuillez renseigner votre nom, un e-mail professionnel valide et un court message.",
-   "privacy": "Nous utiliserons uniquement vos coordonnées pour répondre à cette demande. Consultez notre politique de confidentialité."
-  },
-  "highlights": {
-   "title": "Conçu pour les organisations qui ont dépassé le libre-service",
-   "items": {
-    "scale": "Produits et membres d'équipe illimités",
-    "sso": "SSO / SAML et liaison d'organisations parent-filiale",
-    "monitoring": "Alertes de vulnérabilités en temps réel",
-    "support": "CSM dédié, intégration guidée et MSA personnalisé",
-    "residency": "Résidence des données et engagements SLA personnalisés"
-   }
+  "contact": {
+    "title": "Adaptons Seentrix à votre organisation",
+    "subtitle": "Grands portefeuilles de produits, secteurs réglementés, groupes parent-filiale, SSO ou SLA personnalisé — dites-nous ce dont vous avez besoin et nous concevrons un abonnement et un tarif adaptés.",
+    "form": {
+      "nameLabel": "Votre nom",
+      "namePlaceholder": "Jane Doe",
+      "emailLabel": "E-mail professionnel",
+      "emailPlaceholder": "jane@entreprise.com",
+      "companyLabel": "Entreprise",
+      "companyPlaceholder": "Acme Manufacturing GmbH",
+      "productsLabel": "Nombre approximatif de produits",
+      "productsPlaceholder": "Ex. : 40",
+      "messageLabel": "De quoi avez-vous besoin ?",
+      "messagePlaceholder": "Parlez-nous de votre portefeuille, de la taille de votre équipe, de votre calendrier de conformité et de toute exigence spécifique comme le SSO, la résidence des données ou un MSA personnalisé.",
+      "submit": "Envoyer la demande",
+      "submitting": "Envoi…",
+      "success": "Merci — nous avons bien reçu votre demande et vous répondrons dans un délai d'un jour ouvrable.",
+      "error": "Une erreur s'est produite. Veuillez réessayer ou nous contacter directement à support@seentrix.com.",
+      "rateLimited": "Trop de demandes depuis ce réseau. Veuillez patienter quelques minutes et réessayer.",
+      "captchaFailed": "Impossible de vérifier que vous êtes humain. Rechargez la page et réessayez.",
+      "validation": "Veuillez renseigner votre nom, un e-mail professionnel valide et un court message.",
+      "privacy": "Nous utiliserons uniquement vos coordonnées pour répondre à cette demande. Consultez notre politique de confidentialité."
+    },
+    "highlights": {
+      "title": "Conçu pour les organisations qui ont dépassé le libre-service",
+      "items": {
+        "scale": "Produits et membres d'équipe illimités",
+        "sso": "SSO / SAML et liaison d'organisations parent-filiale",
+        "monitoring": "Alertes de vulnérabilités en temps réel",
+        "support": "CSM dédié, intégration guidée et MSA personnalisé",
+        "residency": "Résidence des données et engagements SLA personnalisés"
+      }
+    },
+    "eyebrow": "Enterprise"
   }
- }
 }

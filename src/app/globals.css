@@ -144,7 +144,7 @@
   --border: #ece8df;              /* line — hairline borders, dividers */
   --border-strong: #e2ddd1;       /* line-strong */
   --border-outline: #e2ddd1;      /* chip + ghost-button outlines */
-  --input: #f3f1ea;               /* filled-input bg */
+  --input: #ffffff;               /* text-field fill — WHITE per Clay .sx-input */
   --ring: #1f8a5b;
 
   /* Dark CTA (ink panels / buttons-on-dark) */

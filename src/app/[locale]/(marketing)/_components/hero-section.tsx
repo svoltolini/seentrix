@@ -141,20 +141,29 @@ export function HeroSection() {
             </span>
             <span className="ml-auto size-5 rounded-md bg-primary" />
           </div>
-          {/* Mini hero + stats */}
+          {/* Mini hero + stats — mirrors the real dashboard: eyebrow + serif
+              greeting on the left, the signature compliance ring on the
+              right, then the 4-up stat row. */}
           <div className="bg-background px-5 pb-0 pt-4">
             <div className="rounded-t-xl border border-b-0 border-border bg-card px-5 pb-5 pt-4">
-              <p className="text-[9px] font-semibold uppercase tracking-[1px] text-primary">
-                CRA readiness
-              </p>
-              <p className="mt-1.5 font-heading text-[17px] font-medium tracking-[-0.3px] text-foreground">
-                You&apos;re <em className="not-italic text-primary">68%</em> of
-                the way to conformity.
-              </p>
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <p className="text-[9px] font-semibold uppercase tracking-[1px] text-primary">
+                    CRA readiness · Northwind
+                  </p>
+                  <p className="mt-1.5 font-heading text-[17px] font-medium leading-tight tracking-[-0.3px] text-foreground">
+                    Good morning, Sofia.
+                    <br />
+                    You&apos;re <em className="not-italic text-primary">68%</em>{" "}
+                    of the way to conformity.
+                  </p>
+                </div>
+                <PreviewRing value={68} />
+              </div>
               <div className="mt-4 grid grid-cols-4 gap-2.5">
                 {[
                   ["12", "Products"],
-                  ["84%", "SBOM"],
+                  ["84%", "SBOM coverage"],
                   ["7", "Open vulns"],
                   ["3", "Overdue"],
                 ].map(([v, l]) => (
@@ -162,7 +171,7 @@ export function HeroSection() {
                     key={l}
                     className="rounded-lg border border-border px-3 py-2.5"
                   >
-                    <p className="font-heading text-[15px] font-semibold text-foreground">
+                    <p className="font-heading text-[18px] font-semibold tracking-[-0.4px] text-foreground">
                       {v}
                     </p>
                     <p className="mt-0.5 text-[9px] text-muted-foreground">{l}</p>
@@ -174,5 +183,34 @@ export function HeroSection() {
         </div>
       </div>
     </section>
+  );
+}
+
+/** Small static compliance ring for the hero's dashboard preview. */
+function PreviewRing({ value }: { value: number }) {
+  const size = 74;
+  const thickness = 8;
+  const r = (size - thickness) / 2;
+  const c = 2 * Math.PI * r;
+  return (
+    <div className="relative shrink-0" style={{ width: size, height: size }}>
+      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="-rotate-90">
+        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="var(--primary-3)" strokeWidth={thickness} />
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={r}
+          fill="none"
+          stroke="var(--primary)"
+          strokeWidth={thickness}
+          strokeLinecap="round"
+          strokeDasharray={`${(value / 100) * c} ${c}`}
+        />
+      </svg>
+      <span className="absolute inset-0 flex items-center justify-center font-heading text-[18px] font-semibold text-foreground">
+        {value}
+        <span className="text-[10px] text-muted-foreground">%</span>
+      </span>
+    </div>
   );
 }
