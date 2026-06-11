@@ -110,6 +110,15 @@ function LessonsGrid({ completed }: { completed: Set<string> }) {
   );
 }
 
+// Clay course-cover gradients (design `.sx-course [data-tone]` a–d), cycled
+// by lesson index so the grid reads varied without per-lesson config.
+const COURSE_TONES = [
+  "linear-gradient(135deg,#1f8a5b,#2fa56f)",
+  "linear-gradient(135deg,#2b2a26,#4a463d)",
+  "linear-gradient(135deg,#c0892e,#d9a64a)",
+  "linear-gradient(135deg,#3d6470,#56838f)",
+] as const;
+
 function LessonCard({
   id,
   index,
@@ -134,33 +143,36 @@ function LessonCard({
   return (
     <Link
       href={`/app/academy/${id}`}
-      className="group flex items-start gap-4 rounded-lg bg-card p-5 shadow-card-sm transition-shadow duration-300 hover:shadow-card-md"
+      className="group flex flex-col overflow-hidden rounded-lg bg-card shadow-card-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(60,40,20,0.07)]"
     >
-      {/* Status / index badge */}
-      <span
-        className={cn(
-          "flex size-11 shrink-0 items-center justify-center rounded-md text-l5",
-          done
-            ? "bg-success/10 text-success"
-            : "bg-primary/10 text-primary",
-        )}
+      {/* Gradient cover with lesson number / done badge */}
+      <div
+        className="relative h-[88px] shrink-0"
+        style={{ background: COURSE_TONES[(index - 1) % COURSE_TONES.length] }}
       >
-        {done ? (
-          <Icon
-            name="checkmark-circle-01-stroke-rounded"
-            size={22}
-            variant="Bold"
-          />
-        ) : (
-          <span className="tabular-nums">{index}</span>
-        )}
-      </span>
+        <span
+          className={cn(
+            "absolute left-4 top-4 flex size-9 items-center justify-center rounded-md text-l5",
+            done ? "bg-white text-primary" : "bg-white/20 text-white backdrop-blur-sm",
+          )}
+        >
+          {done ? (
+            <Icon
+              name="checkmark-circle-01-stroke-rounded"
+              size={20}
+              variant="Bold"
+            />
+          ) : (
+            <span className="tabular-nums">{index}</span>
+          )}
+        </span>
+      </div>
 
-      <div className="min-w-0 flex-1">
-        <p className="text-h6 text-foreground group-hover:text-primary">
+      <div className="min-w-0 flex-1 p-5">
+        <p className="font-heading text-[17px] font-semibold tracking-[-0.2px] text-foreground group-hover:text-primary">
           {title}
         </p>
-        <div className="mt-2 flex flex-wrap items-center gap-2 text-p4">
+        <div className="mt-3 flex flex-wrap items-center gap-2 text-p4">
           <span className="inline-flex items-center gap-1 text-muted-foreground">
             <Icon name="time-quarter-02-stroke-rounded" size={13} />
             {duration}
@@ -182,11 +194,6 @@ function LessonCard({
           )}
         </div>
       </div>
-      <Icon
-        name="arrow-right-01-stroke-rounded"
-        size={16}
-        className="mt-1 shrink-0 text-muted-foreground transition-colors group-hover:text-primary"
-      />
     </Link>
   );
 }
