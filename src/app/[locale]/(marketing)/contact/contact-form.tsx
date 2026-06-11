@@ -17,7 +17,6 @@ import { submitContactEnquiry, type ContactState } from "./actions";
  */
 export function ContactForm() {
   const t = useTranslations("contact.form");
-  const tc = useTranslations("common");
   const [state, action, isPending] = useActionState<ContactState, FormData>(
     submitContactEnquiry,
     undefined,
@@ -43,7 +42,10 @@ export function ContactForm() {
   }
 
   return (
-    <form action={action} className="flex flex-col gap-6">
+    <form
+      action={action}
+      className="flex flex-col gap-5 rounded-2xl border border-border bg-card p-6 sm:p-8"
+    >
       <div className="grid gap-5 sm:grid-cols-2">
         <div className="flex flex-col gap-2">
           <Label htmlFor="contact-name">{t("nameLabel")}</Label>
@@ -115,7 +117,7 @@ export function ContactForm() {
         value={captchaToken ?? ""}
       />
       <div className="flex justify-start">
-        <Turnstile onToken={setCaptchaToken} label={tc("securityCheck")} />
+        <Turnstile onToken={setCaptchaToken} />
       </div>
 
       {state?.status === "error" && (
@@ -134,11 +136,11 @@ export function ContactForm() {
         </p>
       )}
 
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-3 border-t border-border pt-5 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-p4-r text-muted-foreground">{t("privacy")}</p>
         <Button
           type="submit"
-          size="lg"
+          size="default"
           className="w-full shrink-0 sm:w-auto"
           disabled={isPending}
         >
