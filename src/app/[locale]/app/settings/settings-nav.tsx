@@ -17,8 +17,9 @@ const TABS = [
 const basePath = "/app/settings";
 
 /**
- * SettingsNav — Nask underlined tab strip. Active tab gets a primary-blue
- * underline + primary text; inactive tabs are muted-foreground.
+ * SettingsNav — the Clay left vertical nav (design `.sx-snav`): a sticky
+ * column of left-aligned items; the active one gets an accent-soft fill with
+ * accent text. On small screens it collapses to a horizontal scroll strip.
  */
 export function SettingsNav() {
   const t = useTranslations("settings");
@@ -29,25 +30,25 @@ export function SettingsNav() {
   }
 
   return (
-    <div className="flex w-full flex-wrap items-center gap-x-6 gap-y-1 border-b border-border">
+    <nav className="flex gap-1 overflow-x-auto lg:sticky lg:top-[88px] lg:flex-col lg:overflow-visible">
       {TABS.map((tab) => {
         const active = isActive(tab.segment);
         return (
           <Link
             key={tab.key}
             href={`${basePath}${tab.segment}`}
+            aria-current={active ? "page" : undefined}
             className={cn(
-              "relative flex h-11 items-center whitespace-nowrap text-l6 transition-colors",
-              active ? "text-primary" : "text-muted-foreground hover:text-foreground",
+              "whitespace-nowrap rounded-md px-3.5 py-2.5 text-[14px] transition-colors",
+              active
+                ? "bg-accent-soft font-semibold text-primary"
+                : "font-medium text-muted-foreground hover:bg-muted hover:text-foreground",
             )}
           >
             {t(tab.key)}
-            {active && (
-              <span className="absolute inset-x-0 -bottom-px h-[2px] bg-primary" />
-            )}
           </Link>
         );
       })}
-    </div>
+    </nav>
   );
 }

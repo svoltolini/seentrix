@@ -1,392 +1,393 @@
 {
- "settings": {
-  "title": "Settings",
-  "subtitle": "Manage your organization, team, and account.",
-  "nav": {
-   "organization": "Organization",
-   "entity": "Entity role",
-   "team": "Team",
-   "billing": "Billing",
-   "activity": "Activity",
-   "account": "Account",
-   "security": "Security"
-  },
-  "organization": {
-   "title": "Organization",
-   "subtitle": "Manage your organization details and preferences.",
-   "nameLabel": "Organization name",
-   "namePlaceholder": "Acme Inc.",
-   "legalTitle": "Legal identity",
-   "legalDescription": "Required on every Declaration of Conformity and technical file. Fill this in exactly as it appears on your incorporation documents.",
-   "legalName": "Legal entity name",
-   "legalNameHint": "Registered company name — may differ from the trading/display name above.",
-   "legalNamePlaceholder": "Acme GmbH",
-   "registrationNumber": "Registration or VAT number",
-   "registrationNumberHint": "Trade register (HRB), VAT ID, or equivalent national business registration.",
-   "registrationNumberPlaceholder": "DE123456789 or HRB 12345",
-   "signatoryTitle": "Signatory & contact",
-   "signatoryDescription": "The signatory is the natural person who signs the Declaration of Conformity. The contact email is the customer-facing public contact printed on product labels.",
-   "signatoryName": "Signatory name",
-   "signatoryNamePlaceholder": "Jane Doe",
-   "signatoryPosition": "Signatory position",
-   "signatoryPositionPlaceholder": "Chief Executive Officer",
-   "contactEmail": "Public contact email",
-   "website": "Website",
-   "addressTitle": "Registered Address",
-   "addressDescription": "Used in the Declaration of Conformity and other compliance documents.",
-   "addressLine1": "Address line 1",
-   "addressLine1Placeholder": "123 Main Street",
-   "addressLine2": "Address line 2",
-   "addressLine2Placeholder": "Suite 100",
-   "postalCode": "Postal code",
-   "postalCodePlaceholder": "12345",
-   "city": "City",
-   "cityPlaceholder": "Berlin",
-   "country": "Country",
-   "countryPlaceholder": "Germany",
-   "save": "Save changes",
-   "saving": "Saving…",
-   "saved": "Organization settings saved.",
-   "error": "Failed to save settings. Please try again.",
-   "readOnly": "Only admins can edit organization settings.",
-   "orgChart": "Organization chart",
-   "orgChartDescription": "Your team grouped by CRA role. Click a person to manage them.",
-   "seatsUsed": "{count} of {limit} seats used",
-   "seatsUsedUnlimited": "{count, plural, one {# seat used} other {# seats used}} · Unlimited",
-   "upgrade": "Upgrade",
-   "inviteToRole": "Invite a {role}",
-   "noOneYet": "No one yet",
-   "docReady": {
-    "eyebrow": "Compliance setup",
-    "title": "Declaration of Conformity is not ready to issue yet",
-    "description": "{count, plural, one {# required field is missing} other {# required fields are missing}} for CRA document generation. Fill them below — the conformity workflow will refuse to issue the DoC until everything on this page is complete.",
-    "cta": "Fill in now"
-   },
-   "dangerZone": {
-    "title": "Danger zone",
-    "subtitle": "Irreversible actions. Double-check before continuing.",
-    "exportTitle": "Export all organisation data",
-    "exportDescription": "Download every record scoped to this organisation as a single JSON file. Satisfies GDPR Art. 20 (portability).",
-    "exportCta": "Export data",
-    "exportInProgress": "Preparing export…",
-    "exportReady": "Export downloaded.",
-    "exportError": "Couldn't generate the export. Please try again.",
-    "deleteTitle": "Delete organisation",
-    "deleteDescription": "Schedules a permanent deletion of the organisation and every record linked to it. You have 30 days to cancel.",
-    "deleteCta": "Delete organisation",
-    "deleteScheduled": "Deletion scheduled. You have 30 days to cancel.",
-    "deleteError": "Couldn't request deletion. Please try again.",
-    "cancelDeletion": "Cancel deletion",
-    "cancellingDeletion": "Cancelling…",
-    "cancelSuccess": "Deletion cancelled.",
-    "cancelError": "Couldn't cancel the deletion. Please try again.",
-    "pendingTitle": "Deletion scheduled in {days} day(s).",
-    "pendingSubtitle": "All data will be purged on {date}. Cancel any time before then.",
-    "dialogTitle": "Delete this organisation?",
-    "dialogDescription": "This will remove every product, SBOM, declaration, incident report, training record, and team member in a 30-day grace window. After that, the data is permanently destroyed.",
-    "dialogPromptLabel": "Type \"{name}\" to confirm",
-    "dialogConfirm": "Schedule deletion",
-    "dialogCancel": "Cancel",
-    "deleting": "Scheduling…",
-    "confirmationMismatch": "The name you typed doesn't match. Deletion was not scheduled."
-   },
-   "tooltips": {
-    "name": {
-     "title": "Organization name",
-     "body": "The trading or display name users and teammates see inside Seentrix. This is the friendly name — it does not have to match your registered legal entity.",
-     "ref": "Internal only. The legally-binding name on compliance documents is the Legal entity name field below."
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Manage your organization, team, and account.",
+    "nav": {
+      "organization": "Organization",
+      "entity": "Entity role",
+      "team": "Team",
+      "billing": "Billing",
+      "activity": "Activity",
+      "account": "Account",
+      "security": "Security"
     },
-    "legalName": {
-     "title": "Legal entity name",
-     "body": "Registered company name exactly as it appears on your incorporation documents (e.g. Acme GmbH, Acme S.A.S.). May differ from the trading name — include the legal form suffix. Printed verbatim on the <g-doc>Declaration of Conformity</g-doc> and every <g-ce_marking>CE-marked</g-ce_marking> product label.",
-     "ref": "CRA <g-annex_v>Annex V(1)</g-annex_v> — the Declaration of Conformity must identify the legal person issuing it. Getting this wrong invalidates the declaration."
-    },
-    "registrationNumber": {
-     "title": "Registration or VAT number",
-     "body": "Trade register number (e.g. HRB 12345 in Germany), VAT ID (DE123456789), or equivalent national business registration. Enter exactly one — pick the identifier your national authority uses to look you up.",
-     "ref": "CRA Annex V(1)(b) — the Declaration of Conformity must include an identifier that unambiguously resolves the manufacturer. Market surveillance authorities use it to trace non-compliant products back to you."
-    },
-    "signatoryName": {
-     "title": "Signatory name",
-     "body": "The natural person who signs the Declaration of Conformity. Must be someone legally authorised to bind the organisation — typically the CEO, Managing Director, or an officer with delegated signing authority.",
-     "ref": "CRA Annex V(5) — the declaration is signed by a person acting on behalf of the manufacturer. An unauthorised signature can void the DoC."
-    },
-    "signatoryPosition": {
-     "title": "Signatory position",
-     "body": "Job title of the person signing (e.g. Chief Executive Officer, Managing Director, Head of Compliance). Printed under the signature on the Declaration of Conformity.",
-     "ref": "CRA Annex V(5) — along with the signatory name, this identifies who within the organisation takes legal responsibility for the declaration."
-    },
-    "contactEmail": {
-     "title": "Public contact email",
-     "body": "Customer-facing email printed on product labels, packaging, and the Declaration of Conformity. Must be monitored — market surveillance authorities and end users will use this to reach you.",
-     "ref": "CRA Article 13(4) — manufacturers must provide a single point of contact for cybersecurity matters on the product, packaging, or accompanying documentation."
-    },
-    "website": {
-     "title": "Website",
-     "body": "Corporate website URL. Optional but strongly recommended — it appears on the DoC and gives regulators and end users a second channel to verify your identity.",
-     "ref": "CRA Article 13(4) — not mandatory but counts as acceptable contact information alongside the public email."
-    },
-    "addressLine1": {
-     "title": "Registered address line 1",
-     "body": "Street and number of your registered corporate address — the address on your incorporation documents, not a PO box or shipping depot.",
-     "ref": "CRA Annex V(1)(a) — postal address of the manufacturer, printed on the Declaration of Conformity."
-    },
-    "addressLine2": {
-     "title": "Address line 2",
-     "body": "Optional second line for suite, floor, building name, or similar. Leave blank if your address is a single line.",
-     "ref": "Appended to address line 1 on the Declaration of Conformity when present."
-    },
-    "postalCode": {
-     "title": "Postal code",
-     "body": "ZIP or postal code of your registered address. Format must match your country's convention (e.g. 5 digits for Germany, alphanumeric for the UK).",
-     "ref": "CRA Annex V(1)(a) — part of the postal address block on the Declaration of Conformity."
-    },
-    "city": {
-     "title": "City",
-     "body": "City or locality of your registered address. Also used as the \"place\" field on the signed Declaration of Conformity (\"Signed in {city}, on {date}\").",
-     "ref": "CRA Annex V(6) — the declaration records the place where it was issued, which must match an address that can be linked back to you."
-    },
-    "country": {
-     "title": "Country",
-     "body": "Country of your registered corporate seat. If this is outside the EU, you also need an Authorised Representative in the Union — configure that on the Entity Role tab.",
-     "ref": "CRA Article 18 — manufacturers established outside the Union must appoint an authorised representative in the EU before placing products on the market."
-    }
-   },
-   "readOnlyBadge": "Locked",
-   "editDetails": "Edit details",
-   "cancel": "Cancel",
-   "orgChartTotalMembers": "{count, plural, one {# team member} other {# team members}}",
-   "orgChartCapacity": "Seat capacity",
-   "inviteShort": "Invite"
-  },
-  "team": {
-   "title": "Team",
-   "subtitle": "Manage who has access to your organization.",
-   "members": "Members",
-   "memberCount": "{count} member",
-   "memberCountPlural": "{count} members",
-   "createTitle": "Add a team member",
-   "createDescription": "Create an account for a new team member. They will need to change their password on first login.",
-   "createEmail": "Email",
-   "createEmailPlaceholder": "colleague@company.com",
-   "createName": "Full name",
-   "createNamePlaceholder": "Jane Doe",
-   "createRoleLabel": "Role",
-   "createPassword": "Temporary password",
-   "createPasswordPlaceholder": "Min. 8 characters",
-   "tooltips": {
-    "email": {
-     "title": "Team member's email",
-     "body": "The email address the new member will use to sign in. Must be unique across the entire Seentrix platform — if it's already in use elsewhere, the invitation fails. Also becomes the audit-log identity for every action they take.",
-     "ref": "Activity log entries are stored with the user's immutable auth ID, but the email is what regulators see in exported audit trails."
-    },
-    "fullName": {
-     "title": "Full name",
-     "body": "Legal or display name shown throughout Seentrix. Also printed on activity log exports and appears as the creator/assignee on vulnerabilities, incidents, and checklist items.",
-     "ref": "NIS2 Article 20 (where applicable) — audit-ready staff rosters need identifiable names, not just emails."
-    },
-    "role": {
-     "title": "Role",
-     "body": "Controls what this member can do. Admin: everything. Compliance officer: compliance-critical changes (entity role, DoC issue, incident reports). CTO: same as Compliance officer minus billing. Editor: products, vulnerabilities, checklist items; cannot issue DoC. Viewer: read-only.",
-     "ref": "CRA doesn't mandate specific roles, but segregation of duties between the person who signs the DoC and the person who operates the product is expected during audits. Pick a role that matches the person's actual responsibility."
-    },
-    "password": {
-     "title": "Temporary password",
-     "body": "First-login password you share with the member. They must change it on first sign-in — the must_change_password flag is set automatically. Use a fresh one-time password generator; don't reuse existing passwords.",
-     "ref": "Defense-in-depth — the temporary password is only valid until first login. If a member never logs in, rotate or remove them via the team list."
-    }
-   },
-   "createMember": "Create member",
-   "creatingMember": "Creating…",
-   "memberCreated": "Team member created successfully.",
-   "createError": "Failed to create team member.",
-   "createErrors": {
-    "notAdmin": "Only admins can add team members.",
-    "emailInUse": "This email is already registered.",
-    "limitReached": "Your plan's member limit has been reached.",
-    "passwordTooShort": "Password must be at least 8 characters.",
-    "invalidRole": "Invalid role selected."
-   },
-   "credentialsTitle": "Account created",
-   "credentialsHint": "Share these credentials with the new team member. They will be asked to set a new password on first login.",
-   "credentialsCopied": "Credentials copied to clipboard.",
-   "pendingPassword": "Pending",
-   "removeMember": "Remove",
-   "removeMemberConfirm": "Remove team member?",
-   "removeMemberDescription": "Are you sure you want to remove {name} from your organization? They will lose access immediately.",
-   "removeMemberCancel": "Cancel",
-   "removeMemberSubmit": "Remove",
-   "removed": "Team member removed.",
-   "removeError": "Failed to remove team member.",
-   "changeRole": "Change role",
-   "changeRoleConfirm": "Change role?",
-   "changeRoleDescription": "Change {name}'s role from {oldRole} to {newRole}?",
-   "changeRoleCancel": "Cancel",
-   "changeRoleSubmit": "Change role",
-   "roleChanged": "Role updated.",
-   "roleChangeError": "Failed to change role.",
-   "lastAdminError": "Cannot change the last admin's role.",
-   "you": "You",
-   "adminOnly": "Only admins can manage the team.",
-   "roles": {
-    "admin": "Admin",
-    "compliance_officer": "Compliance Officer",
-    "cto": "CTO",
-    "editor": "Editor",
-    "viewer": "Viewer"
-   },
-   "limits": {
-    "reached": "Team member limit reached",
-    "reachedDescription": "Your {plan} plan allows up to {limit} team member.",
-    "reachedDescriptionPlural": "Your {plan} plan allows up to {limit} team members.",
-    "upgrade": "Upgrade plan"
-   }
-  },
-  "activity": {
-   "title": "Activity Log",
-   "subtitle": "Track all changes made within your organization.",
-   "download": "Download",
-   "empty": "No activity yet.",
-   "exportPeriod": {
-    "1": "Last month",
-    "6": "Last 6 months",
-    "12": "Last 12 months"
-   },
-   "relative": {
-    "justNow": "just now",
-    "minutesAgo": "{count, plural, one {# minute ago} other {# minutes ago}}",
-    "hoursAgo": "{count, plural, one {# hour ago} other {# hours ago}}",
-    "daysAgo": "{count, plural, one {# day ago} other {# days ago}}"
-   },
-   "actions": {
     "organization": {
-     "created": "created the organization",
-     "updated": "updated the organization details",
-     "security_updated": "updated the public security page",
-     "entity_type_changed": "changed the organization's operator role"
+      "title": "Organization",
+      "subtitle": "Manage your organization details and preferences.",
+      "nameLabel": "Organization name",
+      "namePlaceholder": "Acme Inc.",
+      "legalTitle": "Legal identity",
+      "legalDescription": "Required on every Declaration of Conformity and technical file. Fill this in exactly as it appears on your incorporation documents.",
+      "legalName": "Legal entity name",
+      "legalNameHint": "Registered company name — may differ from the trading/display name above.",
+      "legalNamePlaceholder": "Acme GmbH",
+      "registrationNumber": "Registration or VAT number",
+      "registrationNumberHint": "Trade register (HRB), VAT ID, or equivalent national business registration.",
+      "registrationNumberPlaceholder": "DE123456789 or HRB 12345",
+      "signatoryTitle": "Signatory & contact",
+      "signatoryDescription": "The signatory is the natural person who signs the Declaration of Conformity. The contact email is the customer-facing public contact printed on product labels.",
+      "signatoryName": "Signatory name",
+      "signatoryNamePlaceholder": "Jane Doe",
+      "signatoryPosition": "Signatory position",
+      "signatoryPositionPlaceholder": "Chief Executive Officer",
+      "contactEmail": "Public contact email",
+      "website": "Website",
+      "addressTitle": "Registered Address",
+      "addressDescription": "Used in the Declaration of Conformity and other compliance documents.",
+      "addressLine1": "Address line 1",
+      "addressLine1Placeholder": "123 Main Street",
+      "addressLine2": "Address line 2",
+      "addressLine2Placeholder": "Suite 100",
+      "postalCode": "Postal code",
+      "postalCodePlaceholder": "12345",
+      "city": "City",
+      "cityPlaceholder": "Berlin",
+      "country": "Country",
+      "countryPlaceholder": "Germany",
+      "save": "Save changes",
+      "saving": "Saving…",
+      "saved": "Organization settings saved.",
+      "error": "Failed to save settings. Please try again.",
+      "readOnly": "Only admins can edit organization settings.",
+      "orgChart": "Organization chart",
+      "orgChartDescription": "Your team grouped by CRA role. Click a person to manage them.",
+      "seatsUsed": "{count} of {limit} seats used",
+      "seatsUsedUnlimited": "{count, plural, one {# seat used} other {# seats used}} · Unlimited",
+      "upgrade": "Upgrade",
+      "inviteToRole": "Invite a {role}",
+      "noOneYet": "No one yet",
+      "docReady": {
+        "eyebrow": "Compliance setup",
+        "title": "Declaration of Conformity is not ready to issue yet",
+        "description": "{count, plural, one {# required field is missing} other {# required fields are missing}} for CRA document generation. Fill them below — the conformity workflow will refuse to issue the DoC until everything on this page is complete.",
+        "cta": "Fill in now"
+      },
+      "dangerZone": {
+        "title": "Danger zone",
+        "subtitle": "Irreversible actions. Double-check before continuing.",
+        "exportTitle": "Export all organisation data",
+        "exportDescription": "Download every record scoped to this organisation as a single JSON file. Satisfies GDPR Art. 20 (portability).",
+        "exportCta": "Export data",
+        "exportInProgress": "Preparing export…",
+        "exportReady": "Export downloaded.",
+        "exportError": "Couldn't generate the export. Please try again.",
+        "deleteTitle": "Delete organisation",
+        "deleteDescription": "Schedules a permanent deletion of the organisation and every record linked to it. You have 30 days to cancel.",
+        "deleteCta": "Delete organisation",
+        "deleteScheduled": "Deletion scheduled. You have 30 days to cancel.",
+        "deleteError": "Couldn't request deletion. Please try again.",
+        "cancelDeletion": "Cancel deletion",
+        "cancellingDeletion": "Cancelling…",
+        "cancelSuccess": "Deletion cancelled.",
+        "cancelError": "Couldn't cancel the deletion. Please try again.",
+        "pendingTitle": "Deletion scheduled in {days} day(s).",
+        "pendingSubtitle": "All data will be purged on {date}. Cancel any time before then.",
+        "dialogTitle": "Delete this organisation?",
+        "dialogDescription": "This will remove every product, SBOM, declaration, incident report, training record, and team member in a 30-day grace window. After that, the data is permanently destroyed.",
+        "dialogPromptLabel": "Type \"{name}\" to confirm",
+        "dialogConfirm": "Schedule deletion",
+        "dialogCancel": "Cancel",
+        "deleting": "Scheduling…",
+        "confirmationMismatch": "The name you typed doesn't match. Deletion was not scheduled."
+      },
+      "tooltips": {
+        "name": {
+          "title": "Organization name",
+          "body": "The trading or display name users and teammates see inside Seentrix. This is the friendly name — it does not have to match your registered legal entity.",
+          "ref": "Internal only. The legally-binding name on compliance documents is the Legal entity name field below."
+        },
+        "legalName": {
+          "title": "Legal entity name",
+          "body": "Registered company name exactly as it appears on your incorporation documents (e.g. Acme GmbH, Acme S.A.S.). May differ from the trading name — include the legal form suffix. Printed verbatim on the <g-doc>Declaration of Conformity</g-doc> and every <g-ce_marking>CE-marked</g-ce_marking> product label.",
+          "ref": "CRA <g-annex_v>Annex V(1)</g-annex_v> — the Declaration of Conformity must identify the legal person issuing it. Getting this wrong invalidates the declaration."
+        },
+        "registrationNumber": {
+          "title": "Registration or VAT number",
+          "body": "Trade register number (e.g. HRB 12345 in Germany), VAT ID (DE123456789), or equivalent national business registration. Enter exactly one — pick the identifier your national authority uses to look you up.",
+          "ref": "CRA Annex V(1)(b) — the Declaration of Conformity must include an identifier that unambiguously resolves the manufacturer. Market surveillance authorities use it to trace non-compliant products back to you."
+        },
+        "signatoryName": {
+          "title": "Signatory name",
+          "body": "The natural person who signs the Declaration of Conformity. Must be someone legally authorised to bind the organisation — typically the CEO, Managing Director, or an officer with delegated signing authority.",
+          "ref": "CRA Annex V(5) — the declaration is signed by a person acting on behalf of the manufacturer. An unauthorised signature can void the DoC."
+        },
+        "signatoryPosition": {
+          "title": "Signatory position",
+          "body": "Job title of the person signing (e.g. Chief Executive Officer, Managing Director, Head of Compliance). Printed under the signature on the Declaration of Conformity.",
+          "ref": "CRA Annex V(5) — along with the signatory name, this identifies who within the organisation takes legal responsibility for the declaration."
+        },
+        "contactEmail": {
+          "title": "Public contact email",
+          "body": "Customer-facing email printed on product labels, packaging, and the Declaration of Conformity. Must be monitored — market surveillance authorities and end users will use this to reach you.",
+          "ref": "CRA Article 13(4) — manufacturers must provide a single point of contact for cybersecurity matters on the product, packaging, or accompanying documentation."
+        },
+        "website": {
+          "title": "Website",
+          "body": "Corporate website URL. Optional but strongly recommended — it appears on the DoC and gives regulators and end users a second channel to verify your identity.",
+          "ref": "CRA Article 13(4) — not mandatory but counts as acceptable contact information alongside the public email."
+        },
+        "addressLine1": {
+          "title": "Registered address line 1",
+          "body": "Street and number of your registered corporate address — the address on your incorporation documents, not a PO box or shipping depot.",
+          "ref": "CRA Annex V(1)(a) — postal address of the manufacturer, printed on the Declaration of Conformity."
+        },
+        "addressLine2": {
+          "title": "Address line 2",
+          "body": "Optional second line for suite, floor, building name, or similar. Leave blank if your address is a single line.",
+          "ref": "Appended to address line 1 on the Declaration of Conformity when present."
+        },
+        "postalCode": {
+          "title": "Postal code",
+          "body": "ZIP or postal code of your registered address. Format must match your country's convention (e.g. 5 digits for Germany, alphanumeric for the UK).",
+          "ref": "CRA Annex V(1)(a) — part of the postal address block on the Declaration of Conformity."
+        },
+        "city": {
+          "title": "City",
+          "body": "City or locality of your registered address. Also used as the \"place\" field on the signed Declaration of Conformity (\"Signed in {city}, on {date}\").",
+          "ref": "CRA Annex V(6) — the declaration records the place where it was issued, which must match an address that can be linked back to you."
+        },
+        "country": {
+          "title": "Country",
+          "body": "Country of your registered corporate seat. If this is outside the EU, you also need an Authorised Representative in the Union — configure that on the Entity Role tab.",
+          "ref": "CRA Article 18 — manufacturers established outside the Union must appoint an authorised representative in the EU before placing products on the market."
+        }
+      },
+      "readOnlyBadge": "Locked",
+      "editDetails": "Edit details",
+      "cancel": "Cancel",
+      "orgChartTotalMembers": "{count, plural, one {# team member} other {# team members}}",
+      "orgChartCapacity": "Seat capacity",
+      "inviteShort": "Invite"
     },
-    "member": {
-     "created": "added a new team member",
-     "removed": "removed a team member",
-     "role_changed": "changed a team member's role"
+    "team": {
+      "title": "Team",
+      "subtitle": "Manage who has access to your organization.",
+      "members": "Members",
+      "memberCount": "{count} member",
+      "memberCountPlural": "{count} members",
+      "createTitle": "Add a team member",
+      "createDescription": "Create an account for a new team member. They will need to change their password on first login.",
+      "createEmail": "Email",
+      "createEmailPlaceholder": "colleague@company.com",
+      "createName": "Full name",
+      "createNamePlaceholder": "Jane Doe",
+      "createRoleLabel": "Role",
+      "createPassword": "Temporary password",
+      "createPasswordPlaceholder": "Min. 8 characters",
+      "tooltips": {
+        "email": {
+          "title": "Team member's email",
+          "body": "The email address the new member will use to sign in. Must be unique across the entire Seentrix platform — if it's already in use elsewhere, the invitation fails. Also becomes the audit-log identity for every action they take.",
+          "ref": "Activity log entries are stored with the user's immutable auth ID, but the email is what regulators see in exported audit trails."
+        },
+        "fullName": {
+          "title": "Full name",
+          "body": "Legal or display name shown throughout Seentrix. Also printed on activity log exports and appears as the creator/assignee on vulnerabilities, incidents, and checklist items.",
+          "ref": "NIS2 Article 20 (where applicable) — audit-ready staff rosters need identifiable names, not just emails."
+        },
+        "role": {
+          "title": "Role",
+          "body": "Controls what this member can do. Admin: everything. Compliance officer: compliance-critical changes (entity role, DoC issue, incident reports). CTO: same as Compliance officer minus billing. Editor: products, vulnerabilities, checklist items; cannot issue DoC. Viewer: read-only.",
+          "ref": "CRA doesn't mandate specific roles, but segregation of duties between the person who signs the DoC and the person who operates the product is expected during audits. Pick a role that matches the person's actual responsibility."
+        },
+        "password": {
+          "title": "Temporary password",
+          "body": "First-login password you share with the member. They must change it on first sign-in — the must_change_password flag is set automatically. Use a fresh one-time password generator; don't reuse existing passwords.",
+          "ref": "Defense-in-depth — the temporary password is only valid until first login. If a member never logs in, rotate or remove them via the team list."
+        }
+      },
+      "createMember": "Create member",
+      "creatingMember": "Creating…",
+      "memberCreated": "Team member created successfully.",
+      "createError": "Failed to create team member.",
+      "createErrors": {
+        "notAdmin": "Only admins can add team members.",
+        "emailInUse": "This email is already registered.",
+        "limitReached": "Your plan's member limit has been reached.",
+        "passwordTooShort": "Password must be at least 8 characters.",
+        "invalidRole": "Invalid role selected."
+      },
+      "credentialsTitle": "Account created",
+      "credentialsHint": "Share these credentials with the new team member. They will be asked to set a new password on first login.",
+      "credentialsCopied": "Credentials copied to clipboard.",
+      "pendingPassword": "Pending",
+      "removeMember": "Remove",
+      "removeMemberConfirm": "Remove team member?",
+      "removeMemberDescription": "Are you sure you want to remove {name} from your organization? They will lose access immediately.",
+      "removeMemberCancel": "Cancel",
+      "removeMemberSubmit": "Remove",
+      "removed": "Team member removed.",
+      "removeError": "Failed to remove team member.",
+      "changeRole": "Change role",
+      "changeRoleConfirm": "Change role?",
+      "changeRoleDescription": "Change {name}'s role from {oldRole} to {newRole}?",
+      "changeRoleCancel": "Cancel",
+      "changeRoleSubmit": "Change role",
+      "roleChanged": "Role updated.",
+      "roleChangeError": "Failed to change role.",
+      "lastAdminError": "Cannot change the last admin's role.",
+      "you": "You",
+      "adminOnly": "Only admins can manage the team.",
+      "roles": {
+        "admin": "Admin",
+        "compliance_officer": "Compliance Officer",
+        "cto": "CTO",
+        "editor": "Editor",
+        "viewer": "Viewer"
+      },
+      "limits": {
+        "reached": "Team member limit reached",
+        "reachedDescription": "Your {plan} plan allows up to {limit} team member.",
+        "reachedDescriptionPlural": "Your {plan} plan allows up to {limit} team members.",
+        "upgrade": "Upgrade plan"
+      }
     },
-    "profile": {
-     "updated": "updated their profile"
+    "activity": {
+      "title": "Activity Log",
+      "subtitle": "Track all changes made within your organization.",
+      "download": "Download",
+      "empty": "No activity yet.",
+      "exportPeriod": {
+        "1": "Last month",
+        "6": "Last 6 months",
+        "12": "Last 12 months"
+      },
+      "relative": {
+        "justNow": "just now",
+        "minutesAgo": "{count, plural, one {# minute ago} other {# minutes ago}}",
+        "hoursAgo": "{count, plural, one {# hour ago} other {# hours ago}}",
+        "daysAgo": "{count, plural, one {# day ago} other {# days ago}}"
+      },
+      "actions": {
+        "organization": {
+          "created": "created the organization",
+          "updated": "updated the organization details",
+          "security_updated": "updated the public security page",
+          "entity_type_changed": "changed the organization's operator role"
+        },
+        "member": {
+          "created": "added a new team member",
+          "removed": "removed a team member",
+          "role_changed": "changed a team member's role"
+        },
+        "profile": {
+          "updated": "updated their profile"
+        },
+        "password": {
+          "changed": "changed their password"
+        },
+        "product": {
+          "created": "added a new product",
+          "updated": "updated product details for",
+          "deleted": "deleted a product",
+          "assessed": "completed the CRA assessment for",
+          "support_updated": "updated the support period for"
+        },
+        "document": {
+          "saved": "saved document changes for",
+          "status_changed": "changed a document's status",
+          "pdf_generated": "generated a PDF for"
+        },
+        "sbom": {
+          "uploaded": "uploaded a new SBOM",
+          "deleted": "deleted an SBOM",
+          "scanned": "scanned an SBOM for vulnerabilities",
+          "activated": "activated the SBOM",
+          "archived": "archived an SBOM"
+        },
+        "checklist": {
+          "item_status_changed": "updated a CRA checklist item",
+          "item_description_changed": "edited notes on a checklist item",
+          "evidence_uploaded": "uploaded evidence",
+          "evidence_removed": "removed evidence",
+          "item_assigned": "assigned a checklist item"
+        },
+        "vulnerability": {
+          "open": "reopened a vulnerability",
+          "in_progress": "started working on a vulnerability",
+          "resolved": "resolved a vulnerability",
+          "accepted": "accepted the risk of a vulnerability",
+          "assigned": "assigned a vulnerability",
+          "note_added": "added notes to a vulnerability",
+          "marked_exploited": "flagged a vulnerability as actively exploited",
+          "unmarked_exploited": "cleared the actively-exploited flag on a vulnerability"
+        },
+        "vulnerability_report": {
+          "triage": "re-queued a vulnerability report for triage",
+          "accepted": "accepted a vulnerability report",
+          "investigating": "started investigating a vulnerability report",
+          "resolved": "resolved a vulnerability report",
+          "duplicate": "marked a vulnerability report as duplicate",
+          "spam": "marked a vulnerability report as spam"
+        },
+        "incident": {
+          "detected": "opened a new incident",
+          "updated": "updated an incident",
+          "early_warning_submitted": "submitted the 24-hour early warning",
+          "incident_report_submitted": "submitted the 72-hour incident report",
+          "final_report_submitted": "submitted the 14-day final report",
+          "user_notified": "notified affected users of an incident",
+          "closed": "closed an incident"
+        },
+        "release": {
+          "published": "published a new release",
+          "deleted": "deleted a release"
+        },
+        "conformity": {
+          "step_completed": "completed a conformity-assessment step",
+          "step_reopened": "reopened a conformity-assessment step",
+          "notified_body_updated": "updated the notified-body record",
+          "declaration_issued": "issued a Declaration of Conformity for"
+        },
+        "entity_obligation": {
+          "updated": "updated a compliance obligation"
+        },
+        "billing": {
+          "checkout_created": "started a plan checkout"
+        },
+        "academy": {
+          "lesson_completed": "completed an Academy lesson"
+        }
+      }
     },
-    "password": {
-     "changed": "changed their password"
+    "account": {
+      "title": "Account",
+      "subtitle": "Manage your personal account settings.",
+      "profileTitle": "Profile",
+      "avatarLabel": "Profile photo",
+      "avatarHint": "Click to upload (JPG, PNG, WebP, max 2MB)",
+      "avatarUploading": "Uploading…",
+      "nameLabel": "Full name",
+      "namePlaceholder": "John Doe",
+      "emailLabel": "Email",
+      "emailDescription": "Your email is managed through your authentication provider.",
+      "saveProfile": "Save profile",
+      "savingProfile": "Saving…",
+      "profileSaved": "Profile updated.",
+      "profileError": "Failed to update profile.",
+      "avatarError": "Could not upload your photo. Please try a smaller JPG or PNG and try again.",
+      "passwordTitle": "Change password",
+      "currentPassword": "Current password",
+      "newPassword": "New password",
+      "newPasswordPlaceholder": "Minimum 8 characters",
+      "changePassword": "Change password",
+      "changingPassword": "Changing…",
+      "passwordChanged": "Password changed successfully.",
+      "passwordError": "Failed to change password. Please check your current password.",
+      "dangerTitle": "Danger Zone",
+      "logoutButton": "Log out",
+      "logoutDescription": "Sign out of your Seentrix account on this device."
     },
-    "product": {
-     "created": "added a new product",
-     "updated": "updated product details for",
-     "deleted": "deleted a product",
-     "assessed": "completed the CRA assessment for",
-     "support_updated": "updated the support period for"
+    "language": {
+      "title": "Language",
+      "label": "Language",
+      "description": "Choose the language for the entire app — interface, Academy, the AI Copilot, and the documents you generate.",
+      "saved": "Language updated"
     },
-    "document": {
-     "saved": "saved document changes for",
-     "status_changed": "changed a document's status",
-     "pdf_generated": "generated a PDF for"
+    "toast": {
+      "success": "Success",
+      "error": "Error"
     },
-    "sbom": {
-     "uploaded": "uploaded a new SBOM",
-     "deleted": "deleted an SBOM",
-     "scanned": "scanned an SBOM for vulnerabilities",
-     "activated": "activated the SBOM",
-     "archived": "archived an SBOM"
-    },
-    "checklist": {
-     "item_status_changed": "updated a CRA checklist item",
-     "item_description_changed": "edited notes on a checklist item",
-     "evidence_uploaded": "uploaded evidence",
-     "evidence_removed": "removed evidence",
-     "item_assigned": "assigned a checklist item"
-    },
-    "vulnerability": {
-     "open": "reopened a vulnerability",
-     "in_progress": "started working on a vulnerability",
-     "resolved": "resolved a vulnerability",
-     "accepted": "accepted the risk of a vulnerability",
-     "assigned": "assigned a vulnerability",
-     "note_added": "added notes to a vulnerability",
-     "marked_exploited": "flagged a vulnerability as actively exploited",
-     "unmarked_exploited": "cleared the actively-exploited flag on a vulnerability"
-    },
-    "vulnerability_report": {
-     "triage": "re-queued a vulnerability report for triage",
-     "accepted": "accepted a vulnerability report",
-     "investigating": "started investigating a vulnerability report",
-     "resolved": "resolved a vulnerability report",
-     "duplicate": "marked a vulnerability report as duplicate",
-     "spam": "marked a vulnerability report as spam"
-    },
-    "incident": {
-     "detected": "opened a new incident",
-     "updated": "updated an incident",
-     "early_warning_submitted": "submitted the 24-hour early warning",
-     "incident_report_submitted": "submitted the 72-hour incident report",
-     "final_report_submitted": "submitted the 14-day final report",
-     "user_notified": "notified affected users of an incident",
-     "closed": "closed an incident"
-    },
-    "release": {
-     "published": "published a new release",
-     "deleted": "deleted a release"
-    },
-    "conformity": {
-     "step_completed": "completed a conformity-assessment step",
-     "step_reopened": "reopened a conformity-assessment step",
-     "notified_body_updated": "updated the notified-body record",
-     "declaration_issued": "issued a Declaration of Conformity for"
-    },
-    "entity_obligation": {
-     "updated": "updated a compliance obligation"
-    },
-    "billing": {
-     "checkout_created": "started a plan checkout"
-    },
-    "academy": {
-     "lesson_completed": "completed an Academy lesson"
-    }
-   }
-  },
-  "account": {
-   "title": "Account",
-   "subtitle": "Manage your personal account settings.",
-   "profileTitle": "Profile",
-   "avatarLabel": "Profile photo",
-   "avatarHint": "Click to upload (JPG, PNG, WebP, max 2MB)",
-   "avatarUploading": "Uploading…",
-   "nameLabel": "Full name",
-   "namePlaceholder": "John Doe",
-   "emailLabel": "Email",
-   "emailDescription": "Your email is managed through your authentication provider.",
-   "saveProfile": "Save profile",
-   "savingProfile": "Saving…",
-   "profileSaved": "Profile updated.",
-   "profileError": "Failed to update profile.",
-   "avatarError": "Could not upload your photo. Please try a smaller JPG or PNG and try again.",
-   "passwordTitle": "Change password",
-   "currentPassword": "Current password",
-   "newPassword": "New password",
-   "newPasswordPlaceholder": "Minimum 8 characters",
-   "changePassword": "Change password",
-   "changingPassword": "Changing…",
-   "passwordChanged": "Password changed successfully.",
-   "passwordError": "Failed to change password. Please check your current password.",
-   "dangerTitle": "Danger Zone",
-   "logoutButton": "Log out",
-   "logoutDescription": "Sign out of your Seentrix account on this device."
-  },
-  "language": {
-   "title": "Language",
-   "label": "Language",
-   "description": "Choose the language for the entire app — interface, Academy, the AI Copilot, and the documents you generate.",
-   "saved": "Language updated"
-  },
-  "toast": {
-   "success": "Success",
-   "error": "Error"
+    "eyebrow": "Workspace"
   }
- }
 }

@@ -1,392 +1,393 @@
 {
- "settings": {
-  "title": "Einstellungen",
-  "subtitle": "Verwalten Sie Ihre Organisation, Ihr Team und Ihr Konto.",
-  "nav": {
-   "organization": "Organisation",
-   "entity": "Wirtschaftsakteursrolle",
-   "team": "Team",
-   "billing": "Abrechnung",
-   "activity": "Aktivität",
-   "account": "Konto",
-   "security": "Sicherheit"
-  },
-  "organization": {
-   "title": "Organisation",
-   "subtitle": "Verwalten Sie Ihre Organisationsdetails und -einstellungen.",
-   "nameLabel": "Organisationsname",
-   "namePlaceholder": "Muster GmbH",
-   "legalTitle": "Rechtliche Identität",
-   "legalDescription": "Erforderlich für jede Konformitätserklärung und jede technische Dokumentation. Füllen Sie dies genau so aus, wie es in Ihren Gründungsdokumenten erscheint.",
-   "legalName": "Name der juristischen Person",
-   "legalNameHint": "Eingetragener Firmenname – kann vom Handels-/Anzeigenamen oben abweichen.",
-   "legalNamePlaceholder": "Muster GmbH",
-   "registrationNumber": "Handelsregister- oder Umsatzsteuer-ID",
-   "registrationNumberHint": "Handelsregisternummer (HRB), Umsatzsteuer-ID oder entsprechende nationale Unternehmensregistrierung.",
-   "registrationNumberPlaceholder": "DE123456789 oder HRB 12345",
-   "signatoryTitle": "Unterzeichner & Kontakt",
-   "signatoryDescription": "Der Unterzeichner ist die natürliche Person, die die Konformitätserklärung unterzeichnet. Die Kontakt-E-Mail ist der öffentliche, kundenseitige Kontakt, der auf Produktetiketten gedruckt wird.",
-   "signatoryName": "Name des Unterzeichners",
-   "signatoryNamePlaceholder": "Erika Mustermann",
-   "signatoryPosition": "Position des Unterzeichners",
-   "signatoryPositionPlaceholder": "Chief Executive Officer",
-   "contactEmail": "Öffentliche Kontakt-E-Mail",
-   "website": "Website",
-   "addressTitle": "Eingetragene Adresse",
-   "addressDescription": "Wird in der Konformitätserklärung und anderen Compliance-Dokumenten verwendet.",
-   "addressLine1": "Adresszeile 1",
-   "addressLine1Placeholder": "Musterstraße 12",
-   "addressLine2": "Adresszeile 2",
-   "addressLine2Placeholder": "Etage 100",
-   "postalCode": "Postleitzahl",
-   "postalCodePlaceholder": "12345",
-   "city": "Stadt",
-   "cityPlaceholder": "Berlin",
-   "country": "Land",
-   "countryPlaceholder": "Deutschland",
-   "save": "Änderungen speichern",
-   "saving": "Wird gespeichert…",
-   "saved": "Organisationseinstellungen gespeichert.",
-   "error": "Einstellungen konnten nicht gespeichert werden. Bitte versuchen Sie es erneut.",
-   "readOnly": "Nur Administratoren können Organisationseinstellungen bearbeiten.",
-   "orgChart": "Organisationsdiagramm",
-   "orgChartDescription": "Ihr Team, nach CRA-Rolle gruppiert. Klicken Sie auf eine Person, um diese zu verwalten.",
-   "seatsUsed": "{count} von {limit} Plätzen belegt",
-   "seatsUsedUnlimited": "{count, plural, one {# Platz belegt} other {# Plätze belegt}} · Unbegrenzt",
-   "upgrade": "Upgrade",
-   "inviteToRole": "Eine Person als {role} einladen",
-   "noOneYet": "Noch niemand",
-   "docReady": {
-    "eyebrow": "Compliance-Einrichtung",
-    "title": "Konformitätserklärung kann noch nicht ausgestellt werden",
-    "description": "{count, plural, one {# erforderliches Feld fehlt} other {# erforderliche Felder fehlen}} für die Erstellung von CRA-Dokumenten. Füllen Sie sie unten aus – der Konformitäts-Workflow verweigert die Ausstellung der Konformitätserklärung, bis alle Felder auf dieser Seite vollständig sind.",
-    "cta": "Jetzt ausfüllen"
-   },
-   "dangerZone": {
-    "title": "Gefahrenbereich",
-    "subtitle": "Nicht umkehrbare Aktionen. Bitte prüfen Sie sorgfältig, bevor Sie fortfahren.",
-    "exportTitle": "Alle Organisationsdaten exportieren",
-    "exportDescription": "Laden Sie alle dieser Organisation zugeordneten Datensätze als einzelne JSON-Datei herunter. Erfüllt DSGVO Art. 20 (Portabilität).",
-    "exportCta": "Daten exportieren",
-    "exportInProgress": "Export wird vorbereitet…",
-    "exportReady": "Export heruntergeladen.",
-    "exportError": "Export konnte nicht erstellt werden. Bitte versuchen Sie es erneut.",
-    "deleteTitle": "Organisation löschen",
-    "deleteDescription": "Plant eine dauerhafte Löschung der Organisation und aller damit verknüpften Datensätze. Sie haben 30 Tage Zeit zum Widerrufen.",
-    "deleteCta": "Organisation löschen",
-    "deleteScheduled": "Löschung geplant. Sie haben 30 Tage Zeit zum Widerrufen.",
-    "deleteError": "Löschung konnte nicht beantragt werden. Bitte versuchen Sie es erneut.",
-    "cancelDeletion": "Löschung widerrufen",
-    "cancellingDeletion": "Wird widerrufen…",
-    "cancelSuccess": "Löschung widerrufen.",
-    "cancelError": "Löschung konnte nicht widerrufen werden. Bitte versuchen Sie es erneut.",
-    "pendingTitle": "Löschung geplant in {days} Tag(en).",
-    "pendingSubtitle": "Alle Daten werden am {date} gelöscht. Sie können dies jederzeit davor widerrufen.",
-    "dialogTitle": "Diese Organisation löschen?",
-    "dialogDescription": "Damit werden alle Produkte, SBOMs, Erklärungen, Sicherheitsvorfall-Meldungen, Schulungsnachweise und Teammitglieder innerhalb eines 30-tägigen Übergangsfensters entfernt. Danach werden die Daten dauerhaft vernichtet.",
-    "dialogPromptLabel": "Geben Sie \"{name}\" ein, um zu bestätigen",
-    "dialogConfirm": "Löschung planen",
-    "dialogCancel": "Abbrechen",
-    "deleting": "Wird geplant…",
-    "confirmationMismatch": "Der von Ihnen eingegebene Name stimmt nicht überein. Löschung wurde nicht geplant."
-   },
-   "tooltips": {
-    "name": {
-     "title": "Organisationsname",
-     "body": "Der Handels- oder Anzeigename, den Nutzer und Teammitglieder in Seentrix sehen. Dies ist der freundliche Name – er muss nicht mit Ihrer eingetragenen juristischen Person übereinstimmen.",
-     "ref": "Nur intern. Der rechtlich bindende Name auf Compliance-Dokumenten ist das Feld \"Name der juristischen Person\" weiter unten."
+  "settings": {
+    "title": "Einstellungen",
+    "subtitle": "Verwalten Sie Ihre Organisation, Ihr Team und Ihr Konto.",
+    "nav": {
+      "organization": "Organisation",
+      "entity": "Wirtschaftsakteursrolle",
+      "team": "Team",
+      "billing": "Abrechnung",
+      "activity": "Aktivität",
+      "account": "Konto",
+      "security": "Sicherheit"
     },
-    "legalName": {
-     "title": "Name der juristischen Person",
-     "body": "Eingetragener Firmenname, genau wie er in Ihren Gründungsdokumenten erscheint (z. B. Muster GmbH, Muster S.A.S.). Kann vom Handelsnamen abweichen – rechtsformabkürzung einschließen. Wird wortwörtlich auf der <g-doc>Konformitätserklärung</g-doc> und jedem <g-ce_marking>CE-gekennzeichneten</g-ce_marking> Produktetikett gedruckt.",
-     "ref": "CRA <g-annex_v>Anhang V(1)</g-annex_v> – Die Konformitätserklärung muss die ausstellende juristische Person identifizieren. Fehler hier machen die Erklärung ungültig."
-    },
-    "registrationNumber": {
-     "title": "Handelsregister- oder Umsatzsteuer-ID",
-     "body": "Handelsregisternummer (z. B. HRB 12345 in Deutschland), Umsatzsteuer-ID (DE123456789) oder entsprechende nationale Unternehmensregistrierung. Genau eine angeben – wählen Sie die Kennung, die Ihre nationale Behörde zur Suche nach Ihnen verwendet.",
-     "ref": "CRA Anhang V(1)(b) – Die Konformitätserklärung muss eine Kennung enthalten, die den Hersteller eindeutig identifiziert. Marktüberwachungsbehörden verwenden sie, um nicht konforme Produkte auf Sie zurückzuführen."
-    },
-    "signatoryName": {
-     "title": "Name des Unterzeichners",
-     "body": "Die natürliche Person, die die Konformitätserklärung unterzeichnet. Muss jemand sein, der rechtlich befugt ist, die Organisation zu verpflichten – typischerweise der Geschäftsführer, Managing Director oder ein Beauftragter mit delegierter Zeichnungsbefugnis.",
-     "ref": "CRA Anhang V(5) – Die Erklärung wird von einer im Namen des Herstellers handelnden Person unterzeichnet. Eine nicht autorisierte Unterschrift kann die Konformitätserklärung ungültig machen."
-    },
-    "signatoryPosition": {
-     "title": "Position des Unterzeichners",
-     "body": "Berufsbezeichnung der unterzeichnenden Person (z. B. Chief Executive Officer, Geschäftsführer, Leiter Compliance). Wird unter der Unterschrift auf der Konformitätserklärung gedruckt.",
-     "ref": "CRA Anhang V(5) – Zusammen mit dem Namen des Unterzeichners identifiziert dies, wer innerhalb der Organisation die rechtliche Verantwortung für die Erklärung übernimmt."
-    },
-    "contactEmail": {
-     "title": "Öffentliche Kontakt-E-Mail",
-     "body": "Kundenseitige E-Mail, die auf Produktetiketten, Verpackungen und der Konformitätserklärung steht. Muss überwacht werden – Marktüberwachungsbehörden und Endnutzer werden darüber Kontakt aufnehmen.",
-     "ref": "CRA Artikel 13(4) – Hersteller müssen eine einzige Kontaktstelle für Cybersicherheitsfragen am Produkt, auf der Verpackung oder in der Begleitdokumentation angeben."
-    },
-    "website": {
-     "title": "Website",
-     "body": "Unternehmenswebsite-URL. Optional, aber dringend empfohlen – erscheint auf der Konformitätserklärung und gibt Regulierungsbehörden und Endnutzern einen zweiten Kanal zur Identitätsverifizierung.",
-     "ref": "CRA Artikel 13(4) – Nicht zwingend, gilt aber neben der öffentlichen E-Mail als akzeptable Kontaktinformation."
-    },
-    "addressLine1": {
-     "title": "Eingetragene Adresszeile 1",
-     "body": "Straße und Hausnummer Ihrer eingetragenen Unternehmensadresse – die Adresse in Ihren Gründungsdokumenten, nicht ein Postfach oder Versanddepot.",
-     "ref": "CRA Anhang V(1)(a) – Postanschrift des Herstellers, auf der Konformitätserklärung gedruckt."
-    },
-    "addressLine2": {
-     "title": "Adresszeile 2",
-     "body": "Optionale zweite Zeile für Etage, Gebäudename oder Ähnliches. Leer lassen, wenn Ihre Adresse einzeilig ist.",
-     "ref": "Wird bei Vorhandensein zur Adresszeile 1 auf der Konformitätserklärung hinzugefügt."
-    },
-    "postalCode": {
-     "title": "Postleitzahl",
-     "body": "Postleitzahl Ihrer eingetragenen Adresse. Format muss der Konvention Ihres Landes entsprechen (z. B. 5 Ziffern für Deutschland, alphanumerisch für das Vereinigte Königreich).",
-     "ref": "CRA Anhang V(1)(a) – Teil des Adressblocks auf der Konformitätserklärung."
-    },
-    "city": {
-     "title": "Stadt",
-     "body": "Stadt oder Gemeinde Ihrer eingetragenen Adresse. Wird auch als \"Ort\"-Feld auf der unterzeichneten Konformitätserklärung verwendet (\"Unterzeichnet in {city}, am {date}\").",
-     "ref": "CRA Anhang V(6) – Die Erklärung gibt den Ausstellungsort an, der mit einer Adresse verknüpft sein muss, die auf Sie zurückgeführt werden kann."
-    },
-    "country": {
-     "title": "Land",
-     "body": "Land Ihres eingetragenen Firmensitzes. Wenn dies außerhalb der EU liegt, benötigen Sie auch einen Bevollmächtigten in der Union – konfigurieren Sie dies im Tab \"Wirtschaftsakteursrolle\".",
-     "ref": "CRA Artikel 18 – Hersteller mit Sitz außerhalb der Union müssen vor dem Inverkehrbringen von Produkten einen Bevollmächtigten in der EU ernennen."
-    }
-   },
-   "readOnlyBadge": "Gesperrt",
-   "editDetails": "Details bearbeiten",
-   "cancel": "Abbrechen",
-   "orgChartTotalMembers": "{count, plural, one {# Teammitglied} other {# Teammitglieder}}",
-   "orgChartCapacity": "Platzkapazität",
-   "inviteShort": "Einladen"
-  },
-  "team": {
-   "title": "Team",
-   "subtitle": "Verwalten Sie, wer Zugang zu Ihrer Organisation hat.",
-   "members": "Mitglieder",
-   "memberCount": "{count} Mitglied",
-   "memberCountPlural": "{count} Mitglieder",
-   "createTitle": "Teammitglied hinzufügen",
-   "createDescription": "Erstellen Sie ein Konto für ein neues Teammitglied. Dieses muss beim ersten Login sein Passwort ändern.",
-   "createEmail": "E-Mail",
-   "createEmailPlaceholder": "kollege@unternehmen.de",
-   "createName": "Vollständiger Name",
-   "createNamePlaceholder": "Erika Mustermann",
-   "createRoleLabel": "Rolle",
-   "createPassword": "Temporäres Passwort",
-   "createPasswordPlaceholder": "Min. 8 Zeichen",
-   "tooltips": {
-    "email": {
-     "title": "E-Mail des Teammitglieds",
-     "body": "Die E-Mail-Adresse, mit der sich das neue Mitglied anmeldet. Muss auf der gesamten Seentrix-Plattform eindeutig sein – wenn sie bereits anderswo verwendet wird, schlägt die Einladung fehl. Wird auch zur Audit-Protokoll-Identität für jede Aktion.",
-     "ref": "Aktivitätsprotokoll-Einträge werden mit der unveränderlichen Authentifizierungs-ID des Nutzers gespeichert, aber die E-Mail ist das, was Regulierungsbehörden in exportierten Audit-Trails sehen."
-    },
-    "fullName": {
-     "title": "Vollständiger Name",
-     "body": "Rechtlicher oder Anzeigename, der in Seentrix angezeigt wird. Auch in Aktivitätsprotokoll-Exporten gedruckt und erscheint als Ersteller/Beauftragter bei Schwachstellen, Sicherheitsvorfällen und Checklisten-Punkten.",
-     "ref": "NIS2 Artikel 20 (wo anwendbar) – auditfähige Mitarbeiterlisten benötigen identifizierbare Namen, nicht nur E-Mails."
-    },
-    "role": {
-     "title": "Rolle",
-     "body": "Kontrolliert, was dieses Mitglied tun kann. Administrator: alles. Compliance Officer: compliance-kritische Änderungen (Wirtschaftsakteursrolle, Ausstellung der Konformitätserklärung, Sicherheitsvorfall-Meldungen). CTO: wie Compliance Officer, ohne Abrechnung. Bearbeiter: Produkte, Schwachstellen, Checklisten-Punkte; kann keine Konformitätserklärung ausstellen. Betrachter: nur lesend.",
-     "ref": "Der CRA schreibt keine spezifischen Rollen vor, aber eine Aufgabentrennung zwischen der Person, die die Konformitätserklärung unterzeichnet, und der Person, die das Produkt betreibt, wird bei Audits erwartet. Wählen Sie eine Rolle, die der tatsächlichen Verantwortung der Person entspricht."
-    },
-    "password": {
-     "title": "Temporäres Passwort",
-     "body": "Erstanmeldungs-Passwort, das Sie dem Mitglied mitteilen. Es muss beim ersten Login geändert werden – das Flag must_change_password wird automatisch gesetzt. Verwenden Sie einen frischen Einmalpasswort-Generator; verwenden Sie keine bestehenden Passwörter wieder.",
-     "ref": "Defense-in-Depth – Das temporäre Passwort ist nur bis zum ersten Login gültig. Wenn sich ein Mitglied nie einloggt, rotieren oder entfernen Sie es über die Teamliste."
-    }
-   },
-   "createMember": "Mitglied erstellen",
-   "creatingMember": "Wird erstellt…",
-   "memberCreated": "Teammitglied erfolgreich erstellt.",
-   "createError": "Teammitglied konnte nicht erstellt werden.",
-   "createErrors": {
-    "notAdmin": "Nur Administratoren können Teammitglieder hinzufügen.",
-    "emailInUse": "Diese E-Mail ist bereits registriert.",
-    "limitReached": "Das Mitgliedslimit Ihres Plans wurde erreicht.",
-    "passwordTooShort": "Das Passwort muss mindestens 8 Zeichen lang sein.",
-    "invalidRole": "Ungültige Rolle ausgewählt."
-   },
-   "credentialsTitle": "Konto erstellt",
-   "credentialsHint": "Teilen Sie diese Anmeldedaten mit dem neuen Teammitglied. Beim ersten Login wird es aufgefordert, ein neues Passwort zu setzen.",
-   "credentialsCopied": "Anmeldedaten in die Zwischenablage kopiert.",
-   "pendingPassword": "Ausstehend",
-   "removeMember": "Entfernen",
-   "removeMemberConfirm": "Teammitglied entfernen?",
-   "removeMemberDescription": "Möchten Sie {name} wirklich aus Ihrer Organisation entfernen? Der Zugang wird sofort entzogen.",
-   "removeMemberCancel": "Abbrechen",
-   "removeMemberSubmit": "Entfernen",
-   "removed": "Teammitglied entfernt.",
-   "removeError": "Teammitglied konnte nicht entfernt werden.",
-   "changeRole": "Rolle ändern",
-   "changeRoleConfirm": "Rolle ändern?",
-   "changeRoleDescription": "Die Rolle von {name} von {oldRole} zu {newRole} ändern?",
-   "changeRoleCancel": "Abbrechen",
-   "changeRoleSubmit": "Rolle ändern",
-   "roleChanged": "Rolle aktualisiert.",
-   "roleChangeError": "Rolle konnte nicht geändert werden.",
-   "lastAdminError": "Die Rolle des letzten Administrators kann nicht geändert werden.",
-   "you": "Sie",
-   "adminOnly": "Nur Administratoren können das Team verwalten.",
-   "roles": {
-    "admin": "Administrator",
-    "compliance_officer": "Compliance Officer",
-    "cto": "CTO",
-    "editor": "Bearbeiter",
-    "viewer": "Betrachter"
-   },
-   "limits": {
-    "reached": "Teammitglied-Limit erreicht",
-    "reachedDescription": "Ihr {plan}-Plan erlaubt bis zu {limit} Teammitglied.",
-    "reachedDescriptionPlural": "Ihr {plan}-Plan erlaubt bis zu {limit} Teammitglieder.",
-    "upgrade": "Plan upgraden"
-   }
-  },
-  "activity": {
-   "title": "Aktivitätsprotokoll",
-   "subtitle": "Verfolgen Sie alle Änderungen in Ihrer Organisation.",
-   "download": "Herunterladen",
-   "empty": "Noch keine Aktivität.",
-   "exportPeriod": {
-    "1": "Letzter Monat",
-    "6": "Letzte 6 Monate",
-    "12": "Letzte 12 Monate"
-   },
-   "relative": {
-    "justNow": "gerade eben",
-    "minutesAgo": "{count, plural, one {vor # Minute} other {vor # Minuten}}",
-    "hoursAgo": "{count, plural, one {vor # Stunde} other {vor # Stunden}}",
-    "daysAgo": "{count, plural, one {vor # Tag} other {vor # Tagen}}"
-   },
-   "actions": {
     "organization": {
-     "created": "die Organisation erstellt",
-     "updated": "die Organisationsdetails aktualisiert",
-     "security_updated": "die öffentliche Sicherheitsseite aktualisiert",
-     "entity_type_changed": "die Wirtschaftsakteursrolle der Organisation geändert"
+      "title": "Organisation",
+      "subtitle": "Verwalten Sie Ihre Organisationsdetails und -einstellungen.",
+      "nameLabel": "Organisationsname",
+      "namePlaceholder": "Muster GmbH",
+      "legalTitle": "Rechtliche Identität",
+      "legalDescription": "Erforderlich für jede Konformitätserklärung und jede technische Dokumentation. Füllen Sie dies genau so aus, wie es in Ihren Gründungsdokumenten erscheint.",
+      "legalName": "Name der juristischen Person",
+      "legalNameHint": "Eingetragener Firmenname – kann vom Handels-/Anzeigenamen oben abweichen.",
+      "legalNamePlaceholder": "Muster GmbH",
+      "registrationNumber": "Handelsregister- oder Umsatzsteuer-ID",
+      "registrationNumberHint": "Handelsregisternummer (HRB), Umsatzsteuer-ID oder entsprechende nationale Unternehmensregistrierung.",
+      "registrationNumberPlaceholder": "DE123456789 oder HRB 12345",
+      "signatoryTitle": "Unterzeichner & Kontakt",
+      "signatoryDescription": "Der Unterzeichner ist die natürliche Person, die die Konformitätserklärung unterzeichnet. Die Kontakt-E-Mail ist der öffentliche, kundenseitige Kontakt, der auf Produktetiketten gedruckt wird.",
+      "signatoryName": "Name des Unterzeichners",
+      "signatoryNamePlaceholder": "Erika Mustermann",
+      "signatoryPosition": "Position des Unterzeichners",
+      "signatoryPositionPlaceholder": "Chief Executive Officer",
+      "contactEmail": "Öffentliche Kontakt-E-Mail",
+      "website": "Website",
+      "addressTitle": "Eingetragene Adresse",
+      "addressDescription": "Wird in der Konformitätserklärung und anderen Compliance-Dokumenten verwendet.",
+      "addressLine1": "Adresszeile 1",
+      "addressLine1Placeholder": "Musterstraße 12",
+      "addressLine2": "Adresszeile 2",
+      "addressLine2Placeholder": "Etage 100",
+      "postalCode": "Postleitzahl",
+      "postalCodePlaceholder": "12345",
+      "city": "Stadt",
+      "cityPlaceholder": "Berlin",
+      "country": "Land",
+      "countryPlaceholder": "Deutschland",
+      "save": "Änderungen speichern",
+      "saving": "Wird gespeichert…",
+      "saved": "Organisationseinstellungen gespeichert.",
+      "error": "Einstellungen konnten nicht gespeichert werden. Bitte versuchen Sie es erneut.",
+      "readOnly": "Nur Administratoren können Organisationseinstellungen bearbeiten.",
+      "orgChart": "Organisationsdiagramm",
+      "orgChartDescription": "Ihr Team, nach CRA-Rolle gruppiert. Klicken Sie auf eine Person, um diese zu verwalten.",
+      "seatsUsed": "{count} von {limit} Plätzen belegt",
+      "seatsUsedUnlimited": "{count, plural, one {# Platz belegt} other {# Plätze belegt}} · Unbegrenzt",
+      "upgrade": "Upgrade",
+      "inviteToRole": "Eine Person als {role} einladen",
+      "noOneYet": "Noch niemand",
+      "docReady": {
+        "eyebrow": "Compliance-Einrichtung",
+        "title": "Konformitätserklärung kann noch nicht ausgestellt werden",
+        "description": "{count, plural, one {# erforderliches Feld fehlt} other {# erforderliche Felder fehlen}} für die Erstellung von CRA-Dokumenten. Füllen Sie sie unten aus – der Konformitäts-Workflow verweigert die Ausstellung der Konformitätserklärung, bis alle Felder auf dieser Seite vollständig sind.",
+        "cta": "Jetzt ausfüllen"
+      },
+      "dangerZone": {
+        "title": "Gefahrenbereich",
+        "subtitle": "Nicht umkehrbare Aktionen. Bitte prüfen Sie sorgfältig, bevor Sie fortfahren.",
+        "exportTitle": "Alle Organisationsdaten exportieren",
+        "exportDescription": "Laden Sie alle dieser Organisation zugeordneten Datensätze als einzelne JSON-Datei herunter. Erfüllt DSGVO Art. 20 (Portabilität).",
+        "exportCta": "Daten exportieren",
+        "exportInProgress": "Export wird vorbereitet…",
+        "exportReady": "Export heruntergeladen.",
+        "exportError": "Export konnte nicht erstellt werden. Bitte versuchen Sie es erneut.",
+        "deleteTitle": "Organisation löschen",
+        "deleteDescription": "Plant eine dauerhafte Löschung der Organisation und aller damit verknüpften Datensätze. Sie haben 30 Tage Zeit zum Widerrufen.",
+        "deleteCta": "Organisation löschen",
+        "deleteScheduled": "Löschung geplant. Sie haben 30 Tage Zeit zum Widerrufen.",
+        "deleteError": "Löschung konnte nicht beantragt werden. Bitte versuchen Sie es erneut.",
+        "cancelDeletion": "Löschung widerrufen",
+        "cancellingDeletion": "Wird widerrufen…",
+        "cancelSuccess": "Löschung widerrufen.",
+        "cancelError": "Löschung konnte nicht widerrufen werden. Bitte versuchen Sie es erneut.",
+        "pendingTitle": "Löschung geplant in {days} Tag(en).",
+        "pendingSubtitle": "Alle Daten werden am {date} gelöscht. Sie können dies jederzeit davor widerrufen.",
+        "dialogTitle": "Diese Organisation löschen?",
+        "dialogDescription": "Damit werden alle Produkte, SBOMs, Erklärungen, Sicherheitsvorfall-Meldungen, Schulungsnachweise und Teammitglieder innerhalb eines 30-tägigen Übergangsfensters entfernt. Danach werden die Daten dauerhaft vernichtet.",
+        "dialogPromptLabel": "Geben Sie \"{name}\" ein, um zu bestätigen",
+        "dialogConfirm": "Löschung planen",
+        "dialogCancel": "Abbrechen",
+        "deleting": "Wird geplant…",
+        "confirmationMismatch": "Der von Ihnen eingegebene Name stimmt nicht überein. Löschung wurde nicht geplant."
+      },
+      "tooltips": {
+        "name": {
+          "title": "Organisationsname",
+          "body": "Der Handels- oder Anzeigename, den Nutzer und Teammitglieder in Seentrix sehen. Dies ist der freundliche Name – er muss nicht mit Ihrer eingetragenen juristischen Person übereinstimmen.",
+          "ref": "Nur intern. Der rechtlich bindende Name auf Compliance-Dokumenten ist das Feld \"Name der juristischen Person\" weiter unten."
+        },
+        "legalName": {
+          "title": "Name der juristischen Person",
+          "body": "Eingetragener Firmenname, genau wie er in Ihren Gründungsdokumenten erscheint (z. B. Muster GmbH, Muster S.A.S.). Kann vom Handelsnamen abweichen – rechtsformabkürzung einschließen. Wird wortwörtlich auf der <g-doc>Konformitätserklärung</g-doc> und jedem <g-ce_marking>CE-gekennzeichneten</g-ce_marking> Produktetikett gedruckt.",
+          "ref": "CRA <g-annex_v>Anhang V(1)</g-annex_v> – Die Konformitätserklärung muss die ausstellende juristische Person identifizieren. Fehler hier machen die Erklärung ungültig."
+        },
+        "registrationNumber": {
+          "title": "Handelsregister- oder Umsatzsteuer-ID",
+          "body": "Handelsregisternummer (z. B. HRB 12345 in Deutschland), Umsatzsteuer-ID (DE123456789) oder entsprechende nationale Unternehmensregistrierung. Genau eine angeben – wählen Sie die Kennung, die Ihre nationale Behörde zur Suche nach Ihnen verwendet.",
+          "ref": "CRA Anhang V(1)(b) – Die Konformitätserklärung muss eine Kennung enthalten, die den Hersteller eindeutig identifiziert. Marktüberwachungsbehörden verwenden sie, um nicht konforme Produkte auf Sie zurückzuführen."
+        },
+        "signatoryName": {
+          "title": "Name des Unterzeichners",
+          "body": "Die natürliche Person, die die Konformitätserklärung unterzeichnet. Muss jemand sein, der rechtlich befugt ist, die Organisation zu verpflichten – typischerweise der Geschäftsführer, Managing Director oder ein Beauftragter mit delegierter Zeichnungsbefugnis.",
+          "ref": "CRA Anhang V(5) – Die Erklärung wird von einer im Namen des Herstellers handelnden Person unterzeichnet. Eine nicht autorisierte Unterschrift kann die Konformitätserklärung ungültig machen."
+        },
+        "signatoryPosition": {
+          "title": "Position des Unterzeichners",
+          "body": "Berufsbezeichnung der unterzeichnenden Person (z. B. Chief Executive Officer, Geschäftsführer, Leiter Compliance). Wird unter der Unterschrift auf der Konformitätserklärung gedruckt.",
+          "ref": "CRA Anhang V(5) – Zusammen mit dem Namen des Unterzeichners identifiziert dies, wer innerhalb der Organisation die rechtliche Verantwortung für die Erklärung übernimmt."
+        },
+        "contactEmail": {
+          "title": "Öffentliche Kontakt-E-Mail",
+          "body": "Kundenseitige E-Mail, die auf Produktetiketten, Verpackungen und der Konformitätserklärung steht. Muss überwacht werden – Marktüberwachungsbehörden und Endnutzer werden darüber Kontakt aufnehmen.",
+          "ref": "CRA Artikel 13(4) – Hersteller müssen eine einzige Kontaktstelle für Cybersicherheitsfragen am Produkt, auf der Verpackung oder in der Begleitdokumentation angeben."
+        },
+        "website": {
+          "title": "Website",
+          "body": "Unternehmenswebsite-URL. Optional, aber dringend empfohlen – erscheint auf der Konformitätserklärung und gibt Regulierungsbehörden und Endnutzern einen zweiten Kanal zur Identitätsverifizierung.",
+          "ref": "CRA Artikel 13(4) – Nicht zwingend, gilt aber neben der öffentlichen E-Mail als akzeptable Kontaktinformation."
+        },
+        "addressLine1": {
+          "title": "Eingetragene Adresszeile 1",
+          "body": "Straße und Hausnummer Ihrer eingetragenen Unternehmensadresse – die Adresse in Ihren Gründungsdokumenten, nicht ein Postfach oder Versanddepot.",
+          "ref": "CRA Anhang V(1)(a) – Postanschrift des Herstellers, auf der Konformitätserklärung gedruckt."
+        },
+        "addressLine2": {
+          "title": "Adresszeile 2",
+          "body": "Optionale zweite Zeile für Etage, Gebäudename oder Ähnliches. Leer lassen, wenn Ihre Adresse einzeilig ist.",
+          "ref": "Wird bei Vorhandensein zur Adresszeile 1 auf der Konformitätserklärung hinzugefügt."
+        },
+        "postalCode": {
+          "title": "Postleitzahl",
+          "body": "Postleitzahl Ihrer eingetragenen Adresse. Format muss der Konvention Ihres Landes entsprechen (z. B. 5 Ziffern für Deutschland, alphanumerisch für das Vereinigte Königreich).",
+          "ref": "CRA Anhang V(1)(a) – Teil des Adressblocks auf der Konformitätserklärung."
+        },
+        "city": {
+          "title": "Stadt",
+          "body": "Stadt oder Gemeinde Ihrer eingetragenen Adresse. Wird auch als \"Ort\"-Feld auf der unterzeichneten Konformitätserklärung verwendet (\"Unterzeichnet in {city}, am {date}\").",
+          "ref": "CRA Anhang V(6) – Die Erklärung gibt den Ausstellungsort an, der mit einer Adresse verknüpft sein muss, die auf Sie zurückgeführt werden kann."
+        },
+        "country": {
+          "title": "Land",
+          "body": "Land Ihres eingetragenen Firmensitzes. Wenn dies außerhalb der EU liegt, benötigen Sie auch einen Bevollmächtigten in der Union – konfigurieren Sie dies im Tab \"Wirtschaftsakteursrolle\".",
+          "ref": "CRA Artikel 18 – Hersteller mit Sitz außerhalb der Union müssen vor dem Inverkehrbringen von Produkten einen Bevollmächtigten in der EU ernennen."
+        }
+      },
+      "readOnlyBadge": "Gesperrt",
+      "editDetails": "Details bearbeiten",
+      "cancel": "Abbrechen",
+      "orgChartTotalMembers": "{count, plural, one {# Teammitglied} other {# Teammitglieder}}",
+      "orgChartCapacity": "Platzkapazität",
+      "inviteShort": "Einladen"
     },
-    "member": {
-     "created": "ein neues Teammitglied hinzugefügt",
-     "removed": "ein Teammitglied entfernt",
-     "role_changed": "die Rolle eines Teammitglieds geändert"
+    "team": {
+      "title": "Team",
+      "subtitle": "Verwalten Sie, wer Zugang zu Ihrer Organisation hat.",
+      "members": "Mitglieder",
+      "memberCount": "{count} Mitglied",
+      "memberCountPlural": "{count} Mitglieder",
+      "createTitle": "Teammitglied hinzufügen",
+      "createDescription": "Erstellen Sie ein Konto für ein neues Teammitglied. Dieses muss beim ersten Login sein Passwort ändern.",
+      "createEmail": "E-Mail",
+      "createEmailPlaceholder": "kollege@unternehmen.de",
+      "createName": "Vollständiger Name",
+      "createNamePlaceholder": "Erika Mustermann",
+      "createRoleLabel": "Rolle",
+      "createPassword": "Temporäres Passwort",
+      "createPasswordPlaceholder": "Min. 8 Zeichen",
+      "tooltips": {
+        "email": {
+          "title": "E-Mail des Teammitglieds",
+          "body": "Die E-Mail-Adresse, mit der sich das neue Mitglied anmeldet. Muss auf der gesamten Seentrix-Plattform eindeutig sein – wenn sie bereits anderswo verwendet wird, schlägt die Einladung fehl. Wird auch zur Audit-Protokoll-Identität für jede Aktion.",
+          "ref": "Aktivitätsprotokoll-Einträge werden mit der unveränderlichen Authentifizierungs-ID des Nutzers gespeichert, aber die E-Mail ist das, was Regulierungsbehörden in exportierten Audit-Trails sehen."
+        },
+        "fullName": {
+          "title": "Vollständiger Name",
+          "body": "Rechtlicher oder Anzeigename, der in Seentrix angezeigt wird. Auch in Aktivitätsprotokoll-Exporten gedruckt und erscheint als Ersteller/Beauftragter bei Schwachstellen, Sicherheitsvorfällen und Checklisten-Punkten.",
+          "ref": "NIS2 Artikel 20 (wo anwendbar) – auditfähige Mitarbeiterlisten benötigen identifizierbare Namen, nicht nur E-Mails."
+        },
+        "role": {
+          "title": "Rolle",
+          "body": "Kontrolliert, was dieses Mitglied tun kann. Administrator: alles. Compliance Officer: compliance-kritische Änderungen (Wirtschaftsakteursrolle, Ausstellung der Konformitätserklärung, Sicherheitsvorfall-Meldungen). CTO: wie Compliance Officer, ohne Abrechnung. Bearbeiter: Produkte, Schwachstellen, Checklisten-Punkte; kann keine Konformitätserklärung ausstellen. Betrachter: nur lesend.",
+          "ref": "Der CRA schreibt keine spezifischen Rollen vor, aber eine Aufgabentrennung zwischen der Person, die die Konformitätserklärung unterzeichnet, und der Person, die das Produkt betreibt, wird bei Audits erwartet. Wählen Sie eine Rolle, die der tatsächlichen Verantwortung der Person entspricht."
+        },
+        "password": {
+          "title": "Temporäres Passwort",
+          "body": "Erstanmeldungs-Passwort, das Sie dem Mitglied mitteilen. Es muss beim ersten Login geändert werden – das Flag must_change_password wird automatisch gesetzt. Verwenden Sie einen frischen Einmalpasswort-Generator; verwenden Sie keine bestehenden Passwörter wieder.",
+          "ref": "Defense-in-Depth – Das temporäre Passwort ist nur bis zum ersten Login gültig. Wenn sich ein Mitglied nie einloggt, rotieren oder entfernen Sie es über die Teamliste."
+        }
+      },
+      "createMember": "Mitglied erstellen",
+      "creatingMember": "Wird erstellt…",
+      "memberCreated": "Teammitglied erfolgreich erstellt.",
+      "createError": "Teammitglied konnte nicht erstellt werden.",
+      "createErrors": {
+        "notAdmin": "Nur Administratoren können Teammitglieder hinzufügen.",
+        "emailInUse": "Diese E-Mail ist bereits registriert.",
+        "limitReached": "Das Mitgliedslimit Ihres Plans wurde erreicht.",
+        "passwordTooShort": "Das Passwort muss mindestens 8 Zeichen lang sein.",
+        "invalidRole": "Ungültige Rolle ausgewählt."
+      },
+      "credentialsTitle": "Konto erstellt",
+      "credentialsHint": "Teilen Sie diese Anmeldedaten mit dem neuen Teammitglied. Beim ersten Login wird es aufgefordert, ein neues Passwort zu setzen.",
+      "credentialsCopied": "Anmeldedaten in die Zwischenablage kopiert.",
+      "pendingPassword": "Ausstehend",
+      "removeMember": "Entfernen",
+      "removeMemberConfirm": "Teammitglied entfernen?",
+      "removeMemberDescription": "Möchten Sie {name} wirklich aus Ihrer Organisation entfernen? Der Zugang wird sofort entzogen.",
+      "removeMemberCancel": "Abbrechen",
+      "removeMemberSubmit": "Entfernen",
+      "removed": "Teammitglied entfernt.",
+      "removeError": "Teammitglied konnte nicht entfernt werden.",
+      "changeRole": "Rolle ändern",
+      "changeRoleConfirm": "Rolle ändern?",
+      "changeRoleDescription": "Die Rolle von {name} von {oldRole} zu {newRole} ändern?",
+      "changeRoleCancel": "Abbrechen",
+      "changeRoleSubmit": "Rolle ändern",
+      "roleChanged": "Rolle aktualisiert.",
+      "roleChangeError": "Rolle konnte nicht geändert werden.",
+      "lastAdminError": "Die Rolle des letzten Administrators kann nicht geändert werden.",
+      "you": "Sie",
+      "adminOnly": "Nur Administratoren können das Team verwalten.",
+      "roles": {
+        "admin": "Administrator",
+        "compliance_officer": "Compliance Officer",
+        "cto": "CTO",
+        "editor": "Bearbeiter",
+        "viewer": "Betrachter"
+      },
+      "limits": {
+        "reached": "Teammitglied-Limit erreicht",
+        "reachedDescription": "Ihr {plan}-Plan erlaubt bis zu {limit} Teammitglied.",
+        "reachedDescriptionPlural": "Ihr {plan}-Plan erlaubt bis zu {limit} Teammitglieder.",
+        "upgrade": "Plan upgraden"
+      }
     },
-    "profile": {
-     "updated": "das Profil aktualisiert"
+    "activity": {
+      "title": "Aktivitätsprotokoll",
+      "subtitle": "Verfolgen Sie alle Änderungen in Ihrer Organisation.",
+      "download": "Herunterladen",
+      "empty": "Noch keine Aktivität.",
+      "exportPeriod": {
+        "1": "Letzter Monat",
+        "6": "Letzte 6 Monate",
+        "12": "Letzte 12 Monate"
+      },
+      "relative": {
+        "justNow": "gerade eben",
+        "minutesAgo": "{count, plural, one {vor # Minute} other {vor # Minuten}}",
+        "hoursAgo": "{count, plural, one {vor # Stunde} other {vor # Stunden}}",
+        "daysAgo": "{count, plural, one {vor # Tag} other {vor # Tagen}}"
+      },
+      "actions": {
+        "organization": {
+          "created": "die Organisation erstellt",
+          "updated": "die Organisationsdetails aktualisiert",
+          "security_updated": "die öffentliche Sicherheitsseite aktualisiert",
+          "entity_type_changed": "die Wirtschaftsakteursrolle der Organisation geändert"
+        },
+        "member": {
+          "created": "ein neues Teammitglied hinzugefügt",
+          "removed": "ein Teammitglied entfernt",
+          "role_changed": "die Rolle eines Teammitglieds geändert"
+        },
+        "profile": {
+          "updated": "das Profil aktualisiert"
+        },
+        "password": {
+          "changed": "das Passwort geändert"
+        },
+        "product": {
+          "created": "ein neues Produkt hinzugefügt",
+          "updated": "die Produktdetails aktualisiert für",
+          "deleted": "ein Produkt gelöscht",
+          "assessed": "die CRA-Bewertung abgeschlossen für",
+          "support_updated": "den Unterstützungszeitraum aktualisiert für"
+        },
+        "document": {
+          "saved": "Dokumentänderungen gespeichert für",
+          "status_changed": "den Dokumentstatus geändert",
+          "pdf_generated": "ein PDF erstellt für"
+        },
+        "sbom": {
+          "uploaded": "eine neue SBOM hochgeladen",
+          "deleted": "eine SBOM gelöscht",
+          "scanned": "eine SBOM auf Schwachstellen gescannt",
+          "activated": "die SBOM aktiviert",
+          "archived": "eine SBOM archiviert"
+        },
+        "checklist": {
+          "item_status_changed": "einen CRA-Checklisten-Punkt aktualisiert",
+          "item_description_changed": "Notizen an einem Checklisten-Punkt bearbeitet",
+          "evidence_uploaded": "Nachweis hochgeladen",
+          "evidence_removed": "Nachweis entfernt",
+          "item_assigned": "einen Checklisten-Punkt zugewiesen"
+        },
+        "vulnerability": {
+          "open": "eine Schwachstelle erneut geöffnet",
+          "in_progress": "mit der Bearbeitung einer Schwachstelle begonnen",
+          "resolved": "eine Schwachstelle behoben",
+          "accepted": "das Risiko einer Schwachstelle akzeptiert",
+          "assigned": "eine Schwachstelle zugewiesen",
+          "note_added": "Notizen zu einer Schwachstelle hinzugefügt",
+          "marked_exploited": "eine Schwachstelle als aktiv ausgenutzt markiert",
+          "unmarked_exploited": "das Flag \"aktiv ausgenutzt\" einer Schwachstelle entfernt"
+        },
+        "vulnerability_report": {
+          "triage": "eine Schwachstellenmeldung zur Priorisierung erneut eingereiht",
+          "accepted": "eine Schwachstellenmeldung akzeptiert",
+          "investigating": "mit der Untersuchung einer Schwachstellenmeldung begonnen",
+          "resolved": "eine Schwachstellenmeldung behoben",
+          "duplicate": "eine Schwachstellenmeldung als Duplikat markiert",
+          "spam": "eine Schwachstellenmeldung als Spam markiert"
+        },
+        "incident": {
+          "detected": "einen neuen Sicherheitsvorfall eröffnet",
+          "updated": "einen Sicherheitsvorfall aktualisiert",
+          "early_warning_submitted": "die 24-Stunden-Frühwarnung eingereicht",
+          "incident_report_submitted": "den 72-Stunden-Sicherheitsvorfall-Bericht eingereicht",
+          "final_report_submitted": "den 14-Tage-Abschlussbericht eingereicht",
+          "user_notified": "betroffene Nutzer über einen Sicherheitsvorfall informiert",
+          "closed": "einen Sicherheitsvorfall geschlossen"
+        },
+        "release": {
+          "published": "ein neues Release veröffentlicht",
+          "deleted": "ein Release gelöscht"
+        },
+        "conformity": {
+          "step_completed": "einen Konformitätsbewertungs-Schritt abgeschlossen",
+          "step_reopened": "einen Konformitätsbewertungs-Schritt erneut geöffnet",
+          "notified_body_updated": "den Datensatz der notifizierten Stelle aktualisiert",
+          "declaration_issued": "eine Konformitätserklärung ausgestellt für"
+        },
+        "entity_obligation": {
+          "updated": "eine Compliance-Pflicht aktualisiert"
+        },
+        "billing": {
+          "checkout_created": "einen Plan-Checkout gestartet"
+        },
+        "academy": {
+          "lesson_completed": "eine Academy-Lektion abgeschlossen"
+        }
+      }
     },
-    "password": {
-     "changed": "das Passwort geändert"
+    "account": {
+      "title": "Konto",
+      "subtitle": "Verwalten Sie Ihre persönlichen Kontoeinstellungen.",
+      "profileTitle": "Profil",
+      "avatarLabel": "Profilfoto",
+      "avatarHint": "Zum Hochladen klicken (JPG, PNG, WebP, max. 2 MB)",
+      "avatarUploading": "Wird hochgeladen…",
+      "nameLabel": "Vollständiger Name",
+      "namePlaceholder": "Max Mustermann",
+      "emailLabel": "E-Mail",
+      "emailDescription": "Ihre E-Mail wird über Ihren Authentifizierungsanbieter verwaltet.",
+      "saveProfile": "Profil speichern",
+      "savingProfile": "Wird gespeichert…",
+      "profileSaved": "Profil aktualisiert.",
+      "profileError": "Profil konnte nicht aktualisiert werden.",
+      "avatarError": "Ihr Foto konnte nicht hochgeladen werden. Bitte versuchen Sie ein kleineres JPG oder PNG.",
+      "passwordTitle": "Passwort ändern",
+      "currentPassword": "Aktuelles Passwort",
+      "newPassword": "Neues Passwort",
+      "newPasswordPlaceholder": "Mindestens 8 Zeichen",
+      "changePassword": "Passwort ändern",
+      "changingPassword": "Wird geändert…",
+      "passwordChanged": "Passwort erfolgreich geändert.",
+      "passwordError": "Passwort konnte nicht geändert werden. Bitte überprüfen Sie Ihr aktuelles Passwort.",
+      "dangerTitle": "Gefahrenbereich",
+      "logoutButton": "Abmelden",
+      "logoutDescription": "Melden Sie sich auf diesem Gerät von Ihrem Seentrix-Konto ab."
     },
-    "product": {
-     "created": "ein neues Produkt hinzugefügt",
-     "updated": "die Produktdetails aktualisiert für",
-     "deleted": "ein Produkt gelöscht",
-     "assessed": "die CRA-Bewertung abgeschlossen für",
-     "support_updated": "den Unterstützungszeitraum aktualisiert für"
+    "language": {
+      "title": "Sprache",
+      "label": "Sprache",
+      "description": "Wählen Sie die Sprache für die gesamte App – Oberfläche, Academy, den KI-Copiloten und die von Ihnen erstellten Dokumente.",
+      "saved": "Sprache aktualisiert"
     },
-    "document": {
-     "saved": "Dokumentänderungen gespeichert für",
-     "status_changed": "den Dokumentstatus geändert",
-     "pdf_generated": "ein PDF erstellt für"
+    "toast": {
+      "success": "Erfolgreich",
+      "error": "Fehler"
     },
-    "sbom": {
-     "uploaded": "eine neue SBOM hochgeladen",
-     "deleted": "eine SBOM gelöscht",
-     "scanned": "eine SBOM auf Schwachstellen gescannt",
-     "activated": "die SBOM aktiviert",
-     "archived": "eine SBOM archiviert"
-    },
-    "checklist": {
-     "item_status_changed": "einen CRA-Checklisten-Punkt aktualisiert",
-     "item_description_changed": "Notizen an einem Checklisten-Punkt bearbeitet",
-     "evidence_uploaded": "Nachweis hochgeladen",
-     "evidence_removed": "Nachweis entfernt",
-     "item_assigned": "einen Checklisten-Punkt zugewiesen"
-    },
-    "vulnerability": {
-     "open": "eine Schwachstelle erneut geöffnet",
-     "in_progress": "mit der Bearbeitung einer Schwachstelle begonnen",
-     "resolved": "eine Schwachstelle behoben",
-     "accepted": "das Risiko einer Schwachstelle akzeptiert",
-     "assigned": "eine Schwachstelle zugewiesen",
-     "note_added": "Notizen zu einer Schwachstelle hinzugefügt",
-     "marked_exploited": "eine Schwachstelle als aktiv ausgenutzt markiert",
-     "unmarked_exploited": "das Flag \"aktiv ausgenutzt\" einer Schwachstelle entfernt"
-    },
-    "vulnerability_report": {
-     "triage": "eine Schwachstellenmeldung zur Priorisierung erneut eingereiht",
-     "accepted": "eine Schwachstellenmeldung akzeptiert",
-     "investigating": "mit der Untersuchung einer Schwachstellenmeldung begonnen",
-     "resolved": "eine Schwachstellenmeldung behoben",
-     "duplicate": "eine Schwachstellenmeldung als Duplikat markiert",
-     "spam": "eine Schwachstellenmeldung als Spam markiert"
-    },
-    "incident": {
-     "detected": "einen neuen Sicherheitsvorfall eröffnet",
-     "updated": "einen Sicherheitsvorfall aktualisiert",
-     "early_warning_submitted": "die 24-Stunden-Frühwarnung eingereicht",
-     "incident_report_submitted": "den 72-Stunden-Sicherheitsvorfall-Bericht eingereicht",
-     "final_report_submitted": "den 14-Tage-Abschlussbericht eingereicht",
-     "user_notified": "betroffene Nutzer über einen Sicherheitsvorfall informiert",
-     "closed": "einen Sicherheitsvorfall geschlossen"
-    },
-    "release": {
-     "published": "ein neues Release veröffentlicht",
-     "deleted": "ein Release gelöscht"
-    },
-    "conformity": {
-     "step_completed": "einen Konformitätsbewertungs-Schritt abgeschlossen",
-     "step_reopened": "einen Konformitätsbewertungs-Schritt erneut geöffnet",
-     "notified_body_updated": "den Datensatz der notifizierten Stelle aktualisiert",
-     "declaration_issued": "eine Konformitätserklärung ausgestellt für"
-    },
-    "entity_obligation": {
-     "updated": "eine Compliance-Pflicht aktualisiert"
-    },
-    "billing": {
-     "checkout_created": "einen Plan-Checkout gestartet"
-    },
-    "academy": {
-     "lesson_completed": "eine Academy-Lektion abgeschlossen"
-    }
-   }
-  },
-  "account": {
-   "title": "Konto",
-   "subtitle": "Verwalten Sie Ihre persönlichen Kontoeinstellungen.",
-   "profileTitle": "Profil",
-   "avatarLabel": "Profilfoto",
-   "avatarHint": "Zum Hochladen klicken (JPG, PNG, WebP, max. 2 MB)",
-   "avatarUploading": "Wird hochgeladen…",
-   "nameLabel": "Vollständiger Name",
-   "namePlaceholder": "Max Mustermann",
-   "emailLabel": "E-Mail",
-   "emailDescription": "Ihre E-Mail wird über Ihren Authentifizierungsanbieter verwaltet.",
-   "saveProfile": "Profil speichern",
-   "savingProfile": "Wird gespeichert…",
-   "profileSaved": "Profil aktualisiert.",
-   "profileError": "Profil konnte nicht aktualisiert werden.",
-   "avatarError": "Ihr Foto konnte nicht hochgeladen werden. Bitte versuchen Sie ein kleineres JPG oder PNG.",
-   "passwordTitle": "Passwort ändern",
-   "currentPassword": "Aktuelles Passwort",
-   "newPassword": "Neues Passwort",
-   "newPasswordPlaceholder": "Mindestens 8 Zeichen",
-   "changePassword": "Passwort ändern",
-   "changingPassword": "Wird geändert…",
-   "passwordChanged": "Passwort erfolgreich geändert.",
-   "passwordError": "Passwort konnte nicht geändert werden. Bitte überprüfen Sie Ihr aktuelles Passwort.",
-   "dangerTitle": "Gefahrenbereich",
-   "logoutButton": "Abmelden",
-   "logoutDescription": "Melden Sie sich auf diesem Gerät von Ihrem Seentrix-Konto ab."
-  },
-  "language": {
-   "title": "Sprache",
-   "label": "Sprache",
-   "description": "Wählen Sie die Sprache für die gesamte App – Oberfläche, Academy, den KI-Copiloten und die von Ihnen erstellten Dokumente.",
-   "saved": "Sprache aktualisiert"
-  },
-  "toast": {
-   "success": "Erfolgreich",
-   "error": "Fehler"
+    "eyebrow": "Arbeitsbereich"
   }
- }
 }
