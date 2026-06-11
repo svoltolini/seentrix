@@ -120,7 +120,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
                   bottom). The old fixed sidebar + slim-topbar shell is gone. */}
               <div className="min-h-full bg-background">
                 <AppTopnav user={userProfile} orgName={orgName} />
-                <main className="mx-auto w-full max-w-[1240px] px-4 pb-20 pt-7 sm:px-[30px]">
+                <main className="mx-auto w-full max-w-[1480px] px-4 pb-20 pt-7 sm:px-[30px]">
                   {children}
                 </main>
               </div>

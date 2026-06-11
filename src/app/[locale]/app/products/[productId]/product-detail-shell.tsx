@@ -122,8 +122,8 @@ export function ProductDetailShell({
         </Button>
       </div>
 
-      {/* Tabs — wrapping pills (no scrolling) */}
-      <nav className="flex flex-wrap gap-1.5">
+      {/* Tabs — underlined, wrapping (no scrolling) */}
+      <nav className="flex flex-wrap gap-x-6 gap-y-1 border-b border-border">
         {TABS.map((tab) => {
           const active = isActive(tab.segment);
           return (
@@ -132,10 +132,10 @@ export function ProductDetailShell({
               href={`${basePath}${tab.segment}`}
               aria-current={active ? "page" : undefined}
               className={cn(
-                "whitespace-nowrap rounded-md px-3 py-1.5 text-[13.5px] transition-colors",
+                "-mb-px whitespace-nowrap border-b-2 py-2.5 text-[13.5px] transition-colors",
                 active
-                  ? "bg-accent-soft font-semibold text-primary"
-                  : "font-medium text-muted-foreground hover:bg-muted hover:text-foreground",
+                  ? "border-primary font-semibold text-primary"
+                  : "border-transparent font-medium text-muted-foreground hover:text-foreground",
               )}
             >
               {t(`detail.tabs.${tab.key}`)}
