@@ -40,26 +40,28 @@ export function inferNativeButton(render: unknown): boolean {
  *   link        — text-only.
  */
 const buttonVariants = cva(
-  // Reset / shared bits — flat (no scale-on-press), focus-visible ring is the
-  // primary token at low alpha. SVG sizing rule is centralised here.
-  "group/button inline-flex shrink-0 items-center justify-center whitespace-nowrap font-semibold transition-colors outline-none select-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  // Claude UI/UX interaction parameters: a calm 150ms colour transition; solid
+  // fills darken on hover (mix toward black, not opacity) and darken again on
+  // active for a crisp press; bordered variants darken their border on hover.
+  // Focus-visible shows a clear ring. SVG sizing rule centralised here.
+  "group/button inline-flex shrink-0 items-center justify-center whitespace-nowrap font-semibold transition-[background-color,border-color,color,box-shadow] duration-150 outline-none select-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground hover:bg-primary/90",
+          "bg-primary text-primary-foreground hover:bg-[color-mix(in_srgb,var(--primary)_88%,#000)] active:bg-[color-mix(in_srgb,var(--primary)_78%,#000)]",
         dark:
-          "bg-dark-cta text-dark-cta-foreground hover:bg-dark-cta/90",
+          "bg-dark-cta text-dark-cta-foreground hover:bg-[color-mix(in_srgb,var(--dark-cta)_85%,#fff)] active:bg-[color-mix(in_srgb,var(--dark-cta)_78%,#fff)]",
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+          "bg-secondary text-secondary-foreground hover:bg-[color-mix(in_srgb,var(--secondary)_92%,#000)] active:bg-[color-mix(in_srgb,var(--secondary)_86%,#000)]",
         accent:
-          "bg-accent text-accent-foreground hover:bg-accent/90",
+          "bg-accent text-accent-foreground hover:bg-[color-mix(in_srgb,var(--accent)_88%,#000)] active:bg-[color-mix(in_srgb,var(--accent)_78%,#000)]",
         outline:
-          "bg-card text-foreground border-[1.5px] border-border-outline hover:bg-muted",
+          "bg-card text-foreground border-[1.5px] border-border-strong hover:border-border-hover hover:bg-muted active:bg-[color-mix(in_srgb,var(--muted)_92%,#000)]",
         ghost:
-          "bg-transparent text-foreground hover:bg-muted",
+          "bg-transparent text-foreground hover:bg-muted active:bg-[color-mix(in_srgb,var(--muted)_92%,#000)]",
         destructive:
-          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+          "bg-destructive text-destructive-foreground hover:bg-[color-mix(in_srgb,var(--destructive)_88%,#000)] active:bg-[color-mix(in_srgb,var(--destructive)_78%,#000)]",
         link:
           "bg-transparent text-primary underline-offset-4 hover:underline",
       },
