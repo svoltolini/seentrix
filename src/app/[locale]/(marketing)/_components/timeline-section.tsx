@@ -88,23 +88,23 @@ export function TimelineSection() {
     <section
       ref={sectionRef}
       id="timeline"
-      className="scroll-mt-20 bg-dark-cta py-24 text-white lg:py-28"
+      className="scroll-mt-20 bg-accent-soft py-24 lg:py-28"
     >
       <div className="mx-auto max-w-6xl px-6">
         <div className="mx-auto mb-14 max-w-2xl text-center">
           <span className="font-mono text-[12px] font-semibold uppercase tracking-[0.18em] text-primary">
             {t("eyebrow")}
           </span>
-          <h2 className="mt-3 font-heading text-[34px] font-medium tracking-[-0.6px] text-white">
+          <h2 className="mt-3 font-heading text-[34px] font-medium tracking-[-0.6px] text-foreground">
             {t("title")}
           </h2>
-          <p className="mt-3 text-[16px] leading-relaxed text-white/60">
+          <p className="mt-3 text-[16px] leading-relaxed text-muted-foreground">
             {t("subtitle")}
           </p>
         </div>
 
         {/* Horizontal milestone track (design `.mk-tl`) — dots, mono accent
-            dates, titles; connector line between dots on desktop. */}
+            dates, titles; faint green connector line between dots on desktop. */}
         <div className="mx-auto flex max-w-[880px] flex-col gap-10 md:flex-row md:gap-0">
           {MILESTONES.map((ms, i) => {
             const target = new Date(`${ms.isoDate}T00:00:00Z`);
@@ -118,13 +118,16 @@ export function TimelineSection() {
                 <span
                   aria-hidden
                   className={cn(
-                    "absolute top-[5px] hidden h-0.5 bg-white/[0.18] md:block",
+                    "absolute top-[5px] hidden h-0.5 md:block",
                     i === 0
                       ? "left-1/2 right-0"
                       : i === MILESTONES.length - 1
                         ? "left-0 right-1/2"
                         : "inset-x-0",
                   )}
+                  style={{
+                    background: "color-mix(in srgb, var(--primary) 30%, transparent)",
+                  }}
                 />
                 <span
                   aria-hidden
@@ -133,11 +136,11 @@ export function TimelineSection() {
                 <p className="font-mono text-[12px] font-semibold text-primary">
                   {t(`milestones.${ms.key}.date`)}
                 </p>
-                <p className="mt-2 px-3 text-[14px] font-semibold text-white">
+                <p className="mt-2 px-3 text-[14px] font-semibold text-foreground">
                   {t(`milestones.${ms.key}.title`)}
                 </p>
                 {daysAway !== null && daysAway > 0 && (
-                  <p className="mt-1 text-[12px] text-white/45">
+                  <p className="mt-1 text-[12px] text-muted-foreground">
                     {(() => {
                       const { value, unit } = formatCountdown(daysAway);
                       return t(`countdown.${unit}`, { value });
@@ -149,7 +152,7 @@ export function TimelineSection() {
           })}
         </div>
 
-        <p className="mt-12 text-center text-[12px] text-white/45">
+        <p className="mt-12 text-center text-[12px] text-muted-foreground">
           {t("footnote")}
         </p>
       </div>
