@@ -51,6 +51,7 @@ import {
   type ActivityFeedItem,
 } from "./widgets/activity-feed-widget";
 import { GetStartedGuide } from "./widgets/get-started-guide";
+import { TeamChatStrip, type TeamChatItem } from "./widgets/team-chat-strip";
 import {
   ProductsAttention,
   type AttentionProduct,
@@ -359,6 +360,19 @@ export function DashboardContent(
     .map((a) => adaptActivity(a, t, (k) => t.has(k)));
   const todayTasks = overdueItems.slice(0, 4).map(adaptOverdueToTask);
 
+  // Team roster — distinct active members surfaced from the recent activity.
+  const seenUsers = new Map<string, TeamChatItem>();
+  for (const a of recentActivity) {
+    if (!a.user_name || seenUsers.has(a.user_name)) continue;
+    seenUsers.set(a.user_name, {
+      id: a.user_name,
+      name: a.user_name,
+      avatarUrl: a.user_avatar_url ?? null,
+    });
+    if (seenUsers.size >= 6) break;
+  }
+  const teamMembers = [...seenUsers.values()];
+
 
   // ---- Empty-state guidance for brand-new orgs ---------------------------
   if (onboardingState.isEmpty) {
@@ -460,6 +474,14 @@ export function DashboardContent(
             <h3 className="text-h4 text-foreground">{t("calendar.title")}</h3>
             <CraCalendarTracker events={calendarEvents} />
           </section>
+
+          {/* Team roster */}
+          {teamMembers.length > 0 && (
+            <section className="flex flex-col gap-4 rounded-lg border border-border bg-card p-5">
+              <h3 className="text-h4 text-foreground">{t("team")}</h3>
+              <TeamChatStrip members={teamMembers} />
+            </section>
+          )}
 
           {/* Activity feed */}
           <section className="flex flex-col gap-4 rounded-lg border border-border bg-card p-5">
