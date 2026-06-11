@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { Icon } from "@/components/icon";
 import { CountdownTimer } from "./countdown-timer";
 import { Logo } from "@/components/logo";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
@@ -61,11 +62,12 @@ export function HeroSection() {
       />
 
       <div className="relative mx-auto flex max-w-5xl flex-col items-center gap-8 text-center">
-        {/* Clay pill — accent-soft capsule (design `.mk-pill`) */}
+        {/* Clay pill — accent-soft capsule w/ shield (design `.mk-pill`) */}
         <span
           data-hero-reveal
-          className="rounded-full bg-accent-soft px-3.5 py-1.5 text-[12px] font-semibold uppercase tracking-[0.1em] text-primary"
+          className="inline-flex items-center gap-1.5 rounded-full bg-accent-soft px-3.5 py-1.5 text-[12.5px] font-semibold text-primary"
         >
+          <Icon name="shield-check" size={14} />
           {t("badge")}
         </span>
 
@@ -133,6 +135,9 @@ export function HeroSection() {
             </span>
             <span className="px-1 text-[10.5px] font-medium text-muted-foreground">
               Incidents
+            </span>
+            <span className="px-1 text-[10.5px] font-medium text-muted-foreground">
+              Reports
             </span>
             <span className="ml-auto size-5 rounded-md bg-primary" />
           </div>

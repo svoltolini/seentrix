@@ -4,14 +4,19 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useTranslations } from "next-intl";
+import { Icon, type IconName } from "@/components/icon";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
-const modules = [
-  { key: "assessment", accent: "#1f8a5b" },
-  { key: "checklist", accent: "#c0892e" },
-  { key: "sbom", accent: "#c0892e" },
-  { key: "documents", accent: "#FF9E55" },
-] as const;
+// The six landing features, ported verbatim from the design's pf-marketing.jsx
+// (icon tiles, not numbers). Icon glyphs mapped to our set.
+const FEATURES: { key: string; icon: IconName }[] = [
+  { key: "scoring", icon: "Verify" },
+  { key: "vulnerabilities", icon: "ShieldTick" },
+  { key: "documents", icon: "DocumentText" },
+  { key: "copilot", icon: "MagicStar" },
+  { key: "deadlines", icon: "Calendar" },
+  { key: "academy", icon: "Teacher" },
+];
 
 export function FeaturesSection() {
   const t = useTranslations("landing.features");
@@ -33,7 +38,7 @@ export function FeaturesSection() {
         opacity: 1,
         y: 0,
         duration: 0.8,
-        stagger: 0.12,
+        stagger: 0.1,
         ease: "power2.out",
         scrollTrigger: {
           trigger: el,
@@ -50,35 +55,34 @@ export function FeaturesSection() {
     <section
       ref={sectionRef}
       id="features"
-      className="scroll-mt-20 py-24 lg:py-32"
+      className="scroll-mt-20 py-24 lg:py-28"
     >
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="mx-auto mb-16 max-w-3xl text-center">
-          <h2 className="text-h1 tracking-tight text-foreground">
+      <div className="mx-auto max-w-[1120px] px-6">
+        <div className="mx-auto mb-12 max-w-[50ch] text-center">
+          <h2 className="font-heading text-[34px] font-medium tracking-[-0.6px] text-foreground">
             {t("title")}
           </h2>
-          <p className="mt-6 text-p1 text-muted-foreground">
+          <p className="mt-3 text-[16px] leading-relaxed text-muted-foreground">
             {t("subtitle")}
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2">
-          {modules.map((mod, i) => (
+        {/* 6 icon-tile feature cards (design `.mk-features` / `.mk-feature`) */}
+        <div className="grid gap-[22px] md:grid-cols-2 lg:grid-cols-3">
+          {FEATURES.map((f) => (
             <div
-              key={mod.key}
+              key={f.key}
               data-feature-card
-              className="group relative rounded-lg border border-border bg-card p-7 shadow-card-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-card-md"
+              className="rounded-lg border border-border bg-card p-7 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-card-md"
             >
-              {/* Clay feature card (design `.mk-feature`): a 46px accent-soft
-                  serif number tile, then a serif 19/600 title + muted body. */}
-              <span className="flex size-[46px] items-center justify-center rounded-[13px] bg-accent-soft font-heading text-[19px] font-semibold text-primary">
-                {String(i + 1).padStart(2, "0")}
+              <span className="flex size-[46px] items-center justify-center rounded-[13px] bg-accent-soft text-primary">
+                <Icon name={f.icon} size={22} variant={f.icon === "MagicStar" ? "Bold" : "Linear"} />
               </span>
-              <h3 className="mt-5 font-heading text-[19px] font-semibold tracking-[-0.3px] text-foreground">
-                {t(`modules.${mod.key}.title`)}
+              <h3 className="mt-[18px] font-heading text-[19px] font-semibold tracking-[-0.2px] text-foreground">
+                {t(`items.${f.key}.title`)}
               </h3>
-              <p className="mt-2 text-p2-r text-muted-foreground">
-                {t(`modules.${mod.key}.description`)}
+              <p className="mt-2.5 text-[14px] leading-relaxed text-muted-foreground">
+                {t(`items.${f.key}.description`)}
               </p>
             </div>
           ))}

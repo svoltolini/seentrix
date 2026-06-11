@@ -1,252 +1,278 @@
 {
- "landing": {
-  "header": {
-   "features": "Fonctionnalités",
-   "pricing": "Tarifs",
-   "timeline": "Calendrier",
-   "blog": "Blog",
-   "contact": "Contact",
-   "login": "Se connecter",
-   "dashboard": "Tableau de bord",
-   "cta": "Commencer l'évaluation gratuite",
-   "menu": "Menu",
-   "navigation": "Navigation"
-  },
-  "hero": {
-   "badge": "Règlement (UE) sur la cyber-résilience",
-   "titleLine1": "Votre plateforme de conformité CRA",
-   "titleLine2": "Dès le premier jour et au-delà",
-   "subtitle": "Le règlement (UE) sur la cyber-résilience (CRA) exige une cybersécurité continue pour chaque produit connecté en Europe. Seentrix aide les fabricants à atteindre la conformité, à la maintenir en continu et à rester prêts pour les audits. Pas seulement pour l'échéance, mais sur le long terme.",
-   "cta": "Commencer l'évaluation gratuite",
-   "ctaSecondary": "Voir les tarifs",
-   "countdown": {
-    "title": "Temps avant l'application du CRA",
-    "days": "Jours",
-    "hours": "Heures",
-    "minutes": "Minutes",
-    "seconds": "Secondes"
-   }
-  },
-  "problem": {
-   "title": "Le défi de la conformité CRA",
-   "subtitle": "Les fabricants font face à des obligations de cybersécurité sans précédent en vertu du règlement (UE) sur la cyber-résilience.",
-   "stats": {
-    "stat1": {
-     "value": "87%",
-     "label": "des fabricants ne sont pas encore prêts pour le CRA",
-     "description": "La plupart des entreprises sous-estiment l'étendue des exigences applicables à leurs produits connectés."
+  "landing": {
+    "header": {
+      "features": "Fonctionnalités",
+      "pricing": "Tarifs",
+      "timeline": "Calendrier",
+      "blog": "Blog",
+      "contact": "Contact",
+      "login": "Se connecter",
+      "dashboard": "Tableau de bord",
+      "cta": "Commencer l'évaluation gratuite",
+      "menu": "Menu",
+      "navigation": "Navigation"
     },
-    "stat2": {
-     "value": "24h",
-     "label": "délai de déclaration des vulnérabilités",
-     "description": "Les vulnérabilités activement exploitées doivent être signalées à ENISA dans les 24 heures."
+    "hero": {
+      "badge": "Règlement européen sur la cyberrésilience",
+      "titleLine1": "Conformité CRA,",
+      "titleLine2": "maîtrisée.",
+      "subtitle": "Seentrix transforme le règlement sur la cyberrésilience en un flux clair et traçable — en évaluant chaque produit, en gérant les vulnérabilités et en rédigeant les documents nécessaires pour commercialiser dans l'UE.",
+      "cta": "Ouvrir le tableau de bord",
+      "ctaSecondary": "Réserver une démo",
+      "countdown": {
+        "title": "Temps avant l'application du CRA",
+        "days": "Jours",
+        "hours": "Heures",
+        "minutes": "Minutes",
+        "seconds": "Secondes"
+      }
     },
-    "stat3": {
-     "value": "€15M",
-     "label": "amende maximale pour non-conformité",
-     "description": "Ou 2,5 % du chiffre d'affaires annuel mondial, selon le montant le plus élevé."
-    }
-   }
-  },
-  "features": {
-   "title": "Tout ce dont vous avez besoin pour la conformité CRA",
-   "subtitle": "Quatre modules intégrés qui vous guident de l'évaluation à la documentation prête pour la certification.",
-   "modules": {
-    "assessment": {
-     "title": "Évaluation du périmètre",
-     "description": "Déterminez la catégorie CRA de votre produit, la procédure d'évaluation de la conformité et si un organisme notifié est requis. Le tout en quelques minutes."
+    "problem": {
+      "title": "Le défi de la conformité CRA",
+      "subtitle": "Les fabricants font face à des obligations de cybersécurité sans précédent en vertu du règlement (UE) sur la cyber-résilience.",
+      "stats": {
+        "stat1": {
+          "value": "87%",
+          "label": "des fabricants ne sont pas encore prêts pour le CRA",
+          "description": "La plupart des entreprises sous-estiment l'étendue des exigences applicables à leurs produits connectés."
+        },
+        "stat2": {
+          "value": "24h",
+          "label": "délai de déclaration des vulnérabilités",
+          "description": "Les vulnérabilités activement exploitées doivent être signalées à ENISA dans les 24 heures."
+        },
+        "stat3": {
+          "value": "€15M",
+          "label": "amende maximale pour non-conformité",
+          "description": "Ou 2,5 % du chiffre d'affaires annuel mondial, selon le montant le plus élevé."
+        }
+      }
     },
-    "checklist": {
-     "title": "Liste de contrôle de conformité",
-     "description": "Listes de contrôle interactives alignées sur les exigences de l'Annexe I du CRA, avec suivi de progression et liaison des preuves."
-    },
-    "sbom": {
-     "title": "Gestion du SBOM",
-     "description": "Téléversez et gérez des nomenclatures logicielles avec analyse automatique des vulnérabilités dans les bases de données CVE connues."
-    },
-    "documents": {
-     "title": "Hub documentaire",
-     "description": "Générez la déclaration UE de conformité, la documentation technique et les politiques de traitement des vulnérabilités à partir de modèles."
-    }
-   }
-  },
-  "audience": {
-   "title": "Conçu pour les fabricants de produits",
-   "subtitle": "Nous avons conçu Seentrix pour que les fabricants de toutes sortes puissent naviguer dans la conformité CRA avec confiance, de la première évaluation à la documentation prête pour le marché.",
-   "cta": "Commencer",
-   "segments": {
-    "industrial": {
-     "title": "Industrie & OT",
-     "description": "Cartographiez vos automates programmables, systèmes SCADA et contrôleurs industriels par rapport aux exigences de l'Annexe I du CRA. Obtenez de la clarté sur les procédures d'évaluation de la conformité et les obligations d'organisme notifié pour votre technologie opérationnelle."
-    },
-    "iot": {
-     "title": "Appareils IoT",
-     "description": "Gérez les obligations de cybersécurité dès la conception pour les appareils grand public et professionnels connectés. Suivez les vulnérabilités, maintenez des SBOM et générez la documentation attendue par les auditeurs."
-    },
-    "software": {
-     "title": "Logiciels & Firmware",
-     "description": "Évaluez les produits logiciels autonomes et les firmware embarqués par rapport aux critères du périmètre CRA. Automatisez la surveillance des vulnérabilités et produisez des déclarations UE de conformité à partir de modèles."
-    }
-   }
-  },
-  "pricingPreview": {
-   "title": "Tarification simple et transparente",
-   "subtitle": "Commencez gratuitement et passez à un abonnement supérieur à mesure que vos besoins de conformité évoluent. Consultez le tableau de comparaison complet sur la page tarifs.",
-   "free": {
-    "name": "Free",
-    "price": "€0",
-    "description": "Explorez les exigences du CRA",
     "features": {
-     "f1": "1 produit · 1 utilisateur",
-     "f2": "Liste de contrôle de conformité complète",
-     "f3": "Academy + glossaire"
+      "title": "Tout ce que le CRA exige, au même endroit",
+      "subtitle": "De la première analyse de risque au marquage CE — Seentrix garde tout votre portefeuille prêt pour l'audit.",
+      "modules": {
+        "assessment": {
+          "title": "Évaluation du périmètre",
+          "description": "Déterminez la catégorie CRA de votre produit, la procédure d'évaluation de la conformité et si un organisme notifié est requis. Le tout en quelques minutes."
+        },
+        "checklist": {
+          "title": "Liste de contrôle de conformité",
+          "description": "Listes de contrôle interactives alignées sur les exigences de l'Annexe I du CRA, avec suivi de progression et liaison des preuves."
+        },
+        "sbom": {
+          "title": "Gestion du SBOM",
+          "description": "Téléversez et gérez des nomenclatures logicielles avec analyse automatique des vulnérabilités dans les bases de données CVE connues."
+        },
+        "documents": {
+          "title": "Hub documentaire",
+          "description": "Générez la déclaration UE de conformité, la documentation technique et les politiques de traitement des vulnérabilités à partir de modèles."
+        }
+      },
+      "items": {
+        "scoring": {
+          "title": "Score de conformité",
+          "description": "Un score de préparation en direct pour chaque produit, aligné sur les exigences essentielles du CRA — vous savez toujours ce qu'il reste à faire."
+        },
+        "vulnerabilities": {
+          "title": "Gestion des vulnérabilités",
+          "description": "Suivez les CVE par CVSS, gérez la divulgation coordonnée et respectez l'obligation de signalement ENISA sous 24 heures sans précipitation."
+        },
+        "documents": {
+          "title": "Documents, rédigés",
+          "description": "Générez SBOM, analyses de risque et la déclaration UE de conformité — assemblés à partir de vos données, prêts à signer."
+        },
+        "copilot": {
+          "title": "Copilote IA",
+          "description": "Demandez ce qui bloque la conformité, triez les incidents ou faites rédiger un document de conformité en quelques secondes."
+        },
+        "deadlines": {
+          "title": "Suivi des échéances",
+          "description": "Chaque jalon du CRA sur un seul calendrier, avec des rappels qui s'intensifient à l'approche des dates."
+        },
+        "academy": {
+          "title": "Academy",
+          "description": "Rendez toute votre équipe à l'aise avec le CRA grâce à des cours courts et pratiques conçus pour les équipes produit et sécurité."
+        }
+      }
+    },
+    "audience": {
+      "title": "Conçu pour les fabricants de produits",
+      "subtitle": "Nous avons conçu Seentrix pour que les fabricants de toutes sortes puissent naviguer dans la conformité CRA avec confiance, de la première évaluation à la documentation prête pour le marché.",
+      "cta": "Commencer",
+      "segments": {
+        "industrial": {
+          "title": "Industrie & OT",
+          "description": "Cartographiez vos automates programmables, systèmes SCADA et contrôleurs industriels par rapport aux exigences de l'Annexe I du CRA. Obtenez de la clarté sur les procédures d'évaluation de la conformité et les obligations d'organisme notifié pour votre technologie opérationnelle."
+        },
+        "iot": {
+          "title": "Appareils IoT",
+          "description": "Gérez les obligations de cybersécurité dès la conception pour les appareils grand public et professionnels connectés. Suivez les vulnérabilités, maintenez des SBOM et générez la documentation attendue par les auditeurs."
+        },
+        "software": {
+          "title": "Logiciels & Firmware",
+          "description": "Évaluez les produits logiciels autonomes et les firmware embarqués par rapport aux critères du périmètre CRA. Automatisez la surveillance des vulnérabilités et produisez des déclarations UE de conformité à partir de modèles."
+        }
+      }
+    },
+    "pricingPreview": {
+      "title": "Tarification simple et transparente",
+      "subtitle": "Commencez gratuitement et passez à un abonnement supérieur à mesure que vos besoins de conformité évoluent. Consultez le tableau de comparaison complet sur la page tarifs.",
+      "free": {
+        "name": "Free",
+        "price": "€0",
+        "description": "Explorez les exigences du CRA",
+        "features": {
+          "f1": "1 produit · 1 utilisateur",
+          "f2": "Liste de contrôle de conformité complète",
+          "f3": "Academy + glossaire"
+        }
+      },
+      "professional": {
+        "name": "Professional",
+        "price": "€49",
+        "period": "/mois",
+        "description": "Fondateurs solo, 1 à 3 produits",
+        "badge": "Le plus populaire",
+        "features": {
+          "f1": "3 produits · 3 utilisateurs",
+          "f2": "SBOM + analyse de vulnérabilités",
+          "f3": "PDFs DoC + informations utilisateurs finaux",
+          "f4": "Déclaration d'incidents (Art. 14)"
+        }
+      },
+      "business": {
+        "name": "Business",
+        "price": "€179",
+        "period": "/mois",
+        "description": "Équipes conformité, plusieurs produits",
+        "features": {
+          "f1": "15 produits · 10 utilisateurs",
+          "f2": "Surveillance continue quotidienne",
+          "f3": "PSIRT public + security.txt",
+          "f4": "Accès API · Support prioritaire"
+        }
+      },
+      "getStarted": "Commencer",
+      "cta": "Voir tous les tarifs",
+      "compareAllFeatures": "Comparer toutes les 60+ fonctionnalités",
+      "compareAllFeaturesHint": "Matrice complète des fonctionnalités sur chaque niveau, y compris les ajouts à venir.",
+      "enterpriseBand": {
+        "title": "Besoin de plus que Business ?",
+        "subtitle": "Grands portefeuilles, SSO, SLA personnalisé — nous adapterons un abonnement à vos besoins.",
+        "cta": "Nous contacter"
+      }
+    },
+    "timeline": {
+      "eyebrow": "Calendrier CRA",
+      "title": "Trois échéances séparent votre produit du marché de l'UE",
+      "subtitle": "Le Cyber Resilience Act s'applique par phases. En manquer une, et votre produit ne peut plus être livré dans l'UE.",
+      "footnote": "Dates tirées du règlement (UE) 2024/2847. Vérifiez le texte officiel sur EUR-Lex avant de vous y fier dans des dépôts juridiques.",
+      "countdown": {
+        "today": "En vigueur aujourd'hui",
+        "past": "il y a {value} jours",
+        "days": "dans {value} jours",
+        "weeks": "dans {value} semaines",
+        "months": "dans {value} mois",
+        "years": "dans {value} ans"
+      },
+      "milestones": {
+        "m1": {
+          "date": "Juin 2026",
+          "title": "Déclaration des vulnérabilités",
+          "description": "Les fabricants doivent signaler les vulnérabilités activement exploitées à ENISA dans les 24 heures."
+        },
+        "m2": {
+          "date": "11 septembre 2026",
+          "title": "Application intégrale du CRA",
+          "description": "Toutes les exigences essentielles de cybersécurité s'appliquent. Les produits doivent être conformes avant d'être mis sur le marché de l'UE."
+        },
+        "m3": {
+          "date": "Décembre 2027",
+          "title": "Évaluation de la conformité",
+          "description": "Les évaluations par organisme notifié sont requises pour les catégories de produits « importants » et « critiques »."
+        }
+      }
+    },
+    "howItWorks": {
+      "title": "Mettez-vous en conformité en 3 étapes",
+      "subtitle": "De la première évaluation à la documentation prête pour l'audit — Seentrix vous guide tout au long du parcours de conformité CRA.",
+      "steps": {
+        "s1": {
+          "title": "Évaluez vos produits",
+          "description": "Effectuez l'évaluation du périmètre pour déterminer votre catégorie CRA, la procédure d'évaluation de la conformité et si un organisme notifié est requis."
+        },
+        "s2": {
+          "title": "Suivez les exigences",
+          "description": "Parcourez les listes de contrôle interactives alignées sur l'Annexe I du CRA. Téléversez votre SBOM et analysez les vulnérabilités connues."
+        },
+        "s3": {
+          "title": "Générez la documentation",
+          "description": "Exportez votre déclaration UE de conformité, votre documentation technique et vos politiques de traitement des vulnérabilités — prêtes pour les auditeurs."
+        }
+      }
+    },
+    "trust": {
+      "title": "Conçu par des ingénieurs conformité",
+      "subtitle": "Développé au Royaume-Uni par une équipe aux solides racines dans l'automatisation industrielle et les normes de cybersécurité.",
+      "hosting": "Vos données ne quittent jamais l'UE. Base de données + stockage de fichiers sur Supabase à Londres (eu-west-2), application web sur Vercel à Francfort (fra1), suivi des erreurs sur Sentry en Allemagne (de.sentry.io).",
+      "badges": {
+        "iec": "IEC 62443",
+        "etsi": "ETSI EN 303 645",
+        "gdpr": "Conforme au RGPD UE",
+        "eu_data": "Résidence des données UE"
+      }
+    },
+    "faq": {
+      "title": "Foire aux questions",
+      "subtitle": "Tout ce que vous devez savoir sur le CRA et comment Seentrix vous aide.",
+      "items": {
+        "q1": {
+          "question": "Qu'est-ce que le règlement (UE) sur la cyber-résilience ?",
+          "answer": "Le CRA est un règlement de l'UE qui établit des exigences de cybersécurité obligatoires pour tous les produits comportant des éléments numériques vendus sur le marché européen. Il couvre le matériel et les logiciels, des appareils IoT aux contrôleurs industriels."
+        },
+        "q2": {
+          "question": "Le CRA s'applique-t-il à mes produits ?",
+          "answer": "Si vous fabriquez ou importez des produits comportant des éléments numériques sur le marché de l'UE, le CRA s'applique probablement. Cela inclut les appareils connectés, les logiciels autonomes et les firmware embarqués. Effectuez notre évaluation gratuite du périmètre pour le savoir en quelques minutes."
+        },
+        "q3": {
+          "question": "Quand le CRA entre-t-il en vigueur ?",
+          "answer": "Les obligations de déclaration des vulnérabilités commencent en juin 2026. L'application intégrale débute le 11 septembre 2026. Les évaluations de la conformité par organisme notifié pour les produits critiques sont requises d'ici décembre 2027."
+        },
+        "q4": {
+          "question": "Que se passe-t-il si je ne suis pas conforme ?",
+          "answer": "La non-conformité peut entraîner des amendes allant jusqu'à 15 millions d'euros ou 2,5 % du chiffre d'affaires annuel mondial, selon le montant le plus élevé. Les produits peuvent également être retirés du marché de l'UE."
+        },
+        "q5": {
+          "question": "Combien de temps faut-il pour démarrer ?",
+          "answer": "Vous pouvez compléter votre première évaluation du périmètre en moins de 10 minutes. La plupart des équipes obtiennent une image complète de leur conformité en quelques jours, selon le nombre de produits et la complexité."
+        },
+        "q6": {
+          "question": "Puis-je essayer Seentrix gratuitement ?",
+          "answer": "Oui. L'abonnement gratuit inclut un produit avec une évaluation de périmètre de base et une liste de contrôle de conformité en lecture seule. Aucune carte bancaire requise."
+        }
+      }
+    },
+    "newsletter": {
+      "title": "Obtenez votre liste de contrôle de préparation CRA gratuite",
+      "subtitle": "Rejoignez notre newsletter et recevez une liste de contrôle pratique pour évaluer votre préparation au CRA, livrée directement dans votre boîte de réception.",
+      "placeholder": "Saisissez votre adresse e-mail",
+      "cta": "S'inscrire",
+      "privacy": "Nous respectons votre vie privée. Désinscription possible à tout moment.",
+      "success": "Vous êtes inscrit ! Consultez votre boîte de réception pour la liste de contrôle de préparation CRA.",
+      "error": "Une erreur s'est produite. Veuillez réessayer.",
+      "duplicate": "Vous êtes déjà inscrit. Consultez votre boîte de réception pour les dernières mises à jour.",
+      "rateLimited": "Trop d'inscriptions depuis ce réseau. Réessayez dans quelques minutes.",
+      "captchaFailed": "Impossible de confirmer que vous êtes humain. Rechargez la page et réessayez."
+    },
+    "footer": {
+      "impressum": "Mentions légales",
+      "privacy": "Politique de confidentialité",
+      "terms": "Conditions d'utilisation",
+      "copyright": "© {year} Seentrix. Tous droits réservés.",
+      "product": "Produit",
+      "resources": "Ressources",
+      "legal": "Juridique"
     }
-   },
-   "professional": {
-    "name": "Professional",
-    "price": "€49",
-    "period": "/mois",
-    "description": "Fondateurs solo, 1 à 3 produits",
-    "badge": "Le plus populaire",
-    "features": {
-     "f1": "3 produits · 3 utilisateurs",
-     "f2": "SBOM + analyse de vulnérabilités",
-     "f3": "PDFs DoC + informations utilisateurs finaux",
-     "f4": "Déclaration d'incidents (Art. 14)"
-    }
-   },
-   "business": {
-    "name": "Business",
-    "price": "€179",
-    "period": "/mois",
-    "description": "Équipes conformité, plusieurs produits",
-    "features": {
-     "f1": "15 produits · 10 utilisateurs",
-     "f2": "Surveillance continue quotidienne",
-     "f3": "PSIRT public + security.txt",
-     "f4": "Accès API · Support prioritaire"
-    }
-   },
-   "getStarted": "Commencer",
-   "cta": "Voir tous les tarifs",
-   "compareAllFeatures": "Comparer toutes les 60+ fonctionnalités",
-   "compareAllFeaturesHint": "Matrice complète des fonctionnalités sur chaque niveau, y compris les ajouts à venir.",
-   "enterpriseBand": {
-    "title": "Besoin de plus que Business ?",
-    "subtitle": "Grands portefeuilles, SSO, SLA personnalisé — nous adapterons un abonnement à vos besoins.",
-    "cta": "Nous contacter"
-   }
-  },
-  "timeline": {
-   "eyebrow": "Calendrier CRA",
-   "title": "Trois échéances séparent votre produit du marché de l'UE",
-   "subtitle": "Le Cyber Resilience Act s'applique par phases. En manquer une, et votre produit ne peut plus être livré dans l'UE.",
-   "footnote": "Dates tirées du règlement (UE) 2024/2847. Vérifiez le texte officiel sur EUR-Lex avant de vous y fier dans des dépôts juridiques.",
-   "countdown": {
-    "today": "En vigueur aujourd'hui",
-    "past": "il y a {value} jours",
-    "days": "dans {value} jours",
-    "weeks": "dans {value} semaines",
-    "months": "dans {value} mois",
-    "years": "dans {value} ans"
-   },
-   "milestones": {
-    "m1": {
-     "date": "Juin 2026",
-     "title": "Déclaration des vulnérabilités",
-     "description": "Les fabricants doivent signaler les vulnérabilités activement exploitées à ENISA dans les 24 heures."
-    },
-    "m2": {
-     "date": "11 septembre 2026",
-     "title": "Application intégrale du CRA",
-     "description": "Toutes les exigences essentielles de cybersécurité s'appliquent. Les produits doivent être conformes avant d'être mis sur le marché de l'UE."
-    },
-    "m3": {
-     "date": "Décembre 2027",
-     "title": "Évaluation de la conformité",
-     "description": "Les évaluations par organisme notifié sont requises pour les catégories de produits « importants » et « critiques »."
-    }
-   }
-  },
-  "howItWorks": {
-   "title": "Mettez-vous en conformité en 3 étapes",
-   "subtitle": "De la première évaluation à la documentation prête pour l'audit — Seentrix vous guide tout au long du parcours de conformité CRA.",
-   "steps": {
-    "s1": {
-     "title": "Évaluez vos produits",
-     "description": "Effectuez l'évaluation du périmètre pour déterminer votre catégorie CRA, la procédure d'évaluation de la conformité et si un organisme notifié est requis."
-    },
-    "s2": {
-     "title": "Suivez les exigences",
-     "description": "Parcourez les listes de contrôle interactives alignées sur l'Annexe I du CRA. Téléversez votre SBOM et analysez les vulnérabilités connues."
-    },
-    "s3": {
-     "title": "Générez la documentation",
-     "description": "Exportez votre déclaration UE de conformité, votre documentation technique et vos politiques de traitement des vulnérabilités — prêtes pour les auditeurs."
-    }
-   }
-  },
-  "trust": {
-   "title": "Conçu par des ingénieurs conformité",
-   "subtitle": "Développé au Royaume-Uni par une équipe aux solides racines dans l'automatisation industrielle et les normes de cybersécurité.",
-   "hosting": "Vos données ne quittent jamais l'UE. Base de données + stockage de fichiers sur Supabase à Londres (eu-west-2), application web sur Vercel à Francfort (fra1), suivi des erreurs sur Sentry en Allemagne (de.sentry.io).",
-   "badges": {
-    "iec": "IEC 62443",
-    "etsi": "ETSI EN 303 645",
-    "gdpr": "Conforme au RGPD UE",
-    "eu_data": "Résidence des données UE"
-   }
-  },
-  "faq": {
-   "title": "Foire aux questions",
-   "subtitle": "Tout ce que vous devez savoir sur le CRA et comment Seentrix vous aide.",
-   "items": {
-    "q1": {
-     "question": "Qu'est-ce que le règlement (UE) sur la cyber-résilience ?",
-     "answer": "Le CRA est un règlement de l'UE qui établit des exigences de cybersécurité obligatoires pour tous les produits comportant des éléments numériques vendus sur le marché européen. Il couvre le matériel et les logiciels, des appareils IoT aux contrôleurs industriels."
-    },
-    "q2": {
-     "question": "Le CRA s'applique-t-il à mes produits ?",
-     "answer": "Si vous fabriquez ou importez des produits comportant des éléments numériques sur le marché de l'UE, le CRA s'applique probablement. Cela inclut les appareils connectés, les logiciels autonomes et les firmware embarqués. Effectuez notre évaluation gratuite du périmètre pour le savoir en quelques minutes."
-    },
-    "q3": {
-     "question": "Quand le CRA entre-t-il en vigueur ?",
-     "answer": "Les obligations de déclaration des vulnérabilités commencent en juin 2026. L'application intégrale débute le 11 septembre 2026. Les évaluations de la conformité par organisme notifié pour les produits critiques sont requises d'ici décembre 2027."
-    },
-    "q4": {
-     "question": "Que se passe-t-il si je ne suis pas conforme ?",
-     "answer": "La non-conformité peut entraîner des amendes allant jusqu'à 15 millions d'euros ou 2,5 % du chiffre d'affaires annuel mondial, selon le montant le plus élevé. Les produits peuvent également être retirés du marché de l'UE."
-    },
-    "q5": {
-     "question": "Combien de temps faut-il pour démarrer ?",
-     "answer": "Vous pouvez compléter votre première évaluation du périmètre en moins de 10 minutes. La plupart des équipes obtiennent une image complète de leur conformité en quelques jours, selon le nombre de produits et la complexité."
-    },
-    "q6": {
-     "question": "Puis-je essayer Seentrix gratuitement ?",
-     "answer": "Oui. L'abonnement gratuit inclut un produit avec une évaluation de périmètre de base et une liste de contrôle de conformité en lecture seule. Aucune carte bancaire requise."
-    }
-   }
-  },
-  "newsletter": {
-   "title": "Obtenez votre liste de contrôle de préparation CRA gratuite",
-   "subtitle": "Rejoignez notre newsletter et recevez une liste de contrôle pratique pour évaluer votre préparation au CRA, livrée directement dans votre boîte de réception.",
-   "placeholder": "Saisissez votre adresse e-mail",
-   "cta": "S'inscrire",
-   "privacy": "Nous respectons votre vie privée. Désinscription possible à tout moment.",
-   "success": "Vous êtes inscrit ! Consultez votre boîte de réception pour la liste de contrôle de préparation CRA.",
-   "error": "Une erreur s'est produite. Veuillez réessayer.",
-   "duplicate": "Vous êtes déjà inscrit. Consultez votre boîte de réception pour les dernières mises à jour.",
-   "rateLimited": "Trop d'inscriptions depuis ce réseau. Réessayez dans quelques minutes.",
-   "captchaFailed": "Impossible de confirmer que vous êtes humain. Rechargez la page et réessayez."
-  },
-  "footer": {
-   "impressum": "Mentions légales",
-   "privacy": "Politique de confidentialité",
-   "terms": "Conditions d'utilisation",
-   "copyright": "© {year} Seentrix. Tous droits réservés.",
-   "product": "Produit",
-   "resources": "Ressources",
-   "legal": "Juridique"
   }
- }
 }
