@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useTranslations } from "next-intl";
-import { Icon } from "@/components/icon";
 import { cn } from "@/lib/utils";
 import { MS_PER_DAY } from "@/lib/time";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
@@ -89,104 +88,71 @@ export function TimelineSection() {
     <section
       ref={sectionRef}
       id="timeline"
-      className="scroll-mt-20 border-t border-border bg-background py-24 lg:py-32"
+      className="scroll-mt-20 bg-dark-cta py-24 text-white lg:py-28"
     >
       <div className="mx-auto max-w-6xl px-6">
-        <div className="mx-auto mb-12 max-w-2xl text-center">
-          <span className="text-l6-plus uppercase tracking-[2.5px] text-primary">
+        <div className="mx-auto mb-14 max-w-2xl text-center">
+          <span className="font-mono text-[12px] font-semibold uppercase tracking-[0.18em] text-primary">
             {t("eyebrow")}
           </span>
-          <h2 className="mt-3 text-h1 tracking-tight text-foreground">
+          <h2 className="mt-3 font-heading text-[34px] font-medium tracking-[-0.6px] text-white">
             {t("title")}
           </h2>
-          <p className="mt-4 text-p1 text-muted-foreground">
+          <p className="mt-3 text-[16px] leading-relaxed text-white/60">
             {t("subtitle")}
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-3">
+        {/* Horizontal milestone track (design `.mk-tl`) — dots, mono accent
+            dates, titles; connector line between dots on desktop. */}
+        <div className="mx-auto flex max-w-[880px] flex-col gap-10 md:flex-row md:gap-0">
           {MILESTONES.map((ms, i) => {
             const target = new Date(`${ms.isoDate}T00:00:00Z`);
             const daysAway = now ? daysUntil(target, now) : null;
-            const isPast = daysAway !== null && daysAway < 0;
-            const countdownLabel = (() => {
-              if (daysAway === null) return null;
-              if (daysAway === 0) return t("countdown.today");
-              if (isPast) {
-                const { value } = formatCountdown(daysAway);
-                return t("countdown.past", { value });
-              }
-              const { value, unit } = formatCountdown(daysAway);
-              return t(`countdown.${unit}`, { value });
-            })();
             return (
-              <MilestoneCard
+              <div
                 key={ms.key}
-                index={i + 1}
-                date={t(`milestones.${ms.key}.date`)}
-                title={t(`milestones.${ms.key}.title`)}
-                description={t(`milestones.${ms.key}.description`)}
-                countdownLabel={countdownLabel}
-                isPast={isPast}
-              />
+                data-milestone-card
+                className="relative flex-1 text-center md:pt-[30px]"
+              >
+                <span
+                  aria-hidden
+                  className={cn(
+                    "absolute top-[5px] hidden h-0.5 bg-white/[0.18] md:block",
+                    i === 0
+                      ? "left-1/2 right-0"
+                      : i === MILESTONES.length - 1
+                        ? "left-0 right-1/2"
+                        : "inset-x-0",
+                  )}
+                />
+                <span
+                  aria-hidden
+                  className="absolute left-1/2 top-0 hidden size-3 -translate-x-1/2 rounded-full bg-primary md:block"
+                />
+                <p className="font-mono text-[12px] font-semibold text-primary">
+                  {t(`milestones.${ms.key}.date`)}
+                </p>
+                <p className="mt-2 px-3 text-[14px] font-semibold text-white">
+                  {t(`milestones.${ms.key}.title`)}
+                </p>
+                {daysAway !== null && daysAway > 0 && (
+                  <p className="mt-1 text-[12px] text-white/45">
+                    {(() => {
+                      const { value, unit } = formatCountdown(daysAway);
+                      return t(`countdown.${unit}`, { value });
+                    })()}
+                  </p>
+                )}
+              </div>
             );
           })}
         </div>
 
-        <p className="mt-8 text-center text-p4 text-muted-foreground">
+        <p className="mt-12 text-center text-[12px] text-white/45">
           {t("footnote")}
         </p>
       </div>
     </section>
-  );
-}
-
-function MilestoneCard({
-  index,
-  date,
-  title,
-  description,
-  countdownLabel,
-  isPast,
-}: {
-  index: number;
-  date: string;
-  title: string;
-  description: string;
-  countdownLabel: string | null;
-  isPast: boolean;
-}) {
-  return (
-    <article
-      data-milestone-card
-      className="flex flex-col rounded-md border border-border bg-card p-7 shadow-card-md transition-shadow hover:shadow-card-lg"
-    >
-      {/* Index */}
-      <span className="text-h1 leading-none text-primary">
-        {String(index).padStart(2, "0")}
-      </span>
-
-      {/* Date */}
-      <p className="mt-7 text-h2 text-foreground">{date}</p>
-
-      {/* Title + description */}
-      <h3 className="mt-2 text-h4 text-foreground">{title}</h3>
-      <p className="mt-2 flex-1 text-p3 text-muted-foreground">{description}</p>
-
-      {/* Countdown chip — Nask meta-chip recipe (bg-muted, rounded-md,
-          14px icon, text-p4 label). Stable SSR placeholder until the
-          client clock is available so the card height doesn't jump
-          on hydration. */}
-      <div className="mt-6">
-        <span className="inline-flex items-center gap-1.5 rounded-md bg-muted px-2.5 py-1.5 text-p4 text-foreground">
-          <Icon
-            name={isPast ? "TickCircle" : "Clock"}
-            size={14}
-            className={cn(isPast ? "text-muted-foreground" : "text-primary")}
-          />
-          <span className="tabular-nums">{countdownLabel ?? "—"}</span>
-        </span>
-      </div>
-    </article>
   );
 }

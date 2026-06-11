@@ -48,35 +48,30 @@ export function HowItWorksSection() {
   return (
     <section
       ref={sectionRef}
-      className="border-t border-border bg-card py-24 lg:py-32"
+      className="border-t border-border bg-card py-24 lg:py-28"
     >
       <div className="mx-auto max-w-6xl px-6">
-        <div className="mx-auto mb-16 max-w-2xl text-center">
-          <h2 className="text-h1 tracking-tight text-foreground">
+        <div className="mx-auto mb-14 max-w-2xl text-center">
+          <h2 className="font-heading text-[34px] font-medium tracking-[-0.6px] text-foreground">
             {t("title")}
           </h2>
-          <p className="mt-6 text-p1 text-muted-foreground">
+          <p className="mt-3 text-[16px] leading-relaxed text-muted-foreground">
             {t("subtitle")}
           </p>
         </div>
 
-        <div className="grid gap-8 md:grid-cols-3">
+        {/* Numbered steps (design `.mk-steps` / `.mk-step`): a 38px
+            accent-soft serif number tile, serif title, muted body. */}
+        <div className="grid gap-[22px] md:grid-cols-3">
           {steps.map((step, i) => (
-            <div
-              key={step.key}
-              data-step-card
-              className="relative rounded-md bg-background p-8"
-            >
-              <span
-                className="text-5xl font-extrabold leading-none"
-                style={{ color: step.accent }}
-              >
-                {String(i + 1).padStart(2, "0")}
+            <div key={step.key} data-step-card className="pt-2">
+              <span className="flex size-[38px] items-center justify-center rounded-xl bg-accent-soft font-heading text-[18px] font-bold text-primary">
+                {i + 1}
               </span>
-              <h3 className="mt-4 text-h4 text-foreground">
+              <h3 className="mt-4 font-heading text-[19px] font-semibold tracking-[-0.2px] text-foreground">
                 {t(`steps.${step.key}.title`)}
               </h3>
-              <p className="mt-3 text-p2-r text-muted-foreground">
+              <p className="mt-2.5 text-[14px] leading-relaxed text-muted-foreground">
                 {t(`steps.${step.key}.description`)}
               </p>
             </div>
