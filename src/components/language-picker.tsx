@@ -50,6 +50,13 @@ export function LanguagePicker({
     // `router.refresh()` raced the action's Set-Cookie and left the page on
     // the old locale — hence the hard reload (language changes are rare).
     startTransition(async () => {
+      // Mirror to localStorage per the design spec (sx_lang) — the cookie +
+      // profile row remain the source of truth for the actual negotiation.
+      try {
+        window.localStorage.setItem("sx_lang", locale);
+      } catch {
+        // Storage unavailable (private mode etc.) — non-fatal.
+      }
       await setPreferredLocale(locale);
       window.location.assign(window.location.href);
     });
@@ -63,10 +70,12 @@ export function LanguagePicker({
             type="button"
             disabled={pending}
             className={cn(
-              "inline-flex items-center gap-2 outline-none transition-colors disabled:opacity-60",
+              "inline-flex items-center outline-none transition-colors duration-150 disabled:opacity-60",
               variant === "full"
-                ? "h-11 rounded-md border-[1.5px] border-border-outline bg-card px-3.5 text-p3 text-foreground hover:bg-muted"
-                : "rounded-md px-2 py-1.5 text-p3 text-foreground hover:bg-muted",
+                ? "h-11 gap-2 rounded-md border border-border-strong bg-card px-3.5 text-p3 text-foreground hover:bg-muted"
+                : // Nav icon-button recipe: 38px tall, 11px radius, grey →
+                  // ink on hover with the warm hover fill.
+                  "h-[38px] gap-1.5 rounded-[11px] px-2.5 text-[13px] font-medium text-muted-foreground hover:bg-muted hover:text-foreground",
             )}
             aria-label={t.has("label") ? t("label") : "Language"}
           />
@@ -74,36 +83,44 @@ export function LanguagePicker({
       >
         <Icon
           name="Global"
-          size={variant === "full" ? 18 : 16}
-          variant="Bold"
-          className="text-muted-foreground"
+          size={variant === "full" ? 18 : 17}
+          className="text-current"
         />
-        <span>
+        <span className="uppercase">
           {variant === "full" ? LOCALE_LABELS[current] : LOCALE_SHORT[current]}
         </span>
-        <Icon name="ArrowDown2" size={14} className="text-muted-foreground" />
+        <Icon name="ArrowDown2" size={13} className="text-current" />
       </DropdownMenuTrigger>
-      <DropdownMenuContent align={align} className="min-w-[180px]">
-        {LOCALES.map((locale) => (
-          <DropdownMenuItem
-            key={locale}
-            onClick={() => choose(locale)}
-            className={cn(current === locale && "bg-muted text-foreground")}
-          >
-            <span className="w-7 text-p4-r text-muted-foreground">
-              {LOCALE_SHORT[locale]}
-            </span>
-            {LOCALE_LABELS[locale]}
-            {current === locale && (
-              <Icon
-                name="TickCircle"
-                size={16}
-                variant="Bold"
-                className="ml-auto text-primary"
-              />
-            )}
-          </DropdownMenuItem>
-        ))}
+      <DropdownMenuContent
+        align={align}
+        className="w-[180px] rounded-md border border-border-strong bg-card p-1 shadow-[0_12px_34px_rgba(60,40,20,0.14)]"
+      >
+        {LOCALES.map((locale) => {
+          const isActive = current === locale;
+          return (
+            <DropdownMenuItem
+              key={locale}
+              onClick={() => choose(locale)}
+              className={cn(
+                "rounded-[8px] focus:bg-muted data-highlighted:bg-muted",
+                isActive && "font-semibold text-foreground",
+              )}
+            >
+              <span className="w-7 text-p4-r uppercase text-muted-foreground">
+                {LOCALE_SHORT[locale]}
+              </span>
+              {LOCALE_LABELS[locale]}
+              {isActive && (
+                <Icon
+                  name="check"
+                  size={15}
+                  variant="Bold"
+                  className="ml-auto text-primary"
+                />
+              )}
+            </DropdownMenuItem>
+          );
+        })}
       </DropdownMenuContent>
     </DropdownMenu>
   );

@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
+import { Icon } from "@/components/icon";
 
 /**
  * DashboardHero — the Clay signature screen header (design handoff §3).
@@ -67,11 +68,22 @@ export function DashboardHero({
             </>
           )}
         </p>
+        {/* Hero CTA pair — shared base: 12×20 padding (~44px), r12, 14/600,
+            8px icon gap. Primary = solid green + trailing arrow; secondary =
+            white/ink/1px border + leading spark. Row gap 12px. */}
         <div className="mt-6 flex flex-wrap gap-3">
           <Link href="/app/vulnerability-reports">
-            <Button size="sm">{t("reviewCta")}</Button>
+            <Button className="h-11 gap-2 rounded-md px-5 text-[14px]">
+              {t("reviewCta")}
+              <Icon name="ArrowRight" size={16} aria-hidden="true" />
+            </Button>
           </Link>
-          <Button variant="outline" size="sm" onClick={onOpenCopilot}>
+          <Button
+            variant="outline"
+            className="h-11 gap-2 rounded-md px-5 text-[14px]"
+            onClick={onOpenCopilot}
+          >
+            <Icon name="ai-magic-stroke-rounded" size={15} aria-hidden="true" />
             {t("copilotCta")}
           </Button>
         </div>

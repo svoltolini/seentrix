@@ -51,7 +51,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground hover:bg-[color-mix(in_srgb,var(--primary)_88%,#000)]",
+          "bg-primary text-primary-foreground hover:bg-[color-mix(in_srgb,var(--primary)_86%,#000)]",
         dark:
           "bg-dark-cta text-dark-cta-foreground hover:bg-[color-mix(in_srgb,var(--dark-cta)_85%,#fff)]",
         secondary:
