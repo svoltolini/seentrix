@@ -4,6 +4,7 @@
     "subtitle": "Manage your products and track CRA compliance.",
     "addProduct": "Add Product",
     "view": {
+      "table": "Table",
       "grid": "Grid",
       "list": "List",
       "timeline": "Timeline"
@@ -192,6 +193,17 @@
       "noOrganization": "No organization found. Please complete onboarding.",
       "limitReached": "You have reached the product limit for your plan.",
       "planLimitReached": "You have reached the product limit for your plan. Upgrade to add more products."
+    },
+    "eyebrow": "Compliance",
+    "searchPlaceholder": "Search by name or type…",
+    "noMatches": "No products match your filters.",
+    "filter": {
+      "all": "All"
+    },
+    "table": {
+      "product": "Product",
+      "class": "Class",
+      "score": "Compliance score"
     }
   }
 }

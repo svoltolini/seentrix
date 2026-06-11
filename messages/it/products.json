@@ -4,6 +4,7 @@
     "subtitle": "Gestisci i tuoi prodotti e monitora la conformità CRA.",
     "addProduct": "Aggiungi prodotto",
     "view": {
+      "table": "Tabella",
       "grid": "Griglia",
       "list": "Lista",
       "timeline": "Cronologia"
@@ -192,6 +193,17 @@
       "noOrganization": "Nessuna organizzazione trovata. Completa l'onboarding.",
       "limitReached": "Hai raggiunto il limite di prodotti per il tuo piano.",
       "planLimitReached": "Hai raggiunto il limite di prodotti per il tuo piano. Esegui l'upgrade per aggiungere altri prodotti."
+    },
+    "eyebrow": "Conformità",
+    "searchPlaceholder": "Cerca per nome o tipo…",
+    "noMatches": "Nessun prodotto corrisponde ai filtri.",
+    "filter": {
+      "all": "Tutti"
+    },
+    "table": {
+      "product": "Prodotto",
+      "class": "Classe",
+      "score": "Punteggio di conformità"
     }
   }
 }

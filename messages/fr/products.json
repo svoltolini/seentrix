@@ -4,6 +4,7 @@
     "subtitle": "Gérez vos produits et suivez la conformité CRA.",
     "addProduct": "Ajouter un produit",
     "view": {
+      "table": "Tableau",
       "grid": "Grille",
       "list": "Liste",
       "timeline": "Chronologie"
@@ -192,6 +193,17 @@
       "noOrganization": "Aucune organisation trouvée. Veuillez compléter l'intégration.",
       "limitReached": "Vous avez atteint la limite de produits de votre abonnement.",
       "planLimitReached": "Vous avez atteint la limite de produits de votre abonnement. Mettez à niveau pour ajouter plus de produits."
+    },
+    "eyebrow": "Conformité",
+    "searchPlaceholder": "Rechercher par nom ou type…",
+    "noMatches": "Aucun produit ne correspond à vos filtres.",
+    "filter": {
+      "all": "Tous"
+    },
+    "table": {
+      "product": "Produit",
+      "class": "Classe",
+      "score": "Score de conformité"
     }
   }
 }

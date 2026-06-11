@@ -4,6 +4,7 @@
     "subtitle": "Verwalten Sie Ihre Produkte und verfolgen Sie die CRA-Compliance.",
     "addProduct": "Produkt hinzufügen",
     "view": {
+      "table": "Tabelle",
       "grid": "Raster",
       "list": "Liste",
       "timeline": "Zeitplan"
@@ -192,6 +193,17 @@
       "noOrganization": "Keine Organisation gefunden. Bitte schließen Sie das Onboarding ab.",
       "limitReached": "Sie haben das Produktlimit für Ihren Plan erreicht.",
       "planLimitReached": "Sie haben das Produktlimit für Ihren Plan erreicht. Führen Sie ein Upgrade durch, um weitere Produkte hinzuzufügen."
+    },
+    "eyebrow": "Konformität",
+    "searchPlaceholder": "Nach Name oder Typ suchen…",
+    "noMatches": "Keine Produkte entsprechen Ihren Filtern.",
+    "filter": {
+      "all": "Alle"
+    },
+    "table": {
+      "product": "Produkt",
+      "class": "Klasse",
+      "score": "Konformitätswert"
     }
   }
 }

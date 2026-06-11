@@ -9,13 +9,21 @@ import { cn } from "@/lib/utils";
 import { RequiresProductEmptyState } from "@/components/requires-product-empty-state";
 import { ProjectHeroCard } from "../dashboard/widgets/project-hero-card";
 // (AskSeentrixAI now lives inside RequiresProductEmptyState)
-import { ProductCardList } from "./components/product-card-list";
+import { ProductTable } from "./components/product-table";
 import { ProductTimeline } from "./components/product-timeline";
 import type { ProductListItem } from "./actions";
 import type { OrgPlan } from "@/lib/constants/plans";
 import { PLAN_PRODUCT_LIMITS } from "@/lib/constants/plans";
 
-type ViewMode = "grid" | "list" | "timeline";
+type ViewMode = "table" | "grid" | "timeline";
+
+const CATEGORY_FILTERS = [
+  "all",
+  "critical",
+  "important_class_ii",
+  "important_class_i",
+  "default",
+] as const;
 
 /**
  * /app/products — three view modes over the same product list.
@@ -47,18 +55,29 @@ export function ProductsPageContent({
   productCount: number;
 }) {
   const t = useTranslations("products");
-  const [view, setView] = useState<ViewMode>("grid");
+  const [view, setView] = useState<ViewMode>("table");
+  const [query, setQuery] = useState("");
+  const [category, setCategory] =
+    useState<(typeof CATEGORY_FILTERS)[number]>("all");
 
-  // Newest first — single deterministic order, memoised so unrelated
-  // state changes (view toggle) don't re-sort the array.
-  const sorted = useMemo(
-    () =>
-      [...products].sort(
+  // Newest first, then live-filtered by the search query + category pill.
+  const sorted = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    return [...products]
+      .sort(
         (a, b) =>
           new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
-      ),
-    [products],
-  );
+      )
+      .filter((p) => {
+        if (category !== "all" && (p.cra_category ?? "default") !== category)
+          return false;
+        if (!q) return true;
+        return (
+          p.name.toLowerCase().includes(q) ||
+          (p.type ?? "").toLowerCase().includes(q)
+        );
+      });
+  }, [products, query, category]);
 
   const limit = PLAN_PRODUCT_LIMITS[plan];
 
@@ -79,47 +98,96 @@ export function ProductsPageContent({
   }
 
   return (
-    <div className="space-y-8 pb-12">
-      {/* Page header — h1 + p2 muted matches the dashboard greeting.
-          The "+ Add Product" CTA used to live on the right side of
-          this row, but the topbar already carries a globally-visible
-          "+ New Product" button (which opens the `<CreateProductSheet
-          />`), so the page-level duplicate was retired. Same for the
-          empty-state CTA below — both routes now flow through the
-          topbar button + sheet. */}
-      <div>
-        <h1 className="text-h1 text-foreground">{t("title")}</h1>
-        <p className="mt-2 text-p2 text-muted-foreground">{t("subtitle")}</p>
+    <div className="space-y-6 pb-12">
+      {/* Section head — Clay eyebrow + serif title + sub (design `.sx-screen-head`) */}
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p className="text-[12px] font-semibold uppercase tracking-[1px] text-primary">
+            {t.has("eyebrow") ? t("eyebrow") : "Compliance"}
+          </p>
+          <h1 className="mt-2.5 text-h1 text-foreground">{t("title")}</h1>
+          <p className="mt-2.5 max-w-[60ch] text-[14.5px] leading-relaxed text-muted-foreground">
+            {t("subtitle")}
+          </p>
+        </div>
       </div>
 
-      {/* View-mode toggle — outline chips with active = primary fill.
-          Same recipe as the dashboard's "Project Statistics" filter
-          chips so every "small toggle" in the app reads as one family. */}
+      {/* Toolbar — search + category filter pills + view toggle */}
       {products.length > 0 && (
-        <div className="flex items-center gap-2">
-          {(
-            [
-              { key: "grid", iconName: "Grid2" },
-              { key: "list", iconName: "RowVertical" },
-              { key: "timeline", iconName: "Calendar" },
-            ] as const
-          ).map((mode) => (
-            <button
-              key={mode.key}
-              type="button"
-              onClick={() => setView(mode.key)}
-              className={cn(
-                "inline-flex h-9 items-center gap-2 rounded-sm border-[1.5px] px-3 text-l6 transition-colors",
-                view === mode.key
-                  ? "border-primary bg-primary/10 text-primary"
-                  : "border-border-outline bg-card text-muted-foreground hover:text-foreground",
-              )}
-              aria-pressed={view === mode.key}
-            >
-              <Icon name={mode.iconName} size={16} />
-              {t.has(`view.${mode.key}`) ? t(`view.${mode.key}`) : mode.key}
-            </button>
-          ))}
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="flex min-w-[220px] flex-1 items-center gap-2.5 rounded-md border border-border-strong bg-card px-3.5 py-2.5">
+            <Icon
+              name="SearchNormal1"
+              size={16}
+              className="shrink-0 text-muted-foreground"
+            />
+            <input
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder={
+                t.has("searchPlaceholder")
+                  ? t("searchPlaceholder")
+                  : "Search products…"
+              }
+              className="w-full bg-transparent text-[14px] text-foreground outline-none placeholder:text-muted-foreground"
+            />
+          </div>
+
+          <div className="flex flex-wrap gap-1.5">
+            {CATEGORY_FILTERS.map((c) => {
+              const labelKey = c === "all" ? "filter.all" : `categories.${c}`;
+              return (
+                <button
+                  key={c}
+                  type="button"
+                  onClick={() => setCategory(c)}
+                  aria-pressed={category === c}
+                  className={cn(
+                    "rounded-full border px-3.5 py-2 text-[12.5px] font-semibold transition-colors",
+                    category === c
+                      ? "border-foreground bg-foreground text-background"
+                      : "border-border-strong bg-card text-muted-foreground hover:bg-muted hover:text-foreground",
+                  )}
+                >
+                  {c === "all"
+                    ? t.has("filter.all")
+                      ? t("filter.all")
+                      : "All"
+                    : t.has(labelKey)
+                      ? t(labelKey)
+                      : c.replace(/_/g, " ")}
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="ml-auto flex items-center gap-1.5">
+            {(
+              [
+                { key: "table", iconName: "RowVertical" },
+                { key: "grid", iconName: "Grid2" },
+                { key: "timeline", iconName: "Calendar" },
+              ] as const
+            ).map((mode) => (
+              <button
+                key={mode.key}
+                type="button"
+                onClick={() => setView(mode.key)}
+                aria-label={
+                  t.has(`view.${mode.key}`) ? t(`view.${mode.key}`) : mode.key
+                }
+                aria-pressed={view === mode.key}
+                className={cn(
+                  "inline-flex size-9 items-center justify-center rounded-md border transition-colors",
+                  view === mode.key
+                    ? "border-primary bg-primary/10 text-primary"
+                    : "border-border-strong bg-card text-muted-foreground hover:bg-muted hover:text-foreground",
+                )}
+              >
+                <Icon name={mode.iconName} size={16} />
+              </button>
+            ))}
+          </div>
         </div>
       )}
 
@@ -176,9 +244,15 @@ export function ProductsPageContent({
         </div>
       )}
 
-      {/* Body — grid, kanban list, or timeline. The empty state is handled by
-          an early return above. */}
-      {view === "grid" ? (
+      {/* Body — table (default), card grid, or timeline. Empty state is the
+          early return above; an empty *filter* result shows a quiet note. */}
+      {sorted.length === 0 ? (
+        <div className="rounded-lg border border-dashed border-border-strong bg-card px-6 py-12 text-center text-[14px] text-muted-foreground">
+          {t.has("noMatches") ? t("noMatches") : "No products match your filters."}
+        </div>
+      ) : view === "table" ? (
+        <ProductTable products={sorted} />
+      ) : view === "grid" ? (
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {sorted.map((p) => {
             const categoryKey = p.cra_category ?? "default";
@@ -204,8 +278,6 @@ export function ProductsPageContent({
             );
           })}
         </div>
-      ) : view === "list" ? (
-        <ProductCardList products={sorted} />
       ) : (
         <ProductTimeline products={sorted} basePath="/app/products" />
       )}
