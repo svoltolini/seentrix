@@ -370,7 +370,7 @@ export function VulnerabilitiesContent({
   return (
     <div ref={rootRef}>
       <StaggerReveal
-        className="space-y-6"
+        className="space-y-[18px]"
         selector="[data-reveal]"
         stagger={0.08}
         y={24}

@@ -377,7 +377,7 @@ export function DashboardContent(
   // ---- Empty-state guidance for brand-new orgs ---------------------------
   if (onboardingState.isEmpty) {
     return (
-      <div className="flex w-full flex-col gap-6">
+      <div className="flex w-full flex-col gap-3.5">
         {profileStatus && !profileStatus.complete && (
           <ProfileIncompleteBanner
             eyebrow={t("profileIncomplete.eyebrow")}
@@ -395,7 +395,7 @@ export function DashboardContent(
   const heroDeadline = nextCraDeadline();
 
   return (
-    <div className="flex w-full flex-col gap-6">
+    <div className="flex w-full flex-col gap-3.5">
       <DashboardHero
         firstName={firstName}
         percent={avgCompliance}
@@ -423,9 +423,9 @@ export function DashboardContent(
       {/* KPI strip — full width above the columns */}
       <KpiStrip kpis={kpis} />
 
-      <div className="grid gap-6 lg:grid-cols-[1fr_370px]">
+      <div className="grid gap-3.5 lg:grid-cols-[1fr_370px]">
         {/* MAIN COLUMN */}
-        <div className="flex min-w-0 flex-col gap-6">
+        <div className="flex min-w-0 flex-col gap-3.5">
           {/* Project Statistics activity chart */}
           <ProjectStatisticsCard points={chartData} />
 
@@ -468,30 +468,30 @@ export function DashboardContent(
         </div>
 
         {/* RIGHT RAIL — calendar (carries the deadlines), then activity */}
-        <aside className="flex min-w-0 flex-col gap-4 lg:max-w-[370px]">
+        <aside className="flex min-w-0 flex-col gap-3.5 lg:max-w-[370px]">
           {/* CRA calendar tracker — already surfaces upcoming deadlines */}
-          <section className="flex flex-col gap-4 rounded-lg border border-border bg-card p-5">
+          <section className="flex flex-col gap-4 rounded-lg border border-border bg-card p-4">
             <h3 className="text-h4 text-foreground">{t("calendar.title")}</h3>
             <CraCalendarTracker events={calendarEvents} />
           </section>
 
           {/* Team roster */}
           {teamMembers.length > 0 && (
-            <section className="flex flex-col gap-4 rounded-lg border border-border bg-card p-5">
+            <section className="flex flex-col gap-4 rounded-lg border border-border bg-card p-4">
               <h3 className="text-h4 text-foreground">{t("team")}</h3>
               <TeamChatStrip members={teamMembers} />
             </section>
           )}
 
           {/* Activity feed */}
-          <section className="flex flex-col gap-4 rounded-lg border border-border bg-card p-5">
+          <section className="flex flex-col gap-4 rounded-lg border border-border bg-card p-4">
             <h3 className="text-h4 text-foreground">{t("activity")}</h3>
             <ActivityFeedWidget items={activityItems} />
           </section>
 
           {/* CRA readiness roll-up */}
           {totalProducts > 0 && (
-            <section className="flex flex-col gap-4 rounded-lg border border-border bg-card p-5">
+            <section className="flex flex-col gap-4 rounded-lg border border-border bg-card p-4">
               <h3 className="text-h4 text-foreground">{t("readiness.title")}</h3>
               <ReadinessRollupWidget
                 items={readinessRollup ?? []}

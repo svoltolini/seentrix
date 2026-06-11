@@ -164,7 +164,7 @@ export function IncidentsContent({
   return (
     <div className="pb-12">
       <StaggerReveal
-        className="space-y-6"
+        className="space-y-[18px]"
         selector="[data-reveal]"
         stagger={0.08}
         y={24}
@@ -201,7 +201,7 @@ export function IncidentsContent({
         </div>
 
         {/* KPIs — plain bordered Clay stat cards (label + serif value) */}
-        <div data-reveal className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+        <div data-reveal className="grid grid-cols-2 gap-3.5 sm:grid-cols-4">
           <IncidentStat label={t("kpi.active")} value={kpis.active} />
           <IncidentStat
             label={t("kpi.overdue")}
@@ -289,7 +289,7 @@ export function IncidentsContent({
                   <Link
                     key={inc.id}
                     href={`/app/incidents/${inc.id}`}
-                    className="group flex items-center gap-[18px] border-b border-border px-[22px] py-[18px] transition-colors last:border-b-0 hover:bg-muted"
+                    className="group flex items-center gap-4 border-b border-border px-[18px] py-[13px] transition-colors last:border-b-0 hover:bg-muted"
                   >
                     {/* Severity bar — 8×38, design `.sx-sev` */}
                     <span
@@ -693,7 +693,7 @@ function IncidentStat({
   danger?: boolean;
 }) {
   return (
-    <div className="rounded-2xl border border-border bg-card px-[22px] py-5">
+    <div className="rounded-2xl border border-border bg-card px-4 py-[15px]">
       <p className="text-[13px] font-medium text-muted-foreground">{label}</p>
       <p
         className={

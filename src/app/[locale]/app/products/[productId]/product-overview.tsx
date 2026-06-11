@@ -61,7 +61,7 @@ function StatCard({
   footer?: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col justify-between gap-3 rounded-lg border border-border bg-card p-5">
+    <div className="flex flex-col justify-between gap-3 rounded-lg border border-border bg-card p-4">
       <div className="flex flex-col gap-2">
         <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
           {eyebrow}
@@ -175,7 +175,7 @@ export function ProductOverview({
           per CRA category) which contradicted the design memory rule
           "palette only, no per-card gradients" and felt like a
           different system from the dashboard. */}
-      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3.5 lg:grid-cols-4">
         {/* Type */}
         <StatCard eyebrow={t("detail.overview.type")}>
           {product.type ? (

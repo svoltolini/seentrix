@@ -56,7 +56,7 @@ export default async function ReadinessPage({
         </div>
 
         {/* Readiness ring */}
-        <section className="flex flex-wrap items-center gap-6 rounded-lg border border-border bg-card p-6">
+        <section className="flex flex-wrap items-center gap-6 rounded-lg border border-border bg-card p-[17px]">
           <div className="relative" style={{ width: SIZE, height: SIZE }}>
             <svg width={SIZE} height={SIZE} className="-rotate-90">
               <circle cx={SIZE / 2} cy={SIZE / 2} r={R} fill="none" stroke="var(--border)" strokeOpacity="0.25" strokeWidth={STROKE} />

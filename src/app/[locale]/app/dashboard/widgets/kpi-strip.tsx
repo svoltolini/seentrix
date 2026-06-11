@@ -41,12 +41,12 @@ export function KpiStrip({ kpis }: Props) {
   return (
     <section className="flex flex-col gap-3">
       <h2 className="sr-only">{t("kpi.heading")}</h2>
-      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3.5 lg:grid-cols-4">
         {kpis.map((kpi) => (
           <Link
             key={kpi.id}
             href={kpi.href}
-            className="rounded-2xl border border-border bg-card px-[22px] py-5"
+            className="rounded-2xl border border-border bg-card px-4 py-[15px]"
           >
             <p className="text-[13px] font-medium text-muted-foreground">
               {kpi.label}

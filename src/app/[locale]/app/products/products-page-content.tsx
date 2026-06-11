@@ -82,7 +82,7 @@ export function ProductsPageContent({
   }
 
   return (
-    <div className="space-y-6 pb-12">
+    <div className="space-y-[18px] pb-12">
       {/* Section head — Clay eyebrow + serif title + sub (design `.sx-screen-head`) */}
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>

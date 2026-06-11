@@ -96,7 +96,7 @@ export function ReleasesContent({
   return (
     <div>
       <StaggerReveal
-        className="space-y-6"
+        className="space-y-[18px]"
         selector="[data-reveal]"
         stagger={0.08}
         y={24}
@@ -107,7 +107,7 @@ export function ReleasesContent({
         {/* Support period block */}
         <div
           data-reveal
-          className="overflow-hidden rounded-lg border border-border bg-card p-6"
+          className="overflow-hidden rounded-lg border border-border bg-card p-[17px]"
         >
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>

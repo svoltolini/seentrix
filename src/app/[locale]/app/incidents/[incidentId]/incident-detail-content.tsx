@@ -561,7 +561,7 @@ export function IncidentDetailContent({
   return (
     <div className="mx-auto max-w-[1120px] pb-12">
       <StaggerReveal
-        className="space-y-6"
+        className="space-y-[18px]"
         selector="[data-reveal]"
         stagger={0.08}
         y={24}

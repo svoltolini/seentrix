@@ -116,7 +116,7 @@ export function TechnicalFileContent({
       </div>
 
       {/* Coverage score */}
-      <section className="rounded-lg border border-border bg-card p-6">
+      <section className="rounded-lg border border-border bg-card p-[17px]">
         <div className="flex items-center justify-between gap-4">
           <div>
             <h3 className="text-h4 text-foreground">{t("coverage.heading")}</h3>

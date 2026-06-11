@@ -437,7 +437,7 @@ export function ConformityContent({
   return (
     <div>
       <StaggerReveal
-        className="space-y-6"
+        className="space-y-[18px]"
         selector="[data-reveal]"
         stagger={0.08}
         y={24}
@@ -448,7 +448,7 @@ export function ConformityContent({
         {/* Hero: route + progress ring */}
         <div
           data-reveal
-          className="overflow-hidden rounded-lg border border-border bg-card p-6"
+          className="overflow-hidden rounded-lg border border-border bg-card p-[17px]"
         >
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div className="min-w-0">
@@ -500,7 +500,7 @@ export function ConformityContent({
         {notifiedBodyRequired && (
           <div
             data-reveal
-            className="rounded-lg border border-border bg-card p-6"
+            className="rounded-lg border border-border bg-card p-[17px]"
           >
             <div className="mb-4">
               <h2 className="text-h4 text-foreground">{t("notifiedBody.title")}</h2>

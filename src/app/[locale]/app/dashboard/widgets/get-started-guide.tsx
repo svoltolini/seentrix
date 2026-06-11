@@ -55,7 +55,7 @@ export function GetStartedGuide({ state, firstName }: Props) {
       {/* Progress card. No CTA button here — the active step in the checklist
           below is the single, unambiguous call to action, so a duplicate
           "add product" button would just be noise. */}
-      <div className="flex flex-col gap-2 rounded-lg border border-border bg-card p-6">
+      <div className="flex flex-col gap-2 rounded-lg border border-border bg-card p-[17px]">
         <p className="text-h4 text-foreground">
           {t("getStarted.progressLabel", {
             done: state.completedCount,

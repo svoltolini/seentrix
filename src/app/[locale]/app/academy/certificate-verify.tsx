@@ -38,7 +38,7 @@ export function CertificateVerify() {
 
   return (
     <div className="w-full">
-      <div className="rounded-lg border border-border bg-card p-6">
+      <div className="rounded-lg border border-border bg-card p-[17px]">
         <div className="flex items-start gap-3">
           <IconBadge
             name="checkmark-badge-01-stroke-rounded"

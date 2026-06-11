@@ -34,9 +34,9 @@ export function ProductTable({ products }: { products: ProductListItem[] }) {
       <table className="w-full border-collapse">
         <thead>
           <tr className="bg-background text-left text-[11px] font-bold uppercase tracking-[0.5px] text-muted-foreground">
-            <th className="px-5 py-3.5">{t("table.product")}</th>
-            <th className="px-5 py-3.5">{t("table.class")}</th>
-            <th className="px-5 py-3.5 text-right">{t("table.score")}</th>
+            <th className="px-4 py-[11px]">{t("table.product")}</th>
+            <th className="px-4 py-[11px]">{t("table.class")}</th>
+            <th className="px-4 py-[11px] text-right">{t("table.score")}</th>
           </tr>
         </thead>
         <tbody>
@@ -49,7 +49,7 @@ export function ProductTable({ products }: { products: ProductListItem[] }) {
                 key={p.id}
                 className="group cursor-pointer border-t border-border transition-colors hover:bg-muted"
               >
-                <td className="px-5 py-4">
+                <td className="px-4 py-[11px]">
                   <Link href={`/app/products/${p.id}`} className="flex flex-col">
                     <span className="text-[14.5px] font-semibold tracking-[-0.1px] text-foreground group-hover:text-primary">
                       {p.name}
@@ -61,7 +61,7 @@ export function ProductTable({ products }: { products: ProductListItem[] }) {
                     )}
                   </Link>
                 </td>
-                <td className="px-5 py-4">
+                <td className="px-4 py-[11px]">
                   <span
                     className={`rounded-[7px] px-2.5 py-1 text-[11px] font-bold ${CATEGORY_CHIP[categoryKey] ?? CATEGORY_CHIP.default}`}
                   >
@@ -70,7 +70,7 @@ export function ProductTable({ products }: { products: ProductListItem[] }) {
                       : categoryKey.replace(/_/g, " ")}
                   </span>
                 </td>
-                <td className="px-5 py-4">
+                <td className="px-4 py-[11px]">
                   <div className="flex items-center justify-end gap-3">
                     <span className="w-16 overflow-hidden rounded-full bg-primary-3">
                       <span

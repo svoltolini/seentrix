@@ -236,7 +236,7 @@ function ScreenCard({
   const doneCount = screen.lessons.filter((id) => completed.has(id)).length;
 
   return (
-    <div className="rounded-lg border border-border bg-card p-6 transition-colors duration-300 hover:bg-muted/30">
+    <div className="rounded-lg border border-border bg-card p-[17px] transition-colors duration-300 hover:bg-muted/30">
       <div className="flex items-center gap-3">
         <div className="min-w-0 flex-1">
           <p className="text-h5 text-foreground">

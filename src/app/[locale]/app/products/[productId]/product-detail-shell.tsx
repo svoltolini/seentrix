@@ -62,7 +62,7 @@ export function ProductDetailShell({
   const categoryKey = product.cra_category ?? "default";
 
   return (
-    <div className="space-y-6 pb-12">
+    <div className="space-y-[18px] pb-12">
       {/* Back to the product list */}
       <Link
         href="/app/products"

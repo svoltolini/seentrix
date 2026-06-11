@@ -221,7 +221,7 @@ function MemberCard({
   return (
     <div
       className={cn(
-        "rounded-lg border border-border bg-card p-5 transition-colors duration-300 hover:bg-muted/30",
+        "rounded-lg border border-border bg-card p-4 transition-colors duration-300 hover:bg-muted/30",
         isYou && "ring-2 ring-primary/30",
       )}
     >

@@ -229,7 +229,7 @@ export function RiskAssessmentContent({
       )}
 
       {/* Context (Art 13(3)) */}
-      <section className="space-y-4 rounded-lg border border-border bg-card p-6">
+      <section className="space-y-4 rounded-lg border border-border bg-card p-[17px]">
         <h3 className="text-h4 text-foreground">{t("context.heading")}</h3>
         <div className="grid gap-5 md:grid-cols-2">
           {(
@@ -443,7 +443,7 @@ function RequirementRow({
       : null;
 
   return (
-    <div className="rounded-lg border border-border bg-card p-5">
+    <div className="rounded-lg border border-border bg-card p-4">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="min-w-0 flex-1">
           <p className="text-l5 text-foreground">
