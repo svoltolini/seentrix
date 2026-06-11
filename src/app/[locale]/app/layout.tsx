@@ -5,9 +5,7 @@ import { GsapProvider } from "@/components/gsap-provider";
 import { NavigationProgress } from "@/components/navigation-progress";
 import { CopilotProvider } from "@/components/copilot/copilot-provider";
 import { CreateProductSheet } from "@/components/products/create-product-sheet";
-import { redirect } from "next/navigation";
 import { createClient, getAuthUser } from "@/lib/supabase/server";
-import { getPlatformStaff } from "@/lib/admin/access";
 
 /**
  * Pull a usable display name out of whatever sources we have. The
@@ -48,17 +46,10 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   // single getUser() network round-trip per navigation.
   const user = await getAuthUser();
 
-  // Wall Seentrix-staff off from the customer app: their place is the admin
-  // console, not the product. Send any staff session that lands on /app to the
-  // console (its own subdomain when ADMIN_HOST is configured, else the /admin
-  // path). Customers never match, so this is a single indexed lookup for them.
-  if (user) {
-    const staff = await getPlatformStaff();
-    if (staff) {
-      const adminHost = process.env.ADMIN_HOST?.trim();
-      redirect(adminHost ? `https://${adminHost}/admin` : "/admin");
-    }
-  }
+  // NOTE: Seentrix-staff are NOT walled off from the customer app — a staff
+  // member is also a customer of their own org and uses the product normally.
+  // The admin console is reached explicitly via its own subdomain
+  // (admin.seentrix.com); nothing here forces staff away from /app.
 
   let avatarUrl: string | null = null;
   let displayName: string | null = null;
