@@ -11,8 +11,8 @@
  *       stat row      — four serif-value stat cards
  *       main column   — team-activity chart, products needing attention,
  *                       today's overdue tasks
- *       right rail    — next deadlines (accent card), CRA calendar,
- *                       recent-activity feed, readiness roll-up
+ *       right rail    — CRA calendar (with deadlines), recent-activity
+ *                       feed, readiness roll-up
  *
  * Widgets live in `./widgets/`. This file adapts the `DashboardStats` shape
  * into widget props (KPIs, chart buckets, featured-product picker, calendar
@@ -55,7 +55,6 @@ import {
   ProductsAttention,
   type AttentionProduct,
 } from "./widgets/products-attention";
-import { DeadlinesCard, type DeadlineItem } from "./widgets/deadlines-card";
 import { DashboardHero } from "./widgets/dashboard-hero";
 import { KpiStrip, type Kpi } from "./widgets/kpi-strip";
 import {
@@ -328,24 +327,6 @@ export function DashboardContent(
       });
   }, [products, t]);
 
-  // ---- Next-deadlines rail card -------------------------------------------
-  const deadlineItems = useMemo<DeadlineItem[]>(
-    () =>
-      upcomingCraDeadlines()
-        .slice(0, 4)
-        .map((d) => ({
-          id: d.id,
-          title: t(`deadline.${d.labelKey}`),
-          days: Math.max(0, daysUntil(d.date)),
-          date: new Date(d.date).toLocaleDateString(undefined, {
-            day: "numeric",
-            month: "long",
-            year: "numeric",
-          }),
-        })),
-    [t],
-  );
-
   const calendarEvents = useMemo<CalendarEvent[]>(() => {
     const deadlineEvents: CalendarEvent[] = upcomingCraDeadlines().map((d) => ({
       id: `deadline-${d.id}`,
@@ -472,15 +453,9 @@ export function DashboardContent(
           </section>
         </div>
 
-        {/* RIGHT RAIL — Clay order: deadlines (accent), calendar, activity */}
+        {/* RIGHT RAIL — calendar (carries the deadlines), then activity */}
         <aside className="flex min-w-0 flex-col gap-4 lg:max-w-[370px]">
-          {/* Next CRA deadlines — accent-soft card with mono countdowns */}
-          <DeadlinesCard
-            title={t("upcomingDeadlines.title")}
-            items={deadlineItems}
-          />
-
-          {/* CRA calendar tracker */}
+          {/* CRA calendar tracker — already surfaces upcoming deadlines */}
           <section className="flex flex-col gap-4 rounded-lg border border-border bg-card p-5">
             <h3 className="text-h4 text-foreground">{t("calendar.title")}</h3>
             <CraCalendarTracker events={calendarEvents} />

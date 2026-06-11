@@ -23,17 +23,19 @@ const TABS = [
   { key: "lifecycle", segment: "/lifecycle" },
 ] as const;
 
+const CATEGORY_CHIP: Record<string, string> = {
+  critical: "bg-[#f4e1da] text-[#a8442f]",
+  important_class_ii: "bg-[#f1e9da] text-[#856231]",
+  important_class_i: "bg-[#e7eef0] text-[#3d6470]",
+  default: "bg-muted text-muted-foreground",
+};
+
 /**
- * ProductDetailShell — solid-blue hero + soft dot-grid overlay (the
- * "Built by Compliance Engineers" recipe from the landing page
- * TrustSection). Earlier passes used a per-product gradient hero
- * (blue → orange → peach) which contradicted the design memory rule
- * "palette only, no per-card gradients". The new recipe lifts the
- * exact JSX pattern used by `<TrustSection />` and the FieldHelp
- * reference callout so every "primary blue panel" surface in the app
- * reads as one family.
- *
- * Below the hero: underlined sub-tabs and the routed tab content.
+ * ProductDetailShell — Clay product header (design `.sx-detail-top`): a back
+ * link, the serif product name with a meta row (category badge + type), and
+ * an Edit Product action — all on the page background, no coloured hero card.
+ * Below: a wrapping pill tab row (no horizontal/vertical scroll) and the
+ * routed tab content.
  */
 export function ProductDetailShell({
   product,
@@ -57,82 +59,90 @@ export function ProductDetailShell({
     return pathname.startsWith(tabPath);
   }
 
+  const categoryKey = product.cra_category ?? "default";
+
   return (
-    // Full-width container — every signed-in surface uses the whole
-    // horizontal space of the <main> column (no max-width cap), matching
-    // /app/dashboard + /app/products and the screen-training banner.
     <div className="space-y-6 pb-12">
-      {/* Hero — solid bg-primary + radial dot-grid overlay. Verbatim
-          recipe from the landing TrustSection / FieldHelp reference
-          callout / dashboard hero card so all four surfaces read
-          identically. The chip on uploaded product images uses the
-          same translucent-white-on-blur recipe as the priority chip
-          on the project hero card. */}
-      <div className="relative overflow-hidden rounded-md bg-primary p-8 text-primary-foreground">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle, rgba(255,255,255,0.12) 1px, transparent 1px)",
-            backgroundSize: "24px 24px",
-          }}
-        />
-        <div className="relative flex items-start gap-4">
+      {/* Back to the product list */}
+      <Link
+        href="/app/products"
+        className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-muted-foreground transition-colors hover:text-foreground"
+      >
+        ← {t("breadcrumbs.products")}
+      </Link>
+
+      {/* Header — name + meta on the left, Edit on the right */}
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <div className="flex min-w-0 items-start gap-4">
           {product.image_url && (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={product.image_url}
               alt={product.name}
-              className="size-16 shrink-0 rounded-md object-cover ring-2 ring-primary-foreground/20"
+              className="size-14 shrink-0 rounded-md border border-border object-cover"
             />
           )}
-          <div className="flex min-w-0 flex-1 flex-col gap-1">
-            <p className="text-l6-plus uppercase tracking-wider text-primary-foreground/80">
-              {t("breadcrumbs.products")} · {productId.slice(0, 8)}
-            </p>
-            <h1 className="truncate text-h1 text-primary-foreground">
+          <div className="min-w-0">
+            <h1 className="font-heading text-[30px] font-medium leading-tight tracking-[-0.6px] text-foreground">
               {product.name}
             </h1>
-            {product.description && (
-              <p className="mt-1 max-w-2xl text-p2 text-primary-foreground/90">
-                {product.description}
-              </p>
-            )}
+            <div className="mt-2.5 flex flex-wrap items-center gap-2">
+              {product.cra_category ? (
+                <span
+                  className={cn(
+                    "rounded-[7px] px-2.5 py-1 text-[11px] font-bold",
+                    CATEGORY_CHIP[categoryKey] ?? CATEGORY_CHIP.default,
+                  )}
+                >
+                  {t.has(`categories.${categoryKey}`)
+                    ? t(`categories.${categoryKey}`)
+                    : categoryKey.replace(/_/g, " ")}
+                </span>
+              ) : null}
+              {product.type && (
+                <span className="text-[13px] text-muted-foreground">
+                  {t.has(`types.${product.type}`)
+                    ? t(`types.${product.type}`)
+                    : product.type}
+                </span>
+              )}
+            </div>
           </div>
-          <Button
-            variant="default"
-            size="default"
-            className="shrink-0 border-[1.5px] border-primary-foreground/30 bg-primary-foreground/15 text-primary-foreground backdrop-blur-sm hover:bg-primary-foreground/25"
-            render={<Link href={`${basePath}/checklist`} />}
-          >
-            <Icon name="Edit" size={16} />
-            {t("detail.editProduct") ?? "Edit Product"}
-          </Button>
         </div>
+
+        {/* Edit Product — opens the edit sheet on the overview tab via ?edit=1 */}
+        <Button
+          variant="outline"
+          size="sm"
+          className="shrink-0"
+          render={<Link href={`${basePath}?edit=1`} />}
+        >
+          <Icon name="Edit" size={15} />
+          {t("detail.editProduct") ?? "Edit Product"}
+        </Button>
       </div>
 
-      {/* Tabs (underlined) */}
-      <div className="-mx-1 flex items-center gap-6 overflow-x-auto border-b border-border px-1">
+      {/* Tabs — wrapping pills (no scrolling) */}
+      <nav className="flex flex-wrap gap-1.5">
         {TABS.map((tab) => {
           const active = isActive(tab.segment);
           return (
             <Link
               key={tab.key}
               href={`${basePath}${tab.segment}`}
+              aria-current={active ? "page" : undefined}
               className={cn(
-                "relative flex h-11 shrink-0 items-center text-l6 transition-colors",
-                active ? "text-primary" : "text-muted-foreground hover:text-foreground",
+                "whitespace-nowrap rounded-md px-3 py-1.5 text-[13.5px] transition-colors",
+                active
+                  ? "bg-accent-soft font-semibold text-primary"
+                  : "font-medium text-muted-foreground hover:bg-muted hover:text-foreground",
               )}
             >
               {t(`detail.tabs.${tab.key}`)}
-              {active && (
-                <span className="absolute inset-x-0 -bottom-px h-[2px] bg-primary" />
-              )}
             </Link>
           );
         })}
-      </div>
+      </nav>
 
       {/* Content */}
       {children}

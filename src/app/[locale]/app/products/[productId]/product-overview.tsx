@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useActionState, useTransition, useEffect, useRef } from "react";
+import { useSearchParams } from "next/navigation";
 import { Icon } from "@/components/icon";
 import { useTranslations } from "next-intl";
 import { useRouter, Link } from "@/i18n/navigation";
@@ -89,7 +90,14 @@ export function ProductOverview({
     reference: t(`create.tooltips.${key}.ref`),
   });
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [editing, setEditing] = useState(false);
+
+  // The product header's "Edit Product" button (on any tab) navigates here
+  // with ?edit=1; open the edit sheet when that's present.
+  useEffect(() => {
+    if (searchParams.get("edit") === "1") setEditing(true);
+  }, [searchParams]);
   const [showDelete, setShowDelete] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [imagePreview, setImagePreview] = useState<string | null>(product.image_url);
@@ -253,15 +261,6 @@ export function ProductOverview({
           </Link>
         )}
         <Button
-          size="sm"
-          variant="outline"
-          onClick={() => setEditing(true)}
-          className="gap-1.5"
-        >
-          <Icon name="PencilIcon" className="size-3.5" />
-          {t("detail.overview.edit")}
-        </Button>
-        <Button
           variant="outline"
           size="sm"
           onClick={() => setShowDelete(true)}
@@ -273,7 +272,17 @@ export function ProductOverview({
       </div>
 
       {/* Edit sheet */}
-      <Sheet open={editing} onOpenChange={(open) => { setEditing(open); if (!open) resetImageState(); }}>
+      <Sheet
+        open={editing}
+        onOpenChange={(open) => {
+          setEditing(open);
+          if (!open) {
+            resetImageState();
+            // Drop the ?edit=1 deep-link param so a refresh doesn't reopen.
+            if (searchParams.get("edit")) router.replace(`/app/products/${product.id}`);
+          }
+        }}
+      >
         <SheetContent side="right" className="overflow-y-auto sm:max-w-[845px]">
           <SheetHeader>
             <SheetTitle>{t("edit.title")}</SheetTitle>
