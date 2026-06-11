@@ -94,7 +94,7 @@ export function CompaniesTable({ rows }: { rows: CompanyRow[] }) {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search by name or country…"
-          className="h-10 w-full rounded-md bg-input pl-9 pr-3 text-p3 text-foreground outline-none border-[1.5px] border-border-strong focus:border-primary"
+          className="h-10 w-full rounded-md bg-input pl-9 pr-3 text-p3 text-foreground outline-none border border-border-strong focus:border-primary"
         />
       </div>
 

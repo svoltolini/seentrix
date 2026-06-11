@@ -32,6 +32,7 @@
         "residency": "Custom data-residency and SLA commitments"
       }
     },
-    "eyebrow": "Enterprise"
+    "eyebrow": "Enterprise",
+    "directEmail": "Prefer email?"
   }
 }

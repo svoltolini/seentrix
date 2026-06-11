@@ -290,7 +290,7 @@ export function CopilotSheet() {
             textarea now opens at two lines for a roomier prompt box and
             still auto-grows up to the max height.
           */}
-          <div className="flex items-end gap-2 rounded-md bg-input px-3.5 py-2.5 border-[1.5px] border-border-strong transition hover:border-border-hover focus-within:border-primary">
+          <div className="flex items-end gap-2 rounded-md bg-input px-3.5 py-2.5 border border-border-strong transition focus-within:border-primary">
             <textarea
               value={input}
               onChange={(e) => setInput(e.target.value)}

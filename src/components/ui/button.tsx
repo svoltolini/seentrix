@@ -57,7 +57,7 @@ const buttonVariants = cva(
         accent:
           "bg-accent text-accent-foreground hover:bg-[color-mix(in_srgb,var(--accent)_88%,#000)] active:bg-[color-mix(in_srgb,var(--accent)_78%,#000)]",
         outline:
-          "bg-card text-foreground border-[1.5px] border-border-strong hover:border-border-hover hover:bg-muted active:bg-[color-mix(in_srgb,var(--muted)_92%,#000)]",
+          "bg-card text-foreground border-[1.5px] border-border-strong hover:bg-muted active:bg-[color-mix(in_srgb,var(--muted)_92%,#000)]",
         ghost:
           "bg-transparent text-foreground hover:bg-muted active:bg-[color-mix(in_srgb,var(--muted)_92%,#000)]",
         destructive:

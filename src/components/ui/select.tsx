@@ -40,8 +40,8 @@ function SelectTrigger({
       className={cn(
         "flex w-full items-center justify-between gap-2 rounded-md bg-input px-4 text-p2 text-foreground transition-colors outline-none",
         "data-[size=default]:h-11 data-[size=sm]:h-9 data-[size=sm]:px-3 data-[size=sm]:text-p3",
-        "border-[1.5px] border-border-strong",
-        "focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-ring/15",
+        "border border-border-strong",
+        "focus-visible:border-primary",
         "data-[placeholder]:text-muted-foreground",
         "disabled:pointer-events-none disabled:opacity-50",
         "aria-invalid:border-destructive/40",

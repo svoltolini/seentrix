@@ -32,6 +32,7 @@
         "residency": "Individuelle Datenresidenz und SLA-Verpflichtungen"
       }
     },
-    "eyebrow": "Enterprise"
+    "eyebrow": "Enterprise",
+    "directEmail": "Lieber per E-Mail?"
   }
 }

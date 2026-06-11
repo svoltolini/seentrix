@@ -13,10 +13,10 @@ function Input({ className, type, ...props }: React.ComponentProps<"input">) {
       type={type}
       data-slot="input"
       className={cn(
-        "h-11 w-full min-w-0 rounded-md bg-input px-4 text-p2 text-foreground placeholder:text-muted-foreground border-[1.5px] border-border-strong transition-colors duration-150 outline-none",
-        "hover:border-border-hover focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-ring/15",
+        "h-11 w-full min-w-0 rounded-md bg-input px-4 text-p2 text-foreground placeholder:text-muted-foreground border border-border-strong transition-[border-color] duration-[140ms] outline-none",
+        "focus-visible:border-primary",
         "disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
-        "aria-invalid:border-destructive/40 aria-invalid:ring-2 aria-invalid:ring-destructive/15",
+        "aria-invalid:border-destructive/40",
         "file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-l6 file:font-semibold file:text-foreground",
         className
       )}

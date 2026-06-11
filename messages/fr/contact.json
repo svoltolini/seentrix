@@ -32,6 +32,7 @@
         "residency": "Résidence des données et engagements SLA personnalisés"
       }
     },
-    "eyebrow": "Enterprise"
+    "eyebrow": "Enterprise",
+    "directEmail": "Vous préférez l'e-mail ?"
   }
 }
