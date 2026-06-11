@@ -379,6 +379,15 @@
       "notFound": "In Ihrer Organisation stimmt keine Zertifikatsnummer überein. Die Nummer könnte falsch eingegeben oder ungültig sein.",
       "forbidden": "Nur Administratoren und Compliance Officer können Zertifikate verifizieren.",
       "error": "Bei der Verifizierung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
+    },
+    "list": {
+      "eyebrow": "Lernen",
+      "statCompleted": "Abgeschlossene Lektionen",
+      "statRequired": "Für Ihre Rolle erforderlich",
+      "statProgress": "Katalogfortschritt",
+      "resumeEyebrow": "Weiterlernen",
+      "resumeCta": "Fortsetzen",
+      "lessonOf": "Lektion {n} von {total}"
     }
   }
 }

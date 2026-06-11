@@ -7,7 +7,6 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { ACADEMY_LESSONS } from "@/lib/glossary";
 import { LESSON_AUDIO } from "@/lib/academy/audio";
 import { Icon } from "@/components/icon";
-import { cn } from "@/lib/utils";
 import { GlossaryIndex } from "@/app/[locale]/app/help/glossary/glossary-index";
 import { SCREEN_LESSONS, type ScreenKey } from "@/lib/academy/screens";
 import { CertificateVerify } from "./certificate-verify";
@@ -91,12 +90,13 @@ function LessonsGrid({ completed }: { completed: Set<string> }) {
   const t = useTranslations("academy.lessonCard");
   const lessons = Object.entries(ACADEMY_LESSONS);
   return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+    <div className="grid grid-cols-1 gap-3.5 md:grid-cols-2 lg:grid-cols-3">
       {lessons.map(([id, lesson], i) => (
         <LessonCard
           key={id}
           id={id}
           index={i + 1}
+          total={lessons.length}
           title={lesson.title}
           duration={lesson.duration}
           done={completed.has(id)}
@@ -119,9 +119,18 @@ const COURSE_TONES = [
   "linear-gradient(135deg,#3d6470,#56838f)",
 ] as const;
 
+/** Level badge derived from catalogue position (thirds). */
+function levelOf(index: number, total: number): string {
+  const third = total / 3;
+  if (index <= third) return "Foundations";
+  if (index <= third * 2) return "Intermediate";
+  return "Advanced";
+}
+
 function LessonCard({
   id,
   index,
+  total,
   title,
   duration,
   done,
@@ -132,6 +141,7 @@ function LessonCard({
 }: {
   id: string;
   index: number;
+  total: number;
   title: string;
   duration: string;
   done: boolean;
@@ -143,56 +153,61 @@ function LessonCard({
   return (
     <Link
       href={`/app/academy/${id}`}
-      className="group flex flex-col overflow-hidden rounded-lg border border-border bg-card transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(60,40,20,0.07)]"
+      className="group flex flex-col overflow-hidden rounded-lg border border-border bg-card transition-all duration-150 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-[0_8px_24px_rgba(60,40,20,0.07)]"
     >
-      {/* Gradient cover with lesson number / done badge */}
+      {/* Gradient cover (compact 112px) with the level badge bottom-left */}
       <div
-        className="relative h-[88px] shrink-0"
+        className="relative flex h-[112px] shrink-0 items-end p-4"
         style={{ background: COURSE_TONES[(index - 1) % COURSE_TONES.length] }}
       >
-        <span
-          className={cn(
-            "absolute left-4 top-4 flex size-9 items-center justify-center rounded-md text-l5",
-            done ? "bg-white text-primary" : "bg-white/20 text-white backdrop-blur-sm",
-          )}
-        >
-          {done ? (
-            <Icon
-              name="checkmark-circle-01-stroke-rounded"
-              size={20}
-              variant="Bold"
-            />
-          ) : (
-            <span className="tabular-nums">{index}</span>
-          )}
+        <span className="rounded-full bg-black/[0.18] px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.5px] text-white/90">
+          {levelOf(index, total)}
         </span>
+        {done && (
+          <span className="absolute right-3.5 top-3.5 flex size-7 items-center justify-center rounded-full bg-white text-primary">
+            <Icon name="check" size={14} variant="Bold" />
+          </span>
+        )}
       </div>
 
-      <div className="min-w-0 flex-1 p-5">
-        <p className="font-heading text-[17px] font-semibold tracking-[-0.2px] text-foreground group-hover:text-primary">
+      {/* Body — serif title, meta, then state footer */}
+      <div className="flex min-w-0 flex-1 flex-col px-5 pb-5 pt-[15px]">
+        <p className="font-heading text-[17px] font-semibold leading-[1.25] tracking-[-0.2px] text-foreground">
           {title}
         </p>
-        <div className="mt-3 flex flex-wrap items-center gap-2 text-p4">
-          <span className="inline-flex items-center gap-1 text-muted-foreground">
-            <Icon name="time-quarter-02-stroke-rounded" size={13} />
-            {duration}
-          </span>
-          {hasAudio && (
-            <span className="inline-flex items-center gap-1 rounded-sm bg-accent/10 px-2 py-0.5 text-l6-plus text-accent">
-              <Icon name="VolumeHigh" size={11} />
-              {audioLabel}
+        <div className="flex-1" />
+
+        {done ? (
+          /* Completed state — label row over a full green bar */
+          <div className="mt-4">
+            <div className="flex items-center justify-between text-[12px]">
+              <span className="text-muted-foreground">{completedLabel}</span>
+              <span className="font-bold tabular-nums text-foreground">
+                100%
+              </span>
+            </div>
+            <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-[color:var(--primary-3)]">
+              <div className="h-full w-full rounded-full bg-primary" />
+            </div>
+          </div>
+        ) : (
+          /* Not-started state — meta items + ghost Start pushed right */
+          <div className="mt-4 flex items-center gap-3.5">
+            <span className="inline-flex items-center gap-1.5 text-[12px] text-muted-foreground">
+              <Icon name="time-quarter-02-stroke-rounded" size={13} />
+              {duration}
             </span>
-          )}
-          {done ? (
-            <span className="inline-flex items-center gap-1 rounded-sm bg-success/10 px-2 py-0.5 text-l6-plus text-success">
-              {completedLabel}
-            </span>
-          ) : (
-            <span className="inline-flex items-center gap-1 rounded-sm bg-primary/10 px-2 py-0.5 text-l6-plus text-primary">
+            {hasAudio && (
+              <span className="inline-flex items-center gap-1.5 text-[12px] text-muted-foreground">
+                <Icon name="VolumeHigh" size={13} />
+                {audioLabel}
+              </span>
+            )}
+            <span className="ml-auto inline-flex h-8 items-center rounded-[10px] border border-border-strong bg-card px-[13px] text-[12.5px] font-semibold text-foreground transition-colors duration-150 group-hover:bg-muted">
               {openLabel}
             </span>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </Link>
   );

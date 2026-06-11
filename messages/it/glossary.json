@@ -379,6 +379,15 @@
       "notFound": "Nessun certificato corrisponde a quel numero nella tua organizzazione. Potrebbe essere errato o non valido.",
       "forbidden": "Solo amministratori e responsabili conformità possono verificare i certificati.",
       "error": "Qualcosa è andato storto durante la verifica. Riprova."
+    },
+    "list": {
+      "eyebrow": "Impara",
+      "statCompleted": "Lezioni completate",
+      "statRequired": "Richieste per il tuo ruolo",
+      "statProgress": "Avanzamento del catalogo",
+      "resumeEyebrow": "Continua a imparare",
+      "resumeCta": "Riprendi",
+      "lessonOf": "Lezione {n} di {total}"
     }
   }
 }

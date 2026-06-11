@@ -379,6 +379,15 @@
       "notFound": "No certificate matches that number in your organisation. It may be mistyped or invalid.",
       "forbidden": "Only admins and compliance officers can verify certificates.",
       "error": "Something went wrong while verifying. Please try again."
+    },
+    "list": {
+      "eyebrow": "Learn",
+      "statCompleted": "Lessons completed",
+      "statRequired": "Required for your role",
+      "statProgress": "Catalogue progress",
+      "resumeEyebrow": "Continue learning",
+      "resumeCta": "Resume",
+      "lessonOf": "Lesson {n} of {total}"
     }
   }
 }
