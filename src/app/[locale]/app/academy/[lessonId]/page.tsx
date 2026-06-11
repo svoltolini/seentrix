@@ -4,6 +4,8 @@ import { Link } from "@/i18n/navigation";
 import { getLesson, getLessonContent } from "@/lib/academy/lessons";
 import type { LocaleId } from "@/lib/academy/types";
 import { getLessonAudio } from "@/lib/academy/audio";
+import { allLessonIds } from "@/lib/academy/lessons";
+import { AskSeentrixAI } from "@/components/copilot/ask-seentrix-ai";
 import { CurrentLessonProvider } from "@/lib/academy/current-lesson-context";
 import { createClient } from "@/lib/supabase/server";
 import { Icon } from "@/components/icon";
@@ -56,12 +58,31 @@ export default async function LessonPage({
     existingCompletion = (data ?? null) as CompletionRow | null;
   }
 
+  // Tone gradient + level badge — same a/b/c/d mapping as the listing cards,
+  // keyed by catalogue position so card cover and detail hero always match.
+  const catalogue = allLessonIds();
+  const lessonIdx = Math.max(0, catalogue.indexOf(lesson.id));
+  const TONES = [
+    "linear-gradient(135deg,#1f8a5b,#2fa56f)",
+    "linear-gradient(135deg,#2b2a26,#4a463d)",
+    "linear-gradient(135deg,#c0892e,#d9a64a)",
+    "linear-gradient(135deg,#3d6470,#56838f)",
+  ] as const;
+  const tone = TONES[lessonIdx % TONES.length];
+  const third = catalogue.length / 3;
+  const level =
+    lessonIdx + 1 <= third
+      ? "Foundations"
+      : lessonIdx + 1 <= third * 2
+        ? "Intermediate"
+        : "Advanced";
+
   return (
     <CurrentLessonProvider lessonId={lesson.id}>
-      <div className="mx-auto max-w-3xl px-4 py-8 md:py-12">
+      <div className="pb-12">
         <Link
           href="/app/academy"
-          className="mb-6 inline-flex items-center gap-1.5 text-p4 text-muted-foreground transition-colors hover:text-foreground"
+          className="mb-[18px] inline-flex items-center gap-1.5 text-[13px] font-semibold text-muted-foreground transition-colors hover:text-foreground"
         >
           <Icon
             name="arrow-right-01-stroke-rounded"
@@ -71,33 +92,43 @@ export default async function LessonPage({
           {t("backToAcademy")}
         </Link>
 
-        {/* Hero */}
-        <header className="mb-8">
-          <div className="flex flex-wrap items-center gap-2 text-p4 text-muted-foreground">
-            <span className="inline-flex items-center gap-1.5">
-              <Icon name="time-quarter-02-stroke-rounded" size={14} />
-              {lesson.duration}
+        {/* Hero — tone gradient, serif title, meta row */}
+        <header
+          className="overflow-hidden rounded-2xl px-8 py-[30px] text-white"
+          style={{ background: tone }}
+        >
+          <div className="max-w-[640px]">
+            <span className="inline-block rounded-full bg-white/[0.18] px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.5px] text-white/90">
+              {level}
             </span>
-            <span aria-hidden>·</span>
-            <span className="inline-flex items-center gap-1.5">
-              <Icon name="task-done-02-stroke-rounded" size={14} />
-              {t("questionCount", { count: content.quiz.length })}
-            </span>
-            {existingCompletion && (
-              <span className="inline-flex items-center gap-1 rounded-sm bg-success/10 px-2 py-0.5 text-l6-plus text-success">
-                <Icon name="checkmark-circle-01-stroke-rounded" size={12} />
-                {t("completedBadge")}
+            <h1 className="mt-3.5 font-heading text-[32px] font-semibold leading-tight tracking-[-0.6px] text-balance">
+              {content.title}
+            </h1>
+            <p className="mt-2.5 text-[15px] leading-[1.55] text-white/[0.82]">
+              {content.summary}
+            </p>
+            <div className="mt-5 flex flex-wrap items-center gap-[22px] text-[13px] text-white/90">
+              <span className="inline-flex items-center gap-1.5">
+                <Icon name="time-quarter-02-stroke-rounded" size={14} />
+                {lesson.duration}
               </span>
-            )}
+              <span className="inline-flex items-center gap-1.5">
+                <Icon name="task-done-02-stroke-rounded" size={14} />
+                {t("questionCount", { count: content.quiz.length })}
+              </span>
+              {existingCompletion && (
+                <span className="inline-flex items-center gap-1.5">
+                  <Icon name="checkmark-circle-01-stroke-rounded" size={14} />
+                  {t("completedBadge")}
+                </span>
+              )}
+            </div>
           </div>
-          <h1 className="mt-3 text-h1 leading-tight text-foreground">
-            {content.title}
-          </h1>
-          <p className="mt-2 text-p2 text-muted-foreground">
-            {content.summary}
-          </p>
         </header>
 
+        {/* Two-column: content + 340px rail */}
+        <div className="mt-3.5 grid items-start gap-3.5 lg:grid-cols-[1fr_340px]">
+          <div className="min-w-0 rounded-lg border border-border bg-card p-[17px] sm:p-6">
         {/* AI audio briefing (only on lessons that ship one) */}
         {audio && (
           <div className="mb-8">
@@ -123,7 +154,7 @@ export default async function LessonPage({
         </article>
 
         {/* Quiz */}
-        <div className="mt-12 border-t border-border pt-10">
+        <div id="quiz" className="mt-12 scroll-mt-24 border-t border-border pt-10">
           <h2 className="text-h3 text-foreground">{t("quizHeading")}</h2>
           <p className="mt-1.5 text-p3 text-muted-foreground">
             {t("quizIntro")}
@@ -165,7 +196,125 @@ export default async function LessonPage({
             />
           </div>
         </div>
+          </div>
+
+          {/* RIGHT RAIL — progress + key-value, then the Copilot prompt */}
+          <aside className="flex min-w-0 flex-col gap-3.5">
+            <div className="rounded-lg border border-border bg-card p-[17px]">
+              <div className="flex flex-col items-center gap-3 py-2">
+                <LessonRing pct={existingCompletion ? 100 : 0} />
+                <p className="text-[13px] text-muted-foreground">
+                  {existingCompletion
+                    ? t("completedBadge")
+                    : (t.has("notStarted") ? t("notStarted") : "Not started")}
+                </p>
+              </div>
+              <a
+                href="#quiz"
+                className="mt-3 inline-flex h-10 w-full items-center justify-center gap-2 rounded-md bg-primary px-[18px] text-[13.5px] font-semibold text-primary-foreground transition-all duration-150 hover:bg-[color-mix(in_srgb,var(--primary)_86%,#000)]"
+              >
+                {existingCompletion
+                  ? (t.has("reviewCta") ? t("reviewCta") : "Review lesson")
+                  : (t.has("startCta") ? t("startCta") : "Start lesson")}
+              </a>
+              <dl className="mt-4 flex flex-col">
+                <KvRow k={t.has("kvLevel") ? t("kvLevel") : "Level"} v={level} />
+                <KvRow
+                  k={t.has("kvDuration") ? t("kvDuration") : "Duration"}
+                  v={lesson.duration}
+                />
+                <KvRow
+                  k={t.has("kvQuestions") ? t("kvQuestions") : "Questions"}
+                  v={String(content.quiz.length)}
+                />
+                <KvRow
+                  k={t.has("kvCertificate") ? t("kvCertificate") : "Certificate"}
+                  v={
+                    t.has("kvCertificateValue")
+                      ? t("kvCertificateValue")
+                      : "On completion"
+                  }
+                  last
+                />
+              </dl>
+            </div>
+
+            {/* Copilot prompt — accent-soft card */}
+            <div
+              className="rounded-lg p-[17px]"
+              style={{
+                background: "var(--accent-soft)",
+                border:
+                  "1px solid color-mix(in srgb, var(--primary) 22%, var(--border))",
+              }}
+            >
+              <p className="flex items-center gap-2 text-[14px] font-bold text-foreground">
+                <Icon
+                  name="ai-magic-stroke-rounded"
+                  size={16}
+                  className="text-primary"
+                />
+                Copilot
+              </p>
+              <p className="mt-2 text-[13px] leading-relaxed text-muted-foreground">
+                {t.has("copilotPrompt")
+                  ? t("copilotPrompt")
+                  : "Questions about this topic? Ask the Copilot to explain it in the context of your products."}
+              </p>
+              <div className="mt-3">
+                <AskSeentrixAI
+                  seed={`Explain "${content.title}" and how it applies to my products in Seentrix.`}
+                  label={t.has("copilotCta") ? t("copilotCta") : "Ask Copilot"}
+                />
+              </div>
+            </div>
+          </aside>
+        </div>
       </div>
     </CurrentLessonProvider>
+  );
+}
+
+/** KV row — muted key left, 600 value right, hairline divider. */
+function KvRow({ k, v, last }: { k: string; v: string; last?: boolean }) {
+  return (
+    <div
+      className={
+        "flex items-center justify-between gap-3 py-3 text-[13.5px]" +
+        (last ? "" : " border-b border-border")
+      }
+    >
+      <dt className="text-muted-foreground">{k}</dt>
+      <dd className="text-right font-semibold text-foreground">{v}</dd>
+    </div>
+  );
+}
+
+/** 150px progress ring for the rail (green fill, serif % value). */
+function LessonRing({ pct }: { pct: number }) {
+  const size = 150;
+  const thickness = 13;
+  const r = (size - thickness) / 2;
+  const c = 2 * Math.PI * r;
+  return (
+    <div className="relative" style={{ width: size, height: size }}>
+      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="-rotate-90" aria-hidden>
+        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="var(--primary-3)" strokeWidth={thickness} />
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={r}
+          fill="none"
+          stroke="var(--primary)"
+          strokeWidth={thickness}
+          strokeLinecap="round"
+          strokeDasharray={`${(pct / 100) * c} ${c}`}
+        />
+      </svg>
+      <span className="absolute inset-0 flex items-center justify-center font-heading text-[40px] font-semibold text-foreground">
+        {pct}
+        <span className="text-[18px] text-muted-foreground">%</span>
+      </span>
+    </div>
   );
 }
