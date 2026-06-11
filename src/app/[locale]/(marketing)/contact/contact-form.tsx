@@ -30,21 +30,20 @@ export function ContactForm() {
     return (
       <div
         role="status"
-        className="flex flex-col items-start gap-3 rounded-lg border border-border bg-card p-8 shadow-card-md"
+        className="flex flex-col items-center gap-4 rounded-2xl border border-border bg-card px-8 py-14 text-center"
       >
-        <span className="flex size-11 items-center justify-center rounded-md bg-success/10 text-success">
-          <Icon name="TickCircle" size={22} variant="Bold" aria-hidden="true" />
+        <span className="flex size-12 items-center justify-center rounded-full bg-primary/10 text-primary">
+          <Icon name="TickCircle" size={24} variant="Bold" aria-hidden="true" />
         </span>
-        <p className="text-p2 text-foreground">{t("success")}</p>
+        <p className="max-w-sm text-[15px] leading-relaxed text-foreground">
+          {t("success")}
+        </p>
       </div>
     );
   }
 
   return (
-    <form
-      action={action}
-      className="flex flex-col gap-5 rounded-lg border border-border bg-card p-6 shadow-card-md sm:p-8"
-    >
+    <form action={action} className="flex flex-col gap-6">
       <div className="grid gap-5 sm:grid-cols-2">
         <div className="flex flex-col gap-2">
           <Label htmlFor="contact-name">{t("nameLabel")}</Label>

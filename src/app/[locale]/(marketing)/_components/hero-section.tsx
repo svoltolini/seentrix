@@ -61,7 +61,7 @@ export function HeroSection() {
         }}
       />
 
-      <div className="relative mx-auto flex max-w-5xl flex-col items-center gap-8 text-center">
+      <div className="relative mx-auto flex max-w-6xl flex-col items-center gap-8 text-center">
         {/* Clay pill — accent-soft capsule w/ shield (design `.mk-pill`) */}
         <span
           data-hero-reveal
@@ -113,7 +113,7 @@ export function HeroSection() {
         <div
           data-hero-reveal
           aria-hidden="true"
-          className="mt-10 w-full max-w-4xl overflow-hidden rounded-t-2xl border border-b-0 border-border-strong bg-card text-left shadow-[0_16px_48px_rgba(60,40,20,0.10)]"
+          className="mt-10 w-full max-w-5xl overflow-hidden rounded-t-2xl border border-b-0 border-border-strong bg-card text-left shadow-[0_16px_48px_rgba(60,40,20,0.10)]"
         >
           {/* Browser chrome */}
           <div className="flex items-center gap-1.5 border-b border-border px-4 py-3">

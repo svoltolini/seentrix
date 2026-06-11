@@ -38,32 +38,30 @@ export default async function ContactPage({
         </p>
       </div>
 
-      <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:items-start">
-        {/* Highlights — what "more than Business" actually means. */}
+      <div className="mx-auto grid max-w-5xl gap-10 lg:grid-cols-[0.85fr_1fr] lg:items-start lg:gap-16">
+        {/* Highlights — what "more than Business" actually means. Sits in a
+            soft accent panel so it reads as the "why" beside the form. */}
         <aside className="lg:sticky lg:top-24">
-          <h2 className="text-h4 text-foreground">
-            {t("highlights.title")}
-          </h2>
-          <ul className="mt-6 flex flex-col gap-4">
-            {highlightKeys.map((key) => (
-              <li key={key} className="flex items-start gap-3">
-                <span className="flex size-9 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary">
-                  <Icon
-                    name="TickCircle"
-                    size={18}
-                    variant="Bold"
-                    aria-hidden="true"
-                  />
-                </span>
-                <span className="pt-1.5 text-p2-r text-foreground">
-                  {t(`highlights.items.${key}`)}
-                </span>
-              </li>
-            ))}
-          </ul>
+          <div className="rounded-2xl bg-accent-soft p-7">
+            <h2 className="font-heading text-[21px] font-semibold tracking-[-0.3px] text-foreground">
+              {t("highlights.title")}
+            </h2>
+            <ul className="mt-5 flex flex-col gap-3.5">
+              {highlightKeys.map((key) => (
+                <li key={key} className="flex items-start gap-3">
+                  <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                    <Icon name="check" size={12} variant="Bold" aria-hidden="true" />
+                  </span>
+                  <span className="text-[14.5px] leading-relaxed text-foreground">
+                    {t(`highlights.items.${key}`)}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </aside>
 
-        {/* Enquiry form. */}
+        {/* Enquiry form — laid out openly on the page, no heavy card. */}
         <ContactForm />
       </div>
     </div>
