@@ -1,6 +1,5 @@
 import { Suspense } from "react";
-import { AppSidebar } from "@/components/layout/app-sidebar";
-import { AppTopbar } from "@/components/layout/app-topbar";
+import { AppTopnav } from "@/components/layout/app-topnav";
 import { ToastProvider } from "@/components/ui/toast";
 import { GsapProvider } from "@/components/gsap-provider";
 import { NavigationProgress } from "@/components/navigation-progress";
@@ -124,20 +123,15 @@ export default async function AppLayout({ children }: { children: React.ReactNod
               query param is still honoured for deep-links. */}
           <Suspense fallback={null}>
             <CreateProductSheet>
-              {/* Nask shell: 310px sidebar + flex-1 main column with slim
-                  topbar. Pinned to the viewport with `fixed inset-0` (not just
-                  `h-screen`) so the shell can never push the document/body
-                  taller than the viewport — that was producing a second,
-                  outer scrollbar on top of the intended <main> scroll. Only
-                  <main> scrolls. */}
-              <div className="fixed inset-0 flex overflow-hidden">
-                <AppSidebar user={userProfile} orgName={orgName} />
-                <div className="flex flex-1 flex-col overflow-hidden">
-                  <AppTopbar user={userProfile} orgName={orgName} />
-                  <main className="flex-1 overflow-y-auto bg-background px-4 py-6 lg:px-8 lg:py-8">
-                    {children}
-                  </main>
-                </div>
+              {/* Clay shell: one sticky 64px top-nav over a normally-scrolling
+                  document. Screens sit in a 1240px container (`.sx-screen`
+                  geometry from the design handoff: 30px side padding, 80px
+                  bottom). The old fixed sidebar + slim-topbar shell is gone. */}
+              <div className="min-h-full bg-background">
+                <AppTopnav user={userProfile} orgName={orgName} />
+                <main className="mx-auto w-full max-w-[1240px] px-4 pb-20 pt-7 sm:px-[30px]">
+                  {children}
+                </main>
               </div>
             </CreateProductSheet>
           </Suspense>

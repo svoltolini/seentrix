@@ -45,7 +45,7 @@ export function LoginForm() {
 
   return (
     <>
-      <h1 className="text-center text-h3 text-foreground">
+      <h1 className="text-center font-heading text-[30px] font-medium tracking-[-0.6px] text-foreground">
         {t("login.title")}
       </h1>
       <p className="mt-1.5 text-center text-p3 text-muted-foreground">

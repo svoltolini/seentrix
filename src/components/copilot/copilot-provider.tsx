@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { CopilotContext } from "./copilot-context";
 import { CopilotSheet } from "./copilot-sheet";
+import { CopilotTriggerButton } from "./copilot-trigger-button";
 
 /**
  * Wraps the authenticated app and renders the Copilot sheet once. The
@@ -45,6 +46,7 @@ export function CopilotProvider({ children }: { children: React.ReactNode }) {
     <CopilotContext.Provider value={value}>
       {children}
       <CopilotSheet />
+      <CopilotTriggerButton />
     </CopilotContext.Provider>
   );
 }

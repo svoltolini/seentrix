@@ -65,22 +65,27 @@ export function HeroSection() {
           off-palette purple in and clutter the hero. */}
 
       <div className="relative mx-auto flex max-w-5xl flex-col items-center gap-8 text-center">
+        {/* Clay pill — accent-soft capsule (design `.mk-pill`) */}
         <span
           data-hero-reveal
-          className="text-l6-plus uppercase tracking-[0.18em] text-primary"
+          className="rounded-full bg-accent-soft px-3.5 py-1.5 text-[12px] font-semibold uppercase tracking-[0.1em] text-primary"
         >
           {t("badge")}
         </span>
 
-        <h1 data-hero-reveal className="text-h1 tracking-tight [&>span:last-child]:font-black">
+        {/* Clay hero headline — 60/500 serif, accent em (design `.mk-hero h1`) */}
+        <h1
+          data-hero-reveal
+          className="font-heading text-[40px] font-medium leading-[1.08] tracking-[-1.5px] text-balance sm:text-[52px] lg:text-[60px]"
+        >
           <span className="text-foreground">{t("titleLine1")}</span>
           <br />
-          <span className="text-primary">{t("titleLine2")}</span>
+          <em className="not-italic text-primary">{t("titleLine2")}</em>
         </h1>
 
         <p
           data-hero-reveal
-          className="max-w-2xl text-p1 text-muted-foreground"
+          className="max-w-[56ch] text-[18px] leading-relaxed text-muted-foreground"
         >
           {t("subtitle")}
         </p>

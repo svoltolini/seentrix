@@ -32,11 +32,13 @@ import {
 } from "./actions";
 import { nextPhaseDeadline } from "@/lib/constants/incident-deadlines";
 
+// Clay severity ramp (design handoff): critical danger-red, high amber,
+// medium olive-gold, low muted — never the brand green.
 const SEVERITY_COLOR: Record<IncidentSeverity, string> = {
-  critical: "var(--destructive)",
-  high: "var(--warning)",
-  medium: "var(--primary)",
-  low: "var(--muted-foreground)",
+  critical: "var(--sev-critical)",
+  high: "var(--sev-high)",
+  medium: "var(--sev-medium)",
+  low: "var(--sev-low)",
 };
 
 const STATUS_COLOR: Record<string, string> = {
