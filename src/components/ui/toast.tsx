@@ -101,7 +101,7 @@ function ToastItem({
   return (
     <div
       className={cn(
-        "pointer-events-auto flex min-w-[280px] max-w-sm items-center gap-2 rounded-md border bg-card px-4 py-3 text-p3 shadow-card-md transition-all duration-200",
+        "pointer-events-auto flex min-w-[280px] max-w-sm items-center gap-2 rounded-md border border border-border bg-card px-4 py-3 text-p3 shadow-card-md transition-all duration-200",
         visible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0",
         toast.type === "success"
           ? "border-success/20 text-success"

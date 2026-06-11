@@ -43,7 +43,7 @@ export function DashboardTaskCard({ task }: { task: DashboardTask }) {
   return (
     <Wrapper
       {...wrapperProps}
-      className="relative flex h-[121px] w-full flex-col rounded-lg bg-card p-[18px] shadow-card-sm transition-shadow hover:shadow-card-md"
+      className="relative flex h-[121px] w-full flex-col rounded-lg border border-border bg-card p-[18px] shadow-card-sm transition-shadow hover:shadow-card-md"
     >
       <button
         type="button"

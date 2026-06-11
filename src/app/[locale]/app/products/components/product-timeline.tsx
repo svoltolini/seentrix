@@ -268,7 +268,7 @@ export function ProductTimeline({
   }
 
   return (
-    <div className="overflow-hidden rounded-lg bg-card shadow-card-md">
+    <div className="overflow-hidden rounded-lg border border-border bg-card shadow-card-md">
       {/* === HEADER ============================================== */}
       <header className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-6 py-4">
         <button
@@ -589,7 +589,7 @@ function FloatingCard({
   return (
     <Link
       href={`${basePath}/${product.id}`}
-      className="group/timeline-card absolute z-20 flex min-w-0 flex-col gap-2 rounded-lg bg-card p-3 shadow-card-sm transition-shadow hover:shadow-card-md"
+      className="group/timeline-card absolute z-20 flex min-w-0 flex-col gap-2 rounded-lg border border-border bg-card p-3 shadow-card-sm transition-shadow hover:shadow-card-md"
       style={{
         left: `${leftPct}%`,
         width: `${widthPct}%`,

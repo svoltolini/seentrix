@@ -125,7 +125,7 @@ export function HeroSection() {
               <Logo size={13} className="text-primary" />
               Seentrix
             </span>
-            <span className="rounded-md bg-card px-2 py-1 text-[10.5px] font-semibold text-foreground shadow-card-sm">
+            <span className="rounded-md border border-border bg-card px-2 py-1 text-[10.5px] font-semibold text-foreground shadow-card-sm">
               Dashboard
             </span>
             <span className="px-1 text-[10.5px] font-medium text-muted-foreground">

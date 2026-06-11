@@ -93,7 +93,7 @@ export function PricingPreview() {
                 )}
                 <div
                   className={cn(
-                    "relative flex h-full flex-col rounded-lg bg-card p-6 shadow-card-md transition-all duration-300 hover:-translate-y-1 hover:shadow-card-lg",
+                    "relative flex h-full flex-col rounded-lg border border-border bg-card p-6 shadow-card-md transition-all duration-300 hover:-translate-y-1 hover:shadow-card-lg",
                     isPro
                       ? "border-2 border-primary"
                       : "border border-border",

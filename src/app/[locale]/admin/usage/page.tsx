@@ -118,7 +118,7 @@ export default async function AdminUsagePage() {
             Month to date · costs are estimates
           </span>
         </div>
-        <div className="overflow-x-auto rounded-lg bg-card shadow-card-sm">
+        <div className="overflow-x-auto rounded-lg border border-border bg-card shadow-card-sm">
           <table className="w-full text-left">
             <thead>
               <tr className="border-b border-border text-l6-plus uppercase tracking-wide text-muted-foreground">

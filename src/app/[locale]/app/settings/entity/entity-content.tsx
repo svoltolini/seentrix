@@ -167,7 +167,7 @@ export function EntityContent({
                   disabled={!canEdit}
                   onClick={() => handleTypeChange(ty)}
                   className={cn(
-                    "group flex items-start gap-3.5 rounded-md border-[1.5px] bg-card p-4 text-left shadow-card-sm transition-all",
+                    "group flex items-start gap-3.5 rounded-md border-[1.5px] border border-border bg-card p-4 text-left shadow-card-sm transition-all",
                     active
                       ? "border-primary/40 bg-primary/5"
                       : "border-border-outline hover:-translate-y-0.5 hover:border-primary/25 hover:shadow-card-md",

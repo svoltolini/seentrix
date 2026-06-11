@@ -38,7 +38,7 @@ export function CertificateVerify() {
 
   return (
     <div className="w-full">
-      <div className="rounded-lg bg-card p-6 shadow-card-md">
+      <div className="rounded-lg border border-border bg-card p-6 shadow-card-md">
         <div className="flex items-start gap-3">
           <IconBadge
             name="checkmark-badge-01-stroke-rounded"
@@ -103,7 +103,7 @@ function ResultCard({
       { label: t("certificate"), value: result.certificateHash },
     ];
     return (
-      <div className="w-full overflow-hidden rounded-lg bg-card shadow-card-md">
+      <div className="w-full overflow-hidden rounded-lg border border-border bg-card shadow-card-md">
         <div className="flex items-center gap-2.5 border-b border-border px-5 py-4">
           <IconBadge
             name="checkmark-circle-01-stroke-rounded"
@@ -145,7 +145,7 @@ function ResultCard({
         : t("error");
 
   return (
-    <div className="flex w-full items-start gap-3 rounded-lg bg-card px-5 py-4 shadow-card-md">
+    <div className="flex w-full items-start gap-3 rounded-lg border border-border bg-card px-5 py-4 shadow-card-md">
       <IconBadge name="alert-02" tone="destructive" size="sm" />
       <p className="text-p3 text-foreground">{message}</p>
     </div>

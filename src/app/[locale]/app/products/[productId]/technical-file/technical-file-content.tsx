@@ -116,7 +116,7 @@ export function TechnicalFileContent({
       </div>
 
       {/* Coverage score */}
-      <section className="rounded-lg bg-card p-6 shadow-card-sm">
+      <section className="rounded-lg border border-border bg-card p-6 shadow-card-sm">
         <div className="flex items-center justify-between gap-4">
           <div>
             <h3 className="text-h4 text-foreground">{t("coverage.heading")}</h3>
@@ -179,7 +179,7 @@ export function TechnicalFileContent({
             {initial.history.map((v) => (
               <div
                 key={v.id}
-                className="flex flex-wrap items-center gap-3 rounded-lg bg-card px-4 py-3 shadow-card-sm"
+                className="flex flex-wrap items-center gap-3 rounded-lg border border-border bg-card px-4 py-3 shadow-card-sm"
               >
                 <span
                   className={cn(

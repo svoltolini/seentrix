@@ -60,7 +60,7 @@ function StatCard({
   footer?: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col justify-between gap-3 rounded-lg bg-card p-5 shadow-card-md">
+    <div className="flex flex-col justify-between gap-3 rounded-lg border border-border bg-card p-5 shadow-card-md">
       <div className="flex flex-col gap-2">
         <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
           {eyebrow}
@@ -365,7 +365,7 @@ export function ProductOverview({
                     <button
                       type="button"
                       onClick={handleRemoveImage}
-                      className="absolute -right-2 -top-2 flex size-6 items-center justify-center rounded-full bg-card shadow-card-sm text-muted-foreground transition-colors hover:bg-destructive hover:text-white"
+                      className="absolute -right-2 -top-2 flex size-6 items-center justify-center rounded-full border border-border bg-card shadow-card-sm text-muted-foreground transition-colors hover:bg-destructive hover:text-white"
                     >
                       <Icon name="XIcon" className="size-3.5" />
                     </button>

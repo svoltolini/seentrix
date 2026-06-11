@@ -30,7 +30,7 @@ export function ContactForm() {
     return (
       <div
         role="status"
-        className="flex flex-col items-start gap-3 rounded-lg bg-card p-8 shadow-card-md"
+        className="flex flex-col items-start gap-3 rounded-lg border border-border bg-card p-8 shadow-card-md"
       >
         <span className="flex size-11 items-center justify-center rounded-md bg-success/10 text-success">
           <Icon name="TickCircle" size={22} variant="Bold" aria-hidden="true" />
@@ -43,7 +43,7 @@ export function ContactForm() {
   return (
     <form
       action={action}
-      className="flex flex-col gap-5 rounded-lg bg-card p-6 shadow-card-md sm:p-8"
+      className="flex flex-col gap-5 rounded-lg border border-border bg-card p-6 shadow-card-md sm:p-8"
     >
       <div className="grid gap-5 sm:grid-cols-2">
         <div className="flex flex-col gap-2">

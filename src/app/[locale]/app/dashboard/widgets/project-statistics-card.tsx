@@ -188,7 +188,7 @@ export function ProjectStatisticsCard({ points, title, legendLabel }: Props) {
   };
 
   return (
-    <div className="flex min-h-[346px] w-full flex-col rounded-lg bg-card p-[18px] shadow-card-lg">
+    <div className="flex min-h-[346px] w-full flex-col rounded-lg border border-border bg-card p-[18px] shadow-card-lg">
       {/* Header */}
       <div className="flex items-center justify-between">
         <p className="text-h4 text-foreground">{resolvedTitle}</p>

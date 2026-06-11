@@ -35,17 +35,19 @@ export default function AuthLayout({
 
   return (
     <div className="flex min-h-dvh flex-col items-center justify-center bg-background px-6 py-12">
-      <div ref={containerRef} className="w-full max-w-[420px]">
+      <div ref={containerRef} className="w-full max-w-[380px]">
         <Link
           href="/"
           className="mb-8 flex items-center justify-center gap-2 transition-opacity hover:opacity-80"
         >
-          <Logo size={28} className="shrink-0 text-primary" />
-          <span className="text-h2 text-foreground">Seentrix</span>
+          <Logo size={26} className="shrink-0 text-primary" />
+          <span className="font-heading text-[21px] font-semibold tracking-[-0.3px] text-foreground">
+            Seentrix
+          </span>
         </Link>
-        <div className="rounded-lg bg-card p-8 shadow-card-md">
-          {children}
-        </div>
+        {/* No card — the form sits directly on the warm background (Clay
+            centered login). */}
+        {children}
       </div>
     </div>
   );

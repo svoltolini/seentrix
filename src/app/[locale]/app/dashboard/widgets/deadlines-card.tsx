@@ -35,7 +35,7 @@ export function DeadlinesCard({
       <div className="mt-4 flex flex-col gap-4">
         {items.map((d) => (
           <div key={d.id} className="flex items-start gap-3">
-            <span className="mt-0.5 shrink-0 rounded-md bg-card px-2 py-1 font-mono text-[12px] font-semibold tabular-nums text-primary shadow-card-sm">
+            <span className="mt-0.5 shrink-0 rounded-md border border-border bg-card px-2 py-1 font-mono text-[12px] font-semibold tabular-nums text-primary shadow-card-sm">
               {d.days}d
             </span>
             <div className="min-w-0">

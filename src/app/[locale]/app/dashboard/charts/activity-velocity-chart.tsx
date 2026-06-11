@@ -126,7 +126,7 @@ export function ActivityVelocityChart({ data }: Props) {
               if (!payload?.length || !label) return null;
               const count = payload[0].value as number;
               return (
-                <div className="rounded-lg bg-card px-3 py-1.5 text-p4 shadow-card-sm">
+                <div className="rounded-lg border border-border bg-card px-3 py-1.5 text-p4 shadow-card-sm">
                   <p className="text-p4 text-foreground">{formatDate(String(label))}</p>
                   <p className="tabular-nums text-muted-foreground">
                     {t("activityVelocity.actions", { count })}

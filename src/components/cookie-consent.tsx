@@ -56,7 +56,7 @@ export function CookieConsent() {
     <div
       role="dialog"
       aria-label="Cookie notice"
-      className="fixed inset-x-4 bottom-4 z-50 mx-auto flex max-w-2xl flex-col gap-3 rounded-lg bg-card p-4 shadow-card-lg sm:flex-row sm:items-center md:inset-x-auto md:left-1/2 md:-translate-x-1/2"
+      className="fixed inset-x-4 bottom-4 z-50 mx-auto flex max-w-2xl flex-col gap-3 rounded-lg border border-border bg-card p-4 shadow-card-lg sm:flex-row sm:items-center md:inset-x-auto md:left-1/2 md:-translate-x-1/2"
     >
       <p className="text-p3 leading-relaxed text-muted-foreground">
         Seentrix only uses strictly-necessary cookies (session and UI

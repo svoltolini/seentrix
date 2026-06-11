@@ -31,7 +31,7 @@ function KpiCard({
     <div
       data-slot="kpi-card"
       className={cn(
-        "flex flex-col gap-3 rounded-lg bg-card p-[18px] shadow-card-sm",
+        "flex flex-col gap-3 rounded-lg border border-border bg-card p-[18px] shadow-card-sm",
         className
       )}
       {...props}

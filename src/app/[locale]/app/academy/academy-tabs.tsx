@@ -143,7 +143,7 @@ function LessonCard({
   return (
     <Link
       href={`/app/academy/${id}`}
-      className="group flex flex-col overflow-hidden rounded-lg bg-card shadow-card-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(60,40,20,0.07)]"
+      className="group flex flex-col overflow-hidden rounded-lg border border-border bg-card shadow-card-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(60,40,20,0.07)]"
     >
       {/* Gradient cover with lesson number / done badge */}
       <div
@@ -236,7 +236,7 @@ function ScreenCard({
   const doneCount = screen.lessons.filter((id) => completed.has(id)).length;
 
   return (
-    <div className="rounded-lg bg-card shadow-card-sm p-6 transition-colors duration-300 hover:bg-muted/30">
+    <div className="rounded-lg border border-border bg-card shadow-card-sm p-6 transition-colors duration-300 hover:bg-muted/30">
       <div className="flex items-center gap-3">
         <div className="min-w-0 flex-1">
           <p className="text-h5 text-foreground">

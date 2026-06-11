@@ -43,7 +43,7 @@ export function ProductsAttention({
   if (products.length === 0) return null;
 
   return (
-    <section className="rounded-lg bg-card p-6 shadow-card-sm">
+    <section className="rounded-lg border border-border bg-card p-6 shadow-card-sm">
       <header className="flex items-baseline justify-between gap-4">
         <h2 className="text-h4 text-foreground">{title}</h2>
         <Link

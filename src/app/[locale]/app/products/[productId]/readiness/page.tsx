@@ -56,7 +56,7 @@ export default async function ReadinessPage({
         </div>
 
         {/* Readiness ring */}
-        <section className="flex flex-wrap items-center gap-6 rounded-lg bg-card p-6 shadow-card-sm">
+        <section className="flex flex-wrap items-center gap-6 rounded-lg border border-border bg-card p-6 shadow-card-sm">
           <div className="relative" style={{ width: SIZE, height: SIZE }}>
             <svg width={SIZE} height={SIZE} className="-rotate-90">
               <circle cx={SIZE / 2} cy={SIZE / 2} r={R} fill="none" stroke="var(--border)" strokeOpacity="0.25" strokeWidth={STROKE} />
@@ -104,7 +104,7 @@ export default async function ReadinessPage({
                 {items.map((item) => (
                   <div
                     key={item.key}
-                    className="flex flex-wrap items-center gap-3 rounded-lg bg-card px-4 py-3 shadow-card-sm"
+                    className="flex flex-wrap items-center gap-3 rounded-lg border border-border bg-card px-4 py-3 shadow-card-sm"
                   >
                     <span className="min-w-0 flex-1 text-p3 text-foreground">
                       {t(`items.${item.key}`)}

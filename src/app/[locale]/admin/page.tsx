@@ -89,7 +89,7 @@ export default async function AdminOverviewPage() {
             View all companies →
           </Link>
         </div>
-        <div className="overflow-hidden rounded-lg bg-card shadow-card-sm">
+        <div className="overflow-hidden rounded-lg border border-border bg-card shadow-card-sm">
           {recent.length === 0 ? (
             <p className="p-6 text-center text-p3 text-muted-foreground">
               No companies yet.

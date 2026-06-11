@@ -33,7 +33,7 @@ export function DashboardHero({
   const clamped = Math.max(0, Math.min(100, Math.round(percent)));
 
   return (
-    <section className="grid items-center gap-10 rounded-2xl bg-card px-7 py-8 shadow-card-sm sm:px-11 sm:py-10 lg:grid-cols-[1fr_auto]">
+    <section className="grid items-center gap-10 rounded-2xl border border-border bg-card px-7 py-8 shadow-card-sm sm:px-11 sm:py-10 lg:grid-cols-[1fr_auto]">
       <div>
         <p className="text-[12.5px] font-semibold uppercase tracking-[1px] text-primary">
           {t("eyebrow")}

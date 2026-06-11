@@ -67,7 +67,7 @@ export function FeaturesSection() {
             <div
               key={mod.key}
               data-feature-card
-              className="group relative rounded-lg bg-card p-7 shadow-card-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-card-md"
+              className="group relative rounded-lg border border-border bg-card p-7 shadow-card-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-card-md"
             >
               {/* Clay feature card (design `.mk-feature`): a 46px accent-soft
                   serif number tile, then a serif 19/600 title + muted body. */}

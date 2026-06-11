@@ -193,7 +193,7 @@ export function SecurityContent({
       )}
 
       {/* Current state */}
-      <div className="rounded-lg bg-card shadow-card-lg">
+      <div className="rounded-lg border border-border bg-card shadow-card-lg">
         <div className="border-b border-border px-6 py-4">
           <h2 className="text-h4 text-foreground">Two-factor authentication</h2>
           <p className="mt-0.5 text-p3 text-muted-foreground">

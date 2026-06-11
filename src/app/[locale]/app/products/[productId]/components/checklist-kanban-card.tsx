@@ -66,7 +66,7 @@ export function ChecklistKanbanCard({
       type="button"
       onClick={onClick}
       className={cn(
-        "group/kanban-card relative flex h-14 w-full min-h-[58px] items-center gap-3.5 rounded-lg bg-card px-4 text-left transition-shadow hover:shadow-card-sm",
+        "group/kanban-card relative flex h-14 w-full min-h-[58px] items-center gap-3.5 rounded-lg border border-border bg-card px-4 text-left transition-shadow hover:shadow-card-sm",
         status === "completed" && "opacity-60",
       )}
       data-status={status}

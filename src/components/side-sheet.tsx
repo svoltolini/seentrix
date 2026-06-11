@@ -78,7 +78,7 @@ export function SideSheetPopup({
         // real estate. Earlier passes used `sm:max-w-md` (448 px) then
         // `2xl` (672 px); 3xl gives forms, detail threads and composers
         // a bit more breathing room.
-        "fixed inset-y-0 right-0 z-50 flex h-full w-full flex-col overflow-hidden bg-card text-p3 text-card-foreground shadow-card-lg transition duration-200 ease-in-out sm:max-w-[845px]",
+        "fixed inset-y-0 right-0 z-50 flex h-full w-full flex-col overflow-hidden border border-border bg-card text-p3 text-card-foreground shadow-card-lg transition duration-200 ease-in-out sm:max-w-[845px]",
         "data-ending-style:translate-x-[2.5rem] data-ending-style:opacity-0 data-starting-style:translate-x-[2.5rem] data-starting-style:opacity-0",
         className,
       )}

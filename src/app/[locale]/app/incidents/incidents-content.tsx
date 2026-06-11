@@ -280,7 +280,7 @@ export function IncidentsContent({
         {filtered.length === 0 ? (
           <div
             data-reveal
-            className="overflow-hidden rounded-lg bg-card shadow-card-md px-6 py-20 text-center"
+            className="overflow-hidden rounded-lg border border-border bg-card shadow-card-md px-6 py-20 text-center"
           >
             <div className="flex justify-center">
               <IconBadge name="alert-02" tone="warning" size="xl" />
