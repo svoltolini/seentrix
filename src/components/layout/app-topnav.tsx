@@ -4,7 +4,6 @@ import { useTranslations } from "next-intl";
 import { usePathname, Link } from "@/i18n/navigation";
 
 import { useCreateProduct } from "@/components/products/create-product-context";
-import { useCopilot } from "@/components/copilot/copilot-context";
 import { TopbarSearch } from "./topbar-search";
 import { LanguagePicker } from "@/components/language-picker";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -26,11 +25,11 @@ import { cn } from "@/lib/utils";
  *
  * One sticky 64px bar on the page background with a bottom hairline:
  *   left:   logo mark + "Seentrix" wordmark (serif 21/600) → dashboard
- *   center: nav tabs (14/500, radius 10; active = white surface + soft
- *           shadow + ink text). Hidden below lg, where a menu button
- *           exposes the same destinations.
- *   right:  + New product, Copilot (spark), search, language, bell, then
- *           the avatar dropdown (account / help / logout).
+ *   center: nav tabs (14/500; active = white surface + ink text). Hidden
+ *           below lg, where a menu button exposes the same destinations.
+ *   right:  + New product, a wider search box, language, bell, then the
+ *           round avatar dropdown (account / help / logout). Copilot lives
+ *           in the floating FAB + ⌘K, not the bar.
  *
  * Replaces the old sidebar + slim-topbar shell entirely.
  */
@@ -56,7 +55,6 @@ type AppTopnavProps = {
 export function AppTopnav({ user, orgName }: AppTopnavProps) {
   const t = useTranslations();
   const pathname = usePathname();
-  const { open: openCopilot } = useCopilot();
   const { open: openCreateProduct } = useCreateProduct();
 
   const isActive = (href: string) =>
@@ -113,7 +111,7 @@ export function AppTopnav({ user, orgName }: AppTopnavProps) {
         </Link>
 
         {/* Tabs */}
-        <nav className="ml-2 hidden items-center gap-0.5 lg:flex">
+        <nav className="ml-5 hidden items-center gap-1.5 lg:flex">
           {NAV_ITEMS.map((item) => {
             const active = isActive(item.href);
             return (
@@ -122,9 +120,9 @@ export function AppTopnav({ user, orgName }: AppTopnavProps) {
                 href={item.href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "whitespace-nowrap rounded-sm px-3.5 py-2 text-[14px] transition-colors",
+                  "whitespace-nowrap rounded-md px-4 py-2 text-[14px] transition-colors",
                   active
-                    ? "bg-card font-semibold text-foreground shadow-[0_1px_3px_rgba(80,60,40,0.07)]"
+                    ? "bg-card font-semibold text-foreground"
                     : "font-medium text-muted-foreground hover:bg-muted hover:text-foreground",
                 )}
               >
@@ -146,41 +144,32 @@ export function AppTopnav({ user, orgName }: AppTopnavProps) {
             {t("topbar.newProduct") ?? "New Product"}
           </button>
 
-          {/* Copilot — spark icon button */}
-          <button
-            type="button"
-            onClick={() => openCopilot()}
-            className="inline-flex size-[38px] items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-            aria-label="Copilot"
-          >
-            <Icon name="MagicStar" size={19} />
-          </button>
-
-          {/* Quick search — compact input at xl+, collapses entirely below */}
-          <div className="hidden xl:block">
-            <TopbarSearch className="w-[230px]" />
+          {/* Quick search — Copilot lives in the floating FAB + ⌘K, so the
+              top bar gives that space to a wider search box. */}
+          <div className="hidden lg:block">
+            <TopbarSearch className="w-[300px]" />
           </div>
 
           <LanguagePicker variant="menu" align="end" />
           <NotificationsMenu />
 
-          {/* Avatar dropdown — green tile per Clay (36px, radius 11) */}
+          {/* Avatar dropdown — round green avatar */}
           <DropdownMenu>
             <DropdownMenuTrigger
               render={
                 <button
                   type="button"
-                  className="ml-1 inline-flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-[11px] transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+                  className="ml-1 inline-flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-full transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
                   aria-label={accountLabel}
                 />
               }
             >
-              <Avatar size="lg" className="size-full rounded-[11px]">
+              <Avatar size="lg" className="size-full rounded-full">
                 <AvatarImage
                   src={user?.avatarUrl ?? undefined}
                   alt={user?.name ?? "User"}
                 />
-                <AvatarFallback className="rounded-[11px] bg-primary text-[13px] font-bold text-primary-foreground">
+                <AvatarFallback className="rounded-full bg-primary text-[13px] font-bold text-primary-foreground">
                   {initials || "U"}
                 </AvatarFallback>
               </Avatar>

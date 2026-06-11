@@ -9,7 +9,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
  * `28:1755` (`data-node-id="28:2535"` / `28:2536`, frame 700×121).
  *
  * Layout:
- *   container 700×121, `bg-card rounded-[10px] shadow-card-sm`
+ *   container 700×121, `bg-card rounded-[10px]`
  *   inner padding 18
  *   left column (362 wide): Task Title (subtitle 14/400 muted + title 16/700)
  *     followed by 3 meta chips (message / link / clock) at gap-16
@@ -43,7 +43,7 @@ export function DashboardTaskCard({ task }: { task: DashboardTask }) {
   return (
     <Wrapper
       {...wrapperProps}
-      className="relative flex h-[121px] w-full flex-col rounded-lg border border-border bg-card p-[18px] shadow-card-sm transition-shadow hover:shadow-card-md"
+      className="relative flex h-[121px] w-full flex-col rounded-lg border border-border bg-card p-[18px]"
     >
       <button
         type="button"

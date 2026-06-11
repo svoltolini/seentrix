@@ -481,20 +481,20 @@ export function DashboardContent(
           />
 
           {/* CRA calendar tracker */}
-          <section className="flex flex-col gap-4 rounded-lg border border-border bg-card p-5 shadow-card-sm">
+          <section className="flex flex-col gap-4 rounded-lg border border-border bg-card p-5">
             <h3 className="text-h4 text-foreground">{t("calendar.title")}</h3>
             <CraCalendarTracker events={calendarEvents} />
           </section>
 
           {/* Activity feed */}
-          <section className="flex flex-col gap-4 rounded-lg border border-border bg-card p-5 shadow-card-sm">
+          <section className="flex flex-col gap-4 rounded-lg border border-border bg-card p-5">
             <h3 className="text-h4 text-foreground">{t("activity")}</h3>
             <ActivityFeedWidget items={activityItems} />
           </section>
 
           {/* CRA readiness roll-up */}
           {totalProducts > 0 && (
-            <section className="flex flex-col gap-4 rounded-lg border border-border bg-card p-5 shadow-card-sm">
+            <section className="flex flex-col gap-4 rounded-lg border border-border bg-card p-5">
               <h3 className="text-h4 text-foreground">{t("readiness.title")}</h3>
               <ReadinessRollupWidget
                 items={readinessRollup ?? []}

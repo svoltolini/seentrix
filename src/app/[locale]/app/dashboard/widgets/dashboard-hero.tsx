@@ -33,7 +33,7 @@ export function DashboardHero({
   const clamped = Math.max(0, Math.min(100, Math.round(percent)));
 
   return (
-    <section className="grid items-center gap-10 rounded-2xl border border-border bg-card px-7 py-8 shadow-card-sm sm:px-11 sm:py-10 lg:grid-cols-[1fr_auto]">
+    <section className="grid items-center gap-10 rounded-2xl border border-border bg-card px-7 py-8 sm:px-11 sm:py-10 lg:grid-cols-[1fr_auto]">
       <div>
         <p className="text-[12.5px] font-semibold uppercase tracking-[1px] text-primary">
           {t("eyebrow")}
@@ -80,7 +80,7 @@ export function DashboardHero({
       {/* Compliance ring + legend */}
       <div className="flex flex-col items-center gap-4 justify-self-center">
         <HeroRing value={clamped} caption={t("ringCaption")} />
-        <div className="flex flex-col gap-1.5">
+        <div className="flex flex-col items-center gap-1.5">
           <span className="flex items-center gap-2 whitespace-nowrap text-[12.5px] text-muted-foreground">
             <i className="size-2.5 rounded-full bg-primary" aria-hidden />
             {t("legendAchieved", { percent: clamped })}

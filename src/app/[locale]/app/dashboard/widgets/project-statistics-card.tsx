@@ -188,7 +188,7 @@ export function ProjectStatisticsCard({ points, title, legendLabel }: Props) {
   };
 
   return (
-    <div className="flex min-h-[346px] w-full flex-col rounded-lg border border-border bg-card p-[18px] shadow-card-lg">
+    <div className="flex min-h-[346px] w-full flex-col rounded-lg border border-border bg-card p-[18px]">
       {/* Header */}
       <div className="flex items-center justify-between">
         <p className="text-h4 text-foreground">{resolvedTitle}</p>
@@ -302,16 +302,25 @@ export function ProjectStatisticsCard({ points, title, legendLabel }: Props) {
             </div>
           </div>
 
-          {/* X-axis labels */}
-          <div className="mt-2 flex pl-9">
-            {buckets.map((b, i) => (
-              <div
-                key={i}
-                className="flex-1 text-center text-p3 text-muted-foreground"
-              >
-                {b.label}
-              </div>
-            ))}
+          {/* X-axis labels — mirror the chart row (w-9 Y-axis + gap-3 + plot)
+              so each label sits centered under its bar. */}
+          <div className="mt-2 flex gap-3">
+            <div className="w-9 shrink-0" aria-hidden />
+            <div
+              className={cn(
+                "flex flex-1",
+                buckets.length > 14 ? "gap-px" : "justify-between",
+              )}
+            >
+              {buckets.map((b, i) => (
+                <div
+                  key={i}
+                  className="flex-1 text-center text-p3 text-muted-foreground"
+                >
+                  {b.label}
+                </div>
+              ))}
+            </div>
           </div>
         </>
       ) : (

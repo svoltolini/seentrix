@@ -55,7 +55,7 @@ export function GetStartedGuide({ state, firstName }: Props) {
       {/* Progress card. No CTA button here — the active step in the checklist
           below is the single, unambiguous call to action, so a duplicate
           "add product" button would just be noise. */}
-      <div className="flex flex-col gap-2 rounded-lg border border-border bg-card p-6 shadow-card-md">
+      <div className="flex flex-col gap-2 rounded-lg border border-border bg-card p-6">
         <p className="text-h4 text-foreground">
           {t("getStarted.progressLabel", {
             done: state.completedCount,
@@ -132,7 +132,7 @@ function StepRow({
         // Structure mirrors the "Ask Seentrix AI" banner on this same screen:
         // items-center, gap-4, a size-11 rounded-md icon badge, then a
         // flex-col gap-0.5 with a text-h6 title + text-p3 body.
-        "flex items-center gap-4 rounded-lg border border-border bg-card px-5 py-4 shadow-card-sm transition-colors",
+        "flex items-center gap-4 rounded-lg border border-border bg-card px-5 py-4 transition-colors",
         isNext && "ring-2 ring-primary/40",
         isNext && "hover:bg-muted/40",
         locked && "opacity-55",

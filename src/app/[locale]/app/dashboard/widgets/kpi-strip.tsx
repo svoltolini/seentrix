@@ -46,7 +46,7 @@ export function KpiStrip({ kpis }: Props) {
           <Link
             key={kpi.id}
             href={kpi.href}
-            className="rounded-2xl border border-border bg-card px-[22px] py-5 shadow-card-sm transition-shadow hover:shadow-card-md"
+            className="rounded-2xl border border-border bg-card px-[22px] py-5"
           >
             <p className="text-[13px] font-medium text-muted-foreground">
               {kpi.label}
