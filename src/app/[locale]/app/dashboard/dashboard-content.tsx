@@ -6,11 +6,13 @@
  * Behaviour:
  *   - Brand-new orgs with no products see the GetStartedGuide (an ordered,
  *     CRA-aware next-steps checklist) instead of an empty dashboard.
- *   - Established orgs see the full two-column layout:
- *       main column   — KPI strip, Project-Statistics activity chart,
- *                       featured product hero cards, today's overdue tasks
- *       right rail     — CRA calendar tracker (deadlines + tasks), upcoming
- *                       CRA deadlines, team strip, recent-activity feed
+ *   - Established orgs see the Clay layout (design handoff §3):
+ *       hero          — serif greeting + compliance ring + CTAs
+ *       stat row      — four serif-value stat cards
+ *       main column   — team-activity chart, products needing attention,
+ *                       today's overdue tasks
+ *       right rail    — next deadlines (accent card), CRA calendar,
+ *                       recent-activity feed, readiness roll-up
  *
  * Widgets live in `./widgets/`. This file adapts the `DashboardStats` shape
  * into widget props (KPIs, chart buckets, featured-product picker, calendar
@@ -29,7 +31,6 @@ import { upcomingCraDeadlines, nextCraDeadline } from "@/lib/constants/cra-deadl
 import { daysUntil } from "@/lib/time";
 import type {
   DashboardStats,
-  DashboardProduct,
   ActivityItem,
 } from "../products/actions";
 import type { IncidentWidgetData } from "../incidents/actions";
@@ -40,19 +41,21 @@ import {
   ProjectStatisticsCard,
   type DayActivity,
 } from "./widgets/project-statistics-card";
-import { ProjectHeroCard } from "./widgets/project-hero-card";
 import { DashboardTaskCard, type DashboardTask } from "./widgets/dashboard-task-card";
 import {
   CraCalendarTracker,
   type CalendarEvent,
 } from "./widgets/cra-calendar-tracker";
-import { MeetingsList } from "./widgets/meetings-list";
 import {
   ActivityFeedWidget,
   type ActivityFeedItem,
 } from "./widgets/activity-feed-widget";
-import { TeamChatStrip, type TeamChatItem } from "./widgets/team-chat-strip";
 import { GetStartedGuide } from "./widgets/get-started-guide";
+import {
+  ProductsAttention,
+  type AttentionProduct,
+} from "./widgets/products-attention";
+import { DeadlinesCard, type DeadlineItem } from "./widgets/deadlines-card";
 import { DashboardHero } from "./widgets/dashboard-hero";
 import { KpiStrip, type Kpi } from "./widgets/kpi-strip";
 import {
@@ -64,24 +67,6 @@ import { useCopilot } from "@/components/copilot/copilot-context";
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
-
-/**
- * Pick the two products most likely to block the next CRA deadline so they
- * sit at the top of the "My Products" hero strip. Lowest compliance below
- * 75% wins; not-yet-assessed products lead.
- */
-function pickFeaturedProducts(
-  products: DashboardProduct[],
-): DashboardProduct[] {
-  if (products.length === 0) return [];
-  const sorted = [...products].sort((a, b) => {
-    const aUn = a.cra_category ? 1 : 0;
-    const bUn = b.cra_category ? 1 : 0;
-    if (aUn !== bUn) return aUn - bUn;
-    return a.compliance_score - b.compliance_score;
-  });
-  return sorted.slice(0, 2);
-}
 
 const CATEGORY_KEY_MAP: Record<string, string> = {
   default: "categoryDefault",
@@ -256,9 +241,8 @@ export function DashboardContent(
     [activityVelocity],
   );
 
-  const featured = useMemo(() => pickFeaturedProducts(products), [products]);
-
-  // ---- KPI strip ---------------------------------------------------------
+  // ---- Clay stat row (4 cards) -------------------------------------------
+  // Average compliance lives in the hero ring now, so it's not repeated here.
   const kpis = useMemo<Kpi[]>(() => {
     const next = nextCraDeadline();
     const list: Kpi[] = [
@@ -269,14 +253,6 @@ export function DashboardContent(
         caption: t("kpi.productsAssessed", { count: assessedCount }),
         icon: "Box",
         tone: "primary",
-        href: "/app/products",
-      },
-      {
-        id: "compliance",
-        label: t("kpi.avgCompliance"),
-        value: `${avgCompliance}%`,
-        icon: "Verify",
-        tone: avgCompliance >= 75 ? "success" : "neutral",
         href: "/app/products",
       },
       {
@@ -320,43 +296,56 @@ export function DashboardContent(
     t,
     totalProducts,
     assessedCount,
-    avgCompliance,
     openVulnCount,
     criticalCount,
     overdueCount,
   ]);
 
-  // ---- Right-rail upcoming CRA deadlines (meeting-list cards) -------------
-  // The "View" CTA opens the Copilot with a deadline-specific question so the
-  // AI can explain what that milestone means and what the user needs to have
-  // done by then — more useful than navigating to a static page.
-  const meetings = upcomingCraDeadlines().map((d) => {
-    const deadlineName = t(`deadline.${d.labelKey}`);
-    const deadlineDate = new Date(d.date).toLocaleDateString(undefined, {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    });
-    const seed = `Explain the CRA "${deadlineName}" deadline on ${deadlineDate}: what does it mean, what do I need to have in place and do before that date, and how does it apply to my products in Seentrix?`;
-    return {
-      id: d.id,
-      icon: "Calendar" as const,
-      title: deadlineName,
-      subtitle: `${daysUntil(d.date)} ${
-        t.has("deadline.daysAway") ? t("deadline.daysAway") : "days away"
-      }`,
-      cta: {
-        label: t.has("deadline.explain")
-          ? t("deadline.explain")
-          : t.has("deadline.view")
-            ? t("deadline.view")
-            : "Explain",
-        onClick: () => openCopilot(seed),
-      },
+  // ---- Products needing attention (lowest scores first) -------------------
+  const attentionProducts = useMemo<AttentionProduct[]>(() => {
+    const TONE_MAP: Record<string, AttentionProduct["categoryTone"]> = {
+      critical: "critical",
+      important_class_ii: "important_ii",
+      important_class_i: "important_i",
+      default: "default",
     };
-  });
+    return [...products]
+      .sort((a, b) => a.compliance_score - b.compliance_score)
+      .slice(0, 4)
+      .map((p) => {
+        const categoryKey = p.cra_category ?? "default";
+        const labelKey = CATEGORY_KEY_MAP[categoryKey] ?? "categoryDefault";
+        return {
+          id: p.id,
+          name: p.name,
+          type: p.type ?? null,
+          categoryLabel: t.has(labelKey)
+            ? t(labelKey)
+            : categoryKey.replace(/_/g, " "),
+          categoryTone: TONE_MAP[categoryKey] ?? "default",
+          score: p.compliance_score,
+        };
+      });
+  }, [products, t]);
 
-  // ---- Calendar tracker events (CRA deadlines + overdue tasks) -----------
+  // ---- Next-deadlines rail card -------------------------------------------
+  const deadlineItems = useMemo<DeadlineItem[]>(
+    () =>
+      upcomingCraDeadlines()
+        .slice(0, 4)
+        .map((d) => ({
+          id: d.id,
+          title: t(`deadline.${d.labelKey}`),
+          days: Math.max(0, daysUntil(d.date)),
+          date: new Date(d.date).toLocaleDateString(undefined, {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          }),
+        })),
+    [t],
+  );
+
   const calendarEvents = useMemo<CalendarEvent[]>(() => {
     const deadlineEvents: CalendarEvent[] = upcomingCraDeadlines().map((d) => ({
       id: `deadline-${d.id}`,
@@ -389,19 +378,6 @@ export function DashboardContent(
     .map((a) => adaptActivity(a, t, (k) => t.has(k)));
   const todayTasks = overdueItems.slice(0, 4).map(adaptOverdueToTask);
 
-  // Team strip — surface up to 5 active org members from recent activity.
-  const seenUsers = new Map<string, TeamChatItem>();
-  for (const a of recentActivity) {
-    if (!a.user_name) continue;
-    if (seenUsers.has(a.user_name)) continue;
-    seenUsers.set(a.user_name, {
-      id: a.user_name,
-      name: a.user_name,
-      avatarUrl: a.user_avatar_url ?? null,
-    });
-    if (seenUsers.size >= 6) break;
-  }
-  const teamMembers = [...seenUsers.values()];
 
   // ---- Empty-state guidance for brand-new orgs ---------------------------
   if (onboardingState.isEmpty) {
@@ -458,35 +434,17 @@ export function DashboardContent(
           {/* Project Statistics activity chart */}
           <ProjectStatisticsCard points={chartData} />
 
-          {/* My Products — 2 hero cards */}
-          {totalProducts > 0 && featured.length > 0 && (
-            <section className="flex flex-col gap-4">
-              <header className="flex items-center justify-between">
-                <h2 className="text-h2 text-foreground">{t("myProducts")}</h2>
-                <Link
-                  href="/app/products"
-                  className="text-p3 text-primary hover:text-primary/80"
-                >
-                  {t("seeAll")}
-                </Link>
-              </header>
-              <div className="grid gap-5 sm:grid-cols-2">
-                {featured.map((p) => {
-                  const categoryKey = p.cra_category ?? "default";
-                  const priorityKey = CATEGORY_KEY_MAP[categoryKey] ?? "categoryDefault";
-                  return (
-                    <ProjectHeroCard
-                      key={p.id}
-                      title={p.name}
-                      subtitle={p.type ?? "Product"}
-                      href={`/app/products/${p.id}`}
-                      score={p.compliance_score}
-                      priority={t.has(priorityKey) ? t(priorityKey) : categoryKey.replace(/_/g, " ")}
-                    />
-                  );
-                })}
-              </div>
-            </section>
+          {/* Products needing attention — lowest scores, score rings */}
+          {totalProducts > 0 && (
+            <ProductsAttention
+              title={
+                t.has("attention.title")
+                  ? t("attention.title")
+                  : t("myProducts")
+              }
+              viewAllLabel={t("seeAll")}
+              products={attentionProducts}
+            />
           )}
 
           {/* Today's tasks — overdue compliance items */}
@@ -514,46 +472,36 @@ export function DashboardContent(
           </section>
         </div>
 
-        {/* RIGHT RAIL */}
+        {/* RIGHT RAIL — Clay order: deadlines (accent), calendar, activity */}
         <aside className="flex min-w-0 flex-col gap-4 lg:max-w-[370px]">
+          {/* Next CRA deadlines — accent-soft card with mono countdowns */}
+          <DeadlinesCard
+            title={t("upcomingDeadlines.title")}
+            items={deadlineItems}
+          />
+
           {/* CRA calendar tracker */}
-          <section className="flex flex-col gap-4 rounded-lg bg-card p-5 shadow-card-md">
-            <h3 className="text-h3 text-foreground">{t("calendar.title")}</h3>
+          <section className="flex flex-col gap-4 rounded-lg bg-card p-5 shadow-card-sm">
+            <h3 className="text-h4 text-foreground">{t("calendar.title")}</h3>
             <CraCalendarTracker events={calendarEvents} />
+          </section>
+
+          {/* Activity feed */}
+          <section className="flex flex-col gap-4 rounded-lg bg-card p-5 shadow-card-sm">
+            <h3 className="text-h4 text-foreground">{t("activity")}</h3>
+            <ActivityFeedWidget items={activityItems} />
           </section>
 
           {/* CRA readiness roll-up */}
           {totalProducts > 0 && (
-            <section className="flex flex-col gap-4 rounded-lg bg-card p-5 shadow-card-md">
-              <h3 className="text-h3 text-foreground">{t("readiness.title")}</h3>
+            <section className="flex flex-col gap-4 rounded-lg bg-card p-5 shadow-card-sm">
+              <h3 className="text-h4 text-foreground">{t("readiness.title")}</h3>
               <ReadinessRollupWidget
                 items={readinessRollup ?? []}
                 emptyLabel={t("readiness.empty")}
               />
             </section>
           )}
-
-          {/* Upcoming CRA deadlines */}
-          <section className="flex flex-col gap-4 rounded-lg bg-card p-5 shadow-card-md">
-            <h3 className="text-h3 text-foreground">
-              {t("upcomingDeadlines.title")}
-            </h3>
-            <MeetingsList meetings={meetings} />
-          </section>
-
-          {/* Team */}
-          {teamMembers.length > 0 && (
-            <section className="flex flex-col gap-4 rounded-lg bg-card p-5 shadow-card-md">
-              <h3 className="text-h3 text-foreground">{t("team")}</h3>
-              <TeamChatStrip members={teamMembers} />
-            </section>
-          )}
-
-          {/* Activity feed */}
-          <section className="flex flex-col gap-4 rounded-lg bg-card p-5 shadow-card-md">
-            <h3 className="text-h3 text-foreground">{t("activity")}</h3>
-            <ActivityFeedWidget items={activityItems} />
-          </section>
         </aside>
       </div>
     </div>

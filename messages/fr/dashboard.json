@@ -348,6 +348,9 @@
       "ringCaption": "Préparation CRA",
       "legendAchieved": "Atteint · {percent}%",
       "legendRemaining": "Restant · {percent}%"
+    },
+    "attention": {
+      "title": "Produits nécessitant votre attention"
     }
   }
 }

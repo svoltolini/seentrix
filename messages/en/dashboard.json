@@ -348,6 +348,9 @@
       "ringCaption": "CRA readiness",
       "legendAchieved": "Achieved · {percent}%",
       "legendRemaining": "Remaining to target · {percent}%"
+    },
+    "attention": {
+      "title": "Products needing attention"
     }
   }
 }

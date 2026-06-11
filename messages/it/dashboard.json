@@ -348,6 +348,9 @@
       "ringCaption": "Prontezza CRA",
       "legendAchieved": "Raggiunto · {percent}%",
       "legendRemaining": "Mancante · {percent}%"
+    },
+    "attention": {
+      "title": "Prodotti che richiedono attenzione"
     }
   }
 }

@@ -2,18 +2,13 @@
 
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { Icon } from "@/components/icon";
 import { cn } from "@/lib/utils";
 
 /**
- * KpiStrip — a row of compact key-metric cards across the top of the dashboard
- * main column. Surfaces the numbers a compliance owner checks first: how many
- * products, average compliance, open vulnerabilities, overdue tasks, and how
- * long until the next CRA milestone.
- *
- * Each card is a real, derived figure from `DashboardStats` (no placeholders)
- * and links to the relevant section. A `tone` drives the accent colour so
- * attention-worthy metrics (open criticals, overdue work) read as warnings.
+ * KpiStrip — the Clay stat row (design handoff §3, `.clay-stats`): four
+ * white cards, each a muted 13px label on top, a big 34px serif value, and
+ * a small colored caption/delta underneath. Each card links to the section
+ * that explains its number.
  */
 
 export interface Kpi {
@@ -27,12 +22,12 @@ export interface Kpi {
   href: string;
 }
 
-const TONE: Record<Kpi["tone"], { badge: string }> = {
-  neutral: { badge: "bg-muted text-muted-foreground" },
-  primary: { badge: "bg-primary/10 text-primary" },
-  success: { badge: "bg-success/10 text-success" },
-  warning: { badge: "bg-accent/10 text-accent" },
-  danger: { badge: "bg-destructive/10 text-destructive" },
+const TONE_TEXT: Record<Kpi["tone"], string> = {
+  neutral: "text-muted-foreground",
+  primary: "text-primary",
+  success: "text-success-2",
+  warning: "text-accent",
+  danger: "text-destructive",
 };
 
 interface Props {
@@ -46,32 +41,27 @@ export function KpiStrip({ kpis }: Props) {
   return (
     <section className="flex flex-col gap-3">
       <h2 className="sr-only">{t("kpi.heading")}</h2>
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         {kpis.map((kpi) => (
           <Link
             key={kpi.id}
             href={kpi.href}
-            className="group flex flex-col gap-3 rounded-lg bg-card p-4 shadow-card-sm transition-shadow hover:shadow-card-md"
+            className="rounded-2xl bg-card px-[22px] py-5 shadow-card-sm transition-shadow hover:shadow-card-md"
           >
-            <span
+            <p className="text-[13px] font-medium text-muted-foreground">
+              {kpi.label}
+            </p>
+            <p className="mt-3 font-heading text-[34px] font-semibold leading-none tracking-[-0.8px] text-foreground">
+              {kpi.value}
+            </p>
+            <p
               className={cn(
-                "flex size-9 items-center justify-center rounded-md",
-                TONE[kpi.tone].badge,
+                "mt-2.5 min-h-[18px] text-[12px] font-semibold",
+                TONE_TEXT[kpi.tone],
               )}
             >
-              <Icon name={kpi.icon} size={18} variant="Bold" />
-            </span>
-            <div className="flex flex-col gap-0.5">
-              <p className="text-h3 leading-none text-foreground">
-                {kpi.value}
-              </p>
-              <p className="text-p3 text-muted-foreground">{kpi.label}</p>
-              {kpi.caption && (
-                <p className="mt-0.5 text-p4 text-muted-foreground">
-                  {kpi.caption}
-                </p>
-              )}
-            </div>
+              {kpi.caption ?? " "}
+            </p>
           </Link>
         ))}
       </div>
