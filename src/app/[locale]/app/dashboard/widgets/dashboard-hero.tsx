@@ -45,7 +45,7 @@ export function DashboardHero({
             em: (chunks) => <em className="not-italic text-primary">{chunks}</em>,
           })}
         </h1>
-        <p className="mt-4 max-w-[52ch] text-[15.5px] leading-relaxed text-muted-foreground">
+        <p className="mt-4 text-[15.5px] leading-relaxed text-muted-foreground">
           {t.rich("body", {
             critical: criticalCount,
             overdue: overdueCount,
