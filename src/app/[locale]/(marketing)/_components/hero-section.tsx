@@ -5,9 +5,9 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { Icon } from "@/components/icon";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { CountdownTimer } from "./countdown-timer";
+import { Logo } from "@/components/logo";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 export function HeroSection() {
@@ -50,19 +50,15 @@ export function HeroSection() {
       ref={sectionRef}
       className="relative flex items-center justify-center overflow-hidden px-6 pt-20 pb-28 lg:pt-28 lg:pb-36"
     >
-      {/* Soft dot grid pattern (light mode — navy dots at 4% alpha) */}
+      {/* Soft dot grid pattern — warm ink dots on the Clay background */}
       <div
         className="pointer-events-none absolute inset-0"
         style={{
           backgroundImage:
-            "radial-gradient(circle, rgba(44,54,89,0.06) 1px, transparent 1px)",
+            "radial-gradient(circle, rgba(43,42,38,0.05) 1px, transparent 1px)",
           backgroundSize: "32px 32px",
         }}
       />
-
-      {/* No atmospheric gradient blobs — Nask is a flat design system. The
-          dot grid above is enough background texture; gradients here brought
-          off-palette purple in and clutter the hero. */}
 
       <div className="relative mx-auto flex max-w-5xl flex-col items-center gap-8 text-center">
         {/* Clay pill — accent-soft capsule (design `.mk-pill`) */}
@@ -109,14 +105,67 @@ export function HeroSection() {
           <CountdownTimer />
         </div>
 
-        {/* Scroll indicator — decorative, hidden from SRs. */}
-        <div data-hero-reveal className="mt-6 animate-bounce">
-          <Icon
-            name="ArrowDown2"
-            size={24}
-            aria-hidden="true"
-            className="text-muted-foreground"
-          />
+        {/* Product preview — faux browser frame with a hand-built miniature
+            dashboard (design `.mk-preview`). Decorative: a CSS "screenshot"
+            substitute, hidden from screen readers. Bleeds off the bottom. */}
+        <div
+          data-hero-reveal
+          aria-hidden="true"
+          className="mt-10 w-full max-w-4xl overflow-hidden rounded-t-2xl border border-b-0 border-border-strong bg-card text-left shadow-[0_16px_48px_rgba(60,40,20,0.10)]"
+        >
+          {/* Browser chrome */}
+          <div className="flex items-center gap-1.5 border-b border-border px-4 py-3">
+            <span className="size-2.5 rounded-full bg-[#e2ddd1]" />
+            <span className="size-2.5 rounded-full bg-[#e2ddd1]" />
+            <span className="size-2.5 rounded-full bg-[#e2ddd1]" />
+          </div>
+          {/* Mini nav */}
+          <div className="flex items-center gap-4 border-b border-border bg-background px-5 py-2.5">
+            <span className="flex items-center gap-1.5 font-heading text-[13px] font-semibold text-foreground">
+              <Logo size={13} className="text-primary" />
+              Seentrix
+            </span>
+            <span className="rounded-md bg-card px-2 py-1 text-[10.5px] font-semibold text-foreground shadow-card-sm">
+              Dashboard
+            </span>
+            <span className="px-1 text-[10.5px] font-medium text-muted-foreground">
+              Products
+            </span>
+            <span className="px-1 text-[10.5px] font-medium text-muted-foreground">
+              Incidents
+            </span>
+            <span className="ml-auto size-5 rounded-md bg-primary" />
+          </div>
+          {/* Mini hero + stats */}
+          <div className="bg-background px-5 pb-0 pt-4">
+            <div className="rounded-t-xl border border-b-0 border-border bg-card px-5 pb-5 pt-4">
+              <p className="text-[9px] font-semibold uppercase tracking-[1px] text-primary">
+                CRA readiness
+              </p>
+              <p className="mt-1.5 font-heading text-[17px] font-medium tracking-[-0.3px] text-foreground">
+                You&apos;re <em className="not-italic text-primary">68%</em> of
+                the way to conformity.
+              </p>
+              <div className="mt-4 grid grid-cols-4 gap-2.5">
+                {[
+                  ["12", "Products"],
+                  ["84%", "SBOM"],
+                  ["7", "Open vulns"],
+                  ["3", "Overdue"],
+                ].map(([v, l]) => (
+                  <div
+                    key={l}
+                    className="rounded-lg border border-border px-3 py-2.5"
+                  >
+                    <p className="font-heading text-[15px] font-semibold text-foreground">
+                      {v}
+                    </p>
+                    <p className="mt-0.5 text-[9px] text-muted-foreground">{l}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

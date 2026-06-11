@@ -67,25 +67,19 @@ export function FeaturesSection() {
             <div
               key={mod.key}
               data-feature-card
-              className="group relative rounded-lg bg-card p-8 shadow-card-md transition-shadow duration-300 hover:shadow-card-lg"
+              className="group relative rounded-lg bg-card p-7 shadow-card-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-card-md"
             >
-              <div className="flex items-start gap-5">
-                <span
-                  className="shrink-0 text-h1 leading-none"
-                  style={{ color: mod.accent }}
-                >
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-
-                <div>
-                  <h3 className="text-h4 text-foreground">
-                    {t(`modules.${mod.key}.title`)}
-                  </h3>
-                  <p className="mt-2 text-p2-r text-muted-foreground">
-                    {t(`modules.${mod.key}.description`)}
-                  </p>
-                </div>
-              </div>
+              {/* Clay feature card (design `.mk-feature`): a 46px accent-soft
+                  serif number tile, then a serif 19/600 title + muted body. */}
+              <span className="flex size-[46px] items-center justify-center rounded-[13px] bg-accent-soft font-heading text-[19px] font-semibold text-primary">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <h3 className="mt-5 font-heading text-[19px] font-semibold tracking-[-0.3px] text-foreground">
+                {t(`modules.${mod.key}.title`)}
+              </h3>
+              <p className="mt-2 text-p2-r text-muted-foreground">
+                {t(`modules.${mod.key}.description`)}
+              </p>
             </div>
           ))}
         </div>
