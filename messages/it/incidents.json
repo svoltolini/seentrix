@@ -53,7 +53,10 @@
     "deadline": {
       "in": "Tra {time}",
       "overdueBy": "In ritardo di {time}",
-      "none": "Tutte le finestre chiuse"
+      "none": "Tutte le finestre chiuse",
+      "unitHours": "ore",
+      "unitDays": "giorni",
+      "unitOverdue": "in ritardo"
     },
     "empty": {
       "title": "Nessun incidente ancora",

@@ -53,7 +53,10 @@
     "deadline": {
       "in": "In {time}",
       "overdueBy": "Überfällig um {time}",
-      "none": "Alle Fristen abgelaufen"
+      "none": "Alle Fristen abgelaufen",
+      "unitHours": "Std.",
+      "unitDays": "Tage",
+      "unitOverdue": "überfällig"
     },
     "empty": {
       "title": "Noch keine Sicherheitsvorfälle",

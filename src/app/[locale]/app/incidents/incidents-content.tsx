@@ -12,9 +12,7 @@ import { Icon } from "@/components/icon";
 import { IconBadge } from "@/components/ui/icon-badge";
 import { FieldHelp } from "@/components/field-help";
 import { StaggerReveal } from "@/components/stagger-reveal";
-import { StatCard } from "@/components/stat-card";
 import { useToast } from "@/components/ui/toast";
-import { useLocaleDate } from "@/lib/locale-date";
 import { AskSeentrixAI } from "@/components/copilot/ask-seentrix-ai";
 import {
   DropdownMenu,
@@ -118,11 +116,8 @@ export function IncidentsContent({
   currentUserRole: string | null;
 }) {
   const t = useTranslations("incidents");
-  const tType = useTranslations("incidents.type");
   const tSev = useTranslations("incidents.severity");
-  const tPhase = useTranslations("incidents.phase");
   const tStatus = useTranslations("incidents.status");
-  const { formatDate } = useLocaleDate();
   const { toast } = useToast();
   const [incidents] = useState(initialIncidents);
   const [statusFilter, setStatusFilter] = useState<"active" | "all" | "closed">(
@@ -183,13 +178,13 @@ export function IncidentsContent({
           className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-end"
         >
           <div>
-            <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
+            <p className="text-[12px] font-semibold uppercase tracking-[1px] text-primary">
               {t("breadcrumb")}
             </p>
-            <h1 className="mt-1 text-h1">
+            <h1 className="mt-2.5 text-h1">
               {t("title")}
             </h1>
-            <p className="mt-1.5 max-w-xl text-p3 text-muted-foreground">
+            <p className="mt-2.5 max-w-[60ch] text-[14.5px] leading-relaxed text-muted-foreground">
               {t("subtitle")}
             </p>
           </div>
@@ -205,43 +200,20 @@ export function IncidentsContent({
           )}
         </div>
 
-        {/* KPIs */}
-        <div
-          data-reveal
-          className="grid grid-cols-2 gap-3 sm:grid-cols-4"
-        >
-          <StatCard
-            label={t("kpi.active")}
-            from="#d9a64a"
-            to="#c0892e"
-            accentDot
-            pulse={kpis.active > 0}
-          >
-            <p className="mt-2 text-h2 tabular-nums tracking-tight text-white">
-              {kpis.active}
-            </p>
-          </StatCard>
-          <StatCard
+        {/* KPIs — plain bordered Clay stat cards (label + serif value) */}
+        <div data-reveal className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+          <IncidentStat label={t("kpi.active")} value={kpis.active} />
+          <IncidentStat
             label={t("kpi.overdue")}
-            from="#c0453a"
-            to="#2b2a26"
-            accentDot
-            pulse={kpis.overdue > 0}
-          >
-            <p className="mt-2 text-h2 tabular-nums tracking-tight text-white">
-              {kpis.overdue}
-            </p>
-          </StatCard>
-          <StatCard label={t("kpi.critical")} from="#c0453a" to="#c0892e">
-            <p className="mt-2 text-h2 tabular-nums tracking-tight text-white">
-              {kpis.critical}
-            </p>
-          </StatCard>
-          <StatCard label={t("kpi.closed")} from="#1f8a5b" to="#2fa56f">
-            <p className="mt-2 text-h2 tabular-nums tracking-tight text-white">
-              {kpis.closed}
-            </p>
-          </StatCard>
+            value={kpis.overdue}
+            danger={kpis.overdue > 0}
+          />
+          <IncidentStat
+            label={t("kpi.critical")}
+            value={kpis.critical}
+            danger={kpis.critical > 0}
+          />
+          <IncidentStat label={t("kpi.closed")} value={kpis.closed} />
         </div>
 
         {/* Filters */}
@@ -307,17 +279,8 @@ export function IncidentsContent({
         ) : (
           <div
             data-reveal
-            className="overflow-hidden rounded-md bg-muted"
+            className="overflow-hidden rounded-lg border border-border bg-card"
           >
-            <div className="flex items-center border-b border-border px-5 py-2.5 text-h6 text-muted-foreground">
-              <span className="flex-1">{t("table.incident")}</span>
-              <span className="hidden w-24 sm:block">{t("table.type")}</span>
-              <span className="hidden w-28 sm:block">
-                {t("table.aware_at")}
-              </span>
-              <span className="hidden w-32 md:block">{t("table.status")}</span>
-              <span className="w-32 text-right">{t("table.deadline")}</span>
-            </div>
             <div className="divide-y divide-border">
               {filtered.map((inc) => {
                 const next = nextDeadline(inc);
@@ -326,87 +289,73 @@ export function IncidentsContent({
                   <Link
                     key={inc.id}
                     href={`/app/incidents/${inc.id}`}
-                    className="group relative flex items-center px-5 py-3.5 transition-colors hover:bg-muted/60"
+                    className="group flex items-center gap-[18px] border-b border-border px-[22px] py-[18px] transition-colors last:border-b-0 hover:bg-muted"
                   >
+                    {/* Severity bar — 8×38, design `.sx-sev` */}
                     <span
-                      className="absolute inset-y-0 left-0 w-[3px]"
-                      style={{
-                        backgroundColor: SEVERITY_COLOR[inc.severity],
-                      }}
+                      className="h-[38px] w-2 shrink-0 rounded-[4px]"
+                      style={{ backgroundColor: SEVERITY_COLOR[inc.severity] }}
+                      aria-label={tSev(inc.severity)}
                     />
                     <div className="min-w-0 flex-1">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <span
-                          className="rounded-sm px-1.5 py-0.5 text-l6-plus uppercase tracking-wide text-white"
-                          style={{
-                            backgroundColor: SEVERITY_COLOR[inc.severity],
-                          }}
-                        >
-                          {tSev(inc.severity)}
-                        </span>
-                        <span className="truncate text-l6 text-foreground transition-colors group-hover:text-primary">
-                          {inc.title}
-                        </span>
+                      <p className="truncate text-[15px] font-semibold tracking-[-0.1px] text-foreground transition-colors group-hover:text-primary">
+                        {inc.title}
+                      </p>
+                      <p className="mt-1 truncate text-[12.5px] text-muted-foreground">
                         {inc.linked_cve_id && (
-                          <span className="font-mono text-p4 text-muted-foreground">
-                            · {inc.linked_cve_id}
-                          </span>
+                          <span className="font-mono">{inc.linked_cve_id}</span>
                         )}
-                      </div>
-                      {inc.affected_product_names.length > 0 && (
-                        <p className="mt-0.5 truncate text-p4 text-muted-foreground">
-                          {inc.affected_product_names.join(" · ")}
-                        </p>
-                      )}
+                        {inc.linked_cve_id &&
+                          inc.affected_product_names.length > 0 &&
+                          " · "}
+                        {inc.affected_product_names.join(" · ")}
+                      </p>
                     </div>
-                    <span className="hidden w-24 text-p4 text-muted-foreground sm:block">
-                      {tType(inc.type)}
-                    </span>
-                    <span className="hidden w-28 text-p4 text-muted-foreground sm:block">
-                      {formatDate(inc.aware_at)}
-                    </span>
-                    <div className="hidden w-32 md:block">
+                    <div className="hidden shrink-0 sm:block">
                       <StatusChip
                         status={inc.status}
                         label={tStatus(inc.status)}
                       />
                     </div>
-                    <div className="w-32 text-right">
+                    {/* Stacked serif countdown — design `.sx-count` */}
+                    <div className="flex w-16 shrink-0 flex-col items-center">
                       {tLeft ? (
-                        <div
-                          className={cn(
-                            "inline-flex items-center gap-1.5 rounded-sm px-2.5 py-1 text-l6",
-                            tLeft.overdue
-                              ? "bg-destructive/15 text-destructive"
-                              : tLeft.hoursLeft < 24
-                                ? "bg-warning/15 text-warning"
-                                : "bg-card text-muted-foreground",
-                          )}
-                        >
+                        <>
                           <span
                             className={cn(
-                              "size-1.5 rounded-full",
-                              (tLeft.overdue || tLeft.hoursLeft < 24) &&
-                                "animate-pulse",
+                              "font-heading text-[26px] font-semibold leading-none tabular-nums",
+                              tLeft.overdue || tLeft.hoursLeft < 24
+                                ? "text-destructive"
+                                : "text-foreground",
                             )}
-                            style={{
-                              backgroundColor: tLeft.overdue
-                                ? "var(--destructive)"
-                                : tLeft.hoursLeft < 24
-                                  ? "var(--warning)"
-                                  : "var(--muted-foreground)",
-                            }}
-                          />
-                          {tLeft.overdue
-                            ? t("deadline.overdueBy", { time: tLeft.text })
-                            : t("deadline.in", { time: tLeft.text })}
-                          <span className="text-p4 opacity-60">
-                            · {tPhase(next!.phase)}
+                          >
+                            {tLeft.hoursLeft < 24 && !tLeft.overdue
+                              ? tLeft.hoursLeft
+                              : Math.max(1, Math.round(tLeft.hoursLeft / 24))}
                           </span>
-                        </div>
+                          <span className="mt-1 text-[10px] font-bold uppercase tracking-[0.6px] text-muted-foreground">
+                            {(() => {
+                              const key = tLeft.overdue
+                                ? "deadline.unitOverdue"
+                                : tLeft.hoursLeft < 24
+                                  ? "deadline.unitHours"
+                                  : "deadline.unitDays";
+                              const fallback = tLeft.overdue
+                                ? "overdue"
+                                : tLeft.hoursLeft < 24
+                                  ? "hours"
+                                  : "days";
+                              return t.has(key) ? t(key) : fallback;
+                            })()}
+                          </span>
+                        </>
                       ) : (
-                        <span className="text-p4 text-muted-foreground">
-                          {t("deadline.none")}
+                        <span className="text-primary">
+                          <Icon
+                            name="checkmark-circle-01-stroke-rounded"
+                            size={22}
+                            variant="Bold"
+                          />
                         </span>
                       )}
                     </div>
@@ -728,5 +677,32 @@ function NewIncidentDialog({
         </div>
       </div>
     </ConfirmDialog>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// IncidentStat — plain bordered Clay stat card (label + serif value).
+// ---------------------------------------------------------------------------
+function IncidentStat({
+  label,
+  value,
+  danger,
+}: {
+  label: string;
+  value: number;
+  danger?: boolean;
+}) {
+  return (
+    <div className="rounded-2xl border border-border bg-card px-[22px] py-5 shadow-card-sm">
+      <p className="text-[13px] font-medium text-muted-foreground">{label}</p>
+      <p
+        className={
+          "mt-3 font-heading text-[34px] font-semibold leading-none tracking-[-0.8px] " +
+          (danger ? "text-destructive" : "text-foreground")
+        }
+      >
+        {value}
+      </p>
+    </div>
   );
 }
