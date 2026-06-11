@@ -12,6 +12,7 @@ import { Icon } from "@/components/icon";
 import { IconBadge } from "@/components/ui/icon-badge";
 import { FieldHelp } from "@/components/field-help";
 import { StaggerReveal } from "@/components/stagger-reveal";
+import { Segmented } from "@/components/ui/segmented";
 import { useToast } from "@/components/ui/toast";
 import { AskSeentrixAI } from "@/components/copilot/ask-seentrix-ai";
 import {
@@ -221,7 +222,7 @@ export function IncidentsContent({
           data-reveal
           className="flex flex-wrap items-center gap-2"
         >
-          <SegmentedControl
+          <Segmented
             options={[
               { value: "active", label: t("filter.active") },
               { value: "all", label: t("filter.all") },
@@ -387,36 +388,6 @@ export function IncidentsContent({
 // ---------------------------------------------------------------------------
 // Sub-components
 // ---------------------------------------------------------------------------
-
-function SegmentedControl({
-  options,
-  value,
-  onChange,
-}: {
-  options: { value: string; label: string }[];
-  value: string;
-  onChange: (v: string) => void;
-}) {
-  return (
-    <div className="inline-flex gap-1 rounded-md bg-muted p-1">
-      {options.map((o) => (
-        <button
-          key={o.value}
-          type="button"
-          onClick={() => onChange(o.value)}
-          className={cn(
-            "rounded-sm px-3 py-1.5 text-l6 transition-colors",
-            value === o.value
-              ? "bg-card text-foreground"
-              : "text-muted-foreground hover:text-foreground",
-          )}
-        >
-          {o.label}
-        </button>
-      ))}
-    </div>
-  );
-}
 
 function MultiSeverity({
   label,

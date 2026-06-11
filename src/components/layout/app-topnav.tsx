@@ -7,6 +7,7 @@ import { useCreateProduct } from "@/components/products/create-product-context";
 import { TopbarSearch } from "./topbar-search";
 import { LanguagePicker } from "@/components/language-picker";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -134,15 +135,15 @@ export function AppTopnav({ user, orgName }: AppTopnavProps) {
 
         {/* Right cluster */}
         <div className="ml-auto flex shrink-0 items-center gap-1.5">
-          {/* + New product — compact solid CTA */}
-          <button
-            type="button"
+          {/* + New product — standard sm primary, per the unified button spec */}
+          <Button
+            size="sm"
             onClick={openCreateProduct}
-            className="mr-1 hidden items-center gap-1.5 rounded-md bg-primary px-3.5 py-2 text-[13px] font-semibold text-primary-foreground transition-colors hover:bg-primary/90 md:inline-flex"
+            className="mr-1 hidden md:inline-flex"
           >
             <Icon name="Add" size={15} />
             {t("topbar.newProduct") ?? "New Product"}
-          </button>
+          </Button>
 
           {/* Quick search — Copilot lives in the floating FAB + ⌘K, so the
               top bar gives that space to a wider search box. */}

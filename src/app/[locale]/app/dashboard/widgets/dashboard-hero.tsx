@@ -11,7 +11,7 @@ import { Icon } from "@/components/icon";
  * White hero card (radius 22): eyebrow, a serif greeting headline with the
  * org-wide compliance % as a green <em>, a context line naming what needs
  * attention, and two CTAs. On the right, a large compliance ring (196px,
- * 16 thick) with an Achieved / Remaining legend.
+ * 16 thick).
  */
 export function DashboardHero({
   firstName,
@@ -89,23 +89,9 @@ export function DashboardHero({
         </div>
       </div>
 
-      {/* Compliance ring + legend */}
+      {/* Compliance ring */}
       <div className="flex flex-col items-center gap-4 justify-self-center">
         <HeroRing value={clamped} caption={t("ringCaption")} />
-        <div className="flex flex-col items-center gap-1.5">
-          <span className="flex items-center gap-2 whitespace-nowrap text-[12.5px] text-muted-foreground">
-            <i className="size-2.5 rounded-full bg-primary" aria-hidden />
-            {t("legendAchieved", { percent: clamped })}
-          </span>
-          <span className="flex items-center gap-2 whitespace-nowrap text-[12.5px] text-muted-foreground">
-            <i
-              className="size-2.5 rounded-full"
-              style={{ background: "var(--primary-3)" }}
-              aria-hidden
-            />
-            {t("legendRemaining", { percent: 100 - clamped })}
-          </span>
-        </div>
       </div>
     </section>
   );

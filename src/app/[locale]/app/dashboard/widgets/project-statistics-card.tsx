@@ -2,14 +2,8 @@
 
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
-import { Icon } from "@/components/icon";
 import { IconBadge } from "@/components/ui/icon-badge";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { Segmented } from "@/components/ui/segmented";
 import { cn } from "@/lib/utils";
 
 /**
@@ -201,45 +195,15 @@ export function ProjectStatisticsCard({ points, title, legendLabel }: Props) {
             {resolvedLegend}
           </span>
 
-          {/* Working timeframe selector — was a dead button. */}
-          <DropdownMenu>
-            <DropdownMenuTrigger
-              render={
-                <button
-                  type="button"
-                  className="inline-flex items-center gap-3.5 rounded-sm border-[1.5px] border-border-outline bg-card px-2.5 py-1.5 text-p3 text-foreground transition-colors hover:bg-muted"
-                />
-              }
-            >
-              {timeframeLabel(timeframe)}
-              <Icon
-                name="ArrowDown2"
-                size={14}
-                className="text-muted-foreground"
-              />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="min-w-[150px]">
-              {(["week", "month", "year"] as const).map((tf) => (
-                <DropdownMenuItem
-                  key={tf}
-                  onClick={() => setTimeframe(tf)}
-                  className={cn(
-                    timeframe === tf && "bg-muted text-foreground",
-                  )}
-                >
-                  {timeframeLabel(tf)}
-                  {timeframe === tf && (
-                    <Icon
-                      name="TickCircle"
-                      size={16}
-                      variant="Bold"
-                      className="ml-auto text-primary"
-                    />
-                  )}
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
+          {/* Timeframe — Segmented view switcher (design .sx-seg) */}
+          <Segmented
+            value={timeframe}
+            onChange={(v) => setTimeframe(v as Timeframe)}
+            options={(["week", "month", "year"] as const).map((tf) => ({
+              value: tf,
+              label: timeframeLabel(tf),
+            }))}
+          />
         </div>
       </div>
 
