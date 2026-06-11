@@ -193,7 +193,7 @@ export function SecurityContent({
       )}
 
       {/* Current state */}
-      <div className="rounded-lg border border-border bg-card shadow-card-lg">
+      <div className="rounded-lg border border-border bg-card">
         <div className="border-b border-border px-6 py-4">
           <h2 className="text-h4 text-foreground">Two-factor authentication</h2>
           <p className="mt-0.5 text-p3 text-muted-foreground">
@@ -287,7 +287,7 @@ function EnrolStep({
             (`data:image/svg+xml;utf-8,<svg…>`), so render it as an <img> src.
             The previous `dangerouslySetInnerHTML` approach dumped the data-URI
             prefix as visible text above the code. */}
-        <div className="mt-4 inline-block rounded-md bg-white p-3 shadow-card-sm">
+        <div className="mt-4 inline-block rounded-md bg-white p-3">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={state.qrSvg}

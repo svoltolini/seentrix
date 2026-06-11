@@ -65,7 +65,7 @@ export function AudienceSection() {
             <div
               key={seg.key}
               data-audience-row
-              className="flex items-start gap-6 rounded-lg border border-border bg-card p-8 shadow-card-md lg:gap-8"
+              className="flex items-start gap-6 rounded-lg border border-border bg-card p-8 lg:gap-8"
             >
               <span
                 className="shrink-0 text-4xl font-extrabold leading-none lg:text-5xl"

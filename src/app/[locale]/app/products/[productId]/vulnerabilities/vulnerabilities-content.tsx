@@ -356,7 +356,7 @@ export function VulnerabilitiesContent({
   if (isEmpty) {
     return (
       <div
-        className="overflow-hidden rounded-lg border border-border bg-card shadow-card-md px-6 py-20 text-center"
+        className="overflow-hidden rounded-lg border border-border bg-card px-6 py-20 text-center"
       >
         <IconBadge name="shield-check" tone="success" size="xl" className="mx-auto" />
         <h2 className="mt-5 text-h4 text-foreground">
@@ -421,7 +421,7 @@ export function VulnerabilitiesContent({
         {/* ── Filter bar ── */}
         <div
           data-reveal
-          className="overflow-hidden rounded-lg border border-border bg-card shadow-card-md"
+          className="overflow-hidden rounded-lg border border-border bg-card"
         >
           {/* Search row — takes full width for scannability */}
           <div className="border-b border-border p-3">
@@ -606,7 +606,7 @@ export function VulnerabilitiesContent({
         {/* ── Table ── */}
         <div
           data-reveal
-          className="overflow-hidden rounded-lg border border-border bg-card shadow-card-md"
+          className="overflow-hidden rounded-lg border border-border bg-card"
         >
           <div className="flex items-center border-b border-border px-4 py-2.5 text-h6 text-muted-foreground">
             {canWrite && (

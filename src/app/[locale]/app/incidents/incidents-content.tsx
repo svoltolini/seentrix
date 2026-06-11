@@ -252,7 +252,7 @@ export function IncidentsContent({
         {filtered.length === 0 ? (
           <div
             data-reveal
-            className="overflow-hidden rounded-lg border border-border bg-card shadow-card-md px-6 py-20 text-center"
+            className="overflow-hidden rounded-lg border border-border bg-card px-6 py-20 text-center"
           >
             <div className="flex justify-center">
               <IconBadge name="alert-02" tone="warning" size="xl" />
@@ -407,7 +407,7 @@ function SegmentedControl({
           className={cn(
             "rounded-sm px-3 py-1.5 text-l6 transition-colors",
             value === o.value
-              ? "bg-card shadow-card-sm text-foreground"
+              ? "bg-card text-foreground"
               : "text-muted-foreground hover:text-foreground",
           )}
         >
@@ -693,7 +693,7 @@ function IncidentStat({
   danger?: boolean;
 }) {
   return (
-    <div className="rounded-2xl border border-border bg-card px-[22px] py-5 shadow-card-sm">
+    <div className="rounded-2xl border border-border bg-card px-[22px] py-5">
       <p className="text-[13px] font-medium text-muted-foreground">{label}</p>
       <p
         className={

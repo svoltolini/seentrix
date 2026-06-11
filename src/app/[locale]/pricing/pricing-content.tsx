@@ -147,7 +147,7 @@ export function PricingContent() {
               )}
               <div
                 className={cn(
-                  "relative flex h-full flex-col rounded-lg border border-border bg-card p-6 shadow-card-md transition-all duration-300 hover:-translate-y-1 hover:shadow-card-lg",
+                  "relative flex h-full flex-col rounded-lg border border-border bg-card p-6 transition-all duration-300 hover:-translate-y-1",
                   isPro
                     ? "border-2 border-primary"
                     : "border border-border",
@@ -283,7 +283,7 @@ function EnterpriseBand() {
 
   return (
     <section className="mt-12">
-      <div className="flex flex-col gap-6 rounded-md bg-dark-cta p-8 shadow-card-md sm:p-10 lg:flex-row lg:items-center lg:justify-between">
+      <div className="flex flex-col gap-6 rounded-md bg-dark-cta p-8 sm:p-10 lg:flex-row lg:items-center lg:justify-between">
         <div className="max-w-2xl">
           <h2 className="text-h3 text-primary-foreground">{t("title")}</h2>
           <p className="mt-2 text-p2-r text-primary-foreground/80">
@@ -350,7 +350,7 @@ function ComparisonTable() {
         </p>
       </div>
 
-      <div className="overflow-hidden rounded-md border border-border bg-card shadow-card-md">
+      <div className="overflow-hidden rounded-md border border-border bg-card">
         {/* Sticky header with plan-name TIER CHIPS — visually mirrors the
             pricing cards above. Highlighted tier (Professional) gets a solid
             primary chip; the rest get an outlined chip on the white card. */}

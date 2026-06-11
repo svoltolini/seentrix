@@ -91,7 +91,7 @@ export function ActivityContent({ activities }: { activities: Activity[] }) {
                 className="fixed inset-0 z-40"
                 onClick={() => setShowExportMenu(false)}
               />
-              <div className="absolute right-0 top-full z-50 mt-1.5 w-48 overflow-hidden rounded-lg border border-border bg-card shadow-card-md py-1">
+              <div className="absolute right-0 top-full z-50 mt-1.5 w-48 overflow-hidden rounded-lg border border-border bg-card py-1">
                 {EXPORT_PERIODS.map((months) => (
                   <button
                     key={months}
@@ -114,7 +114,7 @@ export function ActivityContent({ activities }: { activities: Activity[] }) {
           <p className="text-p3 text-muted-foreground">{t("empty")}</p>
         </div>
       ) : (
-        <div className="rounded-lg border border-border bg-card shadow-card-lg">
+        <div className="rounded-lg border border-border bg-card">
           <div className="divide-y divide-border">
             {activities.map((activity) => {
               const initials = activity.actor_name

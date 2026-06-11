@@ -94,7 +94,7 @@ export function PricingPreview() {
                 )}
                 <div
                   className={cn(
-                    "relative flex h-full flex-col rounded-lg border border-border bg-card p-6 shadow-card-md transition-all duration-300 hover:-translate-y-1 hover:shadow-card-lg",
+                    "relative flex h-full flex-col rounded-lg border border-border bg-card p-6 transition-all duration-300 hover:-translate-y-1",
                     isPro
                       ? "border-2 border-primary"
                       : "border border-border",
@@ -166,7 +166,7 @@ export function PricingPreview() {
         {/* Enterprise / custom contact band — mirrors the band on /pricing.
             Replaces the old fourth "Enterprise" card; routes bespoke buyers
             to /contact. */}
-        <div className="mt-6 flex flex-col items-start gap-4 rounded-md bg-dark-cta p-6 shadow-card-md sm:flex-row sm:items-center sm:justify-between sm:p-8">
+        <div className="mt-6 flex flex-col items-start gap-4 rounded-md bg-dark-cta p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
           <div>
             <h3 className="text-h4 text-primary-foreground">
               {t("enterpriseBand.title")}

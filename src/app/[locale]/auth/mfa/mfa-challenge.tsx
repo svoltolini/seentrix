@@ -202,8 +202,8 @@ export function MfaChallenge() {
             aria-label={`Digit ${index + 1}`}
             className={cn(
               "aspect-square w-full max-w-[52px] rounded-md bg-input text-center font-mono text-h3 text-foreground transition-all",
-              "border-[1.5px] border-transparent",
-              "focus:border-primary/30 focus:bg-card focus:outline-none focus:ring-2 focus:ring-primary/30",
+              "border-[1.5px] border-border-strong",
+              "focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30",
               "disabled:opacity-50",
               error && "border-destructive/60",
             )}

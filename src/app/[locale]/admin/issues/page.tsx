@@ -50,7 +50,7 @@ export default async function AdminIssuesPage() {
       </div>
 
       {issues.length === 0 ? (
-        <div className="rounded-lg border border-border bg-card p-8 text-center text-p3 text-muted-foreground shadow-card-sm">
+        <div className="rounded-lg border border-border bg-card p-8 text-center text-p3 text-muted-foreground">
           No unresolved issues. 🎉
         </div>
       ) : (
@@ -70,7 +70,7 @@ function IssueRow({ issue }: { issue: SentryIssue }) {
       href={issue.permalink || undefined}
       target="_blank"
       rel="noreferrer"
-      className="flex items-start justify-between gap-4 rounded-lg border border-border bg-card p-4 shadow-card-sm transition-colors hover:bg-muted/40"
+      className="flex items-start justify-between gap-4 rounded-lg border border-border bg-card p-4 transition-colors hover:bg-muted/40"
     >
       <div className="min-w-0">
         <div className="flex items-center gap-2">

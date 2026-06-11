@@ -298,7 +298,7 @@ export function CreateProductForm({
                 type="button"
                 onClick={removeImage}
                 aria-label={t("create.imageRemove")}
-                className="absolute -right-2 -top-2 flex size-6 items-center justify-center rounded-full bg-card shadow-card-sm text-muted-foreground border border-border-outline transition hover:bg-destructive hover:text-white hover:border-destructive"
+                className="absolute -right-2 -top-2 flex size-6 items-center justify-center rounded-full bg-card text-muted-foreground border border-border-outline transition hover:bg-destructive hover:text-white hover:border-destructive"
               >
                 <Icon
                   name="CloseCircle"

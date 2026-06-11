@@ -156,7 +156,7 @@ export function OrgSettingsContent({
 
       {/* General */}
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="rounded-lg border border-border bg-card shadow-card-lg">
+        <div className="rounded-lg border border-border bg-card">
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-6 py-4">
             <div className="flex items-center gap-2.5">
               <h2 className="text-h4 text-foreground">{t("title")}</h2>
@@ -214,7 +214,7 @@ export function OrgSettingsContent({
         )}
 
         {/* Legal entity (CRA-mandatory) */}
-        <div className="rounded-lg border border-border bg-card shadow-card-lg">
+        <div className="rounded-lg border border-border bg-card">
           <div className="border-b border-border px-6 py-4">
             <h2 className="text-h4 text-foreground">{t("legalTitle")}</h2>
             <p className="mt-0.5 text-p3 text-muted-foreground">
@@ -258,7 +258,7 @@ export function OrgSettingsContent({
         </div>
 
         {/* Signatory + public contact */}
-        <div className="rounded-lg border border-border bg-card shadow-card-lg">
+        <div className="rounded-lg border border-border bg-card">
           <div className="border-b border-border px-6 py-4">
             <h2 className="text-h4 text-foreground">{t("signatoryTitle")}</h2>
             <p className="mt-0.5 text-p3 text-muted-foreground">
@@ -328,7 +328,7 @@ export function OrgSettingsContent({
         </div>
 
         {/* Address */}
-        <div className="rounded-lg border border-border bg-card shadow-card-lg">
+        <div className="rounded-lg border border-border bg-card">
           <div className="border-b border-border px-6 py-4">
             <h2 className="text-h4 text-foreground">{t("addressTitle")}</h2>
             <p className="mt-0.5 text-p3 text-muted-foreground">
@@ -480,7 +480,7 @@ function OrganizationChart({
   }));
 
   return (
-    <div className="overflow-hidden rounded-lg border border-border bg-card shadow-card-lg">
+    <div className="overflow-hidden rounded-lg border border-border bg-card">
       {/* Header — title + total head-count + capacity meter */}
       <div className="border-b border-border px-6 py-5">
         <div className="flex flex-wrap items-start justify-between gap-4">
@@ -581,7 +581,7 @@ function RoleLane({
       <div className="flex shrink-0 items-center gap-3 sm:w-56">
         <div
           className={cn(
-            "flex size-11 shrink-0 items-center justify-center rounded-md text-white shadow-card-sm",
+            "flex size-11 shrink-0 items-center justify-center rounded-md text-white",
             hex ? "" : tier.bg,
           )}
           style={hex ? { backgroundColor: hex } : undefined}
@@ -609,7 +609,7 @@ function RoleLane({
           <Link
             key={member.id}
             href="/app/settings/team"
-            className="group flex items-center gap-2.5 rounded-full border border-border-outline bg-card py-1 pl-1 pr-3.5 transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-card-sm"
+            className="group flex items-center gap-2.5 rounded-full border border-border-outline bg-card py-1 pl-1 pr-3.5 transition-all hover:-translate-y-0.5 hover:border-primary/40"
           >
             <span className="flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-full bg-muted text-l6-plus text-muted-foreground">
               {member.avatar_url ? (

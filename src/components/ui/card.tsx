@@ -3,16 +3,15 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 
 /**
- * Card — Nask surface primitive.
- * White surface with a 10px radius and one of three soft shadow scales
- * (verbatim from Figma: card-lg = 0 4 120, card-md = 0 4 90, card-sm = 0 4 60,
- * all `rgba(169,173,180,0.15)`). The default `lg` matches Settings, Project
- * Statistics, and other section-level surfaces.
+ * Card — Clay surface primitive.
+ * Flat white surface defined by a hairline border (no shadow) — the
+ * Claude/Clay aesthetic. The `shadow` prop is retained for API compatibility
+ * but is a no-op; cards are flat across the app.
  */
 function Card({
   className,
   size = "default",
-  shadow = "lg",
+  shadow = "none",
   ...props
 }: React.ComponentProps<"div"> & {
   size?: "default" | "sm"
@@ -24,8 +23,7 @@ function Card({
       data-size={size}
       data-shadow={shadow}
       className={cn(
-        "group/card flex flex-col gap-6 overflow-hidden rounded-lg bg-card text-card-foreground py-[18px]",
-        "data-[shadow=lg]:shadow-card-lg data-[shadow=md]:shadow-card-md data-[shadow=sm]:shadow-card-sm",
+        "group/card flex flex-col gap-6 overflow-hidden rounded-lg border border-border bg-card text-card-foreground py-[18px]",
         "has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0",
         "data-[size=sm]:gap-4 data-[size=sm]:py-4 data-[size=sm]:has-data-[slot=card-footer]:pb-0",
         "*:[img:first-child]:rounded-t-md *:[img:last-child]:rounded-b-md",

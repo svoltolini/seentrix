@@ -88,7 +88,7 @@ function AiContent() {
             {BULLET_KEYS.map((key, i) => (
               <article
                 key={key}
-                className="flex flex-col rounded-md border border-border bg-card p-6 shadow-card-md transition-shadow hover:shadow-card-lg"
+                className="flex flex-col rounded-md border border-border bg-card p-6"
               >
                 <span
                   className={`font-heading text-5xl font-extrabold leading-none tracking-tight ${numeralTone(i)}`}
@@ -159,7 +159,7 @@ function AiContent() {
               return (
                 <div
                   key={tier}
-                  className="flex flex-col rounded-md border border-border bg-card p-5 shadow-card-md"
+                  className="flex flex-col rounded-md border border-border bg-card p-5"
                 >
                   <span
                     className={`font-heading text-5xl font-extrabold leading-none tracking-tight tabular-nums ${numeralTone(i)}`}

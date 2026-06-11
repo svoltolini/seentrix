@@ -382,7 +382,7 @@ export function BillingContent({
             <div
               key={cardPlan}
               className={cn(
-                "flex flex-col rounded-lg border border-border bg-card p-5 shadow-card-sm",
+                "flex flex-col rounded-lg border border-border bg-card p-5",
                 isCurrent ? "border-2 border-primary" : "border border-border",
               )}
             >

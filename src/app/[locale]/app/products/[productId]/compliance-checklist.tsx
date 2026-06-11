@@ -141,7 +141,7 @@ export function ComplianceChecklist({
           signal lives in the 4 px left stripe and the icon block tone
           now; the rest of the card stays neutral so the score itself
           is the readable focus. */}
-      <div className="relative overflow-hidden rounded-lg border border-border bg-card shadow-card-md shadow-card-md">
+      <div className="relative overflow-hidden rounded-lg border border-border bg-card">
         <span
           aria-hidden
           className={cn(
@@ -226,7 +226,7 @@ export function ComplianceChecklist({
         <>
 
       {/* Part I */}
-      <div className="overflow-hidden rounded-lg border border-border bg-card shadow-card-md">
+      <div className="overflow-hidden rounded-lg border border-border bg-card">
         <div className="flex items-center gap-3 px-5 py-4">
           <Icon
             name="one-circle-stroke-rounded"
@@ -275,7 +275,7 @@ export function ComplianceChecklist({
       </div>
 
       {/* Part II */}
-      <div className="overflow-hidden rounded-lg border border-border bg-card shadow-card-md">
+      <div className="overflow-hidden rounded-lg border border-border bg-card">
         <div className="flex items-center gap-3 px-5 py-4">
           <Icon
             name="two-circle-stroke-rounded"

@@ -31,8 +31,8 @@ function SearchInput({
         data-slot="search-input"
         placeholder={placeholder}
         className={cn(
-          "h-full w-full rounded-md bg-input pl-12 pr-4 text-p3-r text-foreground placeholder:text-muted-foreground border-[1.5px] border-transparent outline-none transition-colors",
-          "focus-visible:bg-card focus-visible:border-primary/30 focus-visible:ring-2 focus-visible:ring-ring/15"
+          "h-full w-full rounded-md bg-input pl-12 pr-4 text-p3-r text-foreground placeholder:text-muted-foreground border-[1.5px] border-border-strong outline-none transition-colors",
+          "focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-ring/15"
         )}
         {...props}
       />

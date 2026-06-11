@@ -8,7 +8,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 export default function SettingsLoading() {
   return (
     <div className="space-y-6">
-      <div className="rounded-lg border border-border bg-card p-6 shadow-card-sm">
+      <div className="rounded-lg border border-border bg-card p-6">
         <Skeleton className="h-5 w-40" />
         <div className="mt-6 space-y-4">
           {Array.from({ length: 4 }).map((_, i) => (
@@ -19,7 +19,7 @@ export default function SettingsLoading() {
           ))}
         </div>
       </div>
-      <div className="rounded-lg border border-border bg-card p-6 shadow-card-sm">
+      <div className="rounded-lg border border-border bg-card p-6">
         <Skeleton className="h-5 w-48" />
         <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
           {Array.from({ length: 4 }).map((_, i) => (

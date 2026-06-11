@@ -122,7 +122,7 @@ export function TeamContent({
     <div className="space-y-6">
       {/* Plan limit banner */}
       {!canAdd && (
-        <div className="flex items-center gap-4 overflow-hidden rounded-lg border border-border bg-card p-[18px] shadow-card-lg">
+        <div className="flex items-center gap-4 overflow-hidden rounded-lg border border-border bg-card p-[18px]">
           <div className="relative flex size-10 shrink-0 items-center justify-center">
             <svg viewBox="0 0 36 36" className="size-10 -rotate-90">
               <circle
@@ -182,7 +182,7 @@ export function TeamContent({
       )}
 
       {/* Members list */}
-      <div className="rounded-lg border border-border bg-card shadow-card-lg">
+      <div className="rounded-lg border border-border bg-card">
         <div className="flex items-center justify-between border-b border-border px-6 py-4">
           <h2 className="text-h4 text-foreground">{t("members")}</h2>
           <span className="text-p4 text-muted-foreground">
@@ -407,7 +407,7 @@ function CreateMemberSection({
   }
 
   return (
-    <div className="rounded-lg border border-border bg-card shadow-card-lg">
+    <div className="rounded-lg border border-border bg-card">
       <div className="border-b border-border px-6 py-4">
         <h2 className="text-h4 text-foreground">{t("createTitle")}</h2>
         <p className="mt-1 text-p3 text-muted-foreground">

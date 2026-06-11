@@ -78,7 +78,7 @@ function TabsTrigger({ className, ...props }: TabsPrimitive.Tab.Props) {
         "after:absolute after:left-0 after:right-0 after:bottom-[-1px] after:h-[2px] after:bg-primary after:opacity-0 after:transition-opacity",
         "group-data-[variant=line]/tabs-list:data-active:after:opacity-100",
         // Pill variant
-        "group-data-[variant=pills]/tabs-list:h-7 group-data-[variant=pills]/tabs-list:rounded group-data-[variant=pills]/tabs-list:px-3 group-data-[variant=pills]/tabs-list:data-active:bg-card group-data-[variant=pills]/tabs-list:data-active:text-foreground group-data-[variant=pills]/tabs-list:data-active:shadow-card-sm",
+        "group-data-[variant=pills]/tabs-list:h-7 group-data-[variant=pills]/tabs-list:rounded group-data-[variant=pills]/tabs-list:px-3 group-data-[variant=pills]/tabs-list:data-active:bg-card group-data-[variant=pills]/tabs-list:data-active:text-foreground",
         className
       )}
       {...props}

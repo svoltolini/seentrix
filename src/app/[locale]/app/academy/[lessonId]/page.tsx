@@ -130,7 +130,7 @@ export default async function LessonPage({
           </p>
 
           {existingCompletion && (
-            <div className="mt-5 flex w-full flex-wrap items-center gap-4 rounded-lg border border-border bg-card p-5 shadow-card-md">
+            <div className="mt-5 flex w-full flex-wrap items-center gap-4 rounded-lg border border-border bg-card p-5">
               <IconBadge
                 name="checkmark-circle-01-stroke-rounded"
                 tone="success"

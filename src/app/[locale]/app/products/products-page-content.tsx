@@ -7,15 +7,12 @@ import { buttonVariants } from "@/components/ui/button";
 import { Icon } from "@/components/icon";
 import { cn } from "@/lib/utils";
 import { RequiresProductEmptyState } from "@/components/requires-product-empty-state";
-import { ProjectHeroCard } from "../dashboard/widgets/project-hero-card";
 // (AskSeentrixAI now lives inside RequiresProductEmptyState)
 import { ProductTable } from "./components/product-table";
-import { ProductTimeline } from "./components/product-timeline";
 import type { ProductListItem } from "./actions";
 import type { OrgPlan } from "@/lib/constants/plans";
 import { PLAN_PRODUCT_LIMITS } from "@/lib/constants/plans";
 
-type ViewMode = "table" | "grid" | "timeline";
 
 const CATEGORY_FILTERS = [
   "all",
@@ -26,21 +23,9 @@ const CATEGORY_FILTERS = [
 ] as const;
 
 /**
- * /app/products — three view modes over the same product list.
- *
- * Layout matches the dashboard chrome (max-w-[1600px], h1 + p2 muted
- * header) so the signed-in surfaces all read at the same horizontal
- * rhythm.
- *
- *   - Grid (default): same `<ProjectHeroCard />` the dashboard uses
- *   - List: Nask kanban with compliance-posture lanes
- *   - Timeline: horizontal Gantt with a Today indicator
- *
- * The in-page search input was retired — the topbar already carries a
- * global search, so a second box on this page was redundant. Sorting
- * also went away with the flat-table list view; products land in
- * created-date order (newest first), and the kanban + timeline split
- * by compliance posture which is the natural sort for triage anyway.
+ * /app/products — the Clay product list: a section head, a search +
+ * category-pill toolbar, and the bordered data table. Products sort
+ * newest-first and filter live by query + CRA category.
  */
 
 export function ProductsPageContent({
@@ -55,7 +40,6 @@ export function ProductsPageContent({
   productCount: number;
 }) {
   const t = useTranslations("products");
-  const [view, setView] = useState<ViewMode>("table");
   const [query, setQuery] = useState("");
   const [category, setCategory] =
     useState<(typeof CATEGORY_FILTERS)[number]>("all");
@@ -112,7 +96,7 @@ export function ProductsPageContent({
         </div>
       </div>
 
-      {/* Toolbar — search + category filter pills + view toggle */}
+      {/* Toolbar — search + category filter pills */}
       {products.length > 0 && (
         <div className="flex flex-wrap items-center gap-3">
           <div className="flex min-w-[220px] flex-1 items-center gap-2.5 rounded-md border border-border-strong bg-card px-3.5 py-2.5">
@@ -161,39 +145,12 @@ export function ProductsPageContent({
             })}
           </div>
 
-          <div className="ml-auto flex items-center gap-1.5">
-            {(
-              [
-                { key: "table", iconName: "RowVertical" },
-                { key: "grid", iconName: "Grid2" },
-                { key: "timeline", iconName: "Calendar" },
-              ] as const
-            ).map((mode) => (
-              <button
-                key={mode.key}
-                type="button"
-                onClick={() => setView(mode.key)}
-                aria-label={
-                  t.has(`view.${mode.key}`) ? t(`view.${mode.key}`) : mode.key
-                }
-                aria-pressed={view === mode.key}
-                className={cn(
-                  "inline-flex size-9 items-center justify-center rounded-md border transition-colors",
-                  view === mode.key
-                    ? "border-primary bg-primary/10 text-primary"
-                    : "border-border-strong bg-card text-muted-foreground hover:bg-muted hover:text-foreground",
-                )}
-              >
-                <Icon name={mode.iconName} size={16} />
-              </button>
-            ))}
-          </div>
         </div>
       )}
 
       {/* Plan limit banner */}
       {products.length > 0 && !canCreate && (
-        <div className="flex items-center gap-4 overflow-hidden rounded-lg border border-border bg-card p-[18px] shadow-card-lg">
+        <div className="flex items-center gap-4 overflow-hidden rounded-lg border border-border bg-card p-[18px]">
           <div className="relative flex size-10 shrink-0 items-center justify-center">
             <svg viewBox="0 0 36 36" className="size-10 -rotate-90">
               <circle
@@ -244,42 +201,14 @@ export function ProductsPageContent({
         </div>
       )}
 
-      {/* Body — table (default), card grid, or timeline. Empty state is the
-          early return above; an empty *filter* result shows a quiet note. */}
+      {/* Body — the Clay table. An empty filter result shows a quiet note
+          (the no-products-at-all empty state is the early return above). */}
       {sorted.length === 0 ? (
         <div className="rounded-lg border border-dashed border-border-strong bg-card px-6 py-12 text-center text-[14px] text-muted-foreground">
           {t.has("noMatches") ? t("noMatches") : "No products match your filters."}
         </div>
-      ) : view === "table" ? (
-        <ProductTable products={sorted} />
-      ) : view === "grid" ? (
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {sorted.map((p) => {
-            const categoryKey = p.cra_category ?? "default";
-            const categoryLabelKey = `categories.${categoryKey}`;
-            const subtitleKey = p.type ? `types.${p.type}` : null;
-            return (
-              <ProjectHeroCard
-                key={p.id}
-                title={p.name}
-                subtitle={
-                  subtitleKey && t.has(subtitleKey)
-                    ? t(subtitleKey)
-                    : (p.type ?? "Product")
-                }
-                href={`/app/products/${p.id}`}
-                score={p.compliance_score}
-                priority={
-                  t.has(categoryLabelKey)
-                    ? t(categoryLabelKey)
-                    : categoryKey.replace(/_/g, " ")
-                }
-              />
-            );
-          })}
-        </div>
       ) : (
-        <ProductTimeline products={sorted} basePath="/app/products" />
+        <ProductTable products={sorted} />
       )}
     </div>
   );

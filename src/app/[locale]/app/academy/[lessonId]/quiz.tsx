@@ -239,7 +239,7 @@ function PassedCard({
   t: ReturnType<typeof useTranslations>;
 }) {
   return (
-    <div className="flex w-full items-start gap-4 rounded-lg border border-border bg-card p-5 shadow-card-md">
+    <div className="flex w-full items-start gap-4 rounded-lg border border-border bg-card p-5">
       <IconBadge
         name="checkmark-circle-01-stroke-rounded"
         tone="success"
@@ -277,7 +277,7 @@ function QuestionCard({
   return (
     <fieldset
       disabled={locked}
-      className="rounded-lg border border-border bg-card p-5 shadow-card-sm"
+      className="rounded-lg border border-border bg-card p-5"
     >
       {/* Native <legend> renders on the fieldset border edge, which made the
           question text sit on top of the card border. We hide a semantic

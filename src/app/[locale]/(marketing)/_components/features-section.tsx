@@ -73,7 +73,7 @@ export function FeaturesSection() {
             <div
               key={f.key}
               data-feature-card
-              className="rounded-lg border border-border bg-card p-7 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-card-md"
+              className="rounded-lg border border-border bg-card p-7 transition-all duration-300 hover:-translate-y-0.5"
             >
               <span className="flex size-[46px] items-center justify-center rounded-[13px] bg-accent-soft text-primary">
                 <Icon name={f.icon} size={22} variant={f.icon === "MagicStar" ? "Bold" : "Linear"} />

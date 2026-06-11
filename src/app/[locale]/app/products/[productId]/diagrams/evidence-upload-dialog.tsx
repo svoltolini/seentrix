@@ -110,7 +110,7 @@ export function EvidenceUploadDialog({
         />
         <DialogPrimitive.Popup
           className={cn(
-            "fixed top-1/2 left-1/2 z-50 w-full max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-lg border border-border bg-card p-[18px] shadow-card-md transition duration-200",
+            "fixed top-1/2 left-1/2 z-50 w-full max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-lg border border-border bg-card p-[18px] transition duration-200",
             "data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0",
           )}
         >

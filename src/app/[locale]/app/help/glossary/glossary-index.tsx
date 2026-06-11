@@ -100,7 +100,7 @@ function GlossaryCard({
   body: string;
 }) {
   return (
-    <div className="rounded-lg border border-border bg-card shadow-card-sm p-4 transition-colors hover:bg-muted/30">
+    <div className="rounded-lg border border-border bg-card p-4 transition-colors hover:bg-muted/30">
       <Term id={id} className="text-h5 text-foreground no-underline hover:text-primary">
         {title}
       </Term>

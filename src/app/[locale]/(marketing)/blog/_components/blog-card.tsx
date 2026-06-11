@@ -11,7 +11,7 @@ export function BlogCard({
 }) {
   return (
     <Link href={`/blog/${post.slug}`} className="group block">
-      <div className="flex h-full flex-col rounded-md border border-border bg-card p-6 shadow-card-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-card-lg">
+      <div className="flex h-full flex-col rounded-md border border-border bg-card p-6 transition-all duration-300 hover:-translate-y-1">
         <div className="mb-3">
           <Badge variant="secondary">{post.category}</Badge>
         </div>

@@ -84,7 +84,7 @@ export default async function AdminRevenuePage() {
             Live from Stripe
           </span>
         </div>
-        <div className="overflow-hidden rounded-lg border border-border bg-card shadow-card-sm">
+        <div className="overflow-hidden rounded-lg border border-border bg-card">
           {problems.length === 0 ? (
             <p className="p-6 text-center text-p3 text-muted-foreground">
               No failed or past-due subscriptions. 🎉
@@ -140,7 +140,7 @@ export default async function AdminRevenuePage() {
         <h2 className="font-heading text-h4 text-foreground">
           Recent billing events
         </h2>
-        <div className="overflow-hidden rounded-lg border border-border bg-card shadow-card-sm">
+        <div className="overflow-hidden rounded-lg border border-border bg-card">
           {events.length === 0 ? (
             <p className="p-6 text-center text-p3 text-muted-foreground">
               No Stripe events recorded yet.

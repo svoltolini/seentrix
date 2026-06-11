@@ -448,7 +448,7 @@ export function ConformityContent({
         {/* Hero: route + progress ring */}
         <div
           data-reveal
-          className="overflow-hidden rounded-lg border border-border bg-card p-6 shadow-card-md"
+          className="overflow-hidden rounded-lg border border-border bg-card p-6"
         >
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div className="min-w-0">
@@ -500,7 +500,7 @@ export function ConformityContent({
         {notifiedBodyRequired && (
           <div
             data-reveal
-            className="rounded-lg border border-border bg-card p-6 shadow-card-md"
+            className="rounded-lg border border-border bg-card p-6"
           >
             <div className="mb-4">
               <h2 className="text-h4 text-foreground">{t("notifiedBody.title")}</h2>
@@ -556,7 +556,7 @@ export function ConformityContent({
         {/* Steps */}
         <div
           data-reveal
-          className="overflow-hidden rounded-lg border border-border bg-card shadow-card-md"
+          className="overflow-hidden rounded-lg border border-border bg-card"
         >
           <div className="border-b border-border px-5 py-4">
             <span className="text-h4 text-foreground">{t("steps.title")}</span>
@@ -710,7 +710,7 @@ export function ConformityContent({
                   type="button"
                   onClick={handleIssue}
                   disabled={!allStepsComplete || issuing}
-                  className="inline-flex items-center gap-2 rounded-sm border border-border bg-card px-4 py-2.5 text-l6 text-foreground shadow-card-sm transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0"
+                  className="inline-flex items-center gap-2 rounded-sm border border-border bg-card px-4 py-2.5 text-l6 text-foreground transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0"
                 >
                   <Icon
                     name="checkmark-circle-01-stroke-rounded"

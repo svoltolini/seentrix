@@ -94,11 +94,11 @@ export function CompaniesTable({ rows }: { rows: CompanyRow[] }) {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search by name or country…"
-          className="h-10 w-full rounded-md bg-input pl-9 pr-3 text-p3 text-foreground outline-none border-[1.5px] border-transparent focus:bg-card focus:border-primary/30"
+          className="h-10 w-full rounded-md bg-input pl-9 pr-3 text-p3 text-foreground outline-none border-[1.5px] border-border-strong focus:border-primary"
         />
       </div>
 
-      <div className="overflow-x-auto rounded-lg border border-border bg-card shadow-card-sm">
+      <div className="overflow-x-auto rounded-lg border border-border bg-card">
         <table className="w-full text-left">
           <thead>
             <tr className="border-b border-border text-l6-plus uppercase tracking-wide text-muted-foreground">

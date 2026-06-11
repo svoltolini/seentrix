@@ -54,7 +54,7 @@ export function LessonAudioPlayer({
   const pct = duration > 0 ? (current / duration) * 100 : 0;
 
   return (
-    <div className="flex items-center gap-4 rounded-lg border border-border bg-card p-5 shadow-card-md">
+    <div className="flex items-center gap-4 rounded-lg border border-border bg-card p-5">
       {/* Play / pause */}
       <button
         type="button"

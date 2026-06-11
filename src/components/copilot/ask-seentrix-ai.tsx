@@ -38,7 +38,7 @@ export function AskSeentrixAI({
         type="button"
         onClick={() => open(seed)}
         className={cn(
-          "group flex w-full items-center gap-4 rounded-md border border-border-outline bg-card p-4 text-left shadow-card-sm transition hover:border-primary/40 hover:shadow-card-md",
+          "group flex w-full items-center gap-4 rounded-md border border-border-outline bg-card p-4 text-left transition hover:border-primary/40",
           className,
         )}
       >

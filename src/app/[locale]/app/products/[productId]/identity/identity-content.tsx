@@ -135,7 +135,7 @@ export function IdentityContent({
       </div>
 
       {/* Product identification (Art 13(15),(16)) */}
-      <section className="space-y-4 rounded-lg border border-border bg-card p-6 shadow-card-sm">
+      <section className="space-y-4 rounded-lg border border-border bg-card p-6">
         <div>
           <h3 className="text-h4 text-foreground">{t("identity.heading")}</h3>
           <p className="mt-0.5 text-p3 text-muted-foreground">
@@ -195,7 +195,7 @@ export function IdentityContent({
       </section>
 
       {/* CE marking (Art 30) */}
-      <section className="space-y-4 rounded-lg border border-border bg-card p-6 shadow-card-sm">
+      <section className="space-y-4 rounded-lg border border-border bg-card p-6">
         <div>
           <h3 className="text-h4 text-foreground">
             {t("ce.heading")}
@@ -258,7 +258,7 @@ export function IdentityContent({
       </section>
 
       {/* Simplified DoC (Annex VI) */}
-      <section className="space-y-4 rounded-lg border border-border bg-card p-6 shadow-card-sm">
+      <section className="space-y-4 rounded-lg border border-border bg-card p-6">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="min-w-0">
             <h3 className="text-h4 text-foreground">
@@ -331,7 +331,7 @@ export function IdentityContent({
       </section>
 
       {/* End-user information (Annex II) */}
-      <section className="space-y-4 rounded-lg border border-border bg-card p-6 shadow-card-sm">
+      <section className="space-y-4 rounded-lg border border-border bg-card p-6">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="min-w-0">
             <h3 className="text-h4 text-foreground">{t("annexII.heading")}</h3>

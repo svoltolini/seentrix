@@ -12,7 +12,7 @@ import { useReducedMotion } from "@/hooks/use-reduced-motion";
  * CRA Timeline section — three equal Nask cards.
  *
  * Each card is a light Nask card (white surface, 1.5px border,
- * shadow-card-md, rounded-md, 28-32px padding) carrying:
+ *, rounded-md, 28-32px padding) carrying:
  *   - the milestone index in extra-bold primary blue (matches
  *     FeaturesSection numbering),
  *   - the date as the prominent heading,
