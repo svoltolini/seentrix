@@ -70,7 +70,9 @@
         "unsupported": "Questo tipo di file non può essere importato. Usa un file .excalidraw o un'immagine.",
         "failed": "Impossibile importare il file.",
         "mermaidEmpty": "Niente da convertire — il diagramma è vuoto o la sintassi è incompleta.",
-        "mermaidFailed": "Impossibile analizzare questa sintassi Mermaid."
+        "mermaidFailed": "Impossibile analizzare questa sintassi Mermaid.",
+        "fileBtn": "Importa file",
+        "mermaidBtn": "Mermaid / IA"
       }
     },
     "evidence": {

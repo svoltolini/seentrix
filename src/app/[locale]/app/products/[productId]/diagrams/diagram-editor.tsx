@@ -13,12 +13,6 @@ import { Input } from "@/components/ui/input";
 import { Icon } from "@/components/icon";
 import { IconBadge } from "@/components/ui/icon-badge";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
   Select,
   SelectContent,
   SelectItem,
@@ -229,25 +223,25 @@ export function DiagramEditor({
         )}
 
         <div className="ml-auto flex items-center gap-2">
-          {/* Import existing diagrams onto the canvas */}
-          <DropdownMenu>
-            <DropdownMenuTrigger
-              render={<Button variant="outline" size="sm" disabled={importing || loadingScene} />}
-            >
-              <Icon name="DocumentUpload" size={15} />
-              {importing ? t("editor.import.importing") : t("editor.import.label")}
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => fileInputRef.current?.click()}>
-                <Icon name="DocumentUpload" size={16} />
-                {t("editor.import.file")}
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setMermaidOpen(true)}>
-                <Icon name="ai-magic-stroke-rounded" size={16} />
-                {t("editor.import.mermaid")}
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          {/* Import existing diagrams onto the canvas — two direct buttons */}
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => fileInputRef.current?.click()}
+            disabled={importing || loadingScene}
+          >
+            <Icon name="DocumentUpload" size={15} />
+            {t("editor.import.fileBtn")}
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setMermaidOpen(true)}
+            disabled={importing || loadingScene}
+          >
+            <Icon name="ai-magic-stroke-rounded" size={15} />
+            {t("editor.import.mermaidBtn")}
+          </Button>
           <input
             ref={fileInputRef}
             type="file"

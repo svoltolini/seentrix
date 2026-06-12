@@ -70,7 +70,9 @@
         "unsupported": "Dieser Dateityp kann nicht importiert werden. Verwende eine .excalidraw-Datei oder ein Bild.",
         "failed": "Datei konnte nicht importiert werden.",
         "mermaidEmpty": "Nichts zu konvertieren — das Diagramm ist leer oder die Syntax unvollständig.",
-        "mermaidFailed": "Diese Mermaid-Syntax konnte nicht verarbeitet werden."
+        "mermaidFailed": "Diese Mermaid-Syntax konnte nicht verarbeitet werden.",
+        "fileBtn": "Datei importieren",
+        "mermaidBtn": "Mermaid / KI"
       }
     },
     "evidence": {

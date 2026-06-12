@@ -70,7 +70,9 @@
         "unsupported": "That file type can't be imported. Use a .excalidraw file or an image.",
         "failed": "Couldn't import that file.",
         "mermaidEmpty": "Nothing to convert — the diagram is empty or the syntax is incomplete.",
-        "mermaidFailed": "Couldn't parse that Mermaid syntax."
+        "mermaidFailed": "Couldn't parse that Mermaid syntax.",
+        "fileBtn": "Import file",
+        "mermaidBtn": "Mermaid / AI"
       }
     },
     "evidence": {
