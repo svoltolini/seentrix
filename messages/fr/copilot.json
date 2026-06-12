@@ -99,7 +99,8 @@
     "fab": {
       "sbom": "Demander à Seentrix AI sur les SBOM",
       "diagrams": "Demander à Seentrix AI sur les diagrammes",
-      "getStarted": "Demander à Seentrix AI par où commencer"
+      "getStarted": "Demander à Seentrix AI par où commencer",
+      "lifecycle": "Demander à Seentrix AI sur cet onglet"
     }
   }
 }

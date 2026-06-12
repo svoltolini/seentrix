@@ -26,19 +26,19 @@ const SEVERITY_TOKEN: Record<
 > = {
   critical: {
     active: "border-destructive/40 bg-destructive/10 text-destructive",
-    base: "border-border text-muted-foreground hover:text-foreground",
+    base: "border-border-strong bg-card text-muted-foreground hover:bg-muted hover:text-foreground",
   },
   high: {
     active: "border-warning/40 bg-warning/10 text-warning",
-    base: "border-border text-muted-foreground hover:text-foreground",
+    base: "border-border-strong bg-card text-muted-foreground hover:bg-muted hover:text-foreground",
   },
   medium: {
     active: "border-primary/40 bg-primary/10 text-primary",
-    base: "border-border text-muted-foreground hover:text-foreground",
+    base: "border-border-strong bg-card text-muted-foreground hover:bg-muted hover:text-foreground",
   },
   low: {
     active: "border-muted-foreground/30 bg-muted text-muted-foreground",
-    base: "border-border text-muted-foreground hover:text-foreground",
+    base: "border-border-strong bg-card text-muted-foreground hover:bg-muted hover:text-foreground",
   },
 };
 
@@ -205,7 +205,7 @@ export function PublicSecurityPage({
                       type="button"
                       onClick={() => setSeverity(s === severity ? null : s)}
                       className={cn(
-                        "rounded-lg border px-2 py-1.5 text-l6-plus transition-colors",
+                        "rounded-[10px] border px-2 py-1.5 text-l6-plus transition-colors",
                         severity === s
                           ? SEVERITY_TOKEN[s].active
                           : SEVERITY_TOKEN[s].base,

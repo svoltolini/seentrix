@@ -99,7 +99,8 @@
     "fab": {
       "sbom": "Seentrix AI zu SBOMs fragen",
       "diagrams": "Seentrix AI zu Diagrammen & Nachweisen fragen",
-      "getStarted": "Seentrix AI fragen, wo Sie anfangen"
+      "getStarted": "Seentrix AI fragen, wo Sie anfangen",
+      "lifecycle": "Seentrix AI zu diesem Bereich fragen"
     }
   }
 }

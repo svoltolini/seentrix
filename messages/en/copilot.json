@@ -99,7 +99,8 @@
     "fab": {
       "sbom": "Ask Seentrix AI about SBOMs",
       "diagrams": "Ask Seentrix AI about diagrams & evidence",
-      "getStarted": "Ask Seentrix AI where to start"
+      "getStarted": "Ask Seentrix AI where to start",
+      "lifecycle": "Ask Seentrix AI about this tab"
     }
   }
 }

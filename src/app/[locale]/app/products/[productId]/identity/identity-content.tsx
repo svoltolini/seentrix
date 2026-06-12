@@ -197,7 +197,7 @@ export function IdentityContent({
       {/* CE marking (Art 30) */}
       <section className="space-y-4 rounded-lg border border-border bg-card p-[17px]">
         <div>
-          <h3 className="text-h4 text-foreground">
+          <h3 className="flex items-center gap-2 text-h4 text-foreground">
             {t("ce.heading")}
             <FieldHelp
               title={t("ce.help.title")}
@@ -261,7 +261,7 @@ export function IdentityContent({
       <section className="space-y-4 rounded-lg border border-border bg-card p-[17px]">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="min-w-0">
-            <h3 className="text-h4 text-foreground">
+            <h3 className="flex items-center gap-2 text-h4 text-foreground">
               {t("simplified.heading")}
               <FieldHelp
                 title={t("simplified.help.title")}

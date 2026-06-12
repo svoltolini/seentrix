@@ -7,8 +7,12 @@
       "saveNotes": "Enregistrer les notes",
       "add": "Ajouter"
     },
-    "feedback": { "saved": "Enregistré." },
-    "errors": { "generic": "Une erreur est survenue. Veuillez réessayer." },
+    "feedback": {
+      "saved": "Enregistré."
+    },
+    "errors": {
+      "generic": "Une erreur est survenue. Veuillez réessayer."
+    },
     "sections": {
       "conformity": "Module de conformité & surveillance",
       "supplyChain": "Registre de la chaîne d'approvisionnement",
@@ -38,13 +42,16 @@
       "empty": "Aucune entrée de chaîne d'approvisionnement.",
       "name": "Nom",
       "address": "Adresse",
-      "contact": "Contact"
+      "contact": "Contact",
+      "relation": "Relation"
     },
     "monitoring": {
       "description": "Un journal continu des aspects de cybersécurité documentés et des vulnérabilités tout au long de la vie du produit (art. 13(7)).",
       "empty": "Aucune entrée de surveillance.",
       "descriptionField": "Description",
-      "noSeverity": "Gravité…"
+      "date": "Date",
+      "source": "Source",
+      "severity": "Sévérité"
     },
     "sources": {
       "internal_review": "Examen interne",
@@ -68,7 +75,9 @@
       "title": "Titre",
       "fixed": "Corrigé dans",
       "public": "Public",
-      "private": "Privé"
+      "private": "Privé",
+      "severity": "Sévérité",
+      "published": "Publication"
     },
     "tests": {
       "description": "Un calendrier et un journal de tests de sécurité récurrents — tests d'intrusion, fuzzing, analyse de code (annexe I partie II(3)).",
@@ -77,7 +86,9 @@
       "last": "dernier",
       "next": "prochain",
       "frequency": "Tous les N jours",
-      "result": "Résultat"
+      "result": "Résultat",
+      "type": "Type",
+      "lastPerformed": "Dernière exécution"
     },
     "testTypes": {
       "penetration_test": "Test d'intrusion",

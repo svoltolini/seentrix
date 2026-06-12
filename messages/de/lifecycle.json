@@ -7,8 +7,12 @@
       "saveNotes": "Notizen speichern",
       "add": "Hinzufügen"
     },
-    "feedback": { "saved": "Gespeichert." },
-    "errors": { "generic": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut." },
+    "feedback": {
+      "saved": "Gespeichert."
+    },
+    "errors": {
+      "generic": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut."
+    },
     "sections": {
       "conformity": "Konformitätsmodul & Überwachung",
       "supplyChain": "Lieferkettenregister",
@@ -38,13 +42,16 @@
       "empty": "Noch keine Lieferketteneinträge.",
       "name": "Name",
       "address": "Anschrift",
-      "contact": "Kontakt"
+      "contact": "Kontakt",
+      "relation": "Beziehung"
     },
     "monitoring": {
       "description": "Ein laufendes Protokoll dokumentierter Cybersicherheitsaspekte und Schwachstellen über die Produktlebensdauer (Art. 13(7)).",
       "empty": "Noch keine Überwachungseinträge.",
       "descriptionField": "Beschreibung",
-      "noSeverity": "Schweregrad…"
+      "date": "Datum",
+      "source": "Quelle",
+      "severity": "Schweregrad"
     },
     "sources": {
       "internal_review": "Interne Prüfung",
@@ -68,7 +75,9 @@
       "title": "Titel",
       "fixed": "Behoben in",
       "public": "Öffentlich",
-      "private": "Privat"
+      "private": "Privat",
+      "severity": "Schweregrad",
+      "published": "Veröffentlicht"
     },
     "tests": {
       "description": "Ein wiederkehrender Sicherheitstestplan und ein Protokoll — Penetrationstests, Fuzzing, Code-Analyse (Anhang I Teil II(3)).",
@@ -77,7 +86,9 @@
       "last": "zuletzt",
       "next": "nächster",
       "frequency": "Alle N Tage",
-      "result": "Ergebnis"
+      "result": "Ergebnis",
+      "type": "Typ",
+      "lastPerformed": "Zuletzt durchgeführt"
     },
     "testTypes": {
       "penetration_test": "Penetrationstest",

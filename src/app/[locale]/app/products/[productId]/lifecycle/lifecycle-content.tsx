@@ -8,8 +8,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { Segmented } from "@/components/ui/segmented";
 import { Icon } from "@/components/icon";
 import { useToast } from "@/components/ui/toast";
+import { CopilotFabContext } from "@/components/copilot/copilot-fab-context";
 import {
   SUPPLY_RELATIONS,
   MONITORING_SOURCES,
@@ -32,11 +34,6 @@ import {
   exportLifecycleRegister,
   type LifecycleState,
 } from "./actions";
-
-const SELECT = cn(
-  "h-9 rounded-md bg-input px-2 text-p3 text-foreground outline-none",
-  "focus-visible:ring-2 focus-visible:ring-primary/30 disabled:opacity-60",
-);
 
 export function LifecycleContent({
   productId,
@@ -87,6 +84,12 @@ export function LifecycleContent({
 
   return (
     <div className="space-y-8">
+      {/* This tab covers six CRA duty areas at once — let the floating
+          Copilot pill offer a guided explanation of all of them. */}
+      <CopilotFabContext
+        topicKey="lifecycle"
+        seed="Explain the Lifecycle & Supply Chain tab: what the CRA expects for conformity surveillance, the supply-chain register (Art 23), post-market monitoring (Art 13(7)), public vulnerability advisories, recurring security tests, and end-of-support obligations — and how I should fill in each section."
+      />
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <h2 className="text-h3 text-foreground">{t("title")}</h2>
@@ -361,14 +364,31 @@ function RowList({
 
 type T = ReturnType<typeof useTranslations>;
 
+/**
+ * Inline add-row panel: a dashed drop-in strip under each register with
+ * labelled field stacks and the green Add pushed to the bottom-right.
+ * (Replaces a cramped unlabelled bar of bare inputs and native selects.)
+ */
 function AddBar({ children, onAdd, label }: { children: ReactNode; onAdd: () => void; label: string }) {
   return (
-    <div className="flex flex-wrap items-end gap-2 rounded-md bg-muted p-3">
+    <div className="flex flex-wrap items-end gap-x-4 gap-y-3 rounded-md border border-dashed border-border-strong bg-card p-3.5">
       {children}
-      <Button type="button" size="sm" onClick={onAdd}>
+      <Button type="button" size="sm" onClick={onAdd} className="ml-auto">
         <Icon name="add-01-stroke-rounded" size={14} />
         {label}
       </Button>
+    </div>
+  );
+}
+
+/** Small labelled stack for one add-bar field. */
+function Mini({ label, children }: { label: string; children: ReactNode }) {
+  return (
+    <div className="flex flex-col gap-1.5">
+      <span className="text-[11px] font-bold uppercase tracking-[0.5px] text-muted-foreground">
+        {label}
+      </span>
+      {children}
     </div>
   );
 }
@@ -378,14 +398,25 @@ function SupplierForm({ t, onAdd }: { t: T; onAdd: (i: { relation: string; entit
   const [f, setF] = useState(empty);
   return (
     <AddBar label={t("actions.add")} onAdd={() => { onAdd(f); setF(empty); }}>
-      <select className={SELECT} value={f.relation} onChange={(e) => setF({ ...f, relation: e.target.value })}>
-        {SUPPLY_RELATIONS.map((r) => (
-          <option key={r} value={r}>{t(`supply.${r === "upstream_supplier" ? "upstream" : "downstream"}`)}</option>
-        ))}
-      </select>
-      <Input className="h-9 w-40" placeholder={t("supply.name")} value={f.name} onChange={(e) => setF({ ...f, name: e.target.value })} />
-      <Input className="h-9 w-48" placeholder={t("supply.address")} value={f.address} onChange={(e) => setF({ ...f, address: e.target.value })} />
-      <Input className="h-9 w-40" placeholder={t("supply.contact")} value={f.contact} onChange={(e) => setF({ ...f, contact: e.target.value })} />
+      <Mini label={t("supply.relation")}>
+        <Segmented
+          value={f.relation}
+          options={SUPPLY_RELATIONS.map((r) => ({
+            value: r,
+            label: t(`supply.${r === "upstream_supplier" ? "upstream" : "downstream"}`),
+          }))}
+          onChange={(v) => setF({ ...f, relation: v })}
+        />
+      </Mini>
+      <Mini label={t("supply.name")}>
+        <Input className="h-9 w-40" value={f.name} onChange={(e) => setF({ ...f, name: e.target.value })} />
+      </Mini>
+      <Mini label={t("supply.address")}>
+        <Input className="h-9 w-48" value={f.address} onChange={(e) => setF({ ...f, address: e.target.value })} />
+      </Mini>
+      <Mini label={t("supply.contact")}>
+        <Input className="h-9 w-40" value={f.contact} onChange={(e) => setF({ ...f, contact: e.target.value })} />
+      </Mini>
     </AddBar>
   );
 }
@@ -395,15 +426,28 @@ function MonitoringForm({ t, onAdd }: { t: T; onAdd: (i: { entry_date: string; s
   const [f, setF] = useState(empty);
   return (
     <AddBar label={t("actions.add")} onAdd={() => { onAdd(f); setF(empty); }}>
-      <Input className="h-9 w-36" type="date" value={f.entry_date} onChange={(e) => setF({ ...f, entry_date: e.target.value })} />
-      <select className={SELECT} value={f.source} onChange={(e) => setF({ ...f, source: e.target.value })}>
-        {MONITORING_SOURCES.map((s) => <option key={s} value={s}>{t(`sources.${s}`)}</option>)}
-      </select>
-      <select className={SELECT} value={f.severity} onChange={(e) => setF({ ...f, severity: e.target.value })}>
-        <option value="">{t("monitoring.noSeverity")}</option>
-        {MONITORING_SEVERITIES.map((s) => <option key={s} value={s}>{t(`severities.${s}`)}</option>)}
-      </select>
-      <Input className="h-9 w-56" placeholder={t("monitoring.descriptionField")} value={f.description} onChange={(e) => setF({ ...f, description: e.target.value })} />
+      <Mini label={t("monitoring.date")}>
+        <Input className="h-9 w-36" type="date" value={f.entry_date} onChange={(e) => setF({ ...f, entry_date: e.target.value })} />
+      </Mini>
+      <Mini label={t("monitoring.source")}>
+        <Segmented
+          className="flex-wrap"
+          value={f.source}
+          options={MONITORING_SOURCES.map((s) => ({ value: s, label: t(`sources.${s}`) }))}
+          onChange={(v) => setF({ ...f, source: v })}
+        />
+      </Mini>
+      <Mini label={t("monitoring.severity")}>
+        <Segmented
+          className="flex-wrap"
+          value={f.severity}
+          options={MONITORING_SEVERITIES.map((s) => ({ value: s, label: t(`severities.${s}`) }))}
+          onChange={(v) => setF({ ...f, severity: v === f.severity ? "" : v })}
+        />
+      </Mini>
+      <Mini label={t("monitoring.descriptionField")}>
+        <Input className="h-9 w-56" value={f.description} onChange={(e) => setF({ ...f, description: e.target.value })} />
+      </Mini>
     </AddBar>
   );
 }
@@ -413,15 +457,29 @@ function AdvisoryForm({ t, onAdd }: { t: T; onAdd: (i: { advisory_ref: string; c
   const [f, setF] = useState(empty);
   return (
     <AddBar label={t("actions.add")} onAdd={() => { onAdd(f); setF(empty); }}>
-      <Input className="h-9 w-32" placeholder={t("advisories.ref")} value={f.advisory_ref} onChange={(e) => setF({ ...f, advisory_ref: e.target.value })} />
-      <Input className="h-9 w-32" placeholder="CVE" value={f.cve_id} onChange={(e) => setF({ ...f, cve_id: e.target.value })} />
-      <Input className="h-9 w-48" placeholder={t("advisories.title")} value={f.title} onChange={(e) => setF({ ...f, title: e.target.value })} />
-      <Input className="h-9 w-28" placeholder={t("advisories.fixed")} value={f.fixed_version} onChange={(e) => setF({ ...f, fixed_version: e.target.value })} />
-      <select className={SELECT} value={f.severity} onChange={(e) => setF({ ...f, severity: e.target.value })}>
-        <option value="">{t("monitoring.noSeverity")}</option>
-        {ADVISORY_SEVERITIES.map((s) => <option key={s} value={s}>{t(`severities.${s}`)}</option>)}
-      </select>
-      <Input className="h-9 w-36" type="date" value={f.published_at} onChange={(e) => setF({ ...f, published_at: e.target.value })} />
+      <Mini label={t("advisories.ref")}>
+        <Input className="h-9 w-32" value={f.advisory_ref} onChange={(e) => setF({ ...f, advisory_ref: e.target.value })} />
+      </Mini>
+      <Mini label="CVE">
+        <Input className="h-9 w-32" value={f.cve_id} onChange={(e) => setF({ ...f, cve_id: e.target.value })} />
+      </Mini>
+      <Mini label={t("advisories.title")}>
+        <Input className="h-9 w-48" value={f.title} onChange={(e) => setF({ ...f, title: e.target.value })} />
+      </Mini>
+      <Mini label={t("advisories.fixed")}>
+        <Input className="h-9 w-28" value={f.fixed_version} onChange={(e) => setF({ ...f, fixed_version: e.target.value })} />
+      </Mini>
+      <Mini label={t("advisories.severity")}>
+        <Segmented
+          className="flex-wrap"
+          value={f.severity}
+          options={ADVISORY_SEVERITIES.map((s) => ({ value: s, label: t(`severities.${s}`) }))}
+          onChange={(v) => setF({ ...f, severity: v === f.severity ? "" : v })}
+        />
+      </Mini>
+      <Mini label={t("advisories.published")}>
+        <Input className="h-9 w-36" type="date" value={f.published_at} onChange={(e) => setF({ ...f, published_at: e.target.value })} />
+      </Mini>
     </AddBar>
   );
 }
@@ -431,12 +489,23 @@ function TestForm({ t, onAdd }: { t: T; onAdd: (i: { test_type: string; frequenc
   const [f, setF] = useState(empty);
   return (
     <AddBar label={t("actions.add")} onAdd={() => { onAdd(f); setF(empty); }}>
-      <select className={SELECT} value={f.test_type} onChange={(e) => setF({ ...f, test_type: e.target.value })}>
-        {TEST_TYPES.map((s) => <option key={s} value={s}>{t(`testTypes.${s}`)}</option>)}
-      </select>
-      <Input className="h-9 w-28" type="number" placeholder={t("tests.frequency")} value={f.frequency_days} onChange={(e) => setF({ ...f, frequency_days: e.target.value })} />
-      <Input className="h-9 w-36" type="date" value={f.last_performed_at} onChange={(e) => setF({ ...f, last_performed_at: e.target.value })} />
-      <Input className="h-9 w-44" placeholder={t("tests.result")} value={f.result} onChange={(e) => setF({ ...f, result: e.target.value })} />
+      <Mini label={t("tests.type")}>
+        <Segmented
+          className="flex-wrap"
+          value={f.test_type}
+          options={TEST_TYPES.map((s) => ({ value: s, label: t(`testTypes.${s}`) }))}
+          onChange={(v) => setF({ ...f, test_type: v })}
+        />
+      </Mini>
+      <Mini label={t("tests.frequency")}>
+        <Input className="h-9 w-28" type="number" value={f.frequency_days} onChange={(e) => setF({ ...f, frequency_days: e.target.value })} />
+      </Mini>
+      <Mini label={t("tests.lastPerformed")}>
+        <Input className="h-9 w-36" type="date" value={f.last_performed_at} onChange={(e) => setF({ ...f, last_performed_at: e.target.value })} />
+      </Mini>
+      <Mini label={t("tests.result")}>
+        <Input className="h-9 w-44" value={f.result} onChange={(e) => setF({ ...f, result: e.target.value })} />
+      </Mini>
     </AddBar>
   );
 }

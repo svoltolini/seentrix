@@ -414,3 +414,15 @@
     animation: none;
   }
 }
+
+/* Hide the document-level scrollbar (pages still scroll) so views that
+   overflow don't shift the centered layout when the bar appears. Inner
+   scroll areas (tables, drawers, the Copilot thread) keep theirs. */
+html {
+  scrollbar-width: none;
+}
+html::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}

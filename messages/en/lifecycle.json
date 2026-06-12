@@ -7,8 +7,12 @@
       "saveNotes": "Save notes",
       "add": "Add"
     },
-    "feedback": { "saved": "Saved." },
-    "errors": { "generic": "Something went wrong. Please try again." },
+    "feedback": {
+      "saved": "Saved."
+    },
+    "errors": {
+      "generic": "Something went wrong. Please try again."
+    },
     "sections": {
       "conformity": "Conformity module & surveillance",
       "supplyChain": "Supply-chain register",
@@ -38,13 +42,16 @@
       "empty": "No supply-chain entries yet.",
       "name": "Name",
       "address": "Address",
-      "contact": "Contact"
+      "contact": "Contact",
+      "relation": "Relation"
     },
     "monitoring": {
       "description": "A running log of documented cybersecurity aspects and vulnerabilities over the product's life (Art 13(7)).",
       "empty": "No monitoring entries yet.",
       "descriptionField": "Description",
-      "noSeverity": "Severity…"
+      "date": "Date",
+      "source": "Source",
+      "severity": "Severity"
     },
     "sources": {
       "internal_review": "Internal review",
@@ -68,7 +75,9 @@
       "title": "Title",
       "fixed": "Fixed in",
       "public": "Public",
-      "private": "Private"
+      "private": "Private",
+      "severity": "Severity",
+      "published": "Published"
     },
     "tests": {
       "description": "A recurring security-testing schedule and log — penetration tests, fuzzing, code analysis (Annex I Part II(3)).",
@@ -77,7 +86,9 @@
       "last": "last",
       "next": "next",
       "frequency": "Every N days",
-      "result": "Result"
+      "result": "Result",
+      "type": "Type",
+      "lastPerformed": "Last performed"
     },
     "testTypes": {
       "penetration_test": "Penetration test",

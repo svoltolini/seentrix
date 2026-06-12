@@ -7,8 +7,12 @@
       "saveNotes": "Salva note",
       "add": "Aggiungi"
     },
-    "feedback": { "saved": "Salvato." },
-    "errors": { "generic": "Qualcosa è andato storto. Riprova." },
+    "feedback": {
+      "saved": "Salvato."
+    },
+    "errors": {
+      "generic": "Qualcosa è andato storto. Riprova."
+    },
     "sections": {
       "conformity": "Modulo di conformità & sorveglianza",
       "supplyChain": "Registro della catena di fornitura",
@@ -38,13 +42,16 @@
       "empty": "Nessuna voce della catena di fornitura.",
       "name": "Nome",
       "address": "Indirizzo",
-      "contact": "Contatto"
+      "contact": "Contatto",
+      "relation": "Relazione"
     },
     "monitoring": {
       "description": "Un registro continuo degli aspetti di cibersicurezza documentati e delle vulnerabilità durante la vita del prodotto (art. 13(7)).",
       "empty": "Nessuna voce di monitoraggio.",
       "descriptionField": "Descrizione",
-      "noSeverity": "Gravità…"
+      "date": "Data",
+      "source": "Fonte",
+      "severity": "Gravità"
     },
     "sources": {
       "internal_review": "Revisione interna",
@@ -68,7 +75,9 @@
       "title": "Titolo",
       "fixed": "Risolta in",
       "public": "Pubblico",
-      "private": "Privato"
+      "private": "Privato",
+      "severity": "Gravità",
+      "published": "Pubblicazione"
     },
     "tests": {
       "description": "Un calendario e un log di test di sicurezza ricorrenti — penetration test, fuzzing, analisi del codice (allegato I parte II(3)).",
@@ -77,7 +86,9 @@
       "last": "ultimo",
       "next": "prossimo",
       "frequency": "Ogni N giorni",
-      "result": "Risultato"
+      "result": "Risultato",
+      "type": "Tipo",
+      "lastPerformed": "Ultima esecuzione"
     },
     "testTypes": {
       "penetration_test": "Penetration test",

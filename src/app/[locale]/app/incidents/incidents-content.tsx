@@ -552,10 +552,10 @@ function NewIncidentDialog({
                   type="button"
                   onClick={() => setType(o)}
                   className={cn(
-                    "rounded-sm border-[1.5px] px-3 py-2 text-left text-p3 transition-colors",
+                    "rounded-[10px] border border-border-strong bg-card px-3 py-2 text-left text-p3 transition-colors",
                     type === o
-                      ? "border-primary bg-primary/10 text-foreground"
-                      : "border-border-outline bg-card text-muted-foreground hover:text-foreground",
+                      ? "border-primary bg-primary/5 text-foreground"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground",
                   )}
                 >
                   {tType(o)}
@@ -577,10 +577,10 @@ function NewIncidentDialog({
                   type="button"
                   onClick={() => setSeverity(s)}
                   className={cn(
-                    "rounded-sm border-[1.5px] px-2 py-1.5 text-l6 transition-colors",
+                    "rounded-[10px] border border-border-strong bg-card px-2 py-1.5 text-l6 transition-colors",
                     severity === s
                       ? "border-[color:var(--c)] bg-[color:var(--c)]/10 text-[color:var(--c)]"
-                      : "border-border-outline bg-card text-muted-foreground hover:text-foreground",
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground",
                   )}
                   style={{ ["--c" as string]: SEVERITY_COLOR[s] }}
                 >
@@ -596,7 +596,7 @@ function NewIncidentDialog({
               {t("new.affectedProductsLabel")}
               <FieldHelp {...tip("affectedProducts")} />
             </label>
-            <div className="mt-1.5 flex max-h-40 flex-col gap-1 overflow-y-auto rounded-md border border-border-outline bg-card p-1">
+            <div className="mt-1.5 flex max-h-40 flex-col gap-1 overflow-y-auto rounded-md border border-border-strong bg-card p-1">
               {products.map((p) => {
                 const on = productIds.has(p.id);
                 return (
