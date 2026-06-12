@@ -7,8 +7,6 @@
     "partIDescription": "Exigences essentielles de cybersécurité pour les produits comportant des éléments numériques.",
     "partII": "Partie II — Traitement des vulnérabilités",
     "partIIDescription": "Exigences relatives au traitement des vulnérabilités tout au long du cycle de vie du produit.",
-    "getStarted": "Prêt à commencer",
-    "getStartedDescription": "Commencez à parcourir les exigences du CRA — nous vous guiderons étape par étape. Sélectionnez un élément ci-dessous pour démarrer.",
     "itemCount": "{completed} sur {total} complétés",
     "view": {
       "kanban": "Kanban",
@@ -30,8 +28,6 @@
     "statusLabel": "Statut",
     "articleLabel": "Article",
     "assigneeLabel": "Assigné à",
-    "assignTo": "Assigner à…",
-    "unassign": "Non assigné",
     "unassigned": "Non assigné",
     "saving": "Enregistrement…",
     "saved": "Enregistré",

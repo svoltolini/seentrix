@@ -7,8 +7,6 @@
     "partIDescription": "Essential cybersecurity requirements for products with digital elements.",
     "partII": "Part II — Vulnerability Handling",
     "partIIDescription": "Requirements for handling vulnerabilities throughout the product lifecycle.",
-    "getStarted": "Ready to begin",
-    "getStartedDescription": "Start working through the CRA requirements — we'll guide you step by step. Select any item below to begin.",
     "itemCount": "{completed} of {total} completed",
     "view": {
       "kanban": "Kanban",
@@ -30,8 +28,6 @@
     "statusLabel": "Status",
     "articleLabel": "Article",
     "assigneeLabel": "Assigned to",
-    "assignTo": "Assign to…",
-    "unassign": "Unassigned",
     "unassigned": "Unassigned",
     "saving": "Saving…",
     "saved": "Saved",

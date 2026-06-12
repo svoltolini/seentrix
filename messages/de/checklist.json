@@ -7,8 +7,6 @@
     "partIDescription": "Grundlegende Cybersicherheitsanforderungen für Produkte mit digitalen Elementen.",
     "partII": "Teil II – Umgang mit Schwachstellen",
     "partIIDescription": "Anforderungen an den Umgang mit Schwachstellen über den gesamten Produktlebenszyklus.",
-    "getStarted": "Bereit zum Start",
-    "getStartedDescription": "Beginnen Sie mit der Bearbeitung der CRA-Anforderungen – wir führen Sie Schritt für Schritt. Wählen Sie unten einen Punkt aus, um zu beginnen.",
     "itemCount": "{completed} von {total} abgeschlossen",
     "view": {
       "kanban": "Kanban",
@@ -30,8 +28,6 @@
     "statusLabel": "Status",
     "articleLabel": "Artikel",
     "assigneeLabel": "Zugewiesen an",
-    "assignTo": "Zuweisen an…",
-    "unassign": "Zuweisung aufheben",
     "unassigned": "Nicht zugewiesen",
     "saving": "Wird gespeichert…",
     "saved": "Gespeichert",

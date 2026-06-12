@@ -2,9 +2,8 @@
 
 import { useState, useCallback } from "react";
 import { useTranslations } from "next-intl";
-import { cn } from "@/lib/utils";
 import { Icon } from "@/components/icon";
-import { IconBadge } from "@/components/ui/icon-badge";
+import { Segmented } from "@/components/ui/segmented";
 import { ChecklistItemCard } from "./components/checklist-item-card";
 import { ChecklistKanban } from "./components/checklist-kanban";
 import {
@@ -25,6 +24,49 @@ import {
 } from "./checklist-actions";
 
 type ViewMode = "list" | "kanban";
+
+/** Band-colored progress ring (≥75 green, ≥40 amber, else red). */
+function ScoreRing({ score }: { score: number }) {
+  const SIZE = 110;
+  const STROKE = 10;
+  const r = (SIZE - STROKE) / 2;
+  const c = 2 * Math.PI * r;
+  const color =
+    score >= 75
+      ? "var(--success)"
+      : score >= 40
+        ? "var(--warning)"
+        : "var(--destructive)";
+  return (
+    <div className="relative shrink-0" style={{ width: SIZE, height: SIZE }}>
+      <svg width={SIZE} height={SIZE} className="-rotate-90" aria-hidden>
+        <circle
+          cx={SIZE / 2}
+          cy={SIZE / 2}
+          r={r}
+          fill="none"
+          stroke="var(--border)"
+          strokeOpacity="0.25"
+          strokeWidth={STROKE}
+        />
+        <circle
+          cx={SIZE / 2}
+          cy={SIZE / 2}
+          r={r}
+          fill="none"
+          stroke={color}
+          strokeWidth={STROKE}
+          strokeLinecap="round"
+          strokeDasharray={c}
+          strokeDashoffset={c * (1 - score / 100)}
+        />
+      </svg>
+      <span className="absolute inset-0 flex items-center justify-center text-h3 text-foreground">
+        {score}%
+      </span>
+    </div>
+  );
+}
 
 export function ComplianceChecklist({
   product,
@@ -113,115 +155,39 @@ export function ComplianceChecklist({
     return items.find((i) => i.title === requirementId);
   }
 
-  const allPending = items.every(
-    (i) => i.status === "pending" || i.status === "not_applicable"
-  );
-
   return (
     <div className="space-y-6">
-      {/* Encouragement banner */}
-      {allPending && (
-        <div className="flex items-start gap-4 rounded-md border border-primary/20 bg-primary/5 p-[18px]">
-          <IconBadge name="sparkles-stroke-rounded" tone="primary" size="md" />
-          <div>
-            <p className="text-h5 text-foreground">
-              {t("getStarted")}
-            </p>
-            <p className="mt-0.5 text-p3 text-muted-foreground">
-              {t("getStartedDescription")}
-            </p>
-          </div>
+      {/* Score — same ring recipe as the CRA readiness section: a band-
+          colored progress ring with the serif % inside, heading + per-part
+          progress beside it. */}
+      <section className="flex flex-wrap items-center gap-6 rounded-lg border border-border bg-card p-[17px]">
+        <ScoreRing score={score} />
+        <div className="min-w-0">
+          <p className="text-h4 text-foreground">{t("title")}</p>
+          <p className="mt-1 text-p3 text-muted-foreground">
+            {t("partI")} ·{" "}
+            {t("itemCount", { completed: partICompleted, total: partITotal })}
+          </p>
+          <p className="mt-0.5 text-p4 text-muted-foreground">
+            {t("partII")} ·{" "}
+            {t("itemCount", { completed: partIICompleted, total: partIITotal })}
+          </p>
         </div>
-      )}
+      </section>
 
-      {/* Score header — white card with a tier-tinted left-edge accent
-          stripe + tinted icon block. Earlier passes used full-bleed
-          gradient cards (green/orange/red) which violated the design
-          memory rule "palette only, no per-card gradients". The tier
-          signal lives in the 4 px left stripe and the icon block tone
-          now; the rest of the card stays neutral so the score itself
-          is the readable focus. */}
-      <div className="relative overflow-hidden rounded-lg border border-border bg-card">
-        <span
-          aria-hidden
-          className={cn(
-            "absolute inset-y-0 left-0 w-1",
-            score >= 75
-              ? "bg-success"
-              : score >= 40
-                ? "bg-accent"
-                : "bg-destructive",
-          )}
-        />
-        <div className="flex items-center gap-5 p-5">
-          <div
-            className={cn(
-              "flex size-12 shrink-0 items-center justify-center rounded-md",
-              score >= 75
-                ? "bg-success/10 text-success"
-                : score >= 40
-                  ? "bg-accent/10 text-accent"
-                  : "bg-destructive/10 text-destructive",
-            )}
-          >
-            <Icon name="shield-check" size={24} variant="Bold" />
-          </div>
-          <div className="min-w-0 flex-1">
-            <p className="text-l6-plus uppercase tracking-wider text-muted-foreground">
-              {t("title")}
-            </p>
-            <p className="text-h1 tabular-nums leading-none tracking-tight text-foreground">
-              {score}%
-            </p>
-          </div>
-        </div>
-        <div className="px-5 pb-5">
-          <div className="h-1.5 overflow-hidden rounded-xl bg-border">
-            <div
-              className={cn(
-                "h-full rounded-xl transition-all duration-500",
-                score >= 75
-                  ? "bg-success"
-                  : score >= 40
-                    ? "bg-accent"
-                    : "bg-destructive",
-              )}
-              style={{ width: `${score}%` }}
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* View-mode toggle — Kanban (Figma 41:1171) is the default; List is preserved
-          as the legacy density-friendly view for users who prefer scanning. */}
-      <div className="flex items-center justify-between gap-3">
-        <div className="flex gap-2">
-          {(["kanban", "list"] as const).map((mode) => (
-            <button
-              key={mode}
-              type="button"
-              onClick={() => setView(mode)}
-              className={cn(
-                "inline-flex h-9 items-center gap-2 rounded-sm border-[1.5px] px-3 text-l6 transition-colors",
-                view === mode
-                  ? "border-primary bg-primary/10 text-primary"
-                  : "border-border-outline bg-card text-muted-foreground hover:text-foreground",
-              )}
-              aria-pressed={view === mode}
-            >
-              <Icon name={mode === "kanban" ? "Kanban" : "RowVertical"} size={16} />
-              {t.has(`view.${mode}`) ? t(`view.${mode}`) : mode}
-            </button>
-          ))}
-        </div>
-      </div>
+      {/* View switch — kanban is a read-only progress visualization; the
+          list is where status, notes, evidence and assignees are edited. */}
+      <Segmented
+        value={view}
+        onChange={(v) => setView(v as ViewMode)}
+        options={(["kanban", "list"] as const).map((mode) => ({
+          value: mode,
+          label: t.has(`view.${mode}`) ? t(`view.${mode}`) : mode,
+        }))}
+      />
 
       {view === "kanban" ? (
-        <ChecklistKanban
-          items={items}
-          members={members}
-          onStatusChange={handleStatusChange}
-        />
+        <ChecklistKanban items={items} />
       ) : (
         <>
 

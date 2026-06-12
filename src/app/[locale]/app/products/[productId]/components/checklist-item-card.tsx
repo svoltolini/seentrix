@@ -3,16 +3,9 @@
 import { useState, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Icon } from "@/components/icon";
 import {
   CHECKLIST_STATUSES,
@@ -41,11 +34,11 @@ const STATUS_DOT: Record<ChecklistStatus, string> = {
 };
 
 const STATUS_SELECTED: Record<ChecklistStatus, string> = {
-  pending: "border-border-outline bg-muted text-foreground",
+  pending: "border-border-strong bg-muted text-foreground",
   in_progress: "border-warning/40 bg-warning/10 text-warning",
   completed: "border-success/40 bg-success/10 text-success",
   not_applicable:
-    "border-border-outline bg-muted text-muted-foreground",
+    "border-border-strong bg-muted text-muted-foreground",
 };
 
 interface ChecklistItemCardProps {
@@ -200,74 +193,42 @@ export function ChecklistItemCard({
             </p>
           </div>
 
-          {/* Assignee picker */}
+          {/* Assignee picker — one selectable chip per member (avatar +
+              first name); clicking the selected chip unassigns. */}
           <div className="flex flex-col gap-2">
             <span className="text-l6-plus uppercase tracking-[1.5px] text-muted-foreground">
               {t("assigneeLabel")}
             </span>
-            <DropdownMenu>
-              <DropdownMenuTrigger
-                render={
+            <div className="flex flex-wrap gap-2">
+              {members.map((m) => {
+                const on = assignee?.id === m.id;
+                const firstName =
+                  (m.full_name?.trim() || m.email || m.id).split(/[\s@]/)[0];
+                return (
                   <button
-                    type="button"
-                    className={cn(
-                      buttonVariants({ variant: "outline", size: "sm" }),
-                      "h-9 w-fit justify-start gap-2 px-2"
-                    )}
-                  />
-                }
-              >
-                {assignee ? (
-                  <>
-                    <Avatar size="sm">
-                      {assignee.avatar_url && (
-                        <AvatarImage src={assignee.avatar_url} alt="" />
-                      )}
-                      <AvatarFallback>
-                        {initialsOf(assignee.full_name, assignee.email)}
-                      </AvatarFallback>
-                    </Avatar>
-                    <span>{assignee.full_name ?? assignee.email}</span>
-                  </>
-                ) : (
-                  <>
-                    <span className="flex size-6 items-center justify-center rounded-full border border-dashed border-muted-foreground/40 text-muted-foreground">
-                      <Icon name="add-01" size={12} />
-                    </span>
-                    <span className="text-muted-foreground">
-                      {t("assignTo")}
-                    </span>
-                  </>
-                )}
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="max-h-72 overflow-y-auto">
-                <DropdownMenuItem onClick={() => onAssigneeChange(id, null)}>
-                  <Icon
-                    name="circle-stroke-rounded"
-                    size={14}
-                    className="text-muted-foreground"
-                  />
-                  {t("unassign")}
-                </DropdownMenuItem>
-                {members.length > 0 && <DropdownMenuSeparator />}
-                {members.map((m) => (
-                  <DropdownMenuItem
                     key={m.id}
-                    onClick={() => onAssigneeChange(id, m.id)}
+                    type="button"
+                    onClick={() => onAssigneeChange(id, on ? null : m.id)}
+                    aria-pressed={on}
+                    title={m.full_name ?? m.email ?? undefined}
+                    className={cn(
+                      "flex items-center gap-2 rounded-full border py-1 pl-1 pr-3 text-[12.5px] font-semibold transition-colors",
+                      on
+                        ? "border-primary bg-primary/5 text-foreground"
+                        : "border-border-strong bg-card text-muted-foreground hover:bg-muted hover:text-foreground",
+                    )}
                   >
-                    <Avatar size="sm">
+                    <Avatar size="sm" className="size-6">
                       {m.avatar_url && <AvatarImage src={m.avatar_url} alt="" />}
                       <AvatarFallback>
                         {initialsOf(m.full_name, m.email)}
                       </AvatarFallback>
                     </Avatar>
-                    <span className="truncate">
-                      {m.full_name ?? m.email ?? m.id}
-                    </span>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+                    {firstName}
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           {/* Status selector */}
@@ -282,10 +243,10 @@ export function ChecklistItemCard({
                   type="button"
                   onClick={() => onStatusChange(id, s)}
                   className={cn(
-                    "flex items-center gap-1.5 rounded-sm border-[1.5px] px-3 py-1.5 text-l6-plus transition-all",
+                    "flex items-center gap-1.5 rounded-[10px] border px-3 py-1.5 text-l6-plus transition-colors",
                     s === status
                       ? STATUS_SELECTED[s]
-                      : "border-border-outline bg-card text-muted-foreground hover:bg-muted hover:text-foreground"
+                      : "border-border-strong bg-card text-muted-foreground hover:bg-muted hover:text-foreground"
                   )}
                 >
                   <span

@@ -7,8 +7,6 @@
     "partIDescription": "Requisiti essenziali di cibersicurezza per i prodotti con elementi digitali.",
     "partII": "Parte II — Gestione delle vulnerabilità",
     "partIIDescription": "Requisiti per la gestione delle vulnerabilità durante tutto il ciclo di vita del prodotto.",
-    "getStarted": "Pronto per iniziare",
-    "getStartedDescription": "Inizia a lavorare sui requisiti CRA — ti guideremo passo dopo passo. Seleziona qualsiasi elemento qui sotto per iniziare.",
     "itemCount": "{completed} di {total} completati",
     "view": {
       "kanban": "Kanban",
@@ -30,8 +28,6 @@
     "statusLabel": "Stato",
     "articleLabel": "Articolo",
     "assigneeLabel": "Assegnato a",
-    "assignTo": "Assegna a…",
-    "unassign": "Non assegnato",
     "unassigned": "Non assegnato",
     "saving": "Salvataggio…",
     "saved": "Salvato",
