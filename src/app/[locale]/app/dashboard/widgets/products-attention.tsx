@@ -3,9 +3,10 @@
 import { Link } from "@/i18n/navigation";
 
 /**
- * "Products needing attention" (design handoff §3, `.clay-product` rows):
- * the lowest-scoring products as bordered rows — name + type on the left,
- * a category chip, and a small score ring on the right colored by band
+ * "Products needing attention" — the lowest-scoring products in the shared
+ * list recipe (same as the CRA readiness / Conformity / Technical File
+ * checklists): heading above one bordered card, hairline-divided rows with
+ * a muted hover, and a compact score ring on the right colored by band
  * (≥75 green, ≥50 amber, else danger). Whole row links to the product.
  */
 
@@ -43,30 +44,28 @@ export function ProductsAttention({
   if (products.length === 0) return null;
 
   return (
-    <section className="rounded-lg border border-border bg-card p-[17px]">
+    <section className="space-y-3">
       <header className="flex items-baseline justify-between gap-4">
         <h2 className="text-h4 text-foreground">{title}</h2>
         <Link
           href="/app/products"
-          className="text-[13.5px] font-semibold text-primary transition-all hover:gap-2"
+          className="text-[13.5px] font-semibold text-primary hover:underline"
         >
           {viewAllLabel} →
         </Link>
       </header>
-      <div className="mt-4 flex flex-col gap-3">
+      <div className="divide-y divide-border overflow-hidden rounded-lg border border-border bg-card">
         {products.map((p) => (
           <Link
             key={p.id}
             href={`/app/products/${p.id}`}
-            className="flex items-center gap-4 rounded-[14px] border border-border px-[18px] py-[15px] transition-colors hover:bg-muted"
+            className="flex w-full items-center gap-3 px-5 py-3.5 transition-colors hover:bg-muted/60"
           >
             <div className="min-w-0 flex-1">
-              <p className="truncate text-[15.5px] font-semibold tracking-[-0.1px] text-foreground">
-                {p.name}
-              </p>
-              <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
+              <p className="truncate text-l6 text-foreground">{p.name}</p>
+              <div className="mt-0.5 flex flex-wrap items-center gap-1.5">
                 {p.type && (
-                  <span className="text-[12.5px] text-muted-foreground">
+                  <span className="text-p4 text-muted-foreground">
                     {p.type}
                   </span>
                 )}
@@ -86,8 +85,8 @@ export function ProductsAttention({
 }
 
 function ScoreRing({ value }: { value: number }) {
-  const size = 62;
-  const thickness = 6;
+  const size = 44;
+  const thickness = 5;
   const r = (size - thickness) / 2;
   const c = 2 * Math.PI * r;
   const clamped = Math.max(0, Math.min(100, value));
@@ -121,7 +120,7 @@ function ScoreRing({ value }: { value: number }) {
           strokeDasharray={`${(clamped / 100) * c} ${c}`}
         />
       </svg>
-      <span className="absolute inset-0 flex items-center justify-center text-[13px] font-bold tabular-nums text-foreground">
+      <span className="absolute inset-0 flex items-center justify-center text-[11.5px] font-bold tabular-nums text-foreground">
         {clamped}
       </span>
     </div>
