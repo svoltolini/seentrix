@@ -15,15 +15,29 @@
  * bulk-selection, and per-row inline edit all share state.
  */
 
-import { useCallback, useMemo, useRef, useState, useTransition } from "react";
+import {
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+  useTransition,
+  type ReactNode,
+} from "react";
+import { Dialog as SheetPrimitive } from "@base-ui/react/dialog";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
+import {
+  SideSheetBackdrop,
+  SideSheetPopup,
+  SideSheetHero,
+  SideSheetBody,
+} from "@/components/side-sheet";
 import { Icon } from "@/components/icon";
 import { IconBadge } from "@/components/ui/icon-badge";
 import { StaggerReveal } from "@/components/stagger-reveal";
 import { StatCard } from "@/components/stat-card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -55,10 +69,19 @@ import { MS_PER_DAY } from "@/lib/time";
 // ---------------------------------------------------------------------------
 
 const SEVERITY_COLOR: Record<VulnSeverity, string> = {
-  critical: "var(--destructive)",
-  high: "var(--warning)",
-  medium: "var(--primary)",
-  low: "var(--muted-foreground)",
+  critical: "var(--sev-critical)",
+  high: "var(--sev-high)",
+  medium: "var(--sev-medium)",
+  low: "var(--sev-low)",
+};
+
+// Status pill hue (the .sx-pill tint): open=red/bad, in_progress=amber/warn,
+// resolved + accepted = green/ok.
+const STATUS_TINT: Record<VulnStatus, string> = {
+  open: "var(--sev-critical)",
+  in_progress: "var(--sev-high)",
+  resolved: "var(--success)",
+  accepted: "var(--success)",
 };
 
 const STATUS_COLOR: Record<VulnStatus, string> = {
@@ -113,6 +136,25 @@ function initialsOf(name: string | null, email: string | null): string {
     .toUpperCase();
 }
 
+/** CVSS score → colour ramp: high red, mid amber, low grey. */
+function cvssColor(score: number): string {
+  if (score >= 7) return "var(--sev-critical)";
+  if (score >= 4) return "var(--sev-high)";
+  return "var(--sev-low)";
+}
+
+/** A 13%-opacity wash of a colour for tinted pills. */
+function tint13(color: string): string {
+  return `color-mix(in srgb, ${color} 13%, transparent)`;
+}
+
+/** Authoritative reference URL for a CVE / GHSA / other advisory id. */
+function vulnUrl(id: string): string {
+  if (id.startsWith("GHSA-")) return `https://github.com/advisories/${id}`;
+  if (id.startsWith("CVE-")) return `https://nvd.nist.gov/vuln/detail/${id}`;
+  return `https://osv.dev/vulnerability/${id}`;
+}
+
 // ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
@@ -134,7 +176,8 @@ export function VulnerabilitiesContent({
   const tRes = useTranslations("vulnerabilities.resolution");
   const { toast } = useToast();
   const [vulns, setVulns] = useState<VulnListItem[]>(initialVulns);
-  const [selected, setSelected] = useState<Set<string>>(new Set());
+  // Tapping a row opens the side drawer; all per-vuln actions live there.
+  const [activeId, setActiveId] = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<Set<VulnStatus>>(
     new Set(["open", "in_progress"]),
@@ -278,7 +321,6 @@ export function VulnerabilitiesContent({
                 ? t("toast.statusUpdated")
                 : t("toast.bulkUpdated", { count: ids.length }),
           });
-          setSelected(new Set());
         }
       });
     },
@@ -299,7 +341,6 @@ export function VulnerabilitiesContent({
           toast({ type: "error", message: t("toast.updateFailed") });
         } else {
           toast({ type: "success", message: t("toast.assignmentUpdated") });
-          setSelected(new Set());
         }
       });
     },
@@ -326,28 +367,9 @@ export function VulnerabilitiesContent({
     [applyLocal, productId, t, toast],
   );
 
-  // Selection helpers -------------------------------------------------------
-  const allFilteredSelected =
-    filtered.length > 0 && filtered.every((v) => selected.has(v.id));
-  const toggleSelectAll = () => {
-    setSelected((prev) => {
-      if (allFilteredSelected) return new Set();
-      const next = new Set(prev);
-      for (const v of filtered) next.add(v.id);
-      return next;
-    });
-  };
-  const toggleSelectOne = (id: string) => {
-    setSelected((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-  };
-
   const isEmpty = vulns.length === 0;
   const filteredEmpty = vulns.length > 0 && filtered.length === 0;
+  const activeVuln = activeId ? vulns.find((v) => v.id === activeId) ?? null : null;
 
   // ---------------------------------------------------------------------
   // Render
@@ -565,69 +587,11 @@ export function VulnerabilitiesContent({
           </div>
         </div>
 
-        {/* ── Bulk action bar ── */}
-        {selected.size > 0 && canWrite && (
-          <div className="flex flex-wrap items-center gap-2 rounded-md border border-primary/30 bg-primary/10 p-2 pl-4">
-            <span className="text-l6 text-primary">
-              {t("bulk.selected", { count: selected.size })}
-            </span>
-            <div className="ml-auto flex flex-wrap gap-2">
-              <BulkStatusPicker
-                labels={(k) => tStatus(k)}
-                onPick={(s) => {
-                  const ids = Array.from(selected);
-                  if (s === "resolved" || s === "accepted") {
-                    setResolveTarget({ ids, status: s });
-                  } else {
-                    changeStatus(ids, s);
-                  }
-                }}
-                label={t("bulk.changeStatus")}
-              />
-              <BulkAssignPicker
-                members={members}
-                labels={{
-                  unassign: t("bulk.unassign"),
-                  assign: t("bulk.assign"),
-                }}
-                onPick={(uid) => changeAssignee(Array.from(selected), uid)}
-              />
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setSelected(new Set())}
-              >
-                {t("bulk.clear")}
-              </Button>
-            </div>
-          </div>
-        )}
-
-        {/* ── Table ── */}
+        {/* ── List (sx-tablecard) ── tap a row to open the action drawer ── */}
         <div
           data-reveal
           className="overflow-hidden rounded-lg border border-border bg-card"
         >
-          <div className="flex items-center border-b border-border px-4 py-2.5 text-h6 text-muted-foreground">
-            {canWrite && (
-              <label className="flex w-8 cursor-pointer items-center">
-                <input
-                  type="checkbox"
-                  checked={allFilteredSelected}
-                  onChange={toggleSelectAll}
-                  className="size-3.5 accent-primary"
-                  aria-label={t("table.selectAll")}
-                />
-              </label>
-            )}
-            <span className="flex-1">{t("table.cve")}</span>
-            <span className="hidden w-44 sm:block">{t("table.component")}</span>
-            <span className="hidden w-14 sm:block">{t("table.age")}</span>
-            <span className="hidden w-28 md:block">{t("table.assignee")}</span>
-            <span className="w-32 text-right">{t("table.status")}</span>
-            <div className="w-8" />
-          </div>
-
           {filteredEmpty ? (
             <div className="flex flex-col items-center justify-center py-16 text-center">
               <p className="text-p3 text-muted-foreground">
@@ -655,30 +619,41 @@ export function VulnerabilitiesContent({
                 <VulnRow
                   key={v.id}
                   vuln={v}
-                  selected={selected.has(v.id)}
-                  onToggleSelect={() => toggleSelectOne(v.id)}
-                  members={members}
-                  canWrite={canWrite}
-                  canFlagExploit={canFlagExploit}
                   tStatus={tStatus}
-                  tSev={tSev}
-                  tRes={tRes}
                   t={t}
-                  onStatusChange={(status) => {
-                    if (status === "resolved" || status === "accepted") {
-                      setResolveTarget({ ids: [v.id], status });
-                    } else {
-                      changeStatus([v.id], status);
-                    }
-                  }}
-                  onAssign={(uid) => changeAssignee([v.id], uid)}
-                  onToggleExploit={(flag) => toggleExploit(v.id, flag)}
+                  onOpen={() => setActiveId(v.id)}
                 />
               ))}
             </div>
           )}
         </div>
       </StaggerReveal>
+
+      {/* Per-vulnerability action drawer */}
+      <VulnSheet
+        vuln={activeVuln}
+        open={activeVuln !== null}
+        onOpenChange={(o) => !o && setActiveId(null)}
+        members={members}
+        canWrite={canWrite}
+        canFlagExploit={canFlagExploit}
+        tStatus={tStatus}
+        tSev={tSev}
+        tRes={tRes}
+        t={t}
+        onStatusChange={(status) => {
+          if (!activeVuln) return;
+          if (status === "resolved" || status === "accepted") {
+            setResolveTarget({ ids: [activeVuln.id], status });
+          } else {
+            changeStatus([activeVuln.id], status);
+          }
+        }}
+        onAssign={(uid) => activeVuln && changeAssignee([activeVuln.id], uid)}
+        onToggleExploit={(flag) =>
+          activeVuln && toggleExploit(activeVuln.id, flag)
+        }
+      />
 
       <ResolveModal
         target={resolveTarget}
@@ -806,86 +781,102 @@ function ToggleChip({
 }
 
 // ---------------------------------------------------------------------------
-// Bulk pickers
-// ---------------------------------------------------------------------------
-
-function BulkStatusPicker({
-  labels,
-  onPick,
-  label,
-}: {
-  labels: (s: VulnStatus) => string;
-  onPick: (s: VulnStatus) => void;
-  label: string;
-}) {
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger render={<Button variant="outline" size="sm" />}>
-        {label}
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        {STATUS_ORDER.map((s) => (
-          <DropdownMenuItem key={s} onClick={() => onPick(s)}>
-            <span
-              className="size-2 rounded-full"
-              style={{ backgroundColor: STATUS_COLOR[s] }}
-            />
-            {labels(s)}
-          </DropdownMenuItem>
-        ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
-}
-
-function BulkAssignPicker({
-  members,
-  labels,
-  onPick,
-}: {
-  members: TeamMemberOption[];
-  labels: { unassign: string; assign: string };
-  onPick: (uid: string | null) => void;
-}) {
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger render={<Button variant="outline" size="sm" />}>
-        {labels.assign}
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="max-h-72 overflow-y-auto">
-        <DropdownMenuItem onClick={() => onPick(null)}>
-          <Icon
-            name="circle-stroke-rounded"
-            size={14}
-            className="text-muted-foreground"
-          />
-          {labels.unassign}
-        </DropdownMenuItem>
-        {members.length > 0 && <DropdownMenuSeparator />}
-        {members.map((m) => (
-          <DropdownMenuItem key={m.id} onClick={() => onPick(m.id)}>
-            <Avatar size="sm">
-              {m.avatar_url && <AvatarImage src={m.avatar_url} alt="" />}
-              <AvatarFallback>
-                {initialsOf(m.full_name, m.email)}
-              </AvatarFallback>
-            </Avatar>
-            <span className="truncate">{m.full_name ?? m.email ?? m.id}</span>
-          </DropdownMenuItem>
-        ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
-}
-
-// ---------------------------------------------------------------------------
 // Row
 // ---------------------------------------------------------------------------
 
 function VulnRow({
   vuln,
-  selected,
-  onToggleSelect,
+  tStatus,
+  t,
+  onOpen,
+}: {
+  vuln: VulnListItem;
+  tStatus: (key: string) => string;
+  t: (key: string, vars?: Record<string, string | number>) => string;
+  onOpen: () => void;
+}) {
+  const statusHue = STATUS_TINT[vuln.status];
+  const title = vuln.description?.trim() || vuln.cve_id;
+  const component = vuln.component_name
+    ? `${vuln.component_name}${vuln.component_version ? ` ${vuln.component_version}` : ""}`
+    : null;
+
+  return (
+    <button
+      type="button"
+      onClick={onOpen}
+      aria-label={vuln.cve_id}
+      className="flex w-full items-center gap-[18px] px-[18px] py-[13px] text-left transition-colors hover:bg-muted/60"
+    >
+      {/* 1. severity tick */}
+      <span
+        className="h-[34px] w-1 shrink-0 rounded-[3px]"
+        style={{ backgroundColor: SEVERITY_COLOR[vuln.severity] }}
+        aria-hidden
+      />
+
+      {/* 2. main text */}
+      <span className="min-w-0 flex-1">
+        <span className="block truncate text-[14px] font-semibold text-foreground">
+          {title}
+        </span>
+        <span className="block truncate text-[12.5px] text-muted-foreground">
+          <span className="font-mono">{vuln.cve_id}</span>
+          {component ? ` · ${component}` : ""}
+        </span>
+      </span>
+
+      {/* KEV / actively-exploited signals stay visible at a glance */}
+      {vuln.actively_exploited && (
+        <span
+          className="hidden shrink-0 items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide sm:inline-flex"
+          style={{ color: "var(--sev-critical)", backgroundColor: tint13("var(--sev-critical)") }}
+        >
+          <span className="size-1.5 animate-pulse rounded-full bg-[color:var(--sev-critical)]" />
+          {t("row.actively_exploited")}
+        </span>
+      )}
+      {!vuln.actively_exploited && vuln.cisa_kev && (
+        <span
+          className="hidden shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide sm:inline-flex"
+          style={{ color: "var(--sev-critical)", backgroundColor: tint13("var(--sev-critical)") }}
+        >
+          KEV
+        </span>
+      )}
+
+      {/* 3. status pill */}
+      <span
+        className="shrink-0 rounded-full px-2.5 py-1 text-[11.5px] font-semibold capitalize"
+        style={{ color: statusHue, backgroundColor: tint13(statusHue) }}
+      >
+        {tStatus(vuln.status)}
+      </span>
+
+      {/* 4. CVSS score */}
+      <span
+        className="w-9 shrink-0 text-right font-mono text-[13px] font-semibold tabular-nums"
+        style={{
+          color:
+            vuln.cvss_score !== null
+              ? cvssColor(vuln.cvss_score)
+              : "var(--muted-foreground)",
+        }}
+      >
+        {vuln.cvss_score !== null ? vuln.cvss_score.toFixed(1) : "—"}
+      </span>
+    </button>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Per-vulnerability action drawer
+// ---------------------------------------------------------------------------
+
+function VulnSheet({
+  vuln,
+  open,
+  onOpenChange,
   members,
   canWrite,
   canFlagExploit,
@@ -897,9 +888,9 @@ function VulnRow({
   onAssign,
   onToggleExploit,
 }: {
-  vuln: VulnListItem;
-  selected: boolean;
-  onToggleSelect: () => void;
+  vuln: VulnListItem | null;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
   members: TeamMemberOption[];
   canWrite: boolean;
   canFlagExploit: boolean;
@@ -911,312 +902,202 @@ function VulnRow({
   onAssign: (uid: string | null) => void;
   onToggleExploit: (flag: boolean) => void;
 }) {
+  if (!vuln) return null;
   const age = ageDays(vuln.discovery_date);
+  const url = vulnUrl(vuln.cve_id);
 
   return (
-    <div
-      className={cn(
-        "group relative flex items-center px-4 py-3 transition-colors hover:bg-muted/60",
-        selected && "bg-primary/5",
-      )}
-    >
-      {canWrite && (
-        <label className="flex w-8 cursor-pointer items-center">
-          <input
-            type="checkbox"
-            checked={selected}
-            onChange={onToggleSelect}
-            className="size-3.5 accent-primary"
-            aria-label={t("table.selectRow", { cve: vuln.cve_id })}
+    <SheetPrimitive.Root open={open} onOpenChange={onOpenChange}>
+      <SheetPrimitive.Portal>
+        <SideSheetBackdrop />
+        <SideSheetPopup>
+          <SideSheetHero
+            eyebrow={`${tSev(vuln.severity)}${vuln.cvss_score !== null ? ` · CVSS ${vuln.cvss_score.toFixed(1)}` : ""}`}
+            title={vuln.cve_id}
           />
-        </label>
-      )}
-
-      {/* Severity bar on left edge */}
-      <span
-        className="absolute inset-y-0 left-0 w-[3px]"
-        style={{ backgroundColor: SEVERITY_COLOR[vuln.severity] }}
-      />
-
-      {/* CVE + badges */}
-      <div className="min-w-0 flex-1">
-        <div className="flex flex-wrap items-center gap-2">
-          <span
-            className="rounded-sm px-1.5 py-0.5 text-l6-plus uppercase tracking-wide text-white"
-            style={{ backgroundColor: SEVERITY_COLOR[vuln.severity] }}
-          >
-            {tSev(vuln.severity)}
-          </span>
-          <span className="font-mono text-l6 text-foreground">
-            {vuln.cve_id}
-          </span>
-          {vuln.cvss_score !== null && (
-            <span className="text-l6-plus tabular-nums text-muted-foreground">
-              CVSS {vuln.cvss_score}
-            </span>
-          )}
-          {vuln.cisa_kev && (
-            <span className="inline-flex items-center gap-1 rounded-sm bg-destructive/15 px-2 py-0.5 text-l6-plus uppercase tracking-wide text-destructive">
-              KEV
-            </span>
-          )}
-          {vuln.actively_exploited && (
-            <span className="inline-flex items-center gap-1 rounded-sm bg-destructive/20 px-2 py-0.5 text-l6-plus uppercase tracking-wide text-destructive">
-              <span className="size-1.5 animate-pulse rounded-full bg-destructive" />
-              {t("row.actively_exploited")}
-            </span>
-          )}
-          {vuln.resolution_type && (
-            <span className="inline-flex items-center gap-1 rounded-sm bg-muted px-2 py-0.5 text-l6-plus uppercase tracking-wide text-muted-foreground">
-              {tRes(vuln.resolution_type)}
-            </span>
-          )}
-        </div>
-        {vuln.description && (
-          <p className="mt-1 line-clamp-1 text-p4 text-muted-foreground">
-            {vuln.description}
-          </p>
-        )}
-      </div>
-
-      {/* Component */}
-      <div className="hidden w-44 min-w-0 sm:block">
-        <p className="truncate text-l6 text-foreground">
-          {vuln.component_name || "—"}
-        </p>
-        {vuln.component_version && (
-          <p className="truncate text-p4 text-muted-foreground">
-            {vuln.component_version}
-          </p>
-        )}
-      </div>
-
-      {/* Age */}
-      <div className="hidden w-14 text-p4 text-muted-foreground sm:block">
-        {age !== null ? t("row.daysOld", { days: age }) : "—"}
-      </div>
-
-      {/* Assignee */}
-      <div className="hidden w-28 md:block">
-        {canWrite ? (
-          <AssigneePicker
-            assignee={vuln.assignee}
-            members={members}
-            onAssign={onAssign}
-            unassignLabel={t("row.unassign")}
-            assignLabel={t("row.assign")}
-          />
-        ) : vuln.assignee ? (
-          <div className="flex items-center gap-1.5">
-            <Avatar size="sm">
-              {vuln.assignee.avatar_url && (
-                <AvatarImage src={vuln.assignee.avatar_url} alt="" />
+          <SideSheetBody>
+            {/* Signal badges */}
+            <div className="flex flex-wrap items-center gap-2">
+              <span
+                className="rounded-full px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wide"
+                style={{ color: SEVERITY_COLOR[vuln.severity], backgroundColor: tint13(SEVERITY_COLOR[vuln.severity]) }}
+              >
+                {tSev(vuln.severity)}
+              </span>
+              {vuln.cisa_kev && (
+                <span className="rounded-full bg-destructive px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wide text-white">
+                  KEV
+                </span>
               )}
-              <AvatarFallback>
-                {initialsOf(vuln.assignee.full_name, vuln.assignee.email)}
-              </AvatarFallback>
-            </Avatar>
-            <span className="truncate text-p4">
-              {vuln.assignee.full_name ?? vuln.assignee.email}
-            </span>
-          </div>
-        ) : (
-          <span className="text-p4 text-muted-foreground">
-            {t("row.unassigned")}
-          </span>
-        )}
-      </div>
-
-      {/* Status pill */}
-      <div className="w-32 text-right">
-        <StatusPill
-          status={vuln.status}
-          label={tStatus(vuln.status)}
-          labels={(s) => tStatus(s)}
-          disabled={!canWrite}
-          onChange={onStatusChange}
-        />
-      </div>
-
-      {/* Row menu */}
-      <div className="flex w-8 justify-end">
-        {canWrite && (
-          <DropdownMenu>
-            <DropdownMenuTrigger
-              render={
-                <Button
-                  variant="ghost"
-                  size="icon-sm"
-                  aria-label={t("row.more")}
-                />
-              }
-            >
-              <Icon name="menu-02" size={16} />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              {canFlagExploit && (
-                <DropdownMenuItem
-                  onClick={() => onToggleExploit(!vuln.actively_exploited)}
-                  variant={vuln.actively_exploited ? "default" : "destructive"}
+              {vuln.actively_exploited && (
+                <span
+                  className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wide"
+                  style={{ color: "var(--sev-critical)", backgroundColor: tint13("var(--sev-critical)") }}
                 >
-                  <Icon name="alert-02" size={14} />
-                  {vuln.actively_exploited
-                    ? t("row.unmarkExploited")
-                    : t("row.markExploited")}
-                </DropdownMenuItem>
+                  <span className="size-1.5 animate-pulse rounded-full bg-[color:var(--sev-critical)]" />
+                  {t("row.actively_exploited")}
+                </span>
               )}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        )}
-      </div>
-    </div>
-  );
-}
+            </div>
 
-// ---------------------------------------------------------------------------
-// Status pill dropdown
-// ---------------------------------------------------------------------------
-
-function StatusPill({
-  status,
-  label,
-  labels,
-  disabled,
-  onChange,
-}: {
-  status: VulnStatus;
-  label: string;
-  labels: (s: VulnStatus) => string;
-  disabled?: boolean;
-  onChange: (s: VulnStatus) => void;
-}) {
-  const color = STATUS_COLOR[status];
-  const pill = (
-    <span
-      className={cn(
-        "inline-flex items-center gap-1.5 rounded-sm border px-2.5 py-1 text-l6 transition-transform",
-        !disabled && "hover:-translate-y-0.5",
-      )}
-      style={{
-        borderColor: `${color}4D`,
-        backgroundColor: `${color}1A`,
-        color,
-      }}
-    >
-      <span
-        className="size-1.5 rounded-full"
-        style={{ backgroundColor: color }}
-      />
-      {label}
-    </span>
-  );
-
-  if (disabled) return pill;
-
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger
-        render={<button type="button" className="outline-none" />}
-      >
-        {pill}
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        {STATUS_ORDER.map((s) => (
-          <DropdownMenuItem
-            key={s}
-            onClick={() => onChange(s)}
-            className={cn(s === status && "bg-accent")}
-          >
-            <span
-              className="size-2 rounded-full"
-              style={{ backgroundColor: STATUS_COLOR[s] }}
-            />
-            {labels(s)}
-          </DropdownMenuItem>
-        ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Assignee picker (inline avatar trigger)
-// ---------------------------------------------------------------------------
-
-function AssigneePicker({
-  assignee,
-  members,
-  onAssign,
-  unassignLabel,
-  assignLabel,
-}: {
-  assignee: VulnListItem["assignee"];
-  members: TeamMemberOption[];
-  onAssign: (uid: string | null) => void;
-  unassignLabel: string;
-  assignLabel: string;
-}) {
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger
-        render={
-          <button
-            type="button"
-            className={cn(
-              buttonVariants({ variant: "ghost", size: "sm" }),
-              "h-8 justify-start gap-1.5 px-1.5",
+            {vuln.description && (
+              <p className="text-p3 leading-relaxed text-muted-foreground">
+                {vuln.description}
+              </p>
             )}
-          />
-        }
-      >
-        {assignee ? (
-          <>
-            <Avatar size="sm">
-              {assignee.avatar_url && (
-                <AvatarImage src={assignee.avatar_url} alt="" />
+
+            {/* Meta */}
+            <dl className="grid grid-cols-2 gap-x-4 gap-y-3">
+              <Meta label={t("table.component")}>
+                {vuln.component_name || "—"}
+                {vuln.component_version ? ` ${vuln.component_version}` : ""}
+              </Meta>
+              <Meta label={t("table.age")}>
+                {age !== null ? t("row.daysOld", { days: age }) : "—"}
+              </Meta>
+              {vuln.cvss_score !== null && (
+                <Meta label="CVSS">
+                  <span
+                    className="font-mono font-semibold"
+                    style={{ color: cvssColor(vuln.cvss_score) }}
+                  >
+                    {vuln.cvss_score.toFixed(1)}
+                  </span>
+                </Meta>
               )}
-              <AvatarFallback>
-                {initialsOf(assignee.full_name, assignee.email)}
-              </AvatarFallback>
-            </Avatar>
-            <span className="truncate text-p4">
-              {assignee.full_name ?? assignee.email}
-            </span>
-          </>
-        ) : (
-          <>
-            <span className="flex size-6 items-center justify-center rounded-full border border-dashed border-muted-foreground/40 text-muted-foreground">
-              <Icon name="add-01" size={12} />
-            </span>
-            <span className="text-p4 text-muted-foreground">
-              {assignLabel}
-            </span>
-          </>
-        )}
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="start" className="max-h-72 overflow-y-auto">
-        <DropdownMenuItem onClick={() => onAssign(null)}>
-          <Icon
-            name="circle-stroke-rounded"
-            size={14}
-            className="text-muted-foreground"
-          />
-          {unassignLabel}
-        </DropdownMenuItem>
-        {members.length > 0 && <DropdownMenuSeparator />}
-        {members.map((m) => (
-          <DropdownMenuItem key={m.id} onClick={() => onAssign(m.id)}>
-            <Avatar size="sm">
-              {m.avatar_url && <AvatarImage src={m.avatar_url} alt="" />}
-              <AvatarFallback>
-                {initialsOf(m.full_name, m.email)}
-              </AvatarFallback>
-            </Avatar>
-            <span className="truncate">{m.full_name ?? m.email ?? m.id}</span>
-          </DropdownMenuItem>
-        ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
+              {vuln.resolution_type && (
+                <Meta label={t("table.status")}>{tRes(vuln.resolution_type)}</Meta>
+              )}
+            </dl>
+
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-l6 text-primary hover:underline"
+            >
+              {t("row.viewAdvisory")}
+              <Icon name="ExternalLinkIcon" className="size-3" />
+            </a>
+
+            {canWrite && (
+              <>
+                {/* Status */}
+                <div className="flex flex-col gap-2">
+                  <span className="text-l6-plus uppercase tracking-[1.5px] text-muted-foreground">
+                    {t("table.status")}
+                  </span>
+                  <div className="flex flex-wrap gap-2">
+                    {STATUS_ORDER.map((s) => {
+                      const on = vuln.status === s;
+                      const hue = STATUS_TINT[s];
+                      return (
+                        <button
+                          key={s}
+                          type="button"
+                          onClick={() => onStatusChange(s)}
+                          aria-pressed={on}
+                          className={cn(
+                            "flex items-center gap-1.5 rounded-[10px] border px-3 py-1.5 text-l6-plus transition-colors",
+                            on
+                              ? ""
+                              : "border-border-strong bg-card text-muted-foreground hover:bg-muted hover:text-foreground",
+                          )}
+                          style={
+                            on
+                              ? { color: hue, borderColor: hue, backgroundColor: tint13(hue) }
+                              : undefined
+                          }
+                        >
+                          <span className="size-1.5 rounded-full" style={{ backgroundColor: STATUS_COLOR[s] }} />
+                          {tStatus(s)}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Assignee */}
+                <div className="flex flex-col gap-2">
+                  <span className="text-l6-plus uppercase tracking-[1.5px] text-muted-foreground">
+                    {t("table.assignee")}
+                  </span>
+                  <div className="flex flex-wrap gap-2">
+                    <button
+                      type="button"
+                      onClick={() => onAssign(null)}
+                      aria-pressed={!vuln.assignee}
+                      className={cn(
+                        "flex items-center gap-2 rounded-full border py-1 pl-2.5 pr-3 text-[12.5px] font-semibold transition-colors",
+                        !vuln.assignee
+                          ? "border-primary bg-primary/5 text-foreground"
+                          : "border-border-strong bg-card text-muted-foreground hover:bg-muted hover:text-foreground",
+                      )}
+                    >
+                      {t("row.unassigned")}
+                    </button>
+                    {members.map((m) => {
+                      const on = vuln.assignee?.id === m.id;
+                      const first = (m.full_name?.trim() || m.email || m.id).split(/[\s@]/)[0];
+                      return (
+                        <button
+                          key={m.id}
+                          type="button"
+                          onClick={() => onAssign(on ? null : m.id)}
+                          aria-pressed={on}
+                          className={cn(
+                            "flex items-center gap-2 rounded-full border py-1 pl-1 pr-3 text-[12.5px] font-semibold transition-colors",
+                            on
+                              ? "border-primary bg-primary/5 text-foreground"
+                              : "border-border-strong bg-card text-muted-foreground hover:bg-muted hover:text-foreground",
+                          )}
+                        >
+                          <Avatar size="sm" className="size-6">
+                            {m.avatar_url && <AvatarImage src={m.avatar_url} alt="" />}
+                            <AvatarFallback>{initialsOf(m.full_name, m.email)}</AvatarFallback>
+                          </Avatar>
+                          {first}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Actively exploited */}
+                {canFlagExploit && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className={cn(
+                      "w-fit",
+                      !vuln.actively_exploited &&
+                        "text-destructive hover:bg-destructive/10 hover:text-destructive",
+                    )}
+                    onClick={() => onToggleExploit(!vuln.actively_exploited)}
+                  >
+                    <Icon name="alert-02" size={14} />
+                    {vuln.actively_exploited
+                      ? t("row.unmarkExploited")
+                      : t("row.markExploited")}
+                  </Button>
+                )}
+              </>
+            )}
+          </SideSheetBody>
+        </SideSheetPopup>
+      </SheetPrimitive.Portal>
+    </SheetPrimitive.Root>
+  );
+}
+
+function Meta({ label, children }: { label: string; children: ReactNode }) {
+  return (
+    <div>
+      <dt className="text-l6-plus uppercase tracking-wide text-muted-foreground">
+        {label}
+      </dt>
+      <dd className="mt-0.5 text-p3 text-foreground">{children}</dd>
+    </div>
   );
 }
 

@@ -69,7 +69,8 @@
       "unassigned": "Non assignée",
       "more": "Plus d'actions",
       "markExploited": "Marquer comme activement exploitée",
-      "unmarkExploited": "Retirer le marquage d'exploitation"
+      "unmarkExploited": "Retirer le marquage d'exploitation",
+      "viewAdvisory": "Voir l'avis"
     },
     "modal": {
       "resolveTitle": "{count, plural, one {Résoudre la vulnérabilité} other {Résoudre # vulnérabilités}}",

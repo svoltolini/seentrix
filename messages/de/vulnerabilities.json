@@ -69,7 +69,8 @@
       "unassigned": "Nicht zugewiesen",
       "more": "Weitere Aktionen",
       "markExploited": "Als aktiv ausgenutzt markieren",
-      "unmarkExploited": "Flag \"ausgenutzt\" entfernen"
+      "unmarkExploited": "Flag \"ausgenutzt\" entfernen",
+      "viewAdvisory": "Hinweis ansehen"
     },
     "modal": {
       "resolveTitle": "{count, plural, one {Schwachstelle beheben} other {# Schwachstellen beheben}}",

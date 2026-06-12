@@ -69,7 +69,8 @@
       "unassigned": "Unassigned",
       "more": "More actions",
       "markExploited": "Mark actively exploited",
-      "unmarkExploited": "Remove exploited flag"
+      "unmarkExploited": "Remove exploited flag",
+      "viewAdvisory": "View advisory"
     },
     "modal": {
       "resolveTitle": "{count, plural, one {Resolve vulnerability} other {Resolve # vulnerabilities}}",

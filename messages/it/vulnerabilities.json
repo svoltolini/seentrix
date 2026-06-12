@@ -69,7 +69,8 @@
       "unassigned": "Non assegnato",
       "more": "Altre azioni",
       "markExploited": "Contrassegna come sfruttata attivamente",
-      "unmarkExploited": "Rimuovi flag di sfruttata"
+      "unmarkExploited": "Rimuovi flag di sfruttata",
+      "viewAdvisory": "Vedi avviso"
     },
     "modal": {
       "resolveTitle": "{count, plural, one {Risolvi vulnerabilità} other {Risolvi # vulnerabilità}}",
