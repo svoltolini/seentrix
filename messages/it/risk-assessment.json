@@ -74,7 +74,18 @@
       "implementationPlaceholder": "I controlli e le scelte di progettazione che soddisfano questo requisito e mitigano la minaccia…",
       "residualRisk": "Rischio residuo",
       "justification": "Giustificazione",
-      "justificationPlaceholder": "Perché questo requisito non si applica al prodotto — richiesto dall'Articolo 13(3) del CRA…"
+      "justificationPlaceholder": "Perché questo requisito non si applica al prodotto — richiesto dall'Articolo 13(3) del CRA…",
+      "stride": {
+        "label": "STRIDE (facoltativo):",
+        "categories": {
+          "spoofing": "Spoofing",
+          "tampering": "Manomissione",
+          "repudiation": "Ripudio",
+          "info_disclosure": "Divulgazione di info",
+          "denial_of_service": "Negazione del servizio",
+          "elevation_of_privilege": "Escalation dei privilegi"
+        }
+      }
     },
     "levels": {
       "low": "Basso",

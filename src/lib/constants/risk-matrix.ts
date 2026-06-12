@@ -64,3 +64,25 @@ export const RISK_HEX: Record<RiskBand, string> = {
   high: "#E60019",
   critical: "#FF6D00",
 };
+
+/**
+ * STRIDE threat categories — OPTIONAL tags on risk-assessment items. The
+ * CRA never mandates a methodology; these exist to make a threat analysis
+ * defensible at audit, and releasing an assessment never requires them.
+ */
+export const STRIDE_CATEGORIES = [
+  "spoofing",
+  "tampering",
+  "repudiation",
+  "info_disclosure",
+  "denial_of_service",
+  "elevation_of_privilege",
+] as const;
+export type StrideCategory = (typeof STRIDE_CATEGORIES)[number];
+
+export function isStrideCategory(v: unknown): v is StrideCategory {
+  return (
+    typeof v === "string" &&
+    (STRIDE_CATEGORIES as readonly string[]).includes(v)
+  );
+}

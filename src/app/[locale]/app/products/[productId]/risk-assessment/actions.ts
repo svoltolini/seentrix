@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { createClient, getAuthUser } from "@/lib/supabase/server";
 import { logActivity } from "@/lib/activity";
 import { CRA_REQUIREMENTS } from "@/lib/constants/cra-requirements";
-import { inherentRisk } from "@/lib/constants/risk-matrix";
+import { inherentRisk, isStrideCategory } from "@/lib/constants/risk-matrix";
 import {
   REQUIREMENT_IDS,
   isApplicability,
@@ -40,6 +40,8 @@ export interface RaItemInput {
   implementation: string;
   residualRisk: ResidualRisk | "";
   justification: string;
+  /** Optional STRIDE tags — never required (CRA is methodology-agnostic). */
+  strideCategories: string[];
 }
 
 export interface RaItem {
@@ -53,6 +55,7 @@ export interface RaItem {
   implementation: string;
   residualRisk: ResidualRisk | null;
   justification: string;
+  strideCategories: string[];
 }
 
 export interface RaVersion {
@@ -113,6 +116,7 @@ type StoredItem = {
   implementation: string | null;
   residual_risk: ResidualRisk | null;
   justification: string | null;
+  stride_categories: string[] | null;
 };
 
 function mergeItems(stored: StoredItem[]): RaItem[] {
@@ -130,6 +134,7 @@ function mergeItems(stored: StoredItem[]): RaItem[] {
       implementation: s?.implementation ?? "",
       residualRisk: s?.residual_risk ?? null,
       justification: s?.justification ?? "",
+      strideCategories: s?.stride_categories ?? [],
     };
   });
 }
@@ -189,7 +194,7 @@ export async function loadRiskAssessment(
     const { data: itemRows } = await supabase
       .from("risk_assessment_items")
       .select(
-        "requirement_id, applicability, threat, likelihood, impact, implementation, residual_risk, justification",
+        "requirement_id, applicability, threat, likelihood, impact, implementation, residual_risk, justification, stride_categories",
       )
       .eq("risk_assessment_id", current.id);
     items = mergeItems((itemRows ?? []) as StoredItem[]);
@@ -301,6 +306,7 @@ export async function saveRiskAssessment(
       implementation: it.implementation || null,
       residual_risk: isResidual(it.residualRisk) ? it.residualRisk : null,
       justification: it.justification || null,
+      stride_categories: (it.strideCategories ?? []).filter(isStrideCategory),
       updated_at: new Date().toISOString(),
     }));
 
@@ -338,7 +344,7 @@ export async function releaseRiskAssessment(
   const { data: itemRows } = await supabase
     .from("risk_assessment_items")
     .select(
-      "requirement_id, applicability, threat, likelihood, impact, implementation, residual_risk, justification",
+      "requirement_id, applicability, threat, likelihood, impact, implementation, residual_risk, justification, stride_categories",
     )
     .eq("risk_assessment_id", draft.id);
   const merged = mergeItems((itemRows ?? []) as StoredItem[]);
@@ -429,7 +435,7 @@ export async function reviseRiskAssessment(
   const { data: prevItems } = await supabase
     .from("risk_assessment_items")
     .select(
-      "requirement_id, applicability, threat, likelihood, impact, implementation, residual_risk, justification",
+      "requirement_id, applicability, threat, likelihood, impact, implementation, residual_risk, justification, stride_categories",
     )
     .eq("risk_assessment_id", latest.id);
   const clones = ((prevItems ?? []) as StoredItem[]).map((it) => ({
@@ -443,6 +449,7 @@ export async function reviseRiskAssessment(
     implementation: it.implementation,
     residual_risk: it.residual_risk,
     justification: it.justification,
+    stride_categories: it.stride_categories ?? [],
   }));
   if (clones.length > 0) {
     await supabase.from("risk_assessment_items").insert(clones);
@@ -540,7 +547,7 @@ async function buildAndUploadPdf(
       supabase
         .from("risk_assessment_items")
         .select(
-          "requirement_id, applicability, threat, likelihood, impact, implementation, residual_risk, justification",
+          "requirement_id, applicability, threat, likelihood, impact, implementation, residual_risk, justification, stride_categories",
         )
         .eq("risk_assessment_id", assessmentId),
     ]);

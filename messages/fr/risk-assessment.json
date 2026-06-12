@@ -74,7 +74,18 @@
       "implementationPlaceholder": "Les contrôles et choix de conception qui satisfont cette exigence et atténuent la menace…",
       "residualRisk": "Risque résiduel",
       "justification": "Justification",
-      "justificationPlaceholder": "Pourquoi cette exigence ne s'applique pas au produit — exigé par l'Article 13(3) du CRA…"
+      "justificationPlaceholder": "Pourquoi cette exigence ne s'applique pas au produit — exigé par l'Article 13(3) du CRA…",
+      "stride": {
+        "label": "STRIDE (facultatif) :",
+        "categories": {
+          "spoofing": "Usurpation",
+          "tampering": "Altération",
+          "repudiation": "Répudiation",
+          "info_disclosure": "Divulgation d'infos",
+          "denial_of_service": "Déni de service",
+          "elevation_of_privilege": "Élévation de privilèges"
+        }
+      }
     },
     "levels": {
       "low": "Faible",

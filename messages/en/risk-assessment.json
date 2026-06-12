@@ -74,7 +74,18 @@
       "implementationPlaceholder": "The controls and design decisions that meet this requirement and mitigate the threat…",
       "residualRisk": "Residual risk",
       "justification": "Justification",
-      "justificationPlaceholder": "Why this requirement does not apply to the product — required by CRA Article 13(3)…"
+      "justificationPlaceholder": "Why this requirement does not apply to the product — required by CRA Article 13(3)…",
+      "stride": {
+        "label": "STRIDE (optional):",
+        "categories": {
+          "spoofing": "Spoofing",
+          "tampering": "Tampering",
+          "repudiation": "Repudiation",
+          "info_disclosure": "Info disclosure",
+          "denial_of_service": "Denial of service",
+          "elevation_of_privilege": "Privilege elevation"
+        }
+      }
     },
     "levels": {
       "low": "Low",

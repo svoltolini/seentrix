@@ -15,6 +15,7 @@ import {
   LIKELIHOOD_LEVELS,
   IMPACT_LEVELS,
   RESIDUAL_LEVELS,
+  STRIDE_CATEGORIES,
   type RiskBand,
 } from "@/lib/constants/risk-matrix";
 import {
@@ -97,6 +98,7 @@ export function RiskAssessmentContent({
       implementation: it.implementation,
       residualRisk: it.residualRisk ?? ("" as const),
       justification: it.justification,
+      strideCategories: it.strideCategories,
     };
   }
 
@@ -482,6 +484,39 @@ function RequirementRow({
               }
               placeholder={t("item.threatPlaceholder")}
             />
+            {/* Optional STRIDE tags — the CRA never mandates a methodology,
+                so these are purely additive and never block release. */}
+            <div className="mt-2 flex flex-wrap items-center gap-1.5">
+              <span className="mr-1 text-p4 text-muted-foreground">
+                {t("item.stride.label")}
+              </span>
+              {STRIDE_CATEGORIES.map((c) => {
+                const on = item.strideCategories.includes(c);
+                return (
+                  <button
+                    key={c}
+                    type="button"
+                    disabled={!editable}
+                    aria-pressed={on}
+                    onClick={() =>
+                      updateItem(item.requirementId, {
+                        strideCategories: on
+                          ? item.strideCategories.filter((x) => x !== c)
+                          : [...item.strideCategories, c],
+                      })
+                    }
+                    className={cn(
+                      "rounded-full border px-2.5 py-0.5 text-[11.5px] font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-60",
+                      on
+                        ? "border-primary bg-primary/5 text-foreground"
+                        : "border-border-strong bg-card text-muted-foreground hover:bg-muted hover:text-foreground",
+                    )}
+                  >
+                    {t(`item.stride.categories.${c}`)}
+                  </button>
+                );
+              })}
+            </div>
           </Field>
 
           {/* Likelihood / Impact / Residual use the same segmented pill

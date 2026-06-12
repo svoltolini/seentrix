@@ -74,7 +74,18 @@
       "implementationPlaceholder": "Die Maßnahmen und Designentscheidungen, die diese Anforderung erfüllen und die Bedrohung mindern…",
       "residualRisk": "Restrisiko",
       "justification": "Begründung",
-      "justificationPlaceholder": "Warum diese Anforderung nicht auf das Produkt zutrifft — gemäß CRA Artikel 13(3) erforderlich…"
+      "justificationPlaceholder": "Warum diese Anforderung nicht auf das Produkt zutrifft — gemäß CRA Artikel 13(3) erforderlich…",
+      "stride": {
+        "label": "STRIDE (optional):",
+        "categories": {
+          "spoofing": "Spoofing",
+          "tampering": "Manipulation",
+          "repudiation": "Abstreitbarkeit",
+          "info_disclosure": "Informationspreisgabe",
+          "denial_of_service": "Denial of Service",
+          "elevation_of_privilege": "Rechteausweitung"
+        }
+      }
     },
     "levels": {
       "low": "Niedrig",
