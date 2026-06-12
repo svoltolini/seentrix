@@ -682,7 +682,7 @@ export function ConformityContent({
               <h2 className="text-h3 leading-snug text-primary-foreground">
                 {t("doc.title")}
               </h2>
-              <p className="mt-2 max-w-xl text-p3 text-primary-foreground/90">
+              <p className="mt-2 text-p3 text-primary-foreground/90">
                 {t("doc.description")}
               </p>
               {state.declarationIssuedAt && state.declarationVersion && (

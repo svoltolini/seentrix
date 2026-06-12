@@ -115,7 +115,7 @@ export default async function AcademyPage({
               <h1 className="text-h2 leading-tight text-primary-foreground md:text-h1">
                 {tGate("title")}
               </h1>
-              <p className="mt-2 max-w-xl text-p3 text-primary-foreground/80 md:text-p2">
+              <p className="mt-2 text-p3 text-primary-foreground/80 md:text-p2">
                 {tGate("subtitle")}
               </p>
               <p className="mt-3 text-p3 text-primary-foreground">

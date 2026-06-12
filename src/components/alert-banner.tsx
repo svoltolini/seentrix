@@ -66,7 +66,7 @@ export function AlertBanner({
           {children ? (
             <div className="mt-3 text-p2 text-white">{children}</div>
           ) : description ? (
-            <p className="mt-2 max-w-xl text-p2 text-white">{description}</p>
+            <p className="mt-2 text-p2 text-white">{description}</p>
           ) : null}
         </div>
 

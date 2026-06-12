@@ -199,7 +199,7 @@ function LanguageCard() {
         <h2 className="text-h4 text-foreground">{tl("title")}</h2>
       </div>
       <div className="flex flex-col gap-4 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
-        <p className="max-w-md text-p3 text-muted-foreground">
+        <p className="text-p3 text-muted-foreground">
           {tl("description")}
         </p>
         <LanguagePicker variant="full" align="end" />
