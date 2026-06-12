@@ -14,19 +14,6 @@ import {
   archiveTechnicalFile,
   type TechnicalFileState,
 } from "./actions";
-import type { Coverage } from "@/lib/constants/annex-vii";
-
-const COVERAGE_TONE: Record<Coverage, string> = {
-  present: "bg-success/10 text-success",
-  partial: "bg-warning/10 text-warning",
-  missing: "bg-destructive/10 text-destructive",
-};
-const COVERAGE_DOT: Record<Coverage, string> = {
-  present: "bg-success",
-  partial: "bg-warning",
-  missing: "bg-destructive",
-};
-
 export function TechnicalFileContent({
   productId,
   initial,
@@ -135,28 +122,62 @@ export function TechnicalFileContent({
             style={{ width: `${score.percent}%` }}
           />
         </div>
+      </section>
 
-        {/* Per-point checklist */}
-        <div className="mt-5 space-y-2">
-          {manifest.map((e) => (
+      {/* Per-point checklist — same row recipe as the CRA readiness and
+          Conformity workflow lists: a circular status marker (filled green
+          check when present, amber dot when partial, empty red ring when
+          missing), the Annex VII point + ref/status sub-line, and a green
+          Fix link, all in one bordered card. */}
+      <div className="divide-y divide-border overflow-hidden rounded-lg border border-border bg-card">
+        {manifest.map((e) => {
+          const color =
+            e.coverage === "present"
+              ? "var(--success)"
+              : e.coverage === "partial"
+                ? "var(--warning)"
+                : "var(--destructive)";
+          return (
             <div
               key={e.point}
-              className="flex flex-wrap items-center gap-3 rounded-md border border-border px-4 py-3"
+              className="flex w-full items-center gap-3 px-5 py-3.5 transition-colors hover:bg-muted/60"
             >
-              <span className="w-10 shrink-0 text-l6 text-muted-foreground">
-                {e.ref}
-              </span>
-              <span className="min-w-0 flex-1 text-p3 text-foreground">
-                {t(`points.${e.point}`)}
-              </span>
               <span
-                className={cn(
-                  "inline-flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-0.5 text-l6-plus uppercase tracking-wide",
-                  COVERAGE_TONE[e.coverage],
-                )}
+                className="flex size-5 shrink-0 items-center justify-center rounded-full border"
+                style={{
+                  borderColor: color,
+                  backgroundColor:
+                    e.coverage === "present" ? color : "transparent",
+                }}
               >
-                <span className={cn("size-1.5 rounded-full", COVERAGE_DOT[e.coverage])} />
-                {t(`coverage.${e.coverage}`)}
+                {e.coverage === "present" && (
+                  <Icon
+                    name="checkmark-circle-01-stroke-rounded"
+                    size={12}
+                    className="text-white"
+                  />
+                )}
+                {e.coverage === "partial" && (
+                  <span
+                    className="size-1.5 rounded-full"
+                    style={{ backgroundColor: color }}
+                  />
+                )}
+              </span>
+              <span className="min-w-0 flex-1">
+                <span
+                  className={cn(
+                    "block text-l6",
+                    e.coverage === "present"
+                      ? "text-muted-foreground"
+                      : "text-foreground",
+                  )}
+                >
+                  {t(`points.${e.point}`)}
+                </span>
+                <span className="block text-p4 text-muted-foreground">
+                  {e.ref} · {t(`coverage.${e.coverage}`)}
+                </span>
               </span>
               {e.coverage !== "present" && (
                 <Link
@@ -167,9 +188,9 @@ export function TechnicalFileContent({
                 </Link>
               )}
             </div>
-          ))}
-        </div>
-      </section>
+          );
+        })}
+      </div>
 
       {/* Version history */}
       {initial.history.length > 0 && (

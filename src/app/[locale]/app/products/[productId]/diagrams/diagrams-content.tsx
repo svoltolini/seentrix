@@ -139,7 +139,7 @@ export function DiagramsContent({
       {/* ----------------------------------------------------------------- */}
       {/* Diagrams                                                          */}
       {/* ----------------------------------------------------------------- */}
-      <section className="space-y-5">
+      <section className="space-y-4">
         <div>
           <h2 className="text-h3 text-foreground">{t("diagrams.title")}</h2>
           <p className="mt-0.5 text-p3 text-muted-foreground">
@@ -147,62 +147,50 @@ export function DiagramsContent({
           </p>
         </div>
 
-        {/* One section per diagram type, each with its own add button —
-            replaces the single "+ New diagram" dropdown (user request). */}
-        {DIAGRAM_TYPES.map((dt) => {
-          const ofType = diagrams.filter((d) => d.type === dt);
-          return (
-            <section key={dt} className="space-y-3">
-              <div className="flex items-center justify-between gap-4">
-                <h3 className="flex items-center gap-2 text-h4 text-foreground">
-                  <Icon
-                    name={DIAGRAM_TYPE_ICON[dt]}
-                    size={16}
-                    className="text-primary"
-                  />
-                  {t(`types.${dt}`)}
-                  {ofType.length > 0 && (
-                    <span className="text-p4 font-normal text-muted-foreground">
-                      ({ofType.length})
-                    </span>
-                  )}
-                </h3>
-                {canWrite && (
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() =>
-                      setEditorTarget({ id: null, type: dt, title: "" })
-                    }
-                  >
-                    <Icon name="Add" size={15} />
-                    {t("diagrams.add")}
-                  </Button>
-                )}
-              </div>
-              {ofType.length === 0 ? (
-                <div className="rounded-lg border border-dashed border-border-outline bg-card px-4 py-6 text-center text-p4 text-muted-foreground">
-                  {t("diagrams.sectionEmpty")}
-                </div>
-              ) : (
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                  {ofType.map((d) => (
-                    <DiagramCard
-                      key={d.id}
-                      diagram={d}
-                      canWrite={canWrite}
-                      onOpen={() =>
-                        setEditorTarget({ id: d.id, type: d.type, title: d.title })
-                      }
-                      onRename={() => setRenameTarget(d)}
-                      onDelete={() => setDeleteDiagramTarget(d)}
-                    />
-                  ))}
-                </div>
-              )}
-            </section>
-          );
-        })}
+        {/* One add button per type (no dropdown); the cards carry their
+            type label, so the grid itself stays a single section. */}
+        {canWrite && (
+          <div className="flex flex-wrap gap-2">
+            {DIAGRAM_TYPES.map((dt) => (
+              <Button
+                key={dt}
+                variant="outline"
+                size="sm"
+                onClick={() =>
+                  setEditorTarget({ id: null, type: dt, title: "" })
+                }
+              >
+                <Icon name="Add" size={15} />
+                {t(`types.${dt}`)}
+              </Button>
+            ))}
+          </div>
+        )}
+
+        {diagrams.length === 0 ? (
+          <div className="flex flex-col items-center justify-center rounded-lg border border-border bg-card py-14 text-center">
+            <IconBadge name="Category" tone="primary" size="xl" className="mb-4" />
+            <p className="text-h4 text-foreground">{t("diagrams.empty")}</p>
+            <p className="mt-1 max-w-sm text-p3 text-muted-foreground">
+              {t("diagrams.emptyDescription")}
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {diagrams.map((d) => (
+              <DiagramCard
+                key={d.id}
+                diagram={d}
+                canWrite={canWrite}
+                onOpen={() =>
+                  setEditorTarget({ id: d.id, type: d.type, title: d.title })
+                }
+                onRename={() => setRenameTarget(d)}
+                onDelete={() => setDeleteDiagramTarget(d)}
+              />
+            ))}
+          </div>
+        )}
       </section>
 
       {/* ----------------------------------------------------------------- */}

@@ -21,9 +21,7 @@
       "deleteDescription": "Dadurch werden das Diagramm und die gespeicherte Zeichnung dauerhaft gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.",
       "deleteConfirm": "Diagramm löschen",
       "deleteCancel": "Abbrechen",
-      "deleting": "Wird gelöscht…",
-      "add": "Hinzufügen",
-      "sectionEmpty": "Noch keine Diagramme dieses Typs."
+      "deleting": "Wird gelöscht…"
     },
     "card": {
       "open": "Öffnen",

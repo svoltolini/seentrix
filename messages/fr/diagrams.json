@@ -21,9 +21,7 @@
       "deleteDescription": "Cette action supprime définitivement le schéma et son dessin enregistré. Elle est irréversible.",
       "deleteConfirm": "Supprimer le schéma",
       "deleteCancel": "Annuler",
-      "deleting": "Suppression…",
-      "add": "Ajouter",
-      "sectionEmpty": "Aucun schéma de ce type pour l’instant."
+      "deleting": "Suppression…"
     },
     "card": {
       "open": "Ouvrir",
