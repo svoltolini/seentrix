@@ -58,10 +58,8 @@ import {
 } from "./widgets/products-attention";
 import { DashboardHero } from "./widgets/dashboard-hero";
 import { KpiStrip, type Kpi } from "./widgets/kpi-strip";
-import {
-  ReadinessRollupWidget,
-  type ReadinessRollupItem,
-} from "./widgets/readiness-rollup-widget";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { useCopilot } from "@/components/copilot/copilot-context";
 
 // ---------------------------------------------------------------------------
@@ -175,7 +173,6 @@ export function DashboardContent(
     incidentWidget?: IncidentWidgetData;
     supportWidget?: SupportWidgetData;
     profileStatus?: CompanyProfileStatus;
-    readinessRollup?: ReadinessRollupItem[];
   },
 ) {
   const t = useTranslations("dashboard");
@@ -195,7 +192,6 @@ export function DashboardContent(
     criticalCount,
     totalVulnerabilities,
     profileStatus,
-    readinessRollup,
   } = stats;
 
   const firstName = currentUser?.full_name?.split(" ")[0] ?? null;
@@ -356,7 +352,7 @@ export function DashboardContent(
   }, [t, overdueItems]);
 
   const activityItems = recentActivity
-    .slice(0, 6)
+    .slice(0, 5)
     .map((a) => adaptActivity(a, t, (k) => t.has(k)));
   const todayTasks = overdueItems.slice(0, 4).map(adaptOverdueToTask);
 
@@ -483,22 +479,23 @@ export function DashboardContent(
             </section>
           )}
 
-          {/* Activity feed */}
+          {/* Activity feed — last 5, with a button through to the full
+              audit list in Settings → Activity */}
           <section className="flex flex-col gap-4 rounded-lg border border-border bg-card p-4">
             <h3 className="text-h4 text-foreground">{t("activity")}</h3>
             <ActivityFeedWidget items={activityItems} />
+            {activityItems.length > 0 && (
+              <Link
+                href="/app/settings/activity"
+                className={cn(
+                  buttonVariants({ variant: "outline", size: "sm" }),
+                  "w-full",
+                )}
+              >
+                {t("seeAll")}
+              </Link>
+            )}
           </section>
-
-          {/* CRA readiness roll-up */}
-          {totalProducts > 0 && (
-            <section className="flex flex-col gap-4 rounded-lg border border-border bg-card p-4">
-              <h3 className="text-h4 text-foreground">{t("readiness.title")}</h3>
-              <ReadinessRollupWidget
-                items={readinessRollup ?? []}
-                emptyLabel={t("readiness.empty")}
-              />
-            </section>
-          )}
         </aside>
       </div>
     </div>

@@ -67,10 +67,6 @@
     "todayTasks": "Heutige Aufgaben",
     "seeAll": "Alle anzeigen",
     "noOverdue": "Keine überfälligen Aufgaben. Gut gemacht.",
-    "readiness": {
-      "title": "CRA-Reife",
-      "empty": "Fügen Sie ein Produkt hinzu, um seine CRA-Reife zu sehen."
-    },
     "chat": "Team",
     "upcomingDeadlines": {
       "title": "Bevorstehend"

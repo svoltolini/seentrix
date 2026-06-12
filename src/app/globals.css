@@ -396,3 +396,21 @@
 .prose td {
   @apply border border-border px-3 py-2;
 }
+
+/* Floating avatar "pool" on the dashboard Team card — each avatar runs
+   this path with its own duration/delay/direction set inline. */
+@keyframes sx-float {
+  0%   { transform: translate(0, 0); }
+  25%  { transform: translate(8px, -10px); }
+  50%  { transform: translate(-6px, -16px); }
+  75%  { transform: translate(-10px, 8px); }
+  100% { transform: translate(0, 0); }
+}
+.sx-pool-float {
+  animation: sx-float 10s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sx-pool-float {
+    animation: none;
+  }
+}

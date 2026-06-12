@@ -67,10 +67,6 @@
     "todayTasks": "Today's Tasks",
     "seeAll": "See all",
     "noOverdue": "No overdue tasks. Nice work.",
-    "readiness": {
-      "title": "CRA readiness",
-      "empty": "Add a product to see its CRA readiness."
-    },
     "chat": "Team",
     "upcomingDeadlines": {
       "title": "Upcoming"
