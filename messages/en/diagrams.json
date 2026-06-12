@@ -21,7 +21,9 @@
       "deleteDescription": "This permanently deletes the diagram and its saved drawing. This action cannot be undone.",
       "deleteConfirm": "Delete diagram",
       "deleteCancel": "Cancel",
-      "deleting": "Deleting…"
+      "deleting": "Deleting…",
+      "add": "Add",
+      "sectionEmpty": "No diagrams of this type yet."
     },
     "card": {
       "open": "Open",

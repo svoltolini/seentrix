@@ -21,7 +21,9 @@
       "deleteDescription": "Questa operazione elimina definitivamente il diagramma e il disegno salvato. L'azione non può essere annullata.",
       "deleteConfirm": "Elimina diagramma",
       "deleteCancel": "Annulla",
-      "deleting": "Eliminazione…"
+      "deleting": "Eliminazione…",
+      "add": "Aggiungi",
+      "sectionEmpty": "Ancora nessun diagramma di questo tipo."
     },
     "card": {
       "open": "Apri",

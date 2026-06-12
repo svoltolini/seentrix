@@ -18,11 +18,13 @@ export function Segmented({
   options,
   value,
   onChange,
+  disabled = false,
   className,
 }: {
   options: { value: string; label: string }[];
   value: string;
   onChange: (v: string) => void;
+  disabled?: boolean;
   className?: string;
 }) {
   return (
@@ -30,6 +32,7 @@ export function Segmented({
       role="tablist"
       className={cn(
         "inline-flex gap-0.5 rounded-[9px] bg-muted p-[3px]",
+        disabled && "opacity-60",
         className,
       )}
     >
@@ -41,9 +44,10 @@ export function Segmented({
             type="button"
             role="tab"
             aria-selected={on}
+            disabled={disabled}
             onClick={() => onChange(o.value)}
             className={cn(
-              "whitespace-nowrap rounded-[7px] px-[13px] py-1.5 text-[12.5px] font-semibold transition-all duration-150",
+              "whitespace-nowrap rounded-[7px] px-[13px] py-1.5 text-[12.5px] font-semibold transition-all duration-150 disabled:cursor-not-allowed",
               on
                 ? "bg-card text-foreground shadow-[0_1px_2px_rgba(80,60,40,0.08)]"
                 : "text-muted-foreground hover:text-foreground",

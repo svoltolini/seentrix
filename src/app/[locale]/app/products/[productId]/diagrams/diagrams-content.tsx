@@ -139,61 +139,70 @@ export function DiagramsContent({
       {/* ----------------------------------------------------------------- */}
       {/* Diagrams                                                          */}
       {/* ----------------------------------------------------------------- */}
-      <section className="space-y-4">
-        <div className="flex items-end justify-between gap-4">
-          <div>
-            <h2 className="text-h3 text-foreground">{t("diagrams.title")}</h2>
-            <p className="mt-0.5 text-p3 text-muted-foreground">
-              {t("diagrams.subtitle")}
-            </p>
-          </div>
-          {canWrite && (
-            <DropdownMenu>
-              <DropdownMenuTrigger render={<Button size="sm" />}>
-                <Icon name="Add" size={16} />
-                {t("diagrams.new")}
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                {DIAGRAM_TYPES.map((dt) => (
-                  <DropdownMenuItem
-                    key={dt}
+      <section className="space-y-5">
+        <div>
+          <h2 className="text-h3 text-foreground">{t("diagrams.title")}</h2>
+          <p className="mt-0.5 text-p3 text-muted-foreground">
+            {t("diagrams.subtitle")}
+          </p>
+        </div>
+
+        {/* One section per diagram type, each with its own add button —
+            replaces the single "+ New diagram" dropdown (user request). */}
+        {DIAGRAM_TYPES.map((dt) => {
+          const ofType = diagrams.filter((d) => d.type === dt);
+          return (
+            <section key={dt} className="space-y-3">
+              <div className="flex items-center justify-between gap-4">
+                <h3 className="flex items-center gap-2 text-h4 text-foreground">
+                  <Icon
+                    name={DIAGRAM_TYPE_ICON[dt]}
+                    size={16}
+                    className="text-primary"
+                  />
+                  {t(`types.${dt}`)}
+                  {ofType.length > 0 && (
+                    <span className="text-p4 font-normal text-muted-foreground">
+                      ({ofType.length})
+                    </span>
+                  )}
+                </h3>
+                {canWrite && (
+                  <Button
+                    variant="outline"
+                    size="sm"
                     onClick={() =>
                       setEditorTarget({ id: null, type: dt, title: "" })
                     }
                   >
-                    <Icon name={DIAGRAM_TYPE_ICON[dt]} size={16} />
-                    {t(`types.${dt}`)}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          )}
-        </div>
-
-        {diagrams.length === 0 ? (
-          <div className="flex flex-col items-center justify-center rounded-lg border border-border bg-card py-14 text-center">
-            <IconBadge name="Category" tone="primary" size="xl" className="mb-4" />
-            <p className="text-h4 text-foreground">{t("diagrams.empty")}</p>
-            <p className="mt-1 max-w-sm text-p3 text-muted-foreground">
-              {t("diagrams.emptyDescription")}
-            </p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {diagrams.map((d) => (
-              <DiagramCard
-                key={d.id}
-                diagram={d}
-                canWrite={canWrite}
-                onOpen={() =>
-                  setEditorTarget({ id: d.id, type: d.type, title: d.title })
-                }
-                onRename={() => setRenameTarget(d)}
-                onDelete={() => setDeleteDiagramTarget(d)}
-              />
-            ))}
-          </div>
-        )}
+                    <Icon name="Add" size={15} />
+                    {t("diagrams.add")}
+                  </Button>
+                )}
+              </div>
+              {ofType.length === 0 ? (
+                <div className="rounded-lg border border-dashed border-border-outline bg-card px-4 py-6 text-center text-p4 text-muted-foreground">
+                  {t("diagrams.sectionEmpty")}
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {ofType.map((d) => (
+                    <DiagramCard
+                      key={d.id}
+                      diagram={d}
+                      canWrite={canWrite}
+                      onOpen={() =>
+                        setEditorTarget({ id: d.id, type: d.type, title: d.title })
+                      }
+                      onRename={() => setRenameTarget(d)}
+                      onDelete={() => setDeleteDiagramTarget(d)}
+                    />
+                  ))}
+                </div>
+              )}
+            </section>
+          );
+        })}
       </section>
 
       {/* ----------------------------------------------------------------- */}
@@ -365,11 +374,13 @@ function DiagramCard({
       >
         <div className="relative flex aspect-video items-center justify-center overflow-hidden border-b border-border bg-muted">
           {diagram.preview_signed_url ? (
+            // object-cover so the drawing fills the whole preview area
+            // instead of letterboxing inside it.
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={diagram.preview_signed_url}
               alt={diagram.title}
-              className="size-full object-contain"
+              className="size-full object-cover"
             />
           ) : (
             <Icon

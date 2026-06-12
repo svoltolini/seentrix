@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Icon } from "@/components/icon";
+import { Segmented } from "@/components/ui/segmented";
 import { FieldHelp } from "@/components/field-help";
 import {
   inherentRisk,
@@ -33,11 +34,6 @@ const TONE_CLASS: Record<RiskBand, string> = {
   high: "bg-destructive/10 text-destructive",
   critical: "bg-accent/10 text-accent",
 };
-
-const SELECT_CLASS = cn(
-  "h-10 w-full rounded-md bg-input px-3 text-p3 text-foreground transition-colors outline-none",
-  "focus-visible:ring-2 focus-visible:ring-primary/30 disabled:opacity-60",
-);
 
 function RiskPill({ band, label }: { band: RiskBand; label: string }) {
   return (
@@ -488,44 +484,42 @@ function RequirementRow({
             />
           </Field>
 
+          {/* Likelihood / Impact / Residual use the same segmented pill
+              track as the dashboard chart's timeframe switcher (user
+              request — no dropdowns). Clicking the active level clears it,
+              standing in for the old "—" option. */}
           <div className="grid gap-4 sm:grid-cols-3">
             <Field label={t("item.likelihood")}>
-              <select
-                className={SELECT_CLASS}
+              <Segmented
                 disabled={!editable}
                 value={item.likelihood ?? ""}
-                onChange={(e) =>
+                options={LIKELIHOOD_LEVELS.map((l) => ({
+                  value: l,
+                  label: levelLabel(l),
+                }))}
+                onChange={(v) =>
                   updateItem(item.requirementId, {
-                    likelihood: (e.target.value || null) as RaItem["likelihood"],
+                    likelihood: (v === item.likelihood
+                      ? null
+                      : v) as RaItem["likelihood"],
                   })
                 }
-              >
-                <option value="">{"—"}</option>
-                {LIKELIHOOD_LEVELS.map((l) => (
-                  <option key={l} value={l}>
-                    {levelLabel(l)}
-                  </option>
-                ))}
-              </select>
+              />
             </Field>
             <Field label={t("item.impact")}>
-              <select
-                className={SELECT_CLASS}
+              <Segmented
                 disabled={!editable}
                 value={item.impact ?? ""}
-                onChange={(e) =>
+                options={IMPACT_LEVELS.map((l) => ({
+                  value: l,
+                  label: levelLabel(l),
+                }))}
+                onChange={(v) =>
                   updateItem(item.requirementId, {
-                    impact: (e.target.value || null) as RaItem["impact"],
+                    impact: (v === item.impact ? null : v) as RaItem["impact"],
                   })
                 }
-              >
-                <option value="">{"—"}</option>
-                {IMPACT_LEVELS.map((l) => (
-                  <option key={l} value={l}>
-                    {levelLabel(l)}
-                  </option>
-                ))}
-              </select>
+              />
             </Field>
             <Field label={t("item.inherentRisk")}>
               <div className="flex h-10 items-center">
@@ -555,23 +549,21 @@ function RequirementRow({
           </Field>
 
           <Field label={t("item.residualRisk")}>
-            <select
-              className={cn(SELECT_CLASS, "sm:max-w-xs")}
+            <Segmented
               disabled={!editable}
               value={item.residualRisk ?? ""}
-              onChange={(e) =>
+              options={RESIDUAL_LEVELS.map((l) => ({
+                value: l,
+                label: levelLabel(l),
+              }))}
+              onChange={(v) =>
                 updateItem(item.requirementId, {
-                  residualRisk: (e.target.value || null) as RaItem["residualRisk"],
+                  residualRisk: (v === item.residualRisk
+                    ? null
+                    : v) as RaItem["residualRisk"],
                 })
               }
-            >
-              <option value="">{"—"}</option>
-              {RESIDUAL_LEVELS.map((l) => (
-                <option key={l} value={l}>
-                  {levelLabel(l)}
-                </option>
-              ))}
-            </select>
+            />
           </Field>
         </div>
       )}
