@@ -365,12 +365,18 @@ export async function scanVulnerabilities(
     (c) => c.purl && c.purl.length > 0
   );
 
-  // 2. Clear existing vulnerabilities for this SBOM's components
+  // 2. Clear existing vulnerabilities for this SBOM's components. Chunk the
+  //    id list — a large SBOM (1000+ components) would otherwise build a
+  //    request URL past the server limit, so a rescan failed to clear the
+  //    prior vulns and they accumulated.
   const componentIds = allComponents.map((c) => c.id);
-  await supabase
-    .from("vulnerabilities")
-    .delete()
-    .in("sbom_component_id", componentIds);
+  const ID_CHUNK = 200;
+  for (let k = 0; k < componentIds.length; k += ID_CHUNK) {
+    await supabase
+      .from("vulnerabilities")
+      .delete()
+      .in("sbom_component_id", componentIds.slice(k, k + ID_CHUNK));
+  }
 
   // Reset component vuln counts
   await supabase

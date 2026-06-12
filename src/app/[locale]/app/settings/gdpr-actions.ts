@@ -115,14 +115,18 @@ export async function exportOrgData(): Promise<{ json?: string; error?: string }
   const components = (componentsRes.data as Record<string, unknown>[]) ?? [];
   const componentIds = components.map((c) => c.id as string);
 
-  const [vulnsRes] = componentIds.length > 0
-    ? await Promise.all([
-        supabase
-          .from("vulnerabilities")
-          .select("*")
-          .in("sbom_component_id", componentIds),
-      ])
-    : [{ data: [] }];
+  // Chunk the id list so a large SBOM doesn't blow past the request URL
+  // length limit (which would silently drop vulns from the export).
+  const vulnRows: Record<string, unknown>[] = [];
+  const GDPR_ID_CHUNK = 200;
+  for (let k = 0; k < componentIds.length; k += GDPR_ID_CHUNK) {
+    const { data } = await supabase
+      .from("vulnerabilities")
+      .select("*")
+      .in("sbom_component_id", componentIds.slice(k, k + GDPR_ID_CHUNK));
+    if (data) vulnRows.push(...(data as Record<string, unknown>[]));
+  }
+  const vulnsRes = { data: vulnRows };
 
   // documents are scoped by product_id; filter client-side since the RLS
   // policy should already restrict, but we double-check for defence in depth.

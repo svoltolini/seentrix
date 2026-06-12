@@ -110,8 +110,7 @@ export async function listProductVulnerabilities(
   const { supabase, user, orgId } = await getAuthContext();
   if (!user || !orgId) return { vulns: [], error: "notAuthenticated" };
 
-  // Load all SBOM component ids for this product so we only pull their vulns.
-  // RLS guarantees org scoping so we don't re-check here.
+  // SBOM ids for this product (typically one). RLS guarantees org scoping.
   const { data: sboms } = await supabase
     .from("sboms")
     .select("id")
@@ -119,33 +118,18 @@ export async function listProductVulnerabilities(
   const sbomIds = (sboms ?? []).map((s) => (s as { id: string }).id);
   if (sbomIds.length === 0) return { vulns: [] };
 
-  const { data: components } = await supabase
-    .from("sbom_components")
-    .select("id, component_name, component_version")
-    .in("sbom_id", sbomIds);
-  const componentMap = new Map<
-    string,
-    { name: string; version: string | null }
-  >();
-  for (const c of components ?? []) {
-    const row = c as {
-      id: string;
-      component_name: string;
-      component_version: string | null;
-    };
-    componentMap.set(row.id, {
-      name: row.component_name,
-      version: row.component_version,
-    });
-  }
-  if (componentMap.size === 0) return { vulns: [] };
-
+  // Filter vulnerabilities through an inner join on their component's
+  // sbom_id. Earlier this fetched every component id and passed them to
+  // `.in("sbom_component_id", [...])`; a large SBOM (1000+ components) blew
+  // past the request URL length limit, so the query failed and the tab
+  // looked empty even though the rows existed. The join keeps the filter
+  // on the small sbom-id list and returns the component name/version inline.
   let query = supabase
     .from("vulnerabilities")
     .select(
-      "id, sbom_component_id, cve_id, description, severity, cvss_score, cisa_kev, discovery_date, status, resolved_at, resolution_notes, resolution_type, assigned_to, resolved_by, actively_exploited",
+      "id, sbom_component_id, cve_id, description, severity, cvss_score, cisa_kev, discovery_date, status, resolved_at, resolution_notes, resolution_type, assigned_to, resolved_by, actively_exploited, sbom_components!inner(component_name, component_version, sbom_id)",
     )
-    .in("sbom_component_id", Array.from(componentMap.keys()));
+    .in("sbom_components.sbom_id", sbomIds);
 
   if (filters.statuses && filters.statuses.length > 0) {
     query = query.in("status", filters.statuses);
@@ -170,7 +154,7 @@ export async function listProductVulnerabilities(
   // Load the distinct assignees + resolvers in one round-trip.
   const userIds = new Set<string>();
   for (const v of vulnRows ?? []) {
-    const r = v as Record<string, string | null>;
+    const r = v as unknown as Record<string, string | null>;
     if (r.assigned_to) userIds.add(r.assigned_to);
     if (r.resolved_by) userIds.add(r.resolved_by);
   }
@@ -188,7 +172,11 @@ export async function listProductVulnerabilities(
 
   const vulns: VulnListItem[] = (vulnRows ?? []).map((v) => {
     const r = v as Record<string, unknown>;
-    const component = componentMap.get(r.sbom_component_id as string);
+    const embedded = r.sbom_components as
+      | { component_name: string; component_version: string | null }
+      | { component_name: string; component_version: string | null }[]
+      | null;
+    const component = Array.isArray(embedded) ? embedded[0] : embedded;
     return {
       id: r.id as string,
       cve_id: r.cve_id as string,
@@ -204,8 +192,8 @@ export async function listProductVulnerabilities(
       resolution_type:
         (r.resolution_type as VulnResolutionType | null) ?? null,
       component_id: r.sbom_component_id as string,
-      component_name: component?.name ?? "",
-      component_version: component?.version ?? null,
+      component_name: component?.component_name ?? "",
+      component_version: component?.component_version ?? null,
       assignee: r.assigned_to
         ? userMap.get(r.assigned_to as string) ?? null
         : null,
