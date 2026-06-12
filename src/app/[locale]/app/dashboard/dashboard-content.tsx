@@ -199,6 +199,7 @@ export function DashboardContent(
     profileStatus,
     myTasks,
     myVulns,
+    teamRoster,
   } = stats;
 
   const firstName = currentUser?.full_name?.split(" ")[0] ?? null;
@@ -363,18 +364,13 @@ export function DashboardContent(
     .map((a) => adaptActivity(a, t, (k) => t.has(k)));
   const todayTasks = overdueItems.slice(0, 4).map(adaptOverdueToTask);
 
-  // Team roster — distinct active members surfaced from the recent activity.
-  const seenUsers = new Map<string, TeamChatItem>();
-  for (const a of recentActivity) {
-    if (!a.user_name || seenUsers.has(a.user_name)) continue;
-    seenUsers.set(a.user_name, {
-      id: a.user_name,
-      name: a.user_name,
-      avatarUrl: a.user_avatar_url ?? null,
-    });
-    if (seenUsers.size >= 6) break;
-  }
-  const teamMembers = [...seenUsers.values()];
+  // Team roster — the full org membership (not just whoever shows up in the
+  // recent-activity log, which collapsed to one person during heavy use).
+  const teamMembers: TeamChatItem[] = teamRoster.map((m) => ({
+    id: m.id,
+    name: m.name ?? "",
+    avatarUrl: m.avatarUrl,
+  }));
 
 
   // ---- Empty-state guidance for brand-new orgs ---------------------------

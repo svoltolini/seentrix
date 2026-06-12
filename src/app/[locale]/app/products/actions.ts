@@ -543,6 +543,8 @@ export interface DashboardStats {
   overdueCount: number;
   overdueItems: OverdueItem[];
   activityVelocity: ActivityVelocityPoint[];
+  /** Every member of the org — the Team card shows the full roster. */
+  teamRoster: { id: string; name: string | null; avatarUrl: string | null }[];
 }
 
 export async function getDashboardStats(): Promise<DashboardStats> {
@@ -569,6 +571,7 @@ export async function getDashboardStats(): Promise<DashboardStats> {
       overdueCount: 0,
       overdueItems: [],
       activityVelocity: [],
+      teamRoster: [],
     };
   }
 
@@ -1040,6 +1043,18 @@ export async function getDashboardStats(): Promise<DashboardStats> {
   const mediumCount = useOpenCounts ? openMedium : sbomMedium;
   const lowCount = useOpenCounts ? openLow : sbomLow;
 
+  // Full org roster for the Team card — every member, not just whoever
+  // happens to appear in the recent-activity log.
+  const { data: rosterRows } = await supabase
+    .from("users")
+    .select("id, full_name, avatar_url")
+    .eq("org_id", orgId)
+    .order("full_name", { ascending: true });
+  const teamRoster = (rosterRows ?? []).map((u) => {
+    const r = u as { id: string; full_name: string | null; avatar_url: string | null };
+    return { id: r.id, name: r.full_name, avatarUrl: r.avatar_url };
+  });
+
   return {
     totalProducts,
     assessedCount,
@@ -1060,5 +1075,6 @@ export async function getDashboardStats(): Promise<DashboardStats> {
     overdueCount,
     overdueItems,
     activityVelocity,
+    teamRoster,
   };
 }
