@@ -57,6 +57,20 @@
         "notAuthenticated": "Sie müssen angemeldet sein.",
         "generic": "Etwas ist schiefgelaufen. Bitte erneut versuchen.",
         "typeExists": "Ein Diagramm dieses Typs existiert bereits — öffnen Sie es, um es zu aktualisieren."
+      },
+      "import": {
+        "label": "Importieren",
+        "importing": "Wird importiert…",
+        "file": "Datei importieren (.excalidraw, Bild)",
+        "mermaid": "Aus Mermaid / KI erzeugen",
+        "mermaidTitle": "Aus Mermaid erzeugen",
+        "mermaidHint": "Mermaid-Diagrammsyntax einfügen — jede KI, die Mermaid ausgibt, funktioniert. Wird zu bearbeitbaren Formen auf der Leinwand.",
+        "insert": "Einfügen",
+        "cancel": "Abbrechen",
+        "unsupported": "Dieser Dateityp kann nicht importiert werden. Verwende eine .excalidraw-Datei oder ein Bild.",
+        "failed": "Datei konnte nicht importiert werden.",
+        "mermaidEmpty": "Nichts zu konvertieren — das Diagramm ist leer oder die Syntax unvollständig.",
+        "mermaidFailed": "Diese Mermaid-Syntax konnte nicht verarbeitet werden."
       }
     },
     "evidence": {

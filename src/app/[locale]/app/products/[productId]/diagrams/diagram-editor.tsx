@@ -5,12 +5,19 @@ import dynamic from "next/dynamic";
 import { useLocale, useTranslations } from "next-intl";
 import type {
   DiagramSaveData,
+  DiagramImportApi,
 } from "@/components/diagrams/excalidraw-canvas";
 import type { ExcalidrawInitialDataState } from "@excalidraw/excalidraw/types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Icon } from "@/components/icon";
 import { IconBadge } from "@/components/ui/icon-badge";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
   Select,
   SelectContent,
@@ -67,6 +74,11 @@ export function DiagramEditor({
   const [error, setError] = useState<string | null>(null);
 
   const saverRef = useRef<(() => Promise<DiagramSaveData>) | null>(null);
+  const importRef = useRef<DiagramImportApi | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [mermaidOpen, setMermaidOpen] = useState(false);
+  const [mermaidText, setMermaidText] = useState("");
+  const [importing, setImporting] = useState(false);
 
   // Load the existing scene when editing. New diagrams start blank, so
   // `loadingScene` already initialises to false for them (target.id === null).
@@ -110,6 +122,45 @@ export function DiagramEditor({
     },
     [],
   );
+
+  const bindImport = useCallback((api: DiagramImportApi) => {
+    importRef.current = api;
+  }, []);
+
+  async function handleImportFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (fileInputRef.current) fileInputRef.current.value = "";
+    if (!file || !importRef.current) return;
+    setImporting(true);
+    setError(null);
+    const res = await importRef.current.importFile(file);
+    setImporting(false);
+    if (!res.ok) {
+      setError(
+        res.reason === "unsupported"
+          ? t("editor.import.unsupported")
+          : t("editor.import.failed"),
+      );
+    }
+  }
+
+  async function handleInsertMermaid() {
+    if (!importRef.current) return;
+    setImporting(true);
+    setError(null);
+    const res = await importRef.current.insertMermaid(mermaidText);
+    setImporting(false);
+    if (res.ok) {
+      setMermaidOpen(false);
+      setMermaidText("");
+    } else {
+      setError(
+        res.reason === "empty"
+          ? t("editor.import.mermaidEmpty")
+          : t("editor.import.mermaidFailed"),
+      );
+    }
+  }
 
   async function handleSave() {
     if (!title.trim()) {
@@ -178,6 +229,33 @@ export function DiagramEditor({
         )}
 
         <div className="ml-auto flex items-center gap-2">
+          {/* Import existing diagrams onto the canvas */}
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              render={<Button variant="outline" size="sm" disabled={importing || loadingScene} />}
+            >
+              <Icon name="DocumentUpload" size={15} />
+              {importing ? t("editor.import.importing") : t("editor.import.label")}
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={() => fileInputRef.current?.click()}>
+                <Icon name="DocumentUpload" size={16} />
+                {t("editor.import.file")}
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setMermaidOpen(true)}>
+                <Icon name="ai-magic-stroke-rounded" size={16} />
+                {t("editor.import.mermaid")}
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".excalidraw,application/json,image/png,image/svg+xml,image/jpeg,image/webp,image/gif"
+            onChange={handleImportFile}
+            className="hidden"
+          />
+
           <Button variant="outline" size="sm" onClick={onClose} disabled={saving}>
             {t("editor.close")}
           </Button>
@@ -198,9 +276,53 @@ export function DiagramEditor({
             initialScene={initialScene}
             langCode={locale}
             bindSave={bindSave}
+            bindImport={bindImport}
           />
         )}
       </div>
+
+      {/* Mermaid → editable shapes. Paste Mermaid (or AI-generated) syntax. */}
+      {mermaidOpen && (
+        <div className="absolute inset-0 z-10 flex items-center justify-center bg-foreground/20 backdrop-blur-sm p-4">
+          <div className="flex w-full max-w-xl flex-col gap-3 rounded-lg border border-border bg-card p-5 shadow-card-lg">
+            <div>
+              <h3 className="text-h5 text-foreground">
+                {t("editor.import.mermaidTitle")}
+              </h3>
+              <p className="mt-0.5 text-p4 text-muted-foreground">
+                {t("editor.import.mermaidHint")}
+              </p>
+            </div>
+            <textarea
+              value={mermaidText}
+              onChange={(e) => setMermaidText(e.target.value)}
+              rows={9}
+              spellCheck={false}
+              placeholder={
+                "graph TD\n  Client --> API\n  API --> DB[(Database)]\n  API --> Auth"
+              }
+              className="w-full resize-none rounded-md border border-border-strong bg-input px-3 py-2 font-mono text-[13px] text-foreground outline-none transition-[border-color] duration-[140ms] focus:border-primary"
+            />
+            <div className="flex items-center justify-end gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setMermaidOpen(false)}
+                disabled={importing}
+              >
+                {t("editor.import.cancel")}
+              </Button>
+              <Button
+                size="sm"
+                onClick={handleInsertMermaid}
+                disabled={importing || !mermaidText.trim()}
+              >
+                {importing ? t("editor.import.importing") : t("editor.import.insert")}
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

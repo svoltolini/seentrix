@@ -57,6 +57,20 @@
         "notAuthenticated": "You must be signed in.",
         "generic": "Something went wrong. Please try again.",
         "typeExists": "A diagram of this type already exists — open it to update it."
+      },
+      "import": {
+        "label": "Import",
+        "importing": "Importing…",
+        "file": "Import file (.excalidraw, image)",
+        "mermaid": "Generate from Mermaid / AI",
+        "mermaidTitle": "Generate from Mermaid",
+        "mermaidHint": "Paste Mermaid diagram syntax — any AI that outputs Mermaid works. It becomes editable shapes on the canvas.",
+        "insert": "Insert",
+        "cancel": "Cancel",
+        "unsupported": "That file type can't be imported. Use a .excalidraw file or an image.",
+        "failed": "Couldn't import that file.",
+        "mermaidEmpty": "Nothing to convert — the diagram is empty or the syntax is incomplete.",
+        "mermaidFailed": "Couldn't parse that Mermaid syntax."
       }
     },
     "evidence": {

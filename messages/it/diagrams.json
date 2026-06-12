@@ -57,6 +57,20 @@
         "notAuthenticated": "Devi aver effettuato l'accesso.",
         "generic": "Qualcosa è andato storto. Riprova.",
         "typeExists": "Esiste già un diagramma di questo tipo — aprilo per aggiornarlo."
+      },
+      "import": {
+        "label": "Importa",
+        "importing": "Importazione…",
+        "file": "Importa file (.excalidraw, immagine)",
+        "mermaid": "Genera da Mermaid / IA",
+        "mermaidTitle": "Genera da Mermaid",
+        "mermaidHint": "Incolla la sintassi Mermaid — funziona qualsiasi IA che produce Mermaid. Diventa forme modificabili sulla tela.",
+        "insert": "Inserisci",
+        "cancel": "Annulla",
+        "unsupported": "Questo tipo di file non può essere importato. Usa un file .excalidraw o un'immagine.",
+        "failed": "Impossibile importare il file.",
+        "mermaidEmpty": "Niente da convertire — il diagramma è vuoto o la sintassi è incompleta.",
+        "mermaidFailed": "Impossibile analizzare questa sintassi Mermaid."
       }
     },
     "evidence": {
