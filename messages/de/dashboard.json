@@ -347,6 +347,22 @@
     },
     "attention": {
       "title": "Produkte, die Aufmerksamkeit brauchen"
+    },
+    "myWork": {
+      "greeting": "Hallo {name}, hier ist deine Arbeit",
+      "greetingNoName": "Hier ist deine Arbeit",
+      "summary": "{open} offene Aufgaben, {overdue} überfällig.",
+      "summaryClear": "Dir ist gerade nichts zugewiesen — alles erledigt.",
+      "nextUp": "Als Nächstes",
+      "allProducts": "Alle Produkte",
+      "yourVulns": "Dir zugewiesene Schwachstellen",
+      "training": "Deine Schulung",
+      "noTraining": "Keine Pflichtlektionen für deine Rolle.",
+      "noTasksTitle": "Keine Aufgaben zugewiesen",
+      "noTasksBody": "Wenn dir ein Checklistenpunkt zugewiesen wird, erscheint er hier — überfällige Arbeit zuerst.",
+      "overdueDays": "{days} T überfällig",
+      "dueInDays": "Fällig in {days} T",
+      "dueToday": "Heute fällig"
     }
   }
 }

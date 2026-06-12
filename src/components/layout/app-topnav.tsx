@@ -51,9 +51,11 @@ type AppTopnavProps = {
     avatarUrl?: string | null;
   };
   orgName?: string | null;
+  /** Viewers are read-only — the create-product button is hidden for them. */
+  canWrite?: boolean;
 };
 
-export function AppTopnav({ user, orgName }: AppTopnavProps) {
+export function AppTopnav({ user, orgName, canWrite = true }: AppTopnavProps) {
   const t = useTranslations();
   const pathname = usePathname();
   const { open: openCreateProduct } = useCreateProduct();
@@ -136,14 +138,16 @@ export function AppTopnav({ user, orgName }: AppTopnavProps) {
         {/* Right cluster */}
         <div className="ml-auto flex shrink-0 items-center gap-1.5">
           {/* + New product — height-matched to the search box (h-12) so the
-              right cluster reads as one row */}
-          <Button
-            onClick={openCreateProduct}
-            className="mr-1 hidden h-12 rounded-md md:inline-flex"
-          >
-            <Icon name="Add" size={15} />
-            {t("topbar.newProduct") ?? "New Product"}
-          </Button>
+              right cluster reads as one row. Hidden for read-only viewers. */}
+          {canWrite && (
+            <Button
+              onClick={openCreateProduct}
+              className="mr-1 hidden h-12 rounded-md md:inline-flex"
+            >
+              <Icon name="Add" size={15} />
+              {t("topbar.newProduct") ?? "New Product"}
+            </Button>
+          )}
 
           {/* Quick search — Copilot lives in the floating FAB + ⌘K, so the
               top bar gives that space to a wider search box. */}

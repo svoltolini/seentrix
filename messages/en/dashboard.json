@@ -347,6 +347,22 @@
     },
     "attention": {
       "title": "Products needing attention"
+    },
+    "myWork": {
+      "greeting": "Hi {name}, here's your work",
+      "greetingNoName": "Here's your work",
+      "summary": "{open} open tasks, {overdue} overdue.",
+      "summaryClear": "Nothing assigned to you right now — you're all caught up.",
+      "nextUp": "Next up",
+      "allProducts": "All products",
+      "yourVulns": "Vulnerabilities assigned to you",
+      "training": "Your training",
+      "noTraining": "No required lessons for your role.",
+      "noTasksTitle": "No tasks assigned",
+      "noTasksBody": "When a checklist item is assigned to you, it shows up here — overdue work first.",
+      "overdueDays": "{days}d overdue",
+      "dueInDays": "Due in {days}d",
+      "dueToday": "Due today"
     }
   }
 }

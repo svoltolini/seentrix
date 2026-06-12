@@ -20,6 +20,7 @@
 import { createClient, getAuthUser } from "@/lib/supabase/server";
 import { createProductSchema, updateProductSchema } from "@/lib/validations/product";
 import { canCreateProduct, type OrgPlan } from "@/lib/constants/plans";
+import { canWrite } from "@/lib/constants/roles";
 import { logActivity } from "@/lib/activity";
 import { MS_PER_DAY } from "@/lib/time";
 
@@ -42,6 +43,23 @@ async function getAuthContext() {
 
   const orgId = user.app_metadata?.org_id as string | undefined;
   return { supabase, user, orgId: orgId ?? null, plan: "free" as OrgPlan };
+}
+
+/**
+ * Resolve the caller's org role. Viewers are read-only, so every product
+ * mutation calls this and refuses when `canWrite` is false — the UI hides
+ * the affordances, but the actions are reachable directly.
+ */
+async function callerCanWrite(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  userId: string,
+): Promise<boolean> {
+  const { data } = await supabase
+    .from("users")
+    .select("role")
+    .eq("id", userId)
+    .single();
+  return canWrite((data as { role: string } | null)?.role);
 }
 
 // ---------------------------------------------------------------------------
@@ -238,6 +256,8 @@ export async function createProduct(
   const orgId = user.app_metadata?.org_id as string | undefined;
   if (!orgId) return { error: "noOrganization" };
 
+  if (!(await callerCanWrite(supabase, user.id))) return { error: "notAuthorized" };
+
   // Server-side plan-limit enforcement. The UI already hides the create
   // button when at cap, but the action is reachable on its own — without
   // this check a user could POST around the disabled button and blow past
@@ -307,6 +327,7 @@ export async function updateProduct(
   const { supabase, user, orgId } = await getAuthContext();
 
   if (!user) return { error: "notAuthenticated" };
+  if (!(await callerCanWrite(supabase, user.id))) return { error: "notAuthorized" };
 
   // Handle image upload / removal
   const removeImage = formData.get("remove_image") === "1";
@@ -361,6 +382,7 @@ export async function deleteProduct(productId: string): Promise<DeleteState> {
   const { supabase, user } = await getAuthContext();
 
   if (!user) return { error: "notAuthenticated" };
+  if (!(await callerCanWrite(supabase, user.id))) return { error: "notAuthorized" };
 
   const { error } = await supabase
     .from("products")

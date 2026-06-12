@@ -240,6 +240,30 @@
         "reachedDescription": "Your {plan} plan allows up to {limit} team member.",
         "reachedDescriptionPlural": "Your {plan} plan allows up to {limit} team members.",
         "upgrade": "Upgrade plan"
+      },
+      "roleGuide": {
+        "title": "Roles",
+        "description": "What each role can do, so you can pick the right one when inviting someone.",
+        "admin": {
+          "summary": "Full access — manage products, compliance, the team and billing.",
+          "who": "Account owners and organisation leads."
+        },
+        "compliance_officer": {
+          "summary": "All compliance-critical actions: entity role, issuing the Declaration of Conformity, incident reports. No billing.",
+          "who": "The person accountable for CRA conformity."
+        },
+        "cto": {
+          "summary": "Same as Compliance officer, minus billing — products, technical work, conformity.",
+          "who": "Engineering leadership steering the technical file."
+        },
+        "editor": {
+          "summary": "Works the day-to-day: products, vulnerabilities, checklist items and assigned tasks. Cannot issue the Declaration of Conformity.",
+          "who": "Staff doing the hands-on compliance work."
+        },
+        "viewer": {
+          "summary": "Read-only — can open every screen but cannot add or change anything.",
+          "who": "Stakeholders, auditors and observers who only need visibility."
+        }
       }
     },
     "activity": {

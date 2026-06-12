@@ -240,6 +240,30 @@
         "reachedDescription": "Il tuo piano {plan} consente fino a {limit} membro del team.",
         "reachedDescriptionPlural": "Il tuo piano {plan} consente fino a {limit} membri del team.",
         "upgrade": "Esegui l'upgrade del piano"
+      },
+      "roleGuide": {
+        "title": "Ruoli",
+        "description": "Cosa può fare ogni ruolo, così scegli quello giusto quando inviti qualcuno.",
+        "admin": {
+          "summary": "Accesso completo — gestire prodotti, conformità, team e fatturazione.",
+          "who": "Titolari dell'account e responsabili dell'organizzazione."
+        },
+        "compliance_officer": {
+          "summary": "Tutte le azioni critiche per la conformità: ruolo dell'operatore, emissione della dichiarazione di conformità, segnalazioni di incidenti. Niente fatturazione.",
+          "who": "La persona responsabile della conformità CRA."
+        },
+        "cto": {
+          "summary": "Come il responsabile conformità, senza fatturazione — prodotti, lavoro tecnico, conformità.",
+          "who": "Direzione tecnica che guida il fascicolo tecnico."
+        },
+        "editor": {
+          "summary": "Gestisce il quotidiano: prodotti, vulnerabilità, elementi della checklist e attività assegnate. Non può emettere la dichiarazione di conformità.",
+          "who": "Personale che svolge il lavoro pratico di conformità."
+        },
+        "viewer": {
+          "summary": "Sola lettura — può aprire ogni schermata ma non può aggiungere o modificare nulla.",
+          "who": "Stakeholder, revisori e osservatori che hanno bisogno solo di visibilità."
+        }
       }
     },
     "activity": {

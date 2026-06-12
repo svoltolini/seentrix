@@ -240,6 +240,30 @@
         "reachedDescription": "Votre abonnement {plan} autorise jusqu'à {limit} membre.",
         "reachedDescriptionPlural": "Votre abonnement {plan} autorise jusqu'à {limit} membres.",
         "upgrade": "Mettre à niveau l'abonnement"
+      },
+      "roleGuide": {
+        "title": "Rôles",
+        "description": "Ce que chaque rôle peut faire, pour choisir le bon lors d'une invitation.",
+        "admin": {
+          "summary": "Accès complet — gérer les produits, la conformité, l'équipe et la facturation.",
+          "who": "Propriétaires du compte et responsables de l'organisation."
+        },
+        "compliance_officer": {
+          "summary": "Toutes les actions critiques de conformité : rôle d'opérateur, émission de la déclaration de conformité, rapports d'incident. Pas la facturation.",
+          "who": "La personne responsable de la conformité CRA."
+        },
+        "cto": {
+          "summary": "Comme le responsable conformité, sans la facturation — produits, travail technique, conformité.",
+          "who": "Direction technique pilotant le dossier technique."
+        },
+        "editor": {
+          "summary": "Gère le quotidien : produits, vulnérabilités, éléments de checklist et tâches assignées. Ne peut pas émettre la déclaration de conformité.",
+          "who": "Personnel réalisant le travail de conformité concret."
+        },
+        "viewer": {
+          "summary": "Lecture seule — peut ouvrir chaque écran mais ne peut rien ajouter ni modifier.",
+          "who": "Parties prenantes, auditeurs et observateurs qui ont seulement besoin de visibilité."
+        }
       }
     },
     "activity": {

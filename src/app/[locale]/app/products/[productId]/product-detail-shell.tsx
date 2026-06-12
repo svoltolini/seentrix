@@ -41,10 +41,13 @@ const CATEGORY_CHIP: Record<string, string> = {
 export function ProductDetailShell({
   product,
   productId,
+  canWrite = true,
   children,
 }: {
   product: ProductDetail;
   productId: string;
+  /** Viewers are read-only — Edit / Delete are hidden for them. */
+  canWrite?: boolean;
   children: React.ReactNode;
 }) {
   const t = useTranslations("products");
@@ -124,35 +127,37 @@ export function ProductDetailShell({
         </div>
 
         {/* Edit Product (opens the edit drawer on the overview tab via
-            ?edit=1) + Delete, side by side */}
-        <div className="flex shrink-0 items-center gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => {
-              // Already on the overview? Set the param via the History API —
-              // it syncs with useSearchParams without a server round-trip,
-              // so the drawer opens instantly. From other tabs, navigate.
-              if (isActive("")) {
-                window.history.pushState(null, "", "?edit=1");
-              } else {
-                router.push(`${basePath}?edit=1`);
-              }
-            }}
-          >
-            <Icon name="Edit" size={15} />
-            {t("detail.editProduct") ?? "Edit Product"}
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setShowDelete(true)}
-            className="gap-1.5 text-destructive hover:bg-destructive/10 hover:text-destructive"
-          >
-            <Icon name="Trash2Icon" className="size-3.5" />
-            {t("detail.overview.delete")}
-          </Button>
-        </div>
+            ?edit=1) + Delete, side by side. Hidden for read-only viewers. */}
+        {canWrite && (
+          <div className="flex shrink-0 items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                // Already on the overview? Set the param via the History API —
+                // it syncs with useSearchParams without a server round-trip,
+                // so the drawer opens instantly. From other tabs, navigate.
+                if (isActive("")) {
+                  window.history.pushState(null, "", "?edit=1");
+                } else {
+                  router.push(`${basePath}?edit=1`);
+                }
+              }}
+            >
+              <Icon name="Edit" size={15} />
+              {t("detail.editProduct") ?? "Edit Product"}
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setShowDelete(true)}
+              className="gap-1.5 text-destructive hover:bg-destructive/10 hover:text-destructive"
+            >
+              <Icon name="Trash2Icon" className="size-3.5" />
+              {t("detail.overview.delete")}
+            </Button>
+          </div>
+        )}
       </div>
 
       {/* Tabs — underlined, wrapping (no scrolling) */}

@@ -240,6 +240,30 @@
         "reachedDescription": "Ihr {plan}-Plan erlaubt bis zu {limit} Teammitglied.",
         "reachedDescriptionPlural": "Ihr {plan}-Plan erlaubt bis zu {limit} Teammitglieder.",
         "upgrade": "Plan upgraden"
+      },
+      "roleGuide": {
+        "title": "Rollen",
+        "description": "Was jede Rolle darf, damit du beim Einladen die richtige wählst.",
+        "admin": {
+          "summary": "Vollzugriff — Produkte, Compliance, Team und Abrechnung verwalten.",
+          "who": "Kontoinhaber und Organisationsleitung."
+        },
+        "compliance_officer": {
+          "summary": "Alle compliance-kritischen Aktionen: Akteursrolle, Ausstellung der Konformitätserklärung, Vorfallmeldungen. Keine Abrechnung.",
+          "who": "Die für die CRA-Konformität verantwortliche Person."
+        },
+        "cto": {
+          "summary": "Wie Compliance-Officer, ohne Abrechnung — Produkte, technische Arbeit, Konformität.",
+          "who": "Technische Leitung, die die technische Dokumentation steuert."
+        },
+        "editor": {
+          "summary": "Erledigt das Tagesgeschäft: Produkte, Schwachstellen, Checklistenpunkte und zugewiesene Aufgaben. Kann keine Konformitätserklärung ausstellen.",
+          "who": "Mitarbeitende, die die praktische Compliance-Arbeit leisten."
+        },
+        "viewer": {
+          "summary": "Nur Lesen — kann jeden Bildschirm öffnen, aber nichts hinzufügen oder ändern.",
+          "who": "Stakeholder, Prüfer und Beobachter, die nur Einblick brauchen."
+        }
       }
     },
     "activity": {

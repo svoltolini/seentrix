@@ -1,4 +1,6 @@
 import { loadProduct } from "../actions";
+import { getCurrentUserRole } from "../../settings/actions";
+import { canWrite } from "@/lib/constants/roles";
 import { ProductDetailShell } from "./product-detail-shell";
 
 export default async function ProductDetailLayout({
@@ -9,7 +11,10 @@ export default async function ProductDetailLayout({
   params: Promise<{ locale: string; productId: string }>;
 }) {
   const { productId } = await params;
-  const { product } = await loadProduct(productId);
+  const [{ product }, role] = await Promise.all([
+    loadProduct(productId),
+    getCurrentUserRole(),
+  ]);
 
   if (!product) {
     return (
@@ -26,7 +31,11 @@ export default async function ProductDetailLayout({
   }
 
   return (
-    <ProductDetailShell product={product} productId={productId}>
+    <ProductDetailShell
+      product={product}
+      productId={productId}
+      canWrite={canWrite(role)}
+    >
       {children}
     </ProductDetailShell>
   );

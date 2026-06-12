@@ -5,6 +5,7 @@ import { GsapProvider } from "@/components/gsap-provider";
 import { NavigationProgress } from "@/components/navigation-progress";
 import { CopilotProvider } from "@/components/copilot/copilot-provider";
 import { LearnFabProvider } from "@/components/academy/learn-fab";
+import { canWrite } from "@/lib/constants/roles";
 import { CreateProductSheet } from "@/components/products/create-product-sheet";
 import { createClient, getAuthUser } from "@/lib/supabase/server";
 
@@ -56,6 +57,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   let displayName: string | null = null;
   let orgName: string | null = null;
   let completedLessonIds: string[] = [];
+  let role: string | null = null;
   if (user) {
     // Two separate queries instead of one nested join. The earlier
     // `.select("avatar_url, full_name, organization:organizations(name)")`
@@ -70,9 +72,13 @@ export default async function AppLayout({ children }: { children: React.ReactNod
     const [userRowRes, orgRowRes, completionsRes] = await Promise.all([
       supabase
         .from("users")
-        .select("avatar_url, full_name")
+        .select("avatar_url, full_name, role")
         .eq("id", user.id)
-        .single<{ avatar_url: string | null; full_name: string | null }>(),
+        .single<{
+          avatar_url: string | null;
+          full_name: string | null;
+          role: string | null;
+        }>(),
       orgId
         ? supabase
             .from("organizations")
@@ -103,6 +109,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
     completedLessonIds = (completionsRes.data ?? []).map(
       (r) => (r as { lesson_id: string }).lesson_id,
     );
+    role = userRowRes.data?.role ?? null;
   }
 
   const userProfile = {
@@ -132,7 +139,11 @@ export default async function AppLayout({ children }: { children: React.ReactNod
                     geometry from the design handoff: 30px side padding, 80px
                     bottom). The old fixed sidebar + slim-topbar shell is gone. */}
                 <div className="min-h-full bg-background">
-                  <AppTopnav user={userProfile} orgName={orgName} />
+                  <AppTopnav
+                    user={userProfile}
+                    orgName={orgName}
+                    canWrite={canWrite(role)}
+                  />
                   <main className="mx-auto w-full max-w-[1480px] px-4 pb-[52px] pt-5 sm:px-[30px]">
                     {children}
                   </main>

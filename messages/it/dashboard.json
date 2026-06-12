@@ -347,6 +347,22 @@
     },
     "attention": {
       "title": "Prodotti che richiedono attenzione"
+    },
+    "myWork": {
+      "greeting": "Ciao {name}, ecco il tuo lavoro",
+      "greetingNoName": "Ecco il tuo lavoro",
+      "summary": "{open} attività aperte, {overdue} in ritardo.",
+      "summaryClear": "Al momento non hai nulla assegnato — sei in pari.",
+      "nextUp": "Prossimi passi",
+      "allProducts": "Tutti i prodotti",
+      "yourVulns": "Vulnerabilità assegnate a te",
+      "training": "La tua formazione",
+      "noTraining": "Nessuna lezione obbligatoria per il tuo ruolo.",
+      "noTasksTitle": "Nessuna attività assegnata",
+      "noTasksBody": "Quando ti viene assegnato un elemento della checklist, appare qui — prima il lavoro in ritardo.",
+      "overdueDays": "{days}g di ritardo",
+      "dueInDays": "Scade tra {days}g",
+      "dueToday": "Scade oggi"
     }
   }
 }

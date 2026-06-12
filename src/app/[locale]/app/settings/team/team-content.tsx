@@ -19,6 +19,7 @@ import {
 } from "../actions";
 import type { OrgPlan } from "@/lib/constants/plans";
 import { PLAN_USER_LIMITS } from "@/lib/constants/plans";
+import { ROLE_META } from "@/lib/constants/roles";
 import { useToast } from "@/components/ui/toast";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
@@ -285,6 +286,10 @@ export function TeamContent({
         </div>
       </div>
 
+      {/* Role reference — what each role can do + who it's for, so whoever
+          invites people knows which role to pick. */}
+      <RoleGuide />
+
       {/* Remove member dialog */}
       <ConfirmDialog
         open={!!removeTarget}
@@ -327,6 +332,50 @@ export function TeamContent({
         disabled={isPending}
         variant="default"
       />
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Role guide — reference card listing every role + permissions + who it's for
+// ---------------------------------------------------------------------------
+
+function RoleGuide() {
+  const t = useTranslations("settings.team");
+  const tg = useTranslations("settings.team.roleGuide");
+
+  return (
+    <div className="rounded-lg border border-border bg-card">
+      <div className="border-b border-border px-5 py-4">
+        <h2 className="text-h4 text-foreground">{tg("title")}</h2>
+        <p className="mt-0.5 text-p3 text-muted-foreground">
+          {tg("description")}
+        </p>
+      </div>
+      <div className="divide-y divide-border">
+        {ROLE_META.map((meta) => (
+          <div key={meta.id} className="flex flex-col gap-1.5 px-5 py-4 sm:flex-row sm:gap-4">
+            <div className="sm:w-44 sm:shrink-0">
+              <span
+                className={cn(
+                  "inline-flex rounded-full px-2.5 py-0.5 text-l6-plus",
+                  ROLE_STYLE[meta.id] ?? ROLE_STYLE.viewer,
+                )}
+              >
+                {t(`roles.${meta.id}` as Parameters<typeof t>[0])}
+              </span>
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="text-p3 text-foreground">
+                {tg(`${meta.id}.summary` as Parameters<typeof tg>[0])}
+              </p>
+              <p className="mt-0.5 text-p4 text-muted-foreground">
+                {tg(`${meta.id}.who` as Parameters<typeof tg>[0])}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
