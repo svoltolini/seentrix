@@ -362,7 +362,8 @@
       "noTasksBody": "Lorsqu'un élément de checklist vous est assigné, il apparaît ici — les retards d'abord.",
       "overdueDays": "{days} j de retard",
       "dueInDays": "Échéance dans {days} j",
-      "dueToday": "Échéance aujourd'hui"
+      "dueToday": "Échéance aujourd'hui",
+      "myTasks": "Mes tâches"
     }
   }
 }

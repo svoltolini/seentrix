@@ -66,7 +66,6 @@ export function MyWorkDashboard({ stats }: { stats: MyWorkStats }) {
 
       {/* Hero — greeting + my-progress ring */}
       <section className="flex flex-wrap items-center gap-6 rounded-lg bg-dark-cta px-[30px] py-[26px] text-white">
-        <ProgressRing pct={pct} />
         <div className="min-w-0 flex-1">
           <h1 className="font-heading text-[26px] font-semibold leading-[1.1] tracking-[-0.4px]">
             {stats.firstName
@@ -82,6 +81,7 @@ export function MyWorkDashboard({ stats }: { stats: MyWorkStats }) {
               : t("summaryClear")}
           </p>
         </div>
+        <ProgressRing pct={pct} />
       </section>
 
       <div className="grid gap-3.5 lg:grid-cols-[1fr_370px]">

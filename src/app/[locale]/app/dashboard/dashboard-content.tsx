@@ -60,6 +60,8 @@ import { DashboardHero } from "./widgets/dashboard-hero";
 import { KpiStrip, type Kpi } from "./widgets/kpi-strip";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { MyTasksCard } from "./widgets/my-tasks-card";
+import type { MyTask, MyVuln } from "./my-work-actions";
 import { useCopilot } from "@/components/copilot/copilot-context";
 
 // ---------------------------------------------------------------------------
@@ -173,6 +175,9 @@ export function DashboardContent(
     incidentWidget?: IncidentWidgetData;
     supportWidget?: SupportWidgetData;
     profileStatus?: CompanyProfileStatus;
+    /** The viewer's own assigned work (leadership "My tasks" rail card). */
+    myTasks?: MyTask[];
+    myVulns?: MyVuln[];
   },
 ) {
   const t = useTranslations("dashboard");
@@ -192,6 +197,8 @@ export function DashboardContent(
     criticalCount,
     totalVulnerabilities,
     profileStatus,
+    myTasks,
+    myVulns,
   } = stats;
 
   const firstName = currentUser?.full_name?.split(" ")[0] ?? null;
@@ -465,6 +472,11 @@ export function DashboardContent(
 
         {/* RIGHT RAIL — calendar (carries the deadlines), then activity */}
         <aside className="flex min-w-0 flex-col gap-3.5 lg:max-w-[370px]">
+          {/* My tasks — leadership sees their own assigned work inline */}
+          {!!(myTasks?.length || myVulns?.length) && (
+            <MyTasksCard tasks={myTasks ?? []} vulns={myVulns ?? []} />
+          )}
+
           {/* CRA calendar tracker — already surfaces upcoming deadlines */}
           <section className="flex flex-col gap-4 rounded-lg border border-border bg-card p-4">
             <h3 className="text-h4 text-foreground">{t("calendar.title")}</h3>

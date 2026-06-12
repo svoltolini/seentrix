@@ -21,12 +21,14 @@ export default async function DashboardPage() {
     // Fall through to the org dashboard if the per-user fetch fails.
   }
 
-  const [stats, incidentWidget, supportWidget, profileStatus] =
+  const [stats, incidentWidget, supportWidget, profileStatus, myWork] =
     await Promise.all([
       getDashboardStats(),
       getIncidentWidget(),
       getSupportWidget(),
       getCompanyProfileStatus(),
+      // Leadership's own assigned work for the "My tasks" rail card.
+      getMyWorkStats(),
     ]);
 
   return (
@@ -37,6 +39,8 @@ export default async function DashboardPage() {
         incidentWidget={incidentWidget}
         supportWidget={supportWidget}
         profileStatus={profileStatus}
+        myTasks={myWork?.tasks ?? []}
+        myVulns={myWork?.vulns ?? []}
       />
     </>
   );

@@ -362,7 +362,8 @@
       "noTasksBody": "When a checklist item is assigned to you, it shows up here — overdue work first.",
       "overdueDays": "{days}d overdue",
       "dueInDays": "Due in {days}d",
-      "dueToday": "Due today"
+      "dueToday": "Due today",
+      "myTasks": "My tasks"
     }
   }
 }

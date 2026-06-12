@@ -75,10 +75,13 @@ export function ProductOverview({
   product,
   complianceScore,
   hasChecklist,
+  canWrite = true,
 }: {
   product: ProductDetail;
   complianceScore: number;
   hasChecklist: boolean;
+  /** Viewers are read-only — edit drawer + rerun-assessment are hidden. */
+  canWrite?: boolean;
 }) {
   const t = useTranslations("products");
   const tAssessment = useTranslations("assessment");
@@ -92,10 +95,11 @@ export function ProductOverview({
   const [editing, setEditing] = useState(false);
 
   // The product header's "Edit Product" button (on any tab) navigates here
-  // with ?edit=1; open the edit sheet when that's present.
+  // with ?edit=1; open the edit sheet when that's present — but never for
+  // read-only viewers (who could otherwise reach it by typing the URL).
   useEffect(() => {
-    if (searchParams.get("edit") === "1") setEditing(true);
-  }, [searchParams]);
+    if (canWrite && searchParams.get("edit") === "1") setEditing(true);
+  }, [canWrite, searchParams]);
   const [isPending, startTransition] = useTransition();
   const [imagePreview, setImagePreview] = useState<string | null>(product.image_url);
   const [removeImage, setRemoveImage] = useState(false);
@@ -185,13 +189,15 @@ export function ProductOverview({
             >
               {t(`categories.${product.cra_category}`)}
             </span>
-          ) : (
+          ) : canWrite ? (
             <Link
               href={`/app/products/${product.id}/assess`}
               className="inline-flex items-center gap-1 text-l6 text-primary hover:underline"
             >
               {t("detail.overview.runAssessment")} &rarr;
             </Link>
+          ) : (
+            <span className="text-p3 text-muted-foreground">{EM_DASH}</span>
           )}
         </StatCard>
 
@@ -238,8 +244,9 @@ export function ProductOverview({
         </StatCard>
       </div>
 
-      {/* Actions row — delete lives in the product header next to Edit */}
-      {product.cra_category && (
+      {/* Actions row — delete lives in the product header next to Edit.
+          Hidden for read-only viewers. */}
+      {canWrite && product.cra_category && (
         <div className="flex items-center gap-2">
           <Link
             href={`/app/products/${product.id}/assess`}

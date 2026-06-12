@@ -1,4 +1,6 @@
 import { loadProduct } from "../actions";
+import { getCurrentUserRole } from "../../settings/actions";
+import { canWrite } from "@/lib/constants/roles";
 import { ProductOverview } from "./product-overview";
 import { ReadinessSection } from "./readiness/readiness-section";
 
@@ -8,7 +10,10 @@ export default async function ProductPage({
   params: Promise<{ locale: string; productId: string }>;
 }) {
   const { locale, productId } = await params;
-  const { product } = await loadProduct(productId);
+  const [{ product }, role] = await Promise.all([
+    loadProduct(productId),
+    getCurrentUserRole(),
+  ]);
 
   if (!product) {
     return null; // Layout handles the not-found case
@@ -37,6 +42,7 @@ export default async function ProductPage({
         product={product}
         complianceScore={complianceScore}
         hasChecklist={!!items && items.length > 0}
+        canWrite={canWrite(role)}
       />
       {/* CRA Readiness — merged into the Overview tab */}
       <ReadinessSection locale={locale} productId={productId} />

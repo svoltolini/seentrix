@@ -362,7 +362,8 @@
       "noTasksBody": "Wenn dir ein Checklistenpunkt zugewiesen wird, erscheint er hier — überfällige Arbeit zuerst.",
       "overdueDays": "{days} T überfällig",
       "dueInDays": "Fällig in {days} T",
-      "dueToday": "Heute fällig"
+      "dueToday": "Heute fällig",
+      "myTasks": "Meine Aufgaben"
     }
   }
 }
