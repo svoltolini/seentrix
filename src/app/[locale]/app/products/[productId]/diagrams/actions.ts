@@ -23,6 +23,8 @@ export interface DiagramRecord {
   version: number;
   created_at: string;
   updated_at: string;
+  /** Set when this version was superseded or manually archived. */
+  archived_at: string | null;
   /** Short-lived signed URL for the preview PNG, or null if not exported. */
   preview_signed_url: string | null;
   created_by: {
@@ -115,7 +117,7 @@ export async function loadDiagramsAndEvidence(
     supabase
       .from("product_diagrams")
       .select(
-        "id, type, title, version, preview_url, created_at, updated_at, creator:users(id, full_name)",
+        "id, type, title, version, preview_url, created_at, updated_at, archived_at, creator:users(id, full_name)",
       )
       .eq("product_id", productId)
       .order("updated_at", { ascending: false }),
@@ -136,14 +138,16 @@ export async function loadDiagramsAndEvidence(
     preview_url: string | null;
     created_at: string;
     updated_at: string;
+    archived_at: string | null;
     creator: { id: string; full_name: string | null } | null;
   }>;
 
-  // Sign every preview PNG in one batch so the card grid can render <img>.
+  // Sign preview PNGs for the ACTIVE diagrams only — the archive renders as
+  // a compact text list, so signing its previews would be wasted round-trips.
   const diagrams: DiagramRecord[] = await Promise.all(
     typedDiagrams.map(async (row) => {
       let previewSigned: string | null = null;
-      if (row.preview_url) {
+      if (row.preview_url && !row.archived_at) {
         const { data: signed } = await supabase.storage
           .from(DIAGRAMS_BUCKET)
           .createSignedUrl(row.preview_url, 3600);
@@ -156,6 +160,7 @@ export async function loadDiagramsAndEvidence(
         version: row.version,
         created_at: row.created_at,
         updated_at: row.updated_at,
+        archived_at: row.archived_at,
         preview_signed_url: previewSigned,
         created_by: row.creator
           ? { id: row.creator.id, name: row.creator.full_name }
@@ -213,9 +218,11 @@ export async function loadDiagramsAndEvidence(
  *   - `scene`      the scene JSON (application/json blob)
  *   - `preview`    the exported PNG (image/png blob)
  *
- * Path layout: `<org_id>/<product_id>/<diagram_id>/{scene.json,preview.png}` —
- * stable per diagram so re-saves overwrite in place (upsert). The leading
- * org_id segment is what the storage RLS policy gates on.
+ * Versioning: at most one ACTIVE diagram exists per (product, type) — the
+ * valid one. Updating doesn't overwrite: the current row is archived and a
+ * NEW row (version + 1) is inserted with its own storage objects under
+ * `<org_id>/<product_id>/<new_id>/{scene.json,preview.png}`, so every
+ * version's drawing survives for the Annex VII record-keeping trail.
  */
 export async function saveDiagram(
   productId: string,
@@ -226,11 +233,11 @@ export async function saveDiagram(
   if (!canWrite(role)) return { error: "notAuthorized" };
 
   const rawId = formData.get("diagramId");
-  const diagramId =
-    typeof rawId === "string" && rawId.trim().length > 0
-      ? rawId.trim()
-      : crypto.randomUUID();
-  const isUpdate = typeof rawId === "string" && rawId.trim().length > 0;
+  const previousId =
+    typeof rawId === "string" && rawId.trim().length > 0 ? rawId.trim() : null;
+  const isUpdate = previousId !== null;
+  // Every save writes a fresh row + fresh storage objects.
+  const diagramId = crypto.randomUUID();
 
   const rawType = formData.get("type");
   const rawTitle = formData.get("title");
@@ -247,6 +254,28 @@ export async function saveDiagram(
     return { error: "noScene" };
   }
   if (scene.size > DIAGRAM_ASSET_MAX_BYTES) return { error: "sceneTooLarge" };
+
+  // On create, refuse a second active diagram of the same type up front so
+  // the user gets a meaningful error instead of a unique-index violation.
+  let nextVersion = 1;
+  if (isUpdate) {
+    const { data: existing } = await supabase
+      .from("product_diagrams")
+      .select("version")
+      .eq("id", previousId)
+      .single();
+    if (!existing) return { error: "notFound" };
+    nextVersion = ((existing as { version: number }).version ?? 1) + 1;
+  } else {
+    const { data: activeSameType } = await supabase
+      .from("product_diagrams")
+      .select("id")
+      .eq("product_id", productId)
+      .eq("type", rawType)
+      .is("archived_at", null)
+      .limit(1);
+    if ((activeSameType ?? []).length > 0) return { error: "typeExists" };
+  }
 
   const basePath = `${orgId}/${productId}/${diagramId}`;
   const scenePath = `${basePath}/scene.json`;
@@ -276,49 +305,44 @@ export async function saveDiagram(
     if (!previewError) hasPreview = true;
   }
 
+  // Archive the previous version first — the partial unique index allows
+  // only one active row per (product, type).
   if (isUpdate) {
-    // Bump the version + refresh updated_at. We read the current version
-    // first because PostgREST can't express `version = version + 1`
-    // without an RPC.
-    const { data: existing } = await supabase
+    const { error: archiveError } = await supabase
       .from("product_diagrams")
-      .select("version")
-      .eq("id", diagramId)
-      .single();
-    const nextVersion =
-      ((existing as { version: number } | null)?.version ?? 1) + 1;
-    const patch: Record<string, unknown> = {
-      title,
-      type: rawType,
-      scene_url: scenePath,
-      version: nextVersion,
-      updated_at: new Date().toISOString(),
-    };
-    if (hasPreview) patch.preview_url = previewPath;
-    const { error } = await supabase
-      .from("product_diagrams")
-      .update(patch)
-      .eq("id", diagramId);
-    if (error) return { error: "generic" };
-  } else {
-    const { error } = await supabase.from("product_diagrams").insert({
-      id: diagramId,
-      product_id: productId,
-      org_id: orgId,
-      type: rawType,
-      title,
-      scene_url: scenePath,
-      preview_url: hasPreview ? previewPath : null,
-      version: 1,
-      created_by: user.id,
-    });
-    if (error) {
-      // Roll back the just-uploaded assets so we don't orphan storage.
+      .update({ archived_at: new Date().toISOString() })
+      .eq("id", previousId);
+    if (archiveError) {
       await supabase.storage
         .from(DIAGRAMS_BUCKET)
         .remove([scenePath, previewPath]);
       return { error: "generic" };
     }
+  }
+
+  const { error } = await supabase.from("product_diagrams").insert({
+    id: diagramId,
+    product_id: productId,
+    org_id: orgId,
+    type: rawType,
+    title,
+    scene_url: scenePath,
+    preview_url: hasPreview ? previewPath : null,
+    version: nextVersion,
+    created_by: user.id,
+  });
+  if (error) {
+    // Roll back: un-archive the previous version and drop the new assets.
+    if (isUpdate) {
+      await supabase
+        .from("product_diagrams")
+        .update({ archived_at: null })
+        .eq("id", previousId);
+    }
+    await supabase.storage
+      .from(DIAGRAMS_BUCKET)
+      .remove([scenePath, previewPath]);
+    return { error: "generic" };
   }
 
   await logActivity({
@@ -333,6 +357,58 @@ export async function saveDiagram(
   // only need to hand back the id (useful for keeping the editor open on the
   // freshly-created diagram).
   return { diagramId };
+}
+
+/**
+ * Restore an archived diagram version: it becomes the valid diagram of its
+ * type again, and the currently-active version (if any) is archived in its
+ * place. Only the latest restore wins — there is never more than one active
+ * diagram per type.
+ */
+export async function restoreDiagram(
+  diagramId: string,
+  productId: string,
+): Promise<{ error?: string }> {
+  const { supabase, user, role } = await getAuthContext();
+  if (!user) return { error: "notAuthenticated" };
+  if (!canWrite(role)) return { error: "notAuthorized" };
+
+  const { data: target } = await supabase
+    .from("product_diagrams")
+    .select("id, type, archived_at")
+    .eq("id", diagramId)
+    .single();
+  const targetRow = target as {
+    id: string;
+    type: DiagramType;
+    archived_at: string | null;
+  } | null;
+  if (!targetRow) return { error: "notFound" };
+  if (!targetRow.archived_at) return {}; // already the active one
+
+  // Swap: archive the current active of this type (if any), then activate.
+  const { error: archiveError } = await supabase
+    .from("product_diagrams")
+    .update({ archived_at: new Date().toISOString() })
+    .eq("product_id", productId)
+    .eq("type", targetRow.type)
+    .is("archived_at", null);
+  if (archiveError) return { error: "generic" };
+
+  const { error: activateError } = await supabase
+    .from("product_diagrams")
+    .update({ archived_at: null, updated_at: new Date().toISOString() })
+    .eq("id", diagramId);
+  if (activateError) return { error: "generic" };
+
+  await logActivity({
+    action: "diagram.restored",
+    targetType: "product_diagram",
+    targetId: diagramId,
+    metadata: { productId, type: targetRow.type },
+  });
+  revalidatePath(`/app/products/${productId}/diagrams`);
+  return {};
 }
 
 export async function renameDiagram(

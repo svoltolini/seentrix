@@ -21,7 +21,11 @@
       "deleteDescription": "Dadurch werden das Diagramm und die gespeicherte Zeichnung dauerhaft gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.",
       "deleteConfirm": "Diagramm löschen",
       "deleteCancel": "Abbrechen",
-      "deleting": "Wird gelöscht…"
+      "deleting": "Wird gelöscht…",
+      "archiveTitle": "Archiv",
+      "archiveSubtitle": "Frühere Versionen jedes Diagramms. Nur die Diagramme oben sind gültig — beim Wiederherstellen wird eine Version wieder zur gültigen.",
+      "restore": "Wiederherstellen",
+      "archivedOn": "Archiviert am {date}"
     },
     "card": {
       "open": "Öffnen",
@@ -49,7 +53,8 @@
         "uploadFailed": "Das Speichern der Zeichnung ist fehlgeschlagen. Bitte erneut versuchen.",
         "notAuthorized": "Sie sind nicht berechtigt, Diagramme zu bearbeiten.",
         "notAuthenticated": "Sie müssen angemeldet sein.",
-        "generic": "Etwas ist schiefgelaufen. Bitte erneut versuchen."
+        "generic": "Etwas ist schiefgelaufen. Bitte erneut versuchen.",
+        "typeExists": "Ein Diagramm dieses Typs existiert bereits — öffnen Sie es, um es zu aktualisieren."
       }
     },
     "evidence": {

@@ -130,6 +130,7 @@ async function gather(
       .from("product_diagrams")
       .select("id, type, title, preview_url")
       .eq("product_id", productId)
+      .is("archived_at", null)
       .order("updated_at", { ascending: false }),
     supabase
       .from("sboms")

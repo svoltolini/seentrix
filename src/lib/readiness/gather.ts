@@ -53,7 +53,7 @@ export async function gatherReadinessInputs(
       .order("snapshot_date", { ascending: false }),
     supabase.from("sboms").select("product_id").eq("is_active", true).in("product_id", productIds),
     supabase.from("risk_assessments").select("product_id, status").in("product_id", productIds),
-    supabase.from("product_diagrams").select("product_id, type").in("product_id", productIds),
+    supabase.from("product_diagrams").select("product_id, type").is("archived_at", null).in("product_id", productIds),
     supabase.from("technical_files").select("product_id, status").in("product_id", productIds),
     supabase.from("documents").select("product_id, document_type, status").in("product_id", productIds),
     supabase.from("monitoring_entries").select("product_id").in("product_id", productIds),

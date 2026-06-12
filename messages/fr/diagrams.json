@@ -21,7 +21,11 @@
       "deleteDescription": "Cette action supprime définitivement le schéma et son dessin enregistré. Elle est irréversible.",
       "deleteConfirm": "Supprimer le schéma",
       "deleteCancel": "Annuler",
-      "deleting": "Suppression…"
+      "deleting": "Suppression…",
+      "archiveTitle": "Archive",
+      "archiveSubtitle": "Versions précédentes de chaque schéma. Seuls les schémas ci-dessus sont valides — restaurer une version la rend de nouveau valide.",
+      "restore": "Restaurer",
+      "archivedOn": "Archivé le {date}"
     },
     "card": {
       "open": "Ouvrir",
@@ -49,7 +53,8 @@
         "uploadFailed": "L'enregistrement du dessin a échoué. Veuillez réessayer.",
         "notAuthorized": "Vous n'avez pas la permission de modifier les schémas.",
         "notAuthenticated": "Vous devez être connecté.",
-        "generic": "Une erreur s'est produite. Veuillez réessayer."
+        "generic": "Une erreur s'est produite. Veuillez réessayer.",
+        "typeExists": "Un schéma de ce type existe déjà — ouvrez-le pour le mettre à jour."
       }
     },
     "evidence": {

@@ -352,7 +352,7 @@ export function buildCopilotTools({ supabase, orgId, plan }: Ctx) {
             .eq("id", orgId)
             .maybeSingle(),
           supabase.from("product_releases").select("id").eq("product_id", productId),
-          supabase.from("product_diagrams").select("type").eq("product_id", productId),
+          supabase.from("product_diagrams").select("type").is("archived_at", null).eq("product_id", productId),
           supabase
             .from("sboms")
             .select("id")

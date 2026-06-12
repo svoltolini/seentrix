@@ -21,7 +21,11 @@
       "deleteDescription": "This permanently deletes the diagram and its saved drawing. This action cannot be undone.",
       "deleteConfirm": "Delete diagram",
       "deleteCancel": "Cancel",
-      "deleting": "Deleting…"
+      "deleting": "Deleting…",
+      "archiveTitle": "Archive",
+      "archiveSubtitle": "Previous versions of each diagram. Only the diagrams above are valid — restoring a version makes it the valid one again.",
+      "restore": "Restore",
+      "archivedOn": "Archived {date}"
     },
     "card": {
       "open": "Open",
@@ -49,7 +53,8 @@
         "uploadFailed": "Saving the drawing failed. Please try again.",
         "notAuthorized": "You don't have permission to edit diagrams.",
         "notAuthenticated": "You must be signed in.",
-        "generic": "Something went wrong. Please try again."
+        "generic": "Something went wrong. Please try again.",
+        "typeExists": "A diagram of this type already exists — open it to update it."
       }
     },
     "evidence": {

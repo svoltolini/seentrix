@@ -21,7 +21,11 @@
       "deleteDescription": "Questa operazione elimina definitivamente il diagramma e il disegno salvato. L'azione non può essere annullata.",
       "deleteConfirm": "Elimina diagramma",
       "deleteCancel": "Annulla",
-      "deleting": "Eliminazione…"
+      "deleting": "Eliminazione…",
+      "archiveTitle": "Archivio",
+      "archiveSubtitle": "Versioni precedenti di ogni diagramma. Solo i diagrammi sopra sono validi — ripristinando una versione torna a essere quella valida.",
+      "restore": "Ripristina",
+      "archivedOn": "Archiviato il {date}"
     },
     "card": {
       "open": "Apri",
@@ -49,7 +53,8 @@
         "uploadFailed": "Il salvataggio del disegno non è riuscito. Riprova.",
         "notAuthorized": "Non hai i permessi per modificare i diagrammi.",
         "notAuthenticated": "Devi aver effettuato l'accesso.",
-        "generic": "Qualcosa è andato storto. Riprova."
+        "generic": "Qualcosa è andato storto. Riprova.",
+        "typeExists": "Esiste già un diagramma di questo tipo — aprilo per aggiornarlo."
       }
     },
     "evidence": {

@@ -24,6 +24,7 @@ import {
   loadDiagramsAndEvidence,
   renameDiagram,
   deleteDiagram,
+  restoreDiagram,
   deleteEvidence,
   getEvidenceDownloadUrl,
   type DiagramRecord,
@@ -94,6 +95,14 @@ export function DiagramsContent({
     router.refresh();
   }, [productId, router]);
 
+  // One valid diagram per type: the grid shows the active set; superseded
+  // versions live in the archive list below and can be restored.
+  const activeDiagrams = diagrams.filter((d) => !d.archived_at);
+  const archivedDiagrams = diagrams.filter((d) => d.archived_at);
+  const missingTypes = DIAGRAM_TYPES.filter(
+    (dt) => !activeDiagrams.some((d) => d.type === dt),
+  );
+
 
   function handleDownload(record: EvidenceRecord) {
     startTransition(async () => {
@@ -147,11 +156,12 @@ export function DiagramsContent({
           </p>
         </div>
 
-        {/* One add button per type (no dropdown); the cards carry their
-            type label, so the grid itself stays a single section. */}
-        {canWrite && (
+        {/* One valid diagram per type: an add button appears only for types
+            that don't have one yet. Updating an existing diagram archives
+            the previous version (restorable below). */}
+        {canWrite && missingTypes.length > 0 && (
           <div className="flex flex-wrap gap-2">
-            {DIAGRAM_TYPES.map((dt) => (
+            {missingTypes.map((dt) => (
               <Button
                 key={dt}
                 variant="outline"
@@ -167,7 +177,7 @@ export function DiagramsContent({
           </div>
         )}
 
-        {diagrams.length === 0 ? (
+        {activeDiagrams.length === 0 ? (
           <div className="flex flex-col items-center justify-center rounded-lg border border-border bg-card py-14 text-center">
             <IconBadge name="Category" tone="primary" size="xl" className="mb-4" />
             <p className="text-h4 text-foreground">{t("diagrams.empty")}</p>
@@ -177,7 +187,7 @@ export function DiagramsContent({
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {diagrams.map((d) => (
+            {activeDiagrams.map((d) => (
               <DiagramCard
                 key={d.id}
                 diagram={d}
@@ -189,6 +199,69 @@ export function DiagramsContent({
                 onDelete={() => setDeleteDiagramTarget(d)}
               />
             ))}
+          </div>
+        )}
+
+        {/* Archive — superseded versions in the shared list recipe. Only the
+            cards above are valid; restoring swaps a version back in. */}
+        {archivedDiagrams.length > 0 && (
+          <div className="space-y-3 pt-2">
+            <div>
+              <h3 className="text-h4 text-foreground">
+                {t("diagrams.archiveTitle")}
+              </h3>
+              <p className="mt-0.5 text-p3 text-muted-foreground">
+                {t("diagrams.archiveSubtitle")}
+              </p>
+            </div>
+            <div className="divide-y divide-border overflow-hidden rounded-lg border border-border bg-card">
+              {archivedDiagrams.map((d) => (
+                <div
+                  key={d.id}
+                  className="flex w-full items-center gap-3 px-5 py-3.5 transition-colors hover:bg-muted/60"
+                >
+                  <span className="flex size-8 shrink-0 items-center justify-center rounded-md bg-muted text-muted-foreground">
+                    <Icon name={DIAGRAM_TYPE_ICON[d.type]} size={15} />
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block truncate text-l6 text-muted-foreground">
+                      {d.title}
+                    </span>
+                    <span className="block text-p4 text-muted-foreground">
+                      {t(`types.${d.type}`)} · V{d.version} ·{" "}
+                      {t("diagrams.archivedOn", {
+                        date: new Date(d.archived_at!).toLocaleDateString(),
+                      })}
+                    </span>
+                  </span>
+                  {canWrite && (
+                    <>
+                      <button
+                        type="button"
+                        disabled={isPending}
+                        onClick={() =>
+                          startTransition(async () => {
+                            await restoreDiagram(d.id, productId);
+                            await refresh();
+                          })
+                        }
+                        className="shrink-0 text-l6 text-primary hover:underline disabled:opacity-60"
+                      >
+                        {t("diagrams.restore")}
+                      </button>
+                      <Button
+                        variant="ghost"
+                        size="icon-sm"
+                        onClick={() => setDeleteDiagramTarget(d)}
+                        aria-label={t("card.delete")}
+                      >
+                        <Icon name="Trash" size={15} className="text-destructive" />
+                      </Button>
+                    </>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         )}
       </section>
@@ -389,8 +462,7 @@ function DiagramCard({
         <div className="min-w-0 flex-1">
           <p className="truncate text-l5 text-foreground">{diagram.title}</p>
           <p className="text-p4 text-muted-foreground">
-            {t(`types.${diagram.type}`)}
-            {diagram.version > 1 && ` · v${diagram.version}`}
+            {t(`types.${diagram.type}`)} · V{diagram.version}
           </p>
         </div>
         {canWrite && (
