@@ -16,10 +16,8 @@ import {
   SheetTitle,
   SheetDescription,
 } from "@/components/ui/sheet";
-import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import {
   updateProduct,
-  deleteProduct,
   type ProductDetail,
   type ProductActionState,
 } from "../actions";
@@ -98,7 +96,6 @@ export function ProductOverview({
   useEffect(() => {
     if (searchParams.get("edit") === "1") setEditing(true);
   }, [searchParams]);
-  const [showDelete, setShowDelete] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [imagePreview, setImagePreview] = useState<string | null>(product.image_url);
   const [removeImage, setRemoveImage] = useState(false);
@@ -148,15 +145,6 @@ export function ProductOverview({
 
   function handleEdit(formData: FormData) {
     startTransition(() => editAction(formData));
-  }
-
-  async function handleDelete() {
-    startTransition(async () => {
-      const result = await deleteProduct(product.id);
-      if (!result?.error) {
-        router.push("/app/products");
-      }
-    });
   }
 
   const ts = TYPE_STYLE[product.type ?? ""] ?? {
@@ -250,26 +238,17 @@ export function ProductOverview({
         </StatCard>
       </div>
 
-      {/* Actions row */}
-      <div className="flex items-center gap-2">
-        {product.cra_category && (
+      {/* Actions row — delete lives in the product header next to Edit */}
+      {product.cra_category && (
+        <div className="flex items-center gap-2">
           <Link
             href={`/app/products/${product.id}/assess`}
             className={buttonVariants({ variant: "outline", size: "sm" })}
           >
             {t("detail.assessment.rerun")}
           </Link>
-        )}
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => setShowDelete(true)}
-          className="gap-1.5 text-destructive hover:bg-destructive/10 hover:text-destructive"
-        >
-          <Icon name="Trash2Icon" className="size-3.5" />
-          {t("detail.overview.delete")}
-        </Button>
-      </div>
+        </div>
+      )}
 
       {/* Edit sheet */}
       <Sheet
@@ -283,12 +262,18 @@ export function ProductOverview({
           }
         }}
       >
-        <SheetContent side="right" className="overflow-y-auto sm:max-w-[845px]">
-          <SheetHeader>
+        {/* Drawer per the design `.sx-drawer` spec: 540px on the warm page
+            background with a strong hairline edge and a soft leftward
+            shadow; serif header over a hairline, 26px body gutters. */}
+        <SheetContent
+          side="right"
+          className="gap-0 overflow-y-auto border-l border-border-strong bg-background shadow-[-16px_0_48px_rgba(60,40,20,0.12)] sm:max-w-[540px]"
+        >
+          <SheetHeader className="border-b border-border px-[26px] pb-[18px] pt-6">
             <SheetTitle>{t("edit.title")}</SheetTitle>
             <SheetDescription>{t("detail.overview.edit")}</SheetDescription>
           </SheetHeader>
-          <div className="px-4 pb-6">
+          <div className="px-[26px] pb-10 pt-[22px]">
             <form action={handleEdit} className="flex flex-col gap-5">
               {editState?.error && (
                 <p className="rounded-md bg-destructive/10 px-3 py-2.5 text-p3 text-destructive">
@@ -404,16 +389,15 @@ export function ProductOverview({
                 </p>
               </div>
 
-              <div className="flex justify-end gap-2 pt-2">
+              <div className="flex justify-end gap-3 pt-2">
                 <Button
                   type="button"
                   variant="outline"
-                  size="sm"
                   onClick={() => { setEditing(false); resetImageState(); }}
                 >
                   {t("edit.cancel")}
                 </Button>
-                <Button type="submit" size="sm" disabled={isPending}>
+                <Button type="submit" disabled={isPending}>
                   {t("edit.submit")}
                 </Button>
               </div>
@@ -421,18 +405,6 @@ export function ProductOverview({
           </div>
         </SheetContent>
       </Sheet>
-
-      {/* Delete confirmation */}
-      <ConfirmDialog
-        open={showDelete}
-        onOpenChange={setShowDelete}
-        title={t("delete.title")}
-        description={t("delete.description", { name: product.name })}
-        confirmLabel={t("delete.confirm")}
-        cancelLabel={t("delete.cancel")}
-        onConfirm={handleDelete}
-        disabled={isPending}
-      />
     </div>
   );
 }

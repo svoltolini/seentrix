@@ -1,11 +1,13 @@
 "use client";
 
+import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
-import { usePathname, Link } from "@/i18n/navigation";
+import { usePathname, useRouter, Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { Icon } from "@/components/icon";
-import type { ProductDetail } from "../actions";
+import { deleteProduct, type ProductDetail } from "../actions";
 
 const TABS = [
   { key: "overview", segment: "" },
@@ -47,8 +49,20 @@ export function ProductDetailShell({
 }) {
   const t = useTranslations("products");
   const pathname = usePathname();
+  const router = useRouter();
+  const [showDelete, setShowDelete] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
   const basePath = `/app/products/${productId}`;
+
+  function handleDelete() {
+    startTransition(async () => {
+      const result = await deleteProduct(productId);
+      if (!result?.error) {
+        router.push("/app/products");
+      }
+    });
+  }
 
   function isActive(segment: string) {
     const tabPath = basePath + segment;
@@ -109,16 +123,27 @@ export function ProductDetailShell({
           </div>
         </div>
 
-        {/* Edit Product — opens the edit sheet on the overview tab via ?edit=1 */}
-        <Button
-          variant="outline"
-          size="sm"
-          className="shrink-0"
-          render={<Link href={`${basePath}?edit=1`} />}
-        >
-          <Icon name="Edit" size={15} />
-          {t("detail.editProduct") ?? "Edit Product"}
-        </Button>
+        {/* Edit Product (opens the edit drawer on the overview tab via
+            ?edit=1) + Delete, side by side */}
+        <div className="flex shrink-0 items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            render={<Link href={`${basePath}?edit=1`} />}
+          >
+            <Icon name="Edit" size={15} />
+            {t("detail.editProduct") ?? "Edit Product"}
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setShowDelete(true)}
+            className="gap-1.5 text-destructive hover:bg-destructive/10 hover:text-destructive"
+          >
+            <Icon name="Trash2Icon" className="size-3.5" />
+            {t("detail.overview.delete")}
+          </Button>
+        </div>
       </div>
 
       {/* Tabs — underlined, wrapping (no scrolling) */}
@@ -145,6 +170,18 @@ export function ProductDetailShell({
 
       {/* Content */}
       {children}
+
+      {/* Delete confirmation */}
+      <ConfirmDialog
+        open={showDelete}
+        onOpenChange={setShowDelete}
+        title={t("delete.title")}
+        description={t("delete.description", { name: product.name })}
+        confirmLabel={t("delete.confirm")}
+        cancelLabel={t("delete.cancel")}
+        onConfirm={handleDelete}
+        disabled={isPending}
+      />
     </div>
   );
 }
