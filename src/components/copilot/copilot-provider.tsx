@@ -15,6 +15,9 @@ import { CopilotTriggerButton } from "./copilot-trigger-button";
  */
 export function CopilotProvider({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [fab, setFab] = useState<{ label: string; seed?: string } | null>(
+    null,
+  );
   const [seed, setSeed] = useState<string | null>(null);
 
   const open = useCallback((s?: string) => {
@@ -38,8 +41,8 @@ export function CopilotProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const value = useMemo(
-    () => ({ isOpen, open, close, toggle, seed, clearSeed }),
-    [isOpen, open, close, toggle, seed, clearSeed],
+    () => ({ isOpen, open, close, toggle, seed, clearSeed, fab, setFab }),
+    [isOpen, open, close, toggle, seed, clearSeed, fab],
   );
 
   return (

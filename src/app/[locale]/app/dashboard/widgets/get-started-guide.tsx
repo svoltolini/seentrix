@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Icon } from "@/components/icon";
-import { AskSeentrixAI } from "@/components/copilot/ask-seentrix-ai";
+import { CopilotFabContext } from "@/components/copilot/copilot-fab-context";
 import { useCreateProduct } from "@/components/products/create-product-context";
 import { cn } from "@/lib/utils";
 import type { OnboardingState, OnboardingStep } from "@/lib/onboarding-state";
@@ -96,13 +96,10 @@ export function GetStartedGuide({ state, firstName }: Props) {
         })}
       </ol>
 
-      {/* Ask-the-Copilot helper — a real button that opens the AI drawer with a
-          pre-seeded "what do I do next?" question. */}
-      <AskSeentrixAI
-        variant="banner"
+      {/* Screen-contextual Copilot FAB topic — "what do I do next?" */}
+      <CopilotFabContext
+        topicKey="getStarted"
         seed="I just set up my company in Seentrix. What do I need to do next to get started with CRA compliance?"
-        label={t("getStarted.askTitle")}
-        sublabel={t("getStarted.askDescription")}
       />
     </div>
   );

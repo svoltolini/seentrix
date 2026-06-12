@@ -19,6 +19,14 @@ export interface CopilotContextValue {
    */
   seed: string | null;
   clearSeed: () => void;
+  /**
+   * Screen-contextual FAB override: when a screen registers a topic (via
+   * <CopilotFabContext/>), the floating button relabels itself (e.g. "Ask
+   * Seentrix AI about SBOMs") and opens pre-seeded with that screen's
+   * question.
+   */
+  fab: { label: string; seed?: string } | null;
+  setFab: (fab: { label: string; seed?: string } | null) => void;
 }
 
 export const CopilotContext = createContext<CopilotContextValue | null>(null);

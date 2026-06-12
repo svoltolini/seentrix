@@ -95,6 +95,11 @@
         "business": "1.000 messaggi/mese",
         "enterprise": "10.000 messaggi/mese"
       }
+    },
+    "fab": {
+      "sbom": "Chiedi a Seentrix AI sugli SBOM",
+      "diagrams": "Chiedi a Seentrix AI su diagrammi e prove",
+      "getStarted": "Chiedi a Seentrix AI da dove iniziare"
     }
   }
 }

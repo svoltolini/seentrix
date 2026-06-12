@@ -10,18 +10,22 @@ import { useCopilot } from "./copilot-context";
  * bottom-right with a green spark circle and the "Ask Seentrix AI" label.
  * Rendered globally by CopilotProvider and hidden while the drawer is open
  * (the drawer has its own close affordance). ⌘K still toggles globally.
+ *
+ * Screens can register a topic via <CopilotFabContext/> — the FAB then
+ * relabels itself ("Ask Seentrix AI about SBOMs") and opens pre-seeded
+ * with that screen's question.
  */
 export function CopilotTriggerButton({ className }: { className?: string }) {
   const t = useTranslations("copilot");
-  const { isOpen, open } = useCopilot();
+  const { isOpen, open, fab } = useCopilot();
 
   if (isOpen) return null;
 
   return (
     <button
       type="button"
-      onClick={() => open()}
-      aria-label={t("triggerAria")}
+      onClick={() => open(fab?.seed)}
+      aria-label={fab?.label ?? t("triggerAria")}
       className={cn(
         "group/copilot fixed bottom-6 right-6 z-40 flex items-center gap-2.5 rounded-full bg-dark-cta py-2 pl-2 pr-5",
         "text-[13.5px] font-semibold text-dark-cta-foreground",
@@ -36,7 +40,7 @@ export function CopilotTriggerButton({ className }: { className?: string }) {
           className="transition-transform duration-300 ease-out group-hover/copilot:rotate-12 group-hover/copilot:scale-110"
         />
       </span>
-      {t("triggerLabel")}
+      {fab?.label ?? t("triggerLabel")}
     </button>
   );
 }

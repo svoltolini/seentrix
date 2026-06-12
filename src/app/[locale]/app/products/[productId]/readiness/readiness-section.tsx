@@ -1,22 +1,10 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
+import { Icon } from "@/components/icon";
 import { ScreenTrainingBanner } from "@/components/screen-training-banner";
-import { READINESS_GROUPS, type ItemStatus } from "@/lib/constants/cra-readiness";
+import { READINESS_GROUPS } from "@/lib/constants/cra-readiness";
 import { loadReadiness } from "./actions";
-
-const STATUS_TONE: Record<ItemStatus, string> = {
-  complete: "bg-success/10 text-success",
-  partial: "bg-warning/10 text-warning",
-  missing: "bg-destructive/10 text-destructive",
-  not_applicable: "bg-muted text-muted-foreground",
-};
-const STATUS_DOT: Record<ItemStatus, string> = {
-  complete: "bg-success",
-  partial: "bg-warning",
-  missing: "bg-destructive",
-  not_applicable: "bg-muted-foreground/40",
-};
 
 function ringColor(percent: number): string {
   if (percent >= 80) return "var(--success)";
@@ -93,41 +81,80 @@ export async function ReadinessSection({
           </div>
         </section>
 
-        {/* Grouped master checklist */}
+        {/* Grouped master checklist — same row recipe as the Conformity
+            workflow list: a circular status checkbox (filled green check
+            when complete, status-colored dot when partial, empty ring when
+            missing), title + status, rows in one bordered card. */}
         {READINESS_GROUPS.map((group) => {
           const items = state.items.filter((i) => i.group === group);
           if (items.length === 0) return null;
           return (
             <section key={group} className="space-y-3">
               <h3 className="text-h4 text-foreground">{t(`groups.${group}`)}</h3>
-              <div className="space-y-2">
-                {items.map((item) => (
-                  <div
-                    key={item.key}
-                    className="flex flex-wrap items-center gap-3 rounded-lg border border-border bg-card px-4 py-3"
-                  >
-                    <span className="min-w-0 flex-1 text-p3 text-foreground">
-                      {t(`items.${item.key}`)}
-                    </span>
-                    <span
-                      className={cn(
-                        "inline-flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-0.5 text-l6-plus uppercase tracking-wide",
-                        STATUS_TONE[item.status],
-                      )}
+              <div className="divide-y divide-border overflow-hidden rounded-lg border border-border bg-card">
+                {items.map((item) => {
+                  const color =
+                    item.status === "complete"
+                      ? "var(--success)"
+                      : item.status === "partial"
+                        ? "var(--warning)"
+                        : item.status === "missing"
+                          ? "var(--destructive)"
+                          : "var(--border-strong)";
+                  return (
+                    <div
+                      key={item.key}
+                      className="flex w-full items-center gap-3 px-5 py-3.5 transition-colors hover:bg-muted/60"
                     >
-                      <span className={cn("size-1.5 rounded-full", STATUS_DOT[item.status])} />
-                      {t(`status.${item.status}`)}
-                    </span>
-                    {item.status !== "complete" && item.status !== "not_applicable" && (
-                      <Link
-                        href={`${base}${item.fixSegment}`}
-                        className="shrink-0 text-l6 text-primary hover:underline"
+                      <span
+                        className="flex size-5 shrink-0 items-center justify-center rounded-full border"
+                        style={{
+                          borderColor: color,
+                          backgroundColor:
+                            item.status === "complete" ? color : "transparent",
+                        }}
                       >
-                        {t("fix")}
-                      </Link>
-                    )}
-                  </div>
-                ))}
+                        {item.status === "complete" && (
+                          <Icon
+                            name="checkmark-circle-01-stroke-rounded"
+                            size={12}
+                            className="text-white"
+                          />
+                        )}
+                        {item.status === "partial" && (
+                          <span
+                            className="size-1.5 rounded-full"
+                            style={{ backgroundColor: color }}
+                          />
+                        )}
+                      </span>
+                      <span className="min-w-0 flex-1">
+                        <span
+                          className={cn(
+                            "block text-l6",
+                            item.status === "complete"
+                              ? "text-muted-foreground"
+                              : "text-foreground",
+                          )}
+                        >
+                          {t(`items.${item.key}`)}
+                        </span>
+                        <span className="block text-p4 text-muted-foreground">
+                          {t(`status.${item.status}`)}
+                        </span>
+                      </span>
+                      {item.status !== "complete" &&
+                        item.status !== "not_applicable" && (
+                          <Link
+                            href={`${base}${item.fixSegment}`}
+                            className="shrink-0 text-l6 text-primary hover:underline"
+                          >
+                            {t("fix")}
+                          </Link>
+                        )}
+                    </div>
+                  );
+                })}
               </div>
             </section>
           );

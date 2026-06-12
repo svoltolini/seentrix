@@ -17,7 +17,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { AskSeentrixAI } from "@/components/copilot/ask-seentrix-ai";
+import { CopilotFabContext } from "@/components/copilot/copilot-fab-context";
 import { DiagramEditor, type EditorTarget } from "./diagram-editor";
 import { EvidenceUploadDialog } from "./evidence-upload-dialog";
 import {
@@ -94,7 +94,6 @@ export function DiagramsContent({
     router.refresh();
   }, [productId, router]);
 
-  const isEmpty = diagrams.length === 0 && evidence.length === 0;
 
   function handleDownload(record: EvidenceRecord) {
     startTransition(async () => {
@@ -131,15 +130,11 @@ export function DiagramsContent({
 
   return (
     <div className="space-y-10">
-      {/* First-time nudge — both stores empty. */}
-      {isEmpty && (
-        <AskSeentrixAI
-          variant="banner"
-          seed="What architecture and data-flow diagrams does the CRA expect in my Annex VII technical file, and what counts as test-report evidence?"
-          label={t("seed.label")}
-          sublabel={t("seed.sublabel")}
-        />
-      )}
+      {/* Screen-contextual Copilot FAB topic. */}
+      <CopilotFabContext
+        topicKey="diagrams"
+        seed="What architecture and data-flow diagrams does the CRA expect in my Annex VII technical file, and what counts as test-report evidence?"
+      />
 
       {/* ----------------------------------------------------------------- */}
       {/* Diagrams                                                          */}
