@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient, getAuthUser } from "@/lib/supabase/server";
+import { canWrite, canIssueDoC } from "@/lib/constants/roles";
 import { logActivity } from "@/lib/activity";
 
 // ---------------------------------------------------------------------------
@@ -40,10 +41,16 @@ async function getAuthContext() {
   const supabase = await createClient();
   const user = await getAuthUser();
 
-  if (!user) return { supabase, user: null, orgId: null };
+  if (!user) return { supabase, user: null, orgId: null, role: null };
 
   const orgId = user.app_metadata?.org_id as string | undefined;
-  return { supabase, user, orgId: orgId ?? null };
+  const { data } = await supabase
+    .from("users")
+    .select("role")
+    .eq("id", user.id)
+    .single();
+  const role = (data as { role: string } | null)?.role ?? null;
+  return { supabase, user, orgId: orgId ?? null, role };
 }
 
 // ---------------------------------------------------------------------------
@@ -105,9 +112,10 @@ export async function saveDocument(
   content: string,
   status: DocumentStatus = "draft"
 ): Promise<{ documentId?: string; error?: string }> {
-  const { supabase, user } = await getAuthContext();
+  const { supabase, user, role } = await getAuthContext();
 
   if (!user) return { error: "notAuthenticated" };
+  if (!canWrite(role)) return { error: "notAuthorized" };
 
   // Check if document already exists for this product+type
   const { data: existing } = await supabase
@@ -162,9 +170,10 @@ export async function updateDocumentStatus(
   documentId: string,
   status: DocumentStatus
 ): Promise<{ error?: string }> {
-  const { supabase, user } = await getAuthContext();
+  const { supabase, user, role } = await getAuthContext();
 
   if (!user) return { error: "notAuthenticated" };
+  if (!canWrite(role)) return { error: "notAuthorized" };
 
   const patch: Record<string, unknown> = { status };
 
@@ -184,6 +193,10 @@ export async function updateDocumentStatus(
       released_at: string | null;
     } | null;
     if (d?.document_type === "declaration_of_conformity") {
+      // Issuing (finalizing) the DoC is restricted to admin / compliance
+      // officer — editors may draft it but not sign it off (matches the
+      // conformity tab and the segregation-of-duties role guide).
+      if (!canIssueDoC(role)) return { error: "notAuthorized" };
       const { data: product } = await supabase
         .from("products")
         .select("support_period_end")
@@ -219,10 +232,11 @@ export async function updateDocumentStatus(
 export async function generateDocumentPdf(
   documentId: string,
 ): Promise<{ url?: string; error?: string }> {
-  const { supabase, user, orgId } = await getAuthContext();
+  const { supabase, user, orgId, role } = await getAuthContext();
 
   if (!user) return { error: "notAuthenticated" };
   if (!orgId) return { error: "notAuthenticated" };
+  if (!canWrite(role)) return { error: "notAuthorized" };
 
   // Check plan allows PDF generation
   const { canGeneratePdf } = await import("@/lib/constants/plans");

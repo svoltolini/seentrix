@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient, getAuthUser } from "@/lib/supabase/server";
+import { canWrite } from "@/lib/constants/roles";
 import { parseSbom, type SbomFormat } from "@/lib/sbom/parser";
 import {
   type OsvBatchResult,
@@ -69,10 +70,16 @@ async function getAuthContext() {
   const supabase = await createClient();
   const user = await getAuthUser();
 
-  if (!user) return { supabase, user: null, orgId: null };
+  if (!user) return { supabase, user: null, orgId: null, role: null };
 
   const orgId = user.app_metadata?.org_id as string | undefined;
-  return { supabase, user, orgId: orgId ?? null };
+  const { data } = await supabase
+    .from("users")
+    .select("role")
+    .eq("id", user.id)
+    .single();
+  const role = (data as { role: string } | null)?.role ?? null;
+  return { supabase, user, orgId: orgId ?? null, role };
 }
 
 // ---------------------------------------------------------------------------
@@ -83,9 +90,10 @@ export async function uploadSbom(
   productId: string,
   formData: FormData
 ): Promise<{ sbomId?: string; error?: string }> {
-  const { supabase, user, orgId } = await getAuthContext();
+  const { supabase, user, orgId, role } = await getAuthContext();
 
   if (!user || !orgId) return { error: "notAuthenticated" };
+  if (!canWrite(role)) return { error: "notAuthorized" };
 
   // Plan gate: SBOM upload is a paid feature (Free has a 0 SBOM limit).
   // Enforced server-side here, not just in the UI.
@@ -240,9 +248,10 @@ export async function getComponentVulnerabilities(
 export async function deleteSbom(
   sbomId: string
 ): Promise<{ error?: string }> {
-  const { supabase, user } = await getAuthContext();
+  const { supabase, user, role } = await getAuthContext();
 
   if (!user) return { error: "notAuthenticated" };
+  if (!canWrite(role)) return { error: "notAuthorized" };
 
   const { data: sbom } = await supabase
     .from("sboms")
@@ -274,9 +283,10 @@ export async function toggleSbomActive(
   sbomId: string,
   isActive: boolean
 ): Promise<{ error?: string }> {
-  const { supabase, user } = await getAuthContext();
+  const { supabase, user, role } = await getAuthContext();
 
   if (!user) return { error: "notAuthenticated" };
+  if (!canWrite(role)) return { error: "notAuthorized" };
 
   const { error } = await supabase
     .from("sboms")
@@ -302,9 +312,10 @@ export async function updateVulnerabilityStatus(
   vulnId: string,
   status: "open" | "in_progress" | "resolved" | "accepted"
 ): Promise<{ error?: string }> {
-  const { supabase, user } = await getAuthContext();
+  const { supabase, user, role } = await getAuthContext();
 
   if (!user) return { error: "notAuthenticated" };
+  if (!canWrite(role)) return { error: "notAuthorized" };
 
   const updateData: Record<string, unknown> = { status };
   if (status === "resolved") {
@@ -336,9 +347,10 @@ export async function updateVulnerabilityStatus(
 export async function scanVulnerabilities(
   sbomId: string
 ): Promise<{ error?: string }> {
-  const { supabase, user } = await getAuthContext();
+  const { supabase, user, role } = await getAuthContext();
 
   if (!user) return { error: "notAuthenticated" };
+  if (!canWrite(role)) return { error: "notAuthorized" };
 
   // 1. Load all components with purl for this SBOM
   const { data: allComponents, error: compError } = await supabase

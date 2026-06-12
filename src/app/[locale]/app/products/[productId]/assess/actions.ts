@@ -2,6 +2,7 @@
 
 import { createClient, getAuthUser } from "@/lib/supabase/server";
 import type { CraCategory, ConformityRoute } from "@/lib/constants/cra-classification";
+import { canWrite } from "@/lib/constants/roles";
 import { logActivity } from "@/lib/activity";
 
 interface AssessmentInput {
@@ -22,6 +23,17 @@ export async function runAssessmentForProduct(
   const user = await getAuthUser();
 
   if (!user) return { error: "notAuthenticated" };
+
+  // Read-only viewers cannot run/overwrite a product's CRA classification.
+  {
+    const { data: me } = await supabase
+      .from("users")
+      .select("role")
+      .eq("id", user.id)
+      .single();
+    if (!canWrite((me as { role: string } | null)?.role))
+      return { error: "notAuthorized" };
+  }
 
   // Update product classification
   const { error: updateError } = await supabase

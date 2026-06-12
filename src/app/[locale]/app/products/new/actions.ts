@@ -5,6 +5,7 @@ import { assessmentSchema } from "@/lib/validations/assessment";
 import { classifyProduct } from "@/lib/constants/cra-classification";
 import { logActivity } from "@/lib/activity";
 import { canCreateProduct, type OrgPlan } from "@/lib/constants/plans";
+import { canWrite } from "@/lib/constants/roles";
 
 export type AssessmentState =
   | { productId: string; error?: never }
@@ -43,6 +44,18 @@ export async function createProductWithAssessment(
   const orgId = user.app_metadata?.org_id;
   if (!orgId) {
     return { error: "noOrganization" };
+  }
+
+  // Read-only viewers cannot create products (RLS only org-scopes; role is
+  // enforced here). Mirrors the gate on createProduct.
+  {
+    const { data: me } = await supabase
+      .from("users")
+      .select("role")
+      .eq("id", user.id)
+      .single();
+    if (!canWrite((me as { role: string } | null)?.role))
+      return { error: "notAuthorized" };
   }
 
   // Server-side plan-limit enforcement — mirror createMember in settings.

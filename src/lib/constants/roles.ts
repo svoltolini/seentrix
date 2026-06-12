@@ -38,6 +38,20 @@ export function canWrite(role: string | null | undefined): boolean {
   return !!role && WRITE_ROLES.has(role);
 }
 
+/**
+ * Roles allowed to ISSUE the Declaration of Conformity (mark it final).
+ * Narrower than `canWrite`: editors can draft/edit compliance content but
+ * may not sign off the DoC — segregation of duties expected at audit.
+ */
+const ISSUE_ROLES: ReadonlySet<string> = new Set<RoleId>([
+  "admin",
+  "compliance_officer",
+]);
+
+export function canIssueDoC(role: string | null | undefined): boolean {
+  return !!role && ISSUE_ROLES.has(role);
+}
+
 export function isViewer(role: string | null | undefined): boolean {
   return role === "viewer";
 }
