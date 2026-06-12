@@ -51,7 +51,9 @@
           "body": "Interruttore principale — quando attivo, la pagina /security/<slug> è raggiungibile da chiunque su Internet e accetta invii anonimi. Quando disattivo, la pagina risponde 404 e l'intake è chiuso. Disattiva durante la configurazione, attiva una volta che il tuo processo di triage è pronto.",
           "ref": "CRA Allegato I Parte II(1) + Articolo 11 — la politica CVD e l'intake devono essere operativi prima che il prodotto venga immesso sul mercato. Lasciarlo disattivo dopo il lancio non è conforme."
         }
-      }
+      },
+      "planRequired": "La pubblicazione della pagina di sicurezza pubblica richiede il piano Business.",
+      "businessPlan": "Business"
     },
     "list": {
       "title": "Segnalazioni in arrivo"

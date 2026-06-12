@@ -51,7 +51,9 @@
           "body": "Hauptschalter – wenn aktiviert, ist die /security/<slug>-Seite von jedem im Internet erreichbar und akzeptiert anonyme Einreichungen. Wenn deaktiviert, gibt die Seite einen 404-Fehler zurück und der Eingang ist geschlossen. Während der Einrichtung deaktiviert lassen, nach Bereitschaft Ihres Triage-Prozesses aktivieren.",
           "ref": "CRA Anhang I Teil II(1) + Artikel 11 – Die CVD-Richtlinie und der Eingang müssen betriebsbereit sein, bevor das Produkt auf den Markt gebracht wird. Diesen Schalter nach dem Start deaktiviert zu lassen ist nicht konform."
         }
-      }
+      },
+      "planRequired": "Die Veröffentlichung der öffentlichen Sicherheitsseite erfordert den Business-Plan.",
+      "businessPlan": "Business"
     },
     "list": {
       "title": "Eingehende Meldungen"

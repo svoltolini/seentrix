@@ -51,7 +51,9 @@
           "body": "Interrupteur principal — lorsqu'il est activé, la page /security/<slug> est accessible par toute personne sur Internet et accepte les soumissions anonymes. Lorsqu'il est désactivé, la page renvoie une erreur 404 et l'accueil est fermé. Désactivez pendant la configuration, activez une fois votre processus de triage prêt.",
           "ref": "CRA Annexe I Partie II(1) + Article 11 — la politique CVD et l'accueil doivent être opérationnels avant la mise sur le marché du produit. Laisser cette option désactivée après le lancement est non conforme."
         }
-      }
+      },
+      "planRequired": "La publication de la page de sécurité publique nécessite le plan Business.",
+      "businessPlan": "Business"
     },
     "list": {
       "title": "Rapports entrants"
