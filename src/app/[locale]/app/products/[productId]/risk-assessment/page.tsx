@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { loadRiskAssessment } from "./actions";
 import { RiskAssessmentContent } from "./risk-assessment-content";
-import { ScreenTrainingBanner } from "@/components/screen-training-banner";
+import { LearnScreenContext } from "@/components/academy/learn-fab";
 
 export default async function RiskAssessmentPage({
   params,
@@ -14,7 +14,7 @@ export default async function RiskAssessmentPage({
 
   return (
     <>
-      <ScreenTrainingBanner screenKey="risk-assessment" />
+      <LearnScreenContext screenKey="risk-assessment" />
       <RiskAssessmentContent productId={productId} initial={state} />
     </>
   );

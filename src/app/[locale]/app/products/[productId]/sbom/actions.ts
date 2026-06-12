@@ -1,6 +1,6 @@
 "use server";
 
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getAuthUser } from "@/lib/supabase/server";
 import { parseSbom, type SbomFormat } from "@/lib/sbom/parser";
 import {
   type OsvBatchResult,
@@ -67,9 +67,7 @@ export interface VulnerabilityRecord {
 
 async function getAuthContext() {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getAuthUser();
 
   if (!user) return { supabase, user: null, orgId: null };
 

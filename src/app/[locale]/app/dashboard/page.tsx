@@ -4,6 +4,7 @@ import { getSupportWidget } from "../products/[productId]/releases/actions";
 import { getCompanyProfileStatus } from "../settings/actions";
 import { getReadinessRollup } from "../products/[productId]/readiness/actions";
 import { DashboardContent } from "./dashboard-content";
+import { LearnScreenContext } from "@/components/academy/learn-fab";
 
 export default async function DashboardPage() {
   const [stats, incidentWidget, supportWidget, profileStatus, readinessRollup] =
@@ -16,13 +17,16 @@ export default async function DashboardPage() {
     ]);
 
   return (
-    <DashboardContent
-      {...stats}
-      incidentWidget={incidentWidget}
-      supportWidget={supportWidget}
-      profileStatus={profileStatus}
-      readinessRollup={readinessRollup}
-    />
+    <>
+      <LearnScreenContext screenKey="dashboard" />
+      <DashboardContent
+        {...stats}
+        incidentWidget={incidentWidget}
+        supportWidget={supportWidget}
+        profileStatus={profileStatus}
+        readinessRollup={readinessRollup}
+      />
+    </>
   );
 }
 

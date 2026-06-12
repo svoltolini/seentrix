@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { getCurrentUserRole } from "../../../settings/actions";
 import { loadConformity } from "./actions";
 import { ConformityContent } from "./conformity-content";
-import { ScreenTrainingBanner } from "@/components/screen-training-banner";
+import { LearnScreenContext } from "@/components/academy/learn-fab";
 
 export default async function ConformityPage({
   params,
@@ -19,7 +19,7 @@ export default async function ConformityPage({
 
   return (
     <>
-      <ScreenTrainingBanner screenKey="conformity" />
+      <LearnScreenContext screenKey="conformity" />
       <ConformityContent
         productId={productId}
         initial={state}

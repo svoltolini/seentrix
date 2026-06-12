@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getAuthUser } from "@/lib/supabase/server";
 import { LOCALE_COOKIE, isLocale, type Locale } from "@/i18n/locales";
 
 /**
@@ -32,9 +32,7 @@ export async function setPreferredLocale(
   // Persist on the user row when authenticated (source of truth across
   // devices). Scoped to the caller's own id.
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getAuthUser();
   if (user) {
     await supabase
       .from("users")

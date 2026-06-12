@@ -1,6 +1,6 @@
 "use server";
 
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getAuthUser } from "@/lib/supabase/server";
 import {
   CRA_REQUIREMENTS,
   type ChecklistStatus,
@@ -50,9 +50,7 @@ export async function loadProductChecklist(productId: string): Promise<{
   error?: string;
 }> {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getAuthUser();
 
   if (!user) {
     return { product: null, items: [], error: "notAuthenticated" };
@@ -156,9 +154,7 @@ export async function updateChecklistItemStatus(
   status: ChecklistStatus
 ): Promise<{ error?: string }> {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getAuthUser();
 
   if (!user) return { error: "notAuthenticated" };
 
@@ -181,9 +177,7 @@ export async function assignChecklistItem(
   userId: string | null,
 ): Promise<{ error?: string }> {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getAuthUser();
   if (!user) return { error: "notAuthenticated" };
 
   const { error } = await supabase
@@ -210,9 +204,7 @@ export async function listChecklistAssignees(): Promise<{
   error?: string;
 }> {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getAuthUser();
   if (!user) return { members: [], error: "notAuthenticated" };
   const orgId = user.app_metadata?.org_id as string | undefined;
   if (!orgId) return { members: [], error: "notAuthenticated" };
@@ -246,9 +238,7 @@ export async function updateChecklistItemDescription(
   description: string
 ): Promise<{ error?: string }> {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getAuthUser();
 
   if (!user) return { error: "notAuthenticated" };
 
@@ -272,9 +262,7 @@ export async function uploadEvidence(
   formData: FormData
 ): Promise<{ path: string | null; error?: string }> {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getAuthUser();
 
   if (!user) return { path: null, error: "notAuthenticated" };
 
@@ -304,9 +292,7 @@ export async function removeEvidence(
   filePath: string
 ): Promise<{ error?: string }> {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getAuthUser();
 
   if (!user) return { error: "notAuthenticated" };
 

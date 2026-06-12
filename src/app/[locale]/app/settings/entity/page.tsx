@@ -1,6 +1,7 @@
 import { getCurrentUserRole } from "../actions";
 import { loadEntityState } from "./actions";
 import { EntityContent } from "./entity-content";
+import { LearnScreenContext } from "@/components/academy/learn-fab";
 
 export default async function EntityPage() {
   const [{ state }, role] = await Promise.all([
@@ -12,7 +13,12 @@ export default async function EntityPage() {
     return null;
   }
 
-  return <EntityContent initial={state} currentUserRole={role} />;
+  return (
+    <>
+      <LearnScreenContext screenKey="settingsEntity" />
+      <EntityContent initial={state} currentUserRole={role} />
+    </>
+  );
 }
 
 export const metadata = { title: "Entity role" };

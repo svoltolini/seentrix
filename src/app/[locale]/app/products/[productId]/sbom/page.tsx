@@ -1,6 +1,6 @@
 import { listSboms } from "./actions";
 import { SbomContent } from "./sbom-content";
-import { ScreenTrainingBanner } from "@/components/screen-training-banner";
+import { LearnScreenContext } from "@/components/academy/learn-fab";
 
 export default async function SbomPage({
   params,
@@ -12,7 +12,7 @@ export default async function SbomPage({
 
   return (
     <>
-      <ScreenTrainingBanner screenKey="sbom" />
+      <LearnScreenContext screenKey="sbom" />
       <SbomContent productId={productId} initialSboms={sboms} />
     </>
   );

@@ -316,7 +316,13 @@
         "reports": "Rapports de vulnérabilité",
         "settingsOrganization": "Paramètres → Organisation",
         "settingsEntity": "Paramètres → Rôle d'opérateur",
-        "settingsTeam": "Paramètres → Équipe"
+        "settingsTeam": "Paramètres → Équipe",
+        "readiness": "Préparation CRA",
+        "identity": "Identité & CE",
+        "lifecycle": "Cycle de vie & chaîne d'approvisionnement",
+        "diagrams": "Schémas & preuves",
+        "risk-assessment": "Évaluation des risques",
+        "technical-file": "Dossier technique"
       }
     },
     "teamProgress": {
@@ -331,12 +337,6 @@
       "pending": "En attente",
       "yourProgress": "Votre progression",
       "yourTeam": "Votre équipe ({count})"
-    },
-    "banner": {
-      "title": "Première visite sur cet écran ?",
-      "body": "{count, plural, one {# leçon le couvre en {minutes} min} other {# leçons le couvrent en {minutes} min}}.",
-      "cta": "Ouvrir l'Academy →",
-      "dismiss": "Pas maintenant"
     },
     "gate": {
       "title": "Complétez votre formation pour continuer",
@@ -388,6 +388,9 @@
       "resumeEyebrow": "Reprendre l'apprentissage",
       "resumeCta": "Reprendre",
       "lessonOf": "Leçon {n} sur {total}"
+    },
+    "fab": {
+      "label": "Leçons sur cet écran"
     }
   }
 }

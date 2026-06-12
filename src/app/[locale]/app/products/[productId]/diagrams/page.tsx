@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { getCurrentUserRole } from "../../../settings/actions";
 import { loadDiagramsAndEvidence } from "./actions";
 import { DiagramsContent } from "./diagrams-content";
-import { ScreenTrainingBanner } from "@/components/screen-training-banner";
+import { LearnScreenContext } from "@/components/academy/learn-fab";
 
 const ROLES_CAN_WRITE = new Set([
   "admin",
@@ -26,7 +26,7 @@ export default async function DiagramsPage({
 
   return (
     <>
-      <ScreenTrainingBanner screenKey="diagrams" />
+      <LearnScreenContext screenKey="diagrams" />
       <DiagramsContent
         productId={productId}
         initial={state}

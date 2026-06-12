@@ -1,8 +1,9 @@
 import { getLocale, getTranslations } from "next-intl/server";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getAuthUser } from "@/lib/supabase/server";
 import { AcademyTabs, type TabKey } from "./academy-tabs";
 import { TeamProgress } from "./team-progress";
 import type { LocaleId, RoleId } from "@/lib/academy/types";
+import { SCREEN_LESSONS, type ScreenKey } from "@/lib/academy/screens";
 import { requiredLessonsForRole, allLessonIds } from "@/lib/academy/lessons";
 import { Icon } from "@/components/icon";
 import { Link } from "@/i18n/navigation";
@@ -20,16 +21,14 @@ import { ReferenceCard, ReferenceBadge } from "@/components/reference-card";
 export default async function AcademyPage({
   searchParams,
 }: {
-  searchParams: Promise<{ tab?: string }>;
+  searchParams: Promise<{ tab?: string; screen?: string }>;
 }) {
-  const { tab } = await searchParams;
+  const { tab, screen } = await searchParams;
   const locale = (await getLocale()) as LocaleId;
   const t = await getTranslations("academy");
 
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getAuthUser();
 
   let completedLessonIds: string[] = [];
   let role: string | null = null;
@@ -96,6 +95,12 @@ export default async function AcademyPage({
         : tab === "team-progress" && isAdminOrCO
           ? "team-progress"
           : "lessons";
+
+  // ?screen=sbom (set by the floating "Learn this screen" pill) scrolls the
+  // By Screen tab to that screen's card. Validated against the map so a
+  // mistyped param is just ignored.
+  const initialScreen =
+    screen && screen in SCREEN_LESSONS ? (screen as ScreenKey) : undefined;
 
   return (
     <div className="pb-12">
@@ -210,6 +215,7 @@ export default async function AcademyPage({
 
       <AcademyTabs
         initialTab={initialTab}
+        initialScreen={initialScreen}
         completedLessonIds={completedLessonIds}
         isAdminOrCO={isAdminOrCO}
         teamProgress={isAdminOrCO ? <TeamProgress locale={locale} /> : null}

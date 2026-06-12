@@ -1,6 +1,6 @@
 "use server";
 
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getAuthUser } from "@/lib/supabase/server";
 import { assessmentSchema } from "@/lib/validations/assessment";
 import { classifyProduct } from "@/lib/constants/cra-classification";
 import { logActivity } from "@/lib/activity";
@@ -34,9 +34,7 @@ export async function createProductWithAssessment(
   }
 
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getAuthUser();
 
   if (!user) {
     return { error: "notAuthenticated" };

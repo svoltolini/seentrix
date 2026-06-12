@@ -1,6 +1,6 @@
 "use server";
 
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getAuthUser } from "@/lib/supabase/server";
 
 /**
  * Delete every Copilot chat_session (and therefore every chat_message) for
@@ -13,9 +13,7 @@ export async function clearCopilotHistory(): Promise<{
   error?: string;
 }> {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getAuthUser();
   if (!user) return { ok: false, error: "unauthorized" };
 
   // Count first so we can report it back in the toast.

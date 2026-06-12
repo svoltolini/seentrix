@@ -1,6 +1,7 @@
 import { getCurrentUserRole } from "../../../settings/actions";
 import { listReleases, loadProductSupport } from "./actions";
 import { ReleasesContent } from "./releases-content";
+import { LearnScreenContext } from "@/components/academy/learn-fab";
 
 export default async function ReleasesPage({
   params,
@@ -15,12 +16,15 @@ export default async function ReleasesPage({
   ]);
 
   return (
-    <ReleasesContent
-      productId={productId}
-      initialReleases={releases}
-      initialSupport={support}
-      currentUserRole={role}
-    />
+    <>
+      <LearnScreenContext screenKey="releases" />
+      <ReleasesContent
+        productId={productId}
+        initialReleases={releases}
+        initialSupport={support}
+        currentUserRole={role}
+      />
+    </>
   );
 }
 

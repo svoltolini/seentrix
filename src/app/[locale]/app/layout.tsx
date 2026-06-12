@@ -4,6 +4,7 @@ import { ToastProvider } from "@/components/ui/toast";
 import { GsapProvider } from "@/components/gsap-provider";
 import { NavigationProgress } from "@/components/navigation-progress";
 import { CopilotProvider } from "@/components/copilot/copilot-provider";
+import { LearnFabProvider } from "@/components/academy/learn-fab";
 import { CreateProductSheet } from "@/components/products/create-product-sheet";
 import { createClient, getAuthUser } from "@/lib/supabase/server";
 
@@ -54,6 +55,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   let avatarUrl: string | null = null;
   let displayName: string | null = null;
   let orgName: string | null = null;
+  let completedLessonIds: string[] = [];
   if (user) {
     // Two separate queries instead of one nested join. The earlier
     // `.select("avatar_url, full_name, organization:organizations(name)")`
@@ -65,7 +67,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
     // pattern here. Issued in parallel via Promise.all so the layout
     // doesn't pay two serial round-trips.
     const orgId = user.app_metadata?.org_id as string | undefined;
-    const [userRowRes, orgRowRes] = await Promise.all([
+    const [userRowRes, orgRowRes, completionsRes] = await Promise.all([
       supabase
         .from("users")
         .select("avatar_url, full_name")
@@ -78,6 +80,13 @@ export default async function AppLayout({ children }: { children: React.ReactNod
             .eq("id", orgId)
             .single<{ name: string | null }>()
         : Promise.resolve({ data: null }),
+      // Academy completions feed the floating "Learn this screen" pill.
+      // Fetched once here (layouts don't re-render on soft navigations) so
+      // per-screen registration costs no extra queries.
+      supabase
+        .from("academy_completions")
+        .select("lesson_id")
+        .eq("user_id", user.id),
     ]);
 
     avatarUrl =
@@ -91,6 +100,9 @@ export default async function AppLayout({ children }: { children: React.ReactNod
       email: user.email ?? null,
     });
     orgName = orgRowRes.data?.name ?? null;
+    completedLessonIds = (completionsRes.data ?? []).map(
+      (r) => (r as { lesson_id: string }).lesson_id,
+    );
   }
 
   const userProfile = {
@@ -106,26 +118,28 @@ export default async function AppLayout({ children }: { children: React.ReactNod
           <NavigationProgress />
         </Suspense>
         <CopilotProvider>
-          {/* Global "+ New Product" side sheet. It now PROVIDES the
-              create-product context and wraps the shell, so any affordance
-              (topbar, dashboard, empty states) can call
-              `useCreateProduct().open()` to reveal the sheet instantly via
-              React state — no route navigation jank. The `?new=product`
-              query param is still honoured for deep-links. */}
-          <Suspense fallback={null}>
-            <CreateProductSheet>
-              {/* Clay shell: one sticky 64px top-nav over a normally-scrolling
-                  document. Screens sit in a 1240px container (`.sx-screen`
-                  geometry from the design handoff: 30px side padding, 80px
-                  bottom). The old fixed sidebar + slim-topbar shell is gone. */}
-              <div className="min-h-full bg-background">
-                <AppTopnav user={userProfile} orgName={orgName} />
-                <main className="mx-auto w-full max-w-[1480px] px-4 pb-[52px] pt-5 sm:px-[30px]">
-                  {children}
-                </main>
-              </div>
-            </CreateProductSheet>
-          </Suspense>
+          <LearnFabProvider completedLessonIds={completedLessonIds}>
+            {/* Global "+ New Product" side sheet. It now PROVIDES the
+                create-product context and wraps the shell, so any affordance
+                (topbar, dashboard, empty states) can call
+                `useCreateProduct().open()` to reveal the sheet instantly via
+                React state — no route navigation jank. The `?new=product`
+                query param is still honoured for deep-links. */}
+            <Suspense fallback={null}>
+              <CreateProductSheet>
+                {/* Clay shell: one sticky 64px top-nav over a normally-scrolling
+                    document. Screens sit in a 1240px container (`.sx-screen`
+                    geometry from the design handoff: 30px side padding, 80px
+                    bottom). The old fixed sidebar + slim-topbar shell is gone. */}
+                <div className="min-h-full bg-background">
+                  <AppTopnav user={userProfile} orgName={orgName} />
+                  <main className="mx-auto w-full max-w-[1480px] px-4 pb-[52px] pt-5 sm:px-[30px]">
+                    {children}
+                  </main>
+                </div>
+              </CreateProductSheet>
+            </Suspense>
+          </LearnFabProvider>
         </CopilotProvider>
       </GsapProvider>
     </ToastProvider>

@@ -1,6 +1,6 @@
 "use server";
 
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getAuthUser } from "@/lib/supabase/server";
 import type { CraCategory, ConformityRoute } from "@/lib/constants/cra-classification";
 import { logActivity } from "@/lib/activity";
 
@@ -19,9 +19,7 @@ export async function runAssessmentForProduct(
   input: AssessmentInput
 ): Promise<{ error?: string }> {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getAuthUser();
 
   if (!user) return { error: "notAuthenticated" };
 

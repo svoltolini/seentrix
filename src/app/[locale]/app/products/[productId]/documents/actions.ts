@@ -1,6 +1,6 @@
 "use server";
 
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getAuthUser } from "@/lib/supabase/server";
 import { logActivity } from "@/lib/activity";
 
 // ---------------------------------------------------------------------------
@@ -38,9 +38,7 @@ export interface DocumentRecord {
 
 async function getAuthContext() {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getAuthUser();
 
   if (!user) return { supabase, user: null, orgId: null };
 

@@ -258,7 +258,10 @@ export function ProductOverview({
           if (!open) {
             resetImageState();
             // Drop the ?edit=1 deep-link param so a refresh doesn't reopen.
-            if (searchParams.get("edit")) router.replace(`/app/products/${product.id}`);
+            // History API instead of router.replace — no server round-trip.
+            if (searchParams.get("edit")) {
+              window.history.replaceState(null, "", window.location.pathname);
+            }
           }
         }}
       >

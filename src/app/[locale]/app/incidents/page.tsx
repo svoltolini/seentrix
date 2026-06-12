@@ -1,7 +1,7 @@
 import { getCurrentUserRole } from "../settings/actions";
 import { listIncidents, listOrgProducts } from "./actions";
 import { IncidentsContent } from "./incidents-content";
-import { ScreenTrainingBanner } from "@/components/screen-training-banner";
+import { LearnScreenContext } from "@/components/academy/learn-fab";
 import { RequiresProductEmptyState } from "@/components/requires-product-empty-state";
 
 export default async function IncidentsPage() {
@@ -28,7 +28,7 @@ export default async function IncidentsPage() {
 
   return (
     <>
-      <ScreenTrainingBanner screenKey="incidents" />
+      <LearnScreenContext screenKey="incidents" />
       <IncidentsContent
         initialIncidents={incidents}
         products={products}

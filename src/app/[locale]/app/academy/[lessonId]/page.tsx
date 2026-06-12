@@ -7,7 +7,7 @@ import { getLessonAudio } from "@/lib/academy/audio";
 import { allLessonIds } from "@/lib/academy/lessons";
 import { AskSeentrixAI } from "@/components/copilot/ask-seentrix-ai";
 import { CurrentLessonProvider } from "@/lib/academy/current-lesson-context";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getAuthUser } from "@/lib/supabase/server";
 import { Icon } from "@/components/icon";
 import { IconBadge } from "@/components/ui/icon-badge";
 import { Quiz } from "./quiz";
@@ -37,9 +37,7 @@ export default async function LessonPage({
   const audio = getLessonAudio(lesson.id, locale);
 
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getAuthUser();
 
   type CompletionRow = {
     completed_at: string;

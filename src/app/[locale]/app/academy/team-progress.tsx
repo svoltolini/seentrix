@@ -1,5 +1,5 @@
 import { getTranslations } from "next-intl/server";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getAuthUser } from "@/lib/supabase/server";
 import {
   getLesson,
   requiredLessonsForRole,
@@ -36,16 +36,16 @@ export async function TeamProgress({ locale }: { locale: LocaleId }) {
   const t = await getTranslations("academy.teamProgress");
   const supabase = await createClient();
 
-  const [{ data: members }, { data: auth }] = await Promise.all([
+  const [{ data: members }, user] = await Promise.all([
     supabase
       .from("users")
       .select("id, full_name, email, role")
       .order("created_at", { ascending: true }),
-    supabase.auth.getUser(),
+    getAuthUser(),
   ]);
 
   const memberList = (members ?? []) as TeamMember[];
-  const currentUserId = auth.user?.id ?? null;
+  const currentUserId = user?.id ?? null;
 
   // Split the viewer's own row out from the rest of the team so the two
   // are never confused — "Your progress" sits above "Your team".

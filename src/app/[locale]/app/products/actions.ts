@@ -17,7 +17,7 @@
  * file. Keep additions grouped by purpose with a banner comment.
  */
 
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getAuthUser } from "@/lib/supabase/server";
 import { createProductSchema, updateProductSchema } from "@/lib/validations/product";
 import { canCreateProduct, type OrgPlan } from "@/lib/constants/plans";
 import { logActivity } from "@/lib/activity";
@@ -36,9 +36,7 @@ export type DeleteState = { error?: string } | undefined;
 
 async function getAuthContext() {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getAuthUser();
 
   if (!user) return { supabase, user: null, orgId: null, plan: "free" as OrgPlan };
 
@@ -233,9 +231,7 @@ export async function createProduct(
   if (!result.success) return { error: "generic" };
 
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getAuthUser();
 
   if (!user) return { error: "notAuthenticated" };
 

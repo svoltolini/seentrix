@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getAuthUser } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import type { OrgPlan } from "@/lib/constants/plans";
 import { PLAN_USER_LIMITS } from "@/lib/constants/plans";
@@ -15,9 +15,7 @@ export type ActionResult = { error?: string } | undefined;
 
 async function getAuthContext() {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getAuthUser();
 
   if (!user) return { supabase, user: null, orgId: null };
 

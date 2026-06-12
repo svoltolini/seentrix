@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getAuthUser } from "@/lib/supabase/server";
 import { logActivity } from "@/lib/activity";
 import { isCeLocation, type CeLocation } from "./constants";
 
@@ -37,9 +37,7 @@ export interface IdentityState {
 
 async function getAuthContext() {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getAuthUser();
   if (!user) return { supabase, user: null, orgId: null, role: null };
   const orgId = (user.app_metadata?.org_id as string | undefined) ?? null;
   const { data } = await supabase

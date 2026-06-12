@@ -316,7 +316,13 @@
         "reports": "Vulnerability reports",
         "settingsOrganization": "Settings → Organization",
         "settingsEntity": "Settings → Entity role",
-        "settingsTeam": "Settings → Team"
+        "settingsTeam": "Settings → Team",
+        "readiness": "CRA Readiness",
+        "identity": "Identity & CE",
+        "lifecycle": "Lifecycle & Supply Chain",
+        "diagrams": "Diagrams & Evidence",
+        "risk-assessment": "Risk Assessment",
+        "technical-file": "Technical File"
       }
     },
     "teamProgress": {
@@ -331,12 +337,6 @@
       "pending": "Pending",
       "yourProgress": "Your progress",
       "yourTeam": "Your team ({count})"
-    },
-    "banner": {
-      "title": "New to this screen?",
-      "body": "{count, plural, one {# lesson covers it in {minutes} min} other {# lessons cover it in {minutes} min}}.",
-      "cta": "Open Academy →",
-      "dismiss": "Not now"
     },
     "gate": {
       "title": "Complete your training to continue",
@@ -388,6 +388,9 @@
       "resumeEyebrow": "Continue learning",
       "resumeCta": "Resume",
       "lessonOf": "Lesson {n} of {total}"
+    },
+    "fab": {
+      "label": "Learn this screen"
     }
   }
 }

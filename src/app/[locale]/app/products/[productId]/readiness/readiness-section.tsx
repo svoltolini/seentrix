@@ -2,7 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { Icon } from "@/components/icon";
-import { ScreenTrainingBanner } from "@/components/screen-training-banner";
+import { LearnScreenContext } from "@/components/academy/learn-fab";
 import { READINESS_GROUPS } from "@/lib/constants/cra-readiness";
 import { loadReadiness } from "./actions";
 
@@ -34,7 +34,7 @@ export async function ReadinessSection({
 
   return (
     <>
-      <ScreenTrainingBanner screenKey="readiness" />
+      <LearnScreenContext screenKey="readiness" />
       <div className="space-y-8">
         <div>
           <h2 className="text-h3 text-foreground">{t("title")}</h2>

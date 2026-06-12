@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { createHash } from "node:crypto";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getAuthUser } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import {
   QUIZ_COOLDOWN_MINUTES,
@@ -37,9 +37,7 @@ export type QuizResult =
 
 async function getContext() {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getAuthUser();
   if (!user) return { supabase, user: null, orgId: null };
   const orgId =
     (user.app_metadata?.org_id as string | undefined) ?? null;

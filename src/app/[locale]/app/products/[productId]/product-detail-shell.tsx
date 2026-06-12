@@ -129,7 +129,16 @@ export function ProductDetailShell({
           <Button
             variant="outline"
             size="sm"
-            render={<Link href={`${basePath}?edit=1`} />}
+            onClick={() => {
+              // Already on the overview? Set the param via the History API —
+              // it syncs with useSearchParams without a server round-trip,
+              // so the drawer opens instantly. From other tabs, navigate.
+              if (isActive("")) {
+                window.history.pushState(null, "", "?edit=1");
+              } else {
+                router.push(`${basePath}?edit=1`);
+              }
+            }}
           >
             <Icon name="Edit" size={15} />
             {t("detail.editProduct") ?? "Edit Product"}

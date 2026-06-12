@@ -1,6 +1,6 @@
 "use server";
 
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getAuthUser } from "@/lib/supabase/server";
 import {
   computeReadiness,
   readinessScore,
@@ -19,9 +19,7 @@ export interface ReadinessState {
 
 async function getAuthContext() {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getAuthUser();
   if (!user) return { supabase, user: null, orgId: null };
   const orgId = (user.app_metadata?.org_id as string | undefined) ?? null;
   return { supabase, user, orgId };

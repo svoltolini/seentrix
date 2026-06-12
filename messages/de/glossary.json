@@ -316,7 +316,13 @@
         "reports": "Schwachstellenmeldungen",
         "settingsOrganization": "Einstellungen → Organisation",
         "settingsEntity": "Einstellungen → Wirtschaftsakteursrolle",
-        "settingsTeam": "Einstellungen → Team"
+        "settingsTeam": "Einstellungen → Team",
+        "readiness": "CRA-Bereitschaft",
+        "identity": "Identität & CE",
+        "lifecycle": "Lebenszyklus & Lieferkette",
+        "diagrams": "Diagramme & Nachweise",
+        "risk-assessment": "Risikobewertung",
+        "technical-file": "Technische Dokumentation"
       }
     },
     "teamProgress": {
@@ -331,12 +337,6 @@
       "pending": "Ausstehend",
       "yourProgress": "Ihr Fortschritt",
       "yourTeam": "Ihr Team ({count})"
-    },
-    "banner": {
-      "title": "Neu bei diesem Bildschirm?",
-      "body": "{count, plural, one {# Lektion deckt ihn in {minutes} Min. ab} other {# Lektionen decken ihn in {minutes} Min. ab}}.",
-      "cta": "Academy öffnen →",
-      "dismiss": "Nicht jetzt"
     },
     "gate": {
       "title": "Schulung abschließen, um fortzufahren",
@@ -388,6 +388,9 @@
       "resumeEyebrow": "Weiterlernen",
       "resumeCta": "Fortsetzen",
       "lessonOf": "Lektion {n} von {total}"
+    },
+    "fab": {
+      "label": "Lektionen zu diesem Bildschirm"
     }
   }
 }

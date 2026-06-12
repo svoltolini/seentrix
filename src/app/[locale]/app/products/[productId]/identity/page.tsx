@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { loadIdentity } from "./actions";
 import { IdentityContent } from "./identity-content";
-import { ScreenTrainingBanner } from "@/components/screen-training-banner";
+import { LearnScreenContext } from "@/components/academy/learn-fab";
 
 export default async function IdentityPage({
   params,
@@ -14,7 +14,7 @@ export default async function IdentityPage({
 
   return (
     <>
-      <ScreenTrainingBanner screenKey="identity" />
+      <LearnScreenContext screenKey="identity" />
       <IdentityContent productId={productId} initial={state} />
     </>
   );

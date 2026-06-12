@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { loadLifecycle } from "./actions";
 import { LifecycleContent } from "./lifecycle-content";
-import { ScreenTrainingBanner } from "@/components/screen-training-banner";
+import { LearnScreenContext } from "@/components/academy/learn-fab";
 
 export default async function LifecyclePage({
   params,
@@ -14,7 +14,7 @@ export default async function LifecyclePage({
 
   return (
     <>
-      <ScreenTrainingBanner screenKey="lifecycle" />
+      <LearnScreenContext screenKey="lifecycle" />
       <LifecycleContent productId={productId} initial={state} />
     </>
   );

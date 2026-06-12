@@ -4,7 +4,7 @@ import {
   listProductVulnerabilities,
 } from "./actions";
 import { VulnerabilitiesContent } from "./vulnerabilities-content";
-import { ScreenTrainingBanner } from "@/components/screen-training-banner";
+import { LearnScreenContext } from "@/components/academy/learn-fab";
 
 export default async function VulnerabilitiesPage({
   params,
@@ -20,7 +20,7 @@ export default async function VulnerabilitiesPage({
 
   return (
     <>
-      <ScreenTrainingBanner screenKey="vulnerabilities" />
+      <LearnScreenContext screenKey="vulnerabilities" />
       <VulnerabilitiesContent
         productId={productId}
         initialVulns={vulns}

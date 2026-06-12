@@ -1,6 +1,7 @@
 import { loadOrgSettings, listTeamMembers, getCurrentUserRole } from "../actions";
 import { getDeletionStatus } from "../gdpr-actions";
 import { OrgSettingsContent } from "./org-settings-content";
+import { LearnScreenContext } from "@/components/academy/learn-fab";
 
 export default async function OrganizationPage() {
   const [org, members, currentUserRole, deletion] = await Promise.all([
@@ -11,12 +12,15 @@ export default async function OrganizationPage() {
   ]);
 
   return (
-    <OrgSettingsContent
-      org={org}
-      members={members}
-      isAdmin={currentUserRole === "admin"}
-      deletion={deletion}
-    />
+    <>
+      <LearnScreenContext screenKey="settingsOrganization" />
+      <OrgSettingsContent
+        org={org}
+        members={members}
+        isAdmin={currentUserRole === "admin"}
+        deletion={deletion}
+      />
+    </>
   );
 }
 

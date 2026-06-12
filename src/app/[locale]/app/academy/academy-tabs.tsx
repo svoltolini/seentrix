@@ -1,8 +1,9 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { cn } from "@/lib/utils";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { ACADEMY_LESSONS } from "@/lib/glossary";
 import { LESSON_AUDIO } from "@/lib/academy/audio";
@@ -29,11 +30,13 @@ export type TabKey =
  */
 export function AcademyTabs({
   initialTab = "lessons",
+  initialScreen,
   completedLessonIds = [],
   isAdminOrCO = false,
   teamProgress,
 }: {
   initialTab?: TabKey;
+  initialScreen?: ScreenKey;
   completedLessonIds?: string[];
   isAdminOrCO?: boolean;
   teamProgress?: React.ReactNode;
@@ -63,7 +66,7 @@ export function AcademyTabs({
         <LessonsGrid completed={completed} />
       </TabsContent>
       <TabsContent value="by-screen" className="mt-6">
-        <ByScreenGrid completed={completed} />
+        <ByScreenGrid completed={completed} initialScreen={initialScreen} />
       </TabsContent>
       <TabsContent value="glossary" className="mt-6">
         <GlossaryIndex />
@@ -213,9 +216,25 @@ function LessonCard({
   );
 }
 
-function ByScreenGrid({ completed }: { completed: Set<string> }) {
+function ByScreenGrid({
+  completed,
+  initialScreen,
+}: {
+  completed: Set<string>;
+  initialScreen?: ScreenKey;
+}) {
   const t = useTranslations("academy.byScreen");
   const screens = Object.values(SCREEN_LESSONS);
+
+  // Deep-links from the floating "Learn this screen" pill land here with
+  // ?screen=<key> — scroll that screen's card into view once on mount.
+  useEffect(() => {
+    if (!initialScreen) return;
+    document
+      .getElementById(`academy-screen-${initialScreen}`)
+      ?.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, [initialScreen]);
+
   return (
     <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
       {screens.map((screen) => (
@@ -225,6 +244,7 @@ function ByScreenGrid({ completed }: { completed: Set<string> }) {
           screenName={t(`screens.${screen.key as ScreenKey}`)}
           completed={completed}
           openLabel={t("openScreen")}
+          highlighted={screen.key === initialScreen}
         />
       ))}
     </div>
@@ -236,11 +256,13 @@ function ScreenCard({
   screenName,
   completed,
   openLabel,
+  highlighted = false,
 }: {
   screen: (typeof SCREEN_LESSONS)[ScreenKey];
   screenName: string;
   completed: Set<string>;
   openLabel: string;
+  highlighted?: boolean;
 }) {
   const tCard = useTranslations("academy.byScreenCard");
   const totalMinutes = screen.lessons.reduce((sum, id) => {
@@ -251,7 +273,13 @@ function ScreenCard({
   const doneCount = screen.lessons.filter((id) => completed.has(id)).length;
 
   return (
-    <div className="rounded-lg border border-border bg-card p-[17px] transition-colors duration-300 hover:bg-muted/30">
+    <div
+      id={`academy-screen-${screen.key}`}
+      className={cn(
+        "rounded-lg border bg-card p-[17px] transition-colors duration-300 hover:bg-muted/30",
+        highlighted ? "border-primary/50" : "border-border",
+      )}
+    >
       <div className="flex items-center gap-3">
         <div className="min-w-0 flex-1">
           <p className="text-h5 text-foreground">

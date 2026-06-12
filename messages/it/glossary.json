@@ -316,7 +316,13 @@
         "reports": "Segnalazioni di vulnerabilità",
         "settingsOrganization": "Impostazioni → Organizzazione",
         "settingsEntity": "Impostazioni → Ruolo entità",
-        "settingsTeam": "Impostazioni → Team"
+        "settingsTeam": "Impostazioni → Team",
+        "readiness": "Preparazione CRA",
+        "identity": "Identità & CE",
+        "lifecycle": "Ciclo di vita & catena di fornitura",
+        "diagrams": "Diagrammi e prove",
+        "risk-assessment": "Valutazione dei rischi",
+        "technical-file": "Fascicolo tecnico"
       }
     },
     "teamProgress": {
@@ -331,12 +337,6 @@
       "pending": "In attesa",
       "yourProgress": "I tuoi progressi",
       "yourTeam": "Il tuo team ({count})"
-    },
-    "banner": {
-      "title": "Nuovo in questa schermata?",
-      "body": "{count, plural, one {# lezione la copre in {minutes} min} other {# lezioni la coprono in {minutes} min}}.",
-      "cta": "Apri Academy →",
-      "dismiss": "Non ora"
     },
     "gate": {
       "title": "Completa la tua formazione per continuare",
@@ -388,6 +388,9 @@
       "resumeEyebrow": "Continua a imparare",
       "resumeCta": "Riprendi",
       "lessonOf": "Lezione {n} di {total}"
+    },
+    "fab": {
+      "label": "Lezioni su questa schermata"
     }
   }
 }

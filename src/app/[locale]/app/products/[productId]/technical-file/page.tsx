@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { loadTechnicalFile } from "./actions";
 import { TechnicalFileContent } from "./technical-file-content";
-import { ScreenTrainingBanner } from "@/components/screen-training-banner";
+import { LearnScreenContext } from "@/components/academy/learn-fab";
 
 export default async function TechnicalFilePage({
   params,
@@ -14,7 +14,7 @@ export default async function TechnicalFilePage({
 
   return (
     <>
-      <ScreenTrainingBanner screenKey="technical-file" />
+      <LearnScreenContext screenKey="technical-file" />
       <TechnicalFileContent productId={productId} initial={state} />
     </>
   );
