@@ -9,7 +9,6 @@ import type { ProductDetail } from "../actions";
 
 const TABS = [
   { key: "overview", segment: "" },
-  { key: "readiness", segment: "/readiness" },
   { key: "checklist", segment: "/checklist" },
   { key: "sbom", segment: "/sbom" },
   { key: "vulnerabilities", segment: "/vulnerabilities" },
@@ -73,7 +72,7 @@ export function ProductDetailShell({
 
       {/* Header — name + meta on the left, Edit on the right */}
       <div className="flex flex-wrap items-start justify-between gap-4">
-        <div className="flex min-w-0 items-start gap-4">
+        <div className="flex min-w-0 items-center gap-4">
           {product.image_url && (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -83,10 +82,10 @@ export function ProductDetailShell({
             />
           )}
           <div className="min-w-0">
-            <h1 className="font-heading text-[30px] font-medium leading-tight tracking-[-0.6px] text-foreground">
+            <h1 className="font-heading text-[30px] font-medium leading-[1.1] tracking-[-0.6px] text-foreground">
               {product.name}
             </h1>
-            <div className="mt-2.5 flex flex-wrap items-center gap-2">
+            <div className="mt-1 flex flex-wrap items-center gap-2">
               {product.cra_category ? (
                 <span
                   className={cn(

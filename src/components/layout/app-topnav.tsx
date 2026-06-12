@@ -135,11 +135,11 @@ export function AppTopnav({ user, orgName }: AppTopnavProps) {
 
         {/* Right cluster */}
         <div className="ml-auto flex shrink-0 items-center gap-1.5">
-          {/* + New product — standard sm primary, per the unified button spec */}
+          {/* + New product — height-matched to the search box (h-12) so the
+              right cluster reads as one row */}
           <Button
-            size="sm"
             onClick={openCreateProduct}
-            className="mr-1 hidden md:inline-flex"
+            className="mr-1 hidden h-12 rounded-md md:inline-flex"
           >
             <Icon name="Add" size={15} />
             {t("topbar.newProduct") ?? "New Product"}

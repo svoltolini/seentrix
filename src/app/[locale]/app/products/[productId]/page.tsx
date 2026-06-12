@@ -1,12 +1,13 @@
 import { loadProduct } from "../actions";
 import { ProductOverview } from "./product-overview";
+import { ReadinessSection } from "./readiness/readiness-section";
 
 export default async function ProductPage({
   params,
 }: {
   params: Promise<{ locale: string; productId: string }>;
 }) {
-  const { productId } = await params;
+  const { locale, productId } = await params;
   const { product } = await loadProduct(productId);
 
   if (!product) {
@@ -31,10 +32,14 @@ export default async function ProductPage({
   }
 
   return (
-    <ProductOverview
-      product={product}
-      complianceScore={complianceScore}
-      hasChecklist={!!items && items.length > 0}
-    />
+    <div className="space-y-[18px]">
+      <ProductOverview
+        product={product}
+        complianceScore={complianceScore}
+        hasChecklist={!!items && items.length > 0}
+      />
+      {/* CRA Readiness — merged into the Overview tab */}
+      <ReadinessSection locale={locale} productId={productId} />
+    </div>
   );
 }
