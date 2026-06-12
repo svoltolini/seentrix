@@ -329,7 +329,7 @@ function DeleteButton({ onClick }: { onClick: () => void }) {
       className="shrink-0 rounded-md p-1 text-muted-foreground transition-colors hover:bg-destructive/10 hover:text-destructive"
       aria-label="Delete"
     >
-      <Icon name="delete-02-stroke-rounded" size={15} />
+      <Icon name="Trash" size={15} />
     </button>
   );
 }
@@ -373,8 +373,8 @@ function AddBar({ children, onAdd, label }: { children: ReactNode; onAdd: () => 
   return (
     <div className="flex flex-wrap items-end gap-x-4 gap-y-3 rounded-md border border-dashed border-border-strong bg-card p-3.5">
       {children}
-      <Button type="button" size="sm" onClick={onAdd} className="ml-auto">
-        <Icon name="add-01-stroke-rounded" size={14} />
+      <Button type="button" size="sm" onClick={onAdd} className="ml-auto shrink-0">
+        <Icon name="Add" size={15} />
         {label}
       </Button>
     </div>

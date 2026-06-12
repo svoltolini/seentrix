@@ -291,7 +291,7 @@ export function IdentityContent({
           </p>
         ) : published && publicUrl ? (
           <div className="flex flex-wrap items-center gap-3 rounded-md bg-muted px-4 py-3">
-            <Icon name="link-01-stroke-rounded" size={16} className="text-primary" />
+            <Icon name="Link1" size={16} className="text-primary" />
             <code className="min-w-0 flex-1 truncate text-p3 text-foreground">
               {publicUrl}
             </code>
