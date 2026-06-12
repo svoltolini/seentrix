@@ -3,7 +3,6 @@
 import { useState, useCallback, useTransition, useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
-import { cn } from "@/lib/utils";
 import { IconBadge } from "@/components/ui/icon-badge";
 import {
   uploadSbom,
@@ -182,19 +181,13 @@ export function SbomContent({
   // on the white aggregate cards. Replaces per-card gradient backgrounds
   // (red→orange→blue etc.) which violated the design memory rule
   // "palette only, no per-card gradients".
+  // Proper severity ramp (red → amber → gold → grey) via the shared
+  // --sev-* tokens; medium is gold, not green.
   const SEVERITY_CARDS = [
-    {
-      key: "critical" as const,
-      tone: "text-destructive",
-      stripe: "bg-destructive",
-    },
-    { key: "high" as const, tone: "text-warning", stripe: "bg-warning" },
-    { key: "medium" as const, tone: "text-primary", stripe: "bg-primary" },
-    {
-      key: "low" as const,
-      tone: "text-muted-foreground",
-      stripe: "bg-muted-foreground/50",
-    },
+    { key: "critical" as const, color: "var(--sev-critical)" },
+    { key: "high" as const, color: "var(--sev-high)" },
+    { key: "medium" as const, color: "var(--sev-medium)" },
+    { key: "low" as const, color: "var(--sev-low)" },
   ];
 
   return (
@@ -238,13 +231,12 @@ export function SbomContent({
                     aggregate counts to the per-row colour key. */}
                 <span
                   aria-hidden
-                  className={cn("absolute inset-y-0 left-0 w-1", s.stripe)}
+                  className="absolute inset-y-0 left-0 w-1"
+                  style={{ backgroundColor: s.color }}
                 />
                 <p
-                  className={cn(
-                    "text-l6-plus uppercase tracking-wider",
-                    s.tone,
-                  )}
+                  className="text-l6-plus uppercase tracking-wider"
+                  style={{ color: s.color }}
                 >
                   {t(`scan.severity.${s.key}`)}
                 </p>

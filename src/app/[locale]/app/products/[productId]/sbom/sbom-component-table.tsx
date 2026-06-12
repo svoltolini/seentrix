@@ -2,24 +2,24 @@
 
 import { useTranslations } from "next-intl";
 import { Icon } from "@/components/icon";
+import { Segmented } from "@/components/ui/segmented";
 import { cn } from "@/lib/utils";
 import type { SbomComponentRecord, VulnerabilityRecord } from "./actions";
 
 const PREVIEW_LIMIT = 20;
 
-const SEVERITY_DOT: Record<string, string> = {
-  critical: "bg-destructive",
-  high: "bg-warning",
-  medium: "bg-primary",
-  low: "bg-muted-foreground",
+// Proper severity ramp (red → amber → gold → grey) via the shared design
+// tokens; not Tailwind-mapped, so applied inline like the incidents page.
+const SEVERITY_COLOR: Record<string, string> = {
+  critical: "var(--sev-critical)",
+  high: "var(--sev-high)",
+  medium: "var(--sev-medium)",
+  low: "var(--sev-low)",
 };
 
-const SEVERITY_PILL: Record<string, string> = {
-  critical: "bg-destructive",
-  high: "bg-warning",
-  medium: "bg-primary",
-  low: "bg-muted-foreground",
-};
+function tint(color: string): string {
+  return `color-mix(in srgb, ${color} 14%, transparent)`;
+}
 
 function getVulnUrl(cveId: string): string {
   if (cveId.startsWith("GHSA-")) {
@@ -67,175 +67,105 @@ export function SbomComponentTable({
 
   return (
     <div className="border-t border-border">
-      {/* Column headers */}
-      <div className="flex items-center gap-3 border-b border-border px-5 py-2.5">
-        <div className="w-5 shrink-0" />
-
-        <button
-          type="button"
-          onClick={() => onSortChange("name")}
-          className={cn(
-            "min-w-0 flex-1 text-left text-l6-plus uppercase tracking-wider transition-colors",
-            sortBy === "name"
-              ? "text-foreground"
-              : "text-muted-foreground hover:text-muted-foreground"
-          )}
-        >
+      {/* Toolbar — sort control */}
+      <div className="flex items-center justify-between gap-3 px-5 py-3">
+        <span className="text-l6-plus uppercase tracking-wider text-muted-foreground">
           {t("components.name")}
-        </button>
-
-        <span className="hidden w-32 shrink-0 text-center text-l6-plus uppercase tracking-wider text-muted-foreground sm:block">
-          {t("components.version")}
         </span>
-
-        <span className="hidden w-36 shrink-0 text-center text-l6-plus uppercase tracking-wider text-muted-foreground md:block">
-          {t("components.license")}
-        </span>
-
         {hasScanned && (
-          <button
-            type="button"
-            onClick={() => onSortChange("vulns")}
-            className={cn(
-              "w-24 shrink-0 text-center text-l6-plus uppercase tracking-wider transition-colors",
-              sortBy === "vulns"
-                ? "text-foreground"
-                : "text-muted-foreground hover:text-muted-foreground"
-            )}
-          >
-            {t("components.vulns")}
-          </button>
+          <Segmented
+            value={sortBy}
+            onChange={(v) => onSortChange(v as "name" | "vulns")}
+            options={[
+              { value: "vulns", label: t("components.sortVulns") },
+              { value: "name", label: t("components.sortName") },
+            ]}
+          />
         )}
       </div>
 
-      {/* Component rows */}
-      <div>
-        {displayComps.map((comp, idx) => {
-          const isCompExpanded = expandedCompId === comp.id;
+      {/* Component rows — shared list recipe: hairline-divided, muted hover */}
+      <div className="divide-y divide-border border-t border-border">
+        {displayComps.map((comp) => {
+          const isExpanded = expandedCompId === comp.id;
           const vulns = compVulns[comp.id];
           const isVulnLoading = loadingVulns === comp.id;
           const hasCompVulns = comp.vulnerability_count > 0;
-          const otherCount =
-            comp.vulnerability_count -
-            comp.critical_vulnerability_count -
-            comp.high_vulnerability_count;
+          const worstColor =
+            comp.critical_vulnerability_count > 0
+              ? SEVERITY_COLOR.critical
+              : comp.high_vulnerability_count > 0
+                ? SEVERITY_COLOR.high
+                : SEVERITY_COLOR.medium;
+
+          const meta = [comp.component_version, comp.license]
+            .filter(Boolean)
+            .join(" · ");
 
           return (
-            <div
-              key={comp.id}
-              className={cn(
-                idx % 2 === 0 ? "bg-muted" : "bg-transparent"
-              )}
-            >
+            <div key={comp.id}>
               {/* Component row */}
               <button
                 type="button"
                 onClick={() => hasCompVulns && onToggleComp(comp.id)}
                 className={cn(
-                  "flex w-full items-center gap-3 px-5 py-2.5 text-left transition-colors",
-                  hasCompVulns
-                    ? "cursor-pointer hover:bg-muted"
-                    : "cursor-default"
+                  "flex w-full items-center gap-3 px-5 py-3.5 text-left transition-colors",
+                  hasCompVulns ? "hover:bg-muted/60" : "cursor-default",
                 )}
               >
-                <div className="flex w-5 shrink-0 items-center justify-center">
-                  {hasCompVulns ? (
-                    <Icon name="ChevronDownIcon"
-                      className={cn(
-                        "size-3.5 text-muted-foreground transition-transform",
-                        isCompExpanded && "rotate-180"
-                      )}
-                    />
-                  ) : (
-                    <div className="size-1 rounded-full bg-muted-foreground/15" />
-                  )}
-                </div>
-
-                <div className="min-w-0 flex-1 truncate">
-                  <span className="text-l6 text-foreground">
+                <span className="min-w-0 flex-1">
+                  <span className="block truncate text-l6 text-foreground">
                     {comp.component_name}
                   </span>
-                </div>
+                  {meta && (
+                    <span className="block truncate text-p4 tabular-nums text-muted-foreground">
+                      {meta}
+                    </span>
+                  )}
+                </span>
 
-                <div className="hidden w-32 shrink-0 items-center justify-center sm:flex">
-                  {comp.component_version ? (
-                    <span className="max-w-full truncate rounded-sm bg-card px-2 py-0.5 text-l6-plus tabular-nums text-muted-foreground border border-border-outline">
-                      {comp.component_version}
+                {hasScanned &&
+                  (hasCompVulns ? (
+                    <span
+                      className="shrink-0 rounded-full px-2.5 py-0.5 text-[11px] font-bold tabular-nums"
+                      style={{ backgroundColor: tint(worstColor), color: worstColor }}
+                    >
+                      {comp.vulnerability_count}
                     </span>
                   ) : (
-                    <span className="text-p4 text-muted-foreground">—</span>
-                  )}
-                </div>
+                    <span className="shrink-0 text-p4 text-muted-foreground">—</span>
+                  ))}
 
-                <div className="hidden w-36 shrink-0 items-center justify-center md:flex">
-                  {comp.license ? (
-                    <span className="max-w-full truncate rounded-sm bg-card px-2 py-0.5 text-l6-plus text-muted-foreground border border-border-outline">
-                      {comp.license}
-                    </span>
-                  ) : (
-                    <span className="text-p4 text-muted-foreground">—</span>
-                  )}
-                </div>
-
-                {hasScanned && (
-                  <div className="flex w-24 shrink-0 items-center justify-center gap-1">
-                    {hasCompVulns ? (
-                      <>
-                        {comp.critical_vulnerability_count > 0 && (
-                          <span className="inline-flex size-5 items-center justify-center rounded-full bg-destructive text-l6-plus text-white">
-                            {comp.critical_vulnerability_count}
-                          </span>
-                        )}
-                        {comp.high_vulnerability_count > 0 && (
-                          <span className="inline-flex size-5 items-center justify-center rounded-full bg-warning text-l6-plus text-white">
-                            {comp.high_vulnerability_count}
-                          </span>
-                        )}
-                        {otherCount > 0 && (
-                          <span className="inline-flex size-5 items-center justify-center rounded-full bg-muted text-l6-plus text-muted-foreground">
-                            {otherCount}
-                          </span>
-                        )}
-                      </>
-                    ) : (
-                      <span className="text-p4 text-muted-foreground">
-                        —
-                      </span>
+                {hasCompVulns && (
+                  <Icon
+                    name="ChevronDownIcon"
+                    className={cn(
+                      "size-4 shrink-0 text-muted-foreground transition-transform",
+                      isExpanded && "rotate-180",
                     )}
-                  </div>
+                  />
                 )}
               </button>
 
               {/* Expanded vulnerabilities */}
-              {isCompExpanded && (
-                <div className="pb-3 pl-[52px] pr-5 pt-0.5">
+              {isExpanded && (
+                <div className="bg-muted/40 px-5 pb-3 pt-1">
                   {isVulnLoading ? (
                     <div className="py-4 text-center text-p4 text-muted-foreground">
                       {t("scan.loadingVulns")}
                     </div>
                   ) : vulns && vulns.length > 0 ? (
-                    <div className="space-y-0">
-                      {vulns.map((v, vi) => {
+                    <ul className="divide-y divide-border/70">
+                      {vulns.map((v) => {
                         const vulnUrl = getVulnUrl(v.cve_id);
-
+                        const sevColor =
+                          SEVERITY_COLOR[v.severity] ?? SEVERITY_COLOR.low;
                         return (
-                          <div
-                            key={v.id}
-                            className="flex items-start gap-3 py-2.5"
-                            style={{
-                              opacity: 0,
-                              animation: `fade-in-up 0.3s ease-out ${vi * 50}ms forwards`,
-                            }}
-                          >
-                            {/* Severity dot */}
-                            <div
-                              className={cn(
-                                "mt-[5px] size-2 shrink-0 rounded-full",
-                                SEVERITY_DOT[v.severity] ?? "bg-muted-foreground"
-                              )}
+                          <li key={v.id} className="flex items-start gap-3 py-2.5">
+                            <span
+                              className="mt-[5px] size-2 shrink-0 rounded-full"
+                              style={{ backgroundColor: sevColor }}
                             />
-
-                            {/* Content */}
                             <div className="min-w-0 flex-1">
                               <div className="flex flex-wrap items-center gap-1.5">
                                 <a
@@ -246,13 +176,17 @@ export function SbomComponentTable({
                                   className="inline-flex items-center gap-1 text-l6 text-foreground transition-colors hover:text-primary"
                                 >
                                   {v.cve_id}
-                                  <Icon name="ExternalLinkIcon" className="size-2.5 text-muted-foreground" />
+                                  <Icon
+                                    name="ExternalLinkIcon"
+                                    className="size-2.5 text-muted-foreground"
+                                  />
                                 </a>
                                 <span
-                                  className={cn(
-                                    "rounded-sm px-1.5 py-px text-l6-plus text-white",
-                                    SEVERITY_PILL[v.severity] ?? "bg-muted-foreground"
-                                  )}
+                                  className="rounded-full px-2 py-px text-[10px] font-bold uppercase tracking-wide"
+                                  style={{
+                                    backgroundColor: tint(sevColor),
+                                    color: sevColor,
+                                  }}
                                 >
                                   {t(`scan.severity.${v.severity}`)}
                                 </span>
@@ -262,7 +196,7 @@ export function SbomComponentTable({
                                   </span>
                                 )}
                                 {v.cisa_kev && (
-                                  <span className="rounded-sm bg-destructive px-1.5 py-px text-l6-plus text-white">
+                                  <span className="rounded-full bg-destructive px-2 py-px text-[10px] font-bold uppercase tracking-wide text-white">
                                     KEV
                                   </span>
                                 )}
@@ -286,10 +220,10 @@ export function SbomComponentTable({
                                 </p>
                               )}
                             </div>
-                          </div>
+                          </li>
                         );
                       })}
-                    </div>
+                    </ul>
                   ) : (
                     <div className="py-4 text-center text-p4 text-muted-foreground">
                       {t("scan.noVulnsForComp")}
@@ -304,11 +238,11 @@ export function SbomComponentTable({
 
       {/* Show more / less */}
       {sorted.length > PREVIEW_LIMIT && (
-        <div className="border-t border-border px-5 py-2.5">
+        <div className="border-t border-border px-5 py-3">
           <button
             type="button"
             onClick={onToggleShowAll}
-            className="text-l6 text-primary hover:underline"
+            className="text-l6 font-semibold text-primary hover:underline"
           >
             {showAll
               ? t("components.showLess")
