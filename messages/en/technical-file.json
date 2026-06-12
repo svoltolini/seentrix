@@ -34,7 +34,8 @@
       "version": "Version {n}",
       "archived": "archived",
       "released": "Released {date}",
-      "retainedUntil": "retained until {date}"
+      "retainedUntil": "retained until {date}",
+      "diagrams": "Diagrams"
     },
     "feedback": {
       "assembled": "Technical file assembled.",

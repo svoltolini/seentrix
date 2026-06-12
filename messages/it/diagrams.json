@@ -25,7 +25,9 @@
       "archiveTitle": "Archivio",
       "archiveSubtitle": "Versioni precedenti di ogni diagramma. Solo i diagrammi sopra sono validi — ripristinando una versione torna a essere quella valida.",
       "restore": "Ripristina",
-      "archivedOn": "Archiviato il {date}"
+      "archivedOn": "Archiviato il {date}",
+      "deleteBlocked": "Questa versione fa parte di un fascicolo tecnico rilasciato e non può essere eliminata — resta nell'archivio per la tracciabilità.",
+      "deleteFailed": "Impossibile eliminare il diagramma."
     },
     "card": {
       "open": "Apri",

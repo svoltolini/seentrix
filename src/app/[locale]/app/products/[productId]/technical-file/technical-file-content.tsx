@@ -213,17 +213,31 @@ export function TechnicalFileContent({
                   {t("history.version", { n: v.version })}
                   {v.status === "archived" ? ` · ${t("history.archived")}` : ""}
                 </span>
-                <span className="flex-1 text-p3 text-muted-foreground">
-                  {v.released_at
-                    ? t("history.released", {
-                        date: new Date(v.released_at).toLocaleDateString(),
-                      })
-                    : ""}
-                  {v.retention_until
-                    ? ` · ${t("history.retainedUntil", {
-                        date: new Date(v.retention_until).toLocaleDateString(),
-                      })}`
-                    : ""}
+                <span className="min-w-0 flex-1">
+                  <span className="block text-p3 text-muted-foreground">
+                    {v.released_at
+                      ? t("history.released", {
+                          date: new Date(v.released_at).toLocaleDateString(),
+                        })
+                      : ""}
+                    {v.retention_until
+                      ? ` · ${t("history.retainedUntil", {
+                          date: new Date(v.retention_until).toLocaleDateString(),
+                        })}`
+                      : ""}
+                  </span>
+                  {/* The diagram versions pinned into this file at release */}
+                  {v.diagrams.length > 0 && (
+                    <span className="block text-p4 text-muted-foreground">
+                      {t("history.diagrams")}:{" "}
+                      {v.diagrams
+                        .map(
+                          (d) =>
+                            `${t(`diagramTypes.${d.type}`)} V${d.version}`,
+                        )
+                        .join(" · ")}
+                    </span>
+                  )}
                 </span>
                 {v.has_pdf && (
                   <Button

@@ -25,7 +25,9 @@
       "archiveTitle": "Archive",
       "archiveSubtitle": "Versions précédentes de chaque schéma. Seuls les schémas ci-dessus sont valides — restaurer une version la rend de nouveau valide.",
       "restore": "Restaurer",
-      "archivedOn": "Archivé le {date}"
+      "archivedOn": "Archivé le {date}",
+      "deleteBlocked": "Cette version fait partie d'un dossier technique publié et ne peut pas être supprimée — elle reste dans l'archive pour la traçabilité.",
+      "deleteFailed": "Le schéma n'a pas pu être supprimé."
     },
     "card": {
       "open": "Ouvrir",

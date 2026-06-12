@@ -25,7 +25,9 @@
       "archiveTitle": "Archiv",
       "archiveSubtitle": "Frühere Versionen jedes Diagramms. Nur die Diagramme oben sind gültig — beim Wiederherstellen wird eine Version wieder zur gültigen.",
       "restore": "Wiederherstellen",
-      "archivedOn": "Archiviert am {date}"
+      "archivedOn": "Archiviert am {date}",
+      "deleteBlocked": "Diese Version ist Teil einer freigegebenen technischen Dokumentation und kann nicht gelöscht werden — sie bleibt für den Nachweis im Archiv.",
+      "deleteFailed": "Das Diagramm konnte nicht gelöscht werden."
     },
     "card": {
       "open": "Öffnen",

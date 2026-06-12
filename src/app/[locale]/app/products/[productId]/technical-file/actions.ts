@@ -20,6 +20,13 @@ const MAX_EMBEDDED_DIAGRAMS = 6;
 // Public shapes
 // ---------------------------------------------------------------------------
 
+export interface TfDiagramSnapshotEntry {
+  id: string;
+  type: string;
+  title: string;
+  version: number;
+}
+
 export interface TfVersionRow {
   id: string;
   version: number;
@@ -27,6 +34,8 @@ export interface TfVersionRow {
   released_at: string | null;
   retention_until: string | null;
   has_pdf: boolean;
+  /** The diagram versions this file contained when it was built. */
+  diagrams: TfDiagramSnapshotEntry[];
 }
 
 export interface TechnicalFileState {
@@ -81,7 +90,7 @@ interface Gathered {
   product: Record<string, unknown>;
   org: Record<string, string | null>;
   releases: { version: string; released_at: string; release_type: string }[];
-  diagrams: { id: string; type: string; title: string; preview_url: string | null }[];
+  diagrams: { id: string; type: string; title: string; version: number; preview_url: string | null }[];
   sbom: Record<string, number | string | null> | null;
   evidence: { category: string; title: string; annex_vii_point: string | null }[];
   ra: { status: string; version: number; released_at: string | null } | null;
@@ -128,7 +137,7 @@ async function gather(
       .order("released_at", { ascending: false }),
     supabase
       .from("product_diagrams")
-      .select("id, type, title, preview_url")
+      .select("id, type, title, version, preview_url")
       .eq("product_id", productId)
       .is("archived_at", null)
       .order("updated_at", { ascending: false }),
@@ -161,7 +170,7 @@ async function gather(
     (releases as { version: string; released_at: string; release_type: string }[] | null) ??
     [];
   const diagramsList =
-    (diagrams as { id: string; type: string; title: string; preview_url: string | null }[] | null) ??
+    (diagrams as { id: string; type: string; title: string; version: number; preview_url: string | null }[] | null) ??
     [];
   const sbom = (sbomRows as Record<string, number | string | null>[] | null)?.[0] ?? null;
   const evidenceList =
@@ -260,7 +269,9 @@ export async function loadTechnicalFile(
 
   const { data: rows } = await supabase
     .from("technical_files")
-    .select("id, status, version, released_at, retention_until, pdf_url")
+    .select(
+      "id, status, version, released_at, retention_until, pdf_url, diagrams_snapshot",
+    )
     .eq("product_id", productId)
     .order("version", { ascending: false });
   const all =
@@ -271,6 +282,7 @@ export async function loadTechnicalFile(
       released_at: string | null;
       retention_until: string | null;
       pdf_url: string | null;
+      diagrams_snapshot: TfDiagramSnapshotEntry[] | null;
     }[] | null) ?? [];
 
   const current = all.find((r) => r.status === "draft") ?? all[0] ?? null;
@@ -283,6 +295,7 @@ export async function loadTechnicalFile(
       released_at: r.released_at,
       retention_until: r.retention_until,
       has_pdf: !!r.pdf_url,
+      diagrams: r.diagrams_snapshot ?? [],
     }));
 
   return {
@@ -714,6 +727,14 @@ async function buildAndStorePdf(
     .update({
       pdf_url: storagePath,
       manifest: manifest,
+      // Pin exactly which diagram versions went into this build — the
+      // release-time rebuild makes this the released file's diagram set.
+      diagrams_snapshot: gathered.diagrams.map((d) => ({
+        id: d.id,
+        type: d.type,
+        title: d.title,
+        version: d.version,
+      })),
       updated_at: new Date().toISOString(),
     })
     .eq("id", technicalFileId);

@@ -25,7 +25,9 @@
       "archiveTitle": "Archive",
       "archiveSubtitle": "Previous versions of each diagram. Only the diagrams above are valid — restoring a version makes it the valid one again.",
       "restore": "Restore",
-      "archivedOn": "Archived {date}"
+      "archivedOn": "Archived {date}",
+      "deleteBlocked": "This version is part of a released technical file and can't be deleted — it stays in the archive for the record-keeping trail.",
+      "deleteFailed": "The diagram could not be deleted."
     },
     "card": {
       "open": "Open",

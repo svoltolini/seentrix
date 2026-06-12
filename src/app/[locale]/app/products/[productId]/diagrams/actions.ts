@@ -440,6 +440,18 @@ export async function deleteDiagram(
   if (!user || !orgId) return { error: "notAuthenticated" };
   if (!canWrite(role)) return { error: "notAuthorized" };
 
+  // Record-keeping guard: a version that went into a released (or archived)
+  // technical file is part of the Annex VII trail — its editable scene must
+  // survive alongside the frozen PDF, so it can't be deleted.
+  const { data: referencing } = await supabase
+    .from("technical_files")
+    .select("id")
+    .eq("product_id", productId)
+    .neq("status", "draft")
+    .contains("diagrams_snapshot", JSON.stringify([{ id: diagramId }]))
+    .limit(1);
+  if ((referencing ?? []).length > 0) return { error: "inTechnicalFile" };
+
   // Remove both storage objects first (best-effort), then the row.
   const basePath = `${orgId}/${productId}/${diagramId}`;
   await supabase.storage

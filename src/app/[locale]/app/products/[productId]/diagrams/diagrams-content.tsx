@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Icon, type IconName } from "@/components/icon";
 import { IconBadge } from "@/components/ui/icon-badge";
+import { useToast } from "@/components/ui/toast";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import {
   DropdownMenu,
@@ -73,6 +74,7 @@ export function DiagramsContent({
 }) {
   const t = useTranslations("diagrams");
   const router = useRouter();
+  const { toast } = useToast();
 
   const [diagrams, setDiagrams] = useState<DiagramRecord[]>(initial.diagrams);
   const [evidence, setEvidence] = useState<EvidenceRecord[]>(initial.evidence);
@@ -119,6 +121,14 @@ export function DiagramsContent({
       if (!result.error) {
         setDiagrams((prev) => prev.filter((d) => d.id !== id));
         router.refresh();
+      } else {
+        toast({
+          type: "error",
+          message:
+            result.error === "inTechnicalFile"
+              ? t("diagrams.deleteBlocked")
+              : t("diagrams.deleteFailed"),
+        });
       }
       setDeleteDiagramTarget(null);
     });

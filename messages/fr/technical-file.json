@@ -34,7 +34,8 @@
       "version": "Version {n}",
       "archived": "archivée",
       "released": "Publiée le {date}",
-      "retainedUntil": "conservée jusqu'au {date}"
+      "retainedUntil": "conservée jusqu'au {date}",
+      "diagrams": "Schémas"
     },
     "feedback": {
       "assembled": "Dossier technique assemblé.",
