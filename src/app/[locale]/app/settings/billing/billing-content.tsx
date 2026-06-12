@@ -486,7 +486,7 @@ export function BillingContent({
                   </span>
                 )}
               </div>
-              <p className="mt-1 max-w-prose text-p4 text-muted-foreground">
+              <p className="mt-1 text-p4 text-muted-foreground">
                 {t("aiBoost.description", { messages: AI_BOOST_BONUS_MESSAGES })}
               </p>
               <p className="mt-1.5 text-p4 text-foreground">

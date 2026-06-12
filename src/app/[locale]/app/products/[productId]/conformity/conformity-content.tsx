@@ -458,7 +458,7 @@ export function ConformityContent({
               <h2 className="mt-1 text-h3">
                 {tRoute(`${state.route}.title`)}
               </h2>
-              <p className="mt-2 max-w-xl text-p3 text-muted-foreground">
+              <p className="mt-2 text-p3 text-muted-foreground">
                 {tRoute(`${state.route}.description`)}
               </p>
             </div>

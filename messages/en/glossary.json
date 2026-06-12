@@ -304,7 +304,6 @@
       "verify": "Verify certificate"
     },
     "byScreen": {
-      "openScreen": "Open",
       "screens": {
         "dashboard": "Dashboard",
         "products": "Products",

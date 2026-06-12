@@ -90,7 +90,7 @@ export function ProductsPageContent({
             {t.has("eyebrow") ? t("eyebrow") : "Compliance"}
           </p>
           <h1 className="mt-2.5 text-h1 text-foreground">{t("title")}</h1>
-          <p className="mt-2.5 max-w-[60ch] text-[14.5px] leading-relaxed text-muted-foreground">
+          <p className="mt-2.5 text-[14.5px] leading-relaxed text-muted-foreground">
             {t("subtitle")}
           </p>
         </div>

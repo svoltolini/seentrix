@@ -38,7 +38,7 @@ export async function ReadinessSection({
       <div className="space-y-8">
         <div>
           <h2 className="text-h3 text-foreground">{t("title")}</h2>
-          <p className="mt-0.5 max-w-2xl text-p3 text-muted-foreground">
+          <p className="mt-0.5 text-p3 text-muted-foreground">
             {t("subtitle")}
           </p>
         </div>

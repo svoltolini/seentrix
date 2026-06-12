@@ -16,11 +16,10 @@ import { SCREEN_LESSONS, type ScreenKey } from "@/lib/academy/screens";
 /**
  * Floating "Learn this screen" pill — the compact successor to the old
  * full-width "New to this screen?" banner. It stacks just above the dark
- * Copilot FAB and deep-links into the Academy:
- *
- *   - exactly one lesson left for the screen → straight to that lesson
- *   - several left → the Academy "By Screen" tab, scrolled to this screen
- *
+ * Copilot FAB and always deep-links to the Academy "By Screen" tab,
+ * scrolled to this screen's card (one predictable destination — an
+ * earlier one-lesson-left shortcut straight into the lesson read as
+ * random to users).
  * Screens opt in by rendering <LearnScreenContext screenKey="sbom" /> —
  * a renderless registrar, mirroring <CopilotFabContext/>. Completions are
  * fetched once in the app layout and passed to the provider, so showing
@@ -96,14 +95,9 @@ function LearnFabButton() {
   );
   if (pending.length === 0) return null;
 
-  const href =
-    pending.length === 1
-      ? `/app/academy/${pending[0]}`
-      : `/app/academy?tab=by-screen&screen=${screenKey}`;
-
   return (
     <Link
-      href={href}
+      href={`/app/academy?tab=by-screen&screen=${screenKey}`}
       className="group/learn fixed bottom-[84px] right-6 z-40 flex items-center gap-2.5 rounded-full border border-border-strong bg-card py-1.5 pl-1.5 pr-[18px] text-[12.5px] font-semibold text-foreground shadow-[0_8px_28px_rgba(40,30,20,0.16)] transition-all duration-150 hover:-translate-y-0.5 hover:bg-muted"
     >
       <span className="flex size-7 items-center justify-center rounded-full bg-[color:var(--primary-3)] text-primary">

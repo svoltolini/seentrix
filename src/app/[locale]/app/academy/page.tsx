@@ -142,7 +142,7 @@ export default async function AcademyPage({
               {t.has("list.eyebrow") ? t("list.eyebrow") : "Learn"}
             </p>
             <h1 className="mt-2.5 text-h1 text-foreground">{t("hero.title")}</h1>
-            <p className="mt-2.5 max-w-[60ch] text-[14.5px] leading-relaxed text-muted-foreground">
+            <p className="mt-2.5 text-[14.5px] leading-relaxed text-muted-foreground">
               {t("hero.description")}
             </p>
           </div>

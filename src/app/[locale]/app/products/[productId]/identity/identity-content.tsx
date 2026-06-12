@@ -123,7 +123,7 @@ export function IdentityContent({
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <h2 className="text-h3 text-foreground">{t("title")}</h2>
-          <p className="mt-0.5 max-w-2xl text-p3 text-muted-foreground">
+          <p className="mt-0.5 text-p3 text-muted-foreground">
             {t("subtitle")}
           </p>
         </div>
@@ -269,7 +269,7 @@ export function IdentityContent({
                 reference={t("simplified.help.ref")}
               />
             </h3>
-            <p className="mt-0.5 max-w-2xl text-p3 text-muted-foreground">
+            <p className="mt-0.5 text-p3 text-muted-foreground">
               {t("simplified.description")}
             </p>
           </div>
@@ -335,7 +335,7 @@ export function IdentityContent({
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="min-w-0">
             <h3 className="text-h4 text-foreground">{t("annexII.heading")}</h3>
-            <p className="mt-0.5 max-w-2xl text-p3 text-muted-foreground">
+            <p className="mt-0.5 text-p3 text-muted-foreground">
               {t("annexII.description")}
             </p>
           </div>

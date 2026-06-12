@@ -45,6 +45,13 @@ export function AcademyTabs({
   const [tab, setTab] = useState<string>(initialTab);
   const completed = useMemo(() => new Set(completedLessonIds), [completedLessonIds]);
 
+  // Follow ?tab= deep-links even when the page re-renders in place (the
+  // component instance survives a same-route navigation, so the initial
+  // useState alone would keep showing the previously selected tab).
+  useEffect(() => {
+    setTab(initialTab);
+  }, [initialTab]);
+
   return (
     <Tabs value={tab} onValueChange={setTab}>
       <TabsList variant="line">
@@ -227,12 +234,18 @@ function ByScreenGrid({
   const screens = Object.values(SCREEN_LESSONS);
 
   // Deep-links from the floating "Learn this screen" pill land here with
-  // ?screen=<key> — scroll that screen's card into view once on mount.
+  // ?screen=<key> — scroll that screen's card into view. Deferred a tick
+  // because the router scrolls to the top right after a navigation commits;
+  // an immediate scrollIntoView gets overridden and the page appears to
+  // land on the Academy header instead of the targeted card.
   useEffect(() => {
     if (!initialScreen) return;
-    document
-      .getElementById(`academy-screen-${initialScreen}`)
-      ?.scrollIntoView({ behavior: "smooth", block: "center" });
+    const timer = setTimeout(() => {
+      document
+        .getElementById(`academy-screen-${initialScreen}`)
+        ?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 150);
+    return () => clearTimeout(timer);
   }, [initialScreen]);
 
   return (
@@ -243,7 +256,6 @@ function ByScreenGrid({
           screen={screen}
           screenName={t(`screens.${screen.key as ScreenKey}`)}
           completed={completed}
-          openLabel={t("openScreen")}
           highlighted={screen.key === initialScreen}
         />
       ))}
@@ -255,13 +267,11 @@ function ScreenCard({
   screen,
   screenName,
   completed,
-  openLabel,
   highlighted = false,
 }: {
   screen: (typeof SCREEN_LESSONS)[ScreenKey];
   screenName: string;
   completed: Set<string>;
-  openLabel: string;
   highlighted?: boolean;
 }) {
   const tCard = useTranslations("academy.byScreenCard");
@@ -294,12 +304,9 @@ function ScreenCard({
             })}
           </p>
         </div>
-        <Link
-          href={screen.href}
-          className="shrink-0 rounded-sm px-2.5 py-1 text-l6-plus text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-        >
-          {openLabel} →
-        </Link>
+        {/* No "Open screen" link here — it sat where users expected the
+            course to open and bounced them back out of the Academy. The
+            lessons below are the card's actions. */}
       </div>
       <ul className="mt-4 space-y-1 border-t border-border pt-3">
         {screen.lessons.map((id) => {

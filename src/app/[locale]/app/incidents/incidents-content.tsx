@@ -185,7 +185,7 @@ export function IncidentsContent({
             <h1 className="mt-2.5 text-h1">
               {t("title")}
             </h1>
-            <p className="mt-2.5 max-w-[60ch] text-[14.5px] leading-relaxed text-muted-foreground">
+            <p className="mt-2.5 text-[14.5px] leading-relaxed text-muted-foreground">
               {t("subtitle")}
             </p>
           </div>
