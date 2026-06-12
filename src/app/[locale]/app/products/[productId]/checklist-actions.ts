@@ -5,7 +5,11 @@ import {
   CRA_REQUIREMENTS,
   type ChecklistStatus,
 } from "@/lib/constants/cra-requirements";
+import { canWrite } from "@/lib/constants/roles";
 import { logActivity } from "@/lib/activity";
+
+const CHECKLIST_BUCKET = "checklist-attachments";
+const CHECKLIST_ATTACHMENT_MAX_BYTES = 2 * 1024 * 1024; // 2 MB
 
 // ---------------------------------------------------------------------------
 // Types
@@ -27,8 +31,42 @@ export interface ChecklistItem {
   regulation_article: string | null;
   status: ChecklistStatus;
   priority: string;
-  assigned_to: string | null;
-  assignee: ChecklistAssignee | null;
+  /** One task can have one or more owners (join table). */
+  assignees: ChecklistAssignee[];
+}
+
+/** A single message in the item's append-only audit thread. */
+export interface ChecklistComment {
+  id: string;
+  body: string;
+  created_at: string;
+  user: { id: string; name: string | null; avatar_url: string | null } | null;
+}
+
+/** A file attached to an item — append-only, never deleted. */
+export interface ChecklistAttachment {
+  id: string;
+  file_name: string;
+  mime_type: string;
+  size_bytes: number;
+  storage_path: string;
+  created_at: string;
+  user: { id: string; name: string | null; avatar_url: string | null } | null;
+}
+
+// Resolve the caller's org role. Mutations refuse non-write roles (the DB
+// backstop in migration 00054 enforces this too; gating here gives a clean
+// error and skips wasted work).
+async function callerRole(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  userId: string,
+): Promise<string | null> {
+  const { data } = await supabase
+    .from("users")
+    .select("role")
+    .eq("id", userId)
+    .single();
+  return (data as { role: string } | null)?.role ?? null;
 }
 
 export interface Product {
@@ -106,21 +144,23 @@ export async function loadProductChecklist(productId: string): Promise<{
     items = newItems;
   }
 
-  // Hydrate assignees
-  const ids = new Set<string>();
-  for (const it of items ?? []) {
-    const r = it as Record<string, unknown>;
-    if (r.assigned_to) ids.add(r.assigned_to as string);
-  }
-  const assigneeMap = new Map<string, ChecklistAssignee>();
-  if (ids.size > 0) {
-    const { data: users } = await supabase
-      .from("users")
-      .select("id, full_name, email, avatar_url")
-      .in("id", Array.from(ids));
-    for (const u of users ?? []) {
-      const row = u as ChecklistAssignee;
-      assigneeMap.set(row.id, row);
+  // Hydrate assignees from the join table — one task can have several.
+  const itemIds = (items ?? []).map((it) => (it as { id: string }).id);
+  const assigneesByItem = new Map<string, ChecklistAssignee[]>();
+  if (itemIds.length > 0) {
+    const { data: rows } = await supabase
+      .from("checklist_item_assignees")
+      .select("checklist_item_id, user:users(id, full_name, email, avatar_url)")
+      .in("checklist_item_id", itemIds);
+    for (const row of (rows ?? []) as unknown as Array<{
+      checklist_item_id: string;
+      user: ChecklistAssignee | ChecklistAssignee[] | null;
+    }>) {
+      const u = Array.isArray(row.user) ? row.user[0] : row.user;
+      if (!u) continue;
+      const list = assigneesByItem.get(row.checklist_item_id) ?? [];
+      list.push(u);
+      assigneesByItem.set(row.checklist_item_id, list);
     }
   }
 
@@ -135,10 +175,7 @@ export async function loadProductChecklist(productId: string): Promise<{
       regulation_article: (r.regulation_article as string | null) ?? null,
       status: r.status as ChecklistStatus,
       priority: r.priority as string,
-      assigned_to: (r.assigned_to as string | null) ?? null,
-      assignee: r.assigned_to
-        ? assigneeMap.get(r.assigned_to as string) ?? null
-        : null,
+      assignees: assigneesByItem.get(r.id as string) ?? [],
     };
   });
 
@@ -157,6 +194,8 @@ export async function updateChecklistItemStatus(
   const user = await getAuthUser();
 
   if (!user) return { error: "notAuthenticated" };
+  if (!canWrite(await callerRole(supabase, user.id)))
+    return { error: "notAuthorized" };
 
   const { error } = await supabase
     .from("checklist_items")
@@ -169,21 +208,31 @@ export async function updateChecklistItemStatus(
 }
 
 // ---------------------------------------------------------------------------
-// Assign checklist item to a team member (or clear the assignment)
+// Assignees — one task can have one or more owners (join table)
 // ---------------------------------------------------------------------------
 
-export async function assignChecklistItem(
+export async function addChecklistAssignee(
+  productId: string,
   itemId: string,
-  userId: string | null,
+  userId: string,
 ): Promise<{ error?: string }> {
   const supabase = await createClient();
   const user = await getAuthUser();
   if (!user) return { error: "notAuthenticated" };
+  if (!canWrite(await callerRole(supabase, user.id)))
+    return { error: "notAuthorized" };
 
   const { error } = await supabase
-    .from("checklist_items")
-    .update({ assigned_to: userId })
-    .eq("id", itemId);
+    .from("checklist_item_assignees")
+    .upsert(
+      {
+        checklist_item_id: itemId,
+        user_id: userId,
+        product_id: productId,
+        assigned_by: user.id,
+      },
+      { onConflict: "checklist_item_id,user_id" },
+    );
   if (error) return { error: "generic" };
 
   await logActivity({
@@ -192,6 +241,25 @@ export async function assignChecklistItem(
     targetId: itemId,
     metadata: { assigneeId: userId },
   });
+  return {};
+}
+
+export async function removeChecklistAssignee(
+  itemId: string,
+  userId: string,
+): Promise<{ error?: string }> {
+  const supabase = await createClient();
+  const user = await getAuthUser();
+  if (!user) return { error: "notAuthenticated" };
+  if (!canWrite(await callerRole(supabase, user.id)))
+    return { error: "notAuthorized" };
+
+  const { error } = await supabase
+    .from("checklist_item_assignees")
+    .delete()
+    .eq("checklist_item_id", itemId)
+    .eq("user_id", userId);
+  if (error) return { error: "generic" };
   return {};
 }
 
@@ -303,4 +371,219 @@ export async function removeEvidence(
   if (error) return { error: "generic" };
   await logActivity({ action: "checklist.evidence_removed", targetType: "checklist", metadata: { filePath } });
   return {};
+}
+
+// ---------------------------------------------------------------------------
+// Audit thread — append-only comments + attachments on a checklist item.
+// Mirrors the conformity-step thread contract: every entry is attributed to
+// its author and can never be edited or deleted (compliance log).
+// ---------------------------------------------------------------------------
+
+export async function loadChecklistThread(itemId: string): Promise<{
+  comments: ChecklistComment[];
+  attachments: ChecklistAttachment[];
+  error?: string;
+}> {
+  const supabase = await createClient();
+  const user = await getAuthUser();
+  if (!user) return { comments: [], attachments: [], error: "notAuthenticated" };
+
+  const [{ data: commentRows }, { data: attachmentRows }] = await Promise.all([
+    supabase
+      .from("product_checklist_item_comments")
+      .select("id, body, created_at, user:users(id, full_name, avatar_url)")
+      .eq("checklist_item_id", itemId)
+      .order("created_at", { ascending: true }),
+    supabase
+      .from("checklist_item_attachments")
+      .select(
+        "id, file_name, mime_type, size_bytes, storage_path, created_at, user:users(id, full_name, avatar_url)",
+      )
+      .eq("checklist_item_id", itemId)
+      .order("created_at", { ascending: true }),
+  ]);
+
+  type UserRow = { id: string; full_name: string | null; avatar_url: string | null };
+  const u = (raw: UserRow | UserRow[] | null) => {
+    const row = Array.isArray(raw) ? raw[0] : raw;
+    return row ? { id: row.id, name: row.full_name, avatar_url: row.avatar_url } : null;
+  };
+
+  return {
+    comments: (
+      (commentRows ?? []) as unknown as Array<{
+        id: string;
+        body: string;
+        created_at: string;
+        user: UserRow | UserRow[] | null;
+      }>
+    ).map((r) => ({ id: r.id, body: r.body, created_at: r.created_at, user: u(r.user) })),
+    attachments: (
+      (attachmentRows ?? []) as unknown as Array<{
+        id: string;
+        file_name: string;
+        mime_type: string;
+        size_bytes: number;
+        storage_path: string;
+        created_at: string;
+        user: UserRow | UserRow[] | null;
+      }>
+    ).map((r) => ({
+      id: r.id,
+      file_name: r.file_name,
+      mime_type: r.mime_type,
+      size_bytes: r.size_bytes,
+      storage_path: r.storage_path,
+      created_at: r.created_at,
+      user: u(r.user),
+    })),
+  };
+}
+
+export async function addChecklistComment(
+  productId: string,
+  itemId: string,
+  body: string,
+): Promise<{ comment?: ChecklistComment; error?: string }> {
+  const supabase = await createClient();
+  const user = await getAuthUser();
+  if (!user) return { error: "notAuthenticated" };
+  if (!canWrite(await callerRole(supabase, user.id)))
+    return { error: "notAuthorized" };
+  const trimmed = body.trim();
+  if (!trimmed) return { error: "commentRequired" };
+
+  const { data: inserted, error } = await supabase
+    .from("product_checklist_item_comments")
+    .insert({
+      product_id: productId,
+      checklist_item_id: itemId,
+      user_id: user.id,
+      body: trimmed,
+    })
+    .select("id, body, created_at, user:users(id, full_name, avatar_url)")
+    .single();
+  if (error) return { error: "generic" };
+
+  const row = inserted as unknown as {
+    id: string;
+    body: string;
+    created_at: string;
+    user:
+      | { id: string; full_name: string | null; avatar_url: string | null }
+      | { id: string; full_name: string | null; avatar_url: string | null }[]
+      | null;
+  };
+  const ru = Array.isArray(row.user) ? row.user[0] : row.user;
+
+  await logActivity({
+    action: "checklist.comment_added",
+    targetType: "checklist",
+    targetId: itemId,
+    metadata: { productId },
+  });
+
+  return {
+    comment: {
+      id: row.id,
+      body: row.body,
+      created_at: row.created_at,
+      user: ru ? { id: ru.id, name: ru.full_name, avatar_url: ru.avatar_url } : null,
+    },
+  };
+}
+
+export async function uploadChecklistAttachment(
+  productId: string,
+  itemId: string,
+  formData: FormData,
+): Promise<{ attachment?: ChecklistAttachment; error?: string }> {
+  const supabase = await createClient();
+  const user = await getAuthUser();
+  if (!user) return { error: "notAuthenticated" };
+  const orgId = user.app_metadata?.org_id as string | undefined;
+  if (!orgId) return { error: "notAuthenticated" };
+  if (!canWrite(await callerRole(supabase, user.id)))
+    return { error: "notAuthorized" };
+
+  const file = formData.get("file");
+  if (!(file instanceof File) || file.size === 0) return { error: "noFile" };
+  if (file.size > CHECKLIST_ATTACHMENT_MAX_BYTES) return { error: "fileTooLarge" };
+
+  const safeName = file.name.replace(/[^a-zA-Z0-9._-]+/g, "_");
+  const objectName = `${orgId}/${productId}/${itemId}/${crypto.randomUUID()}-${safeName}`;
+
+  const buffer = await file.arrayBuffer();
+  const { error: uploadError } = await supabase.storage
+    .from(CHECKLIST_BUCKET)
+    .upload(objectName, buffer, { contentType: file.type, upsert: false });
+  if (uploadError) return { error: "uploadFailed" };
+
+  const { data: inserted, error: insertError } = await supabase
+    .from("checklist_item_attachments")
+    .insert({
+      product_id: productId,
+      checklist_item_id: itemId,
+      user_id: user.id,
+      storage_path: objectName,
+      file_name: file.name,
+      mime_type: file.type,
+      size_bytes: file.size,
+    })
+    .select(
+      "id, file_name, mime_type, size_bytes, storage_path, created_at, user:users(id, full_name, avatar_url)",
+    )
+    .single();
+
+  if (insertError) {
+    await supabase.storage.from(CHECKLIST_BUCKET).remove([objectName]);
+    return { error: "generic" };
+  }
+
+  const row = inserted as unknown as {
+    id: string;
+    file_name: string;
+    mime_type: string;
+    size_bytes: number;
+    storage_path: string;
+    created_at: string;
+    user:
+      | { id: string; full_name: string | null; avatar_url: string | null }
+      | { id: string; full_name: string | null; avatar_url: string | null }[]
+      | null;
+  };
+  const ru = Array.isArray(row.user) ? row.user[0] : row.user;
+
+  await logActivity({
+    action: "checklist.attachment_added",
+    targetType: "checklist",
+    targetId: itemId,
+    metadata: { productId, fileName: file.name },
+  });
+
+  return {
+    attachment: {
+      id: row.id,
+      file_name: row.file_name,
+      mime_type: row.mime_type,
+      size_bytes: row.size_bytes,
+      storage_path: row.storage_path,
+      created_at: row.created_at,
+      user: ru ? { id: ru.id, name: ru.full_name, avatar_url: ru.avatar_url } : null,
+    },
+  };
+}
+
+export async function getChecklistAttachmentUrl(
+  storagePath: string,
+): Promise<{ url?: string; error?: string }> {
+  const supabase = await createClient();
+  const user = await getAuthUser();
+  if (!user) return { error: "notAuthenticated" };
+
+  const { data, error } = await supabase.storage
+    .from(CHECKLIST_BUCKET)
+    .createSignedUrl(storagePath, 60);
+  if (error || !data?.signedUrl) return { error: "generic" };
+  return { url: data.signedUrl };
 }

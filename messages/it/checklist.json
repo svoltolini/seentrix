@@ -151,6 +151,19 @@
       "notAuthenticated": "È necessario effettuare l'accesso per continuare.",
       "productNotFound": "Prodotto non trovato.",
       "generic": "Qualcosa è andato storto. Riprova."
+    },
+    "thread": {
+      "title": "Attività",
+      "loading": "Caricamento…",
+      "empty": "Nessuna attività. Pubblica un commento o allega un file per avviare il registro.",
+      "placeholder": "Scrivi un commento…",
+      "send": "Pubblica",
+      "attach": "Allega file",
+      "attached": "File",
+      "saveStatus": "Salva stato",
+      "immutableNote": "Commenti e file fanno parte del registro di conformità — non possono essere modificati o eliminati.",
+      "fileTooLarge": "File troppo grande (max 2 MB).",
+      "loadFailed": "Impossibile caricare il registro attività."
     }
   }
 }

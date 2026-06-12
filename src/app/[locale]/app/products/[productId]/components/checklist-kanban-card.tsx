@@ -27,10 +27,10 @@ interface Props {
   title: string;
   article: string | null;
   status: ChecklistStatus;
-  assignee: ChecklistAssignee | null;
+  assignees: ChecklistAssignee[];
 }
 
-export function ChecklistKanbanCard({ title, article, status, assignee }: Props) {
+export function ChecklistKanbanCard({ title, article, status, assignees }: Props) {
   return (
     <div
       className={cn(
@@ -52,20 +52,20 @@ export function ChecklistKanbanCard({ title, article, status, assignee }: Props)
           <p className="mt-1 text-p4 text-muted-foreground">{article}</p>
         )}
       </div>
-      {assignee && (
-        <Avatar
-          size="sm"
-          className="shrink-0"
-          title={assignee.full_name ?? assignee.email ?? undefined}
-        >
-          <AvatarImage
-            src={assignee.avatar_url ?? undefined}
-            alt={assignee.full_name ?? ""}
-          />
-          <AvatarFallback>
-            {initialsOf(assignee.full_name, assignee.email)}
-          </AvatarFallback>
-        </Avatar>
+      {assignees.length > 0 && (
+        <span className="flex shrink-0 -space-x-2">
+          {assignees.slice(0, 3).map((a) => (
+            <Avatar
+              key={a.id}
+              size="sm"
+              className="ring-2 ring-card"
+              title={a.full_name ?? a.email ?? undefined}
+            >
+              <AvatarImage src={a.avatar_url ?? undefined} alt={a.full_name ?? ""} />
+              <AvatarFallback>{initialsOf(a.full_name, a.email)}</AvatarFallback>
+            </Avatar>
+          ))}
+        </span>
       )}
     </div>
   );

@@ -151,6 +151,19 @@
       "notAuthenticated": "You must be signed in to continue.",
       "productNotFound": "Product not found.",
       "generic": "Something went wrong. Please try again."
+    },
+    "thread": {
+      "title": "Activity",
+      "loading": "Loading…",
+      "empty": "No activity yet. Post a comment or attach a file to start the log.",
+      "placeholder": "Write a comment…",
+      "send": "Post",
+      "attach": "Attach file",
+      "attached": "File",
+      "saveStatus": "Save status",
+      "immutableNote": "Comments and files are part of the compliance log — they can't be edited or deleted.",
+      "fileTooLarge": "File is too large (max 2 MB).",
+      "loadFailed": "Couldn't load the activity log."
     }
   }
 }

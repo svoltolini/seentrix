@@ -79,7 +79,7 @@ export function ChecklistKanban({ items }: Props) {
                   title={reqLabel(item.title)}
                   article={reqOf(item.title)?.article ?? null}
                   status={item.status}
-                  assignee={item.assignee}
+                  assignees={item.assignees}
                 />
               ))}
               {colItems.length === 0 && (

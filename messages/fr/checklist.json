@@ -151,6 +151,19 @@
       "notAuthenticated": "Vous devez être connecté pour continuer.",
       "productNotFound": "Produit introuvable.",
       "generic": "Une erreur s'est produite. Veuillez réessayer."
+    },
+    "thread": {
+      "title": "Activité",
+      "loading": "Chargement…",
+      "empty": "Aucune activité. Publiez un commentaire ou joignez un fichier pour démarrer le journal.",
+      "placeholder": "Écrire un commentaire…",
+      "send": "Publier",
+      "attach": "Joindre un fichier",
+      "attached": "Fichier",
+      "saveStatus": "Enregistrer le statut",
+      "immutableNote": "Les commentaires et fichiers font partie du journal de conformité — ils ne peuvent être ni modifiés ni supprimés.",
+      "fileTooLarge": "Fichier trop volumineux (max 2 Mo).",
+      "loadFailed": "Impossible de charger le journal d'activité."
     }
   }
 }

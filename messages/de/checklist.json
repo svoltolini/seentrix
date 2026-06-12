@@ -151,6 +151,19 @@
       "notAuthenticated": "Sie müssen angemeldet sein, um fortzufahren.",
       "productNotFound": "Produkt nicht gefunden.",
       "generic": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
+    },
+    "thread": {
+      "title": "Aktivität",
+      "loading": "Wird geladen…",
+      "empty": "Noch keine Aktivität. Schreibe einen Kommentar oder hänge eine Datei an, um das Protokoll zu starten.",
+      "placeholder": "Kommentar schreiben…",
+      "send": "Senden",
+      "attach": "Datei anhängen",
+      "attached": "Datei",
+      "saveStatus": "Status speichern",
+      "immutableNote": "Kommentare und Dateien sind Teil des Compliance-Protokolls — sie können nicht bearbeitet oder gelöscht werden.",
+      "fileTooLarge": "Datei ist zu groß (max. 2 MB).",
+      "loadFailed": "Aktivitätsprotokoll konnte nicht geladen werden."
     }
   }
 }

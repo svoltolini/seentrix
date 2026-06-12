@@ -33,6 +33,9 @@ const eslintConfig = defineConfig([
       // by filename suffix instead of the literal `[locale]`/`[productId]`.
       "**/conformity-content.tsx",
       "**/product-overview.tsx",
+      // Same conditional reset-on-open pattern: sync local state + load the
+      // append-only thread when a new checklist item opens.
+      "**/checklist-item-sheet.tsx",
     ],
     rules: {
       "react-hooks/set-state-in-effect": "off",

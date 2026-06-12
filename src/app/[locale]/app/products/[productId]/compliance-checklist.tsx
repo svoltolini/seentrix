@@ -2,10 +2,12 @@
 
 import { useState, useCallback } from "react";
 import { useTranslations } from "next-intl";
+import { cn } from "@/lib/utils";
 import { Icon } from "@/components/icon";
 import { Segmented } from "@/components/ui/segmented";
-import { ChecklistItemCard } from "./components/checklist-item-card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ChecklistKanban } from "./components/checklist-kanban";
+import { ChecklistItemSheet } from "./components/checklist-item-sheet";
 import {
   calculateComplianceScore,
   PART_I_REQUIREMENTS,
@@ -13,17 +15,26 @@ import {
   type ChecklistStatus,
 } from "@/lib/constants/cra-requirements";
 import {
-  assignChecklistItem,
   updateChecklistItemStatus,
-  updateChecklistItemDescription,
-  uploadEvidence,
-  removeEvidence,
   type ChecklistAssignee,
   type ChecklistItem,
   type Product,
 } from "./checklist-actions";
 
 type ViewMode = "list" | "kanban";
+
+const STATUS_DOT: Record<ChecklistStatus, string> = {
+  pending: "bg-muted-foreground",
+  in_progress: "bg-warning",
+  completed: "bg-success",
+  not_applicable: "bg-border",
+};
+
+function initialsOf(name: string | null, email: string | null): string {
+  const src = name?.trim() || email?.trim() || "";
+  if (!src) return "?";
+  return src.split(/\s+/).map((p) => p[0]).join("").slice(0, 2).toUpperCase();
+}
 
 /** Band-colored progress ring (≥75 green, ≥40 amber, else red). */
 function ScoreRing({ score }: { score: number }) {
@@ -72,14 +83,19 @@ export function ComplianceChecklist({
   product,
   initialItems,
   members,
+  editable = true,
 }: {
   product: Product;
   initialItems: ChecklistItem[];
   members: ChecklistAssignee[];
+  /** Viewers are read-only — status / assignees / thread composer hidden. */
+  editable?: boolean;
 }) {
   const t = useTranslations("checklist");
+  const tReq = useTranslations("checklist");
   const [items, setItems] = useState<ChecklistItem[]>(initialItems);
   const [view, setView] = useState<ViewMode>("kanban");
+  const [activeId, setActiveId] = useState<string | null>(null);
 
   const score = calculateComplianceScore(items);
 
@@ -109,51 +125,30 @@ export function ComplianceChecklist({
     []
   );
 
-  const handleNotesChange = useCallback(
-    async (itemId: string, description: string) => {
+  // Assignee add/remove is persisted inside the sheet; here we just mirror
+  // the new set into local state so the list rows update.
+  const handleAssigneesChange = useCallback(
+    (itemId: string, assignees: ChecklistAssignee[]) => {
       setItems((prev) =>
-        prev.map((i) => (i.id === itemId ? { ...i, description } : i))
+        prev.map((i) => (i.id === itemId ? { ...i, assignees } : i))
       );
-      await updateChecklistItemDescription(itemId, description);
     },
     []
-  );
-
-  const handleEvidenceUpload = useCallback(
-    async (itemId: string, file: File): Promise<string | null> => {
-      const formData = new FormData();
-      formData.set("file", file);
-      const result = await uploadEvidence(product.id, itemId, formData);
-      return result.path;
-    },
-    [product.id]
-  );
-
-  const handleEvidenceRemove = useCallback(
-    async (_itemId: string, filePath: string) => {
-      await removeEvidence(filePath);
-    },
-    []
-  );
-
-  const handleAssigneeChange = useCallback(
-    async (itemId: string, userId: string | null) => {
-      const assignee = userId
-        ? members.find((m) => m.id === userId) ?? null
-        : null;
-      setItems((prev) =>
-        prev.map((i) =>
-          i.id === itemId ? { ...i, assigned_to: userId, assignee } : i
-        )
-      );
-      await assignChecklistItem(itemId, userId);
-    },
-    [members]
   );
 
   function findItem(requirementId: string) {
     return items.find((i) => i.title === requirementId);
   }
+
+  const activeItem = items.find((i) => i.id === activeId) ?? null;
+  const activeNs =
+    activeItem?.category === "part_ii"
+      ? "vulnerabilityRequirements"
+      : "requirements";
+  const reqText = (key: string) =>
+    activeItem && tReq.has(`${activeNs}.${activeItem.title}.${key}`)
+      ? tReq(`${activeNs}.${activeItem.title}.${key}`)
+      : "";
 
   return (
     <div className="space-y-6">
@@ -219,21 +214,16 @@ export function ComplianceChecklist({
             const item = findItem(req.id);
             if (!item) return null;
             return (
-              <ChecklistItemCard
+              <ChecklistRow
                 key={item.id}
-                id={item.id}
-                requirementId={req.id}
-                part={req.part}
-                article={req.article}
-                status={item.status}
-                description={item.description}
-                assignee={item.assignee}
-                members={members}
-                onStatusChange={handleStatusChange}
-                onNotesChange={handleNotesChange}
-                onEvidenceUpload={handleEvidenceUpload}
-                onEvidenceRemove={handleEvidenceRemove}
-                onAssigneeChange={handleAssigneeChange}
+                item={item}
+                title={
+                  t.has(`requirements.${req.id}.title`)
+                    ? t(`requirements.${req.id}.title`)
+                    : req.article
+                }
+                statusLabel={t(`statuses.${item.status}`)}
+                onOpen={() => setActiveId(item.id)}
               />
             );
           })}
@@ -268,21 +258,16 @@ export function ComplianceChecklist({
             const item = findItem(req.id);
             if (!item) return null;
             return (
-              <ChecklistItemCard
+              <ChecklistRow
                 key={item.id}
-                id={item.id}
-                requirementId={req.id}
-                part={req.part}
-                article={req.article}
-                status={item.status}
-                description={item.description}
-                assignee={item.assignee}
-                members={members}
-                onStatusChange={handleStatusChange}
-                onNotesChange={handleNotesChange}
-                onEvidenceUpload={handleEvidenceUpload}
-                onEvidenceRemove={handleEvidenceRemove}
-                onAssigneeChange={handleAssigneeChange}
+                item={item}
+                title={
+                  t.has(`vulnerabilityRequirements.${req.id}.title`)
+                    ? t(`vulnerabilityRequirements.${req.id}.title`)
+                    : req.article
+                }
+                statusLabel={t(`statuses.${item.status}`)}
+                onOpen={() => setActiveId(item.id)}
               />
             );
           })}
@@ -290,6 +275,66 @@ export function ComplianceChecklist({
       </div>
         </>
       )}
+
+      <ChecklistItemSheet
+        open={activeId !== null}
+        onOpenChange={(o) => !o && setActiveId(null)}
+        item={activeItem}
+        productId={product.id}
+        members={members}
+        editable={editable}
+        title={reqText("title")}
+        description={reqText("description")}
+        guidance={reqText("guidance")}
+        onStatusChange={handleStatusChange}
+        onAssigneesChange={handleAssigneesChange}
+      />
     </div>
+  );
+}
+
+/** A checklist list row — title, assignee avatars, status, opens the sheet. */
+function ChecklistRow({
+  item,
+  title,
+  statusLabel,
+  onOpen,
+}: {
+  item: ChecklistItem;
+  title: string;
+  statusLabel: string;
+  onOpen: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onOpen}
+      className={cn(
+        "flex w-full items-center gap-3 px-5 py-3.5 text-left transition-colors hover:bg-muted/60",
+        item.status === "not_applicable" && "opacity-60",
+      )}
+    >
+      <span className="min-w-0 flex-1 text-l6 text-foreground">{title}</span>
+      {item.assignees.length > 0 && (
+        <span className="flex shrink-0 -space-x-2">
+          {item.assignees.slice(0, 3).map((a) => (
+            <Avatar key={a.id} size="sm" className="ring-2 ring-card" title={a.full_name ?? a.email ?? ""}>
+              {a.avatar_url && <AvatarImage src={a.avatar_url} alt="" />}
+              <AvatarFallback>{initialsOf(a.full_name, a.email)}</AvatarFallback>
+            </Avatar>
+          ))}
+          {item.assignees.length > 3 && (
+            <span className="flex size-6 items-center justify-center rounded-full bg-muted text-[10px] font-bold text-muted-foreground ring-2 ring-card">
+              +{item.assignees.length - 3}
+            </span>
+          )}
+        </span>
+      )}
+      <span className="flex shrink-0 items-center gap-1.5">
+        <span className={cn("size-1.5 rounded-full", STATUS_DOT[item.status])} />
+        <span className="text-p4 text-muted-foreground">{statusLabel}</span>
+      </span>
+      <Icon name="ChevronRightIcon" className="size-4 shrink-0 text-muted-foreground" />
+    </button>
   );
 }

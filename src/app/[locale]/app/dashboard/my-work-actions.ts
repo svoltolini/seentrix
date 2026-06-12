@@ -55,25 +55,21 @@ export async function getMyWorkStats(): Promise<MyWorkStats | null> {
   const user = await getAuthUser();
   if (!user) return null;
 
-  const [meRes, completionsRes, assignedRes, doneRes, vulnRes] =
+  const [meRes, completionsRes, assignedRes, vulnRes] =
     await Promise.all([
       supabase.from("users").select("full_name, role").eq("id", user.id).single(),
       supabase
         .from("academy_completions")
         .select("lesson_id")
         .eq("user_id", user.id),
-      // Open checklist items assigned to me, with the product name.
+      // All checklist items assigned to me (via the multi-assignee join),
+      // with the product name. Open vs done is split client-side.
       supabase
-        .from("checklist_items")
-        .select("id, title, category, product_id, due_date, status, products(name)")
-        .eq("assigned_to", user.id)
-        .not("status", "in", "(completed,not_applicable)"),
-      // Completed-by-me count for the progress ring.
-      supabase
-        .from("checklist_items")
-        .select("id", { count: "exact", head: true })
-        .eq("assigned_to", user.id)
-        .eq("status", "completed"),
+        .from("checklist_item_assignees")
+        .select(
+          "checklist_items!inner(id, title, category, product_id, due_date, status, products(name))",
+        )
+        .eq("user_id", user.id),
       // Open vulnerabilities assigned to me, joined out to the product.
       supabase
         .from("vulnerabilities")
@@ -91,32 +87,46 @@ export async function getMyWorkStats(): Promise<MyWorkStats | null> {
     (r) => (r as { lesson_id: string }).lesson_id,
   );
 
-  const now = Date.now();
-  const tasks: MyTask[] = (
-    (assignedRes.data ?? []) as Array<{
-      id: string;
-      title: string;
-      category: string | null;
-      product_id: string;
-      due_date: string | null;
-      status: string;
-      products: { name: string } | { name: string }[] | null;
+  // Flatten the join rows to the underlying checklist items.
+  type ItemRow = {
+    id: string;
+    title: string;
+    category: string | null;
+    product_id: string;
+    due_date: string | null;
+    status: string;
+    products: { name: string } | { name: string }[] | null;
+  };
+  const myItems = (
+    (assignedRes.data ?? []) as unknown as Array<{
+      checklist_items: ItemRow | ItemRow[] | null;
     }>
-  ).map((r) => {
-    const product = Array.isArray(r.products) ? r.products[0] : r.products;
-    const daysOverdue = r.due_date
-      ? Math.floor((now - new Date(r.due_date).getTime()) / MS_PER_DAY)
-      : null;
-    return {
-      id: r.id,
-      requirementId: r.title,
-      part: r.category === "part_ii" ? "part_ii" : "part_i",
-      productId: r.product_id,
-      productName: product?.name ?? "",
-      status: r.status,
-      daysOverdue,
-    };
-  });
+  )
+    .map((r) =>
+      Array.isArray(r.checklist_items) ? r.checklist_items[0] : r.checklist_items,
+    )
+    .filter((it): it is ItemRow => !!it);
+
+  const doneTaskCount = myItems.filter((i) => i.status === "completed").length;
+
+  const now = Date.now();
+  const tasks: MyTask[] = myItems
+    .filter((i) => i.status !== "completed" && i.status !== "not_applicable")
+    .map((r) => {
+      const product = Array.isArray(r.products) ? r.products[0] : r.products;
+      const daysOverdue = r.due_date
+        ? Math.floor((now - new Date(r.due_date).getTime()) / MS_PER_DAY)
+        : null;
+      return {
+        id: r.id,
+        requirementId: r.title,
+        part: r.category === "part_ii" ? ("part_ii" as const) : ("part_i" as const),
+        productId: r.product_id,
+        productName: product?.name ?? "",
+        status: r.status,
+        daysOverdue,
+      };
+    });
 
   // Overdue first (most overdue at the top), then items with no due date.
   tasks.sort((a, b) => {
@@ -172,7 +182,7 @@ export async function getMyWorkStats(): Promise<MyWorkStats | null> {
     firstName,
     tasks,
     openTaskCount: tasks.length,
-    doneTaskCount: doneRes.count ?? 0,
+    doneTaskCount,
     vulns,
     completedLessonIds,
     role: me?.role ?? null,

@@ -1,4 +1,6 @@
 import { loadProduct } from "../../actions";
+import { getCurrentUserRole } from "../../../settings/actions";
+import { canWrite } from "@/lib/constants/roles";
 import {
   listChecklistAssignees,
   loadProductChecklist,
@@ -21,10 +23,12 @@ export default async function ChecklistPage({
     return <ChecklistGate productId={productId} />;
   }
 
-  const [{ product: checklistProduct, items }, { members }] = await Promise.all([
-    loadProductChecklist(productId),
-    listChecklistAssignees(),
-  ]);
+  const [{ product: checklistProduct, items }, { members }, role] =
+    await Promise.all([
+      loadProductChecklist(productId),
+      listChecklistAssignees(),
+      getCurrentUserRole(),
+    ]);
 
   if (!checklistProduct) return null;
 
@@ -33,6 +37,7 @@ export default async function ChecklistPage({
       product={checklistProduct}
       initialItems={items}
       members={members}
+      editable={canWrite(role)}
     />
   );
 }
