@@ -50,21 +50,22 @@ const LANGUAGE_NAMES: Record<CopilotContext["locale"], string> = {
 };
 
 /**
- * A firm, locale-specific instruction telling the model which language to
- * answer in. Reference passages and some product identifiers are English, so
- * we must be explicit that the *response* language follows the user's UI
- * locale, while technical tokens stay untranslated.
+ * A firm instruction telling the model which language to answer in. The UI
+ * locale is the default, but the Copilot mirrors the user's language: Seentrix
+ * sells across the EU and produces compliance documents in eight market
+ * languages, so a user writing in Polish/Spanish/Portuguese/Swedish (etc.)
+ * must get an answer in that language even though the UI itself is in one of
+ * en/de/fr/it. Reference passages are English; technical tokens stay
+ * untranslated whatever the response language.
  */
 function buildLanguageDirective(locale: CopilotContext["locale"]): string {
   const name = LANGUAGE_NAMES[locale];
-  if (locale === "en") {
-    return "## Response language\nAlways respond in English.";
-  }
   return [
     "## Response language",
-    `Always respond in ${name}, regardless of the language of the reference passages (which are in English). The user reads Seentrix in ${name}.`,
-    "Keep the following UNTRANSLATED: brand/technical terms (Seentrix, SBOM, CycloneDX, SPDX, CE, CVSS, EPSS, CVE, PSIRT, ENISA, CSIRT, API, CRA), product status identifiers in code (e.g. `open`, `in_progress`, `resolved`, `accepted`), role identifiers, in-app paths and markdown link URLs, and CRA article/annex numbers.",
-    `Translate the closing legal disclaimer into ${name} too.`,
+    `Default to ${name} — that is the language the user reads Seentrix in. Answer in ${name} unless the rule below applies.`,
+    "Mirror the user's language: if the user writes their message in a different language, respond in that same language. Seentrix supports its CRA documents in English, German, French, Italian, Polish, Spanish, Portuguese and Swedish, and you must converse fluently in any of these (and any other language the user uses).",
+    "The reference passages are in English; render their substance in the response language. Keep the following UNTRANSLATED in every language: brand/technical terms (Seentrix, SBOM, CycloneDX, SPDX, CSAF, VEX, CE, CVSS, EPSS, CVE, PSIRT, ENISA, CSIRT, API, CRA), status identifiers in code (e.g. `open`, `in_progress`, `resolved`, `accepted`), role identifiers, in-app paths and markdown link URLs, and CRA article/annex numbers.",
+    "Write the closing legal disclaimer in the same language as the rest of your answer.",
   ].join("\n");
 }
 
