@@ -1,4 +1,5 @@
 import type { RetrievedChunk } from "./retrieval";
+import type { Locale } from "@/i18n/locales";
 
 /**
  * Build the system prompt for a Copilot turn.
@@ -19,8 +20,8 @@ import type { RetrievedChunk } from "./retrieval";
  */
 
 export interface CopilotContext {
-  /** Active UI locale — the Copilot must answer in this language. */
-  locale: "en" | "de" | "fr" | "it";
+  /** Active UI locale — the Copilot answers in this language by default. */
+  locale: Locale;
   orgName?: string;
   orgCountry?: string;
   plan?: string;
@@ -47,16 +48,18 @@ const LANGUAGE_NAMES: Record<CopilotContext["locale"], string> = {
   de: "German (Deutsch)",
   fr: "French (Français)",
   it: "Italian (Italiano)",
+  pl: "Polish (Polski)",
+  es: "Spanish (Español)",
+  pt: "Portuguese (Português)",
+  sv: "Swedish (Svenska)",
 };
 
 /**
  * A firm instruction telling the model which language to answer in. The UI
  * locale is the default, but the Copilot mirrors the user's language: Seentrix
- * sells across the EU and produces compliance documents in eight market
- * languages, so a user writing in Polish/Spanish/Portuguese/Swedish (etc.)
- * must get an answer in that language even though the UI itself is in one of
- * en/de/fr/it. Reference passages are English; technical tokens stay
- * untranslated whatever the response language.
+ * sells across the EU in eight market languages, so a user writing in any of
+ * them must get an answer in that language. Reference passages are English;
+ * technical tokens stay untranslated whatever the response language.
  */
 function buildLanguageDirective(locale: CopilotContext["locale"]): string {
   const name = LANGUAGE_NAMES[locale];

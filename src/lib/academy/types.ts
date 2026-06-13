@@ -15,7 +15,18 @@ export type RoleId =
   | "editor"
   | "viewer";
 
-export type LocaleId = "en" | "de" | "fr" | "it";
+// Mirrors the UI `Locale` set (src/i18n/locales.ts). English is required on
+// every lesson and is the fallback (see `getLessonContent`); the rest are
+// optional so locales fill in incrementally without breaking the build.
+export type LocaleId =
+  | "en"
+  | "de"
+  | "fr"
+  | "it"
+  | "pl"
+  | "es"
+  | "pt"
+  | "sv";
 
 /** A single lesson section — a heading + prose body. */
 export interface LessonSection {

@@ -3,10 +3,17 @@
  *
  * Single source of truth shared by the routing config, the message loader,
  * the language picker, and the locale-negotiation logic. Keep this in sync
- * with the `preferred_locale` CHECK constraint in migration 00041.
+ * with the `preferred_locale` CHECK constraint (see migration 00059).
+ *
+ * English is the source of truth; every other locale is translated on top of
+ * it. The message loader (`src/i18n/request.ts`) always merges the full
+ * English dictionary underneath the active locale, so a locale whose
+ * translations are still incomplete renders English for the missing keys
+ * rather than breaking — which is what lets us add a locale here and fill its
+ * translations afterwards (machine-translated via `scripts/i18n/translate.mjs`).
  */
 
-export const LOCALES = ["en", "de", "fr", "it"] as const;
+export const LOCALES = ["en", "de", "fr", "it", "pl", "es", "pt", "sv"] as const;
 
 export type Locale = (typeof LOCALES)[number];
 
@@ -18,6 +25,10 @@ export const LOCALE_LABELS: Record<Locale, string> = {
   de: "Deutsch",
   fr: "Français",
   it: "Italiano",
+  pl: "Polski",
+  es: "Español",
+  pt: "Português",
+  sv: "Svenska",
 };
 
 /** Short uppercase code for compact UI (e.g. the top-bar menu). */
@@ -26,6 +37,10 @@ export const LOCALE_SHORT: Record<Locale, string> = {
   de: "DE",
   fr: "FR",
   it: "IT",
+  pl: "PL",
+  es: "ES",
+  pt: "PT",
+  sv: "SV",
 };
 
 /** Cookie next-intl reads to resolve the active locale (its default name). */

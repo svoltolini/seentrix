@@ -24,7 +24,7 @@ interface EnrichArgs {
   >;
   orgId: string;
   plan: string;
-  locale: "en" | "de" | "fr" | "it";
+  locale: CopilotContext["locale"];
   pagePath?: string;
   orgName?: string;
   orgCountry?: string;

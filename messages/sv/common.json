@@ -1,0 +1,45 @@
+{
+  "app": {
+    "name": "Seentrix",
+    "tagline": "CRA-efterlevnadsplattform för tillverkare"
+  },
+  "nav": {
+    "dashboard": "Instrumentpanel",
+    "products": "Produkter",
+    "incidents": "Incidenter",
+    "reports": "Rapporter",
+    "settings": "Inställningar",
+    "logout": "Logga ut",
+    "myAccount": "Mitt konto",
+    "help": "Hjälp",
+    "glossary": "Ordlista",
+    "academy": "Akademi",
+    "error": "Något gick fel",
+    "errorDescription": "Ett oväntat fel inträffade. Försök igen.",
+    "tryAgain": "Försök igen"
+  },
+  "sidebar": {
+    "overview": "Arbetsyta",
+    "compliance": "Efterlevnad",
+    "management": "Hantering",
+    "helpTitle": "Hjälpcenter",
+    "helpBody": "Fastnat med CRA-efterlevnad? Fråga Seentrix AI-Copilot.",
+    "helpCta": "Rådfråga nu"
+  },
+  "topbar": {
+    "searchPlaceholder": "Sök produkter…",
+    "searching": "Söker…",
+    "noResults": "Inga produkter matchar din sökning.",
+    "newProduct": "Ny produkt",
+    "notifications": "Aviseringar",
+    "notificationsTitle": "Aviseringar",
+    "notificationsEmpty": "Du är ikapp.",
+    "notificationsLoading": "Laddar…",
+    "notificationsViewAll": "Visa all aktivitet",
+    "addProfilePicture": "Lägg till en profilbild",
+    "language": "Språk"
+  },
+  "common": {
+    "securityCheck": "Säkerhetskontroll"
+  }
+}

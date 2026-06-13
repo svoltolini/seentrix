@@ -2,7 +2,8 @@ import { defineRouting } from "next-intl/routing";
 import { LOCALES, DEFAULT_LOCALE } from "./locales";
 
 /**
- * Multi-locale routing (English, German, French, Italian).
+ * Multi-locale routing (English, German, French, Italian, Polish, Spanish,
+ * Portuguese, Swedish — the full set lives in `LOCALES`).
  *
  * `localePrefix: "never"` means URLs never carry a `/de/` segment — the
  * active locale is resolved per-request from the `NEXT_LOCALE` cookie (set
