@@ -1,0 +1,419 @@
+{
+  "settings": {
+    "title": "Definições",
+    "subtitle": "Faça a gestão da sua organização, equipa e conta.",
+    "nav": {
+      "organization": "Organização",
+      "entity": "Função da entidade",
+      "team": "Equipa",
+      "billing": "Faturação",
+      "activity": "Atividade",
+      "account": "Conta",
+      "security": "Segurança"
+    },
+    "organization": {
+      "title": "Organização",
+      "subtitle": "Faça a gestão dos dados e preferências da sua organização.",
+      "nameLabel": "Nome da organização",
+      "namePlaceholder": "Acme Inc.",
+      "legalTitle": "Identidade legal",
+      "legalDescription": "Obrigatória em cada declaração de conformidade e documentação técnica. Preencha exatamente como aparece nos seus documentos de constituição.",
+      "legalName": "Nome da entidade legal",
+      "legalNameHint": "Nome registado da empresa — pode diferir do nome comercial/apresentado acima.",
+      "legalNamePlaceholder": "Acme GmbH",
+      "registrationNumber": "Número de registo ou de IVA",
+      "registrationNumberHint": "Registo comercial (HRB), número de IVA ou registo empresarial nacional equivalente.",
+      "registrationNumberPlaceholder": "DE123456789 ou HRB 12345",
+      "signatoryTitle": "Signatário e contacto",
+      "signatoryDescription": "O signatário é a pessoa singular que assina a declaração de conformidade. O e-mail de contacto é o contacto público para os clientes impresso nos rótulos dos produtos.",
+      "signatoryName": "Nome do signatário",
+      "signatoryNamePlaceholder": "Maria Santos",
+      "signatoryPosition": "Cargo do signatário",
+      "signatoryPositionPlaceholder": "Diretor executivo",
+      "contactEmail": "E-mail de contacto público",
+      "website": "Site",
+      "addressTitle": "Sede registada",
+      "addressDescription": "Utilizada na declaração de conformidade e noutros documentos de conformidade.",
+      "addressLine1": "Morada, linha 1",
+      "addressLine1Placeholder": "Rua Principal 123",
+      "addressLine2": "Morada, linha 2",
+      "addressLine2Placeholder": "Sala 100",
+      "postalCode": "Código postal",
+      "postalCodePlaceholder": "1000-001",
+      "city": "Cidade",
+      "cityPlaceholder": "Lisboa",
+      "country": "País",
+      "countryPlaceholder": "Portugal",
+      "save": "Guardar alterações",
+      "saving": "A guardar…",
+      "saved": "Definições da organização guardadas.",
+      "error": "Não foi possível guardar as definições. Tente novamente.",
+      "readOnly": "Apenas os administradores podem editar as definições da organização.",
+      "orgChart": "Organograma",
+      "orgChartDescription": "A sua equipa agrupada por função do CRA. Clique numa pessoa para a gerir.",
+      "seatsUsed": "{count} de {limit} lugares utilizados",
+      "seatsUsedUnlimited": "{count, plural, one {# lugar utilizado} other {# lugares utilizados}} · Ilimitado",
+      "upgrade": "Atualizar plano",
+      "inviteToRole": "Convidar um {role}",
+      "noOneYet": "Ainda ninguém",
+      "docReady": {
+        "eyebrow": "Configuração da conformidade",
+        "title": "A declaração de conformidade ainda não está pronta para ser emitida",
+        "description": "{count, plural, one {Falta # campo obrigatório} other {Faltam # campos obrigatórios}} para a geração de documentos do CRA. Preencha-os abaixo — o fluxo de conformidade recusará emitir a declaração até que tudo nesta página esteja completo.",
+        "cta": "Preencher agora"
+      },
+      "dangerZone": {
+        "title": "Zona de perigo",
+        "subtitle": "Ações irreversíveis. Verifique novamente antes de continuar.",
+        "exportTitle": "Exportar todos os dados da organização",
+        "exportDescription": "Descarregue todos os registos associados a esta organização num único ficheiro JSON. Cumpre o art. 20.º do RGPD (portabilidade).",
+        "exportCta": "Exportar dados",
+        "exportInProgress": "A preparar a exportação…",
+        "exportReady": "Exportação descarregada.",
+        "exportError": "Não foi possível gerar a exportação. Tente novamente.",
+        "deleteTitle": "Eliminar a organização",
+        "deleteDescription": "Agenda a eliminação permanente da organização e de todos os registos a ela associados. Tem 30 dias para cancelar.",
+        "deleteCta": "Eliminar a organização",
+        "deleteScheduled": "Eliminação agendada. Tem 30 dias para cancelar.",
+        "deleteError": "Não foi possível solicitar a eliminação. Tente novamente.",
+        "cancelDeletion": "Cancelar a eliminação",
+        "cancellingDeletion": "A cancelar…",
+        "cancelSuccess": "Eliminação cancelada.",
+        "cancelError": "Não foi possível cancelar a eliminação. Tente novamente.",
+        "pendingTitle": "Eliminação agendada para daqui a {days} dia(s).",
+        "pendingSubtitle": "Todos os dados serão eliminados em {date}. Cancele a qualquer momento antes dessa data.",
+        "dialogTitle": "Eliminar esta organização?",
+        "dialogDescription": "Isto removerá todos os produtos, SBOM, declarações, relatórios de incidentes, registos de formação e membros da equipa num período de tolerância de 30 dias. Depois disso, os dados são destruídos permanentemente.",
+        "dialogPromptLabel": "Escreva «{name}» para confirmar",
+        "dialogConfirm": "Agendar eliminação",
+        "dialogCancel": "Cancelar",
+        "deleting": "A agendar…",
+        "confirmationMismatch": "O nome que escreveu não coincide. A eliminação não foi agendada."
+      },
+      "tooltips": {
+        "name": {
+          "title": "Nome da organização",
+          "body": "O nome comercial ou apresentado que os utilizadores e colegas veem dentro do Seentrix. É o nome amigável — não tem de coincidir com a sua entidade legal registada.",
+          "ref": "Apenas interno. O nome juridicamente vinculativo nos documentos de conformidade é o campo Nome da entidade legal abaixo."
+        },
+        "legalName": {
+          "title": "Nome da entidade legal",
+          "body": "Nome registado da empresa exatamente como aparece nos seus documentos de constituição (por ex., Acme GmbH, Acme S.A.S.). Pode diferir do nome comercial — inclua o sufixo da forma jurídica. Impresso literalmente na <g-doc>declaração de conformidade</g-doc> e em cada rótulo de produto com <g-ce_marking>marcação CE</g-ce_marking>.",
+          "ref": "CRA <g-annex_v>anexo V(1)</g-annex_v> — a declaração de conformidade deve identificar a pessoa coletiva que a emite. Um erro aqui invalida a declaração."
+        },
+        "registrationNumber": {
+          "title": "Número de registo ou de IVA",
+          "body": "Número de registo comercial (por ex., HRB 12345 na Alemanha), número de IVA (DE123456789) ou registo empresarial nacional equivalente. Introduza exatamente um — escolha o identificador que a sua autoridade nacional usa para o localizar.",
+          "ref": "CRA anexo V(1)(b) — a declaração de conformidade deve incluir um identificador que resolva o fabricante de forma inequívoca. As autoridades de fiscalização do mercado usam-no para rastrear produtos não conformes até si."
+        },
+        "signatoryName": {
+          "title": "Nome do signatário",
+          "body": "A pessoa singular que assina a declaração de conformidade. Deve ser alguém legalmente autorizado a vincular a organização — normalmente o diretor executivo, o administrador ou um responsável com poder de assinatura delegado.",
+          "ref": "CRA anexo V(5) — a declaração é assinada por uma pessoa que age em nome do fabricante. Uma assinatura não autorizada pode anular a declaração."
+        },
+        "signatoryPosition": {
+          "title": "Cargo do signatário",
+          "body": "Cargo da pessoa que assina (por ex., diretor executivo, administrador, responsável de conformidade). Impresso sob a assinatura na declaração de conformidade.",
+          "ref": "CRA anexo V(5) — juntamente com o nome do signatário, identifica quem, dentro da organização, assume a responsabilidade legal pela declaração."
+        },
+        "contactEmail": {
+          "title": "E-mail de contacto público",
+          "body": "E-mail para os clientes impresso nos rótulos dos produtos, na embalagem e na declaração de conformidade. Deve ser monitorizado — as autoridades de fiscalização do mercado e os utilizadores finais usá-lo-ão para o contactar.",
+          "ref": "CRA artigo 13.º(4) — os fabricantes devem fornecer um ponto único de contacto para questões de cibersegurança no produto, na embalagem ou na documentação que o acompanha."
+        },
+        "website": {
+          "title": "Site",
+          "body": "URL do site da empresa. Opcional, mas vivamente recomendado — aparece na declaração de conformidade e dá aos reguladores e utilizadores finais um segundo canal para verificar a sua identidade.",
+          "ref": "CRA artigo 13.º(4) — não é obrigatório, mas conta como informação de contacto aceitável a par do e-mail público."
+        },
+        "addressLine1": {
+          "title": "Sede registada, linha 1",
+          "body": "Rua e número da sua sede registada — a morada dos seus documentos de constituição, não uma caixa postal nem um armazém de expedição.",
+          "ref": "CRA anexo V(1)(a) — morada postal do fabricante, impressa na declaração de conformidade."
+        },
+        "addressLine2": {
+          "title": "Morada, linha 2",
+          "body": "Segunda linha opcional para sala, piso, nome do edifício ou semelhante. Deixe em branco se a sua morada couber numa só linha.",
+          "ref": "Acrescentada à linha 1 da morada na declaração de conformidade quando presente."
+        },
+        "postalCode": {
+          "title": "Código postal",
+          "body": "Código postal da sua morada registada. O formato deve corresponder à convenção do seu país (por ex., 5 dígitos na Alemanha, alfanumérico no Reino Unido).",
+          "ref": "CRA anexo V(1)(a) — parte do bloco de morada postal na declaração de conformidade."
+        },
+        "city": {
+          "title": "Cidade",
+          "body": "Cidade ou localidade da sua morada registada. Também usada como campo «local» na declaração de conformidade assinada («Assinado em {city}, em {date}»).",
+          "ref": "CRA anexo V(6) — a declaração regista o local onde foi emitida, que deve corresponder a uma morada que possa ser associada a si."
+        },
+        "country": {
+          "title": "País",
+          "body": "País da sede social registada. Se for fora da UE, também precisa de um representante autorizado na União — configure-o no separador Função da entidade.",
+          "ref": "CRA artigo 18.º — os fabricantes estabelecidos fora da União devem designar um representante autorizado na UE antes de colocarem produtos no mercado."
+        }
+      },
+      "readOnlyBadge": "Bloqueado",
+      "editDetails": "Editar dados",
+      "cancel": "Cancelar",
+      "orgChartTotalMembers": "{count, plural, one {# membro da equipa} other {# membros da equipa}}",
+      "orgChartCapacity": "Capacidade de lugares",
+      "inviteShort": "Convidar"
+    },
+    "team": {
+      "title": "Equipa",
+      "subtitle": "Faça a gestão de quem tem acesso à sua organização.",
+      "members": "Membros",
+      "memberCount": "{count} membro",
+      "memberCountPlural": "{count} membros",
+      "createTitle": "Adicionar um membro da equipa",
+      "createDescription": "Crie uma conta para um novo membro da equipa. Terá de alterar a palavra-passe no primeiro início de sessão.",
+      "createEmail": "E-mail",
+      "createEmailPlaceholder": "colega@empresa.com",
+      "createName": "Nome completo",
+      "createNamePlaceholder": "Maria Santos",
+      "createRoleLabel": "Função",
+      "createPassword": "Palavra-passe temporária",
+      "createPasswordPlaceholder": "Mín. 8 caracteres",
+      "tooltips": {
+        "email": {
+          "title": "E-mail do membro da equipa",
+          "body": "O endereço de e-mail que o novo membro usará para iniciar sessão. Deve ser único em toda a plataforma Seentrix — se já estiver em uso noutro local, o convite falha. Torna-se também a identidade no registo de auditoria para cada ação que realizar.",
+          "ref": "As entradas do registo de atividade são armazenadas com o ID de autenticação imutável do utilizador, mas é o e-mail que os reguladores veem nas trilhas de auditoria exportadas."
+        },
+        "fullName": {
+          "title": "Nome completo",
+          "body": "Nome legal ou apresentado mostrado em todo o Seentrix. Também impresso nas exportações do registo de atividade e aparece como criador/responsável em vulnerabilidades, incidentes e itens da lista de verificação.",
+          "ref": "NIS2 artigo 20.º (quando aplicável) — as listas de pessoal prontas para auditoria precisam de nomes identificáveis, não apenas de e-mails."
+        },
+        "role": {
+          "title": "Função",
+          "body": "Controla o que este membro pode fazer. Administrador: tudo. Responsável de conformidade: alterações críticas para a conformidade (função da entidade, emissão da declaração, relatórios de incidentes). CTO: igual ao responsável de conformidade, sem faturação. Editor: produtos, vulnerabilidades, itens da lista de verificação; não pode emitir a declaração. Observador: apenas leitura.",
+          "ref": "O CRA não exige funções específicas, mas durante as auditorias espera-se a separação de funções entre quem assina a declaração e quem opera o produto. Escolha uma função que corresponda à responsabilidade real da pessoa."
+        },
+        "password": {
+          "title": "Palavra-passe temporária",
+          "body": "Palavra-passe do primeiro início de sessão que partilha com o membro. Deve alterá-la no primeiro acesso — o sinalizador must_change_password é definido automaticamente. Use um gerador de palavras-passe de uso único; não reutilize palavras-passe existentes.",
+          "ref": "Defesa em profundidade — a palavra-passe temporária só é válida até ao primeiro início de sessão. Se um membro nunca iniciar sessão, alterne-a ou remova-o através da lista da equipa."
+        }
+      },
+      "createMember": "Criar membro",
+      "creatingMember": "A criar…",
+      "memberCreated": "Membro da equipa criado com sucesso.",
+      "createError": "Não foi possível criar o membro da equipa.",
+      "createErrors": {
+        "notAdmin": "Apenas os administradores podem adicionar membros à equipa.",
+        "emailInUse": "Este e-mail já está registado.",
+        "limitReached": "Foi atingido o limite de membros do seu plano.",
+        "passwordTooShort": "A palavra-passe deve ter pelo menos 8 caracteres.",
+        "invalidRole": "Função selecionada inválida."
+      },
+      "credentialsTitle": "Conta criada",
+      "credentialsHint": "Partilhe estas credenciais com o novo membro da equipa. Ser-lhe-á pedido que defina uma nova palavra-passe no primeiro início de sessão.",
+      "credentialsCopied": "Credenciais copiadas para a área de transferência.",
+      "pendingPassword": "Pendente",
+      "removeMember": "Remover",
+      "removeMemberConfirm": "Remover o membro da equipa?",
+      "removeMemberDescription": "Tem a certeza de que quer remover {name} da sua organização? Perderá o acesso imediatamente.",
+      "removeMemberCancel": "Cancelar",
+      "removeMemberSubmit": "Remover",
+      "removed": "Membro da equipa removido.",
+      "removeError": "Não foi possível remover o membro da equipa.",
+      "changeRole": "Alterar função",
+      "changeRoleConfirm": "Alterar a função?",
+      "changeRoleDescription": "Alterar a função de {name} de {oldRole} para {newRole}?",
+      "changeRoleCancel": "Cancelar",
+      "changeRoleSubmit": "Alterar função",
+      "roleChanged": "Função atualizada.",
+      "roleChangeError": "Não foi possível alterar a função.",
+      "lastAdminError": "Não é possível alterar a função do último administrador.",
+      "you": "Você",
+      "adminOnly": "Apenas os administradores podem gerir a equipa.",
+      "roles": {
+        "admin": "Administrador",
+        "compliance_officer": "Responsável de conformidade",
+        "cto": "CTO",
+        "editor": "Editor",
+        "viewer": "Observador"
+      },
+      "limits": {
+        "reached": "Limite de membros da equipa atingido",
+        "reachedDescription": "O seu plano {plan} permite até {limit} membro da equipa.",
+        "reachedDescriptionPlural": "O seu plano {plan} permite até {limit} membros da equipa.",
+        "upgrade": "Atualizar plano"
+      },
+      "roleGuide": {
+        "title": "Funções",
+        "description": "O que cada função pode fazer, para que escolha a correta ao convidar alguém.",
+        "admin": {
+          "summary": "Acesso total — gestão de produtos, conformidade, equipa e faturação.",
+          "who": "Proprietários da conta e responsáveis da organização."
+        },
+        "compliance_officer": {
+          "summary": "Todas as ações críticas de conformidade: função da entidade, emissão da declaração de conformidade, relatórios de incidentes. Sem faturação.",
+          "who": "A pessoa responsável pela conformidade com o CRA."
+        },
+        "cto": {
+          "summary": "Igual ao responsável de conformidade, sem faturação — produtos, trabalho técnico, conformidade.",
+          "who": "A liderança de engenharia que orienta a documentação técnica."
+        },
+        "editor": {
+          "summary": "Trata do dia a dia: produtos, vulnerabilidades, itens da lista de verificação e tarefas atribuídas. Não pode emitir a declaração de conformidade.",
+          "who": "Pessoal que faz o trabalho prático de conformidade."
+        },
+        "viewer": {
+          "summary": "Apenas leitura — pode abrir qualquer ecrã, mas não pode adicionar nem alterar nada.",
+          "who": "Partes interessadas, auditores e observadores que apenas precisam de visibilidade."
+        }
+      }
+    },
+    "activity": {
+      "title": "Registo de atividade",
+      "subtitle": "Acompanhe todas as alterações feitas na sua organização.",
+      "download": "Descarregar",
+      "empty": "Ainda não há atividade.",
+      "exportPeriod": {
+        "1": "Último mês",
+        "6": "Últimos 6 meses",
+        "12": "Últimos 12 meses"
+      },
+      "relative": {
+        "justNow": "agora mesmo",
+        "minutesAgo": "{count, plural, one {há # minuto} other {há # minutos}}",
+        "hoursAgo": "{count, plural, one {há # hora} other {há # horas}}",
+        "daysAgo": "{count, plural, one {há # dia} other {há # dias}}"
+      },
+      "actions": {
+        "organization": {
+          "created": "criou a organização",
+          "updated": "atualizou os dados da organização",
+          "security_updated": "atualizou a página pública de segurança",
+          "entity_type_changed": "alterou a função de operador da organização"
+        },
+        "member": {
+          "created": "adicionou um novo membro da equipa",
+          "removed": "removeu um membro da equipa",
+          "role_changed": "alterou a função de um membro da equipa"
+        },
+        "profile": {
+          "updated": "atualizou o seu perfil"
+        },
+        "password": {
+          "changed": "alterou a sua palavra-passe"
+        },
+        "product": {
+          "created": "adicionou um novo produto",
+          "updated": "atualizou os dados do produto de",
+          "deleted": "eliminou um produto",
+          "assessed": "concluiu a avaliação do CRA de",
+          "support_updated": "atualizou o período de suporte de"
+        },
+        "document": {
+          "saved": "guardou alterações do documento de",
+          "status_changed": "alterou o estado de um documento",
+          "pdf_generated": "gerou um PDF de"
+        },
+        "sbom": {
+          "uploaded": "carregou um novo SBOM",
+          "deleted": "eliminou um SBOM",
+          "scanned": "analisou um SBOM em busca de vulnerabilidades",
+          "activated": "ativou o SBOM",
+          "archived": "arquivou um SBOM"
+        },
+        "checklist": {
+          "item_status_changed": "atualizou um item da lista de verificação do CRA",
+          "item_description_changed": "editou as notas de um item da lista de verificação",
+          "evidence_uploaded": "carregou provas",
+          "evidence_removed": "removeu provas",
+          "item_assigned": "atribuiu um item da lista de verificação"
+        },
+        "vulnerability": {
+          "open": "reabriu uma vulnerabilidade",
+          "in_progress": "começou a trabalhar numa vulnerabilidade",
+          "resolved": "resolveu uma vulnerabilidade",
+          "accepted": "aceitou o risco de uma vulnerabilidade",
+          "assigned": "atribuiu uma vulnerabilidade",
+          "note_added": "adicionou notas a uma vulnerabilidade",
+          "marked_exploited": "sinalizou uma vulnerabilidade como ativamente explorada",
+          "unmarked_exploited": "removeu o sinalizador de exploração ativa de uma vulnerabilidade"
+        },
+        "vulnerability_report": {
+          "triage": "voltou a colocar em fila um relatório de vulnerabilidade para triagem",
+          "accepted": "aceitou um relatório de vulnerabilidade",
+          "investigating": "começou a investigar um relatório de vulnerabilidade",
+          "resolved": "resolveu um relatório de vulnerabilidade",
+          "duplicate": "marcou um relatório de vulnerabilidade como duplicado",
+          "spam": "marcou um relatório de vulnerabilidade como spam"
+        },
+        "incident": {
+          "detected": "abriu um novo incidente",
+          "updated": "atualizou um incidente",
+          "early_warning_submitted": "enviou o alerta precoce de 24 horas",
+          "incident_report_submitted": "enviou o relatório de incidente de 72 horas",
+          "final_report_submitted": "enviou o relatório final de 14 dias",
+          "user_notified": "notificou os utilizadores afetados de um incidente",
+          "closed": "encerrou um incidente"
+        },
+        "release": {
+          "published": "publicou uma nova versão",
+          "deleted": "eliminou uma versão"
+        },
+        "conformity": {
+          "step_completed": "concluiu uma etapa da avaliação da conformidade",
+          "step_reopened": "reabriu uma etapa da avaliação da conformidade",
+          "notified_body_updated": "atualizou o registo do organismo notificado",
+          "declaration_issued": "emitiu uma declaração de conformidade para"
+        },
+        "entity_obligation": {
+          "updated": "atualizou uma obrigação de conformidade"
+        },
+        "billing": {
+          "checkout_created": "iniciou o pagamento de um plano"
+        },
+        "academy": {
+          "lesson_completed": "concluiu uma lição da Academia"
+        }
+      }
+    },
+    "account": {
+      "title": "Conta",
+      "subtitle": "Faça a gestão das definições da sua conta pessoal.",
+      "profileTitle": "Perfil",
+      "avatarLabel": "Foto de perfil",
+      "avatarHint": "Clique para carregar (JPG, PNG, WebP, máx. 2 MB)",
+      "avatarUploading": "A carregar…",
+      "nameLabel": "Nome completo",
+      "namePlaceholder": "João Silva",
+      "emailLabel": "E-mail",
+      "emailDescription": "O seu e-mail é gerido através do seu fornecedor de autenticação.",
+      "saveProfile": "Guardar perfil",
+      "savingProfile": "A guardar…",
+      "profileSaved": "Perfil atualizado.",
+      "profileError": "Não foi possível atualizar o perfil.",
+      "avatarError": "Não foi possível carregar a sua foto. Tente um JPG ou PNG mais pequeno e tente novamente.",
+      "passwordTitle": "Alterar palavra-passe",
+      "currentPassword": "Palavra-passe atual",
+      "newPassword": "Nova palavra-passe",
+      "newPasswordPlaceholder": "Mínimo 8 caracteres",
+      "changePassword": "Alterar palavra-passe",
+      "changingPassword": "A alterar…",
+      "passwordChanged": "Palavra-passe alterada com sucesso.",
+      "passwordError": "Não foi possível alterar a palavra-passe. Verifique a sua palavra-passe atual.",
+      "dangerTitle": "Zona de perigo",
+      "logoutButton": "Terminar sessão",
+      "logoutDescription": "Termine a sessão da sua conta Seentrix neste dispositivo."
+    },
+    "language": {
+      "title": "Idioma",
+      "label": "Idioma",
+      "description": "Escolha o idioma de toda a aplicação — a interface, a Academia, o Copilot de IA e os documentos que gera.",
+      "saved": "Idioma atualizado",
+      "displayHeading": "Idioma da interface",
+      "documentHeading": "Idioma dos documentos"
+    },
+    "toast": {
+      "success": "Sucesso",
+      "error": "Erro"
+    },
+    "eyebrow": "Espaço de trabalho"
+  }
+}

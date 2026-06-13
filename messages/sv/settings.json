@@ -1,0 +1,419 @@
+{
+  "settings": {
+    "title": "Inställningar",
+    "subtitle": "Hantera din organisation, ditt team och ditt konto.",
+    "nav": {
+      "organization": "Organisation",
+      "entity": "Entitetsroll",
+      "team": "Team",
+      "billing": "Fakturering",
+      "activity": "Aktivitet",
+      "account": "Konto",
+      "security": "Säkerhet"
+    },
+    "organization": {
+      "title": "Organisation",
+      "subtitle": "Hantera din organisations uppgifter och inställningar.",
+      "nameLabel": "Organisationens namn",
+      "namePlaceholder": "Acme Inc.",
+      "legalTitle": "Juridisk identitet",
+      "legalDescription": "Krävs på varje försäkran om överensstämmelse och teknisk dokumentation. Fyll i exakt som det står i dina registreringshandlingar.",
+      "legalName": "Juridiskt namn",
+      "legalNameHint": "Registrerat företagsnamn — kan skilja sig från handels-/visningsnamnet ovan.",
+      "legalNamePlaceholder": "Acme GmbH",
+      "registrationNumber": "Registrerings- eller momsnummer",
+      "registrationNumberHint": "Handelsregister (HRB), momsregistreringsnummer eller motsvarande nationell företagsregistrering.",
+      "registrationNumberPlaceholder": "DE123456789 eller HRB 12345",
+      "signatoryTitle": "Undertecknare och kontakt",
+      "signatoryDescription": "Undertecknaren är den fysiska person som undertecknar försäkran om överensstämmelse. Kontakt-e-posten är den offentliga kundkontakten som trycks på produktetiketter.",
+      "signatoryName": "Undertecknarens namn",
+      "signatoryNamePlaceholder": "Anna Andersson",
+      "signatoryPosition": "Undertecknarens befattning",
+      "signatoryPositionPlaceholder": "Verkställande direktör",
+      "contactEmail": "Offentlig kontakt-e-post",
+      "website": "Webbplats",
+      "addressTitle": "Registrerad adress",
+      "addressDescription": "Används i försäkran om överensstämmelse och andra efterlevnadsdokument.",
+      "addressLine1": "Adressrad 1",
+      "addressLine1Placeholder": "Storgatan 123",
+      "addressLine2": "Adressrad 2",
+      "addressLine2Placeholder": "Lägenhet 100",
+      "postalCode": "Postnummer",
+      "postalCodePlaceholder": "111 22",
+      "city": "Ort",
+      "cityPlaceholder": "Stockholm",
+      "country": "Land",
+      "countryPlaceholder": "Sverige",
+      "save": "Spara ändringar",
+      "saving": "Sparar…",
+      "saved": "Organisationsinställningarna har sparats.",
+      "error": "Det gick inte att spara inställningarna. Försök igen.",
+      "readOnly": "Endast administratörer kan redigera organisationsinställningarna.",
+      "orgChart": "Organisationsschema",
+      "orgChartDescription": "Ditt team grupperat efter CRA-roll. Klicka på en person för att hantera den.",
+      "seatsUsed": "{count} av {limit} platser används",
+      "seatsUsedUnlimited": "{count, plural, one {# plats används} other {# platser används}} · Obegränsat",
+      "upgrade": "Uppgradera",
+      "inviteToRole": "Bjud in en {role}",
+      "noOneYet": "Ingen ännu",
+      "docReady": {
+        "eyebrow": "Efterlevnadskonfiguration",
+        "title": "Försäkran om överensstämmelse är inte redo att utfärdas ännu",
+        "description": "{count, plural, one {# obligatoriskt fält saknas} other {# obligatoriska fält saknas}} för generering av CRA-dokument. Fyll i dem nedan — efterlevnadsflödet vägrar att utfärda försäkran tills allt på den här sidan är komplett.",
+        "cta": "Fyll i nu"
+      },
+      "dangerZone": {
+        "title": "Riskzon",
+        "subtitle": "Oåterkalleliga åtgärder. Dubbelkolla innan du fortsätter.",
+        "exportTitle": "Exportera alla organisationsdata",
+        "exportDescription": "Ladda ner varje post som hör till den här organisationen som en enda JSON-fil. Uppfyller GDPR art. 20 (dataportabilitet).",
+        "exportCta": "Exportera data",
+        "exportInProgress": "Förbereder exporten…",
+        "exportReady": "Exporten har laddats ner.",
+        "exportError": "Det gick inte att generera exporten. Försök igen.",
+        "deleteTitle": "Radera organisationen",
+        "deleteDescription": "Schemalägger en permanent radering av organisationen och varje post som är kopplad till den. Du har 30 dagar på dig att avbryta.",
+        "deleteCta": "Radera organisationen",
+        "deleteScheduled": "Radering schemalagd. Du har 30 dagar på dig att avbryta.",
+        "deleteError": "Det gick inte att begära radering. Försök igen.",
+        "cancelDeletion": "Avbryt raderingen",
+        "cancellingDeletion": "Avbryter…",
+        "cancelSuccess": "Raderingen avbröts.",
+        "cancelError": "Det gick inte att avbryta raderingen. Försök igen.",
+        "pendingTitle": "Radering schemalagd om {days} dag(ar).",
+        "pendingSubtitle": "Alla data raderas den {date}. Avbryt när som helst innan dess.",
+        "dialogTitle": "Radera den här organisationen?",
+        "dialogDescription": "Detta tar bort varje produkt, SBOM, försäkran, incidentrapport, utbildningspost och teammedlem inom en 30-dagars frist. Därefter förstörs data permanent.",
+        "dialogPromptLabel": "Skriv ”{name}” för att bekräfta",
+        "dialogConfirm": "Schemalägg radering",
+        "dialogCancel": "Avbryt",
+        "deleting": "Schemalägger…",
+        "confirmationMismatch": "Namnet du skrev matchar inte. Raderingen schemalades inte."
+      },
+      "tooltips": {
+        "name": {
+          "title": "Organisationens namn",
+          "body": "Det handels- eller visningsnamn som användare och kollegor ser inne i Seentrix. Det är det vänliga namnet — det behöver inte matcha din registrerade juridiska person.",
+          "ref": "Endast internt. Det juridiskt bindande namnet på efterlevnadsdokument är fältet Juridiskt namn nedan."
+        },
+        "legalName": {
+          "title": "Juridiskt namn",
+          "body": "Registrerat företagsnamn exakt som det står i dina registreringshandlingar (t.ex. Acme GmbH, Acme S.A.S.). Kan skilja sig från handelsnamnet — inkludera bolagsformens suffix. Trycks ordagrant på <g-doc>försäkran om överensstämmelse</g-doc> och på varje <g-ce_marking>CE-märkt</g-ce_marking> produktetikett.",
+          "ref": "CRA <g-annex_v>bilaga V(1)</g-annex_v> — försäkran om överensstämmelse måste identifiera den juridiska person som utfärdar den. Fel här ogiltigförklarar försäkran."
+        },
+        "registrationNumber": {
+          "title": "Registrerings- eller momsnummer",
+          "body": "Handelsregisternummer (t.ex. HRB 12345 i Tyskland), momsregistreringsnummer (DE123456789) eller motsvarande nationell företagsregistrering. Ange exakt ett — välj den identifierare som din nationella myndighet använder för att hitta dig.",
+          "ref": "CRA bilaga V(1)(b) — försäkran om överensstämmelse måste innehålla en identifierare som entydigt pekar ut tillverkaren. Marknadskontrollmyndigheter använder den för att spåra produkter som inte uppfyller kraven tillbaka till dig."
+        },
+        "signatoryName": {
+          "title": "Undertecknarens namn",
+          "body": "Den fysiska person som undertecknar försäkran om överensstämmelse. Måste vara någon som är juridiskt behörig att binda organisationen — vanligtvis vd, verkställande direktör eller en befattningshavare med delegerad firmateckningsrätt.",
+          "ref": "CRA bilaga V(5) — försäkran undertecknas av en person som agerar på tillverkarens vägnar. En obehörig underskrift kan ogiltigförklara försäkran."
+        },
+        "signatoryPosition": {
+          "title": "Undertecknarens befattning",
+          "body": "Befattning för personen som undertecknar (t.ex. verkställande direktör, vd, efterlevnadschef). Trycks under underskriften på försäkran om överensstämmelse.",
+          "ref": "CRA bilaga V(5) — tillsammans med undertecknarens namn identifierar detta vem inom organisationen som tar det juridiska ansvaret för försäkran."
+        },
+        "contactEmail": {
+          "title": "Offentlig kontakt-e-post",
+          "body": "Kundvänd e-post som trycks på produktetiketter, förpackningar och försäkran om överensstämmelse. Måste bevakas — marknadskontrollmyndigheter och slutanvändare använder den för att nå dig.",
+          "ref": "CRA artikel 13(4) — tillverkare måste tillhandahålla en enda kontaktpunkt för cybersäkerhetsfrågor på produkten, förpackningen eller den medföljande dokumentationen."
+        },
+        "website": {
+          "title": "Webbplats",
+          "body": "URL till företagets webbplats. Valfri men starkt rekommenderad — den visas på försäkran om överensstämmelse och ger tillsynsmyndigheter och slutanvändare en andra kanal för att verifiera din identitet.",
+          "ref": "CRA artikel 13(4) — inte obligatorisk, men räknas som godtagbar kontaktinformation vid sidan av den offentliga e-posten."
+        },
+        "addressLine1": {
+          "title": "Registrerad adress, rad 1",
+          "body": "Gata och nummer för din registrerade företagsadress — adressen i dina registreringshandlingar, inte en postbox eller ett leveranslager.",
+          "ref": "CRA bilaga V(1)(a) — tillverkarens postadress, tryckt på försäkran om överensstämmelse."
+        },
+        "addressLine2": {
+          "title": "Adressrad 2",
+          "body": "Valfri andra rad för svit, våning, byggnadsnamn eller liknande. Lämna tom om din adress ryms på en rad.",
+          "ref": "Läggs till på adressrad 1 i försäkran om överensstämmelse när den finns."
+        },
+        "postalCode": {
+          "title": "Postnummer",
+          "body": "Postnummer för din registrerade adress. Formatet måste följa ditt lands konvention (t.ex. 5 siffror i Tyskland, alfanumeriskt i Storbritannien).",
+          "ref": "CRA bilaga V(1)(a) — del av postadressblocket på försäkran om överensstämmelse."
+        },
+        "city": {
+          "title": "Ort",
+          "body": "Stad eller ort för din registrerade adress. Används även som fältet ”plats” på den undertecknade försäkran om överensstämmelse (”Undertecknad i {city}, den {date}”).",
+          "ref": "CRA bilaga V(6) — försäkran registrerar den plats där den utfärdades, vilken måste motsvara en adress som kan kopplas tillbaka till dig."
+        },
+        "country": {
+          "title": "Land",
+          "body": "Land för ditt registrerade säte. Om det ligger utanför EU behöver du också en auktoriserad representant i unionen — konfigurera den på fliken Entitetsroll.",
+          "ref": "CRA artikel 18 — tillverkare som är etablerade utanför unionen måste utse en auktoriserad representant i EU innan de släpper ut produkter på marknaden."
+        }
+      },
+      "readOnlyBadge": "Låst",
+      "editDetails": "Redigera uppgifter",
+      "cancel": "Avbryt",
+      "orgChartTotalMembers": "{count, plural, one {# teammedlem} other {# teammedlemmar}}",
+      "orgChartCapacity": "Platskapacitet",
+      "inviteShort": "Bjud in"
+    },
+    "team": {
+      "title": "Team",
+      "subtitle": "Hantera vem som har åtkomst till din organisation.",
+      "members": "Medlemmar",
+      "memberCount": "{count} medlem",
+      "memberCountPlural": "{count} medlemmar",
+      "createTitle": "Lägg till en teammedlem",
+      "createDescription": "Skapa ett konto för en ny teammedlem. De måste byta lösenord vid första inloggningen.",
+      "createEmail": "E-post",
+      "createEmailPlaceholder": "kollega@foretag.com",
+      "createName": "Fullständigt namn",
+      "createNamePlaceholder": "Anna Andersson",
+      "createRoleLabel": "Roll",
+      "createPassword": "Tillfälligt lösenord",
+      "createPasswordPlaceholder": "Minst 8 tecken",
+      "tooltips": {
+        "email": {
+          "title": "Teammedlemmens e-post",
+          "body": "E-postadressen som den nya medlemmen använder för att logga in. Måste vara unik i hela Seentrix-plattformen — om den redan används någon annanstans misslyckas inbjudan. Den blir också identiteten i granskningsloggen för varje åtgärd de utför.",
+          "ref": "Aktivitetsloggposter lagras med användarens oföränderliga autentiserings-ID, men det är e-posten som tillsynsmyndigheter ser i exporterade granskningsspår."
+        },
+        "fullName": {
+          "title": "Fullständigt namn",
+          "body": "Juridiskt namn eller visningsnamn som visas i hela Seentrix. Trycks även i aktivitetsloggexporter och visas som skapare/tilldelad på sårbarheter, incidenter och checklisteposter.",
+          "ref": "NIS2 artikel 20 (där tillämpligt) — granskningsklara personallistor behöver identifierbara namn, inte bara e-postadresser."
+        },
+        "role": {
+          "title": "Roll",
+          "body": "Styr vad den här medlemmen kan göra. Administratör: allt. Efterlevnadsansvarig: efterlevnadskritiska ändringar (entitetsroll, utfärdande av försäkran, incidentrapporter). CTO: samma som efterlevnadsansvarig, utan fakturering. Redaktör: produkter, sårbarheter, checklisteposter; kan inte utfärda försäkran. Observatör: skrivskyddad.",
+          "ref": "CRA föreskriver inga särskilda roller, men vid granskningar förväntas en uppdelning av ansvar mellan den som undertecknar försäkran och den som hanterar produkten. Välj en roll som matchar personens faktiska ansvar."
+        },
+        "password": {
+          "title": "Tillfälligt lösenord",
+          "body": "Lösenord för första inloggningen som du delar med medlemmen. De måste byta det vid första inloggningen — flaggan must_change_password sätts automatiskt. Använd en ny engångslösenordsgenerator; återanvänd inte befintliga lösenord.",
+          "ref": "Djupförsvar — det tillfälliga lösenordet är endast giltigt fram till första inloggningen. Om en medlem aldrig loggar in, rotera det eller ta bort dem via teamlistan."
+        }
+      },
+      "createMember": "Skapa medlem",
+      "creatingMember": "Skapar…",
+      "memberCreated": "Teammedlemmen har skapats.",
+      "createError": "Det gick inte att skapa teammedlemmen.",
+      "createErrors": {
+        "notAdmin": "Endast administratörer kan lägga till teammedlemmar.",
+        "emailInUse": "Den här e-postadressen är redan registrerad.",
+        "limitReached": "Din plans medlemsgräns har nåtts.",
+        "passwordTooShort": "Lösenordet måste vara minst 8 tecken.",
+        "invalidRole": "Ogiltig roll vald."
+      },
+      "credentialsTitle": "Konto skapat",
+      "credentialsHint": "Dela dessa uppgifter med den nya teammedlemmen. De ombeds att ange ett nytt lösenord vid första inloggningen.",
+      "credentialsCopied": "Uppgifterna kopierades till urklipp.",
+      "pendingPassword": "Väntar",
+      "removeMember": "Ta bort",
+      "removeMemberConfirm": "Ta bort teammedlemmen?",
+      "removeMemberDescription": "Är du säker på att du vill ta bort {name} från din organisation? De förlorar åtkomsten omedelbart.",
+      "removeMemberCancel": "Avbryt",
+      "removeMemberSubmit": "Ta bort",
+      "removed": "Teammedlemmen togs bort.",
+      "removeError": "Det gick inte att ta bort teammedlemmen.",
+      "changeRole": "Ändra roll",
+      "changeRoleConfirm": "Ändra roll?",
+      "changeRoleDescription": "Ändra {name}s roll från {oldRole} till {newRole}?",
+      "changeRoleCancel": "Avbryt",
+      "changeRoleSubmit": "Ändra roll",
+      "roleChanged": "Rollen uppdaterades.",
+      "roleChangeError": "Det gick inte att ändra rollen.",
+      "lastAdminError": "Det går inte att ändra den siste administratörens roll.",
+      "you": "Du",
+      "adminOnly": "Endast administratörer kan hantera teamet.",
+      "roles": {
+        "admin": "Administratör",
+        "compliance_officer": "Efterlevnadsansvarig",
+        "cto": "CTO",
+        "editor": "Redaktör",
+        "viewer": "Observatör"
+      },
+      "limits": {
+        "reached": "Gränsen för teammedlemmar har nåtts",
+        "reachedDescription": "Din {plan}-plan tillåter upp till {limit} teammedlem.",
+        "reachedDescriptionPlural": "Din {plan}-plan tillåter upp till {limit} teammedlemmar.",
+        "upgrade": "Uppgradera plan"
+      },
+      "roleGuide": {
+        "title": "Roller",
+        "description": "Vad varje roll kan göra, så att du kan välja rätt när du bjuder in någon.",
+        "admin": {
+          "summary": "Full åtkomst — hantera produkter, efterlevnad, teamet och faktureringen.",
+          "who": "Kontoägare och organisationsansvariga."
+        },
+        "compliance_officer": {
+          "summary": "Alla efterlevnadskritiska åtgärder: entitetsroll, utfärdande av försäkran om överensstämmelse, incidentrapporter. Ingen fakturering.",
+          "who": "Den person som är ansvarig för CRA-efterlevnaden."
+        },
+        "cto": {
+          "summary": "Samma som efterlevnadsansvarig, utan fakturering — produkter, tekniskt arbete, överensstämmelse.",
+          "who": "Den tekniska ledningen som styr den tekniska dokumentationen."
+        },
+        "editor": {
+          "summary": "Sköter det dagliga: produkter, sårbarheter, checklisteposter och tilldelade uppgifter. Kan inte utfärda försäkran om överensstämmelse.",
+          "who": "Personal som utför det praktiska efterlevnadsarbetet."
+        },
+        "viewer": {
+          "summary": "Skrivskyddad — kan öppna varje skärm men kan inte lägga till eller ändra något.",
+          "who": "Intressenter, revisorer och observatörer som bara behöver insyn."
+        }
+      }
+    },
+    "activity": {
+      "title": "Aktivitetslogg",
+      "subtitle": "Följ alla ändringar som görs inom din organisation.",
+      "download": "Ladda ner",
+      "empty": "Ingen aktivitet ännu.",
+      "exportPeriod": {
+        "1": "Senaste månaden",
+        "6": "Senaste 6 månaderna",
+        "12": "Senaste 12 månaderna"
+      },
+      "relative": {
+        "justNow": "just nu",
+        "minutesAgo": "{count, plural, one {# minut sedan} other {# minuter sedan}}",
+        "hoursAgo": "{count, plural, one {# timme sedan} other {# timmar sedan}}",
+        "daysAgo": "{count, plural, one {# dag sedan} other {# dagar sedan}}"
+      },
+      "actions": {
+        "organization": {
+          "created": "skapade organisationen",
+          "updated": "uppdaterade organisationsuppgifterna",
+          "security_updated": "uppdaterade den offentliga säkerhetssidan",
+          "entity_type_changed": "ändrade organisationens operatörsroll"
+        },
+        "member": {
+          "created": "lade till en ny teammedlem",
+          "removed": "tog bort en teammedlem",
+          "role_changed": "ändrade en teammedlems roll"
+        },
+        "profile": {
+          "updated": "uppdaterade sin profil"
+        },
+        "password": {
+          "changed": "ändrade sitt lösenord"
+        },
+        "product": {
+          "created": "lade till en ny produkt",
+          "updated": "uppdaterade produktuppgifterna för",
+          "deleted": "raderade en produkt",
+          "assessed": "slutförde CRA-bedömningen för",
+          "support_updated": "uppdaterade supportperioden för"
+        },
+        "document": {
+          "saved": "sparade dokumentändringar för",
+          "status_changed": "ändrade ett dokuments status",
+          "pdf_generated": "genererade en PDF för"
+        },
+        "sbom": {
+          "uploaded": "laddade upp en ny SBOM",
+          "deleted": "raderade en SBOM",
+          "scanned": "skannade en SBOM efter sårbarheter",
+          "activated": "aktiverade SBOM:en",
+          "archived": "arkiverade en SBOM"
+        },
+        "checklist": {
+          "item_status_changed": "uppdaterade en post i CRA-checklistan",
+          "item_description_changed": "redigerade anteckningar på en checklistepost",
+          "evidence_uploaded": "laddade upp bevis",
+          "evidence_removed": "tog bort bevis",
+          "item_assigned": "tilldelade en checklistepost"
+        },
+        "vulnerability": {
+          "open": "återöppnade en sårbarhet",
+          "in_progress": "började arbeta med en sårbarhet",
+          "resolved": "åtgärdade en sårbarhet",
+          "accepted": "accepterade risken för en sårbarhet",
+          "assigned": "tilldelade en sårbarhet",
+          "note_added": "lade till anteckningar på en sårbarhet",
+          "marked_exploited": "flaggade en sårbarhet som aktivt utnyttjad",
+          "unmarked_exploited": "tog bort flaggan för aktivt utnyttjande på en sårbarhet"
+        },
+        "vulnerability_report": {
+          "triage": "köade om en sårbarhetsrapport för triage",
+          "accepted": "accepterade en sårbarhetsrapport",
+          "investigating": "började utreda en sårbarhetsrapport",
+          "resolved": "åtgärdade en sårbarhetsrapport",
+          "duplicate": "markerade en sårbarhetsrapport som duplikat",
+          "spam": "markerade en sårbarhetsrapport som skräppost"
+        },
+        "incident": {
+          "detected": "öppnade en ny incident",
+          "updated": "uppdaterade en incident",
+          "early_warning_submitted": "skickade in 24-timmars förvarningen",
+          "incident_report_submitted": "skickade in 72-timmars incidentrapporten",
+          "final_report_submitted": "skickade in 14-dagars slutrapporten",
+          "user_notified": "meddelade berörda användare om en incident",
+          "closed": "stängde en incident"
+        },
+        "release": {
+          "published": "publicerade en ny release",
+          "deleted": "raderade en release"
+        },
+        "conformity": {
+          "step_completed": "slutförde ett steg i bedömningen av överensstämmelse",
+          "step_reopened": "återöppnade ett steg i bedömningen av överensstämmelse",
+          "notified_body_updated": "uppdaterade posten för det anmälda organet",
+          "declaration_issued": "utfärdade en försäkran om överensstämmelse för"
+        },
+        "entity_obligation": {
+          "updated": "uppdaterade en efterlevnadsskyldighet"
+        },
+        "billing": {
+          "checkout_created": "påbörjade en planbetalning"
+        },
+        "academy": {
+          "lesson_completed": "slutförde en Academy-lektion"
+        }
+      }
+    },
+    "account": {
+      "title": "Konto",
+      "subtitle": "Hantera inställningarna för ditt personliga konto.",
+      "profileTitle": "Profil",
+      "avatarLabel": "Profilbild",
+      "avatarHint": "Klicka för att ladda upp (JPG, PNG, WebP, max 2 MB)",
+      "avatarUploading": "Laddar upp…",
+      "nameLabel": "Fullständigt namn",
+      "namePlaceholder": "Anna Andersson",
+      "emailLabel": "E-post",
+      "emailDescription": "Din e-post hanteras via din autentiseringsleverantör.",
+      "saveProfile": "Spara profil",
+      "savingProfile": "Sparar…",
+      "profileSaved": "Profilen uppdaterades.",
+      "profileError": "Det gick inte att uppdatera profilen.",
+      "avatarError": "Det gick inte att ladda upp din bild. Prova en mindre JPG eller PNG och försök igen.",
+      "passwordTitle": "Byt lösenord",
+      "currentPassword": "Nuvarande lösenord",
+      "newPassword": "Nytt lösenord",
+      "newPasswordPlaceholder": "Minst 8 tecken",
+      "changePassword": "Byt lösenord",
+      "changingPassword": "Byter…",
+      "passwordChanged": "Lösenordet har bytts.",
+      "passwordError": "Det gick inte att byta lösenord. Kontrollera ditt nuvarande lösenord.",
+      "dangerTitle": "Riskzon",
+      "logoutButton": "Logga ut",
+      "logoutDescription": "Logga ut från ditt Seentrix-konto på den här enheten."
+    },
+    "language": {
+      "title": "Språk",
+      "label": "Språk",
+      "description": "Välj språk för hela appen — gränssnittet, Academy, AI-Copiloten och dokumenten du genererar.",
+      "saved": "Språket uppdaterades",
+      "displayHeading": "Visningsspråk",
+      "documentHeading": "Dokumentspråk"
+    },
+    "toast": {
+      "success": "Klart",
+      "error": "Fel"
+    },
+    "eyebrow": "Arbetsyta"
+  }
+}

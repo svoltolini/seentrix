@@ -1,0 +1,419 @@
+{
+  "settings": {
+    "title": "Ustawienia",
+    "subtitle": "Zarządzaj swoją organizacją, zespołem i kontem.",
+    "nav": {
+      "organization": "Organizacja",
+      "entity": "Rola podmiotu",
+      "team": "Zespół",
+      "billing": "Rozliczenia",
+      "activity": "Aktywność",
+      "account": "Konto",
+      "security": "Bezpieczeństwo"
+    },
+    "organization": {
+      "title": "Organizacja",
+      "subtitle": "Zarządzaj danymi i preferencjami swojej organizacji.",
+      "nameLabel": "Nazwa organizacji",
+      "namePlaceholder": "Acme Inc.",
+      "legalTitle": "Tożsamość prawna",
+      "legalDescription": "Wymagana w każdej deklaracji zgodności i dokumentacji technicznej. Wpisz dokładnie tak, jak widnieje w dokumentach rejestrowych.",
+      "legalName": "Nazwa podmiotu prawnego",
+      "legalNameHint": "Zarejestrowana nazwa firmy — może różnić się od nazwy handlowej/wyświetlanej powyżej.",
+      "legalNamePlaceholder": "Acme GmbH",
+      "registrationNumber": "Numer rejestrowy lub VAT",
+      "registrationNumberHint": "Rejestr handlowy (HRB), numer VAT lub równoważna krajowa rejestracja działalności.",
+      "registrationNumberPlaceholder": "DE123456789 lub HRB 12345",
+      "signatoryTitle": "Sygnatariusz i kontakt",
+      "signatoryDescription": "Sygnatariusz to osoba fizyczna, która podpisuje deklarację zgodności. Kontaktowy adres e-mail to publiczny kontakt dla klientów drukowany na etykietach produktów.",
+      "signatoryName": "Imię i nazwisko sygnatariusza",
+      "signatoryNamePlaceholder": "Jan Kowalski",
+      "signatoryPosition": "Stanowisko sygnatariusza",
+      "signatoryPositionPlaceholder": "Dyrektor generalny",
+      "contactEmail": "Publiczny adres e-mail do kontaktu",
+      "website": "Strona internetowa",
+      "addressTitle": "Adres siedziby",
+      "addressDescription": "Używany w deklaracji zgodności i innych dokumentach dotyczących zgodności.",
+      "addressLine1": "Adres, wiersz 1",
+      "addressLine1Placeholder": "ul. Główna 123",
+      "addressLine2": "Adres, wiersz 2",
+      "addressLine2Placeholder": "Lokal 100",
+      "postalCode": "Kod pocztowy",
+      "postalCodePlaceholder": "12-345",
+      "city": "Miasto",
+      "cityPlaceholder": "Warszawa",
+      "country": "Kraj",
+      "countryPlaceholder": "Polska",
+      "save": "Zapisz zmiany",
+      "saving": "Zapisywanie…",
+      "saved": "Ustawienia organizacji zostały zapisane.",
+      "error": "Nie udało się zapisać ustawień. Spróbuj ponownie.",
+      "readOnly": "Tylko administratorzy mogą edytować ustawienia organizacji.",
+      "orgChart": "Schemat organizacyjny",
+      "orgChartDescription": "Twój zespół pogrupowany według ról CRA. Kliknij osobę, aby nią zarządzać.",
+      "seatsUsed": "Wykorzystano {count} z {limit} miejsc",
+      "seatsUsedUnlimited": "{count, plural, one {# wykorzystane miejsce} few {# wykorzystane miejsca} many {# wykorzystanych miejsc} other {# wykorzystanych miejsc}} · Bez limitu",
+      "upgrade": "Ulepsz",
+      "inviteToRole": "Zaproś osobę z rolą: {role}",
+      "noOneYet": "Jeszcze nikogo",
+      "docReady": {
+        "eyebrow": "Konfiguracja zgodności",
+        "title": "Deklaracja zgodności nie jest jeszcze gotowa do wystawienia",
+        "description": "{count, plural, one {Brakuje # wymaganego pola} few {Brakują # wymagane pola} many {Brakuje # wymaganych pól} other {Brakuje # wymaganych pól}} do wygenerowania dokumentów CRA. Wypełnij je poniżej — proces zgodności nie pozwoli wystawić deklaracji, dopóki wszystko na tej stronie nie zostanie uzupełnione.",
+        "cta": "Wypełnij teraz"
+      },
+      "dangerZone": {
+        "title": "Strefa zagrożenia",
+        "subtitle": "Działania nieodwracalne. Sprawdź dokładnie przed kontynuowaniem.",
+        "exportTitle": "Eksportuj wszystkie dane organizacji",
+        "exportDescription": "Pobierz każdy rekord przypisany do tej organizacji jako pojedynczy plik JSON. Spełnia wymogi art. 20 RODO (przenoszenie danych).",
+        "exportCta": "Eksportuj dane",
+        "exportInProgress": "Przygotowywanie eksportu…",
+        "exportReady": "Eksport pobrany.",
+        "exportError": "Nie udało się wygenerować eksportu. Spróbuj ponownie.",
+        "deleteTitle": "Usuń organizację",
+        "deleteDescription": "Planuje trwałe usunięcie organizacji i każdego powiązanego z nią rekordu. Masz 30 dni na anulowanie.",
+        "deleteCta": "Usuń organizację",
+        "deleteScheduled": "Usunięcie zaplanowane. Masz 30 dni na anulowanie.",
+        "deleteError": "Nie udało się zażądać usunięcia. Spróbuj ponownie.",
+        "cancelDeletion": "Anuluj usunięcie",
+        "cancellingDeletion": "Anulowanie…",
+        "cancelSuccess": "Usunięcie anulowane.",
+        "cancelError": "Nie udało się anulować usunięcia. Spróbuj ponownie.",
+        "pendingTitle": "Usunięcie zaplanowane za {days} dni.",
+        "pendingSubtitle": "Wszystkie dane zostaną usunięte dnia {date}. Anuluj w dowolnym momencie przed tą datą.",
+        "dialogTitle": "Usunąć tę organizację?",
+        "dialogDescription": "Spowoduje to usunięcie każdego produktu, pliku SBOM, deklaracji, zgłoszenia incydentu, rekordu szkolenia i członka zespołu w 30-dniowym okresie karencji. Po tym czasie dane zostają trwale zniszczone.",
+        "dialogPromptLabel": "Wpisz „{name}”, aby potwierdzić",
+        "dialogConfirm": "Zaplanuj usunięcie",
+        "dialogCancel": "Anuluj",
+        "deleting": "Planowanie…",
+        "confirmationMismatch": "Wpisana nazwa nie pasuje. Usunięcie nie zostało zaplanowane."
+      },
+      "tooltips": {
+        "name": {
+          "title": "Nazwa organizacji",
+          "body": "Nazwa handlowa lub wyświetlana, którą użytkownicy i współpracownicy widzą w Seentrix. To przyjazna nazwa — nie musi odpowiadać zarejestrowanemu podmiotowi prawnemu.",
+          "ref": "Tylko wewnętrznie. Prawnie wiążąca nazwa na dokumentach zgodności to pole Nazwa podmiotu prawnego poniżej."
+        },
+        "legalName": {
+          "title": "Nazwa podmiotu prawnego",
+          "body": "Zarejestrowana nazwa firmy dokładnie tak, jak widnieje w dokumentach rejestrowych (np. Acme GmbH, Acme S.A.S.). Może różnić się od nazwy handlowej — uwzględnij oznaczenie formy prawnej. Drukowana dosłownie na <g-doc>deklaracji zgodności</g-doc> i na każdej etykiecie produktu z <g-ce_marking>oznakowaniem CE</g-ce_marking>.",
+          "ref": "CRA <g-annex_v>załącznik V(1)</g-annex_v> — deklaracja zgodności musi wskazywać osobę prawną, która ją wystawia. Błąd w tym miejscu unieważnia deklarację."
+        },
+        "registrationNumber": {
+          "title": "Numer rejestrowy lub VAT",
+          "body": "Numer rejestru handlowego (np. HRB 12345 w Niemczech), numer VAT (DE123456789) lub równoważna krajowa rejestracja działalności. Wpisz dokładnie jeden — wybierz identyfikator, którego używa Twój krajowy organ, aby Cię odnaleźć.",
+          "ref": "CRA załącznik V(1)(b) — deklaracja zgodności musi zawierać identyfikator jednoznacznie wskazujący producenta. Organy nadzoru rynku wykorzystują go do powiązania produktów niezgodnych z Tobą."
+        },
+        "signatoryName": {
+          "title": "Imię i nazwisko sygnatariusza",
+          "body": "Osoba fizyczna, która podpisuje deklarację zgodności. Musi to być ktoś prawnie upoważniony do zaciągania zobowiązań w imieniu organizacji — zwykle dyrektor generalny, członek zarządu lub osoba z delegowanym prawem podpisu.",
+          "ref": "CRA załącznik V(5) — deklarację podpisuje osoba działająca w imieniu producenta. Nieupoważniony podpis może unieważnić deklarację."
+        },
+        "signatoryPosition": {
+          "title": "Stanowisko sygnatariusza",
+          "body": "Stanowisko osoby podpisującej (np. dyrektor generalny, członek zarządu, kierownik ds. zgodności). Drukowane pod podpisem na deklaracji zgodności.",
+          "ref": "CRA załącznik V(5) — wraz z imieniem i nazwiskiem sygnatariusza wskazuje, kto w organizacji ponosi odpowiedzialność prawną za deklarację."
+        },
+        "contactEmail": {
+          "title": "Publiczny adres e-mail do kontaktu",
+          "body": "Adres e-mail dla klientów drukowany na etykietach produktów, opakowaniach i deklaracji zgodności. Musi być monitorowany — organy nadzoru rynku i użytkownicy końcowi będą go używać, aby się z Tobą skontaktować.",
+          "ref": "CRA art. 13(4) — producenci muszą zapewnić pojedynczy punkt kontaktowy w sprawach cyberbezpieczeństwa na produkcie, opakowaniu lub w towarzyszącej dokumentacji."
+        },
+        "website": {
+          "title": "Strona internetowa",
+          "body": "Adres URL strony firmowej. Opcjonalny, ale zdecydowanie zalecany — pojawia się na deklaracji zgodności i daje regulatorom oraz użytkownikom końcowym drugi kanał do weryfikacji Twojej tożsamości.",
+          "ref": "CRA art. 13(4) — nieobowiązkowy, ale liczy się jako akceptowalna informacja kontaktowa obok publicznego adresu e-mail."
+        },
+        "addressLine1": {
+          "title": "Adres siedziby, wiersz 1",
+          "body": "Ulica i numer Twojego zarejestrowanego adresu firmowego — adresu z dokumentów rejestrowych, a nie skrytki pocztowej czy magazynu wysyłkowego.",
+          "ref": "CRA załącznik V(1)(a) — adres pocztowy producenta, drukowany na deklaracji zgodności."
+        },
+        "addressLine2": {
+          "title": "Adres, wiersz 2",
+          "body": "Opcjonalny drugi wiersz na lokal, piętro, nazwę budynku itp. Pozostaw pusty, jeśli Twój adres mieści się w jednym wierszu.",
+          "ref": "Dołączany do wiersza 1 adresu na deklaracji zgodności, jeśli jest obecny."
+        },
+        "postalCode": {
+          "title": "Kod pocztowy",
+          "body": "Kod pocztowy Twojego zarejestrowanego adresu. Format musi odpowiadać konwencji Twojego kraju (np. 5 cyfr w Niemczech, alfanumeryczny w Wielkiej Brytanii).",
+          "ref": "CRA załącznik V(1)(a) — część bloku adresu pocztowego na deklaracji zgodności."
+        },
+        "city": {
+          "title": "Miasto",
+          "body": "Miasto lub miejscowość Twojego zarejestrowanego adresu. Używane również jako pole „miejsce” na podpisanej deklaracji zgodności („Podpisano w {city}, dnia {date}”).",
+          "ref": "CRA załącznik V(6) — deklaracja odnotowuje miejsce jej wystawienia, które musi odpowiadać adresowi możliwemu do powiązania z Tobą."
+        },
+        "country": {
+          "title": "Kraj",
+          "body": "Kraj siedziby Twojej firmy. Jeśli znajduje się poza UE, potrzebujesz również upoważnionego przedstawiciela w Unii — skonfiguruj go na karcie Rola podmiotu.",
+          "ref": "CRA art. 18 — producenci mający siedzibę poza Unią muszą wyznaczyć upoważnionego przedstawiciela w UE, zanim wprowadzą produkty na rynek."
+        }
+      },
+      "readOnlyBadge": "Zablokowane",
+      "editDetails": "Edytuj szczegóły",
+      "cancel": "Anuluj",
+      "orgChartTotalMembers": "{count, plural, one {# członek zespołu} few {# członków zespołu} many {# członków zespołu} other {# członków zespołu}}",
+      "orgChartCapacity": "Liczba miejsc",
+      "inviteShort": "Zaproś"
+    },
+    "team": {
+      "title": "Zespół",
+      "subtitle": "Zarządzaj tym, kto ma dostęp do Twojej organizacji.",
+      "members": "Członkowie",
+      "memberCount": "{count} członek",
+      "memberCountPlural": "{count} członków",
+      "createTitle": "Dodaj członka zespołu",
+      "createDescription": "Utwórz konto dla nowego członka zespołu. Przy pierwszym logowaniu będzie musiał zmienić hasło.",
+      "createEmail": "E-mail",
+      "createEmailPlaceholder": "wspolpracownik@firma.com",
+      "createName": "Imię i nazwisko",
+      "createNamePlaceholder": "Jan Kowalski",
+      "createRoleLabel": "Rola",
+      "createPassword": "Hasło tymczasowe",
+      "createPasswordPlaceholder": "Min. 8 znaków",
+      "tooltips": {
+        "email": {
+          "title": "Adres e-mail członka zespołu",
+          "body": "Adres e-mail, którego nowy członek będzie używać do logowania. Musi być unikalny w całej platformie Seentrix — jeśli jest już używany gdzie indziej, zaproszenie się nie powiedzie. Staje się również tożsamością w dzienniku audytu dla każdego wykonywanego działania.",
+          "ref": "Wpisy w dzienniku aktywności są przechowywane z niezmiennym identyfikatorem uwierzytelniania użytkownika, ale to e-mail widzą regulatorzy w eksportowanych ścieżkach audytu."
+        },
+        "fullName": {
+          "title": "Imię i nazwisko",
+          "body": "Nazwa prawna lub wyświetlana pokazywana w całym Seentrix. Drukowana również w eksportach dziennika aktywności i pojawia się jako twórca/przypisany przy podatnościach, incydentach i pozycjach listy kontrolnej.",
+          "ref": "NIS2 art. 20 (w stosownych przypadkach) — gotowe do audytu listy personelu wymagają możliwych do zidentyfikowania nazwisk, a nie tylko adresów e-mail."
+        },
+        "role": {
+          "title": "Rola",
+          "body": "Określa, co może robić ten członek. Administrator: wszystko. Specjalista ds. zgodności: zmiany krytyczne dla zgodności (rola podmiotu, wystawianie deklaracji zgodności, zgłoszenia incydentów). CTO: tak jak specjalista ds. zgodności, ale bez rozliczeń. Redaktor: produkty, podatności, pozycje listy kontrolnej; nie może wystawiać deklaracji zgodności. Obserwator: tylko do odczytu.",
+          "ref": "CRA nie nakazuje konkretnych ról, ale podczas audytów oczekuje się rozdzielenia obowiązków między osobą podpisującą deklarację zgodności a osobą obsługującą produkt. Wybierz rolę odpowiadającą rzeczywistej odpowiedzialności danej osoby."
+        },
+        "password": {
+          "title": "Hasło tymczasowe",
+          "body": "Hasło do pierwszego logowania, które udostępniasz członkowi. Musi je zmienić przy pierwszym logowaniu — flaga must_change_password jest ustawiana automatycznie. Użyj świeżego generatora haseł jednorazowych; nie używaj ponownie istniejących haseł.",
+          "ref": "Obrona w głąb — hasło tymczasowe jest ważne tylko do pierwszego logowania. Jeśli członek nigdy się nie zaloguje, zmień je lub usuń go za pomocą listy zespołu."
+        }
+      },
+      "createMember": "Utwórz członka",
+      "creatingMember": "Tworzenie…",
+      "memberCreated": "Członek zespołu został pomyślnie utworzony.",
+      "createError": "Nie udało się utworzyć członka zespołu.",
+      "createErrors": {
+        "notAdmin": "Tylko administratorzy mogą dodawać członków zespołu.",
+        "emailInUse": "Ten adres e-mail jest już zarejestrowany.",
+        "limitReached": "Osiągnięto limit członków w Twoim planie.",
+        "passwordTooShort": "Hasło musi mieć co najmniej 8 znaków.",
+        "invalidRole": "Wybrano nieprawidłową rolę."
+      },
+      "credentialsTitle": "Konto utworzone",
+      "credentialsHint": "Udostępnij te dane logowania nowemu członkowi zespołu. Przy pierwszym logowaniu zostanie poproszony o ustawienie nowego hasła.",
+      "credentialsCopied": "Dane logowania skopiowane do schowka.",
+      "pendingPassword": "Oczekujące",
+      "removeMember": "Usuń",
+      "removeMemberConfirm": "Usunąć członka zespołu?",
+      "removeMemberDescription": "Czy na pewno chcesz usunąć {name} ze swojej organizacji? Natychmiast straci dostęp.",
+      "removeMemberCancel": "Anuluj",
+      "removeMemberSubmit": "Usuń",
+      "removed": "Członek zespołu usunięty.",
+      "removeError": "Nie udało się usunąć członka zespołu.",
+      "changeRole": "Zmień rolę",
+      "changeRoleConfirm": "Zmienić rolę?",
+      "changeRoleDescription": "Zmienić rolę użytkownika {name} z {oldRole} na {newRole}?",
+      "changeRoleCancel": "Anuluj",
+      "changeRoleSubmit": "Zmień rolę",
+      "roleChanged": "Rola zaktualizowana.",
+      "roleChangeError": "Nie udało się zmienić roli.",
+      "lastAdminError": "Nie można zmienić roli ostatniego administratora.",
+      "you": "Ty",
+      "adminOnly": "Tylko administratorzy mogą zarządzać zespołem.",
+      "roles": {
+        "admin": "Administrator",
+        "compliance_officer": "Specjalista ds. zgodności",
+        "cto": "CTO",
+        "editor": "Redaktor",
+        "viewer": "Obserwator"
+      },
+      "limits": {
+        "reached": "Osiągnięto limit członków zespołu",
+        "reachedDescription": "Twój plan {plan} pozwala na maksymalnie {limit} członka zespołu.",
+        "reachedDescriptionPlural": "Twój plan {plan} pozwala na maksymalnie {limit} członków zespołu.",
+        "upgrade": "Ulepsz plan"
+      },
+      "roleGuide": {
+        "title": "Role",
+        "description": "Co może robić każda rola, abyś mógł wybrać odpowiednią przy zapraszaniu kogoś.",
+        "admin": {
+          "summary": "Pełny dostęp — zarządzanie produktami, zgodnością, zespołem i rozliczeniami.",
+          "who": "Właściciele kont i osoby kierujące organizacją."
+        },
+        "compliance_officer": {
+          "summary": "Wszystkie działania krytyczne dla zgodności: rola podmiotu, wystawianie deklaracji zgodności, zgłoszenia incydentów. Bez rozliczeń.",
+          "who": "Osoba odpowiedzialna za zgodność z CRA."
+        },
+        "cto": {
+          "summary": "Tak jak specjalista ds. zgodności, ale bez rozliczeń — produkty, prace techniczne, zgodność.",
+          "who": "Kierownictwo inżynieryjne nadzorujące dokumentację techniczną."
+        },
+        "editor": {
+          "summary": "Praca na co dzień: produkty, podatności, pozycje listy kontrolnej i przydzielone zadania. Nie może wystawiać deklaracji zgodności.",
+          "who": "Pracownicy wykonujący praktyczną pracę nad zgodnością."
+        },
+        "viewer": {
+          "summary": "Tylko do odczytu — może otwierać każdy ekran, ale nie może niczego dodawać ani zmieniać.",
+          "who": "Interesariusze, audytorzy i obserwatorzy, którzy potrzebują jedynie wglądu."
+        }
+      }
+    },
+    "activity": {
+      "title": "Dziennik aktywności",
+      "subtitle": "Śledź wszystkie zmiany wprowadzane w Twojej organizacji.",
+      "download": "Pobierz",
+      "empty": "Brak aktywności.",
+      "exportPeriod": {
+        "1": "Ostatni miesiąc",
+        "6": "Ostatnie 6 miesięcy",
+        "12": "Ostatnie 12 miesięcy"
+      },
+      "relative": {
+        "justNow": "przed chwilą",
+        "minutesAgo": "{count, plural, one {# minutę temu} few {# minuty temu} many {# minut temu} other {# minut temu}}",
+        "hoursAgo": "{count, plural, one {# godzinę temu} few {# godziny temu} many {# godzin temu} other {# godzin temu}}",
+        "daysAgo": "{count, plural, one {# dzień temu} few {# dni temu} many {# dni temu} other {# dni temu}}"
+      },
+      "actions": {
+        "organization": {
+          "created": "utworzył(a) organizację",
+          "updated": "zaktualizował(a) dane organizacji",
+          "security_updated": "zaktualizował(a) publiczną stronę bezpieczeństwa",
+          "entity_type_changed": "zmienił(a) rolę operatora organizacji"
+        },
+        "member": {
+          "created": "dodał(a) nowego członka zespołu",
+          "removed": "usunął/usunęła członka zespołu",
+          "role_changed": "zmienił(a) rolę członka zespołu"
+        },
+        "profile": {
+          "updated": "zaktualizował(a) swój profil"
+        },
+        "password": {
+          "changed": "zmienił(a) swoje hasło"
+        },
+        "product": {
+          "created": "dodał(a) nowy produkt",
+          "updated": "zaktualizował(a) dane produktu dla",
+          "deleted": "usunął/usunęła produkt",
+          "assessed": "ukończył(a) ocenę CRA dla",
+          "support_updated": "zaktualizował(a) okres wsparcia dla"
+        },
+        "document": {
+          "saved": "zapisał(a) zmiany dokumentu dla",
+          "status_changed": "zmienił(a) status dokumentu",
+          "pdf_generated": "wygenerował(a) plik PDF dla"
+        },
+        "sbom": {
+          "uploaded": "przesłał(a) nowy plik SBOM",
+          "deleted": "usunął/usunęła plik SBOM",
+          "scanned": "przeskanował(a) plik SBOM pod kątem podatności",
+          "activated": "aktywował(a) plik SBOM",
+          "archived": "zarchiwizował(a) plik SBOM"
+        },
+        "checklist": {
+          "item_status_changed": "zaktualizował(a) pozycję listy kontrolnej CRA",
+          "item_description_changed": "edytował(a) notatki przy pozycji listy kontrolnej",
+          "evidence_uploaded": "przesłał(a) dowody",
+          "evidence_removed": "usunął/usunęła dowody",
+          "item_assigned": "przypisał(a) pozycję listy kontrolnej"
+        },
+        "vulnerability": {
+          "open": "ponownie otworzył(a) podatność",
+          "in_progress": "rozpoczął/rozpoczęła pracę nad podatnością",
+          "resolved": "rozwiązał(a) podatność",
+          "accepted": "zaakceptował(a) ryzyko podatności",
+          "assigned": "przypisał(a) podatność",
+          "note_added": "dodał(a) notatki do podatności",
+          "marked_exploited": "oznaczył(a) podatność jako aktywnie wykorzystywaną",
+          "unmarked_exploited": "usunął/usunęła oznaczenie aktywnego wykorzystywania podatności"
+        },
+        "vulnerability_report": {
+          "triage": "ponownie skierował(a) zgłoszenie podatności do triażu",
+          "accepted": "zaakceptował(a) zgłoszenie podatności",
+          "investigating": "rozpoczął/rozpoczęła badanie zgłoszenia podatności",
+          "resolved": "rozwiązał(a) zgłoszenie podatności",
+          "duplicate": "oznaczył(a) zgłoszenie podatności jako duplikat",
+          "spam": "oznaczył(a) zgłoszenie podatności jako spam"
+        },
+        "incident": {
+          "detected": "otworzył(a) nowy incydent",
+          "updated": "zaktualizował(a) incydent",
+          "early_warning_submitted": "przesłał(a) 24-godzinne wczesne ostrzeżenie",
+          "incident_report_submitted": "przesłał(a) 72-godzinne zgłoszenie incydentu",
+          "final_report_submitted": "przesłał(a) 14-dniowy raport końcowy",
+          "user_notified": "powiadomił(a) dotkniętych użytkowników o incydencie",
+          "closed": "zamknął/zamknęła incydent"
+        },
+        "release": {
+          "published": "opublikował(a) nowe wydanie",
+          "deleted": "usunął/usunęła wydanie"
+        },
+        "conformity": {
+          "step_completed": "ukończył(a) etap oceny zgodności",
+          "step_reopened": "ponownie otworzył(a) etap oceny zgodności",
+          "notified_body_updated": "zaktualizował(a) rekord jednostki notyfikowanej",
+          "declaration_issued": "wystawił(a) deklarację zgodności dla"
+        },
+        "entity_obligation": {
+          "updated": "zaktualizował(a) obowiązek zgodności"
+        },
+        "billing": {
+          "checkout_created": "rozpoczął/rozpoczęła realizację zakupu planu"
+        },
+        "academy": {
+          "lesson_completed": "ukończył(a) lekcję Akademii"
+        }
+      }
+    },
+    "account": {
+      "title": "Konto",
+      "subtitle": "Zarządzaj ustawieniami swojego osobistego konta.",
+      "profileTitle": "Profil",
+      "avatarLabel": "Zdjęcie profilowe",
+      "avatarHint": "Kliknij, aby przesłać (JPG, PNG, WebP, maks. 2 MB)",
+      "avatarUploading": "Przesyłanie…",
+      "nameLabel": "Imię i nazwisko",
+      "namePlaceholder": "Jan Kowalski",
+      "emailLabel": "E-mail",
+      "emailDescription": "Twój adres e-mail jest zarządzany przez dostawcę uwierzytelniania.",
+      "saveProfile": "Zapisz profil",
+      "savingProfile": "Zapisywanie…",
+      "profileSaved": "Profil zaktualizowany.",
+      "profileError": "Nie udało się zaktualizować profilu.",
+      "avatarError": "Nie udało się przesłać zdjęcia. Spróbuj mniejszego pliku JPG lub PNG i spróbuj ponownie.",
+      "passwordTitle": "Zmień hasło",
+      "currentPassword": "Bieżące hasło",
+      "newPassword": "Nowe hasło",
+      "newPasswordPlaceholder": "Minimum 8 znaków",
+      "changePassword": "Zmień hasło",
+      "changingPassword": "Zmienianie…",
+      "passwordChanged": "Hasło zostało pomyślnie zmienione.",
+      "passwordError": "Nie udało się zmienić hasła. Sprawdź swoje bieżące hasło.",
+      "dangerTitle": "Strefa zagrożenia",
+      "logoutButton": "Wyloguj się",
+      "logoutDescription": "Wyloguj się ze swojego konta Seentrix na tym urządzeniu."
+    },
+    "language": {
+      "title": "Język",
+      "label": "Język",
+      "description": "Wybierz język całej aplikacji — interfejsu, Akademii, asystenta AI Copilot oraz generowanych dokumentów.",
+      "saved": "Język zaktualizowany",
+      "displayHeading": "Język wyświetlania",
+      "documentHeading": "Język dokumentów"
+    },
+    "toast": {
+      "success": "Sukces",
+      "error": "Błąd"
+    },
+    "eyebrow": "Obszar roboczy"
+  }
+}
