@@ -1,4 +1,6 @@
 import type { DocumentType } from "@/app/[locale]/app/products/[productId]/documents/actions";
+import type { DocLocale } from "../doc-locales";
+import { MARKET_DOC_LABELS } from "./market-languages";
 
 /**
  * Localised labels for generated CRA compliance PDFs (EN/DE/FR/IT).
@@ -496,9 +498,25 @@ const MESSAGES: Record<Locale, Record<DocumentType, PdfMessages>> = {
   it,
 };
 
+/**
+ * Labels for a document in the requested output language. English is always
+ * the base, so any key missing from a translation falls back to English
+ * per-key. The reviewed core locales (de/fr/it) supply every document type;
+ * the additional market languages (pl/es/pt/sv) supply the Declaration of
+ * Conformity label set (the other document types are authority-/internal-
+ * facing and fall back to English for those languages).
+ */
 export function getPdfMessages(
-  locale: Locale,
+  locale: DocLocale,
   documentType: DocumentType,
 ): PdfMessages {
-  return (MESSAGES[locale] ?? MESSAGES.en)[documentType];
+  const base = en[documentType];
+  const core = (MESSAGES as Record<string, Record<DocumentType, PdfMessages>>)[
+    locale
+  ]?.[documentType];
+  const market =
+    documentType === "declaration_of_conformity"
+      ? (MARKET_DOC_LABELS as Record<string, PdfMessages>)[locale]
+      : undefined;
+  return { ...base, ...(core ?? {}), ...(market ?? {}) };
 }

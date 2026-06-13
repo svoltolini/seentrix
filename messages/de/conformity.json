@@ -130,7 +130,8 @@
       "issuedOn": "Ausgestellt am {date}",
       "stepsIncomplete": "Alle Arbeitsschritte müssen abgeschlossen oder als nicht zutreffend markiert sein, bevor die Erklärung ausgestellt werden kann.",
       "profileIncomplete": "Ihrem Unternehmensprofil fehlen erforderliche Felder. Öffnen Sie Einstellungen → Organisation, um es zu vervollständigen.",
-      "downloadFailed": "Erklärung konnte nicht heruntergeladen werden"
+      "downloadFailed": "Erklärung konnte nicht heruntergeladen werden",
+      "language": "Sprache"
     },
     "toast": {
       "saved": "Gespeichert",

@@ -4,6 +4,12 @@ import { createClient } from "@/lib/supabase/server";
 import { EndUserInfoPdf } from "@/lib/pdf/templates/end-user-info";
 import { getEndUserInfoMessages } from "@/lib/pdf/i18n/end-user-info-messages";
 import { LOCALE_COOKIE, isLocale, type Locale } from "@/i18n/locales";
+import {
+  DOC_DATE_TAG,
+  isDocLocale,
+  formatDocDate,
+  type DocLocale,
+} from "@/lib/pdf/doc-locales";
 import { getOrgPlan } from "@/lib/entitlements";
 import { canGeneratePdf } from "@/lib/constants/plans";
 
@@ -60,6 +66,13 @@ export async function GET(
   const p = product as Record<string, string | null>;
   const o = org as Record<string, string | null>;
 
+  // Output language: explicit `?lang=` wins (the market language the document
+  // must be in), else the operator's UI locale, else English.
+  const langParam = new URL(req.url).searchParams.get("lang");
+  const cookieLocale = localeFromCookieHeader(req.headers.get("cookie"));
+  const locale: DocLocale =
+    langParam && isDocLocale(langParam) ? langParam : cookieLocale;
+
   const manufacturerName = o.legal_name?.trim() || o.name || "";
   const addressParts = [
     o.address_line1,
@@ -68,14 +81,7 @@ export async function GET(
     o.country,
   ].filter(Boolean);
 
-  const fmt = (iso: string | null | undefined) =>
-    iso
-      ? new Date(iso).toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        })
-      : "";
+  const fmt = (iso: string | null | undefined) => formatDocDate(iso, locale);
 
   const origin = new URL(req.url).origin;
   const securityPublicEnabled = Boolean(
@@ -111,18 +117,8 @@ export async function GET(
     declarationIssuedAt: fmt(p.declaration_issued_at),
   };
 
-  // Generate in the user's UI language (CRA: user-facing docs follow the market
-  // language). Resolve from the NEXT_LOCALE cookie on this download request.
-  const locale = localeFromCookieHeader(req.headers.get("cookie"));
   const messages = getEndUserInfoMessages(locale);
-
-  const dateLocaleTag: Record<Locale, string> = {
-    en: "en-US",
-    de: "de-DE",
-    fr: "fr-FR",
-    it: "it-IT",
-  };
-  const generatedAt = new Date().toLocaleDateString(dateLocaleTag[locale], {
+  const generatedAt = new Date().toLocaleDateString(DOC_DATE_TAG[locale], {
     year: "numeric",
     month: "long",
     day: "numeric",
@@ -136,7 +132,7 @@ export async function GET(
     status: 200,
     headers: {
       "Content-Type": "application/pdf",
-      "Content-Disposition": `attachment; filename="end-user-cybersecurity-info-${productId.slice(0, 8)}.pdf"`,
+      "Content-Disposition": `attachment; filename="end-user-cybersecurity-info-${productId.slice(0, 8)}-${locale}.pdf"`,
       "Cache-Control": "no-store",
     },
   });

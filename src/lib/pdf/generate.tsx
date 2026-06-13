@@ -1,6 +1,7 @@
 import { renderToBuffer } from "@react-pdf/renderer";
 import type { DocumentType } from "@/app/[locale]/app/products/[productId]/documents/actions";
-import { getPdfMessages, type Locale } from "./i18n/pdf-messages";
+import { getPdfMessages } from "./i18n/pdf-messages";
+import { DOC_DATE_TAG, type DocLocale } from "./doc-locales";
 import { DeclarationOfConformityPdf } from "./templates/declaration-of-conformity";
 import { VulnerabilityDisclosurePdf } from "./templates/vulnerability-disclosure";
 import { IncidentReportPdf } from "./templates/incident-report";
@@ -11,7 +12,7 @@ import { AuthorisedRepresentativeMandatePdf } from "./templates/authorised-repre
 interface GenerateOptions {
   documentType: DocumentType;
   content: string;
-  locale: Locale;
+  locale: DocLocale;
 }
 
 export async function generatePdfBuffer({
@@ -21,15 +22,9 @@ export async function generatePdfBuffer({
 }: GenerateOptions): Promise<Buffer> {
   const data = JSON.parse(content) as Record<string, string>;
   const messages = getPdfMessages(locale, documentType);
-  // Format the "generated on" date in the document's locale (de-DE, fr-FR,
-  // it-IT, en-US) so the date reads naturally in the chosen language.
-  const dateLocaleTag: Record<Locale, string> = {
-    en: "en-US",
-    de: "de-DE",
-    fr: "fr-FR",
-    it: "it-IT",
-  };
-  const generatedAt = new Date().toLocaleDateString(dateLocaleTag[locale], {
+  // Format the "generated on" date in the document's output language so it
+  // reads naturally in the chosen market language.
+  const generatedAt = new Date().toLocaleDateString(DOC_DATE_TAG[locale], {
     year: "numeric",
     month: "long",
     day: "numeric",

@@ -1,4 +1,6 @@
 import type { Locale } from "./pdf-messages";
+import type { DocLocale } from "../doc-locales";
+import { MARKET_ANNEX2_LABELS } from "./market-languages";
 
 /**
  * Localised labels for the End-User Cybersecurity Information Sheet
@@ -162,6 +164,13 @@ const it: Messages = {
 
 const MESSAGES: Record<Locale, Messages> = { en, de, fr, it };
 
-export function getEndUserInfoMessages(locale: Locale): Messages {
-  return MESSAGES[locale] ?? MESSAGES.en;
+/**
+ * Annex II labels in the requested output language, with per-key English
+ * fallback (en is the base). de/fr/it are the reviewed core set; pl/es/pt/sv
+ * come from the market-language supplement.
+ */
+export function getEndUserInfoMessages(locale: DocLocale): Messages {
+  const core = (MESSAGES as Record<string, Messages>)[locale];
+  const market = (MARKET_ANNEX2_LABELS as Record<string, Messages>)[locale];
+  return { ...en, ...(core ?? {}), ...(market ?? {}) };
 }

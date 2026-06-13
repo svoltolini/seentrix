@@ -67,7 +67,8 @@
       "supportEndUnset": "Legen Sie den Supportzeitraum in der Produktübersicht fest.",
       "generate": "PDF erstellen",
       "generating": "Wird erstellt…",
-      "generateFailed": "Endnutzerinformationen konnten nicht erstellt werden."
+      "generateFailed": "Endnutzerinformationen konnten nicht erstellt werden.",
+      "language": "Sprache"
     },
     "feedback": {
       "saved": "Gespeichert."

@@ -67,7 +67,8 @@
       "supportEndUnset": "Set the support period on the product overview.",
       "generate": "Generate PDF",
       "generating": "Generating…",
-      "generateFailed": "Couldn't generate the end-user information."
+      "generateFailed": "Couldn't generate the end-user information.",
+      "language": "Language"
     },
     "feedback": {
       "saved": "Saved."

@@ -5,10 +5,22 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Icon } from "@/components/icon";
+import {
+  DOC_LOCALES,
+  DOC_LOCALE_LABELS,
+  type DocLocale,
+} from "@/lib/pdf/doc-locales";
 import { FieldHelp } from "@/components/field-help";
 import { useToast } from "@/components/ui/toast";
 import { CE_LOCATIONS, simplifiedDocPath } from "./constants";
@@ -91,16 +103,18 @@ export function IdentityContent({
     });
   }
 
-  async function handleGenerateEndUserInfo() {
+  async function handleGenerateEndUserInfo(lang: DocLocale = "en") {
     setGenerating(true);
     try {
-      const res = await fetch(`/api/products/${productId}/end-user-info`);
+      const res = await fetch(
+        `/api/products/${productId}/end-user-info?lang=${lang}`,
+      );
       if (!res.ok) throw new Error();
       const blob = await res.blob();
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `end-user-information-${productId.slice(0, 8)}.pdf`;
+      a.download = `end-user-information-${productId.slice(0, 8)}-${lang}.pdf`;
       document.body.appendChild(a);
       a.click();
       a.remove();
@@ -339,15 +353,26 @@ export function IdentityContent({
               {t("annexII.description")}
             </p>
           </div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleGenerateEndUserInfo}
-            disabled={generating}
-          >
-            <Icon name="pdf-01-stroke-rounded" size={16} />
-            {generating ? t("annexII.generating") : t("annexII.generate")}
-          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              render={<Button variant="outline" size="sm" disabled={generating} />}
+            >
+              <Icon name="pdf-01-stroke-rounded" size={16} />
+              {generating ? t("annexII.generating") : t("annexII.generate")}
+              <Icon name="ChevronDown" size={14} />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="min-w-44">
+              <DropdownMenuLabel>{t("annexII.language")}</DropdownMenuLabel>
+              {DOC_LOCALES.map((lang) => (
+                <DropdownMenuItem
+                  key={lang}
+                  onClick={() => handleGenerateEndUserInfo(lang)}
+                >
+                  {DOC_LOCALE_LABELS[lang]}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="known_risks">{t("annexII.knownRisks")}</Label>

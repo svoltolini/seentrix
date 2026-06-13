@@ -130,7 +130,8 @@
       "issuedOn": "Emessa il {date}",
       "stepsIncomplete": "Tutte le fasi del flusso di lavoro devono essere completate o contrassegnate come N/A prima che la dichiarazione possa essere emessa.",
       "profileIncomplete": "Il profilo aziendale presenta campi obbligatori mancanti. Apri Impostazioni → Organizzazione per completarlo.",
-      "downloadFailed": "Impossibile scaricare la dichiarazione"
+      "downloadFailed": "Impossibile scaricare la dichiarazione",
+      "language": "Lingua"
     },
     "toast": {
       "saved": "Salvato",

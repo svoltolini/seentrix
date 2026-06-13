@@ -17,6 +17,18 @@ import {
   SideSheetPopup,
 } from "@/components/side-sheet";
 import { StaggerReveal } from "@/components/stagger-reveal";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  DOC_LOCALES,
+  DOC_LOCALE_LABELS,
+  type DocLocale,
+} from "@/lib/pdf/doc-locales";
 import { StandardsReference } from "./standards-reference";
 import { useToast } from "@/components/ui/toast";
 import { useLocaleDate } from "@/lib/locale-date";
@@ -417,15 +429,15 @@ export function ConformityContent({
     }
   }
 
-  async function handleDownload() {
+  async function handleDownload(lang: DocLocale = "en") {
     try {
-      const res = await fetch(`/api/products/${productId}/doc`);
+      const res = await fetch(`/api/products/${productId}/doc?lang=${lang}`);
       if (!res.ok) throw new Error();
       const blob = await res.blob();
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `declaration-of-conformity-${state.productName.toLowerCase().replace(/\s+/g, "-")}.pdf`;
+      a.download = `declaration-of-conformity-${state.productName.toLowerCase().replace(/\s+/g, "-")}-${lang}.pdf`;
       document.body.appendChild(a);
       a.click();
       a.remove();
@@ -697,14 +709,31 @@ export function ConformityContent({
             </div>
             <div className="flex shrink-0 gap-2">
               {state.declarationIssuedAt && (
-                <button
-                  type="button"
-                  onClick={handleDownload}
-                  className="inline-flex items-center gap-2 rounded-sm border-[1.5px] border-primary-foreground/30 bg-primary-foreground/15 px-4 py-2.5 text-l6 text-primary-foreground backdrop-blur-sm transition-colors hover:bg-primary-foreground/25"
-                >
-                  <Icon name="pdf-01-stroke-rounded" size={14} />
-                  {t("doc.download")}
-                </button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger
+                    render={
+                      <button
+                        type="button"
+                        className="inline-flex items-center gap-2 rounded-sm border-[1.5px] border-primary-foreground/30 bg-primary-foreground/15 px-4 py-2.5 text-l6 text-primary-foreground backdrop-blur-sm transition-colors hover:bg-primary-foreground/25"
+                      />
+                    }
+                  >
+                    <Icon name="pdf-01-stroke-rounded" size={14} />
+                    {t("doc.download")}
+                    <Icon name="ChevronDown" size={14} />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="min-w-44">
+                    <DropdownMenuLabel>{t("doc.language")}</DropdownMenuLabel>
+                    {DOC_LOCALES.map((lang) => (
+                      <DropdownMenuItem
+                        key={lang}
+                        onClick={() => handleDownload(lang)}
+                      >
+                        {DOC_LOCALE_LABELS[lang]}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
               )}
               {canIssue && (
                 <button

@@ -3,17 +3,24 @@ import { createClient } from "@/lib/supabase/server";
 import { generatePdfBuffer } from "@/lib/pdf/generate";
 import { getOrgPlan } from "@/lib/entitlements";
 import { canGeneratePdf } from "@/lib/constants/plans";
+import { toDocLocale, formatDocDate } from "@/lib/pdf/doc-locales";
+import { docConformityBoilerplate } from "@/lib/pdf/i18n/market-languages";
 
 /**
  * Stream a Declaration of Conformity PDF, auto-filled from the product +
  * organization + conformity state. Uses the existing
  * /lib/pdf/templates/declaration-of-conformity.tsx template.
+ *
+ * The output language is chosen via `?lang=` (one of the document locales) —
+ * the CRA requires the DoC in the language of the market where the product is
+ * sold. Defaults to English.
  */
 export async function GET(
-  _req: Request,
+  req: Request,
   ctx: { params: Promise<{ productId: string }> },
 ) {
   const { productId } = await ctx.params;
+  const locale = toDocLocale(new URL(req.url).searchParams.get("lang"));
   const supabase = await createClient();
 
   const {
@@ -70,6 +77,13 @@ export async function GET(
     ? `${p.notified_body_name ?? ""} (Notified Body No. ${p.notified_body_id})`
     : "N/A";
 
+  const boilerplate = docConformityBoilerplate(
+    locale,
+    manufacturerName,
+    p.conformity_route ?? "module_a",
+  );
+  const issuedAtDate = formatDocDate(p.declaration_issued_at, locale);
+
   const content = JSON.stringify({
     manufacturerName,
     manufacturerAddress: addressParts.join(", "),
@@ -80,34 +94,29 @@ export async function GET(
     productIdentification: [p.type, p.description ?? ""]
       .filter(Boolean)
       .join(" · "),
-    conformityStatement: `${manufacturerName} declares under its sole responsibility that the product named above is in conformity with Regulation (EU) 2024/2847 (Cyber Resilience Act) and fulfils the essential cybersecurity requirements set out in Annex I. Conformity route: ${p.conformity_route ?? "module_a"}.`,
-    standardsApplied:
-      "Harmonised standards EN 18031-1, EN 18031-2, EN 18031-3 (where applicable).",
+    conformityStatement: boilerplate.conformityStatement,
+    standardsApplied: boilerplate.standardsApplied,
     notifiedBodyName: p.notified_body_name ?? "N/A",
     notifiedBodyNumber: notifiedBodyLine,
     signatoryName: o.signatory_name ?? "",
     signatoryPosition: o.signatory_position ?? "",
     place: o.city ?? "",
-    date: p.declaration_issued_at
-      ? new Date(p.declaration_issued_at).toLocaleDateString()
-      : new Date().toLocaleDateString(),
+    date: issuedAtDate || formatDocDate(new Date().toISOString(), locale),
     version: p.declaration_version ?? "",
-    issuedAt: p.declaration_issued_at
-      ? new Date(p.declaration_issued_at).toLocaleDateString()
-      : "",
+    issuedAt: issuedAtDate,
   });
 
   const buffer = await generatePdfBuffer({
     documentType: "declaration_of_conformity",
     content,
-    locale: "en",
+    locale,
   });
 
   return new NextResponse(new Uint8Array(buffer), {
     status: 200,
     headers: {
       "Content-Type": "application/pdf",
-      "Content-Disposition": `attachment; filename="declaration-of-conformity-${productId.slice(0, 8)}.pdf"`,
+      "Content-Disposition": `attachment; filename="declaration-of-conformity-${productId.slice(0, 8)}-${locale}.pdf"`,
       "Cache-Control": "no-store",
     },
   });

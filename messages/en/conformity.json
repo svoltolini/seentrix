@@ -130,7 +130,8 @@
       "issuedOn": "Issued on {date}",
       "stepsIncomplete": "All workflow steps must be complete or N/A before the declaration can be issued.",
       "profileIncomplete": "Your company profile is missing required fields. Open Settings → Organization to finish it.",
-      "downloadFailed": "Couldn't download the declaration"
+      "downloadFailed": "Couldn't download the declaration",
+      "language": "Language"
     },
     "toast": {
       "saved": "Saved",

@@ -130,7 +130,8 @@
       "issuedOn": "Émise le {date}",
       "stepsIncomplete": "Toutes les étapes du flux de travail doivent être terminées ou marquées S/O avant que la déclaration puisse être émise.",
       "profileIncomplete": "Le profil de votre entreprise comporte des champs obligatoires manquants. Ouvrez Paramètres → Organisation pour le compléter.",
-      "downloadFailed": "Impossible de télécharger la déclaration"
+      "downloadFailed": "Impossible de télécharger la déclaration",
+      "language": "Langue"
     },
     "toast": {
       "saved": "Enregistré",

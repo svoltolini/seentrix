@@ -67,7 +67,8 @@
       "supportEndUnset": "Imposta il periodo di supporto nella panoramica del prodotto.",
       "generate": "Genera PDF",
       "generating": "Generazione…",
-      "generateFailed": "Impossibile generare le informazioni per l'utente finale."
+      "generateFailed": "Impossibile generare le informazioni per l'utente finale.",
+      "language": "Lingua"
     },
     "feedback": {
       "saved": "Salvato."
