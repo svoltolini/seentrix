@@ -22,6 +22,10 @@
       "distributor": {
         "title": "Distributore",
         "description": "Metti a disposizione prodotti sul mercato UE senza essere il fabbricante o l'importatore."
+      },
+      "open_source_software_steward": {
+        "title": "Gestore di software open source",
+        "description": "Fornisci supporto continuativo allo sviluppo di software libero e open source destinato ad attività commerciali, senza essere un fabbricante."
       }
     },
     "status": {
@@ -257,6 +261,44 @@
             "title": "Cooperazione con le autorità",
             "body": "Su richiesta motivata, fornisci alle autorità le informazioni e la documentazione necessarie per dimostrare la conformità e coopera a qualsiasi azione per eliminare i rischi di cibersicurezza dei prodotti che hai messo a disposizione.",
             "ref": "CRA Articolo 20(8) — Obblighi di cooperazione"
+          }
+        }
+      },
+      "open_source_software_steward": {
+        "cybersecurity_policy_documented": {
+          "title": "Politica di cybersicurezza documentata",
+          "description": "Una politica di cybersicurezza verificabile promuove uno sviluppo sicuro e una gestione efficace delle vulnerabilità.",
+          "help": {
+            "title": "Documentare una politica di cybersicurezza",
+            "body": "Istituisci e documenta, in modo verificabile, una politica di cybersicurezza che promuova lo sviluppo sicuro del tuo software e una gestione efficace delle vulnerabilità da parte dei suoi sviluppatori.",
+            "ref": "CRA Articolo 24 — Obblighi dei gestori di software open source"
+          }
+        },
+        "vulnerability_disclosure_supported": {
+          "title": "Divulgazione coordinata supportata",
+          "description": "La politica incoraggia la segnalazione volontaria e la divulgazione coordinata delle vulnerabilità nella comunità di sviluppatori.",
+          "help": {
+            "title": "Supportare la divulgazione volontaria",
+            "body": "La tua politica di cybersicurezza dovrebbe incoraggiare gli sviluppatori e la comunità a segnalare e correggere le vulnerabilità e sostenere un approccio di divulgazione coordinata.",
+            "ref": "CRA Articolo 24 — Obblighi dei gestori di software open source"
+          }
+        },
+        "report_under_article_14": {
+          "title": "Segnalazione ai sensi dell'articolo 14 pronta",
+          "description": "Puoi notificare le vulnerabilità sfruttate attivamente e gli incidenti gravi ai sensi dell'articolo 14, nella misura in cui partecipi allo sviluppo.",
+          "help": {
+            "title": "Segnalazione ai sensi dell'articolo 14",
+            "body": "Nella misura in cui partecipi allo sviluppo di un prodotto con elementi digitali, segnala le vulnerabilità sfruttate attivamente e gli incidenti gravi al CSIRT coordinatore e all'ENISA tramite la Single Reporting Platform.",
+            "ref": "CRA Articolo 24 e Articolo 14"
+          }
+        },
+        "cooperate_with_authorities": {
+          "title": "Cooperazione con le autorità",
+          "description": "Cooperi con le autorità di vigilanza del mercato su richiesta e fornisci la documentazione in una lingua a loro comprensibile.",
+          "help": {
+            "title": "Cooperare con le autorità",
+            "body": "Su richiesta motivata, fornisci alle autorità di vigilanza del mercato le informazioni e la documentazione necessarie a dimostrare la tua politica di cybersicurezza, in una lingua facilmente comprensibile per loro.",
+            "ref": "CRA Articolo 24 — Obblighi dei gestori di software open source"
           }
         }
       }

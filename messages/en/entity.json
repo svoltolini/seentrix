@@ -22,6 +22,10 @@
       "distributor": {
         "title": "Distributor",
         "description": "You make products available on the EU market without being the manufacturer or importer."
+      },
+      "open_source_software_steward": {
+        "title": "Open-source software steward",
+        "description": "You provide sustained support for the development of free and open-source software intended for commercial activities, without being a manufacturer."
       }
     },
     "status": {
@@ -257,6 +261,44 @@
             "title": "Cooperating with authorities",
             "body": "On a reasoned request, give authorities the information and documentation needed to demonstrate conformity and cooperate on any action to eliminate the cybersecurity risks of products you've made available.",
             "ref": "CRA Article 20(8) — Cooperation duties"
+          }
+        }
+      },
+      "open_source_software_steward": {
+        "cybersecurity_policy_documented": {
+          "title": "Cybersecurity policy documented",
+          "description": "A verifiable cybersecurity policy is in place fostering secure development and effective vulnerability handling.",
+          "help": {
+            "title": "Documenting a cybersecurity policy",
+            "body": "Put in place and document, in a verifiable manner, a cybersecurity policy that fosters the secure development of your software and an effective handling of vulnerabilities by its developers.",
+            "ref": "CRA Article 24 — Obligations of open-source software stewards"
+          }
+        },
+        "vulnerability_disclosure_supported": {
+          "title": "Coordinated disclosure supported",
+          "description": "The policy encourages voluntary reporting and coordinated disclosure of vulnerabilities within the developer community.",
+          "help": {
+            "title": "Supporting voluntary disclosure",
+            "body": "Your cybersecurity policy should encourage developers and the community to report and address vulnerabilities, and support a coordinated vulnerability disclosure approach.",
+            "ref": "CRA Article 24 — Obligations of open-source software stewards"
+          }
+        },
+        "report_under_article_14": {
+          "title": "Article 14 reporting ready",
+          "description": "You can notify actively exploited vulnerabilities and severe incidents under Article 14, to the extent you are involved in the product's development.",
+          "help": {
+            "title": "Reporting under Article 14",
+            "body": "To the extent you are involved in the development of a product with digital elements, report actively exploited vulnerabilities and severe incidents to the coordinating CSIRT and ENISA via the Single Reporting Platform.",
+            "ref": "CRA Article 24 & Article 14"
+          }
+        },
+        "cooperate_with_authorities": {
+          "title": "Cooperation with authorities",
+          "description": "You cooperate with market surveillance authorities on request and provide documentation in a language they understand.",
+          "help": {
+            "title": "Cooperating with authorities",
+            "body": "On a reasoned request, provide market surveillance authorities with the information and documentation needed to demonstrate your cybersecurity policy, in a language easily understood by them.",
+            "ref": "CRA Article 24 — Obligations of open-source software stewards"
           }
         }
       }

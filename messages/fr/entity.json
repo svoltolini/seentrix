@@ -22,6 +22,10 @@
       "distributor": {
         "title": "Distributeur",
         "description": "Vous mettez des produits à disposition sur le marché de l'UE sans en être le fabricant ni l'importateur."
+      },
+      "open_source_software_steward": {
+        "title": "Gestionnaire de logiciels libres",
+        "description": "Vous apportez un soutien durable au développement de logiciels libres et open source destinés à des activités commerciales, sans être un fabricant."
       }
     },
     "status": {
@@ -257,6 +261,44 @@
             "title": "Coopérer avec les autorités",
             "body": "Sur demande motivée, fournissez aux autorités les informations et la documentation nécessaires pour démontrer la conformité et coopérez à toute mesure visant à éliminer les risques de cybersécurité des produits que vous avez mis à disposition.",
             "ref": "CRA Article 20(8) — Obligations de coopération"
+          }
+        }
+      },
+      "open_source_software_steward": {
+        "cybersecurity_policy_documented": {
+          "title": "Politique de cybersécurité documentée",
+          "description": "Une politique de cybersécurité vérifiable favorise un développement sécurisé et un traitement efficace des vulnérabilités.",
+          "help": {
+            "title": "Documenter une politique de cybersécurité",
+            "body": "Mettez en place et documentez, de manière vérifiable, une politique de cybersécurité qui favorise le développement sécurisé de votre logiciel et un traitement efficace des vulnérabilités par ses développeurs.",
+            "ref": "CRA Article 24 — Obligations des gestionnaires de logiciels libres"
+          }
+        },
+        "vulnerability_disclosure_supported": {
+          "title": "Divulgation coordonnée soutenue",
+          "description": "La politique encourage le signalement volontaire et la divulgation coordonnée des vulnérabilités au sein de la communauté de développeurs.",
+          "help": {
+            "title": "Soutenir la divulgation volontaire",
+            "body": "Votre politique de cybersécurité devrait encourager les développeurs et la communauté à signaler et corriger les vulnérabilités, et soutenir une approche de divulgation coordonnée.",
+            "ref": "CRA Article 24 — Obligations des gestionnaires de logiciels libres"
+          }
+        },
+        "report_under_article_14": {
+          "title": "Signalement au titre de l'article 14 prêt",
+          "description": "Vous pouvez notifier les vulnérabilités activement exploitées et les incidents graves au titre de l'article 14, dans la mesure où vous participez au développement.",
+          "help": {
+            "title": "Signalement au titre de l'article 14",
+            "body": "Dans la mesure où vous participez au développement d'un produit comportant des éléments numériques, signalez les vulnérabilités activement exploitées et les incidents graves au CSIRT coordinateur et à l'ENISA via la Single Reporting Platform.",
+            "ref": "CRA Article 24 et Article 14"
+          }
+        },
+        "cooperate_with_authorities": {
+          "title": "Coopération avec les autorités",
+          "description": "Vous coopérez avec les autorités de surveillance du marché sur demande et fournissez la documentation dans une langue qu'elles comprennent.",
+          "help": {
+            "title": "Coopérer avec les autorités",
+            "body": "Sur demande motivée, fournissez aux autorités de surveillance du marché les informations et la documentation nécessaires pour démontrer votre politique de cybersécurité, dans une langue facilement compréhensible par elles.",
+            "ref": "CRA Article 24 — Obligations des gestionnaires de logiciels libres"
           }
         }
       }

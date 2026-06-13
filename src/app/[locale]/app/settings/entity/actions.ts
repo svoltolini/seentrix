@@ -8,7 +8,8 @@ export type EntityType =
   | "manufacturer"
   | "authorised_representative"
   | "importer"
-  | "distributor";
+  | "distributor"
+  | "open_source_software_steward";
 
 export type ObligationStatus =
   | "pending"
@@ -61,6 +62,12 @@ const OBLIGATIONS: Record<EntityType, string[]> = {
     "verify_instructions_user_info",
     "store_transport_without_impact",
     "report_exploited_vulnerabilities",
+    "cooperate_with_authorities",
+  ],
+  open_source_software_steward: [
+    "cybersecurity_policy_documented",
+    "vulnerability_disclosure_supported",
+    "report_under_article_14",
     "cooperate_with_authorities",
   ],
 };

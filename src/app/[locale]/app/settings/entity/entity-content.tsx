@@ -23,6 +23,7 @@ const ENTITY_ORDER: EntityType[] = [
   "authorised_representative",
   "importer",
   "distributor",
+  "open_source_software_steward",
 ];
 
 const STATUS_COLOR: Record<ObligationStatus, string> = {
@@ -37,6 +38,7 @@ const ENTITY_ICON: Record<EntityType, string> = {
   authorised_representative: "crown-stroke-rounded",
   importer: "package",
   distributor: "package-open-stroke-rounded",
+  open_source_software_steward: "terminal-stroke-rounded",
 };
 
 export function EntityContent({

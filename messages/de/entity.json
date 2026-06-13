@@ -22,6 +22,10 @@
       "distributor": {
         "title": "Händler",
         "description": "Sie stellen Produkte auf dem EU-Markt bereit, ohne Hersteller oder Einführer zu sein."
+      },
+      "open_source_software_steward": {
+        "title": "Open-Source-Software-Verwalter",
+        "description": "Sie leisten dauerhafte Unterstützung für die Entwicklung freier und quelloffener Software, die für kommerzielle Tätigkeiten bestimmt ist, ohne Hersteller zu sein."
       }
     },
     "status": {
@@ -257,6 +261,44 @@
             "title": "Zusammenarbeit mit Behörden",
             "body": "Stellen Sie auf begründeten Antrag Behörden die zur Konformitätsnachweisführung benötigten Informationen und Dokumentation zur Verfügung und wirken Sie bei Maßnahmen zur Beseitigung der Cybersicherheitsrisiken von Ihnen bereitgestellter Produkte mit.",
             "ref": "CRA Artikel 20(8) – Kooperationspflichten"
+          }
+        }
+      },
+      "open_source_software_steward": {
+        "cybersecurity_policy_documented": {
+          "title": "Cybersicherheitsrichtlinie dokumentiert",
+          "description": "Eine nachprüfbare Cybersicherheitsrichtlinie fördert die sichere Entwicklung und eine wirksame Behandlung von Schwachstellen.",
+          "help": {
+            "title": "Cybersicherheitsrichtlinie dokumentieren",
+            "body": "Führen Sie nachprüfbar eine Cybersicherheitsrichtlinie ein, die die sichere Entwicklung Ihrer Software und eine wirksame Behandlung von Schwachstellen durch die Entwickler fördert.",
+            "ref": "CRA Artikel 24 — Pflichten von Open-Source-Software-Verwaltern"
+          }
+        },
+        "vulnerability_disclosure_supported": {
+          "title": "Koordinierte Offenlegung unterstützt",
+          "description": "Die Richtlinie fördert die freiwillige Meldung und koordinierte Offenlegung von Schwachstellen in der Entwickler-Community.",
+          "help": {
+            "title": "Freiwillige Offenlegung unterstützen",
+            "body": "Ihre Cybersicherheitsrichtlinie sollte Entwickler und die Community ermutigen, Schwachstellen zu melden und zu beheben, und einen Ansatz der koordinierten Offenlegung unterstützen.",
+            "ref": "CRA Artikel 24 — Pflichten von Open-Source-Software-Verwaltern"
+          }
+        },
+        "report_under_article_14": {
+          "title": "Meldung nach Artikel 14 bereit",
+          "description": "Sie können aktiv ausgenutzte Schwachstellen und schwerwiegende Vorfälle nach Artikel 14 melden, soweit Sie an der Entwicklung beteiligt sind.",
+          "help": {
+            "title": "Meldung nach Artikel 14",
+            "body": "Soweit Sie an der Entwicklung eines Produkts mit digitalen Elementen beteiligt sind, melden Sie aktiv ausgenutzte Schwachstellen und schwerwiegende Vorfälle über die Single Reporting Platform an das koordinierende CSIRT und die ENISA.",
+            "ref": "CRA Artikel 24 & Artikel 14"
+          }
+        },
+        "cooperate_with_authorities": {
+          "title": "Zusammenarbeit mit Behörden",
+          "description": "Sie arbeiten auf Anfrage mit den Marktüberwachungsbehörden zusammen und stellen Unterlagen in einer für sie verständlichen Sprache bereit.",
+          "help": {
+            "title": "Zusammenarbeit mit Behörden",
+            "body": "Stellen Sie den Marktüberwachungsbehörden auf begründetes Verlangen die Informationen und Unterlagen bereit, die zum Nachweis Ihrer Cybersicherheitsrichtlinie erforderlich sind, in einer für sie leicht verständlichen Sprache.",
+            "ref": "CRA Artikel 24 — Pflichten von Open-Source-Software-Verwaltern"
           }
         }
       }
