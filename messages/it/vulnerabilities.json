@@ -89,6 +89,17 @@
       "assignmentUpdated": "Assegnazione aggiornata",
       "markedExploited": "Contrassegnata come sfruttata attivamente",
       "unmarkedExploited": "Flag di sfruttata rimosso"
+    },
+    "advisory": {
+      "export": "Esporta avviso",
+      "menuLabel": "Avviso leggibile da macchina",
+      "csaf": "CSAF 2.0",
+      "csafHint": "Formato avviso OASIS (.csaf.json)",
+      "vex": "CycloneDX VEX",
+      "vexHint": "Dichiarazione di sfruttabilità (.vex.json)",
+      "planRequired": "L'esportazione VEX/CSAF è disponibile con il piano Business.",
+      "businessPlan": "Business",
+      "empty": "Nessuna vulnerabilità da includere in un avviso al momento."
     }
   }
 }

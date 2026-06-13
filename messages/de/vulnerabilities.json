@@ -89,6 +89,17 @@
       "assignmentUpdated": "Zuweisung aktualisiert",
       "markedExploited": "Als aktiv ausgenutzt markiert",
       "unmarkedExploited": "Flag \"ausgenutzt\" entfernt"
+    },
+    "advisory": {
+      "export": "Advisory exportieren",
+      "menuLabel": "Maschinenlesbares Advisory",
+      "csaf": "CSAF 2.0",
+      "csafHint": "OASIS-Advisory-Format (.csaf.json)",
+      "vex": "CycloneDX VEX",
+      "vexHint": "Ausnutzbarkeits-Statement (.vex.json)",
+      "planRequired": "Der VEX-/CSAF-Export ist im Business-Tarif verfügbar.",
+      "businessPlan": "Business",
+      "empty": "Noch keine Schwachstellen für ein Advisory vorhanden."
     }
   }
 }

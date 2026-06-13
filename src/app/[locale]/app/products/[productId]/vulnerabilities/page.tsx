@@ -1,4 +1,6 @@
 import { getCurrentUserRole } from "../../../settings/actions";
+import { getOrgProductInfo } from "../../../products/actions";
+import { hasFeature } from "@/lib/constants/plans";
 import {
   listAssignableMembers,
   listProductVulnerabilities,
@@ -12,10 +14,11 @@ export default async function VulnerabilitiesPage({
   params: Promise<{ locale: string; productId: string }>;
 }) {
   const { productId } = await params;
-  const [{ vulns }, { members }, role] = await Promise.all([
+  const [{ vulns }, { members }, role, { plan }] = await Promise.all([
     listProductVulnerabilities(productId),
     listAssignableMembers(),
     getCurrentUserRole(),
+    getOrgProductInfo(),
   ]);
 
   return (
@@ -26,6 +29,7 @@ export default async function VulnerabilitiesPage({
         initialVulns={vulns}
         members={members}
         currentUserRole={role}
+        canExportAdvisory={hasFeature(plan, "vex_csaf")}
       />
     </>
   );

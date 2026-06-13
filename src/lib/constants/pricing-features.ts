@@ -71,7 +71,7 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
       { key: "triageMttr", free: false, professional: true, business: true, enterprise: true },
       { key: "activelyExploited", free: false, professional: true, business: true, enterprise: true },
       { key: "monitoringFrequency", free: "On-demand", professional: "coming-soon", business: "coming-soon", enterprise: "coming-soon" },
-      { key: "vexCsafExport", free: false, professional: false, business: "coming-soon", enterprise: "coming-soon" },
+      { key: "vexCsafExport", free: false, professional: false, business: true, enterprise: true },
     ],
   },
   {

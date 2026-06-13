@@ -164,11 +164,14 @@ export function VulnerabilitiesContent({
   initialVulns,
   members,
   currentUserRole,
+  canExportAdvisory,
 }: {
   productId: string;
   initialVulns: VulnListItem[];
   members: TeamMemberOption[];
   currentUserRole: string | null;
+  /** Whether the org's plan allows VEX/CSAF advisory export (Business+). */
+  canExportAdvisory: boolean;
 }) {
   const t = useTranslations("vulnerabilities");
   const tStatus = useTranslations("vulnerabilities.status");
@@ -199,6 +202,25 @@ export function VulnerabilitiesContent({
   const canWrite = !!currentUserRole && ROLES_CAN_WRITE.has(currentUserRole);
   const canFlagExploit =
     !!currentUserRole && ROLES_CAN_FLAG_EXPLOIT.has(currentUserRole);
+
+  // Download a machine-readable advisory (CSAF 2.0 or CycloneDX VEX) built
+  // from this product's triaged vulnerabilities. The route streams an
+  // attachment; an off-DOM anchor click avoids a full-page navigation.
+  const exportAdvisory = useCallback(
+    (format: "csaf" | "vex") => {
+      if (vulns.length === 0) {
+        toast({ type: "error", message: t("advisory.empty") });
+        return;
+      }
+      const a = document.createElement("a");
+      a.href = `/api/products/${productId}/advisory?format=${format}`;
+      a.rel = "noopener";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    },
+    [productId, t, toast, vulns.length],
+  );
 
   // Derived KPIs for the stat bar ------------------------------------------
   const kpis = useMemo(() => {
@@ -400,6 +422,52 @@ export function VulnerabilitiesContent({
         scale={0.98}
         ease="power3.out"
       >
+        {/* ── Header actions ── */}
+        <div data-reveal className="flex items-center justify-end gap-2">
+          {canExportAdvisory ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger
+                render={<Button variant="outline" size="sm" />}
+              >
+                <Icon name="DocumentDownload" size={14} />
+                {t("advisory.export")}
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="min-w-56">
+                <DropdownMenuLabel>{t("advisory.menuLabel")}</DropdownMenuLabel>
+                <DropdownMenuItem onClick={() => exportAdvisory("csaf")}>
+                  <Icon name="Code" size={14} />
+                  <span className="flex flex-col">
+                    <span>{t("advisory.csaf")}</span>
+                    <span className="text-l6 text-muted-foreground">
+                      {t("advisory.csafHint")}
+                    </span>
+                  </span>
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => exportAdvisory("vex")}>
+                  <Icon name="Code" size={14} />
+                  <span className="flex flex-col">
+                    <span>{t("advisory.vex")}</span>
+                    <span className="text-l6 text-muted-foreground">
+                      {t("advisory.vexHint")}
+                    </span>
+                  </span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <span
+              className="inline-flex cursor-not-allowed items-center gap-2 rounded-md border border-border px-3 py-1.5 text-l6 text-muted-foreground opacity-70"
+              title={t("advisory.planRequired")}
+            >
+              <Icon name="DocumentDownload" size={14} />
+              {t("advisory.export")}
+              <span className="rounded-full bg-accent/15 px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide text-accent">
+                {t("advisory.businessPlan")}
+              </span>
+            </span>
+          )}
+        </div>
+
         {/* ── Stat bar ── */}
         <div
           data-reveal

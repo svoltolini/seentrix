@@ -89,6 +89,17 @@
       "assignmentUpdated": "Assignment updated",
       "markedExploited": "Flagged as actively exploited",
       "unmarkedExploited": "Exploited flag removed"
+    },
+    "advisory": {
+      "export": "Export advisory",
+      "menuLabel": "Machine-readable advisory",
+      "csaf": "CSAF 2.0",
+      "csafHint": "OASIS advisory format (.csaf.json)",
+      "vex": "CycloneDX VEX",
+      "vexHint": "Exploitability statement (.vex.json)",
+      "planRequired": "VEX/CSAF export is available on the Business plan.",
+      "businessPlan": "Business",
+      "empty": "No vulnerabilities to include in an advisory yet."
     }
   }
 }
