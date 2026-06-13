@@ -406,7 +406,9 @@
       "title": "Sprache",
       "label": "Sprache",
       "description": "Wählen Sie die Sprache für die gesamte App – Oberfläche, Academy, den KI-Copiloten und die von Ihnen erstellten Dokumente.",
-      "saved": "Sprache aktualisiert"
+      "saved": "Sprache aktualisiert",
+      "displayHeading": "Anzeigesprache",
+      "documentHeading": "Dokumentsprache"
     },
     "toast": {
       "success": "Erfolgreich",

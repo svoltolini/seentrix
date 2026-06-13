@@ -406,7 +406,9 @@
       "title": "Language",
       "label": "Language",
       "description": "Choose the language for the entire app — interface, Academy, the AI Copilot, and the documents you generate.",
-      "saved": "Language updated"
+      "saved": "Language updated",
+      "displayHeading": "Display language",
+      "documentHeading": "Document language"
     },
     "toast": {
       "success": "Success",

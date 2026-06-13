@@ -10,6 +10,7 @@ import {
   formatDocDate,
   type DocLocale,
 } from "@/lib/pdf/doc-locales";
+import { docLocaleFromCookieHeader } from "@/lib/pdf/doc-locale-cookie";
 import { getOrgPlan } from "@/lib/entitlements";
 import { canGeneratePdf } from "@/lib/constants/plans";
 
@@ -66,12 +67,16 @@ export async function GET(
   const p = product as Record<string, string | null>;
   const o = org as Record<string, string | null>;
 
-  // Output language: explicit `?lang=` wins (the market language the document
-  // must be in), else the operator's UI locale, else English.
+  // Output language priority: explicit `?lang=` (per-download override) →
+  // the user's default document language (preferred_doc_language cookie) →
+  // the UI locale → English.
+  const cookieHeader = req.headers.get("cookie");
   const langParam = new URL(req.url).searchParams.get("lang");
-  const cookieLocale = localeFromCookieHeader(req.headers.get("cookie"));
   const locale: DocLocale =
-    langParam && isDocLocale(langParam) ? langParam : cookieLocale;
+    langParam && isDocLocale(langParam)
+      ? langParam
+      : docLocaleFromCookieHeader(cookieHeader) ??
+        localeFromCookieHeader(cookieHeader);
 
   const manufacturerName = o.legal_name?.trim() || o.name || "";
   const addressParts = [

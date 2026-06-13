@@ -708,33 +708,31 @@ export function ConformityContent({
               )}
             </div>
             <div className="flex shrink-0 gap-2">
-              {state.declarationIssuedAt && (
-                <DropdownMenu>
-                  <DropdownMenuTrigger
-                    render={
-                      <button
-                        type="button"
-                        className="inline-flex items-center gap-2 rounded-sm border-[1.5px] border-primary-foreground/30 bg-primary-foreground/15 px-4 py-2.5 text-l6 text-primary-foreground backdrop-blur-sm transition-colors hover:bg-primary-foreground/25"
-                      />
-                    }
-                  >
-                    <Icon name="pdf-01-stroke-rounded" size={14} />
-                    {t("doc.download")}
-                    <Icon name="ChevronDown" size={14} />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="min-w-44">
-                    <DropdownMenuLabel>{t("doc.language")}</DropdownMenuLabel>
-                    {DOC_LOCALES.map((lang) => (
-                      <DropdownMenuItem
-                        key={lang}
-                        onClick={() => handleDownload(lang)}
-                      >
-                        {DOC_LOCALE_LABELS[lang]}
-                      </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              )}
+              <DropdownMenu>
+                <DropdownMenuTrigger
+                  render={
+                    <button
+                      type="button"
+                      className="inline-flex items-center gap-2 rounded-sm border-[1.5px] border-primary-foreground/30 bg-primary-foreground/15 px-4 py-2.5 text-l6 text-primary-foreground backdrop-blur-sm transition-colors hover:bg-primary-foreground/25"
+                    />
+                  }
+                >
+                  <Icon name="pdf-01-stroke-rounded" size={14} />
+                  {t("doc.download")}
+                  <Icon name="ChevronDown" size={14} />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="min-w-44">
+                  <DropdownMenuLabel>{t("doc.language")}</DropdownMenuLabel>
+                  {DOC_LOCALES.map((lang) => (
+                    <DropdownMenuItem
+                      key={lang}
+                      onClick={() => handleDownload(lang)}
+                    >
+                      {DOC_LOCALE_LABELS[lang]}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
               {canIssue && (
                 <button
                   type="button"

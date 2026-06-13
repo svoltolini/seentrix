@@ -3,7 +3,8 @@ import { createClient } from "@/lib/supabase/server";
 import { generatePdfBuffer } from "@/lib/pdf/generate";
 import { getOrgPlan } from "@/lib/entitlements";
 import { canGeneratePdf } from "@/lib/constants/plans";
-import { toDocLocale, formatDocDate } from "@/lib/pdf/doc-locales";
+import { isDocLocale, formatDocDate, type DocLocale } from "@/lib/pdf/doc-locales";
+import { docLocaleFromCookieHeader } from "@/lib/pdf/doc-locale-cookie";
 import { docConformityBoilerplate } from "@/lib/pdf/i18n/market-languages";
 
 /**
@@ -20,7 +21,13 @@ export async function GET(
   ctx: { params: Promise<{ productId: string }> },
 ) {
   const { productId } = await ctx.params;
-  const locale = toDocLocale(new URL(req.url).searchParams.get("lang"));
+  // Explicit ?lang= wins (per-download override); else the user's default
+  // document language (cookie mirror of preferred_doc_language); else English.
+  const langParam = new URL(req.url).searchParams.get("lang");
+  const locale: DocLocale =
+    langParam && isDocLocale(langParam)
+      ? langParam
+      : docLocaleFromCookieHeader(req.headers.get("cookie")) ?? "en";
   const supabase = await createClient();
 
   const {

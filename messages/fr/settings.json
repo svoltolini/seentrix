@@ -406,7 +406,9 @@
       "title": "Langue",
       "label": "Langue",
       "description": "Choisissez la langue pour toute l'application — interface, Academy, l'assistant IA Copilot et les documents que vous générez.",
-      "saved": "Langue mise à jour"
+      "saved": "Langue mise à jour",
+      "displayHeading": "Langue d'affichage",
+      "documentHeading": "Langue des documents"
     },
     "toast": {
       "success": "Succès",

@@ -4,6 +4,8 @@ import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { createClient, getAuthUser } from "@/lib/supabase/server";
 import { LOCALE_COOKIE, isLocale, type Locale } from "@/i18n/locales";
+import { isDocLocale } from "@/lib/pdf/doc-locales";
+import { DOC_LOCALE_COOKIE } from "@/lib/pdf/doc-locale-cookie";
 
 /**
  * Persist the user's chosen UI language.
@@ -42,5 +44,36 @@ export async function setPreferredLocale(
 
   // Re-render everything in the new language.
   revalidatePath("/", "layout");
+  return { ok: true };
+}
+
+/**
+ * Persist the user's default DOCUMENT language — the language generated CRA
+ * documents (DoC, Annex II) come out in. Distinct from the UI language above:
+ * it supports the eight market languages and does NOT change the interface, so
+ * no re-render is needed. Mirrored into NEXT_DOC_LOCALE for the on-demand PDF
+ * routes + written to the user row as the cross-device source of truth.
+ */
+export async function setPreferredDocLanguage(
+  locale: string,
+): Promise<{ ok: boolean }> {
+  if (!isDocLocale(locale)) return { ok: false };
+
+  const cookieStore = await cookies();
+  cookieStore.set(DOC_LOCALE_COOKIE, locale, {
+    path: "/",
+    maxAge: 60 * 60 * 24 * 365, // 1 year
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+  });
+
+  const supabase = await createClient();
+  const user = await getAuthUser();
+  if (user) {
+    await supabase
+      .from("users")
+      .update({ preferred_doc_language: locale })
+      .eq("id", user.id);
+  }
   return { ok: true };
 }
