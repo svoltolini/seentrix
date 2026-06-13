@@ -164,6 +164,56 @@
       "upload": "Upload file",
       "send": "Add comment",
       "unknownUser": "Unknown user"
+    },
+    "standards": {
+      "title": "Harmonised standards & presumption of conformity",
+      "intro": "A product conforming to a harmonised standard cited in the Official Journal is presumed to conform to the Annex I essential requirements it covers (Article 27). Common specifications and European cybersecurity certification schemes can confer the same presumption.",
+      "statusNote": "The dedicated CRA standards are still being developed under standardisation request M/606 (accepted by CEN, CENELEC and ETSI in April 2025) and are not yet cited in the Official Journal.",
+      "coversLabel": "Covers",
+      "status": {
+        "published": "Published",
+        "in_development": "In development",
+        "potential": "Potential"
+      },
+      "kind": {
+        "harmonised_standard": "Harmonised standard",
+        "common_specification": "Common specification",
+        "certification_scheme": "Certification scheme"
+      },
+      "part": {
+        "part_i": "Annex I Part I — security requirements",
+        "part_ii": "Annex I Part II — vulnerability handling"
+      },
+      "standard": {
+        "en_18031_1": {
+          "title": "Internet-connected radio equipment — network protection",
+          "note": "Harmonised under the Radio Equipment Directive; a practical baseline for Annex I Part I until the dedicated CRA standards are cited."
+        },
+        "en_18031_2": {
+          "title": "Radio equipment — protection of personal data and privacy",
+          "note": "Harmonised under the Radio Equipment Directive; addresses confidentiality and data-minimisation expectations."
+        },
+        "en_18031_3": {
+          "title": "Radio equipment — protection against fraud",
+          "note": "Harmonised under the Radio Equipment Directive; addresses data-integrity expectations."
+        },
+        "cra_horizontal_product": {
+          "title": "CRA horizontal standard — product security requirements",
+          "note": "Being developed under standardisation request M/606; not yet cited in the Official Journal."
+        },
+        "cra_horizontal_vuln_handling": {
+          "title": "CRA horizontal standard — vulnerability handling",
+          "note": "Being developed under standardisation request M/606; targeted ahead of the other horizontal standards."
+        },
+        "common_specifications": {
+          "title": "Commission common specifications",
+          "note": "The Commission may adopt these by implementing act where harmonised standards are absent or insufficient."
+        },
+        "eucc_scheme": {
+          "title": "EUCC — Common Criteria certification scheme",
+          "note": "A certificate at the relevant assurance level can confer a presumption of conformity for the corresponding requirements."
+        }
+      }
     }
   }
 }

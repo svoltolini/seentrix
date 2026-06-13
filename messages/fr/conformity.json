@@ -164,6 +164,56 @@
       "upload": "Téléverser un fichier",
       "send": "Ajouter un commentaire",
       "unknownUser": "Utilisateur inconnu"
+    },
+    "standards": {
+      "title": "Normes harmonisées et présomption de conformité",
+      "intro": "Un produit conforme à une norme harmonisée citée au Journal officiel est présumé conforme aux exigences essentielles de l'annexe I qu'elle couvre (article 27). Les spécifications communes et les schémas européens de certification de cybersécurité peuvent conférer la même présomption.",
+      "statusNote": "Les normes CRA dédiées sont encore en cours d'élaboration au titre de la demande de normalisation M/606 (acceptée par le CEN, le CENELEC et l'ETSI en avril 2025) et ne sont pas encore citées au Journal officiel.",
+      "coversLabel": "Couvre",
+      "status": {
+        "published": "Publiée",
+        "in_development": "En cours d'élaboration",
+        "potential": "Potentielle"
+      },
+      "kind": {
+        "harmonised_standard": "Norme harmonisée",
+        "common_specification": "Spécification commune",
+        "certification_scheme": "Schéma de certification"
+      },
+      "part": {
+        "part_i": "Annexe I Partie I — exigences de sécurité",
+        "part_ii": "Annexe I Partie II — traitement des vulnérabilités"
+      },
+      "standard": {
+        "en_18031_1": {
+          "title": "Équipements radio connectés à Internet — protection du réseau",
+          "note": "Harmonisée au titre de la directive sur les équipements radio ; une base pratique pour l'annexe I Partie I en attendant la citation des normes CRA dédiées."
+        },
+        "en_18031_2": {
+          "title": "Équipements radio — protection des données personnelles et de la vie privée",
+          "note": "Harmonisée au titre de la directive sur les équipements radio ; traite la confidentialité et la minimisation des données."
+        },
+        "en_18031_3": {
+          "title": "Équipements radio — protection contre la fraude",
+          "note": "Harmonisée au titre de la directive sur les équipements radio ; traite l'intégrité des données."
+        },
+        "cra_horizontal_product": {
+          "title": "Norme horizontale CRA — exigences de sécurité des produits",
+          "note": "En cours d'élaboration au titre de la demande de normalisation M/606 ; pas encore citée au Journal officiel."
+        },
+        "cra_horizontal_vuln_handling": {
+          "title": "Norme horizontale CRA — traitement des vulnérabilités",
+          "note": "En cours d'élaboration au titre de la demande de normalisation M/606 ; visée avant les autres normes horizontales."
+        },
+        "common_specifications": {
+          "title": "Spécifications communes de la Commission",
+          "note": "La Commission peut les adopter par acte d'exécution en l'absence de normes harmonisées ou si celles-ci sont insuffisantes."
+        },
+        "eucc_scheme": {
+          "title": "EUCC — schéma de certification Critères communs",
+          "note": "Un certificat au niveau d'assurance pertinent peut conférer une présomption de conformité pour les exigences correspondantes."
+        }
+      }
     }
   }
 }

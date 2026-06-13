@@ -164,6 +164,56 @@
       "upload": "Datei hochladen",
       "send": "Kommentar hinzufügen",
       "unknownUser": "Unbekannter Benutzer"
+    },
+    "standards": {
+      "title": "Harmonisierte Normen & Konformitätsvermutung",
+      "intro": "Ein Produkt, das einer im Amtsblatt veröffentlichten harmonisierten Norm entspricht, wird hinsichtlich der davon abgedeckten grundlegenden Anforderungen aus Anhang I als konform vermutet (Artikel 27). Gemeinsame Spezifikationen und europäische Cybersicherheits-Zertifizierungsschemata können dieselbe Vermutung begründen.",
+      "statusNote": "Die speziellen CRA-Normen werden noch im Rahmen des Normungsauftrags M/606 entwickelt (von CEN, CENELEC und ETSI im April 2025 angenommen) und sind noch nicht im Amtsblatt veröffentlicht.",
+      "coversLabel": "Deckt ab",
+      "status": {
+        "published": "Veröffentlicht",
+        "in_development": "In Entwicklung",
+        "potential": "Möglich"
+      },
+      "kind": {
+        "harmonised_standard": "Harmonisierte Norm",
+        "common_specification": "Gemeinsame Spezifikation",
+        "certification_scheme": "Zertifizierungsschema"
+      },
+      "part": {
+        "part_i": "Anhang I Teil I — Sicherheitsanforderungen",
+        "part_ii": "Anhang I Teil II — Schwachstellenbehandlung"
+      },
+      "standard": {
+        "en_18031_1": {
+          "title": "Mit dem Internet verbundene Funkanlagen — Netzschutz",
+          "note": "Harmonisiert unter der Funkanlagenrichtlinie; eine praktische Grundlage für Anhang I Teil I, bis die speziellen CRA-Normen veröffentlicht sind."
+        },
+        "en_18031_2": {
+          "title": "Funkanlagen — Schutz personenbezogener Daten und der Privatsphäre",
+          "note": "Harmonisiert unter der Funkanlagenrichtlinie; behandelt Vertraulichkeit und Datenminimierung."
+        },
+        "en_18031_3": {
+          "title": "Funkanlagen — Schutz vor Betrug",
+          "note": "Harmonisiert unter der Funkanlagenrichtlinie; behandelt die Datenintegrität."
+        },
+        "cra_horizontal_product": {
+          "title": "Horizontale CRA-Norm — Produktsicherheitsanforderungen",
+          "note": "Wird im Rahmen des Normungsauftrags M/606 entwickelt; noch nicht im Amtsblatt veröffentlicht."
+        },
+        "cra_horizontal_vuln_handling": {
+          "title": "Horizontale CRA-Norm — Schwachstellenbehandlung",
+          "note": "Wird im Rahmen des Normungsauftrags M/606 entwickelt; vor den übrigen horizontalen Normen angestrebt."
+        },
+        "common_specifications": {
+          "title": "Gemeinsame Spezifikationen der Kommission",
+          "note": "Die Kommission kann diese per Durchführungsrechtsakt erlassen, wenn harmonisierte Normen fehlen oder unzureichend sind."
+        },
+        "eucc_scheme": {
+          "title": "EUCC — Zertifizierungsschema nach Common Criteria",
+          "note": "Ein Zertifikat der einschlägigen Vertrauenswürdigkeitsstufe kann eine Konformitätsvermutung für die entsprechenden Anforderungen begründen."
+        }
+      }
     }
   }
 }

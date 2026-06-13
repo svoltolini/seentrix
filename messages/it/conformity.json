@@ -164,6 +164,56 @@
       "upload": "Carica file",
       "send": "Aggiungi commento",
       "unknownUser": "Utente sconosciuto"
+    },
+    "standards": {
+      "title": "Norme armonizzate e presunzione di conformità",
+      "intro": "Un prodotto conforme a una norma armonizzata citata nella Gazzetta ufficiale si presume conforme ai requisiti essenziali dell'allegato I che essa copre (articolo 27). Le specifiche comuni e i sistemi europei di certificazione della cybersicurezza possono conferire la stessa presunzione.",
+      "statusNote": "Le norme CRA dedicate sono ancora in fase di elaborazione nell'ambito della richiesta di normazione M/606 (accettata da CEN, CENELEC ed ETSI ad aprile 2025) e non sono ancora citate nella Gazzetta ufficiale.",
+      "coversLabel": "Copre",
+      "status": {
+        "published": "Pubblicata",
+        "in_development": "In sviluppo",
+        "potential": "Potenziale"
+      },
+      "kind": {
+        "harmonised_standard": "Norma armonizzata",
+        "common_specification": "Specifica comune",
+        "certification_scheme": "Sistema di certificazione"
+      },
+      "part": {
+        "part_i": "Allegato I Parte I — requisiti di sicurezza",
+        "part_ii": "Allegato I Parte II — gestione delle vulnerabilità"
+      },
+      "standard": {
+        "en_18031_1": {
+          "title": "Apparecchiature radio connesse a Internet — protezione della rete",
+          "note": "Armonizzata ai sensi della direttiva sulle apparecchiature radio; una base pratica per l'allegato I Parte I in attesa della citazione delle norme CRA dedicate."
+        },
+        "en_18031_2": {
+          "title": "Apparecchiature radio — protezione dei dati personali e della privacy",
+          "note": "Armonizzata ai sensi della direttiva sulle apparecchiature radio; tratta la riservatezza e la minimizzazione dei dati."
+        },
+        "en_18031_3": {
+          "title": "Apparecchiature radio — protezione contro le frodi",
+          "note": "Armonizzata ai sensi della direttiva sulle apparecchiature radio; tratta l'integrità dei dati."
+        },
+        "cra_horizontal_product": {
+          "title": "Norma orizzontale CRA — requisiti di sicurezza del prodotto",
+          "note": "In fase di elaborazione nell'ambito della richiesta di normazione M/606; non ancora citata nella Gazzetta ufficiale."
+        },
+        "cra_horizontal_vuln_handling": {
+          "title": "Norma orizzontale CRA — gestione delle vulnerabilità",
+          "note": "In fase di elaborazione nell'ambito della richiesta di normazione M/606; prevista prima delle altre norme orizzontali."
+        },
+        "common_specifications": {
+          "title": "Specifiche comuni della Commissione",
+          "note": "La Commissione può adottarle mediante atto di esecuzione in assenza di norme armonizzate o se queste sono insufficienti."
+        },
+        "eucc_scheme": {
+          "title": "EUCC — sistema di certificazione Common Criteria",
+          "note": "Un certificato al livello di affidabilità pertinente può conferire una presunzione di conformità per i requisiti corrispondenti."
+        }
+      }
     }
   }
 }

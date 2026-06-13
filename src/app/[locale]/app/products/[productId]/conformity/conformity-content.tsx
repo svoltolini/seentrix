@@ -17,6 +17,7 @@ import {
   SideSheetPopup,
 } from "@/components/side-sheet";
 import { StaggerReveal } from "@/components/stagger-reveal";
+import { StandardsReference } from "./standards-reference";
 import { useToast } from "@/components/ui/toast";
 import { useLocaleDate } from "@/lib/locale-date";
 import {
@@ -724,6 +725,10 @@ export function ConformityContent({
             </div>
           </div>
         </div>
+
+        {/* Harmonised standards & presumption of conformity (Art 27) —
+            a read-only reference tracking the M/606 standards landscape. */}
+        <StandardsReference />
       </StaggerReveal>
 
       {/* Step detail side sheet — clicking any workflow row opens
