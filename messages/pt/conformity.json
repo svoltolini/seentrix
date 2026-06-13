@@ -1,0 +1,220 @@
+{
+  "conformity": {
+    "header": {
+      "routeLabel": "Via de conformidade",
+      "progressLabel": "Progresso"
+    },
+    "route": {
+      "module_a": {
+        "title": "Módulo A — Controlo interno",
+        "description": "Via de autoavaliação. O fabricante prepara a documentação técnica, declara a conformidade e apõe a marcação CE. Não intervém nenhum organismo notificado."
+      },
+      "module_b_c": {
+        "title": "Módulo B+C — Exame UE de tipo",
+        "description": "Um organismo notificado examina um exemplar representativo do produto (Módulo B) e, em seguida, o fabricante declara a conformidade com esse tipo (Módulo C)."
+      },
+      "module_h": {
+        "title": "Módulo H — Garantia total da qualidade",
+        "description": "Um organismo notificado audita e aprova um sistema de qualidade completo que abrange a conceção, o fabrico e a inspeção final. As auditorias de vigilância são recorrentes."
+      },
+      "european_certification": {
+        "title": "Certificação europeia de cibersegurança",
+        "description": "A conformidade é demonstrada através do certificado de um produto emitido ao abrigo de um sistema europeu de certificação da cibersegurança (CSA)."
+      }
+    },
+    "gate": {
+      "checklist": "Lista de verificação do CRA",
+      "sbom": "Análise de SBOM ativo",
+      "ready": "Pronto",
+      "pending": "Não pronto"
+    },
+    "notifiedBody": {
+      "title": "Organismo notificado",
+      "description": "Registe o organismo notificado que realiza a avaliação da conformidade. O número e o âmbito vão diretamente para a declaração de conformidade.",
+      "name": "Nome",
+      "id": "Número do organismo notificado",
+      "scope": "Âmbito",
+      "tooltips": {
+        "name": {
+          "title": "Nome do organismo notificado",
+          "body": "Nome legal completo do organismo notificado (por ex., «TÜV Rheinland LGA Products GmbH», «BSI Assurance UK Ltd»). Deve coincidir com o nome publicado na base de dados NANDO — sensível a maiúsculas e pontuação.",
+          "ref": "CRA anexo V(4) — quando intervém um organismo notificado (Módulo B+C ou Módulo H), a declaração de conformidade deve indicar o seu nome junto ao número de identificação de quatro dígitos."
+        },
+        "id": {
+          "title": "Número do organismo notificado",
+          "body": "O número de identificação de quatro dígitos que a Comissão Europeia atribuiu ao organismo notificado (por ex., 0197 para a TÜV Rheinland). Encontre o seu procurando o organismo na base de dados NANDO: ec.europa.eu/growth/tools-databases/nando.",
+          "ref": "CRA anexo V(4) — o número do organismo notificado faz parte da marcação CE nos produtos que exigem avaliação por terceiros e deve ser impresso na declaração de conformidade."
+        },
+        "scope": {
+          "title": "Âmbito da atividade do organismo notificado",
+          "body": "Uma frase que descreva o que o organismo notificado fez — por ex., «Exame UE de tipo do produto nos termos do Módulo B» ou «Auditoria do sistema de qualidade ao abrigo do Módulo H». Retirada literalmente do certificado do organismo notificado.",
+          "ref": "CRA anexo V(4) — a declaração deve indicar a atividade específica de avaliação da conformidade realizada, não apenas o nome do organismo. As autoridades aduaneiras e de fiscalização do mercado usam-no para verificar se utilizou o módulo correto."
+        }
+      }
+    },
+    "steps": {
+      "title": "Fluxo de trabalho",
+      "eyebrow": "Etapa do fluxo de trabalho",
+      "current": "Estado atual",
+      "notesLabel": "Notas",
+      "notesPlaceholder": "Adicione notas internas, ligações a provas ou uma referência de auditoria."
+    },
+    "status": {
+      "pending": "Pendente",
+      "in_progress": "Em curso",
+      "complete": "Concluído",
+      "not_applicable": "N/A"
+    },
+    "step": {
+      "checklist_complete": {
+        "title": "Lista de verificação do CRA a 100%",
+        "description": "Todos os itens aplicáveis do anexo I na lista de verificação estão marcados como Concluídos."
+      },
+      "sbom_active": {
+        "title": "SBOM ativo analisado",
+        "description": "O SBOM ativo foi analisado e os resultados de CVE estão revistos."
+      },
+      "technical_documentation_prepared": {
+        "title": "Documentação técnica preparada",
+        "description": "A documentação técnica do anexo II está compilada: descrição, conceção, risco, testes, declaração de conformidade."
+      },
+      "risk_assessment_complete": {
+        "title": "Avaliação de riscos concluída",
+        "description": "O risco de cibersegurança do produto foi avaliado e documentado."
+      },
+      "notified_body_selected": {
+        "title": "Organismo notificado selecionado",
+        "description": "Foi contratado um organismo notificado com o âmbito necessário."
+      },
+      "eu_type_examination_passed": {
+        "title": "Exame UE de tipo aprovado",
+        "description": "O organismo notificado examinou uma amostra representativa e emitiu o certificado."
+      },
+      "conformity_to_type_verified": {
+        "title": "Conformidade com o tipo verificada",
+        "description": "Verifica-se que a produção corresponde ao tipo examinado."
+      },
+      "quality_system_documented": {
+        "title": "Sistema de qualidade documentado",
+        "description": "Os procedimentos de conceção, fabrico e inspeção final estão documentados."
+      },
+      "quality_system_approved": {
+        "title": "Sistema de qualidade aprovado",
+        "description": "O organismo notificado aprovou o sistema de qualidade."
+      },
+      "surveillance_audit_scheduled": {
+        "title": "Auditoria de vigilância agendada",
+        "description": "Auditoria de vigilância recorrente planeada com o organismo notificado."
+      },
+      "eu_certification_obtained": {
+        "title": "Certificado da UE obtido",
+        "description": "O produto possui um certificado válido ao abrigo de um sistema europeu de certificação da cibersegurança."
+      },
+      "declaration_prepared": {
+        "title": "Declaração preparada",
+        "description": "O texto da declaração de conformidade, os dados do fabricante e as normas referenciadas estão prontos."
+      },
+      "ce_marking_affixed": {
+        "title": "Marcação CE aposta",
+        "description": "A marcação CE (com o número do organismo notificado quando aplicável) está aposta no produto."
+      }
+    },
+    "doc": {
+      "eyebrow": "Declaração de conformidade",
+      "title": "Emitir a declaração de conformidade",
+      "description": "Gere a declaração UE de conformidade, preenchida automaticamente a partir dos dados do produto, da organização e do organismo notificado acima.",
+      "issue": "Emitir declaração",
+      "reissue": "Reemitir",
+      "download": "Descarregar PDF",
+      "issued": "Declaração emitida",
+      "issuedOn": "Emitida em {date}",
+      "stepsIncomplete": "Todas as etapas do fluxo de trabalho devem estar concluídas ou marcadas como N/A antes de a declaração poder ser emitida.",
+      "profileIncomplete": "Faltam campos obrigatórios no perfil da sua empresa. Abra Definições → Organização para o concluir.",
+      "downloadFailed": "Não foi possível descarregar a declaração",
+      "language": "Idioma"
+    },
+    "toast": {
+      "saved": "Guardado",
+      "saveFailed": "Não foi possível guardar",
+      "commentRequired": "Adicione uma nota antes de alterar o estado — cada alteração de estado é registada no registo de auditoria.",
+      "fileTooLarge": "O ficheiro excede o limite de carregamento de 2 MB.",
+      "unsupportedMime": "Esse tipo de ficheiro não é suportado. São aceites imagens, PDF, documentos do Office e texto simples.",
+      "uploadFailed": "Não foi possível carregar o ficheiro. Tente novamente.",
+      "fileUploaded": "Ficheiro carregado."
+    },
+    "attachments": {
+      "title": "Anexos",
+      "attach": "Anexar um ficheiro",
+      "hint": "Anexe um ficheiro (≤ 2 MB)",
+      "download": "Descarregar",
+      "discard": "Descartar ficheiro pendente"
+    },
+    "meta": {
+      "commentCount": "{count, plural, one {# comentário} other {# comentários}}",
+      "attachmentCount": "{count, plural, one {# anexo} other {# anexos}}"
+    },
+    "conversation": {
+      "empty": "Ainda não há comentários. Inicie o tópico com a primeira nota.",
+      "placeholder": "Adicione uma nota a explicar o que mudou e porquê…",
+      "changeStatus": "Definir o estado como",
+      "noteRequired": "Os comentários são guardados no registo de auditoria e não podem ser editados nem eliminados.",
+      "pendingChange": "Alteração pendente: {from} → {to}. Prima Guardar para confirmar.",
+      "save": "Guardar comentário",
+      "saveStatus": "Guardar alteração de estado",
+      "saveStatusAndUpload": "Guardar estado e carregar",
+      "upload": "Carregar ficheiro",
+      "send": "Adicionar comentário",
+      "unknownUser": "Utilizador desconhecido"
+    },
+    "standards": {
+      "title": "Normas harmonizadas e presunção de conformidade",
+      "intro": "Presume-se que um produto conforme com uma norma harmonizada citada no Jornal Oficial está em conformidade com os requisitos essenciais do anexo I que esta abrange (artigo 27.º). As especificações comuns e os sistemas europeus de certificação da cibersegurança podem conferir a mesma presunção.",
+      "statusNote": "As normas específicas do CRA ainda estão a ser desenvolvidas ao abrigo do pedido de normalização M/606 (aceite pelo CEN, CENELEC e ETSI em abril de 2025) e ainda não estão citadas no Jornal Oficial.",
+      "coversLabel": "Abrange",
+      "status": {
+        "published": "Publicada",
+        "in_development": "Em desenvolvimento",
+        "potential": "Potencial"
+      },
+      "kind": {
+        "harmonised_standard": "Norma harmonizada",
+        "common_specification": "Especificação comum",
+        "certification_scheme": "Sistema de certificação"
+      },
+      "part": {
+        "part_i": "Anexo I parte I — requisitos de segurança",
+        "part_ii": "Anexo I parte II — tratamento de vulnerabilidades"
+      },
+      "standard": {
+        "en_18031_1": {
+          "title": "Equipamentos de rádio ligados à internet — proteção da rede",
+          "note": "Harmonizada ao abrigo da Diretiva relativa aos equipamentos de rádio; uma base prática para o anexo I parte I até que as normas específicas do CRA sejam citadas."
+        },
+        "en_18031_2": {
+          "title": "Equipamentos de rádio — proteção dos dados pessoais e da privacidade",
+          "note": "Harmonizada ao abrigo da Diretiva relativa aos equipamentos de rádio; aborda as expectativas de confidencialidade e minimização de dados."
+        },
+        "en_18031_3": {
+          "title": "Equipamentos de rádio — proteção contra a fraude",
+          "note": "Harmonizada ao abrigo da Diretiva relativa aos equipamentos de rádio; aborda as expectativas de integridade dos dados."
+        },
+        "cra_horizontal_product": {
+          "title": "Norma horizontal do CRA — requisitos de segurança do produto",
+          "note": "Em desenvolvimento ao abrigo do pedido de normalização M/606; ainda não citada no Jornal Oficial."
+        },
+        "cra_horizontal_vuln_handling": {
+          "title": "Norma horizontal do CRA — tratamento de vulnerabilidades",
+          "note": "Em desenvolvimento ao abrigo do pedido de normalização M/606; prevista antes das restantes normas horizontais."
+        },
+        "common_specifications": {
+          "title": "Especificações comuns da Comissão",
+          "note": "A Comissão pode adotá-las por ato de execução quando as normas harmonizadas estiverem ausentes ou forem insuficientes."
+        },
+        "eucc_scheme": {
+          "title": "EUCC — sistema de certificação Common Criteria",
+          "note": "Um certificado com o nível de garantia pertinente pode conferir uma presunção de conformidade para os requisitos correspondentes."
+        }
+      }
+    }
+  }
+}

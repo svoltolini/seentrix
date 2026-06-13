@@ -1,0 +1,220 @@
+{
+  "conformity": {
+    "header": {
+      "routeLabel": "Ścieżka oceny zgodności",
+      "progressLabel": "Postęp"
+    },
+    "route": {
+      "module_a": {
+        "title": "Moduł A — wewnętrzna kontrola produkcji",
+        "description": "Ścieżka samooceny. Producent przygotowuje dokumentację techniczną, deklaruje zgodność i umieszcza oznakowanie CE. Nie uczestniczy żadna jednostka notyfikowana."
+      },
+      "module_b_c": {
+        "title": "Moduł B+C — badanie typu UE",
+        "description": "Jednostka notyfikowana bada reprezentatywny egzemplarz produktu (Moduł B), następnie producent deklaruje zgodność z tym typem (Moduł C)."
+      },
+      "module_h": {
+        "title": "Moduł H — pełne zapewnienie jakości",
+        "description": "Jednostka notyfikowana audytuje i zatwierdza pełny system jakości obejmujący projektowanie, produkcję i kontrolę końcową. Audyty nadzoru są powtarzane."
+      },
+      "european_certification": {
+        "title": "Europejska certyfikacja cyberbezpieczeństwa",
+        "description": "Zgodność wykazuje się za pomocą certyfikatu produktu wydanego w ramach europejskiego programu certyfikacji cyberbezpieczeństwa (CSA)."
+      }
+    },
+    "gate": {
+      "checklist": "Lista kontrolna CRA",
+      "sbom": "Aktywne skanowanie SBOM",
+      "ready": "Gotowe",
+      "pending": "Niegotowe"
+    },
+    "notifiedBody": {
+      "title": "Jednostka notyfikowana",
+      "description": "Zarejestruj jednostkę notyfikowaną, która przeprowadza ocenę zgodności. Numer i zakres trafiają bezpośrednio do deklaracji zgodności.",
+      "name": "Nazwa",
+      "id": "Numer jednostki notyfikowanej",
+      "scope": "Zakres",
+      "tooltips": {
+        "name": {
+          "title": "Nazwa jednostki notyfikowanej",
+          "body": "Pełna nazwa prawna jednostki notyfikowanej (np. „TÜV Rheinland LGA Products GmbH”, „BSI Assurance UK Ltd”). Musi odpowiadać nazwie opublikowanej w bazie NANDO — z uwzględnieniem wielkości liter i interpunkcji.",
+          "ref": "CRA załącznik V(4) — gdy uczestniczy jednostka notyfikowana (Moduł B+C lub Moduł H), deklaracja zgodności musi podawać jej nazwę obok czterocyfrowego numeru identyfikacyjnego."
+        },
+        "id": {
+          "title": "Numer jednostki notyfikowanej",
+          "body": "Czterocyfrowy numer identyfikacyjny przypisany jednostce notyfikowanej przez Komisję Europejską (np. 0197 dla TÜV Rheinland). Znajdź swój, wyszukując jednostkę w bazie NANDO: ec.europa.eu/growth/tools-databases/nando.",
+          "ref": "CRA załącznik V(4) — numer jednostki notyfikowanej jest częścią oznakowania CE na produktach wymagających oceny przez stronę trzecią i musi być wydrukowany na deklaracji zgodności."
+        },
+        "scope": {
+          "title": "Zakres działalności jednostki notyfikowanej",
+          "body": "Jedno zdanie opisujące, co zrobiła jednostka notyfikowana — np. „Badanie typu UE produktu zgodnie z Modułem B” lub „Audyt systemu jakości w ramach Modułu H”. Przepisane dosłownie z certyfikatu jednostki notyfikowanej.",
+          "ref": "CRA załącznik V(4) — deklaracja musi określać konkretną czynność oceny zgodności, a nie tylko nazwę jednostki. Organy celne i nadzoru rynku wykorzystują to do weryfikacji, czy zastosowano właściwy moduł."
+        }
+      }
+    },
+    "steps": {
+      "title": "Przepływ pracy",
+      "eyebrow": "Etap przepływu pracy",
+      "current": "Bieżący status",
+      "notesLabel": "Notatki",
+      "notesPlaceholder": "Dodaj wewnętrzne notatki, linki do dowodów lub odniesienie audytowe."
+    },
+    "status": {
+      "pending": "Oczekujące",
+      "in_progress": "W toku",
+      "complete": "Ukończone",
+      "not_applicable": "Nie dotyczy"
+    },
+    "step": {
+      "checklist_complete": {
+        "title": "Lista kontrolna CRA w 100%",
+        "description": "Wszystkie mające zastosowanie pozycje załącznika I na liście kontrolnej są oznaczone jako Ukończone."
+      },
+      "sbom_active": {
+        "title": "Aktywny plik SBOM przeskanowany",
+        "description": "Aktywny plik SBOM został przeskanowany, a wyniki dotyczące CVE przejrzano."
+      },
+      "technical_documentation_prepared": {
+        "title": "Dokumentacja techniczna przygotowana",
+        "description": "Dokumentacja techniczna z załącznika II jest skompilowana: opis, projekt, ryzyko, testy, deklaracja zgodności."
+      },
+      "risk_assessment_complete": {
+        "title": "Ocena ryzyka ukończona",
+        "description": "Ryzyko cyberbezpieczeństwa produktu zostało ocenione i udokumentowane."
+      },
+      "notified_body_selected": {
+        "title": "Wybrano jednostkę notyfikowaną",
+        "description": "Zaangażowano jednostkę notyfikowaną o wymaganym zakresie."
+      },
+      "eu_type_examination_passed": {
+        "title": "Badanie typu UE zaliczone",
+        "description": "Jednostka notyfikowana zbadała reprezentatywną próbkę i wydała certyfikat."
+      },
+      "conformity_to_type_verified": {
+        "title": "Zgodność z typem zweryfikowana",
+        "description": "Zweryfikowano, że produkcja odpowiada zbadanemu typowi."
+      },
+      "quality_system_documented": {
+        "title": "System jakości udokumentowany",
+        "description": "Procedury projektowania, produkcji i kontroli końcowej są udokumentowane."
+      },
+      "quality_system_approved": {
+        "title": "System jakości zatwierdzony",
+        "description": "Jednostka notyfikowana zatwierdziła system jakości."
+      },
+      "surveillance_audit_scheduled": {
+        "title": "Zaplanowano audyt nadzoru",
+        "description": "Z jednostką notyfikowaną zaplanowano powtarzający się audyt nadzoru."
+      },
+      "eu_certification_obtained": {
+        "title": "Uzyskano certyfikat UE",
+        "description": "Produkt posiada ważny certyfikat w ramach europejskiego programu certyfikacji cyberbezpieczeństwa."
+      },
+      "declaration_prepared": {
+        "title": "Deklaracja przygotowana",
+        "description": "Tekst deklaracji zgodności, dane producenta i przywołane normy są gotowe."
+      },
+      "ce_marking_affixed": {
+        "title": "Umieszczono oznakowanie CE",
+        "description": "Oznakowanie CE (z numerem jednostki notyfikowanej, jeśli dotyczy) zostało umieszczone na produkcie."
+      }
+    },
+    "doc": {
+      "eyebrow": "Deklaracja zgodności",
+      "title": "Wystaw deklarację zgodności",
+      "description": "Wygeneruj deklarację zgodności UE, automatycznie wypełnioną na podstawie powyższych danych produktu, organizacji i jednostki notyfikowanej.",
+      "issue": "Wystaw deklarację",
+      "reissue": "Wystaw ponownie",
+      "download": "Pobierz PDF",
+      "issued": "Deklaracja wystawiona",
+      "issuedOn": "Wystawiono dnia {date}",
+      "stepsIncomplete": "Wszystkie etapy przepływu pracy muszą być ukończone lub oznaczone jako Nie dotyczy, zanim będzie można wystawić deklarację.",
+      "profileIncomplete": "W profilu Twojej firmy brakuje wymaganych pól. Otwórz Ustawienia → Organizacja, aby go uzupełnić.",
+      "downloadFailed": "Nie udało się pobrać deklaracji",
+      "language": "Język"
+    },
+    "toast": {
+      "saved": "Zapisano",
+      "saveFailed": "Nie udało się zapisać",
+      "commentRequired": "Dodaj notatkę przed zmianą statusu — każda zmiana statusu jest rejestrowana w dzienniku audytu.",
+      "fileTooLarge": "Plik przekracza limit przesyłania wynoszący 2 MB.",
+      "unsupportedMime": "Ten typ pliku nie jest obsługiwany. Akceptowane są obrazy, pliki PDF, dokumenty Office i zwykły tekst.",
+      "uploadFailed": "Nie udało się przesłać pliku. Spróbuj ponownie.",
+      "fileUploaded": "Plik przesłany."
+    },
+    "attachments": {
+      "title": "Załączniki",
+      "attach": "Dołącz plik",
+      "hint": "Dołącz plik (≤ 2 MB)",
+      "download": "Pobierz",
+      "discard": "Odrzuć oczekujący plik"
+    },
+    "meta": {
+      "commentCount": "{count, plural, one {# komentarz} few {# komentarze} many {# komentarzy} other {# komentarzy}}",
+      "attachmentCount": "{count, plural, one {# załącznik} few {# załączniki} many {# załączników} other {# załączników}}"
+    },
+    "conversation": {
+      "empty": "Brak komentarzy. Rozpocznij wątek pierwszą notatką.",
+      "placeholder": "Dodaj notatkę wyjaśniającą, co i dlaczego się zmieniło…",
+      "changeStatus": "Ustaw status na",
+      "noteRequired": "Komentarze są zapisywane w dzienniku audytu i nie można ich edytować ani usuwać.",
+      "pendingChange": "Oczekująca zmiana: {from} → {to}. Naciśnij Zapisz, aby zatwierdzić.",
+      "save": "Zapisz komentarz",
+      "saveStatus": "Zapisz zmianę statusu",
+      "saveStatusAndUpload": "Zapisz status i prześlij",
+      "upload": "Prześlij plik",
+      "send": "Dodaj komentarz",
+      "unknownUser": "Nieznany użytkownik"
+    },
+    "standards": {
+      "title": "Normy zharmonizowane i domniemanie zgodności",
+      "intro": "Produkt zgodny z normą zharmonizowaną przywołaną w Dzienniku Urzędowym jest domniemany za zgodny z zasadniczymi wymaganiami załącznika I, które ona obejmuje (art. 27). Wspólne specyfikacje i europejskie programy certyfikacji cyberbezpieczeństwa mogą nadawać to samo domniemanie.",
+      "statusNote": "Dedykowane normy CRA są nadal opracowywane w ramach wniosku normalizacyjnego M/606 (przyjętego przez CEN, CENELEC i ETSI w kwietniu 2025 r.) i nie są jeszcze przywołane w Dzienniku Urzędowym.",
+      "coversLabel": "Obejmuje",
+      "status": {
+        "published": "Opublikowane",
+        "in_development": "W opracowaniu",
+        "potential": "Potencjalne"
+      },
+      "kind": {
+        "harmonised_standard": "Norma zharmonizowana",
+        "common_specification": "Wspólna specyfikacja",
+        "certification_scheme": "Program certyfikacji"
+      },
+      "part": {
+        "part_i": "Załącznik I część I — wymagania bezpieczeństwa",
+        "part_ii": "Załącznik I część II — obsługa podatności"
+      },
+      "standard": {
+        "en_18031_1": {
+          "title": "Urządzenia radiowe połączone z internetem — ochrona sieci",
+          "note": "Zharmonizowana w ramach dyrektywy o urządzeniach radiowych; praktyczna baza dla załącznika I część I do czasu przywołania dedykowanych norm CRA."
+        },
+        "en_18031_2": {
+          "title": "Urządzenia radiowe — ochrona danych osobowych i prywatności",
+          "note": "Zharmonizowana w ramach dyrektywy o urządzeniach radiowych; dotyczy oczekiwań w zakresie poufności i minimalizacji danych."
+        },
+        "en_18031_3": {
+          "title": "Urządzenia radiowe — ochrona przed oszustwami",
+          "note": "Zharmonizowana w ramach dyrektywy o urządzeniach radiowych; dotyczy oczekiwań w zakresie integralności danych."
+        },
+        "cra_horizontal_product": {
+          "title": "Norma horyzontalna CRA — wymagania bezpieczeństwa produktu",
+          "note": "Opracowywana w ramach wniosku normalizacyjnego M/606; nie jest jeszcze przywołana w Dzienniku Urzędowym."
+        },
+        "cra_horizontal_vuln_handling": {
+          "title": "Norma horyzontalna CRA — obsługa podatności",
+          "note": "Opracowywana w ramach wniosku normalizacyjnego M/606; planowana przed pozostałymi normami horyzontalnymi."
+        },
+        "common_specifications": {
+          "title": "Wspólne specyfikacje Komisji",
+          "note": "Komisja może je przyjąć w drodze aktu wykonawczego, gdy normy zharmonizowane są nieobecne lub niewystarczające."
+        },
+        "eucc_scheme": {
+          "title": "EUCC — program certyfikacji Common Criteria",
+          "note": "Certyfikat na odpowiednim poziomie uzasadnienia zaufania może nadawać domniemanie zgodności dla odpowiadających mu wymagań."
+        }
+      }
+    }
+  }
+}

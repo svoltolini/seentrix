@@ -1,0 +1,220 @@
+{
+  "conformity": {
+    "header": {
+      "routeLabel": "Väg för bedömning av överensstämmelse",
+      "progressLabel": "Förlopp"
+    },
+    "route": {
+      "module_a": {
+        "title": "Modul A — Intern tillverkningskontroll",
+        "description": "Väg för självbedömning. Tillverkaren upprättar den tekniska dokumentationen, försäkrar överensstämmelse och anbringar CE-märkningen. Inget anmält organ medverkar."
+      },
+      "module_b_c": {
+        "title": "Modul B+C — EU-typkontroll",
+        "description": "Ett anmält organ undersöker ett representativt exemplar av produkten (Modul B), därefter försäkrar tillverkaren överensstämmelse med den typen (Modul C)."
+      },
+      "module_h": {
+        "title": "Modul H — Fullständig kvalitetssäkring",
+        "description": "Ett anmält organ granskar och godkänner ett fullständigt kvalitetssystem som omfattar konstruktion, tillverkning och slutkontroll. Övervakningsrevisioner sker återkommande."
+      },
+      "european_certification": {
+        "title": "Europeisk cybersäkerhetscertifiering",
+        "description": "Överensstämmelse påvisas genom en produkts certifikat utfärdat inom ramen för en EU-ordning för cybersäkerhetscertifiering (CSA)."
+      }
+    },
+    "gate": {
+      "checklist": "CRA-checklista",
+      "sbom": "Aktiv SBOM-skanning",
+      "ready": "Klar",
+      "pending": "Inte klar"
+    },
+    "notifiedBody": {
+      "title": "Anmält organ",
+      "description": "Registrera det anmälda organ som utför bedömningen av överensstämmelse. Numret och omfattningen förs direkt in i försäkran om överensstämmelse.",
+      "name": "Namn",
+      "id": "Det anmälda organets nummer",
+      "scope": "Omfattning",
+      "tooltips": {
+        "name": {
+          "title": "Det anmälda organets namn",
+          "body": "Det anmälda organets fullständiga juridiska namn (t.ex. ”TÜV Rheinland LGA Products GmbH”, ”BSI Assurance UK Ltd”). Måste matcha namnet som publicerats i NANDO-databasen — känsligt för gemener/versaler och interpunktion.",
+          "ref": "CRA bilaga V(4) — när ett anmält organ medverkar (Modul B+C eller Modul H) måste försäkran om överensstämmelse ange dess namn jämte det fyrsiffriga identifikationsnumret."
+        },
+        "id": {
+          "title": "Det anmälda organets nummer",
+          "body": "Det fyrsiffriga identifikationsnummer som Europeiska kommissionen tilldelade det anmälda organet (t.ex. 0197 för TÜV Rheinland). Hitta ditt genom att söka upp organet i NANDO-databasen: ec.europa.eu/growth/tools-databases/nando.",
+          "ref": "CRA bilaga V(4) — det anmälda organets nummer är en del av CE-märkningen på produkter som kräver tredjepartsbedömning och måste tryckas på försäkran om överensstämmelse."
+        },
+        "scope": {
+          "title": "Omfattningen av det anmälda organets verksamhet",
+          "body": "En mening som beskriver vad det anmälda organet gjorde — t.ex. ”EU-typkontroll av produkten enligt Modul B” eller ”Revision av kvalitetssystemet enligt Modul H”. Tagen ordagrant från det anmälda organets certifikat.",
+          "ref": "CRA bilaga V(4) — försäkran måste ange den specifika verksamheten för bedömning av överensstämmelse som utförts, inte bara organets namn. Tull- och marknadskontrollmyndigheter använder detta för att verifiera att du använt rätt modul."
+        }
+      }
+    },
+    "steps": {
+      "title": "Arbetsflöde",
+      "eyebrow": "Steg i arbetsflödet",
+      "current": "Aktuell status",
+      "notesLabel": "Anteckningar",
+      "notesPlaceholder": "Lägg till interna anteckningar, länkar till bevis eller en revisionsreferens."
+    },
+    "status": {
+      "pending": "Väntar",
+      "in_progress": "Pågår",
+      "complete": "Slutfört",
+      "not_applicable": "Ej tillämpligt"
+    },
+    "step": {
+      "checklist_complete": {
+        "title": "CRA-checklista till 100 %",
+        "description": "Alla tillämpliga punkter i bilaga I på checklistan är markerade som Slutförda."
+      },
+      "sbom_active": {
+        "title": "Aktiv SBOM skannad",
+        "description": "Den aktiva SBOM:en har skannats och CVE-resultaten är granskade."
+      },
+      "technical_documentation_prepared": {
+        "title": "Teknisk dokumentation upprättad",
+        "description": "Den tekniska dokumentationen enligt bilaga II är sammanställd: beskrivning, konstruktion, risk, tester, försäkran om överensstämmelse."
+      },
+      "risk_assessment_complete": {
+        "title": "Riskbedömning slutförd",
+        "description": "Produktens cybersäkerhetsrisk har bedömts och dokumenterats."
+      },
+      "notified_body_selected": {
+        "title": "Anmält organ valt",
+        "description": "Ett anmält organ med den omfattning som krävs har anlitats."
+      },
+      "eu_type_examination_passed": {
+        "title": "EU-typkontroll godkänd",
+        "description": "Det anmälda organet har undersökt ett representativt prov och utfärdat certifikatet."
+      },
+      "conformity_to_type_verified": {
+        "title": "Överensstämmelse med typen verifierad",
+        "description": "Produktionen verifieras matcha den undersökta typen."
+      },
+      "quality_system_documented": {
+        "title": "Kvalitetssystem dokumenterat",
+        "description": "Rutiner för konstruktion, tillverkning och slutkontroll är dokumenterade."
+      },
+      "quality_system_approved": {
+        "title": "Kvalitetssystem godkänt",
+        "description": "Det anmälda organet har godkänt kvalitetssystemet."
+      },
+      "surveillance_audit_scheduled": {
+        "title": "Övervakningsrevision schemalagd",
+        "description": "Återkommande övervakningsrevision planerad med det anmälda organet."
+      },
+      "eu_certification_obtained": {
+        "title": "EU-certifikat erhållet",
+        "description": "Produkten har ett giltigt certifikat inom ramen för en EU-ordning för cybersäkerhetscertifiering."
+      },
+      "declaration_prepared": {
+        "title": "Försäkran förberedd",
+        "description": "Texten till försäkran om överensstämmelse, tillverkaruppgifterna och de refererade standarderna är klara."
+      },
+      "ce_marking_affixed": {
+        "title": "CE-märkning anbringad",
+        "description": "CE-märkningen (med det anmälda organets nummer där så är tillämpligt) är anbringad på produkten."
+      }
+    },
+    "doc": {
+      "eyebrow": "Försäkran om överensstämmelse",
+      "title": "Utfärda försäkran om överensstämmelse",
+      "description": "Generera EU-försäkran om överensstämmelse, automatiskt ifylld utifrån produkt-, organisations- och uppgifterna om det anmälda organet ovan.",
+      "issue": "Utfärda försäkran",
+      "reissue": "Utfärda på nytt",
+      "download": "Ladda ner PDF",
+      "issued": "Försäkran utfärdad",
+      "issuedOn": "Utfärdad den {date}",
+      "stepsIncomplete": "Alla steg i arbetsflödet måste vara slutförda eller markerade som Ej tillämpligt innan försäkran kan utfärdas.",
+      "profileIncomplete": "Det saknas obligatoriska fält i ditt företags profil. Öppna Inställningar → Organisation för att slutföra den.",
+      "downloadFailed": "Det gick inte att ladda ner försäkran",
+      "language": "Språk"
+    },
+    "toast": {
+      "saved": "Sparat",
+      "saveFailed": "Det gick inte att spara",
+      "commentRequired": "Lägg till en anteckning innan du ändrar status — varje statusändring registreras i granskningsloggen.",
+      "fileTooLarge": "Filen överskrider uppladdningsgränsen på 2 MB.",
+      "unsupportedMime": "Den filtypen stöds inte. Bilder, PDF-filer, Office-dokument och vanlig text accepteras.",
+      "uploadFailed": "Det gick inte att ladda upp filen. Försök igen.",
+      "fileUploaded": "Filen laddades upp."
+    },
+    "attachments": {
+      "title": "Bilagor",
+      "attach": "Bifoga en fil",
+      "hint": "Bifoga en fil (≤ 2 MB)",
+      "download": "Ladda ner",
+      "discard": "Förkasta väntande fil"
+    },
+    "meta": {
+      "commentCount": "{count, plural, one {# kommentar} other {# kommentarer}}",
+      "attachmentCount": "{count, plural, one {# bilaga} other {# bilagor}}"
+    },
+    "conversation": {
+      "empty": "Inga kommentarer ännu. Inled tråden med den första anteckningen.",
+      "placeholder": "Lägg till en anteckning som förklarar vad som ändrades och varför…",
+      "changeStatus": "Ställ in status till",
+      "noteRequired": "Kommentarer sparas i granskningsloggen och kan inte redigeras eller raderas.",
+      "pendingChange": "Väntande ändring: {from} → {to}. Tryck på Spara för att bekräfta.",
+      "save": "Spara kommentar",
+      "saveStatus": "Spara statusändring",
+      "saveStatusAndUpload": "Spara status och ladda upp",
+      "upload": "Ladda upp fil",
+      "send": "Lägg till kommentar",
+      "unknownUser": "Okänd användare"
+    },
+    "standards": {
+      "title": "Harmoniserade standarder och presumtion om överensstämmelse",
+      "intro": "En produkt som överensstämmer med en harmoniserad standard som hänvisas till i Europeiska unionens officiella tidning förutsätts överensstämma med de väsentliga kraven i bilaga I som den omfattar (artikel 27). Gemensamma specifikationer och europeiska ordningar för cybersäkerhetscertifiering kan ge samma presumtion.",
+      "statusNote": "De särskilda CRA-standarderna håller fortfarande på att utvecklas inom standardiseringsbegäran M/606 (godtagen av CEN, CENELEC och ETSI i april 2025) och hänvisas ännu inte till i Europeiska unionens officiella tidning.",
+      "coversLabel": "Omfattar",
+      "status": {
+        "published": "Publicerad",
+        "in_development": "Under utveckling",
+        "potential": "Potentiell"
+      },
+      "kind": {
+        "harmonised_standard": "Harmoniserad standard",
+        "common_specification": "Gemensam specifikation",
+        "certification_scheme": "Certifieringsordning"
+      },
+      "part": {
+        "part_i": "Bilaga I del I — säkerhetskrav",
+        "part_ii": "Bilaga I del II — hantering av sårbarheter"
+      },
+      "standard": {
+        "en_18031_1": {
+          "title": "Internetanslutna radioutrustningar — skydd av nätverket",
+          "note": "Harmoniserad enligt direktivet om radioutrustning; en praktisk baslinje för bilaga I del I tills de särskilda CRA-standarderna hänvisas till."
+        },
+        "en_18031_2": {
+          "title": "Radioutrustning — skydd av personuppgifter och integritet",
+          "note": "Harmoniserad enligt direktivet om radioutrustning; behandlar förväntningar på sekretess och dataminimering."
+        },
+        "en_18031_3": {
+          "title": "Radioutrustning — skydd mot bedrägeri",
+          "note": "Harmoniserad enligt direktivet om radioutrustning; behandlar förväntningar på dataintegritet."
+        },
+        "cra_horizontal_product": {
+          "title": "Horisontell CRA-standard — produktsäkerhetskrav",
+          "note": "Under utveckling inom standardiseringsbegäran M/606; ännu inte hänvisad till i Europeiska unionens officiella tidning."
+        },
+        "cra_horizontal_vuln_handling": {
+          "title": "Horisontell CRA-standard — hantering av sårbarheter",
+          "note": "Under utveckling inom standardiseringsbegäran M/606; planerad före de övriga horisontella standarderna."
+        },
+        "common_specifications": {
+          "title": "Kommissionens gemensamma specifikationer",
+          "note": "Kommissionen får anta dessa genom genomförandeakt när harmoniserade standarder saknas eller är otillräckliga."
+        },
+        "eucc_scheme": {
+          "title": "EUCC — Common Criteria-certifieringsordning",
+          "note": "Ett certifikat på relevant tillitsnivå kan ge en presumtion om överensstämmelse för motsvarande krav."
+        }
+      }
+    }
+  }
+}
