@@ -1,0 +1,209 @@
+{
+  "products": {
+    "title": "Produkter",
+    "subtitle": "Hantera dina produkter och följ CRA-efterlevnaden.",
+    "addProduct": "Lägg till produkt",
+    "view": {
+      "table": "Tabell",
+      "grid": "Rutnät",
+      "list": "Lista",
+      "timeline": "Tidslinje"
+    },
+    "timeline": {
+      "previous": "Föregående",
+      "next": "Nästa",
+      "goToToday": "Hoppa till aktuell period",
+      "jumpToCurrent": "Idag",
+      "emptyWindow": "Inga produkter skapades i det här intervallet.",
+      "jumpToLatest": "Hoppa till senaste",
+      "cadence": {
+        "week": "Vecka",
+        "month": "Månad"
+      }
+    },
+    "kanban": {
+      "ongoing": "Pågående",
+      "pending": "Väntar",
+      "done": "Klar"
+    },
+    "noProducts": "Inga produkter ännu",
+    "noProductsDescription": "Lägg till din första produkt för att påbörja din resa mot CRA-efterlevnad. Vi vägleder dig genom varje steg.",
+    "noProductsDescriptionTopbar": "Använd knappen ”+ Ny produkt” i den övre listen för att lägga till den första — vi vägleder dig genom varje steg.",
+    "columns": {
+      "name": "Namn",
+      "type": "Typ",
+      "category": "CRA-kategori",
+      "compliance": "Efterlevnad",
+      "created": "Skapad"
+    },
+    "notAssessed": "Inte bedömd",
+    "types": {
+      "hardware": "Hårdvara",
+      "software": "Programvara",
+      "firmware": "Fast programvara",
+      "iot": "IoT"
+    },
+    "categories": {
+      "default": "Standard",
+      "important_class_i": "Viktig I",
+      "important_class_ii": "Viktig II",
+      "critical": "Kritisk"
+    },
+    "create": {
+      "eyebrow": "Ny produkt",
+      "sheetTitle": "Lägg till produkt",
+      "title": "Lägg till produkt",
+      "subtitle": "Skapa en ny produkt för att börja följa CRA-efterlevnaden.",
+      "nameLabel": "Produktnamn",
+      "namePlaceholder": "t.ex. Smart Thermostat Pro",
+      "typeLabel": "Produkttyp",
+      "descriptionLabel": "Beskrivning",
+      "descriptionPlaceholder": "Kort beskrivning av produkten…",
+      "imageLabel": "Produktbild",
+      "imageUpload": "Ladda upp",
+      "imageRemove": "Ta bort bild",
+      "imageHint": "JPG, PNG eller WebP. Max 2 MB.",
+      "submit": "Skapa produkt",
+      "submitting": "Skapar…",
+      "cancel": "Avbryt",
+      "startAssessment": "Starta CRA-bedömning",
+      "startAssessmentDescription": "Kör CRA-omfattningsbedömningen direkt efter att den här produkten har skapats.",
+      "tooltips": {
+        "name": {
+          "title": "Produktnamn",
+          "body": "Produktens marknadsförings- eller handelsnamn som det visas på förpackning, etiketter och den slutanvändarvända försäkran om överensstämmelse.",
+          "ref": "CRA bilaga V(2) — försäkran om överensstämmelse måste identifiera produkten med namn och modell så att en marknadskontrollmyndighet kan matcha en fysisk enhet mot försäkran."
+        },
+        "type": {
+          "title": "Produkttyp",
+          "body": "Om produkten är en fysisk enhet (hårdvara), en programvaruapplikation, en inbäddad/fast programvarukomponent eller en IoT-enhet. Styr CRA-klassificeringsflödet och om SBOM-skyldigheterna i bilaga II(3) gäller.",
+          "ref": "CRA artikel 2 — definierar ”produkt med digitala element” och avgränsar förordningen. Den typ du väljer här avgör om du omfattas av CRA överhuvudtaget och vilka väsentliga krav (bilaga I) som gäller."
+        },
+        "description": {
+          "title": "Beskrivning",
+          "body": "Kort intern beskrivning — en eller två meningar om vad produkten gör, vem den är för och eventuell särskiljande egenskap. Används i panellistor och i den tekniska dokumentationen.",
+          "ref": "Matar bilaga II(1) i den tekniska dokumentationen: en allmän beskrivning av produkten, inklusive dess avsedda ändamål."
+        },
+        "image": {
+          "title": "Produktbild",
+          "body": "Valfri bild på produkten. Rent kosmetisk — hjälper kollegor att känna igen produkten i listor och paneler. JPG, PNG eller WebP upp till 2 MB.",
+          "ref": "Inte ett CRA-krav. Inget efterlevnadsdokument använder den här bilden."
+        }
+      }
+    },
+    "edit": {
+      "title": "Redigera produkt",
+      "submit": "Spara ändringar",
+      "cancel": "Avbryt"
+    },
+    "delete": {
+      "title": "Radera produkt",
+      "description": "Detta raderar permanent ”{name}” och alla relaterade bedömningssvar, checklisteposter, SBOM:er och dokument. Den här åtgärden kan inte ångras.",
+      "confirm": "Radera produkt",
+      "cancel": "Avbryt"
+    },
+    "detail": {
+      "editProduct": "Redigera produkt",
+      "tabs": {
+        "overview": "Översikt",
+        "assessment": "Bedömning",
+        "checklist": "Checklista",
+        "sbom": "SBOM",
+        "vulnerabilities": "Sårbarheter",
+        "releases": "Releaser",
+        "conformity": "Överensstämmelse",
+        "riskAssessment": "Riskbedömning",
+        "diagrams": "Diagram och bevis",
+        "documents": "Dokument",
+        "technicalFile": "Teknisk dokumentation",
+        "identity": "Identitet och CE",
+        "lifecycle": "Livscykel och leveranskedja",
+        "readiness": "CRA-beredskap"
+      },
+      "overview": {
+        "title": "Produktöversikt",
+        "productInfo": "Produktinformation",
+        "name": "Namn",
+        "type": "Typ",
+        "description": "Beskrivning",
+        "noDescription": "Ingen beskrivning angiven.",
+        "craStatus": "CRA-klassificering",
+        "notAssessed": "Ännu inte bedömd",
+        "notAssessedDescription": "Kör CRA-omfattningsbedömningen för att avgöra vilka krav som gäller för din produkt.",
+        "runAssessment": "Kör bedömning",
+        "complianceScore": "Efterlevnadspoäng",
+        "noChecklist": "Inga checklistedata ännu. Slutför bedömningen först.",
+        "conformityRoute": "Väg för bedömning av överensstämmelse",
+        "notifiedBody": "Kräver anmält organ",
+        "yes": "Ja",
+        "no": "Nej",
+        "edit": "Redigera",
+        "delete": "Radera"
+      },
+      "assessment": {
+        "title": "CRA-omfattningsbedömning",
+        "completed": "Bedömning slutförd",
+        "completedDescription": "Den här produkten har bedömts och klassificerats.",
+        "rerun": "Kör bedömningen igen",
+        "category": "CRA-kategori",
+        "route": "Väg för bedömning av överensstämmelse"
+      },
+      "checklist": {
+        "notAssessed": "Slutför bedömningen först",
+        "notAssessedDescription": "Kör CRA-omfattningsbedömningen för att avgöra vilka krav som gäller för din produkt. När det är klart visas din personliga efterlevnadschecklista här.",
+        "runAssessment": "Kör bedömning"
+      },
+      "sbom": {
+        "title": "Programvaruförteckning (SBOM)",
+        "comingSoon": "SBOM-hantering kommer snart.",
+        "description": "Du kommer att kunna ladda upp, generera och hantera SBOM:er för den här produkten."
+      },
+      "documents": {
+        "title": "Dokument",
+        "comingSoon": "Dokumenthantering kommer snart.",
+        "description": "Du kommer att kunna ladda upp och hantera efterlevnadsdokumentation för den här produkten."
+      }
+    },
+    "breadcrumbs": {
+      "dashboard": "Instrumentpanel",
+      "products": "Produkter"
+    },
+    "limits": {
+      "reached": "Produktgränsen har nåtts",
+      "reachedDescription": "Din {plan}-plan tillåter upp till {limit} produkt. Uppgradera för att lägga till fler produkter.",
+      "reachedDescriptionPlural": "Din {plan}-plan tillåter upp till {limit} produkter. Uppgradera för att lägga till fler produkter.",
+      "upgrade": "Uppgradera plan",
+      "usage": "{count} av {limit} produkter används",
+      "currentPlan": "Aktuell plan",
+      "backToProducts": "Tillbaka till produkter",
+      "planFeatures": {
+        "free": "1 produkt, skrivskyddad checklista",
+        "professional": "3 produkter, fullständig redigering av checklistan",
+        "business": "15 produkter, teamsamarbete",
+        "enterprise": "Obegränsat antal produkter, prioriterad support"
+      }
+    },
+    "planGate": {
+      "readOnly": "Uppgradera för att redigera",
+      "readOnlyDescription": "Free-planen inkluderar endast skrivskyddad åtkomst till checklistan. Uppgradera till Professional för att redigera checklisteposter och ladda upp bevis."
+    },
+    "errors": {
+      "generic": "Något gick fel. Försök igen.",
+      "notAuthenticated": "Du måste vara inloggad.",
+      "noOrganization": "Ingen organisation hittades. Slutför introduktionen.",
+      "limitReached": "Du har nått produktgränsen för din plan.",
+      "planLimitReached": "Du har nått produktgränsen för din plan. Uppgradera för att lägga till fler produkter."
+    },
+    "eyebrow": "Efterlevnad",
+    "searchPlaceholder": "Sök efter namn eller typ…",
+    "noMatches": "Inga produkter matchar dina filter.",
+    "filter": {
+      "all": "Alla"
+    },
+    "table": {
+      "product": "Produkt",
+      "class": "Klass",
+      "score": "Efterlevnadspoäng"
+    }
+  }
+}

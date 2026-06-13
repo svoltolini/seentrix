@@ -1,0 +1,105 @@
+{
+  "vulnerabilities": {
+    "title": "Podatności",
+    "status": {
+      "open": "Otwarte",
+      "in_progress": "W toku",
+      "resolved": "Rozwiązane",
+      "accepted": "Zaakceptowane"
+    },
+    "severity": {
+      "critical": "Krytyczna",
+      "high": "Wysoka",
+      "medium": "Średnia",
+      "low": "Niska"
+    },
+    "resolution": {
+      "fix": "Poprawka",
+      "mitigation": "Środek zaradczy",
+      "false_positive": "Fałszywy alarm",
+      "wont_fix": "Nie zostanie naprawione"
+    },
+    "kpi": {
+      "total": "Łącznie",
+      "open": "Otwarte",
+      "critical": "Krytyczne otwarte",
+      "kev": "KEV",
+      "exploited": "Aktywnie wykorzystywane"
+    },
+    "filter": {
+      "searchPlaceholder": "Szukaj CVE lub komponentu",
+      "status": "Status",
+      "severity": "Ważność",
+      "kevOnly": "Tylko KEV",
+      "exploitedOnly": "Wykorzystywane",
+      "anyAssignee": "Dowolny przypisany",
+      "unassigned": "Nieprzypisane",
+      "byMember": "Według członka",
+      "assignee": "Przypisany",
+      "clearAll": "Wyczyść wszystko",
+      "activeFilters": "{count, plural, one {# filtr} few {# filtry} many {# filtrów} other {# filtrów}}"
+    },
+    "bulk": {
+      "selected": "{count, plural, one {# wybrany} few {# wybrane} many {# wybranych} other {# wybranych}}",
+      "changeStatus": "Zmień status",
+      "assign": "Przypisz",
+      "unassign": "Cofnij przypisanie",
+      "clear": "Wyczyść"
+    },
+    "table": {
+      "cve": "CVE",
+      "component": "Komponent",
+      "age": "Wiek",
+      "assignee": "Przypisany",
+      "status": "Status",
+      "selectAll": "Zaznacz wszystko",
+      "selectRow": "Zaznacz {cve}"
+    },
+    "empty": {
+      "title": "Brak podatności",
+      "description": "Prześlij i przeskanuj plik SBOM, aby ujawnić CVE. Wyniki pojawią się tutaj do triażu.",
+      "filtered": "Żadne podatności nie pasują do tych filtrów.",
+      "clearFilters": "Wyczyść filtry"
+    },
+    "row": {
+      "actively_exploited": "Wykorzystywane",
+      "daysOld": "{days} dni",
+      "unassign": "Cofnij przypisanie",
+      "assign": "Przypisz",
+      "unassigned": "Nieprzypisane",
+      "more": "Więcej akcji",
+      "markExploited": "Oznacz jako aktywnie wykorzystywane",
+      "unmarkExploited": "Usuń flagę wykorzystywania",
+      "viewAdvisory": "Zobacz poradę"
+    },
+    "modal": {
+      "resolveTitle": "{count, plural, one {Rozwiąż podatność} few {Rozwiąż # podatności} many {Rozwiąż # podatności} other {Rozwiąż # podatności}}",
+      "acceptTitle": "{count, plural, one {Zaakceptuj podatność} few {Zaakceptuj # podatności} many {Zaakceptuj # podatności} other {Zaakceptuj # podatności}}",
+      "resolveDescription": "Udokumentuj, w jaki sposób to rozwiązano. Jest to zapisywane w ścieżce audytu na potrzeby Twoich rekordów CRA.",
+      "acceptDescription": "Zapisz, dlaczego akceptujesz to ryzyko zamiast je naprawiać. Jest to zapisywane w ścieżce audytu na potrzeby Twoich rekordów CRA.",
+      "cancel": "Anuluj",
+      "resolutionTypeLabel": "Typ rozwiązania",
+      "notesLabel": "Notatki",
+      "notesPlaceholder": "Opisz poprawkę, środek zaradczy lub uzasadnienie zaakceptowania ryzyka."
+    },
+    "toast": {
+      "updateFailed": "Nie udało się zastosować zmiany",
+      "statusUpdated": "Status zaktualizowany",
+      "bulkUpdated": "Zaktualizowano podatności: {count}",
+      "assignmentUpdated": "Przypisanie zaktualizowane",
+      "markedExploited": "Oznaczono jako aktywnie wykorzystywane",
+      "unmarkedExploited": "Usunięto flagę wykorzystywania"
+    },
+    "advisory": {
+      "export": "Eksportuj poradę",
+      "menuLabel": "Porada do odczytu maszynowego",
+      "csaf": "CSAF 2.0",
+      "csafHint": "Format porad OASIS (.csaf.json)",
+      "vex": "CycloneDX VEX",
+      "vexHint": "Oświadczenie o możliwości wykorzystania (.vex.json)",
+      "planRequired": "Eksport VEX/CSAF jest dostępny w planie Business.",
+      "businessPlan": "Business",
+      "empty": "Brak podatności do uwzględnienia w poradzie."
+    }
+  }
+}

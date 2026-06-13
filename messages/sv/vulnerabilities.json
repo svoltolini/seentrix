@@ -1,0 +1,105 @@
+{
+  "vulnerabilities": {
+    "title": "Sårbarheter",
+    "status": {
+      "open": "Öppen",
+      "in_progress": "Pågår",
+      "resolved": "Åtgärdad",
+      "accepted": "Accepterad"
+    },
+    "severity": {
+      "critical": "Kritisk",
+      "high": "Hög",
+      "medium": "Medel",
+      "low": "Låg"
+    },
+    "resolution": {
+      "fix": "Åtgärd",
+      "mitigation": "Begränsning",
+      "false_positive": "Falsklarm",
+      "wont_fix": "Åtgärdas inte"
+    },
+    "kpi": {
+      "total": "Totalt",
+      "open": "Öppna",
+      "critical": "Kritiska öppna",
+      "kev": "KEV",
+      "exploited": "Aktivt utnyttjade"
+    },
+    "filter": {
+      "searchPlaceholder": "Sök CVE eller komponent",
+      "status": "Status",
+      "severity": "Allvarlighetsgrad",
+      "kevOnly": "Endast KEV",
+      "exploitedOnly": "Utnyttjade",
+      "anyAssignee": "Valfri tilldelad",
+      "unassigned": "Ej tilldelade",
+      "byMember": "Per medlem",
+      "assignee": "Tilldelad",
+      "clearAll": "Rensa allt",
+      "activeFilters": "{count, plural, one {# filter} other {# filter}}"
+    },
+    "bulk": {
+      "selected": "{count, plural, one {# vald} other {# valda}}",
+      "changeStatus": "Ändra status",
+      "assign": "Tilldela",
+      "unassign": "Ta bort tilldelning",
+      "clear": "Rensa"
+    },
+    "table": {
+      "cve": "CVE",
+      "component": "Komponent",
+      "age": "Ålder",
+      "assignee": "Tilldelad",
+      "status": "Status",
+      "selectAll": "Markera alla",
+      "selectRow": "Markera {cve}"
+    },
+    "empty": {
+      "title": "Inga sårbarheter ännu",
+      "description": "Ladda upp och skanna en SBOM för att hitta CVE:er. Fynd visas här för triage.",
+      "filtered": "Inga sårbarheter matchar dessa filter.",
+      "clearFilters": "Rensa filter"
+    },
+    "row": {
+      "actively_exploited": "Utnyttjad",
+      "daysOld": "{days} d",
+      "unassign": "Ta bort tilldelning",
+      "assign": "Tilldela",
+      "unassigned": "Ej tilldelad",
+      "more": "Fler åtgärder",
+      "markExploited": "Markera som aktivt utnyttjad",
+      "unmarkExploited": "Ta bort utnyttjandeflaggan",
+      "viewAdvisory": "Visa råd"
+    },
+    "modal": {
+      "resolveTitle": "{count, plural, one {Åtgärda sårbarhet} other {Åtgärda # sårbarheter}}",
+      "acceptTitle": "{count, plural, one {Acceptera sårbarhet} other {Acceptera # sårbarheter}}",
+      "resolveDescription": "Dokumentera hur detta åtgärdades. Detta registreras i granskningsspåret för dina CRA-poster.",
+      "acceptDescription": "Ange varför du accepterar den här risken i stället för att åtgärda den. Detta registreras i granskningsspåret för dina CRA-poster.",
+      "cancel": "Avbryt",
+      "resolutionTypeLabel": "Typ av åtgärd",
+      "notesLabel": "Anteckningar",
+      "notesPlaceholder": "Beskriv åtgärden, begränsningen eller motiveringen till att acceptera risken."
+    },
+    "toast": {
+      "updateFailed": "Det gick inte att tillämpa ändringen",
+      "statusUpdated": "Status uppdaterad",
+      "bulkUpdated": "{count} sårbarheter uppdaterade",
+      "assignmentUpdated": "Tilldelning uppdaterad",
+      "markedExploited": "Markerad som aktivt utnyttjad",
+      "unmarkedExploited": "Utnyttjandeflaggan borttagen"
+    },
+    "advisory": {
+      "export": "Exportera råd",
+      "menuLabel": "Maskinläsbart råd",
+      "csaf": "CSAF 2.0",
+      "csafHint": "OASIS-rådformat (.csaf.json)",
+      "vex": "CycloneDX VEX",
+      "vexHint": "Uttalande om utnyttjbarhet (.vex.json)",
+      "planRequired": "Export av VEX/CSAF är tillgänglig i Business-planen.",
+      "businessPlan": "Business",
+      "empty": "Inga sårbarheter att inkludera i ett råd ännu."
+    }
+  }
+}

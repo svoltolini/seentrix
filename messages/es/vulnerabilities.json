@@ -1,0 +1,105 @@
+{
+  "vulnerabilities": {
+    "title": "Vulnerabilidades",
+    "status": {
+      "open": "Abierta",
+      "in_progress": "En curso",
+      "resolved": "Resuelta",
+      "accepted": "Aceptada"
+    },
+    "severity": {
+      "critical": "Crítica",
+      "high": "Alta",
+      "medium": "Media",
+      "low": "Baja"
+    },
+    "resolution": {
+      "fix": "Corrección",
+      "mitigation": "Mitigación",
+      "false_positive": "Falso positivo",
+      "wont_fix": "No se corregirá"
+    },
+    "kpi": {
+      "total": "Total",
+      "open": "Abiertas",
+      "critical": "Críticas abiertas",
+      "kev": "KEV",
+      "exploited": "Explotadas activamente"
+    },
+    "filter": {
+      "searchPlaceholder": "Buscar CVE o componente",
+      "status": "Estado",
+      "severity": "Gravedad",
+      "kevOnly": "Solo KEV",
+      "exploitedOnly": "Explotadas",
+      "anyAssignee": "Cualquier responsable",
+      "unassigned": "Sin asignar",
+      "byMember": "Por miembro",
+      "assignee": "Responsable",
+      "clearAll": "Borrar todo",
+      "activeFilters": "{count, plural, one {# filtro} other {# filtros}}"
+    },
+    "bulk": {
+      "selected": "{count, plural, one {# seleccionada} other {# seleccionadas}}",
+      "changeStatus": "Cambiar estado",
+      "assign": "Asignar",
+      "unassign": "Desasignar",
+      "clear": "Borrar"
+    },
+    "table": {
+      "cve": "CVE",
+      "component": "Componente",
+      "age": "Antigüedad",
+      "assignee": "Responsable",
+      "status": "Estado",
+      "selectAll": "Seleccionar todo",
+      "selectRow": "Seleccionar {cve}"
+    },
+    "empty": {
+      "title": "Aún no hay vulnerabilidades",
+      "description": "Sube y analiza un SBOM para detectar CVE. Los hallazgos aparecerán aquí para su clasificación.",
+      "filtered": "Ninguna vulnerabilidad coincide con estos filtros.",
+      "clearFilters": "Borrar filtros"
+    },
+    "row": {
+      "actively_exploited": "Explotada",
+      "daysOld": "{days} d",
+      "unassign": "Desasignar",
+      "assign": "Asignar",
+      "unassigned": "Sin asignar",
+      "more": "Más acciones",
+      "markExploited": "Marcar como explotada activamente",
+      "unmarkExploited": "Quitar la marca de explotación",
+      "viewAdvisory": "Ver aviso"
+    },
+    "modal": {
+      "resolveTitle": "{count, plural, one {Resolver vulnerabilidad} other {Resolver # vulnerabilidades}}",
+      "acceptTitle": "{count, plural, one {Aceptar vulnerabilidad} other {Aceptar # vulnerabilidades}}",
+      "resolveDescription": "Documenta cómo se resolvió. Esto se registra en la pista de auditoría para tus registros del CRA.",
+      "acceptDescription": "Indica por qué aceptas este riesgo en lugar de corregirlo. Esto se registra en la pista de auditoría para tus registros del CRA.",
+      "cancel": "Cancelar",
+      "resolutionTypeLabel": "Tipo de resolución",
+      "notesLabel": "Notas",
+      "notesPlaceholder": "Describe la corrección, la mitigación o la justificación para aceptar el riesgo."
+    },
+    "toast": {
+      "updateFailed": "No se pudo aplicar el cambio",
+      "statusUpdated": "Estado actualizado",
+      "bulkUpdated": "{count} vulnerabilidades actualizadas",
+      "assignmentUpdated": "Asignación actualizada",
+      "markedExploited": "Marcada como explotada activamente",
+      "unmarkedExploited": "Marca de explotación quitada"
+    },
+    "advisory": {
+      "export": "Exportar aviso",
+      "menuLabel": "Aviso legible por máquina",
+      "csaf": "CSAF 2.0",
+      "csafHint": "Formato de avisos de OASIS (.csaf.json)",
+      "vex": "CycloneDX VEX",
+      "vexHint": "Declaración de explotabilidad (.vex.json)",
+      "planRequired": "La exportación de VEX/CSAF está disponible en el plan Business.",
+      "businessPlan": "Business",
+      "empty": "Aún no hay vulnerabilidades que incluir en un aviso."
+    }
+  }
+}

@@ -1,0 +1,209 @@
+{
+  "products": {
+    "title": "Productos",
+    "subtitle": "Gestiona tus productos y haz seguimiento del cumplimiento del CRA.",
+    "addProduct": "Añadir producto",
+    "view": {
+      "table": "Tabla",
+      "grid": "Cuadrícula",
+      "list": "Lista",
+      "timeline": "Cronología"
+    },
+    "timeline": {
+      "previous": "Anterior",
+      "next": "Siguiente",
+      "goToToday": "Ir al periodo actual",
+      "jumpToCurrent": "Hoy",
+      "emptyWindow": "No se crearon productos en este intervalo.",
+      "jumpToLatest": "Ir a lo más reciente",
+      "cadence": {
+        "week": "Semana",
+        "month": "Mes"
+      }
+    },
+    "kanban": {
+      "ongoing": "En curso",
+      "pending": "Pendiente",
+      "done": "Hecho"
+    },
+    "noProducts": "Aún no hay productos",
+    "noProductsDescription": "Añade tu primer producto para iniciar tu recorrido de cumplimiento del CRA. Te guiaremos en cada paso.",
+    "noProductsDescriptionTopbar": "Usa el botón «+ Nuevo producto» de la barra superior para añadir el primero: te guiaremos en cada paso.",
+    "columns": {
+      "name": "Nombre",
+      "type": "Tipo",
+      "category": "Categoría del CRA",
+      "compliance": "Cumplimiento",
+      "created": "Creado"
+    },
+    "notAssessed": "Sin evaluar",
+    "types": {
+      "hardware": "Hardware",
+      "software": "Software",
+      "firmware": "Firmware",
+      "iot": "IoT"
+    },
+    "categories": {
+      "default": "Predeterminada",
+      "important_class_i": "Importante I",
+      "important_class_ii": "Importante II",
+      "critical": "Crítica"
+    },
+    "create": {
+      "eyebrow": "Nuevo producto",
+      "sheetTitle": "Añadir producto",
+      "title": "Añadir producto",
+      "subtitle": "Crea un nuevo producto para empezar a hacer seguimiento del cumplimiento del CRA.",
+      "nameLabel": "Nombre del producto",
+      "namePlaceholder": "p. ej., Smart Thermostat Pro",
+      "typeLabel": "Tipo de producto",
+      "descriptionLabel": "Descripción",
+      "descriptionPlaceholder": "Breve descripción del producto…",
+      "imageLabel": "Imagen del producto",
+      "imageUpload": "Subir",
+      "imageRemove": "Quitar imagen",
+      "imageHint": "JPG, PNG o WebP. Máx. 2 MB.",
+      "submit": "Crear producto",
+      "submitting": "Creando…",
+      "cancel": "Cancelar",
+      "startAssessment": "Iniciar evaluación del CRA",
+      "startAssessmentDescription": "Ejecuta inmediatamente la evaluación del alcance del CRA tras crear este producto.",
+      "tooltips": {
+        "name": {
+          "title": "Nombre del producto",
+          "body": "El nombre comercial o de marketing del producto tal como aparece en el embalaje, las etiquetas y la declaración de conformidad dirigida al usuario final.",
+          "ref": "CRA anexo V(2): la declaración de conformidad debe identificar el producto por nombre y modelo para que una autoridad de vigilancia del mercado pueda asociar una unidad física a la declaración."
+        },
+        "type": {
+          "title": "Tipo de producto",
+          "body": "Si el producto es un dispositivo físico (hardware), una aplicación de software, un componente integrado/firmware o un dispositivo IoT. Determina el flujo de clasificación del CRA y si se aplican las obligaciones de SBOM del anexo II(3).",
+          "ref": "CRA artículo 2: define «producto con elementos digitales» y delimita el ámbito del reglamento. El tipo que elijas aquí decide si te incluye el CRA y qué requisitos esenciales (anexo I) se aplican."
+        },
+        "description": {
+          "title": "Descripción",
+          "body": "Breve descripción interna: una o dos frases sobre qué hace el producto, para quién es y cualquier característica distintiva. Se usa en las listas del panel y en la documentación técnica.",
+          "ref": "Alimenta el anexo II(1) de la documentación técnica: una descripción general del producto, incluido su uso previsto."
+        },
+        "image": {
+          "title": "Imagen del producto",
+          "body": "Foto opcional del producto. Puramente estética: ayuda a tus compañeros a reconocer el producto en listas y paneles. JPG, PNG o WebP de hasta 2 MB.",
+          "ref": "No es un requisito del CRA. Ningún documento de cumplimiento usa esta imagen."
+        }
+      }
+    },
+    "edit": {
+      "title": "Editar producto",
+      "submit": "Guardar cambios",
+      "cancel": "Cancelar"
+    },
+    "delete": {
+      "title": "Eliminar producto",
+      "description": "Esto eliminará permanentemente «{name}» y todas las respuestas de evaluación, elementos de la lista de verificación, SBOM y documentos relacionados. Esta acción no se puede deshacer.",
+      "confirm": "Eliminar producto",
+      "cancel": "Cancelar"
+    },
+    "detail": {
+      "editProduct": "Editar producto",
+      "tabs": {
+        "overview": "Resumen",
+        "assessment": "Evaluación",
+        "checklist": "Lista de verificación",
+        "sbom": "SBOM",
+        "vulnerabilities": "Vulnerabilidades",
+        "releases": "Versiones",
+        "conformity": "Conformidad",
+        "riskAssessment": "Evaluación de riesgos",
+        "diagrams": "Diagramas y pruebas",
+        "documents": "Documentos",
+        "technicalFile": "Expediente técnico",
+        "identity": "Identidad y CE",
+        "lifecycle": "Ciclo de vida y cadena de suministro",
+        "readiness": "Preparación para el CRA"
+      },
+      "overview": {
+        "title": "Resumen del producto",
+        "productInfo": "Información del producto",
+        "name": "Nombre",
+        "type": "Tipo",
+        "description": "Descripción",
+        "noDescription": "No se proporcionó ninguna descripción.",
+        "craStatus": "Clasificación del CRA",
+        "notAssessed": "Aún sin evaluar",
+        "notAssessedDescription": "Ejecuta la evaluación del alcance del CRA para determinar qué requisitos se aplican a tu producto.",
+        "runAssessment": "Ejecutar evaluación",
+        "complianceScore": "Puntuación de cumplimiento",
+        "noChecklist": "Aún no hay datos de la lista de verificación. Completa primero la evaluación.",
+        "conformityRoute": "Ruta de conformidad",
+        "notifiedBody": "Requiere organismo notificado",
+        "yes": "Sí",
+        "no": "No",
+        "edit": "Editar",
+        "delete": "Eliminar"
+      },
+      "assessment": {
+        "title": "Evaluación del alcance del CRA",
+        "completed": "Evaluación completada",
+        "completedDescription": "Este producto se ha evaluado y clasificado.",
+        "rerun": "Volver a ejecutar la evaluación",
+        "category": "Categoría del CRA",
+        "route": "Ruta de conformidad"
+      },
+      "checklist": {
+        "notAssessed": "Completa primero la evaluación",
+        "notAssessedDescription": "Ejecuta la evaluación del alcance del CRA para determinar qué requisitos se aplican a tu producto. Una vez hecho, tu lista de verificación de cumplimiento personalizada aparecerá aquí.",
+        "runAssessment": "Ejecutar evaluación"
+      },
+      "sbom": {
+        "title": "Lista de materiales de software (SBOM)",
+        "comingSoon": "La gestión de SBOM estará disponible próximamente.",
+        "description": "Podrás subir, generar y gestionar SBOM para este producto."
+      },
+      "documents": {
+        "title": "Documentos",
+        "comingSoon": "La gestión de documentos estará disponible próximamente.",
+        "description": "Podrás subir y gestionar la documentación de cumplimiento de este producto."
+      }
+    },
+    "breadcrumbs": {
+      "dashboard": "Panel",
+      "products": "Productos"
+    },
+    "limits": {
+      "reached": "Límite de productos alcanzado",
+      "reachedDescription": "Tu plan {plan} permite hasta {limit} producto. Mejora el plan para añadir más productos.",
+      "reachedDescriptionPlural": "Tu plan {plan} permite hasta {limit} productos. Mejora el plan para añadir más productos.",
+      "upgrade": "Mejorar plan",
+      "usage": "{count} de {limit} productos utilizados",
+      "currentPlan": "Plan actual",
+      "backToProducts": "Volver a productos",
+      "planFeatures": {
+        "free": "1 producto, lista de verificación de solo lectura",
+        "professional": "3 productos, edición completa de la lista de verificación",
+        "business": "15 productos, colaboración en equipo",
+        "enterprise": "Productos ilimitados, soporte prioritario"
+      }
+    },
+    "planGate": {
+      "readOnly": "Mejora el plan para editar",
+      "readOnlyDescription": "El plan Free solo incluye acceso de solo lectura a la lista de verificación. Mejora a Professional para editar elementos de la lista de verificación y subir pruebas."
+    },
+    "errors": {
+      "generic": "Algo salió mal. Inténtalo de nuevo.",
+      "notAuthenticated": "Debes haber iniciado sesión.",
+      "noOrganization": "No se encontró ninguna organización. Completa la configuración inicial.",
+      "limitReached": "Has alcanzado el límite de productos de tu plan.",
+      "planLimitReached": "Has alcanzado el límite de productos de tu plan. Mejora el plan para añadir más productos."
+    },
+    "eyebrow": "Cumplimiento",
+    "searchPlaceholder": "Buscar por nombre o tipo…",
+    "noMatches": "Ningún producto coincide con tus filtros.",
+    "filter": {
+      "all": "Todos"
+    },
+    "table": {
+      "product": "Producto",
+      "class": "Clase",
+      "score": "Puntuación de cumplimiento"
+    }
+  }
+}
