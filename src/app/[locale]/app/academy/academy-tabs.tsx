@@ -6,7 +6,6 @@ import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { ACADEMY_LESSONS } from "@/lib/glossary";
-import { LESSON_AUDIO } from "@/lib/academy/audio";
 import { Icon } from "@/components/icon";
 import { GlossaryIndex } from "@/app/[locale]/app/help/glossary/glossary-index";
 import { SCREEN_LESSONS, type ScreenKey } from "@/lib/academy/screens";
@@ -110,10 +109,8 @@ function LessonsGrid({ completed }: { completed: Set<string> }) {
           title={lesson.title}
           duration={lesson.duration}
           done={completed.has(id)}
-          hasAudio={id in LESSON_AUDIO}
           completedLabel={t("completed")}
           openLabel={t("open")}
-          audioLabel={t("audio")}
         />
       ))}
     </div>
@@ -144,10 +141,8 @@ function LessonCard({
   title,
   duration,
   done,
-  hasAudio,
   completedLabel,
   openLabel,
-  audioLabel,
 }: {
   id: string;
   index: number;
@@ -155,10 +150,8 @@ function LessonCard({
   title: string;
   duration: string;
   done: boolean;
-  hasAudio: boolean;
   completedLabel: string;
   openLabel: string;
-  audioLabel: string;
 }) {
   return (
     <Link
@@ -207,12 +200,6 @@ function LessonCard({
               <Icon name="time-quarter-02-stroke-rounded" size={13} />
               {duration}
             </span>
-            {hasAudio && (
-              <span className="inline-flex items-center gap-1.5 text-[12px] text-muted-foreground">
-                <Icon name="VolumeHigh" size={13} />
-                {audioLabel}
-              </span>
-            )}
             <span className="ml-auto inline-flex h-8 items-center rounded-[10px] border border-border-strong bg-card px-[13px] text-[12.5px] font-semibold text-foreground transition-colors duration-150 group-hover:bg-muted">
               {openLabel}
             </span>

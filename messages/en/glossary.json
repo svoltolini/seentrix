@@ -275,8 +275,7 @@
     },
     "lessonCard": {
       "completed": "Completed",
-      "open": "Open",
-      "audio": "Audio"
+      "open": "Open"
     },
     "byScreenCard": {
       "meta": "{count, plural, one {# lesson} other {# lessons}} · {minutes} min · {done}/{total} done"

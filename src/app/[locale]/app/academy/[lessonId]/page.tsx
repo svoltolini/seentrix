@@ -3,7 +3,6 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { getLesson, getLessonContent } from "@/lib/academy/lessons";
 import type { LocaleId } from "@/lib/academy/types";
-import { getLessonAudio } from "@/lib/academy/audio";
 import { allLessonIds } from "@/lib/academy/lessons";
 import { AskSeentrixAI } from "@/components/copilot/ask-seentrix-ai";
 import { CurrentLessonProvider } from "@/lib/academy/current-lesson-context";
@@ -11,13 +10,11 @@ import { createClient, getAuthUser } from "@/lib/supabase/server";
 import { Icon } from "@/components/icon";
 import { IconBadge } from "@/components/ui/icon-badge";
 import { Quiz } from "./quiz";
-import { LessonAudioPlayer } from "./lesson-audio";
 
 /**
- * Lesson reader. Renders the lesson hero, an optional AI-generated audio
- * briefing, the numbered content sections, and the quiz. If the learner has
- * already passed, a completion banner with the certificate hash sits above the
- * quiz (which stays available for retakes).
+ * Lesson reader. Renders the lesson hero, the numbered content sections, and
+ * the quiz. If the learner has already passed, a completion banner with the
+ * certificate hash sits above the quiz (which stays available for retakes).
  *
  * Styling uses design-system tokens throughout (no `prose-invert`, no
  * hardcoded hexes) so the reader matches the rest of the light-theme app.
@@ -34,7 +31,6 @@ export default async function LessonPage({
   const locale = (await getLocale()) as LocaleId;
   const content = getLessonContent(lesson, locale);
   const t = await getTranslations("academy.lesson");
-  const audio = getLessonAudio(lesson.id, locale);
 
   const supabase = await createClient();
   const user = await getAuthUser();
@@ -127,13 +123,6 @@ export default async function LessonPage({
         {/* Two-column: content + 340px rail */}
         <div className="mt-3.5 grid items-start gap-3.5 lg:grid-cols-[1fr_340px]">
           <div className="min-w-0 rounded-lg border border-border bg-card p-[17px] sm:p-6">
-        {/* AI audio briefing (only on lessons that ship one) */}
-        {audio && (
-          <div className="mb-8">
-            <LessonAudioPlayer audio={audio} title={content.title} />
-          </div>
-        )}
-
         {/* Sections — numbered for a clear reading rhythm. */}
         <article className="space-y-10">
           {content.sections.map((section, i) => (
@@ -144,7 +133,10 @@ export default async function LessonPage({
                 </span>
                 <h2 className="text-h4 text-foreground">{section.heading}</h2>
               </div>
-              <div className="prose prose-sm max-w-none pl-10 text-p3 leading-relaxed text-muted-foreground prose-headings:text-foreground prose-strong:text-foreground prose-a:text-primary prose-li:my-0.5">
+              <div
+                style={{ maxWidth: "none" }}
+                className="prose prose-sm max-w-none pl-10 text-p3 leading-relaxed text-muted-foreground prose-headings:text-foreground prose-strong:text-foreground prose-a:text-primary prose-li:my-0.5"
+              >
                 {section.body}
               </div>
             </section>
