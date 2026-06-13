@@ -299,6 +299,14 @@ export function SbomContent({
               }
               onSortChange={setSortBy}
               onToggleActive={(active) => handleToggleActive(sbom.id, active)}
+              onDownload={(format) => {
+                const a = document.createElement("a");
+                a.href = `/api/products/${productId}/sbom/export?format=${format}&sbomId=${sbom.id}`;
+                a.rel = "noopener";
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+              }}
             />
           ))}
         </div>

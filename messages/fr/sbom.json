@@ -75,6 +75,12 @@
         "medium": "Moyenne",
         "low": "Faible"
       }
+    },
+    "export": {
+      "download": "Télécharger le SBOM",
+      "menuLabel": "Télécharger au format",
+      "cyclonedx": "CycloneDX 1.6 (.cdx.json)",
+      "spdx": "SPDX 2.3 (.spdx.json)"
     }
   }
 }

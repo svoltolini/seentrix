@@ -75,6 +75,12 @@
         "medium": "Media",
         "low": "Bassa"
       }
+    },
+    "export": {
+      "download": "Scarica SBOM",
+      "menuLabel": "Scarica come",
+      "cyclonedx": "CycloneDX 1.6 (.cdx.json)",
+      "spdx": "SPDX 2.3 (.spdx.json)"
     }
   }
 }

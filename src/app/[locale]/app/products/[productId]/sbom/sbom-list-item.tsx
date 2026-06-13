@@ -3,6 +3,13 @@
 import { useTranslations } from "next-intl";
 import { Icon } from "@/components/icon";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 import { SbomComponentTable } from "./sbom-component-table";
 import type {
@@ -29,6 +36,7 @@ export function SbomListItem({
   onToggleShowAll,
   onSortChange,
   onToggleActive,
+  onDownload,
 }: {
   sbom: SbomRecord;
   isExpanded: boolean;
@@ -47,6 +55,7 @@ export function SbomListItem({
   onToggleShowAll: () => void;
   onSortChange: (sort: "name" | "vulns") => void;
   onToggleActive: (active: boolean) => void;
+  onDownload: (format: "cyclonedx" | "spdx") => void;
 }) {
   const t = useTranslations("sbom");
 
@@ -124,6 +133,35 @@ export function SbomListItem({
               <Icon name="ArchiveIcon" className="size-3.5" />
             )}
           </Button>
+          {/* Download a canonical SBOM (CycloneDX / SPDX) of this set. */}
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              render={
+                <Button
+                  variant="ghost"
+                  size="icon-xs"
+                  className="text-muted-foreground hover:text-foreground"
+                  title={t("export.download")}
+                  onClick={(e) => e.stopPropagation()}
+                />
+              }
+            >
+              <Icon name="DocumentDownload" className="size-3.5" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              align="end"
+              className="min-w-52"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <DropdownMenuLabel>{t("export.menuLabel")}</DropdownMenuLabel>
+              <DropdownMenuItem onClick={() => onDownload("cyclonedx")}>
+                {t("export.cyclonedx")}
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => onDownload("spdx")}>
+                {t("export.spdx")}
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
           <Button
             variant="ghost"
             size="icon-xs"
