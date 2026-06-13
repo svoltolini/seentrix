@@ -1,0 +1,369 @@
+{
+  "dashboard": {
+    "title": "Panel zgodności",
+    "subtitle": "Przegląd stanu zgodności z CRA dla wszystkich Twoich produktów.",
+    "totalProducts": "Łączna liczba produktów",
+    "assessed": "Ocenione",
+    "assessedOf": "{assessed} / {total}",
+    "avgCompliance": "Śr. zgodność",
+    "totalVulnerabilities": "Podatności",
+    "critical": "Krytyczne",
+    "high": "Wysokie",
+    "medium": "Średnie",
+    "low": "Niskie",
+    "vulnChart": "Podział podatności",
+    "vulnChartEyebrow": "Ważność",
+    "vulnChartSubtitle": "We wszystkich Twoich produktach, uszeregowane według ważności",
+    "noVulnerabilities": "Nie znaleziono podatności",
+    "actionNeeded": {
+      "eyebrow": "Wymagane działanie",
+      "headline": "Doprowadź produkt {product} do porządku przed {deadline}",
+      "daysLeft": "pozostało dni",
+      "compliance": "zgodność",
+      "cta": "Otwórz listę kontrolną"
+    },
+    "daysRemaining": "{days} dni",
+    "passed": "Zaliczone",
+    "timeAgo": {
+      "justNow": "przed chwilą",
+      "minutesAgo": "{count} min temu",
+      "hoursAgo": "{count} godz. temu",
+      "daysAgo": "{count} dni temu"
+    },
+    "daysLeft": "pozostało {days} dni",
+    "upcomingDeadline": "Następny termin",
+    "vulnerabilities": "Otwarte podatności",
+    "noProducts": "Brak produktów",
+    "noProductsDescription": "Dodaj swój pierwszy produkt, aby rozpocząć drogę do zgodności z CRA. Przeprowadzimy Cię przez każdy krok.",
+    "addProduct": "Dodaj produkt",
+    "compliance": "Zgodność",
+    "notAssessed": "Nieocenione",
+    "productTable": {
+      "eyebrow": "Produkty",
+      "title": "Zgodność produktów",
+      "subtitle": "Postęp listy kontrolnej i obciążenie podatnościami na produkt.",
+      "name": "Produkt",
+      "category": "Kategoria",
+      "compliance": "Zgodność",
+      "vulnerabilities": "Podat.",
+      "sbom": "SBOM",
+      "action": "Działanie",
+      "view": "Wyświetl"
+    },
+    "productType": {
+      "hardware": "Sprzęt",
+      "software": "Oprogramowanie",
+      "firmware": "Oprogramowanie układowe",
+      "iot": "IoT"
+    },
+    "sbomUploaded": "Przesłano",
+    "sbomMissing": "Brak",
+    "recentActivity": "Ostatnia aktywność",
+    "activityEyebrow": "Ścieżka audytu",
+    "activitySubtitle": "Ostatnie 10 działań w Twojej organizacji, pobrane z dziennika audytu.",
+    "activity": "Aktywność",
+    "activityEmpty": "Aktywność Twojego zespołu pojawi się tutaj w miarę pracy nad zgodnością.",
+    "myProducts": "Moje produkty",
+    "todayTasks": "Dzisiejsze zadania",
+    "seeAll": "Zobacz wszystko",
+    "noOverdue": "Brak zaległych zadań. Dobra robota.",
+    "chat": "Zespół",
+    "upcomingDeadlines": {
+      "title": "Nadchodzące"
+    },
+    "actionLabels": {
+      "billing": {
+        "checkout_created": "Rozpoczęto realizację płatności"
+      },
+      "checklist": {
+        "evidence_removed": "Usunięto dowód",
+        "evidence_uploaded": "Przesłano dowód — {target}",
+        "item_description_changed": "Edytowano opis pozycji listy kontrolnej",
+        "item_status_changed": "Zaktualizowano pozycję listy kontrolnej",
+        "item_assigned": "Przypisano pozycję listy kontrolnej"
+      },
+      "document": {
+        "pdf_generated": "Wygenerowano dokument PDF",
+        "saved": "Zapisano {target}",
+        "status_changed": "Zmieniono status dokumentu"
+      },
+      "member": {
+        "created": "Dodano {target} do zespołu",
+        "removed": "Usunięto członka zespołu",
+        "role_changed": "Zaktualizowano rolę członka zespołu"
+      },
+      "organization": {
+        "updated": "Zaktualizowano ustawienia organizacji",
+        "created": "Utworzono organizację",
+        "entity_type_changed": "Zmieniono typ podmiotu organizacji",
+        "security_updated": "Zaktualizowano ustawienia bezpieczeństwa"
+      },
+      "password": {
+        "changed": "Zmieniono hasło"
+      },
+      "product": {
+        "assessed": "Oceniono produkt",
+        "created": "Utworzono produkt {target}",
+        "deleted": "Usunięto produkt",
+        "updated": "Zaktualizowano {target}",
+        "support_updated": "Zaktualizowano okres wsparcia produktu"
+      },
+      "profile": {
+        "updated": "Zaktualizowano profil"
+      },
+      "sbom": {
+        "deleted": "Usunięto plik SBOM",
+        "scanned": "Przeskanowano plik SBOM",
+        "uploaded": "Przesłano plik SBOM — {target}"
+      },
+      "fallback": "{action}",
+      "academy": {
+        "lesson_completed": "Ukończono lekcję Akademii"
+      },
+      "conformity": {
+        "attachment_added": "Dodano załącznik zgodności",
+        "declaration_issued": "Wystawiono deklarację zgodności",
+        "notified_body_updated": "Zaktualizowano dane jednostki notyfikowanej"
+      },
+      "entity_obligation": {
+        "updated": "Zaktualizowano obowiązki podmiotu"
+      },
+      "gdpr": {
+        "deletion_cancelled": "Anulowano żądanie usunięcia konta",
+        "deletion_requested": "Zażądano usunięcia konta",
+        "export_generated": "Wygenerowano eksport danych"
+      },
+      "incident": {
+        "closed": "Zamknięto incydent",
+        "detected": "Zgłoszono incydent",
+        "updated": "Zaktualizowano incydent",
+        "user_notified": "Powiadomiono użytkowników o incydencie"
+      },
+      "release": {
+        "deleted": "Usunięto wydanie",
+        "published": "Opublikowano wydanie"
+      },
+      "vulnerability": {
+        "assigned": "Przypisano podatność",
+        "note_added": "Dodano notatkę do podatności"
+      }
+    },
+    "activityType": {
+      "assessment": "Ocena",
+      "checklist": "Lista kontrolna",
+      "sbom": "SBOM",
+      "document": "Dokument"
+    },
+    "noActivity": "Brak ostatniej aktywności",
+    "activityLogEmpty": "Aktywność Twojego zespołu pojawi się tutaj w miarę pracy nad zgodnością.",
+    "greeting": "Witaj ponownie, {name}",
+    "greetingSubtitle": "Oto Twój dzisiejszy przegląd zgodności.",
+    "deadlines": "Nadchodzące terminy",
+    "deadlinesEyebrow": "Rozporządzenie",
+    "deadlinesSubtitle": "Kluczowe kamienie milowe CRA w kalendarzu egzekwowania.",
+    "deadlineDescription": "Kluczowe regulacyjne kamienie milowe CRA",
+    "timeElapsed": "Czas, który upłynął",
+    "deadline": {
+      "notifiedBodies": "Jednostki notyfikowane",
+      "notifiedBodiesDate": "11 cze 2026",
+      "reporting": "Obowiązki sprawozdawcze",
+      "reportingDate": "11 wrz 2026",
+      "fullCompliance": "Pełna zgodność",
+      "fullComplianceDate": "11 gru 2027",
+      "explain": "Wyjaśnij"
+    },
+    "viewAll": "Zobacz wszystko",
+    "recentProducts": "Ostatnie produkty",
+    "reportingDeadline": "Obowiązki sprawozdawcze",
+    "reportingDate": "11 wrz 2026",
+    "fullCompliance": "Pełne wymagania dotyczące produktów",
+    "fullComplianceDate": "11 gru 2027",
+    "categoryDefault": "Domyślna",
+    "categoryImportantI": "Istotna I",
+    "categoryImportantII": "Istotna II",
+    "categoryCritical": "Krytyczna",
+    "role": {
+      "admin": "Administrator",
+      "compliance_officer": "Specjalista ds. zgodności",
+      "cto": "CTO",
+      "viewer": "Obserwator",
+      "editor": "Redaktor"
+    },
+    "complianceTrend": {
+      "eyebrow": "Trend",
+      "title": "Trend zgodności",
+      "subtitle": "Wynik listy kontrolnej z ostatnich 12 tygodni, na produkt i jako średnia organizacji.",
+      "orgAverage": "Średnia organizacji",
+      "score": "Wynik",
+      "noData": "Brak historii zgodności. Wyniki są śledzone w miarę aktualizowania list kontrolnych."
+    },
+    "vulnAging": {
+      "eyebrow": "Ryzyko",
+      "title": "Wiek podatności",
+      "openVulns": "Otwarte podatności",
+      "mttr": "MTTR",
+      "mttrDays": "śr. {days} dni",
+      "mttrNoData": "Brak danych",
+      "noData": "Brak otwartych podatności do wyświetlenia."
+    },
+    "checklistProgress": {
+      "eyebrow": "Postęp",
+      "title": "Postęp listy kontrolnej",
+      "summary": "{pct}% śr. ukończenia · {count, plural, one {# produkt} few {# produkty} many {# produktów} other {# produktów}}",
+      "pending": "Oczekujące",
+      "inProgress": "W toku",
+      "completed": "Ukończone",
+      "notApplicable": "Nie dotyczy",
+      "noData": "Brak dostępnych danych listy kontrolnej."
+    },
+    "overdueTasks": {
+      "eyebrow": "Uwaga",
+      "title": "Zaległe zadania",
+      "allOnTrack": "Wszystkie zadania zgodnie z planem",
+      "allOnTrackDescription": "Brak zaległych pozycji listy kontrolnej.",
+      "daysOverdue": "{days} dni po terminie"
+    },
+    "activityVelocity": {
+      "eyebrow": "Tempo",
+      "title": "Aktywność zespołu",
+      "actions": "{count} działań",
+      "totalLast30d": "działań · ostatnie 30 dni",
+      "peak": "Szczytowy dzień",
+      "noData": "Brak aktywności zespołu w ostatnich 30 dniach."
+    },
+    "team": "Zespół",
+    "kpi": {
+      "heading": "Kluczowe wskaźniki",
+      "products": "Produkty",
+      "productsAssessed": "{count} ocenionych",
+      "avgCompliance": "Śr. zgodność",
+      "openVulns": "Otwarte podatności",
+      "criticalCount": "{count} krytycznych",
+      "overdue": "Zaległe zadania",
+      "daysValue": "{days} dni"
+    },
+    "statistics": {
+      "title": "Statystyki projektu",
+      "activity": "Aktywność",
+      "weekFilter": "Ten tydzień",
+      "monthFilter": "Ten miesiąc",
+      "yearFilter": "Ten rok",
+      "empty": "Brak aktywności w tym tygodniu. W miarę jak Ty i Twój zespół pracujecie nad produktami, plikami SBOM i listami kontrolnymi, Twoja tygodniowa aktywność pojawi się tutaj.",
+      "day": {
+        "monday": "Pon",
+        "tuesday": "Wt",
+        "wednesday": "Śr",
+        "thursday": "Czw",
+        "friday": "Pt",
+        "saturday": "Sob",
+        "sunday": "Nd"
+      },
+      "month": {
+        "jan": "sty",
+        "feb": "lut",
+        "mar": "mar",
+        "apr": "kwi",
+        "may": "maj",
+        "jun": "cze",
+        "jul": "lip",
+        "aug": "sie",
+        "sep": "wrz",
+        "oct": "paź",
+        "nov": "lis",
+        "dec": "gru"
+      }
+    },
+    "calendar": {
+      "title": "Kalendarz zgodności",
+      "prev": "Poprzedni miesiąc",
+      "next": "Następny miesiąc",
+      "legendDeadline": "Termin CRA",
+      "legendTask": "Twoje zadanie",
+      "upcoming": "Nadchodzące",
+      "empty": "Nic nie zaplanowano.",
+      "dueToday": "Termin dzisiaj",
+      "inDays": "Za {days} dni",
+      "day": {
+        "mon": "Pon",
+        "tue": "Wt",
+        "wed": "Śr",
+        "thu": "Czw",
+        "fri": "Pt",
+        "sat": "Sob",
+        "sun": "Nd"
+      }
+    },
+    "getStarted": {
+      "title": "Witamy w Seentrix",
+      "greeting": "Witaj, {name}",
+      "subtitle": "Przygotujmy Twoją organizację na unijne rozporządzenie Cyber Resilience Act. Przejdź przez te kroki, a my poprowadzimy Cię przez całą drogę.",
+      "progressLabel": "Ukończono {done} z {total} kroków",
+      "askTitle": "Nie wiesz, od czego zacząć?",
+      "askDescription": "Otwórz Seentrix AI z górnego paska i zapytaj „Co muszę zrobić dalej?” — wie dokładnie, na jakim etapie jest Twoja organizacja."
+    },
+    "steps": {
+      "company-profile": {
+        "title": "Uzupełnij profil firmy",
+        "description": "Dodaj dane podmiotu prawnego, aby Seentrix mógł wygenerować deklarację zgodności.",
+        "cta": "Uzupełnij profil"
+      },
+      "first-product": {
+        "title": "Dodaj swój pierwszy produkt",
+        "description": "Zarejestruj produkt, aby zacząć śledzić jego drogę do zgodności z CRA.",
+        "cta": "Dodaj produkt"
+      },
+      "classify-product": {
+        "title": "Sklasyfikuj swój produkt w ramach CRA",
+        "description": "Uruchom prowadzoną ocenę, aby określić kategorię CRA produktu i ścieżkę oceny zgodności.",
+        "cta": "Sklasyfikuj produkt"
+      },
+      "upload-sbom": {
+        "title": "Prześlij zestawienie składników oprogramowania (SBOM)",
+        "description": "Prześlij plik SBOM w formacie CycloneDX lub SPDX, aby Seentrix mógł ujawnić znane podatności.",
+        "cta": "Prześlij SBOM"
+      },
+      "triage-vulnerabilities": {
+        "title": "Przeprowadź triaż podatności",
+        "description": "Przejrzyj otwarte podatności i oznacz każdą jako rozwiązaną lub zaakceptowaną.",
+        "cta": "Przejrzyj podatności"
+      },
+      "complete-checklist": {
+        "title": "Przejdź przez listę kontrolną zgodności",
+        "description": "Wypełnij listę kontrolną zasadniczych wymagań dla każdego produktu, aby osiągnąć pełną zgodność.",
+        "cta": "Otwórz listę kontrolną"
+      }
+    },
+    "hero": {
+      "eyebrow": "Gotowość do CRA",
+      "headline": "Miło Cię widzieć, {name}. Pokonałeś już <em>{percent}</em> drogi do zgodności.",
+      "headlineNoName": "Pokonałeś już <em>{percent}</em> drogi do zgodności.",
+      "body": "<strong>{critical, plural, =0 {Brak krytycznych podatności} one {1 krytyczna podatność} few {# krytyczne podatności} many {# krytycznych podatności} other {# krytycznych podatności}}</strong> i <strong>{overdue, plural, =0 {brak zaległych zadań} one {1 zaległe zadanie} few {# zaległe zadania} many {# zaległych zadań} other {# zaległych zadań}}</strong> w Twoich produktach.",
+      "nextDeadline": "Twój następny termin, <strong>{deadline}</strong>, jest za {days, plural, one {1 dzień} few {# dni} many {# dni} other {# dni}}.",
+      "reviewCta": "Przejrzyj krytyczne pozycje",
+      "copilotCta": "Otwórz Copilot",
+      "ringCaption": "Gotowość do CRA",
+      "legendAchieved": "Osiągnięto · {percent}%",
+      "legendRemaining": "Pozostało do celu · {percent}%"
+    },
+    "attention": {
+      "title": "Produkty wymagające uwagi"
+    },
+    "myWork": {
+      "greeting": "Cześć {name}, oto Twoja praca",
+      "greetingNoName": "Oto Twoja praca",
+      "summary": "{open} otwartych zadań, {overdue} zaległych.",
+      "summaryClear": "Nic Ci teraz nie przypisano — wszystko na bieżąco.",
+      "nextUp": "Następne",
+      "allProducts": "Wszystkie produkty",
+      "yourVulns": "Podatności przypisane do Ciebie",
+      "training": "Twoje szkolenie",
+      "noTraining": "Brak wymaganych lekcji dla Twojej roli.",
+      "noTasksTitle": "Brak przypisanych zadań",
+      "noTasksBody": "Gdy pozycja listy kontrolnej zostanie Ci przypisana, pojawi się tutaj — najpierw praca zaległa.",
+      "overdueDays": "{days} dni po terminie",
+      "dueInDays": "Termin za {days} dni",
+      "dueToday": "Termin dzisiaj",
+      "myTasks": "Moje zadania"
+    }
+  }
+}

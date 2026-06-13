@@ -1,0 +1,369 @@
+{
+  "dashboard": {
+    "title": "Efterlevnadspanel",
+    "subtitle": "Översikt över din CRA-efterlevnadsstatus för alla produkter.",
+    "totalProducts": "Totalt antal produkter",
+    "assessed": "Bedömda",
+    "assessedOf": "{assessed} / {total}",
+    "avgCompliance": "Genomsn. efterlevnad",
+    "totalVulnerabilities": "Sårbarheter",
+    "critical": "Kritiska",
+    "high": "Höga",
+    "medium": "Medel",
+    "low": "Låga",
+    "vulnChart": "Fördelning av sårbarheter",
+    "vulnChartEyebrow": "Allvarlighetsgrad",
+    "vulnChartSubtitle": "Över alla dina produkter, rangordnade efter allvarlighetsgrad",
+    "noVulnerabilities": "Inga sårbarheter hittades",
+    "actionNeeded": {
+      "eyebrow": "Åtgärd krävs",
+      "headline": "Få {product} på rätt spår före {deadline}",
+      "daysLeft": "dagar kvar",
+      "compliance": "efterlevnad",
+      "cta": "Öppna checklista"
+    },
+    "daysRemaining": "{days} d",
+    "passed": "Godkänd",
+    "timeAgo": {
+      "justNow": "just nu",
+      "minutesAgo": "{count} min sedan",
+      "hoursAgo": "{count} tim sedan",
+      "daysAgo": "{count} d sedan"
+    },
+    "daysLeft": "{days} dagar kvar",
+    "upcomingDeadline": "Nästa tidsfrist",
+    "vulnerabilities": "Öppna sårbarheter",
+    "noProducts": "Inga produkter ännu",
+    "noProductsDescription": "Lägg till din första produkt för att påbörja din resa mot CRA-efterlevnad. Vi vägleder dig genom varje steg.",
+    "addProduct": "Lägg till produkt",
+    "compliance": "Efterlevnad",
+    "notAssessed": "Inte bedömd",
+    "productTable": {
+      "eyebrow": "Produkter",
+      "title": "Produktefterlevnad",
+      "subtitle": "Checklisteförlopp och sårbarhetsbelastning per produkt.",
+      "name": "Produkt",
+      "category": "Kategori",
+      "compliance": "Efterlevnad",
+      "vulnerabilities": "Sårb.",
+      "sbom": "SBOM",
+      "action": "Åtgärd",
+      "view": "Visa"
+    },
+    "productType": {
+      "hardware": "Hårdvara",
+      "software": "Programvara",
+      "firmware": "Fast programvara",
+      "iot": "IoT"
+    },
+    "sbomUploaded": "Uppladdad",
+    "sbomMissing": "Saknas",
+    "recentActivity": "Senaste aktivitet",
+    "activityEyebrow": "Granskningsspår",
+    "activitySubtitle": "De senaste 10 åtgärderna i din organisation, hämtade från granskningsloggen.",
+    "activity": "Aktivitet",
+    "activityEmpty": "Aktivitet från ditt team visas här i takt med att ni arbetar med efterlevnaden.",
+    "myProducts": "Mina produkter",
+    "todayTasks": "Dagens uppgifter",
+    "seeAll": "Visa alla",
+    "noOverdue": "Inga försenade uppgifter. Bra jobbat.",
+    "chat": "Team",
+    "upcomingDeadlines": {
+      "title": "Kommande"
+    },
+    "actionLabels": {
+      "billing": {
+        "checkout_created": "Påbörjade en betalning"
+      },
+      "checklist": {
+        "evidence_removed": "Tog bort ett bevis",
+        "evidence_uploaded": "Laddade upp bevis — {target}",
+        "item_description_changed": "Redigerade en checklistebeskrivning",
+        "item_status_changed": "Uppdaterade en checklistepost",
+        "item_assigned": "Tilldelade en checklistepost"
+      },
+      "document": {
+        "pdf_generated": "Genererade en dokument-PDF",
+        "saved": "Sparade {target}",
+        "status_changed": "Ändrade ett dokuments status"
+      },
+      "member": {
+        "created": "Lade till {target} i teamet",
+        "removed": "Tog bort en teammedlem",
+        "role_changed": "Uppdaterade en teammedlems roll"
+      },
+      "organization": {
+        "updated": "Uppdaterade organisationsinställningarna",
+        "created": "Skapade organisationen",
+        "entity_type_changed": "Ändrade organisationens entitetstyp",
+        "security_updated": "Uppdaterade säkerhetsinställningarna"
+      },
+      "password": {
+        "changed": "Bytte sitt lösenord"
+      },
+      "product": {
+        "assessed": "Bedömde en produkt",
+        "created": "Skapade produkten {target}",
+        "deleted": "Raderade en produkt",
+        "updated": "Uppdaterade {target}",
+        "support_updated": "Uppdaterade en produkts supportperiod"
+      },
+      "profile": {
+        "updated": "Uppdaterade sin profil"
+      },
+      "sbom": {
+        "deleted": "Tog bort en SBOM",
+        "scanned": "Skannade en SBOM",
+        "uploaded": "Laddade upp en SBOM — {target}"
+      },
+      "fallback": "{action}",
+      "academy": {
+        "lesson_completed": "Slutförde en Academy-lektion"
+      },
+      "conformity": {
+        "attachment_added": "Lade till en överensstämmelsebilaga",
+        "declaration_issued": "Utfärdade en försäkran om överensstämmelse",
+        "notified_body_updated": "Uppdaterade uppgifter om anmält organ"
+      },
+      "entity_obligation": {
+        "updated": "Uppdaterade entitetsskyldigheter"
+      },
+      "gdpr": {
+        "deletion_cancelled": "Avbröt en begäran om kontoradering",
+        "deletion_requested": "Begärde kontoradering",
+        "export_generated": "Genererade en dataexport"
+      },
+      "incident": {
+        "closed": "Stängde en incident",
+        "detected": "Rapporterade en incident",
+        "updated": "Uppdaterade en incident",
+        "user_notified": "Meddelade användare om en incident"
+      },
+      "release": {
+        "deleted": "Raderade en release",
+        "published": "Publicerade en release"
+      },
+      "vulnerability": {
+        "assigned": "Tilldelade en sårbarhet",
+        "note_added": "Lade till en sårbarhetsanteckning"
+      }
+    },
+    "activityType": {
+      "assessment": "Bedömning",
+      "checklist": "Checklista",
+      "sbom": "SBOM",
+      "document": "Dokument"
+    },
+    "noActivity": "Ingen senaste aktivitet",
+    "activityLogEmpty": "Aktivitet från ditt team visas här i takt med att ni arbetar med efterlevnaden.",
+    "greeting": "Välkommen tillbaka, {name}",
+    "greetingSubtitle": "Här är din efterlevnadsöversikt för idag.",
+    "deadlines": "Kommande tidsfrister",
+    "deadlinesEyebrow": "Förordning",
+    "deadlinesSubtitle": "Viktiga CRA-milstolpar i tillämpningskalendern.",
+    "deadlineDescription": "Viktiga regulatoriska CRA-milstolpar",
+    "timeElapsed": "Förfluten tid",
+    "deadline": {
+      "notifiedBodies": "Anmälda organ",
+      "notifiedBodiesDate": "11 jun 2026",
+      "reporting": "Rapporteringsskyldigheter",
+      "reportingDate": "11 sep 2026",
+      "fullCompliance": "Full efterlevnad",
+      "fullComplianceDate": "11 dec 2027",
+      "explain": "Förklara"
+    },
+    "viewAll": "Visa alla",
+    "recentProducts": "Senaste produkter",
+    "reportingDeadline": "Rapporteringsskyldigheter",
+    "reportingDate": "11 sep 2026",
+    "fullCompliance": "Fullständiga produktkrav",
+    "fullComplianceDate": "11 dec 2027",
+    "categoryDefault": "Standard",
+    "categoryImportantI": "Viktig I",
+    "categoryImportantII": "Viktig II",
+    "categoryCritical": "Kritisk",
+    "role": {
+      "admin": "Administratör",
+      "compliance_officer": "Efterlevnadsansvarig",
+      "cto": "CTO",
+      "viewer": "Observatör",
+      "editor": "Redaktör"
+    },
+    "complianceTrend": {
+      "eyebrow": "Trend",
+      "title": "Efterlevnadstrend",
+      "subtitle": "Checklistepoäng under de senaste 12 veckorna, per produkt och organisationsgenomsnitt.",
+      "orgAverage": "Organisationsgenomsnitt",
+      "score": "Poäng",
+      "noData": "Ingen efterlevnadshistorik ännu. Poäng spåras i takt med att du uppdaterar checklistor."
+    },
+    "vulnAging": {
+      "eyebrow": "Risk",
+      "title": "Sårbarheternas ålder",
+      "openVulns": "Öppna sårbarheter",
+      "mttr": "MTTR",
+      "mttrDays": "{days} d i genomsnitt",
+      "mttrNoData": "Inga data",
+      "noData": "Inga öppna sårbarheter att visa."
+    },
+    "checklistProgress": {
+      "eyebrow": "Förlopp",
+      "title": "Checklisteförlopp",
+      "summary": "{pct} % genomsnittlig slutförandegrad · {count, plural, one {# produkt} other {# produkter}}",
+      "pending": "Väntar",
+      "inProgress": "Pågår",
+      "completed": "Slutförd",
+      "notApplicable": "Ej tillämpligt",
+      "noData": "Inga checklistedata tillgängliga."
+    },
+    "overdueTasks": {
+      "eyebrow": "Uppmärksamhet",
+      "title": "Försenade uppgifter",
+      "allOnTrack": "Alla uppgifter enligt plan",
+      "allOnTrackDescription": "Inga försenade checklisteposter.",
+      "daysOverdue": "{days} d försenad"
+    },
+    "activityVelocity": {
+      "eyebrow": "Tempo",
+      "title": "Teamaktivitet",
+      "actions": "{count} åtgärder",
+      "totalLast30d": "åtgärder · senaste 30 dagarna",
+      "peak": "Toppdag",
+      "noData": "Ingen teamaktivitet de senaste 30 dagarna."
+    },
+    "team": "Team",
+    "kpi": {
+      "heading": "Nyckeltal",
+      "products": "Produkter",
+      "productsAssessed": "{count} bedömda",
+      "avgCompliance": "Genomsn. efterlevnad",
+      "openVulns": "Öppna sårbarheter",
+      "criticalCount": "{count} kritiska",
+      "overdue": "Försenade uppgifter",
+      "daysValue": "{days} d"
+    },
+    "statistics": {
+      "title": "Projektstatistik",
+      "activity": "Aktivitet",
+      "weekFilter": "Denna vecka",
+      "monthFilter": "Denna månad",
+      "yearFilter": "Detta år",
+      "empty": "Ingen aktivitet ännu denna vecka. I takt med att du och ditt team arbetar med produkter, SBOM:er och checklistor visas din veckoaktivitet här.",
+      "day": {
+        "monday": "Mån",
+        "tuesday": "Tis",
+        "wednesday": "Ons",
+        "thursday": "Tor",
+        "friday": "Fre",
+        "saturday": "Lör",
+        "sunday": "Sön"
+      },
+      "month": {
+        "jan": "jan",
+        "feb": "feb",
+        "mar": "mar",
+        "apr": "apr",
+        "may": "maj",
+        "jun": "jun",
+        "jul": "jul",
+        "aug": "aug",
+        "sep": "sep",
+        "oct": "okt",
+        "nov": "nov",
+        "dec": "dec"
+      }
+    },
+    "calendar": {
+      "title": "Efterlevnadskalender",
+      "prev": "Föregående månad",
+      "next": "Nästa månad",
+      "legendDeadline": "CRA-tidsfrist",
+      "legendTask": "Din uppgift",
+      "upcoming": "Kommande",
+      "empty": "Inget schemalagt.",
+      "dueToday": "Förfaller idag",
+      "inDays": "Om {days} dagar",
+      "day": {
+        "mon": "Mån",
+        "tue": "Tis",
+        "wed": "Ons",
+        "thu": "Tor",
+        "fri": "Fre",
+        "sat": "Lör",
+        "sun": "Sön"
+      }
+    },
+    "getStarted": {
+      "title": "Välkommen till Seentrix",
+      "greeting": "Välkommen, {name}",
+      "subtitle": "Låt oss göra din organisation redo för EU:s cyberresiliensförordning. Arbeta dig igenom dessa steg så vägleder vi dig hela vägen.",
+      "progressLabel": "{done} av {total} steg slutförda",
+      "askTitle": "Osäker på var du ska börja?",
+      "askDescription": "Öppna Seentrix AI från den övre listen och fråga ”Vad behöver jag göra härnäst?” — den vet exakt var din organisation står."
+    },
+    "steps": {
+      "company-profile": {
+        "title": "Slutför din företagsprofil",
+        "description": "Lägg till uppgifterna om din juridiska person så att Seentrix kan generera en försäkran om överensstämmelse.",
+        "cta": "Slutför profil"
+      },
+      "first-product": {
+        "title": "Lägg till din första produkt",
+        "description": "Registrera en produkt för att börja följa dess resa mot CRA-efterlevnad.",
+        "cta": "Lägg till produkt"
+      },
+      "classify-product": {
+        "title": "Klassificera din produkt enligt CRA",
+        "description": "Kör den vägledda bedömningen för att fastställa produktens CRA-kategori och väg för överensstämmelse.",
+        "cta": "Klassificera produkt"
+      },
+      "upload-sbom": {
+        "title": "Ladda upp en programvaruförteckning",
+        "description": "Ladda upp en SBOM i CycloneDX eller SPDX så att Seentrix kan hitta kända sårbarheter.",
+        "cta": "Ladda upp SBOM"
+      },
+      "triage-vulnerabilities": {
+        "title": "Triagera dina sårbarheter",
+        "description": "Granska öppna sårbarheter och markera var och en som åtgärdad eller accepterad.",
+        "cta": "Granska sårbarheter"
+      },
+      "complete-checklist": {
+        "title": "Arbeta dig igenom efterlevnadschecklistan",
+        "description": "Slutför checklistan med väsentliga krav för varje produkt för att nå full överensstämmelse.",
+        "cta": "Öppna checklista"
+      }
+    },
+    "hero": {
+      "eyebrow": "CRA-beredskap",
+      "headline": "Kul att se dig, {name}. Du har kommit <em>{percent}</em> av vägen till överensstämmelse.",
+      "headlineNoName": "Du har kommit <em>{percent}</em> av vägen till överensstämmelse.",
+      "body": "<strong>{critical, plural, =0 {Inga kritiska sårbarheter} one {1 kritisk sårbarhet} other {# kritiska sårbarheter}}</strong> och <strong>{overdue, plural, =0 {inga försenade uppgifter} one {1 försenad uppgift} other {# försenade uppgifter}}</strong> i dina produkter.",
+      "nextDeadline": "Din nästa tidsfrist, <strong>{deadline}</strong>, är om {days, plural, one {1 dag} other {# dagar}}.",
+      "reviewCta": "Granska kritiska poster",
+      "copilotCta": "Öppna Copilot",
+      "ringCaption": "CRA-beredskap",
+      "legendAchieved": "Uppnått · {percent} %",
+      "legendRemaining": "Återstår till målet · {percent} %"
+    },
+    "attention": {
+      "title": "Produkter som behöver uppmärksamhet"
+    },
+    "myWork": {
+      "greeting": "Hej {name}, här är ditt arbete",
+      "greetingNoName": "Här är ditt arbete",
+      "summary": "{open} öppna uppgifter, {overdue} försenade.",
+      "summaryClear": "Inget tilldelat dig just nu — du är ikapp.",
+      "nextUp": "Härnäst",
+      "allProducts": "Alla produkter",
+      "yourVulns": "Sårbarheter tilldelade dig",
+      "training": "Din utbildning",
+      "noTraining": "Inga obligatoriska lektioner för din roll.",
+      "noTasksTitle": "Inga uppgifter tilldelade",
+      "noTasksBody": "När en checklistepost tilldelas dig visas den här — försenat arbete först.",
+      "overdueDays": "{days} d försenad",
+      "dueInDays": "Förfaller om {days} d",
+      "dueToday": "Förfaller idag",
+      "myTasks": "Mina uppgifter"
+    }
+  }
+}

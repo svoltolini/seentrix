@@ -1,0 +1,369 @@
+{
+  "dashboard": {
+    "title": "Painel de conformidade",
+    "subtitle": "Visão geral do estado de conformidade com o CRA em todos os seus produtos.",
+    "totalProducts": "Total de produtos",
+    "assessed": "Avaliados",
+    "assessedOf": "{assessed} / {total}",
+    "avgCompliance": "Conformidade média",
+    "totalVulnerabilities": "Vulnerabilidades",
+    "critical": "Críticas",
+    "high": "Altas",
+    "medium": "Médias",
+    "low": "Baixas",
+    "vulnChart": "Repartição das vulnerabilidades",
+    "vulnChartEyebrow": "Gravidade",
+    "vulnChartSubtitle": "Em todos os seus produtos, ordenadas por gravidade",
+    "noVulnerabilities": "Não foram encontradas vulnerabilidades",
+    "actionNeeded": {
+      "eyebrow": "Ação necessária",
+      "headline": "Coloque {product} em dia antes de {deadline}",
+      "daysLeft": "dias restantes",
+      "compliance": "conformidade",
+      "cta": "Abrir lista de verificação"
+    },
+    "daysRemaining": "{days} d",
+    "passed": "Aprovado",
+    "timeAgo": {
+      "justNow": "agora mesmo",
+      "minutesAgo": "há {count} min",
+      "hoursAgo": "há {count} h",
+      "daysAgo": "há {count} d"
+    },
+    "daysLeft": "{days} dias restantes",
+    "upcomingDeadline": "Próximo prazo",
+    "vulnerabilities": "Vulnerabilidades abertas",
+    "noProducts": "Ainda não há produtos",
+    "noProductsDescription": "Adicione o seu primeiro produto para iniciar o seu percurso de conformidade com o CRA. Iremos guiá-lo em cada passo.",
+    "addProduct": "Adicionar produto",
+    "compliance": "Conformidade",
+    "notAssessed": "Não avaliado",
+    "productTable": {
+      "eyebrow": "Produtos",
+      "title": "Conformidade por produto",
+      "subtitle": "Progresso da lista de verificação e carga de vulnerabilidades por produto.",
+      "name": "Produto",
+      "category": "Categoria",
+      "compliance": "Conformidade",
+      "vulnerabilities": "Vuln.",
+      "sbom": "SBOM",
+      "action": "Ação",
+      "view": "Ver"
+    },
+    "productType": {
+      "hardware": "Hardware",
+      "software": "Software",
+      "firmware": "Firmware",
+      "iot": "IoT"
+    },
+    "sbomUploaded": "Carregado",
+    "sbomMissing": "Em falta",
+    "recentActivity": "Atividade recente",
+    "activityEyebrow": "Trilha de auditoria",
+    "activitySubtitle": "As últimas 10 ações na sua organização, extraídas do registo de auditoria.",
+    "activity": "Atividade",
+    "activityEmpty": "A atividade da sua equipa aparecerá aqui à medida que trabalham na conformidade.",
+    "myProducts": "Os meus produtos",
+    "todayTasks": "Tarefas de hoje",
+    "seeAll": "Ver tudo",
+    "noOverdue": "Não há tarefas em atraso. Bom trabalho.",
+    "chat": "Equipa",
+    "upcomingDeadlines": {
+      "title": "Próximos"
+    },
+    "actionLabels": {
+      "billing": {
+        "checkout_created": "Iniciou um pagamento"
+      },
+      "checklist": {
+        "evidence_removed": "Removeu uma prova",
+        "evidence_uploaded": "Carregou uma prova — {target}",
+        "item_description_changed": "Editou a descrição de um item da lista de verificação",
+        "item_status_changed": "Atualizou um item da lista de verificação",
+        "item_assigned": "Atribuiu um item da lista de verificação"
+      },
+      "document": {
+        "pdf_generated": "Gerou um PDF de um documento",
+        "saved": "Guardou {target}",
+        "status_changed": "Alterou o estado de um documento"
+      },
+      "member": {
+        "created": "Adicionou {target} à equipa",
+        "removed": "Removeu um membro da equipa",
+        "role_changed": "Atualizou a função de um membro da equipa"
+      },
+      "organization": {
+        "updated": "Atualizou as definições da organização",
+        "created": "Criou a organização",
+        "entity_type_changed": "Alterou o tipo de entidade da organização",
+        "security_updated": "Atualizou as definições de segurança"
+      },
+      "password": {
+        "changed": "Alterou a palavra-passe"
+      },
+      "product": {
+        "assessed": "Avaliou um produto",
+        "created": "Criou o produto {target}",
+        "deleted": "Eliminou um produto",
+        "updated": "Atualizou {target}",
+        "support_updated": "Atualizou o período de suporte de um produto"
+      },
+      "profile": {
+        "updated": "Atualizou o perfil"
+      },
+      "sbom": {
+        "deleted": "Removeu um SBOM",
+        "scanned": "Analisou um SBOM",
+        "uploaded": "Carregou um SBOM — {target}"
+      },
+      "fallback": "{action}",
+      "academy": {
+        "lesson_completed": "Concluiu uma lição da Academia"
+      },
+      "conformity": {
+        "attachment_added": "Adicionou um anexo de conformidade",
+        "declaration_issued": "Emitiu uma declaração de conformidade",
+        "notified_body_updated": "Atualizou os dados do organismo notificado"
+      },
+      "entity_obligation": {
+        "updated": "Atualizou as obrigações da entidade"
+      },
+      "gdpr": {
+        "deletion_cancelled": "Cancelou um pedido de eliminação de conta",
+        "deletion_requested": "Solicitou a eliminação da conta",
+        "export_generated": "Gerou uma exportação de dados"
+      },
+      "incident": {
+        "closed": "Encerrou um incidente",
+        "detected": "Comunicou um incidente",
+        "updated": "Atualizou um incidente",
+        "user_notified": "Notificou os utilizadores sobre um incidente"
+      },
+      "release": {
+        "deleted": "Eliminou uma versão",
+        "published": "Publicou uma versão"
+      },
+      "vulnerability": {
+        "assigned": "Atribuiu uma vulnerabilidade",
+        "note_added": "Adicionou uma nota a uma vulnerabilidade"
+      }
+    },
+    "activityType": {
+      "assessment": "Avaliação",
+      "checklist": "Lista de verificação",
+      "sbom": "SBOM",
+      "document": "Documento"
+    },
+    "noActivity": "Não há atividade recente",
+    "activityLogEmpty": "A atividade da sua equipa aparecerá aqui à medida que trabalham na conformidade.",
+    "greeting": "Bem-vindo de volta, {name}",
+    "greetingSubtitle": "Aqui está a sua visão geral de conformidade de hoje.",
+    "deadlines": "Próximos prazos",
+    "deadlinesEyebrow": "Regulamento",
+    "deadlinesSubtitle": "Marcos importantes do CRA no calendário de aplicação.",
+    "deadlineDescription": "Marcos regulamentares importantes do CRA",
+    "timeElapsed": "Tempo decorrido",
+    "deadline": {
+      "notifiedBodies": "Organismos notificados",
+      "notifiedBodiesDate": "11 jun 2026",
+      "reporting": "Obrigações de comunicação",
+      "reportingDate": "11 set 2026",
+      "fullCompliance": "Conformidade total",
+      "fullComplianceDate": "11 dez 2027",
+      "explain": "Explicar"
+    },
+    "viewAll": "Ver tudo",
+    "recentProducts": "Produtos recentes",
+    "reportingDeadline": "Obrigações de comunicação",
+    "reportingDate": "11 set 2026",
+    "fullCompliance": "Requisitos completos do produto",
+    "fullComplianceDate": "11 dez 2027",
+    "categoryDefault": "Predefinida",
+    "categoryImportantI": "Importante I",
+    "categoryImportantII": "Importante II",
+    "categoryCritical": "Crítica",
+    "role": {
+      "admin": "Administrador",
+      "compliance_officer": "Responsável de conformidade",
+      "cto": "CTO",
+      "viewer": "Observador",
+      "editor": "Editor"
+    },
+    "complianceTrend": {
+      "eyebrow": "Tendência",
+      "title": "Tendência de conformidade",
+      "subtitle": "Pontuação da lista de verificação nas últimas 12 semanas, por produto e média da organização.",
+      "orgAverage": "Média da organização",
+      "score": "Pontuação",
+      "noData": "Ainda não há histórico de conformidade. As pontuações são registadas à medida que atualiza as listas de verificação."
+    },
+    "vulnAging": {
+      "eyebrow": "Risco",
+      "title": "Antiguidade das vulnerabilidades",
+      "openVulns": "Vulnerabilidades abertas",
+      "mttr": "MTTR",
+      "mttrDays": "{days} d em média",
+      "mttrNoData": "Sem dados",
+      "noData": "Não há vulnerabilidades abertas para mostrar."
+    },
+    "checklistProgress": {
+      "eyebrow": "Progresso",
+      "title": "Progresso da lista de verificação",
+      "summary": "{pct}% de conclusão média · {count, plural, one {# produto} other {# produtos}}",
+      "pending": "Pendente",
+      "inProgress": "Em curso",
+      "completed": "Concluído",
+      "notApplicable": "N/A",
+      "noData": "Não há dados da lista de verificação disponíveis."
+    },
+    "overdueTasks": {
+      "eyebrow": "Atenção",
+      "title": "Tarefas em atraso",
+      "allOnTrack": "Todas as tarefas em dia",
+      "allOnTrackDescription": "Não há itens em atraso na lista de verificação.",
+      "daysOverdue": "{days} d de atraso"
+    },
+    "activityVelocity": {
+      "eyebrow": "Ritmo",
+      "title": "Atividade da equipa",
+      "actions": "{count} ações",
+      "totalLast30d": "ações · últimos 30 dias",
+      "peak": "Dia de pico",
+      "noData": "Não há atividade da equipa nos últimos 30 dias."
+    },
+    "team": "Equipa",
+    "kpi": {
+      "heading": "Métricas-chave",
+      "products": "Produtos",
+      "productsAssessed": "{count} avaliados",
+      "avgCompliance": "Conformidade média",
+      "openVulns": "Vulnerabilidades abertas",
+      "criticalCount": "{count} críticas",
+      "overdue": "Tarefas em atraso",
+      "daysValue": "{days} d"
+    },
+    "statistics": {
+      "title": "Estatísticas do projeto",
+      "activity": "Atividade",
+      "weekFilter": "Esta semana",
+      "monthFilter": "Este mês",
+      "yearFilter": "Este ano",
+      "empty": "Ainda não há atividade esta semana. À medida que você e a sua equipa trabalham em produtos, SBOM e listas de verificação, a sua atividade semanal aparecerá aqui.",
+      "day": {
+        "monday": "Seg",
+        "tuesday": "Ter",
+        "wednesday": "Qua",
+        "thursday": "Qui",
+        "friday": "Sex",
+        "saturday": "Sáb",
+        "sunday": "Dom"
+      },
+      "month": {
+        "jan": "jan",
+        "feb": "fev",
+        "mar": "mar",
+        "apr": "abr",
+        "may": "mai",
+        "jun": "jun",
+        "jul": "jul",
+        "aug": "ago",
+        "sep": "set",
+        "oct": "out",
+        "nov": "nov",
+        "dec": "dez"
+      }
+    },
+    "calendar": {
+      "title": "Calendário de conformidade",
+      "prev": "Mês anterior",
+      "next": "Mês seguinte",
+      "legendDeadline": "Prazo do CRA",
+      "legendTask": "A sua tarefa",
+      "upcoming": "Próximos",
+      "empty": "Nada agendado.",
+      "dueToday": "Vence hoje",
+      "inDays": "Em {days} dias",
+      "day": {
+        "mon": "Seg",
+        "tue": "Ter",
+        "wed": "Qua",
+        "thu": "Qui",
+        "fri": "Sex",
+        "sat": "Sáb",
+        "sun": "Dom"
+      }
+    },
+    "getStarted": {
+      "title": "Bem-vindo ao Seentrix",
+      "greeting": "Bem-vindo, {name}",
+      "subtitle": "Vamos preparar a sua organização para o Regulamento Ciber-Resiliência da UE. Avance por estes passos e iremos guiá-lo durante todo o percurso.",
+      "progressLabel": "{done} de {total} passos concluídos",
+      "askTitle": "Não sabe por onde começar?",
+      "askDescription": "Abra o Seentrix AI a partir da barra superior e pergunte «O que tenho de fazer a seguir?» — sabe exatamente em que ponto está a sua organização."
+    },
+    "steps": {
+      "company-profile": {
+        "title": "Conclua o perfil da sua empresa",
+        "description": "Adicione os dados da sua entidade legal para que o Seentrix possa gerar uma declaração de conformidade.",
+        "cta": "Concluir perfil"
+      },
+      "first-product": {
+        "title": "Adicione o seu primeiro produto",
+        "description": "Registe um produto para começar a acompanhar o seu percurso de conformidade com o CRA.",
+        "cta": "Adicionar produto"
+      },
+      "classify-product": {
+        "title": "Classifique o seu produto ao abrigo do CRA",
+        "description": "Execute a avaliação guiada para determinar a categoria do CRA e a via de conformidade do produto.",
+        "cta": "Classificar produto"
+      },
+      "upload-sbom": {
+        "title": "Carregue uma lista de materiais de software",
+        "description": "Carregue um SBOM em CycloneDX ou SPDX para que o Seentrix possa revelar vulnerabilidades conhecidas.",
+        "cta": "Carregar SBOM"
+      },
+      "triage-vulnerabilities": {
+        "title": "Faça a triagem das suas vulnerabilidades",
+        "description": "Reveja as vulnerabilidades abertas e marque cada uma como resolvida ou aceite.",
+        "cta": "Rever vulnerabilidades"
+      },
+      "complete-checklist": {
+        "title": "Avance pela lista de verificação de conformidade",
+        "description": "Conclua a lista de verificação de requisitos essenciais de cada produto para alcançar a conformidade total.",
+        "cta": "Abrir lista de verificação"
+      }
+    },
+    "hero": {
+      "eyebrow": "Preparação para o CRA",
+      "headline": "É bom vê-lo, {name}. Já percorreu <em>{percent}</em> do caminho até à conformidade.",
+      "headlineNoName": "Já percorreu <em>{percent}</em> do caminho até à conformidade.",
+      "body": "<strong>{critical, plural, =0 {Nenhuma vulnerabilidade crítica} one {1 vulnerabilidade crítica} other {# vulnerabilidades críticas}}</strong> e <strong>{overdue, plural, =0 {nenhuma tarefa em atraso} one {1 tarefa em atraso} other {# tarefas em atraso}}</strong> nos seus produtos.",
+      "nextDeadline": "O seu próximo prazo, <strong>{deadline}</strong>, é daqui a {days, plural, one {1 dia} other {# dias}}.",
+      "reviewCta": "Rever itens críticos",
+      "copilotCta": "Abrir Copilot",
+      "ringCaption": "Preparação para o CRA",
+      "legendAchieved": "Alcançado · {percent}%",
+      "legendRemaining": "Restante até ao objetivo · {percent}%"
+    },
+    "attention": {
+      "title": "Produtos que precisam de atenção"
+    },
+    "myWork": {
+      "greeting": "Olá {name}, este é o seu trabalho",
+      "greetingNoName": "Este é o seu trabalho",
+      "summary": "{open} tarefas abertas, {overdue} em atraso.",
+      "summaryClear": "Não tem nada atribuído neste momento — está tudo em dia.",
+      "nextUp": "A seguir",
+      "allProducts": "Todos os produtos",
+      "yourVulns": "Vulnerabilidades atribuídas a si",
+      "training": "A sua formação",
+      "noTraining": "Não há lições obrigatórias para a sua função.",
+      "noTasksTitle": "Não há tarefas atribuídas",
+      "noTasksBody": "Quando lhe for atribuído um item da lista de verificação, aparece aqui — primeiro o trabalho em atraso.",
+      "overdueDays": "{days} d de atraso",
+      "dueInDays": "Vence em {days} d",
+      "dueToday": "Vence hoje",
+      "myTasks": "As minhas tarefas"
+    }
+  }
+}
