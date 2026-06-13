@@ -4,6 +4,7 @@ import { useMemo, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/icon";
 import { IconBadge } from "@/components/ui/icon-badge";
 import { StaggerReveal } from "@/components/stagger-reveal";
@@ -206,10 +207,29 @@ export function EntityContent({
           data-reveal
           className="overflow-hidden rounded-md bg-muted"
         >
-          <div className="border-b border-border px-5 py-3">
+          <div className="flex items-center justify-between gap-3 border-b border-border px-5 py-3">
             <span className="text-h4 text-foreground">
               {t("obligations.title", { entity: tType(`${state.entityType}.title`) })}
             </span>
+            {(state.entityType === "manufacturer" ||
+              state.entityType === "authorised_representative") && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  const a = document.createElement("a");
+                  a.href = "/api/org/ar-mandate";
+                  a.rel = "noopener";
+                  document.body.appendChild(a);
+                  a.click();
+                  a.remove();
+                }}
+                title={t("mandate.hint")}
+              >
+                <Icon name="DocumentDownload" size={14} />
+                {t("mandate.generate")}
+              </Button>
+            )}
           </div>
           <div className="divide-y divide-border">
             {state.obligations.map((ob) => {

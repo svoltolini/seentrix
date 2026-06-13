@@ -6,6 +6,7 @@ import { VulnerabilityDisclosurePdf } from "./templates/vulnerability-disclosure
 import { IncidentReportPdf } from "./templates/incident-report";
 import { RiskAssessmentPdf } from "./templates/risk-assessment";
 import { TechnicalDocumentationPdf } from "./templates/technical-documentation";
+import { AuthorisedRepresentativeMandatePdf } from "./templates/authorised-representative-mandate";
 
 interface GenerateOptions {
   documentType: DocumentType;
@@ -65,6 +66,13 @@ export async function generatePdfBuffer({
     ),
     technical_documentation: (
       <TechnicalDocumentationPdf
+        data={data}
+        messages={messages}
+        generatedAt={generatedAt}
+      />
+    ),
+    authorised_representative_mandate: (
+      <AuthorisedRepresentativeMandatePdf
         data={data}
         messages={messages}
         generatedAt={generatedAt}

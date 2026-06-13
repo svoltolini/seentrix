@@ -13,7 +13,8 @@ export type DocumentType =
   | "vulnerability_disclosure_policy"
   | "incident_report"
   | "risk_assessment"
-  | "technical_documentation";
+  | "technical_documentation"
+  | "authorised_representative_mandate";
 
 export type DocumentStatus = "not_started" | "draft" | "final";
 

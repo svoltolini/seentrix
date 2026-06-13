@@ -306,6 +306,10 @@
     "toast": {
       "saved": "Salvato",
       "saveFailed": "Impossibile salvare"
+    },
+    "mandate": {
+      "generate": "Genera mandato",
+      "hint": "Scarica un mandato del mandatario (articolo 18), precompilato con i dati della tua organizzazione."
     }
   }
 }

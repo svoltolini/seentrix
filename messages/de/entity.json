@@ -306,6 +306,10 @@
     "toast": {
       "saved": "Gespeichert",
       "saveFailed": "Speichern fehlgeschlagen"
+    },
+    "mandate": {
+      "generate": "Mandat erstellen",
+      "hint": "Laden Sie ein Mandat des Bevollmächtigten (Artikel 18) herunter, vorausgefüllt mit Ihren Organisationsdaten."
     }
   }
 }

@@ -306,6 +306,10 @@
     "toast": {
       "saved": "Saved",
       "saveFailed": "Couldn't save"
+    },
+    "mandate": {
+      "generate": "Generate mandate",
+      "hint": "Download an Authorised Representative mandate (Article 18), pre-filled from your organisation."
     }
   }
 }

@@ -80,6 +80,9 @@ export const DOC_FIELDS: Record<DocumentType, FieldDef[]> = {
     { key: "update_mechanism", labelKey: "updateMechanism", placeholderKey: "updateMechanismPlaceholder", type: "textarea" },
     { key: "support_period", labelKey: "supportPeriod", placeholderKey: "supportPeriodPlaceholder", type: "input" },
   ],
+  // Generated on-the-fly + auto-filled from the org (see /api/org/ar-mandate);
+  // not authored through the manual document form, so no editable fields.
+  authorised_representative_mandate: [],
 };
 
 // ---------------------------------------------------------------------------

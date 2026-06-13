@@ -306,6 +306,10 @@
     "toast": {
       "saved": "Enregistré",
       "saveFailed": "Impossible d'enregistrer"
+    },
+    "mandate": {
+      "generate": "Générer le mandat",
+      "hint": "Téléchargez un mandat de mandataire (article 18), prérempli à partir de votre organisation."
     }
   }
 }
