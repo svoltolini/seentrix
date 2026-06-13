@@ -460,9 +460,12 @@ function SrpSection({
 export function IncidentDetailContent({
   incident,
   currentUserRole,
+  canExportSrp,
 }: {
   incident: IncidentDetail;
   currentUserRole: string | null;
+  /** Whether the org's plan allows the structured ENISA SRP export. */
+  canExportSrp: boolean;
 }) {
   const t = useTranslations("incidents");
   const tType = useTranslations("incidents.type");
@@ -558,6 +561,18 @@ export function IncidentDetailContent({
     }
   }
 
+  // Structured Article 14 report for the ENISA Single Reporting Platform.
+  // The route streams an attachment; an off-DOM anchor click avoids a
+  // full-page navigation.
+  function handleExportSrp() {
+    const a = document.createElement("a");
+    a.href = `/api/incidents/${incident.id}/srp`;
+    a.rel = "noopener";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  }
+
   return (
     <div className="mx-auto max-w-[1120px] pb-12">
       <StaggerReveal
@@ -617,7 +632,7 @@ export function IncidentDetailContent({
                 </p>
               )}
             </div>
-            <div className="flex shrink-0 gap-2">
+            <div className="flex shrink-0 flex-wrap justify-end gap-2">
               <Button
                 variant="outline"
                 size="sm"
@@ -627,6 +642,28 @@ export function IncidentDetailContent({
                 <Icon name="pdf-01-stroke-rounded" size={14} />
                 {t("detail.downloadPdf")}
               </Button>
+              {canExportSrp ? (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleExportSrp}
+                  title={t("detail.srpExportHint")}
+                >
+                  <Icon name="DocumentDownload" size={14} />
+                  {t("detail.srpExport")}
+                </Button>
+              ) : (
+                <span
+                  className="inline-flex cursor-not-allowed items-center gap-2 rounded-md border border-border px-3 py-1.5 text-l6 text-muted-foreground opacity-70"
+                  title={t("detail.srpPlanRequired")}
+                >
+                  <Icon name="DocumentDownload" size={14} />
+                  {t("detail.srpExport")}
+                  <span className="rounded-full bg-accent/15 px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide text-accent">
+                    {t("detail.businessPlan")}
+                  </span>
+                </span>
+              )}
               {canSubmit && !isClosed && (
                 <Button
                   variant="outline"

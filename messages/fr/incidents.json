@@ -151,7 +151,11 @@
         "send": "Enregistrer la notification",
         "update": "Mettre à jour la notification",
         "sent": "Envoyée le {date}"
-      }
+      },
+      "srpExport": "Exporter pour l'ENISA SRP",
+      "srpExportHint": "Rapport structuré (JSON) au titre de l'article 14 pour la Single Reporting Platform",
+      "srpPlanRequired": "L'export ENISA SRP est disponible avec le plan Business.",
+      "businessPlan": "Business"
     },
     "srp": {
       "title": "Plateforme de signalement unique de l'ENISA",

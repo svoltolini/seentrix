@@ -151,7 +151,11 @@
         "send": "Benachrichtigung erfassen",
         "update": "Benachrichtigung aktualisieren",
         "sent": "Gesendet am {date}"
-      }
+      },
+      "srpExport": "Für ENISA-SRP exportieren",
+      "srpExportHint": "Strukturierter Artikel-14-Bericht (JSON) für die Single Reporting Platform",
+      "srpPlanRequired": "Der ENISA-SRP-Export ist im Business-Tarif verfügbar.",
+      "businessPlan": "Business"
     },
     "srp": {
       "title": "ENISA Single Reporting Platform",

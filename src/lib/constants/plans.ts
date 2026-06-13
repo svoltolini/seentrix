@@ -103,6 +103,12 @@ export function canUsePsirt(plan: OrgPlan): boolean {
   return plan === "business" || plan === "enterprise";
 }
 
+export function canUseEnisaFiling(plan: OrgPlan): boolean {
+  // Structured Article 14 export for the ENISA Single Reporting Platform —
+  // the "ENISA filing assist" tier (Business+).
+  return plan === "business" || plan === "enterprise";
+}
+
 export function canUseApi(plan: OrgPlan): boolean {
   return plan === "business" || plan === "enterprise";
 }

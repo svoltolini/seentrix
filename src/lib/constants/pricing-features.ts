@@ -89,7 +89,7 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
       { key: "incidentReporting", free: false, professional: true, business: true, enterprise: true },
       { key: "deadlineTracking", free: false, professional: true, business: true, enterprise: true },
       { key: "incidentPdf", free: false, professional: true, business: true, enterprise: true },
-      { key: "enisaFilingAssist", free: false, professional: false, business: "coming-soon", enterprise: "coming-soon" },
+      { key: "enisaFilingAssist", free: false, professional: false, business: true, enterprise: true },
       { key: "cveLinkage", free: false, professional: true, business: true, enterprise: true },
     ],
   },
